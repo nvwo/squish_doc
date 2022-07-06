@@ -1,0 +1,226 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<!-- Mirrored from rel-640.html by HTTrack Website Copier/3.x [XR&CO'2013], Wed, 06 Jul 2022 13:28:55 GMT -->
+<head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><title>2.16. Version 6.4</title><link rel="stylesheet" href="manual.css" type="text/css"></link><meta name="generator" content="DocBook XSL Stylesheets V1.73.2"></meta><link rel="start" href="index-noframes.html" title="Squish Manual"></link><link rel="up" href="relnotes.html" title="Chapter 2. Release Notes—for Upgraders"></link><link rel="prev" href="rel-641.html" title="2.15. Version 6.4.1"></link><link rel="next" href="rel-632.html" title="2.17. Version 6.3.2"></link><style xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" type="text/css" media="screen">
+        div.toc * { margin-left: 6px; margin-right: auto; max-width: 75em; }
+        div.toc span { margin-left: 0px; }
+        * { margin-left: auto; margin-right: auto; max-width: 75em; }
+        body { margin-left: 6px; margin-right: 6px; }
+        table th { padding: .5ex }
+        table td { padding: .5ex }
+    </style><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format">
+        function keyPress() {
+            var e = window.event;
+            if ( e == undefined ) {
+                return;
+            }
+            /* ### does not properly scroll, yet
+            if ( e.keyCode == 32 ) {
+            var l = document.links;
+            for ( var i = 0; i < l.length; i++ ) {
+                if ( l[i].innerText == "Next" ) {
+                location.href = l[i].href;
+                }
+            }
+            } else
+                */
+                if ( e.keyCode == 0x08 ) {
+            var l = document.links;
+            for ( var i = 0; i < l.length; i++ ) {
+                if ( l[i].innerText == "Prev" ) {
+                location.href = l[i].href;
+                }
+            }
+            }
+        }
+        document.onkeypress = keyPress;
+    </script></head><body><div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="rel-640"></a>2.16. Version 6.4</h2></div></div></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><span class="section"><a href="rel-640.html#rel-640-script-based-objectmap">2.16.1. Script-Based Object Maps</a></span></dt><dt><span class="section"><a href="rel-640.html#rel-640-image-search">2.16.2. Image-based Object Lookup</a></span></dt><dt><span class="section"><a href="rel-640.html#rel-640-general">2.16.3. General</a></span></dt><dt><span class="section"><a href="rel-640.html#rel-640-ide">2.16.4. Squish IDE-specific</a></span></dt><dt><span class="section"><a href="rel-640.html#rel-640-scripting">2.16.5. Scripting</a></span></dt><dt><span class="section"><a href="rel-640.html#rel-640-qt">2.16.6. Qt-specific</a></span></dt><dt><span class="section"><a href="rel-640.html#rel-640-java">2.16.7. <span class="trademark">Java</span>™-specific</a></span></dt><dt><span class="section"><a href="rel-640.html#rel-640-web">2.16.8. Web-specific</a></span></dt><dt><span class="section"><a href="rel-640.html#rel-640-windows">2.16.9. Windows (native)-specific</a></span></dt><dt><span class="section"><a href="rel-640.html#rel-640-mac">2.16.10. macOS-specific (Cocoa/Carbon edition)</a></span></dt><dt><span class="section"><a href="rel-640.html#rel-640-ios">2.16.11. iOS-specific (iPhone/iPad edition)</a></span></dt><dt><span class="section"><a href="rel-640.html#rel-640-android">2.16.12. Android-specific</a></span></dt><dt><span class="section"><a href="rel-640.html#rel-640-source">2.16.13. Source Packages</a></span></dt><dt><span class="section"><a href="rel-640.html#rel-640-docs">2.16.14. Documentation</a></span></dt><dt><span class="section"><a href="rel-640.html#rel-640-known-issues">2.16.15. Known Issues</a></span></dt><dt><span class="section"><a href="rel-640.html#rel-640-platform">2.16.16. Platform Support</a></span></dt></dl></div><p><span class="emphasis"><em>Squish</em></span> 6.4 is a feature release which delivers new features to all
+  editions of the product.</p><p>Furthermore, a lot of features and bug fixes were applied to individual
+  <span class="emphasis"><em>Squish</em></span> editions since <span class="emphasis"><em>Squish</em></span> 6.3; see the following sections for a detailed
+  list of all changes.</p><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="rel-640-script-based-objectmap"></a>2.16.1. Script-Based Object Maps</h3></div></div></div><p>This <span class="emphasis"><em>Squish</em></span> version introduces a new, more powerful scheme for
+    expressing and managing object names: <a class="link" href="rg-objectmap.html#rgo-squish-scriptbased" title="7.11.4. Script-Based Object Map">Script-Based Object Maps</a>.  Instead
+    of using strings (starting with a colon) as symbolic names referencing real
+    names (which are strings, too), <span class="emphasis"><em>Squish</em></span> 6.4 uses script-based object maps
+    in which the object map is a plain shared script which holds variables with
+    dictionaries. This makes dealing with object names much easier and safer,
+    enabling various useful use cases, such as:
+    </p><div class="itemizedlist"><ul type="disc"><li><p><a class="ulink" href="https://kb.froglogic.com/display/KB/Dealing With Translated User Interfaces" target="_blank">Dealing with translated <acronym class="acronym">UI</acronym>s</a></p></li><li><p><a class="ulink" href="https://kb.froglogic.com/display/KB/Splitting An Object Map To Ease Maintenace" target="_blank">Splitting object maps into multiple files</a></p></li><li><p><a class="ulink" href="https://kb.froglogic.com/display/KB/Resolving Duplication In Object Maps" target="_blank">Resolving duplication between object names</a></p></li><li><p><a class="ulink" href="https://kb.froglogic.com/display/KB/Leverage the improved IDE integration of the Script-Based Object Map" target="_blank">Auto-completion and refactoring support for object names</a></p></li></ul></div><p><a class="link" href="rg-objectmap.html#rgo-squish-scriptbased" title="7.11.4. Script-Based Object Map">Script-Based Object
+    Maps</a> are the default for newly created test suites; existing test
+    suites continue to work as before, but can be converted to use a
+    script-based object map instead of a text-based object map using a
+    convenient migration wizard.</p><p>See <a class="xref" href="rg-objectmap.html#rgo-squish-scriptbased" title="7.11.4. Script-Based Object Map">Script-Based Object Map (Section 7.11.4)</a> for more information on
+    the structure and functionality of object maps in <span class="emphasis"><em>Squish</em></span> 6.4.</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="rel-640-image-search"></a>2.16.2. Image-based Object Lookup</h3></div></div></div><p><span class="emphasis"><em>Squish</em></span> 6.3 <a class="link" href="rel-630.html#rel-630ff-image-search" title="2.19.1. Image Search">introduced</a> basic
+    support for identifying controls in an application based on their visual appearance. <span class="emphasis"><em>Squish</em></span>
+    6.4 builds on top and greatly improves the usability and power of this feature.</p><p>The search images can now be grouped together. Each image in a
+    group is conidered equally valid representation of a control. Grouping
+    together images captured on different platforms, with differnet rendering
+    styles or different display resoluions increaes the protability of the
+    test script.</p><p><span class="emphasis"><em>Squish</em></span> 6.4 supports tolerant Image-based Object Lookup. It permits
+    small deviations between the template image and its occurrence(s) on the
+    desktop, with an adjustable threshold on what constitutes a match.</p><p>The new scaled image search mode allows resized occurrences of the
+    template image. The application controls that vary in size can be matched
+    using a single image file.</p><p>The <span class="application">Squish IDE</span> provides improved Image-based Object Lookup support. The
+    new <a class="xref" href="ide.dialogs.html#ide.image.not.found.dialog" title="8.3.4. Image Not Found dialog">Image Not Found dialog (Section 8.3.4)</a> and
+    <a class="xref" href="ide.dialogs.html#ide.image.search.preview.dialog" title="8.3.6. Image Search Preview dialog">Image Search Preview dialog (Section 8.3.6)</a> help diagnose and fix
+    image search errors.</p><p>See <a class="xref" href="rgs-squish.html#findImage-function"><code class="function">findImage</code></a> and
+    <a class="xref" href="rgs-squish.html#waitForImage-function"><code class="function">waitForImage</code></a> functions for more information on
+    the Image-based Object Lookup configuration.</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="rel-640-general"></a>2.16.3. General</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p><span class="application">squishrunner</span> now logs a script stacktrace for any
+      failed verification, failure or fatal error in generated test reports.
+      </p></li><li><p>Added an alternative JUnit report generator that
+      preserves the testcase and BDD test structure in its generated test
+      report.</p></li><li><p>Reduced resource usage (memory as well as
+      <acronym class="acronym">TCP</acronym> connections) of <span class="application">squishrunner</span>
+      and <span class="application">squishserver</span> in case <a class="xref" href="rgs-squish.html#startApplication-function"><code class="function">startApplication</code></a> or
+      <a class="xref" href="rgs-squish.html#attachToApplication-function"><code class="function">attachToApplication</code></a> calls
+      fail.</p></li><li><p>Fixed a <span class="application">squishrunner</span> crash that could occur when
+      accessing application objects of an <acronym class="acronym">AUT</acronym> that had just
+      crashed.</p></li><li><p>Fixed logging of incorrect timestamps in
+      <acronym class="acronym">XML</acronym> 3.x test reports when the <acronym class="acronym">AUT</acronym>
+      terminates abnormally.</p></li><li><p>Fixed unattended installs of <span class="emphasis"><em>Squish</em></span> packages on Unix
+      when no X11 server is available.</p></li><li><p>Fixed incomplete test reports when aborting
+      <span class="application">squishrunner</span> testsuite execution on commandline.</p></li><li><p>Improved error reporting on <span class="application">squishrunner</span> startup.
+      Problems when writing a test report will now abort with a clear error
+      message.</p></li><li><p>Fixed error reporting when <span class="application">squishrunner</span> connects to
+      <span class="application">squishserver</span>. Failure to connect will now produce a proper error in the
+      test report.</p></li><li><p>Relative paths passed to the
+      <span class="command"><strong>--reportgen</strong></span> or <span class="command"><strong>--resultdir</strong></span> options
+      of <span class="application">squishrunner</span> in testsuite replay mode are now handled as relative to
+      the startup directory. Previously they were relative to the testsuite
+      directory.</p></li><li><p><span class="application">squishrunner</span> in testsuite mode now supports the
+      <span class="command"><strong>--envvar</strong></span> and <span class="command"><strong>--envvars</strong></span> options
+      to provide or override testsuite-wide environment variables.
+      </p></li><li><p>Introduced a user license key option that is
+      node-locked.</p></li><li><p>The <span class="application">vpdiff</span> utility gained
+      support for creating and editing image masks which have the width or
+      height smaller than 10 pixels.</p></li><li><p>The <a class="xref" href="rg-cmdline.html#rgc-xml2jira" title="7.4.11. xml2jira"><span class="application">xml2jira</span> (Section 7.4.11)</a> utility now supports
+      updating JIRA tickets using test reports stored in xml3, xml3.1, xml3.2 and
+      xml 3.3 formats.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="rel-640-ide"></a>2.16.4. Squish IDE-specific</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Fixed an issue due to which single-stepping in test
+      scripts on macOS sometimes worked very slowly.</p></li><li><p>Exported results are stored as a ZIP file and include
+      failed images, screenshots and failed object dumps.</p></li><li><p>Support for importing results into the <a class="xref" href="ide.views.html#ide.the-test-results.view" title="8.2.18. Test Results view">Test Results view (Section 8.2.18)</a> using either a zipped report or a
+      plain <acronym class="acronym">XML</acronym> report file.</p></li><li><p>The Test Suite <a class="xref" href="ide.views.html#ide.the-settings.view" title="8.2.16. Test Suite Settings view">Test Suite Settings view (Section 8.2.16)</a>
+      had its contents split across multiple tabs shown at the bottom of the
+      editor area.</p></li><li><p>Support selecting the iOS simulator device to run a test
+      with from the suites view.</p></li><li><p>Hovering the mouse over symbolic names with
+      <span class="keycap"><strong>Ctrl</strong></span> (<span class="keycap"><strong>Cmd</strong></span> on macOS) pressed in the
+      script editors offers to highlight the object matching that name or
+      checking for its existence.</p></li><li><p>Improve feedback when loading application object children
+      or properties takes long.</p></li><li><p>Support copying method information from the
+      <span class="guilabel">Methods</span> view.</p></li><li><p>Support filtering in the <a class="xref" href="ide.views.html#ide.the-methods.view" title="8.2.9. Methods view">Methods view (Section 8.2.9)</a> and
+      <a class="xref" href="ide.views.html#ide.the-properties.view" title="8.2.12. Properties view">Properties view (Section 8.2.12)</a>.</p></li><li><p>include file/line numbers when copying the text of
+      entries from the <span class="guilabel">Results</span> view.</p></li><li><p>Fixed a problem with the test suite settings editor not
+      updating itself when the <span class="emphasis"><em>Squish</em></span> installation location has been changed.
+      This led to outdated and incorrect information being shown in the suite
+      settings.</p></li><li><p>Provide <span class="guilabel">Check Existence</span> and
+      <span class="guilabel">Highlight Object</span> entries in the Object Map editor's
+      context menu.</p></li><li><p>Made it possible to configure whether the crash dump
+      dialog should be shown by <span class="emphasis"><em>Squish</em></span> tools or <acronym class="acronym">AUT</acronym>'s
+      started directly or indirectly from the <span class="application">Squish IDE</span>.</p></li><li><p>Support <span class="keycap"><strong>Ctrl</strong></span> + MouseClick on symbolic
+      names in test script editor to check the names existence or highlight the
+      object.</p></li><li><p>Fixed a problem with auto-indentation in Ruby scripts
+      affecting formatting of newly recorded script code.</p></li><li><p>Remember selected toolkit, script language and
+      <acronym class="acronym">AUT</acronym> in the test suite creation
+      dialog.</p></li><li><p>Fixed a problem that led to not saving all open editors
+      before executing a test or recording a single scenario.</p></li><li><p>Make the
+      <span class="guilabel">Copy</span>/<span class="guilabel">Add</span> actions in the
+      context menu of the <span class="guilabel">Application Objects</span> view explain
+      what happened via the status bar of the <span class="application">Squish IDE</span>.</p></li><li><p>Support drag and drop of folders from a systems file
+      explorer into the global scripts view to add them as a global scripts
+      directory.</p></li><li><p>Added support for handling test data files in <code class="filename">xlsx</code> format (i.e. modern Excel
+      versions).</p></li><li><p>Support filtering of file names in <span class="guilabel">Global
+      Scripts</span> view and add default set of filters hiding compiled
+      Python files and version control related files.</p></li><li><p>When saving a feature file all lines will have whitespace
+      at the line end removed.</p></li><li><p>Add support for showing stacktrace information included
+      in reports generated with xml3.3 report generator and use that generator
+      when available for executing tests from the <span class="application">Squish IDE</span>.</p></li><li><p>Add a new context menu entry to the <a class="xref" href="ide.views.html#ide.the-test-results.view" title="8.2.18. Test Results view">Test Results view (Section 8.2.18)</a> view to re-execute a single
+      testcase or scenario after having executed a bunch of
+      them.</p></li><li><p>Extended the <span class="guilabel">Environment</span> table in
+      the test suite settings with
+      <span class="guilabel">Add</span>/<span class="guilabel">Remove</span> buttons to make
+      editing of the table easier to discover.</p></li><li><p>Added the <a class="xref" href="ide.views.html#ide.the-settings.view.testsettings" title="8.2.16.4. Test Settings">Test Settings (Section 8.2.16.4)</a>
+      page to the <a class="xref" href="ide.views.html#ide.the-settings.view" title="8.2.16. Test Suite Settings view">Test Suite Settings view (Section 8.2.16)</a> to allow changing the default
+      values of various items available from the <a class="xref" href="rgs-squish.html#rgs-testsettings" title="6.3.19. testSettings Object"><code class="code">testSettings</code> Object (Section 6.3.19)</a>.
+      </p></li><li><p>Fixed a problem with the <span class="guilabel">Properties</span>
+      view showing no properties list when the selected object has a realname
+      that contains properties with linebreaks.</p></li><li><p>Fixed a problem causing error dialogs to pop up when a
+      testcase executed multiple feature files by calling
+      <code class="code">runFeatureFile</code> multiple times.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="rel-640-scripting"></a>2.16.5. Scripting</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Allow passing native dictionaries / hashes to object
+      lookup functions.</p></li><li><p>Added shared and global script directories to search
+      paths used by language-specific module import statements.</p></li><li><p>Added support for JavaScript modules based on
+      the <code class="code">import</code> and <code class="code">export</code> keywords from
+      ECMAScript 2015.</p></li><li><p>Added support for JavaScript <code class="code">for (... of ..)</code>
+      ECMAScript 6 loops.</p></li><li><p>Added JavaScript <code class="code">Set</code> object from ECMAScript
+      6.</p></li><li><p>Added support for default JavaScript function
+      parameters from ECMAScript 2015.</p></li><li><p>Added <a class="xref" href="rgs-squish.html#findAllObjects-function"><code class="function">findAllObjects</code></a> script
+      function.</p></li><li><p>Fixed <a class="xref" href="rgs-squish.html#snooze-function"><code class="function">snooze</code></a> not pausing
+      script execution long enough in some cases.</p></li><li><p>Added <a class="xref" href="rgs-squish.html#test.breakpoint-function"><code class="function">test.breakpoint</code></a>
+      function.</p></li><li><p>Support reading test data files using <code class="filename">xlsx</code> format.</p></li><li><p>Fixed a crash which could occur when using the <a class="link" href="rgs-squish.html#rgss-objmap" title="6.3.11. Object Map Functions"><code class="code">objectMap</code> script
+      <acronym class="acronym">API</acronym></a> in the toplevel scope of the main test
+      script file.</p></li><li><p>Fixed a problem with invoking the wrong <span class="emphasis"><em>Squish</em></span> functions
+      in some rare cases.</p></li><li><p>The Python and Ruby interpreters shipped with <span class="emphasis"><em>Squish</em></span>
+      now include support for <acronym class="acronym">SSL</acronym> encryption, enabling e.g.
+      secure hashing or <acronym class="acronym">HTTPS</acronym> connections in test
+      scripts.</p></li><li><p>Honor the <a class="xref" href="rgs-squish.html#testSettings.logScreenshotOnError-property">testSettings.logScreenshotOnError</a> property on fatal
+      script errors too.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="rel-640-qt"></a>2.16.6. Qt-specific</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Add support for Qt 5.11</p></li><li><p>Fix performance problem for QtQuick name generation with
+      many invisible objects being present.</p></li><li><p>Log output from the Qt toolkit support is now correctly
+      forwarded if <span class="application">squishserver</span> started the <acronym class="acronym">AUT</acronym>. The log output was
+      handled as <acronym class="acronym">AUT</acronym> standard error output before.</p></li><li><p>The Qt toolkit support not honors the
+      <code class="option">--debugLog p</code> option passed to <span class="application">squishrunner</span> and defaults
+      to less log message output compared to earlier versions.</p></li><li><p>Enabled native screen grabbing for MinGW packages on
+      Windows, fixing screenshot VPs for QtQuick/3D on certain driver/hardware
+      combinations.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="rel-640-java"></a>2.16.7. <span class="trademark">Java</span>™-specific</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Restored support for IBM <span class="trademark">Java</span>™ virtual machines, which got removed
+      after the support for <span class="trademark">Java</span>™ 9 was added.</p></li><li><p>Fixed <a class="xref" href="rgs-javaconvenience.html#java-doubleClick-function"><code class="function">doubleClick</code></a> and
+      <a class="xref" href="rgs-javaconvenience.html#java-doubleClickItem-function"><code class="function">doubleClickItem</code></a> for <acronym class="acronym">SWT</acronym>
+      on macOS to trigger a double-click instead of two consecutive
+      clicks.</p></li><li><p>Avoid trying to automate disposed <acronym class="acronym">SWT</acronym>
+      browser controls.</p></li><li><p>Fixed application-specific security policies with <span class="trademark">Java</span>™
+      9.  An option to specify a policy file is available in the wrapper
+      configuration file (<code class="filename">etc/javawrapper.ini</code> resp. the
+      file specified via the <code class="envar">SQUISH_WRAPPER_CONFIG</code> environment
+      variable).</p></li><li><p>Improved stability with applications using both
+      <acronym class="acronym">SWT</acronym> and JavaFx controls.</p></li><li><p>Corrected detection of JFace
+      <code class="code">ControlDecoration</code> with recent Eclipse
+      versions.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="rel-640-web"></a>2.16.8. Web-specific</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Fix handling of Confirm/Prompt dialogs when inspecting a
+      website from the <span class="application">Squish IDE</span>.</p></li><li><p>Fixed shutdown of <span class="application">Google
+      Chrome</span> to be more graceful avoiding the 'restore session'
+      popup.</p></li><li><p>Accessing properties or calling functions of <acronym class="acronym">HTML</acronym>
+      objects that are not available anymore will throw an error instead of
+      silently failing. Most notably this affects object references that are
+      kept alive while the website reloads or navigates to a different
+      page.</p></li><li><p>Support starting <acronym class="acronym">CEF</acronym>-based browsers
+      (and others automated via webdriver) without specifying a
+      <acronym class="acronym">URL</acronym>. This can be used for web-applications that load
+      the web content from packaged resources.</p></li><li><p>Fixed a problem causing Google Chrome to start up with
+      two tabs (labelled <span class="guilabel">files</span> and
+      <span class="guilabel">(x86)</span> instead of starting up normally, causing
+      hooking into the browser to fail.</p></li><li><p>Fixed a defect in <a class="xref" href="rgs-squish.html#nativeMouseClick-function"><code class="function">nativeMouseClick</code></a> causing it to always fail if the
+      element to click on was not inside the visible area of the
+      browser.</p></li><li><p>Session data (cookies, cache, history, form data etc.) is
+      no longer reset when attaching to a running instance of Chrome or
+      <span class="application">Firefox</span>.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="rel-640-windows"></a>2.16.9. Windows (native)-specific</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Fixed an issue which would make <a class="xref" href="rgs-squish.html#waitForObject-function"><code class="function">waitForObject</code></a> sometimes assume that an object was
+      ready for interaction even though the <code class="code">visible</code> or
+      <code class="code">enabled</code> property is <code class="code">false</code>.</p></li><li><p>Improved interoperability between <acronym class="acronym">WPF</acronym>
+      and Windows Forms <acronym class="acronym">GUI</acronym> toolkits. <acronym class="acronym">GUI</acronym>
+      types with same name can have now different properties.</p></li><li><p>Added the property <code class="code">source</code> to
+      <acronym class="acronym">WPF</acronym> <code class="literal">Image</code> objects to help with
+      their identification.</p></li><li><p>Improved clicking on templated <acronym class="acronym">WPF</acronym>
+      controls.</p></li><li><p>Fixed accessing .NET controls embedded into Qt
+      applications but the .NET controls are executing in a separate
+      thread.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="rel-640-mac"></a>2.16.10. macOS-specific (Cocoa/Carbon edition)</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Fix play back of <a class="xref" href="rgs-macconvenience.html#mac-mouseDrag-function"><code class="function">mouseDrag</code></a>
+      on a Mac with a locked screen or fast user switching.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="rel-640-ios"></a>2.16.11. iOS-specific (iPhone/iPad edition)</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Fix automatic enabling of accessibility for iOS 11
+      simulator.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="rel-640-android"></a>2.16.12. Android-specific</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Support <code class="filename">apk</code> files built with
+      Android SDK 3 (<code class="literal">android-26</code>).</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="rel-640-source"></a>2.16.13. Source Packages</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Include WebSockets support in source packages for
+      JavaScript and <span class="emphasis"><em>Squish</em></span> for Web.</p></li><li><p>Building Squish Tools (Runner, IDE Utils) now requires Qt
+      4.6 or newer</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="rel-640-docs"></a>2.16.14. Documentation</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Extended documentation for <a class="xref" href="rgs-webconvenience.html#web-automateLogin-function"><code class="function">automateLogin</code></a> to cover the scenario of a website
+      requesting login during loading the page itself instead of upon a button
+      click.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="rel-640-known-issues"></a>2.16.15. Known Issues</h3></div></div></div><p>For a list of noteworthy issues which were found after the release of
+    <span class="emphasis"><em>Squish</em></span> 6.4, please see the <a class="ulink" href="https://kb.froglogic.com/display/KB/Squish 6.4.0 Known Issues" target="_blank">Known
+    Issues page</a> on the froglogic Knowledge Base.</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="rel-640-platform"></a>2.16.16. Platform Support</h3></div></div></div><p>The support for running the <span class="application">Squish IDE</span> or <span class="application">squishrunner</span> on some older
+    operating systems is being phased out. Hence, starting with one of the
+    upcoming <span class="emphasis"><em>Squish</em></span> releases, out-of-the-box support for some older platforms
+    may be available in form of remote testing only. In particular, this
+    affects</p><div class="itemizedlist"><ul type="disc"><li><p>Windows versions prior to Windows 7</p></li><li><p>macOS releases before macOS 10.10</p></li><li><p>Linux installations older than CentOS 6</p></li><li><p>AIX and Solaris</p></li></ul></div><p>This is due to the dwindling support of frameworks employed by
+    <span class="application">squishrunner</span> and <span class="application">Squish IDE</span>. See this <a class="ulink" href="https://www.eclipse.org/eclipse/news/4.7/M1/" target="_blank">dropped platform
+    announcement</a> by the Eclipse project or the <a class="ulink" href="https://doc.qt.io/qt-5.9/supported-platforms.html" target="_blank">platforms supported
+    by Qt 5.9</a> for example.</p></div></div><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" type="text/javascript" src="ScriptingLanguage.js"></script><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format">setScriptingLanguage();</script><div class="navfooter"><hr></hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="rel-641.html">Prev</a> </td><td width="20%" align="center"><a accesskey="u" href="relnotes.html">Up</a></td><td width="40%" align="right"> <a accesskey="n" href="rel-632.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">2.15. Version 6.4.1 </td><td width="20%" align="center"><a accesskey="h" href="index-noframes.html">Home</a></td><td width="40%" align="right" valign="top"> 2.17. Version 6.3.2</td></tr></table></div></body>
+<!-- Mirrored from rel-640.html by HTTrack Website Copier/3.x [XR&CO'2013], Wed, 06 Jul 2022 13:28:55 GMT -->
+</html>

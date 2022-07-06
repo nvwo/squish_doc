@@ -1,0 +1,236 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<!-- Mirrored from rgs-py.html by HTTrack Website Copier/3.x [XR&CO'2013], Wed, 06 Jul 2022 13:29:00 GMT -->
+<head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><title>6.14. Python Notes</title><link rel="stylesheet" href="manual.css" type="text/css"></link><meta name="generator" content="DocBook XSL Stylesheets V1.73.2"></meta><link rel="start" href="index-noframes.html" title="Squish Manual"></link><link rel="up" href="api.man.html" title="Chapter 6. API Reference Manual"></link><link rel="prev" href="rgs-androidconvenience.html" title="6.13. Android Convenience API"></link><link rel="next" href="rgs-tcl.html" title="6.15. Tcl Notes"></link><style xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" type="text/css" media="screen">
+        div.toc * { margin-left: 6px; margin-right: auto; max-width: 75em; }
+        div.toc span { margin-left: 0px; }
+        * { margin-left: auto; margin-right: auto; max-width: 75em; }
+        body { margin-left: 6px; margin-right: 6px; }
+        table th { padding: .5ex }
+        table td { padding: .5ex }
+    </style><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format">
+        function keyPress() {
+            var e = window.event;
+            if ( e == undefined ) {
+                return;
+            }
+            /* ### does not properly scroll, yet
+            if ( e.keyCode == 32 ) {
+            var l = document.links;
+            for ( var i = 0; i < l.length; i++ ) {
+                if ( l[i].innerText == "Next" ) {
+                location.href = l[i].href;
+                }
+            }
+            } else
+                */
+                if ( e.keyCode == 0x08 ) {
+            var l = document.links;
+            for ( var i = 0; i < l.length; i++ ) {
+                if ( l[i].innerText == "Prev" ) {
+                location.href = l[i].href;
+                }
+            }
+            }
+        }
+        document.onkeypress = keyPress;
+    </script></head><body><div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="rgs-py"></a>6.14. Python Notes</h2></div></div></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><span class="section"><a href="rgs-py.html#default.file.encoding.utf8">6.14.1. Default File Encoding (UTF-8)</a></span></dt><dt><span class="section"><a href="rgs-py.html#str.ret.type.def.unicode">6.14.2. Default type of string return values (Unicode)</a></span></dt><dt><span class="section"><a href="rgs-py.html#squish.python.modules">6.14.3. Squish's Python Modules</a></span></dt><dt><span class="section"><a href="rgs-py.html#hidden.py.symbols">6.14.4. Python Symbols Hidden by <span class="emphasis"><em>Squish</em></span></a></span></dt><dt><span class="section"><a href="rgs-py.html#import.custom.modules">6.14.5. Importing Custom Python Modules</a></span></dt><dt><span class="section"><a href="rgs-py.html#squish.funcs.in.py.modules">6.14.6. Using Squish Functions in Python Modules/Packages</a></span></dt><dt><span class="section"><a href="rgs-py.html#api.python.squishtest">6.14.7.  <code class="code">squishtest</code>: Module for embedding Squish in Python Applications </a></span></dt><dt><span class="section"><a href="rgs-py.html#rgs-python-documentation">6.14.8. Python Language Documentation</a></span></dt></dl></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="default.file.encoding.utf8"></a>6.14.1. Default File Encoding (UTF-8)</h3></div></div></div><p>
+<span class="emphasis"><em>Squish</em></span> assumes that all <code class="filename">test.py</code> files are
+UTF-8 encoded.
+</p><p>If you expect to edit such files outside of the
+<span class="application">Squish IDE</span>, we recommend putting the following line at the start of each
+<code class="filename">test.py</code> file:
+</p><pre class="programlisting">
+# -*- coding: utf-8 -*-
+</pre><p>
+This is purely a comment, but a Python-aware editor will notice it, and
+will correctly load and save using the UTF-8 encoding that <span class="emphasis"><em>Squish</em></span>
+expects, as a result.
+</p><p>Other text editors (which do not recognize the above notation)
+typically must be configured to save the Squish test scripts
+using UTF-8 encoding explicitly.
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="str.ret.type.def.unicode"></a>6.14.2. Default type of string return values (Unicode)</h3></div></div></div><p>
+For Python 2.x, <span class="emphasis"><em>Squish</em></span> API functions that return strings always return
+strings of type <code class="code">unicode</code> instead of <code class="code">str</code>.
+So if you need to check the type, use
+<code class="code">isinstance(<span class="emphasis"><em>string</em></span>, unicode)</code> or
+<code class="code">isinstance(<span class="emphasis"><em>string</em></span>, basestring)</code>.
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="squish.python.modules"></a>6.14.3. Squish's Python Modules</h3></div></div></div><p>
+<span class="emphasis"><em>Squish</em></span>'s Python-specific extension modules are loaded automatically by
+internally executing the equivalent of the following statements
+<span class="emphasis"><em>after attaching to or starting an AUT</em></span>:
+</p><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Python</span><pre class="programlisting">
+import test
+import testData
+import object
+import objectMap
+import squishinfo
+from squish import *
+</pre></div><p>
+<span class="emphasis"><em>The objects (functions, classes, etc.) exposed by the
+<code class="code">squish</code> module depend on the currently hooked up
+application.</em></span> If no application is hooked up (via
+<a class="xref" href="rgs-squish.html#startApplication-function"><code class="function">startApplication</code></a> or
+<a class="xref" href="rgs-squish.html#attachToApplication-function"><code class="function">attachToApplication</code></a>) most
+objects will be "missing" from this module until an application
+is hooked up.
+</p><p>
+This means that it is not necessary to <code class="function">import</code> them
+yourself unless you are developing your own standalone Python module.
+See <a class="xref" href="rgs-py.html#squish.funcs.in.py.modules" title="6.14.6. Using Squish Functions in Python Modules/Packages">Using Squish Functions in Python Modules/Packages (Section 6.14.6)</a> for information on
+using the above modules in your own Python modules or packages.
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="hidden.py.symbols"></a>6.14.4. Python Symbols Hidden by <span class="emphasis"><em>Squish</em></span></h3></div></div></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><span class="section"><a href="rgs-py.html#squish.bool">6.14.4.1. Squish's bool vs. Python's bool</a></span></dt><dt><span class="section"><a href="rgs-py.html#squish.int">6.14.4.2. Squish's int vs. Python's int</a></span></dt><dt><span class="section"><a href="rgs-py.html#squish.long">6.14.4.3. Squish's long vs. Python's long</a></span></dt><dt><span class="section"><a href="rgs-py.html#squish.object">6.14.4.4. Squish's object vs. Python's object</a></span></dt><dt><span class="section"><a href="rgs-py.html#squish.type">6.14.4.5. Squish's type() vs. Python's type()</a></span></dt></dl></div><p>
+The wildcard import (<code class="code">from squish import *</code>) of the
+<code class="code">squish</code> module means that some of Python's built-in
+objects are "hidden" by <span class="emphasis"><em>Squish</em></span> objects that have the same
+names but completely different behavior.
+</p><p>
+The objects hidden by <span class="emphasis"><em>Squish</em></span> are <code class="code">object</code>,
+<code class="code">bool</code>, <code class="code">int</code>, <code class="code">long</code> and
+<code class="code">type</code>.
+</p><p>
+However, please note that this "hiding" only takes place for the
+test script itself (and only when executing test cases, not when
+using the <code class="code">squishtest</code> module). This means that this
+"hiding" is not being done for standard or custom Python
+modules and packages.
+</p><p>
+Some of the original symbols can be restored after calling
+<code class="code">startApplication()</code> or
+<code class="code">attachToApplication()</code>. For example:
+</p><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Python</span><pre class="programlisting">
+
+import sys
+# Check if Python 3:
+if sys.version_info[0] == 3:
+  import builtins
+else:
+  # Make Python 2 look like Python 3:
+  import __builtin__ as builtins
+
+def main():
+    startApplication("aut")
+    restore_python_bool_int_long()
+
+def restore_python_bool_int_long():
+    global bool
+    global int
+    global long
+    global pytype
+    bool = builtins.bool
+    int = builtins.int
+    long = builtins.long
+    pytype = builtins.type
+</pre></div><p>
+Restoring <code class="code">object</code> and <code class="code">type</code> is advised
+against, because they are used in snippets recorded by Squish.
+</p><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="squish.bool"></a>6.14.4.1. Squish's bool vs. Python's bool</h4></div></div></div><p>
+Squish's <code class="code">bool</code> represents the <span class="emphasis"><em>Squish</em></span> type for a
+bool in the wrapper's C and C++ code.
+</p><p>
+Like the other hidden symbols, to access Python's <code class="function">bool()</code>
+function, one can use it from the package <code class="literal">__builtin__</code>
+(Python 2) or <code class="literal">builtins</code> (Python 3).
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="squish.int"></a>6.14.4.2. Squish's int vs. Python's int</h4></div></div></div><p>
+Squish's <code class="code">int</code> represents the <span class="emphasis"><em>Squish</em></span> type for an
+integer in the wrapper's C and C++ code.
+</p><p>
+Like the other hidden symbols, to access Python's <code class="function">int()</code>
+function one can use it from the package <code class="literal">__builtin__</code> (Python 2) or
+<code class="literal">builtins</code> (Python 3).
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="squish.long"></a>6.14.4.3. Squish's long vs. Python's long</h4></div></div></div><p>
+Squish's <code class="code">long</code> represents the <span class="emphasis"><em>Squish</em></span> type for a
+long in the wrapper's C and C++ code.
+</p><p>
+Like the other hidden symbols, to access Python's <code class="function">long()</code>
+function one can use it from the package <code class="literal">__builtin__</code> (Python
+2) or <code class="literal">builtins</code> (Python 3).
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="squish.object"></a>6.14.4.4. Squish's object vs. Python's object</h4></div></div></div><p>
+<span class="emphasis"><em>Squish</em></span>'s <code class="code">object</code> module has the same name as the base
+class of all Python 2 new-style classes, thus hiding Python's
+<code class="code">object</code> symbol.
+</p><p>
+If you need to use Python 2's <code class="literal">object</code> symbol, you can
+access it from the package <code class="literal">__builtin__</code>.
+</p><p>
+In Python 3 there is no need to do anything
+since we don't explicitly inherit <code class="code">object</code>, and it is
+inherited by default if no other class is specified.
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="squish.type"></a>6.14.4.5. Squish's type() vs. Python's type()</h4></div></div></div><p>
+The Squish <code class="code">type</code> functions are used to simulate
+keyboard input by the user.
+</p><p>
+While Python's built-in
+<code class="code">type</code> function is available from package
+<code class="literal">__builtin__</code> in Python 2, or
+<code class="literal">builtins</code> in Python 3, it is better Python practice to
+use the <code class="code">isinstance</code> function.
+</p></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="import.custom.modules"></a>6.14.5. Importing Custom Python Modules</h3></div></div></div><p>
+If you need to import custom modules that are not in
+<code class="code">sys.path</code> you can make them available either by setting (or
+extending if already set) the <code class="envar">PYTHONPATH</code> environment
+variable with the path or paths to the module or modules you want to
+import, or you can extend <code class="code">sys.path</code> at the start of your
+test scripts like this:
+
+</p><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Python</span><pre class="programlisting">
+import sys
+sys.path.append("my/path")
+</pre></div><p>
+You can then import any module from <code class="code">my/path</code> as normal,
+e.g., <code class="code">import mymodule</code>.
+</p><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Note: Path Separators"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/note.png"></img></td><th align="left">Path Separators</th></tr><tr><td align="left" valign="top"><p>
+Most scripting languages, including Python, understand Unix-style paths
+that use <code class="code">/</code> as a path separator, even on Windows. However,
+if you really want to use Windows-style paths with the <code class="code">\</code>
+path separator, you must either escape them (e.g.,
+<code class="code">"my\\path"</code>) or use a raw string (e.g.,
+<code class="code">r"my\path"</code>).
+</p></td></tr></table></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="squish.funcs.in.py.modules"></a>6.14.6. Using Squish Functions in Python Modules/Packages</h3></div></div></div><p>
+If you create a Python module or package that uses the
+functionality in the <code class="code">squish</code> module, we recommend
+importing the <code class="code">squish</code> module like this...
+</p><pre class="programlisting">
+import squish
+</pre><p>
+...and <span class="emphasis"><em>not</em></span> like this (wildcard import variant):
+</p><pre class="programlisting">
+from squish import *
+</pre><p>This is because the objects (functions, members, classes)
+provided by the <code class="code">squish</code> module depend on the currently
+hooked up application. So if no application is hooked up by the
+time <code class="code">from squish import *</code> is being executed,
+many objects will not be available directly, but one needs to
+access them through the <code class="code">squish</code> module.
+</p><p>
+Consequentially, the objects (functions, members, classes) of the
+<code class="code">squish</code> module must then be accessed through the
+<code class="code">squish</code> module:
+</p><pre class="programlisting">
+import squish
+
+def do_something():
+    squish.activateItem(squish.waitForObject(":Some_Menu"), "File")
+</pre></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="api.python.squishtest"></a>6.14.7.  <code class="code">squishtest</code>: Module for embedding Squish in Python Applications </h3></div></div></div><p> Squish tests in Python can be executed in 3 ways: </p><div class="orderedlist"><ol type="1"><li><p> From the IDE </p></li><li><p> From <span class="application">squishrunner</span> command line</p></li><li><p> From a Python main program that uses
+<code class="code">squishtest</code> module. </p></li></ol></div><p> The <code class="code">squishtest</code> Python module attempts to duplicate the
+functionality of <span class="application">squishrunner</span> by offering the complete
+<a class="xref" href="rgs-squish.html" title="6.3. Squish API">Squish API (Section 6.3)</a>. Members are injected into this module,
+just as they are normally injected into the global namespace of <span class="emphasis"><em>Squish</em></span> test
+suites. Similarly, after the call to <code class="function">startApplication</code> or
+<code class="function">attachToApplication</code>, the appropriate edition-specific APIs
+(e.g. Qt, Mac, Windows, Web, Java) are injected into the module dynamically.
+</p><p> Detailed setup steps, as well as an example Python script, can be
+found in <a class="ulink" href="https://kb.froglogic.com/squish/howto/using-squish-module-python-scripts-applications/" target="_blank">this knowledgebase article</a>. </p></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="rgs-python-documentation"></a>6.14.8. Python Language Documentation</h3></div></div></div><p>
+In addition to the Squish extension API, the full set of Python language
+features and modules is available for scripting. The <a class="ulink" href="http://www.python.org/doc/" target="_blank">Python Documentation</a> page has
+links to the Python documentation for the current and older versions.
+If you prefer books, a good Python 2 book is
+<a class="ulink" href="http://python.net/crew/wesc/cpp/" target="_blank">Core Python
+Programming</a> by Wesley Chun,
+and a good Python 3 book is
+<a class="ulink" href="http://www.qtrac.eu/py3book.html" target="_blank">Programming in
+Python 3</a> by Mark Summerfield.
+--&gt;
+</p></div></div><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" type="text/javascript" src="ScriptingLanguage.js"></script><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format">setScriptingLanguage();</script><div class="navfooter"><hr></hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="rgs-androidconvenience.html">Prev</a> </td><td width="20%" align="center"><a accesskey="u" href="api.man.html">Up</a></td><td width="40%" align="right"> <a accesskey="n" href="rgs-tcl.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">6.13. Android Convenience API </td><td width="20%" align="center"><a accesskey="h" href="index-noframes.html">Home</a></td><td width="40%" align="right" valign="top"> 6.15. Tcl Notes</td></tr></table></div></body>
+<!-- Mirrored from rgs-py.html by HTTrack Website Copier/3.x [XR&CO'2013], Wed, 06 Jul 2022 13:29:00 GMT -->
+</html>

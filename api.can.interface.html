@@ -1,0 +1,337 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<!-- Mirrored from api.can.interface.html by HTTrack Website Copier/3.x [XR&CO'2013], Wed, 06 Jul 2022 13:29:02 GMT -->
+<head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><title>6.21. CAN bus support</title><link rel="stylesheet" href="manual.css" type="text/css"></link><meta name="generator" content="DocBook XSL Stylesheets V1.73.2"></meta><link rel="start" href="https://index-noframes.html" title="Squish Manual"></link><link rel="up" href="https://api.man.html" title="Chapter 6. API Reference Manual"></link><link rel="prev" href="https://api.fmi.interface.html" title="6.20. FMI Interface support"></link><link rel="next" href="https://ref.man.html" title="Chapter 7. Tools Reference Manual"></link><style xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" type="text/css" media="screen">
+        div.toc * { margin-left: 6px; margin-right: auto; max-width: 75em; }
+        div.toc span { margin-left: 0px; }
+        * { margin-left: auto; margin-right: auto; max-width: 75em; }
+        body { margin-left: 6px; margin-right: 6px; }
+        table th { padding: .5ex }
+        table td { padding: .5ex }
+    </style><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format">
+        function keyPress() {
+            var e = window.event;
+            if ( e == undefined ) {
+                return;
+            }
+            /* ### does not properly scroll, yet
+            if ( e.keyCode == 32 ) {
+            var l = document.links;
+            for ( var i = 0; i < l.length; i++ ) {
+                if ( l[i].innerText == "Next" ) {
+                location.href = l[i].href;
+                }
+            }
+            } else
+                */
+                if ( e.keyCode == 0x08 ) {
+            var l = document.links;
+            for ( var i = 0; i < l.length; i++ ) {
+                if ( l[i].innerText == "Prev" ) {
+                location.href = l[i].href;
+                }
+            }
+            }
+        }
+        document.onkeypress = keyPress;
+    </script></head><body><div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="api.can.interface"></a>6.21. CAN bus support</h2></div></div></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><span class="section"><a href="https://api.can.interface.html#api.can.overview">6.21.1. Overview</a></span></dt><dt><span class="section"><a href="https://api.can.interface.html#api.can.deviceinfo">6.21.2. CanBusDeviceInfo class</a></span></dt><dt><span class="section"><a href="https://api.can.interface.html#api.can.canbusdevice">6.21.3. CanBusDevice class</a></span></dt><dt><span class="section"><a href="https://api.can.interface.html#api.can.canbusframe">6.21.4. CanBusFrame class</a></span></dt><dt><span class="section"><a href="https://api.can.interface.html#api.can.canbusframerepeater">6.21.5. CanBusFrameRepeater class</a></span></dt><dt><span class="section"><a href="https://api.can.interface.html#api.can.canbusframereceiver">6.21.6. CanBusFrameReceiver class</a></span></dt><dt><span class="section"><a href="https://api.can.interface.html#api.can.frameschema">6.21.7. CAN frame schema</a></span></dt></dl></div><p>CAN (Controller Area Network) bus is a standard for communication between
+microcontrollers and other devices without a central bus controller. It was
+designed for use in the automotive industry, but it is increasingly adopted in
+other areas as well.</p><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="api.can.overview"></a>6.21.1. Overview</h3></div></div></div><p>
+Squish 6.7 and later allows testing the CAN messages send and received by the
+device running the application. In order to facilitate this, the test setup must
+include a PC with with supported CAN hardware attached and connected to the same
+CAN bus as the tested system, and the corresponding driver package installed.
+</p><div class="mediaobject" align="center"><img src="https://images/can-bus-support-diagram.png" align="middle"></img><div class="caption">Diagram of a Squish CAN bus test setup</div></div><div class="table"><a id="idp54725288"></a><p class="title"><b>Table 6.1. Supported CAN hardware</b></p><div class="table-contents"><table summary="Supported CAN hardware" border="1"><colgroup><col align="left"></col><col align="left"></col><col align="left"></col></colgroup><thead><tr><th align="left">Device vendor</th><th align="left">Driver name</th><th align="left">Used with</th></tr></thead><tbody><tr><td align="left">Generic</td><td align="left"><code class="literal">socketcan</code></td><td align="left">Devices using standard SocketCAN interface. Only available on Linux.
+  </td></tr><tr><td align="left">SYS TEC electronic</td><td align="left"><code class="literal">systeccan</code></td><td align="left">Devices using SYS TEC CAN interface. Only available on Windows.</td></tr><tr><td align="left">PEAK-System</td><td align="left"><code class="literal">peakcan</code></td><td align="left">Devices using PEAK CAN interface.</td></tr><tr><td align="left">MHS Elektronik</td><td align="left"><code class="literal">tinycan</code></td><td align="left">Devices using MHS CAN interface.</td></tr><tr><td align="left">Vector Informatik</td><td align="left"><code class="literal">vectorcan</code></td><td align="left">Devices using Vector CAN interface. Only available on Windows.</td></tr></tbody></table></div></div><br class="table-break"></br><p>
+CAN bus types are available only in the application context created with the
+<a class="xref" href="https://api.can.interface.html#startCAN-function"><code class="function">startCAN</code></a>.
+</p><div class="funcsynopsis"><a id="startCAN-function"></a><p><code class="funcdef">ApplicationContext <b class="fsfunc">startCAN</b>(</code><var class="pdparam">options</var><code>)</code>;</p></div><div class="funcsynopsis"><p><code class="funcdef">ApplicationContext <b class="fsfunc">startCAN</b>(</code><var class="pdparam">options</var>, <var class="pdparam">host</var><code>)</code>;</p></div><div class="funcsynopsis"><p><code class="funcdef">ApplicationContext <b class="fsfunc">startCAN</b>(</code><var class="pdparam">options</var>, <var class="pdparam">host</var>, <var class="pdparam">port</var><code>)</code>;</p></div><div class="funcsynopsis"><p><code class="funcdef">ApplicationContext <b class="fsfunc">startCAN</b>(</code><var class="pdparam">options</var>, <var class="pdparam">host</var>, <var class="pdparam">port</var>, <var class="pdparam">timeoutSecs</var><code>)</code>;</p></div><p>
+Creates, activates and returns a new application context which provides types
+and utilities related to CAN bus. All access to CAN objects need to be done
+while that context is active.
+</p><p>
+The first argument is a dictionary which allows specifying additional options
+for the new context. Currently the only supported key is <code class="code">schema</code>.
+If provided, the associated value should be a valid
+<a class="xref" href="https://api.can.interface.html#api.can.frameschema" title="6.21.7. CAN frame schema">CAN frame schema (Section 6.21.7)</a>.
+</p><p>
+Optionally, as seconds and third parameters a <em class="parameter"><code>host</code></em>
+and <em class="parameter"><code>port</code></em> can be specified. If these parameters
+are used, instead of connecting to the default host and port (as
+specified in the <span class="application">Squish IDE</span>'s settings or on <span class="application">squishrunner</span>'s command line), a
+connection to the <span class="application">squishserver</span> on the specified host and listening to
+the specified port will be established.
+</p><p>
+The fourth parameter, <em class="parameter"><code>timeoutSecs</code></em> (an integer
+number of seconds) can also be specified. This tells <span class="emphasis"><em>Squish</em></span> how long it
+should be prepared to wait for the context to initialize before throwing
+an error. If specified, this value overrides <span class="application">squishrunner</span>'s default
+timeout. If not specified the <span class="application">squishserver</span>'s default is used—this is 20
+seconds, unless it has been changed; see
+<a class="xref" href="https://ide.dialogs.html#ide.squish.server.settings.dialog" title="8.3.22. Squish Server Settings dialog">Squish Server Settings dialog (Section 8.3.22)</a>.
+</p><p>
+If you want to specify a timeout, but don't want to change the host or
+port, you can do so by passing an empty string as the host (which will
+make <span class="emphasis"><em>Squish</em></span> use the configured host—<code class="code">localhost</code> by
+default), and by passing -1 as the port.
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="api.can.deviceinfo"></a>6.21.2. CanBusDeviceInfo class</h3></div></div></div><a id="CanBusDeviceInfo.name"></a>
+<span class="property">CanBusDeviceInfo.name</span><p>
+The device name.
+</p><a id="CanBusDeviceInfo.hasFlexibleDataRate"></a>
+<span class="property">CanBusDeviceInfo.hasFlexibleDataRate</span><p>
+A boolean which indicates whether the device supports flexible data rate.
+</p><a id="CanBusDeviceInfo.isVirtual"></a>
+<span class="property">CanBusDeviceInfo.isVirtual</span><p>
+A boolean which indicates whether the device is virtual.
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="api.can.canbusdevice"></a>6.21.3. CanBusDevice class</h3></div></div></div><p>
+The <code class="classname">CanBusDevice</code> class is the core of the <span class="emphasis"><em>Squish</em></span> CAN
+bus support. It represents a connection to a specific CAN device.
+</p><div class="funcsynopsis"><a id="CanBusDevice-function"></a><p><code class="funcdef">CanBusDevice <b class="fsfunc">CanBusDevice</b>(</code><var class="pdparam">driver</var>, <var class="pdparam">device</var><code>)</code>;</p></div><p>
+This constructor opens a connection to the CAN hardware using specified
+<em class="parameter"><code>driver</code></em> and <em class="parameter"><code>device</code></em>.
+</p><div class="funcsynopsis"><a id="CanBusDevice.pluginNames-function"></a><p><code class="funcdef">List <b class="fsfunc">CanBusDevice.pluginNames</b>(</code><code>)</code>;</p></div><p>
+This static method returns the list of driver names supported on current
+platform.
+</p><div class="funcsynopsis"><a id="CanBusDevice.availableDevices-function"></a><p><code class="funcdef">List <b class="fsfunc">CanBusDevice.availableDevices</b>(</code><var class="pdparam">driver</var><code>)</code>;</p></div><p>
+This static method enumerates the available devices using the specified
+<em class="parameter"><code>driver</code></em> and returns the list of
+<a class="xref" href="https://api.can.interface.html#api.can.deviceinfo" title="6.21.2. CanBusDeviceInfo class">CanBusDeviceInfo</a> objects.
+</p><div class="funcsynopsis"><a id="CanBusDevice.readFrame-function"></a><p><code class="funcdef">CanBusFrame <b class="fsfunc">CanBusDevice.readFrame</b>(</code><var class="pdparam">timeout</var><code>)</code>;</p></div><p>
+This method waits until a new CAN frame is received and returns is a CanBusFrame
+object. If no frame is received within the specified
+<em class="parameter"><code>timeout</code></em>, an exception is thrown.
+</p><div class="funcsynopsis"><a id="CanBusDevice.readAllFrames-function"></a><p><code class="funcdef">List <b class="fsfunc">CanBusDevice.readAllFrames</b>(</code><code>)</code>;</p></div><p>
+Returns all the frames accumulates in the input buffer of the CAN device as a
+list of CanBusFrame objects.
+</p><div class="funcsynopsis"><a id="CanBusDevice.writeFrame-function"></a><p><code class="funcdef"><b class="fsfunc">CanBusDevice.writeFrame</b>(</code><var class="pdparam">frame</var><code>)</code>;</p></div><p>
+Schedules the <em class="parameter"><code>frame</code></em> to be sent to the CAN bus. The frame
+will be sent as soon as possible, but it happen some time after this method
+returns.
+</p><div class="funcsynopsis"><a id="CanBusDevice.disconnectDevice-function"></a><p><code class="funcdef"><b class="fsfunc">CanBusDevice.disconnectDevice</b>(</code><code>)</code>;</p></div><p>
+Temporarily disconnects from the device. All frames which arrive after this call
+will not be added to the internal queue and will not be available using the
+<a class="xref" href="https://api.can.interface.html#CanBusDevice.readFrame-function"><code class="function">CanBusDevice.readFrame</code></a> and
+<a class="xref" href="https://api.can.interface.html#CanBusDevice.readAllFrames-function"><code class="function">CanBusDevice.readAllFrames</code></a> methods.
+</p><div class="funcsynopsis"><a id="CanBusDevice.connectDevice-function"></a><p><code class="funcdef"><b class="fsfunc">CanBusDevice.connectDevice</b>(</code><code>)</code>;</p></div><p>
+Restores the connection to the device which was previously suspended using the
+<a class="xref" href="https://api.can.interface.html#CanBusDevice.disconnectDevice-function"><code class="function">CanBusDevice.disconnectDevice</code></a> method.
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="api.can.canbusframe"></a>6.21.4. CanBusFrame class</h3></div></div></div><p>
+The <code class="classname">CanBusFrame</code> object represents a single CAN frame.
+
+</p><a id="CanBusFrame.frameId"></a>
+<span class="property">CanBusFrame.frameId</span><p>
+The ID of the frame.
+</p><a id="CanBusFrame.isValid"></a>
+<span class="property">CanBusFrame.isValid</span><p>
+A boolean which specifies whether the frame is valid.
+</p><a id="CanBusFrame.frameType"></a>
+<span class="property">CanBusFrame.frameType</span><p>
+The type of the frame.
+
+</p><a id="CanBusFrame.hexPayload"></a>
+<span class="property">CanBusFrame.hexPayload</span><p>
+The payload of the frame as a hexadecimal string.
+</p><a id="CanBusFrame.extendedFrameFormat"></a>
+<span class="property">CanBusFrame.extendedFrameFormat</span><p>
+A boolean which indicates whether the frame uses the extended 29-bit frame ID.
+</p><a id="CanBusFrame.bitrateSwitch"></a>
+<span class="property">CanBusFrame.bitrateSwitch</span><p>
+A boolean which indicates if the frame uses the higher bitrate for transmission
+on CAN hardware which supports that feature.
+</p><div class="funcsynopsis"><a id="CanBusFrame-function"></a><p><code class="funcdef">CanBusFrame <b class="fsfunc">CanBusFrame</b>(</code><code>)</code>;</p></div><p>
+This constructor creates a new invalid frame.
+</p><div class="funcsynopsis"><p><code class="funcdef">CanBusFrame <b class="fsfunc">CanBusFrame</b>(</code><var class="pdparam">frameId</var><code>)</code>;</p></div><div class="funcsynopsis"><p><code class="funcdef">CanBusFrame <b class="fsfunc">CanBusFrame</b>(</code><var class="pdparam">frameId</var>, <var class="pdparam">payload</var><code>)</code>;</p></div><p>
+These constructors create a new frame with the specified ID. Optionally, the
+data payload for the frame can be specified in form of a hexadecimal string.
+</p><div class="funcsynopsis"><a id="CanBusFrame.toString-function"></a><p><code class="funcdef">String <b class="fsfunc">CanBusFrame.toString()</b>(</code><code>)</code>;</p></div><p>
+This method returns a human readable description of the frame which includes the
+frame ID and the binary payload.
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="api.can.canbusframerepeater"></a>6.21.5. CanBusFrameRepeater class</h3></div></div></div><p>
+The <code class="classname">CanBusFrameRepeater</code> object sends the specified frame
+to the CAN bus repeatedly, in configurable intervals. It can be used to simulate
+CAN devices which send their frames in such a manner.
+</p><a id="CanBusFrameRepeater.device"></a>
+<span class="property">CanBusFrameRepeater.device</span><p>
+The <a class="xref" href="https://api.can.interface.html#api.can.canbusdevice" title="6.21.3. CanBusDevice class">CanBusDevice</a>
+object used to send frames to the bus. This property cannot be modified.
+</p><a id="CanBusFrameRepeater.interval"></a>
+<span class="property">CanBusFrame.interval</span><p>
+The interval between CAN frame is sent to the bus, in milliseconds. The default
+interval is 500ms.
+</p><a id="CanBusFrameRepeater.enabled"></a>
+<span class="property">CanBusFrame.enabled</span><p>
+A boolean which indicates whether the repeater should send its frame to the bus.
+It can be used to temporarily suspend its operation.
+</p><div class="funcsynopsis"><a id="CanBusFrameRepeater-function"></a><p><code class="funcdef">
+    CanBusFrameRepeater <b class="fsfunc">CanBusFrameRepeater</b>
+  (</code><var class="pdparam">device</var><code>)</code>;</p></div><div class="funcsynopsis"><p><code class="funcdef">
+    CanBusFrameRepeater <b class="fsfunc">CanBusFrameRepeater</b>
+  (</code><var class="pdparam">device</var>, <var class="pdparam">frame</var><code>)</code>;</p></div><p>
+These constructors create a new frame repeater for specified device. Optionally,
+the frame to send out can be specified as well.
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="api.can.canbusframereceiver"></a>6.21.6. CanBusFrameReceiver class</h3></div></div></div><p>
+The <code class="classname">CanBusFrameReceiver</code> object receives incoming CAN
+frames and keeps a history of received frames. The maximal number of received
+frames can be configured.
+</p><p>
+Once a receiver has been created for a
+<a class="xref" href="https://api.can.interface.html#api.can.canbusdevice" title="6.21.3. CanBusDevice class">CanBusDevice</a> object,
+frames will not be available using the
+<a class="xref" href="https://api.can.interface.html#CanBusDevice.readFrame-function"><code class="function">CanBusDevice.readFrame</code></a> and
+<a class="xref" href="https://api.can.interface.html#CanBusDevice.readAllFrames-function"><code class="function">CanBusDevice.readAllFrames</code></a> methods. Once created,
+the receiver takes over the task of managing incoming frames.
+</p><a id="CanBusFrameReceiver.device"></a>
+<span class="property">CanBusFrameReceiver.device</span><p>
+The <a class="xref" href="https://api.can.interface.html#api.can.canbusdevice" title="6.21.3. CanBusDevice class">CanBusDevice</a>
+object used to receive frames. This property cannot be modified.
+</p><div class="funcsynopsis"><a id="CanBusFrameReceiver-function"></a><p><code class="funcdef">
+    CanBusFrameReceiver <b class="fsfunc">CanBusFrameReceiver</b>
+  (</code><var class="pdparam">device</var><code>)</code>;</p></div><p>
+Creates a new <code class="classname">CanBusFrameReceiver</code> instance for the
+specified
+<a class="xref" href="https://api.can.interface.html#api.can.canbusdevice" title="6.21.3. CanBusDevice class">CanBusDevice</a>.
+</p><div class="funcsynopsis"><p><code class="funcdef">
+    CanBusFrameReceiver <b class="fsfunc">CanBusFrameReceiver</b>
+  (</code><var class="pdparam">driver</var>, <var class="pdparam">device</var><code>)</code>;</p></div><p>
+Creates a new <a class="xref" href="https://api.can.interface.html#api.can.canbusdevice" title="6.21.3. CanBusDevice class">CanBusDevice</a>
+object for the specified <em class="parameter"><code>driver</code></em> and
+<em class="parameter"><code>device</code></em> name and a new
+<code class="classname">CanBusFrameReceiver</code> instance for that device.
+</p><div class="funcsynopsis"><a id="CanBusFrameReceiver.setHistorySize-function"></a><p><code class="funcdef"><b class="fsfunc">CanBusFrameReceiver.setHistorySize</b>(</code><var class="pdparam">frameId</var>, <var class="pdparam">length</var><code>)</code>;</p></div><p>
+Changes the history length for the specified frame ID to the specified value.
+</p><div class="funcsynopsis"><a id="CanBusFrameReceiver.frameCount-function"></a><p><code class="funcdef">Integer <b class="fsfunc">CanBusFrameReceiver.frameCount</b>(</code><var class="pdparam">frameId</var><code>)</code>;</p></div><p>
+Returns the number of frames with the specified ID which are currently
+accumulated in the receiver.
+</p><div class="funcsynopsis"><a id="CanBusFrameReceiver.latestFrame-function"></a><p><code class="funcdef">
+    CanBusFrame <b class="fsfunc">CanBusFrameReceiver.latestFrame</b>
+  (</code><var class="pdparam">frameId</var><code>)</code>;</p></div><p>
+Retrieves the latest captured frame with the specified ID.
+</p><div class="funcsynopsis"><a id="CanBusFrameReceiver.pastFrame-function"></a><p><code class="funcdef">
+    CanBusFrame <b class="fsfunc">CanBusFrameReceiver.pastFrame</b>
+  (</code><var class="pdparam">frameId</var>, <var class="pdparam">index</var><code>)</code>;</p></div><p>
+Retrieves one of the past frames accumulated in the receiver. The index must lie
+in the <code class="literal">[0, frameCount())</code> range, with <code class="literal">0</code>
+being the latest frame received.
+</p><div class="funcsynopsis"><a id="CanBusFrameReceiver.pastFrames-function"></a><p><code class="funcdef">
+    CanBusFrame <b class="fsfunc">CanBusFrameReceiver.pastFrames</b>
+  (</code><var class="pdparam">frameId</var><code>)</code>;</p></div><p>
+Retrieves all of the past frames accumulated in the receiver.
+</p><div class="funcsynopsis"><a id="CanBusFrameReceiver.clearHistory-function"></a><p><code class="funcdef">
+    <b class="fsfunc">CanBusFrameReceiver.clearHistory</b>
+  (</code><var class="pdparam">frameId</var><code>)</code>;</p></div><p>
+Clear all the frames with the specified ID accumulated in the receiver.
+</p><div class="funcsynopsis"><a id="CanBusFrameReceiver.waitForFrame-function"></a><p><code class="funcdef">
+    <b class="fsfunc">CanBusFrameReceiver.waitForFrame</b>
+  (</code><var class="pdparam">filter</var>, <var class="pdparam">timeout</var><code>)</code>;</p></div><p>
+Waits for frame matching the specified filter and returns it. The
+<em class="parameter"><code>filter</code></em> must be a dictionary with the
+<em class="parameter"><code>frameId</code></em> field. Additionally, for known frame types the
+dictionary can contain expected values for the frame fields. If no frame
+matching the filter arrives until the timeout elapses, an exception is raised.
+</p><p>
+The <em class="parameter"><code>timeout</code></em> argument is specified in milliseconds. The
+timeout is optional, the default value is 30 seconds.
+</p><p>
+In order to avoid concurrency issues, the frames already accumulated in the
+receiver are considered first. This may lead to a past frame being found by
+mistake, in order to avoid that the receiver buffer may need to be cleared
+with the <a class="xref" href="https://api.can.interface.html#CanBusFrameReceiver.clearHistory-function"><code class="function">CanBusFrameReceiver.clearHistory</code></a> method.
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="api.can.frameschema"></a>6.21.7. CAN frame schema</h3></div></div></div><p>
+The contents of CAN frame payload is not standardized. Because of that, Squish
+cannot offer any insight into the contents of the payload buffer beyond its
+hexadecimal representation. Since it is very inconvenient to access payload
+members this way, the <a class="xref" href="https://api.can.interface.html#startCAN-function"><code class="function">startCAN</code></a> can accept a schema
+which defines the contents of frame payload based on the frame ID.
+</p><p>
+The CAN schema is an XML file with a <code class="code">canschema</code> root element and
+<code class="code">version="1"</code> attribute. The frame contents are defined in a
+<code class="code">frames</code> element. Each frame type is defined as a <code class="code">frame</code>
+element. Each <code class="code">frame</code> element must have <code class="code">id</code> and
+<code class="code">name</code> attributes, which contain the numeric frame ID and the
+name for the frame type, respectively. Each <code class="code">frame</code> should contain
+a <code class="code">fields</code> element which defines known fields within the frame.
+Each <code class="code">field</code> element defines a single field. The attributes of the
+<code class="code">field</code> element can be:
+</p><div class="itemizedlist"><ul type="disc" compact><li><p><code class="code">name</code> — the name of the field. This attribute
+is mandatory;</p></li><li><p><code class="code">type</code> — the type of the field. Currently the
+supported types are <code class="literal">integral</code> and <code class="literal">floating</code>.
+The default value for this field is <code class="literal">integral</code>.
+</p></li><li><p><code class="code">signed</code> — a boolean which indicates whether
+the integral type is signed. The default value for this field is
+<code class="literal">false</code>. This attribute is ignored for field types other than
+<code class="literal">integral</code>.</p></li><li><p><code class="code">size</code> — The size of the field in bits.
+Integral fields can specify any size between 1 and 64. Floating point fields
+can be either 32 or 64-bit long. The default value for this field is
+<code class="literal">32</code>.</p></li></ul></div><p>
+For each frame type in the schema Squish will create a
+<a class="xref" href="https://api.can.interface.html#api.can.canbusframe" title="6.21.4. CanBusFrame class">CanBusFrame</a> subclass
+with the specified name and <code class="literal">Frame</code> suffix. The frame class
+defines payload fields as frame object properties. Additionally, the static
+field called <code class="code">frameId</code> is available on the type for easy access.
+</p><p>
+The following file demonstrates an example CAN schema.
+</p><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage"></span><pre class="programlisting">
+&lt;canschema version="1"&gt;
+  &lt;frames&gt;
+    &lt;frame id="0x100" name="Thermometer"&gt;
+      &lt;fields&gt;
+        &lt;field name="temperature" type="floating" size="32"/&gt;
+      &lt;/fields&gt;
+    &lt;/frame&gt;
+    &lt;frame id="0x200" name="AirConditioning"&gt;
+      &lt;fields&gt;
+        &lt;field name="targetTemp" type="integral" size="32"/&gt;
+        &lt;field name="cooler" type="integral" size="1"/&gt;
+        &lt;field name="heater" type="integral" size="1"/&gt;
+      &lt;/fields&gt;
+    &lt;/frame&gt;
+  &lt;/frames&gt;
+&lt;/canschema&gt;
+</pre></div><p>
+Using the above schema, the fields defined for the frame type can be accessed
+as follows:
+</p><div xmlns="" class="scriptlang"><form><select name="scriptlangcombo" onchange="javascript:changeScriptingLanguage(this)" onclick="javascript:changeScriptingLanguage(this)"><option value="all" selected>Show All</option><option value="JavaScript">Show JavaScript</option><option value="Perl">Show Perl</option><option value="Python">Show Python</option><option value="Ruby">Show Ruby</option><option value="Tcl">Show Tcl</option></select></form></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">JavaScript</span><pre class="programlisting">
+var th = new ThermometerFrame();
+th.temperature = 10.1;
+test.log( th.hexPayload ); // Logs "4121999a"
+
+test.log( AirConditioningFrame.frameId ); // Logs "512"
+var ac = new AirConditioningFrame({targetTemp: 10, cooler: 0, heater: 1});
+test.log( ac.targetTemp ); // Logs "10"
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Python</span><pre class="programlisting">
+th = ThermometerFrame();
+th.temperature = 10.1;
+test.log( th.hexPayload ); # Logs "4121999a"
+
+test.log( AirConditioningFrame.frameId ); # Logs "512"
+ac = AirConditioningFrame({"targetTemp": 10, "cooler": 0, "heater": 1});
+test.log( ac.targetTemp ); # Logs "10"
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Perl</span><pre class="programlisting">
+my $th = Squish::ThermometerFrame-&gt;new();
+$th-&gt;temperature = 10.1;
+test::log( $th-&gt;hexPayload ); # Logs "4121999a"
+
+test::log( Squish::AirConditioningFrame-&gt;frameId ); # Logs "512"
+my %args = ( targetTemp =&gt; 10, cooler =&gt; 0, heater =&gt; 1);
+my $ac = Squish::AirConditioningFrame-&gt;new(%args);
+test::log( $ac-&gt;targetTemp ); # Logs "10"
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Ruby</span><pre class="programlisting">
+th = ThermometerFrame.new();
+th.temperature = 10.1;
+Test.log( th.hexPayload ); # Logs "4121999a"
+
+Test.log( AirConditioningFrame.frameId ); # Logs "512"
+ac = AirConditioningFrame.new(( "targetTemp" =&gt; 10, "cooler" =&gt; 0, "heater" =&gt; 1));
+Test.log( ac.targetTemp ); # Logs "10"
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Tcl</span><pre class="programlisting">
+set th [ThermometerFrame new]
+ThermometerFrame set th temperature 10.1
+test log [ThermometerFrame get hexPayload $th] # Logs "4121999a"
+
+test log [AirConditioningFrame get frameId] # Logs "512"
+set ac [ AirConditioningFrame new (targetTemp, 10, cooler, 0, heater, 1) ]
+test log [ AirConditioningFrame get targetTemp $ac ] # Logs "10"
+</pre></div></div></div><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" type="text/javascript" src="ScriptingLanguage.js"></script><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format">setScriptingLanguage();</script><div class="navfooter"><hr></hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="https://api.fmi.interface.html">Prev</a> </td><td width="20%" align="center"><a accesskey="u" href="https://api.man.html">Up</a></td><td width="40%" align="right"> <a accesskey="n" href="https://ref.man.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">6.20. FMI Interface support </td><td width="20%" align="center"><a accesskey="h" href="https://index-noframes.html">Home</a></td><td width="40%" align="right" valign="top"> Chapter 7. Tools Reference Manual</td></tr></table></div></body>
+<!-- Mirrored from api.can.interface.html by HTTrack Website Copier/3.x [XR&CO'2013], Wed, 06 Jul 2022 13:29:02 GMT -->
+</html>

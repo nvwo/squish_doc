@@ -1,0 +1,104 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<!-- Mirrored from ao-qc.html by HTTrack Website Copier/3.x [XR&CO'2013], Wed, 06 Jul 2022 13:29:01 GMT -->
+<head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><title>9.6. Quality Center™ Integration</title><link rel="stylesheet" href="manual.css" type="text/css"></link><meta name="generator" content="DocBook XSL Stylesheets V1.73.2"></meta><link rel="start" href="https://index-noframes.html" title="Squish Manual"></link><link rel="up" href="https://addons.html" title="Chapter 9. Add-Ons Reference Manual"></link><link rel="prev" href="https://ao-teamcity.html" title="9.5. JetBrains TeamCity integration"></link><link rel="next" href="https://ao-rqmintegration.html" title="9.7. IBM Rational Quality Manager integration"></link><style xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" type="text/css" media="screen">
+        div.toc * { margin-left: 6px; margin-right: auto; max-width: 75em; }
+        div.toc span { margin-left: 0px; }
+        * { margin-left: auto; margin-right: auto; max-width: 75em; }
+        body { margin-left: 6px; margin-right: 6px; }
+        table th { padding: .5ex }
+        table td { padding: .5ex }
+    </style><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format">
+        function keyPress() {
+            var e = window.event;
+            if ( e == undefined ) {
+                return;
+            }
+            /* ### does not properly scroll, yet
+            if ( e.keyCode == 32 ) {
+            var l = document.links;
+            for ( var i = 0; i < l.length; i++ ) {
+                if ( l[i].innerText == "Next" ) {
+                location.href = l[i].href;
+                }
+            }
+            } else
+                */
+                if ( e.keyCode == 0x08 ) {
+            var l = document.links;
+            for ( var i = 0; i < l.length; i++ ) {
+                if ( l[i].innerText == "Prev" ) {
+                location.href = l[i].href;
+                }
+            }
+            }
+        }
+        document.onkeypress = keyPress;
+    </script></head><body><div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="ao-qc"></a>9.6. <span class="trademark">Quality Center</span>™ Integration</h2></div></div></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><span class="section"><a href="https://ao-qc.html#book-qc-integration-definitions">9.6.1. Definitions</a></span></dt><dt><span class="section"><a href="https://ao-qc.html#book-qc-integration-creation">9.6.2. Creating the <acronym class="acronym">VAPI-XP-TEST</acronym> in <span class="trademark">Quality Center</span>™</a></span></dt><dt><span class="section"><a href="https://ao-qc.html#book-qc-integration-prepare">9.6.3. Preparing the test instances</a></span></dt><dt><span class="section"><a href="https://ao-qc.html#book-qc-integration-report">9.6.4. Test report</a></span></dt></dl></div><p>
+The integration with <span class="trademark">Quality Center</span>™, formerly known as <span class="trademark">HP Quality Center</span>™, is implemented via the
+use of VAPI-XP test, for which we are providing a (VBScript) test script
+template that:
+</p><div class="itemizedlist"><ul type="disc"><li><p>Use the test instance parameters to locate Squish and the test suite to run,</p></li><li><p>Start <span class="application">squishserver</span>,</p></li><li><p>Run <span class="emphasis"><em>Squish</em></span> test suite,</p></li><li><p>Upload the text test result,</p></li><li><p>Stop <span class="application">squishserver</span>.</p></li></ul></div><p>
+This covers the basic use of <span class="emphasis"><em>Squish</em></span>, however the template can and should be
+updated as the user sees fit. The test script template can be downloaded here:
+<a class="ulink" href="https://download.froglogic.com/public/script.vbs" target="_blank"> script.vbs </a>
+</p><p>
+We are describing only a basic use of <span class="trademark">Quality Center</span>™, some more advanced
+techniques/use can be found in the official documentation:
+<a class="ulink" href="https://admhelp.microfocus.com/alm/en/12.60/online_help/Content/alm_ug.htm" target="_blank">Micro Focus documentation</a>
+</p><p>
+The following sections will cover the creation of said test in <span class="trademark">Quality Center</span>™, how
+to prepare test instances, and what is reported.
+</p><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="book-qc-integration-definitions"></a>9.6.1. Definitions</h3></div></div></div><p>
+Let us first define some of the term that will be use in later sections.
+</p><p>
+The "Test Plan" module contains what is called a test plan tree. This test plan
+tree contains one or more folders, called test subjects, that in turn contain
+one or more tests.
+</p><p>
+The "Test Lab" module contains what is called "Test Set". Each test set can be
+filled with one or more instances (occurrences) of test(s) from the test plan
+tree.
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="book-qc-integration-creation"></a>9.6.2. Creating the <acronym class="acronym">VAPI-XP-TEST</acronym> in <span class="trademark">Quality Center</span>™</h3></div></div></div><div class="orderedlist"><ol type="1"><li><p>
+Head to the "Test Plan" area to create a new test (you might also want to
+create a new test subject),
+</p></li><li><p>
+Enter a name and select <acronym class="acronym">VAPI-XP-TEST</acronym> as type of the new test,
+</p></li><li><p>
+The default value in the newly opened wizard doesn't need to be modified and
+pressing 'Finish' will create the wanted base test (Default values are: <acronym class="acronym">VBScript</acronym>
+as script language and <acronym class="acronym">COM/DCOM</acronym> Server Test as test type ),
+</p></li><li><p>
+Copy the content of our template over the current content of the "Test script"
+tab of the new test,
+</p><div class="screenshot"><div class="mediaobject" align="center"><img src="https://images/qcPlugin_script.png" align="middle"></img><div class="caption"><p>Copy template test script</p></div></div></div></li><li><p>
+Add the following parameters in the "Parameters" tab:
+</p><div class="itemizedlist"><ul type="disc"><li><p>PathToSquish</p></li><li><p>PathToSuite</p></li><li><p>TestCasesToExecute</p></li></ul></div><div class="screenshot"><div class="mediaobject" align="center"><img src="https://images/qcPlugin_create_parameters.png" align="middle"></img><div class="caption"><p>Create test parameters</p></div></div></div><p>
+	You can already set a default value for some of these parameters if that makes
+	sense. For example, the Squish folder path could be the same on all the
+	machines that will run the test.
+</p></li></ol></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="book-qc-integration-prepare"></a>9.6.3. Preparing the test instances</h3></div></div></div><p>
+Now that the test is created in the test plan tree, we can go ahead and add a
+"test instance" for each Squish test suite that we want to run.
+</p><div class="orderedlist"><ol type="1"><li><p>
+Head to the "Test Lab" area,
+</p></li><li><p>
+Add an instance of our test in a test set,
+</p><div class="screenshot"><div class="mediaobject" align="center"><img src="https://images/qcPlugin_instance.png" align="middle"></img><div class="caption"><p>Add a new instance of the test</p></div></div></div></li><li><p>
+Open the Test instance details and update the real parameters values in the "Execution Settings",
+</p><div class="screenshot"><div class="mediaobject" align="center"><img src="https://images/qcPlugin_instance_parameters.png" align="middle"></img><div class="caption"><p>Setting real parameters value</p></div></div></div></li><li><p>
+Repeat previous steps for each Squish test suite that need to be ran.
+</p></li></ol></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="book-qc-integration-report"></a>9.6.4. Test report</h3></div></div></div><p>
+The proposed test script is reporting the failures/pass of the major steps:
+</p><div class="itemizedlist"><ul type="disc"><li><p>
+Whether <span class="application">squishserver</span>/<span class="application">squishrunner</span> could be found in <code class="filename">"PathToSquish"\bin</code>,
+</p></li><li><p>
+Whether <code class="filename">suite.conf</code> could be found in <code class="filename">"PathToSuite"</code>,
+</p></li><li><p>
+Whether either all tests successfully passed or one of them failed.
+</p></li></ul></div><div class="screenshot"><div class="mediaobject" align="center"><img src="https://images/qcPlugin_report.png" align="middle"></img><div class="caption"><p>Test report</p></div></div></div><p>
+In addition to these steps a text version of the test result (output of
+"--reportgen stdout") is uploaded as attachment to the test execution in <span class="trademark">Quality Center</span>™.
+</p></div></div><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" type="text/javascript" src="ScriptingLanguage.js"></script><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format">setScriptingLanguage();</script><div class="navfooter"><hr></hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="https://ao-teamcity.html">Prev</a> </td><td width="20%" align="center"><a accesskey="u" href="https://addons.html">Up</a></td><td width="40%" align="right"> <a accesskey="n" href="https://ao-rqmintegration.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">9.5. JetBrains TeamCity integration </td><td width="20%" align="center"><a accesskey="h" href="https://index-noframes.html">Home</a></td><td width="40%" align="right" valign="top"> 9.7. IBM Rational Quality Manager integration</td></tr></table></div></body>
+<!-- Mirrored from ao-qc.html by HTTrack Website Copier/3.x [XR&CO'2013], Wed, 06 Jul 2022 13:29:01 GMT -->
+</html>

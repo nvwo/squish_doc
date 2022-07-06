@@ -1,0 +1,57 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <base xmlns:fo="http://www.w3.org/1999/XSL/Format" target="body">
+    <title>froglogic Squish Manual</title>
+    <link rel="stylesheet" href="manual.css" type="text/css"/>
+    <link rel="shortcut icon" href="images/favicon.ico"/>
+    <script type="text/javascript" src="toc-content.js"></script>
+    <script type="text/javascript" src="index.js"></script>
+    <script type="text/javascript" src="toc-and-search.js"></script>
+</head>
+
+<body onload="tocAndSearchInitOnLoad()">
+
+    <div style="background-image:url(images/header_left.svg);left:0;top:0;height:70;width:220;position:absolute;">
+        <a href='https://www.froglogic.com'><img border='0' src='images/header_left.svg'/></a>
+    </div>
+    <div style="background-image:url(images/header_mid.svg);left:220px;top:0px;height:70px;right:178px;position:absolute;background-repeat:repeat-x;">
+        <table cellpadding='0' cellspacing='0' border='0' height="100%" width="100%">
+            <tr><td id='toc-breadcrumbs' valign="bottom" width='100%'></td></tr>
+        </table>
+    </div>
+    <div style="background-image:url(images/header_right.svg);top:0px;height:70px;right:0px;width:178px;position:absolute;">
+    </div>
+
+    <div style="left:0;top:70;width:25%;bottom:20;position:absolute;overflow-y:auto;margin:0;" id="toc-container">
+        <div id="toc-and-search-headings" style="margin:5;">
+            <span id="heading-table-of-contents" target="_self" onclick="setTOCDIVVisible()" style="cursor:pointer;">Table of Contents</span>
+            |
+            <span id="heading-search" target="_self" onclick="setSearchDIVVisible()" style="cursor:pointer;">Search</span>
+            <span id="toc-close" target="_self" onclick="setTOCVisble(false)" style="cursor:pointer;font-family:sans-serif;float:right;margin-right:0;">X</span>
+        </div>
+        <hr>
+        <div id="toc-and-search-div-inner">
+            <div id="search-div">
+                <form action="#" onsubmit="return false;">
+                    Keywords: <input type="text" id="searchEdit" onkeyup="updateSearch()" autocomplete="off"/>
+                </form>
+                <hr size="1"/>
+                <div id="searchResults"></div>
+            </div>
+            <div id="toc-div" style="margin:5;"></div>
+        </div>
+    </div>
+    <div id="toc-open" style="display:none;position:absolute;left:0;top:70;width:2em;bottom:20;margin:2;">
+        <span onclick="setTOCVisble(true)" style="color:rgba(0,0,0,0.3);cursor:pointer;font-family:sans-serif;font-size:2em;"><b>≡</b></span>
+    </div>
+    <div id="output" style="background:white;left:25%;top:70;right:0;bottom:20;position:absolute;margin:0;border-left:1px solid gray;">
+        <iframe height='100%' src="book-about.html" name="body" width='100%' frameborder="0"></iframe>
+    </div>
+    <div style="left:0;height:20;right:0;bottom:0;position:absolute;" class="footer">
+        Copyright &#169; 2022
+        <em><a class="footer" href='https://www.qt.io/product/testing-tools'>The Qt Company Ltd.</a></em>&nbsp;-&nbsp;
+        <a class="footer" href='mailto:contact@froglogic.com'>contact@froglogic.com</a>
+    </div>
+</body>
+</html>

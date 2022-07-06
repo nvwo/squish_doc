@@ -1,0 +1,517 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<!-- Mirrored from ug-vps.html by HTTrack Website Copier/3.x [XR&CO'2013], Wed, 06 Jul 2022 13:29:00 GMT -->
+<head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><title>5.22. How to Create and Use Verification Points</title><link rel="stylesheet" href="manual.css" type="text/css"></link><meta name="generator" content="DocBook XSL Stylesheets V1.73.2"></meta><link rel="start" href="index-noframes.html" title="Squish Manual"></link><link rel="up" href="users-guide.html" title="Chapter 5. User Guide"></link><link rel="prev" href="ug-editdebug.html" title="5.21. How to Edit and Debug Test Scripts"></link><link rel="next" href="ug-shareddata.html" title="5.23. How to Create and Use Shared Data and Shared Scripts"></link><style xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" type="text/css" media="screen">
+        div.toc * { margin-left: 6px; margin-right: auto; max-width: 75em; }
+        div.toc span { margin-left: 0px; }
+        * { margin-left: auto; margin-right: auto; max-width: 75em; }
+        body { margin-left: 6px; margin-right: 6px; }
+        table th { padding: .5ex }
+        table td { padding: .5ex }
+    </style><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format">
+        function keyPress() {
+            var e = window.event;
+            if ( e == undefined ) {
+                return;
+            }
+            /* ### does not properly scroll, yet
+            if ( e.keyCode == 32 ) {
+            var l = document.links;
+            for ( var i = 0; i < l.length; i++ ) {
+                if ( l[i].innerText == "Next" ) {
+                location.href = l[i].href;
+                }
+            }
+            } else
+                */
+                if ( e.keyCode == 0x08 ) {
+            var l = document.links;
+            for ( var i = 0; i < l.length; i++ ) {
+                if ( l[i].innerText == "Prev" ) {
+                location.href = l[i].href;
+                }
+            }
+            }
+        }
+        document.onkeypress = keyPress;
+    </script></head><body><div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="ug-vps"></a>5.22. How to Create and Use Verification Points</h2></div></div></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><span class="section"><a href="ug-vps.html#ugv-objprop">5.22.1. How to Create and Use Property Verifications</a></span></dt><dt><span class="section"><a href="ug-vps.html#ugv-table">5.22.2. How to Create and Use Table Verifications</a></span></dt><dt><span class="section"><a href="ug-vps.html#ugv-screen">5.22.3. How to Do Screenshot Verifications</a></span></dt><dt><span class="section"><a href="ug-vps.html#ugv-visual">5.22.4. Visual Verification Point</a></span></dt><dt><span class="section"><a href="ug-vps.html#ugv-scripting">5.22.5. How to Create and Use Property Verification Points in Test Scripts</a></span></dt></dl></div><p>
+Verification points are a central feature of automated testing. To
+create a verification point, we must first drive the AUT so that it
+reaches the state we want to verify, and then we must check that the AUT
+behaves as it should and has the correct state at the point we have
+reached. This is done by using verification points—these verify
+that object property values or screenshots or other testable
+aspects of the AUT are what they are expected to be.
+</p><p>
+Verification points can be created purely in code using the <span class="emphasis"><em>Squish</em></span>
+API's <a class="xref" href="rgs-squish.html#rgss-teststatements" title="6.3.8. Verification Functions">Verification Functions (Section 6.3.8)</a>, or using the <span class="application">Squish IDE</span>'s point
+&amp; click interface with the <a class="xref" href="ide.views.html#ide.verification.point.creator.view" title="8.2.22. Verification Point Creator view">Verification Point Creator view (Section 8.2.22)</a>, or using a mixture of
+both. We will cover both approaches in this section.
+</p><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="ugv-objprop"></a>5.22.1. How to Create and Use Property Verifications</h3></div></div></div><p>
+The most common type of verification is to compare the value of one of
+an object's properties with an expected value. For example, after some
+text has been typed in, we could compare the line editor's text
+property's value with the text that was entered using one of <span class="emphasis"><em>Squish</em></span>'s
+<code class="code">test</code> functions, such as
+<a class="xref" href="rgs-squish.html#test.compare-function"><code class="function">test.compare</code></a> and
+<a class="xref" href="rgs-squish.html#test.verify-function"><code class="function">test.verify</code></a>.
+</p><p>
+Verification points like this can easily be inserted into a test script
+using <span class="application">Squish IDE</span>'s point &amp; click interface. A detailed step-by-step
+description on how to insert a property verification point can
+be found in the tutorial. (See
+<a class="xref" href="tutorials-qt.html#tutorial-getting-started-qt" title="4.1.1. Tutorial: Starting to Test Qt Applications">Tutorial: Starting to Test Qt Applications (Section 4.1.1)</a>,
+<a class="xref" href="tutorials-java-awt.html#tutorial-getting-started-java" title="4.2.1. Tutorial: Starting to Test Java™ AWT/Swing Applications">Tutorial: Starting to Test <span class="trademark">Java</span>™ AWT/Swing Applications (Section 4.2.1)</a>,
+<a class="xref" href="tutorials-web.html#tutorial-getting-started-web" title="4.6.1. Tutorial: Starting to Test Web Applications">Tutorial: Starting to Test Web Applications (Section 4.6.1)</a>, and so on,
+depending on which GUI toolkit you are interested in.)
+</p><p>
+Some objects are containers for other objects. For example, tree, table,
+and list widgets, as well as menus (with their menu items and submenus).
+<span class="emphasis"><em>Squish</em></span> provide access to both container objects
+<span class="emphasis"><em>and</em></span> to the objects they contain.
+(See for example,
+<a class="xref" href="ugs-qtapi.html#ug-testing-items-in-views-widgets-and-models" title="5.2.6.3. How to Test Items in Item Views, Item Widgets, and Models">How to Test Items in Item Views, Item Widgets, and Models (Section 5.2.6.3)</a>, or
+<a class="xref" href="ugs-javaapi.html#ug-testing-lists-tables-and-trees" title="5.4.6.1.2. How to Test JList, JTable, and JTree widgets (Java—AWT/Swing)">How to Test JList, JTable, and JTree widgets
+(Java—AWT/Swing) (Section 5.4.6.1.2)</a>, and so on,
+depending on which GUI toolkit you are interested in.)
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="ugv-table"></a>5.22.2. How to Create and Use Table Verifications</h3></div></div></div><p>
+With <span class="emphasis"><em>Squish</em></span> it is possible to verify entire tables (and grids
+and similar widgets) using a table verification point rather than having
+to do so manually in code. This feature is supported for Qt, macOS,
+<span class="trademark">Java</span>™, Web, and Windows applications.
+</p><p>
+If you are using an earlier version of <span class="emphasis"><em>Squish</em></span> than 4.2, or a toolkit
+for which there is no table verification support, it is still possible
+to achieve the same effect using hand written code. (For examples of
+such code see <a class="xref" href="ugs-qtapi.html#ug-testing-table-widgets-using-external-data" title="5.2.6.4. How to Test Table Widgets and Use External Data Files">How to Test Table Widgets and Use External Data Files (Section 5.2.6.4)</a>, <a class="xref" href="ugs-javaapi.html#how-to-test-jtable" title="5.4.6.1.2.2. How to Test JTable">How to Test JTable (Section 5.4.6.1.2.2)</a>, or <a class="xref" href="ugs-javaapi.html#how-to-test-table" title="5.4.6.2.2.2. How to Test Table">How to Test Table (Section 5.4.6.2.2.2)</a>.)
+</p><p>
+The steps for creating a table verification point are very similar to
+those needed to create object property, screenshot or visual verifications.
+</p><p>
+While recording a test, whenever you want a table
+verification point,
+click the <a class="xref" href="ide.main.window.html#ide-the-controlbar-window" title="8.1.3. Control Bar Window">Control Bar Window (Section 8.1.3)</a>'s <span class="guiicon">Insert
+Verifications</span> dropdown button, and select <span class="guilabel">Table</span>.
+(<span class="guiicon"><img src="images/ide/control-bar-insert-table-VP.png"></img></span>).
+</p><p>
+If you have an existing test script and want to include a table
+verification point, put a breakpoint on the line
+<span class="emphasis"><em>after</em></span> where you want the verification to take
+place. (Use several breakpoints if you want to insert several table
+verifications.) Now replay the test: it will stop at the first
+breakpoint.
+</p><p> When playback is stopped at a breakpoint, you can insert a new table
+verification point there. To do this, select the table, either directly in the
+<a class="xref" href="ide.views.html#ide.the-application-objects.view" title="8.2.1. Application Objects view">Application Objects view (Section 8.2.1)</a>, or visually with the object
+picker, to make the <a class="xref" href="ide.views.html#ide.verification.point.creator.view" title="8.2.22. Verification Point Creator view">Verification Point Creator view (Section 8.2.22)</a>
+appear. Verify that the verification <span class="guilabel">Type</span> combobox is set
+to “<span class="quote">Table</span>”. Verify table's checkbox is still checked in the
+Application Objects view, so that the table is visible in the VP Creator, and
+you are able to click the <span class="guibutton">Save and Insert Verifications</span>
+button. The recording or playback can now continue. After playback is stopped or
+finished, you can see the verification points inserted into your testcase.
+</p><p>
+If a table verification fails, a <span class="guilabel">Fail</span> entry will be added to the test
+results. Invoke this entry's context menu (e.g., right-click it on many
+platforms) and choose the <span class="guimenuitem">View Differences</span>
+menu item to see the differences.
+</p><p>
+By default table verification does an exact textual match on every
+single cell—but if this fails, <span class="emphasis"><em>Squish</em></span> tries to do a regular
+expression match on the cell's contents. This is useful because in some
+cases, a cell's contents might vary every run (e.g., a column of
+timestamp values). To allow for such cases it is possible to replace a
+cell's contents with a regular expression. For example, using the text
+<code class="code">.*</code> in a cell will mean that the cell will match
+<span class="emphasis"><em>any</em></span> text (including no text at all). To do this
+click the table verification point in the <a class="xref" href="ide.views.html#ide.the-test-suites.view" title="8.2.19. Test Suites view">Test Suites view (Section 8.2.19)</a>'s Test Case Resources list's VP tab
+to show the table in an editable view. Then click a cell and replace its
+text with a regular expression, repeating this for as many cells as
+necessary. (See also <a class="xref" href="rg-namelookup.html#regular-expression-regex-matching-with" title="7.10.4. Regular Expression Matching">Regular Expression Matching (Section 7.10.4)</a>.)
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="ugv-screen"></a>5.22.3. How to Do Screenshot Verifications</h3></div></div></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><span class="section"><a href="ug-vps.html#ugvs-create">5.22.3.1. How to Create and Use Screenshot Verifications</a></span></dt><dt><span class="section"><a href="ug-vps.html#ugvs-mask">5.22.3.2. Image Masks</a></span></dt></dl></div><p>
+This section discusses how to create and work with screenshot
+verification points.
+</p><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="ugvs-create"></a>5.22.3.1. How to Create and Use Screenshot Verifications</h4></div></div></div><p>
+By far the most common kind of verifications are object property
+verifications, but in some situations it is useful to be able to
+visually compare how a widget (or group of widgets) appears with an
+image of how we expect them to appear. For this to work we must provide
+<span class="emphasis"><em>Squish</em></span> with an image (e.g., a screenshot) that shows the widget(s) as
+they should look, so that <span class="emphasis"><em>Squish</em></span> has something to compare with.
+</p><p>
+Although <span class="emphasis"><em>Squish</em></span> makes it very easy to set up screenshot verifications,
+they are not always as useful or convenient as we might expect, and in
+most cases using object property verifications to compare values is the
+best approach. Screenshot verifications essentially work by comparing
+pixels, but this can very easily lead to incorrectly failing
+verifications. For example, if the test is run on a machine that is
+different from the one on which the original screenshot was taken, the
+screenshots taken during the test may differ if the test is run on a
+different operating system, or on a machine with a screen that has a
+different resolution. And even if the tests are run on the same machine,
+if the fonts or theme are changed the screenshots will differ. However,
+if we are careful about these issues, there are situations where
+screenshot verifications make sense.
+</p><p>
+One example where screenshot verifications are useful is when we need to
+verify that a graph or diagram has been drawn correctly.
+</p><p>
+It is just as easy to insert a screenshot verification as it is to
+insert an object property verification—in fact, the steps are
+almost the same. (See, for example, <a class="xref" href="tutorials-qt.html#tgs-vp" title="4.1.1.4. Inserting Additional Verification Points">Inserting Additional Verification Points (Section 4.1.1.4)</a>.) One way
+is to set a breakpoint and run the test until the breakpoint is reached;
+another way is to invoke the <a class="xref" href="ide.main.window.html#ide.insert.screenshot.verification.point.action" title="8.1.3.3. Verify &gt; Screenshot action"><span class="guiicon">Verify &gt; Screenshot</span> action (Section 8.1.3.3)</a> during test
+recording. In either case, at this point the <a class="xref" href="ide.views.html#ide.the-application-objects.view" title="8.2.1. Application Objects view">Application Objects view (Section 8.2.1)</a> is shown. To verify a
+screenshot of a particular object (or of the whole window), first, check
+the object's check box. This will make the <a class="xref" href="ide.views.html#ide.verification.point.creator.view" title="8.2.22. Verification Point Creator view">Verification Point Creator view (Section 8.2.22)</a> appear. (If the object
+you're interested in isn't listed, interact with the AUT until the
+object you want is shown and either refresh the <a class="xref" href="ide.views.html#ide.the-application-objects.view" title="8.2.1. Application Objects view">Application Objects view (Section 8.2.1)</a> or use the object picker to
+select the object.)
+</p><p>
+At this point the verification has <span class="emphasis"><em>not</em></span> been
+inserted! Choose “<span class="quote">Screenshot VP</span>” in the combobox and click
+the <span class="guibutton">Save and Insert Verifications</span> button. If you started from an
+existing test and stopped at a breakpoint, either continue the test run
+or terminate it; and if you are inserting verifications during
+recording, simply continue recording and inserting until you are done.
+For each inserted verification there will be a
+call to the <a class="xref" href="rgs-squish.html#test.vp-function"><code class="function">test.vp</code></a> function—at the
+breakpoint, or at the point in recording where the insertion was made.
+</p><div class="screenshot"><div class="mediaobject" align="center"><img src="images/screenshot-vp.png" align="middle"></img><div class="caption"><p>The <span class="application">Squish IDE</span> showing a screenshot verification that is about to be
+added
+</p></div></div></div><p>
+When we insert the verification point any screenshots that have been
+taken are saved along with any object property values, as part of the
+expected results. Later on, when the test script is replayed, whenever
+<span class="emphasis"><em>Squish</em></span> reaches a screenshot verification point it takes a screenshot
+of the relevant widget and compares this with the corresponding
+screenshot that it originally took, and reports success or failure for
+the verification point depending on whether the images are the same or
+not.
+</p><p>
+If a screenshot verification fails, in addition to recording the failure
+in the log, <span class="emphasis"><em>Squish</em></span> also saves the new (and different) screenshot for
+later inspection. The <span class="application">Squish IDE</span> also has a facility that allows us to view
+the differences between the expected image and the actual image by right
+clicking the failure message in the test log view to pop up the context
+menu, and choosing the <span class="guilabel">View Differences</span>
+option.
+</p><p>
+<span class="emphasis"><em>Squish</em></span> can show the differences between screenshots using a number of
+different techniques and algorithms—for example, subtraction of
+the images, a side-by-side view, and an animation where the expected and
+actual images are displayed quickly one after the other in a loop. If
+the actual image is correct (perhaps because of a change to the AUT that
+has made the original screenshot out of date), we can set the actual
+image as the new expected result.
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="ugvs-mask"></a>5.22.3.2. Image Masks</h4></div></div></div><p>
+When comparing screenshots, it is possible that the expected image contains
+more information than we need in our verification. We can
+<em class="firstterm">mask</em> parts of this image by either creating a
+<span class="guilabel">Positive Mask</span>, where the region outside
+the mask is ignored, or a <span class="guilabel">Negative Mask</span>,
+where the region inside the mask is ignored. The masking is done before the
+images are compared.
+</p><p>
+More information about masks can be found in <a class="xref" href="ide.dialogs.html#ide.setting.masks" title="8.3.19.2. Setting Masks">Setting Masks (Section 8.3.19.2)</a>.
+</p></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="ugv-visual"></a>5.22.4. How to Do Visual Verifications</h3></div></div></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><span class="section"><a href="ug-vps.html#ugvv-create">5.22.4.1. How to Create and Use Visual Verifications</a></span></dt><dt><span class="section"><a href="ug-vps.html#ugvv-checks">5.22.4.2. Visual Verification Check Stages</a></span></dt></dl></div><p>
+This section discusses how to create and work with visual verification points.
+</p><div class="warning" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Warning:  XML Report Generation with Visual VPs "><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Warning]" src="images/warning.png"></img></td><th align="left"> XML Report Generation with Visual VPs </th></tr><tr><td align="left" valign="top"><p> When using an XML report generation format, make sure you are not using a
+legacy version, since <code class="literal">xml3.1</code> or later is required to
+see the proper results in a test report. Generally, the latest version offered
+is recommended. </p></td></tr></table></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="ugvv-create"></a>5.22.4.1. How to Create and Use Visual Verifications</h4></div></div></div><p>
+Visual verifications can check the on-screen display of dialogs, whole
+application windows or subsections thereof. Unlike screenshot verifications
+they do not just treat the rendered screen content as a single
+surface. Instead, the area is divided and compared per individual UI
+control. And prior to a check of rendered pixels the position, size
+and content properties are compared against expected values.
+</p><p>
+Conceptually visual verifications are a hybrid form of property
+verifications and screenshot verifications. Both types of checks are
+combined into a single and somewhat complex algorithm that considers a
+set of controls as a whole and tries to find the best match.
+</p><p>
+By default all checks will be performed in a strict manner that does
+not allow for changes in state, layout and rendering. An editor is
+provided that allows modifications of individual checks to make them
+more tolerant.
+</p><p>
+One example where visual verifications are useful is when we need to
+verify that a dialog (or Web page) as a whole still shows the expected
+text and images (and no more), while the exact layout and UI theme may
+differ between the test systems or even between AUT versions.
+</p><p>
+It is just as easy to insert a visual verification as it is to
+insert an object property verification—in fact, the steps are
+almost the same. (See, for example, <a class="xref" href="tutorials-qt.html#tgs-vp" title="4.1.1.4. Inserting Additional Verification Points">Inserting Additional Verification Points (Section 4.1.1.4)</a>.) One way
+is to set a breakpoint and run the test until the breakpoint is reached;
+another way is to invoke the <a class="xref" href="ide.main.window.html#ide.insert.visual.verification.point.action" title="8.1.3.5. Verify &gt; Visual action"><span class="guiicon">Verify &gt; Visual</span> action (Section 8.1.3.5)</a> during test
+recording. In either case, at this point the <a class="xref" href="ide.views.html#ide.the-application-objects.view" title="8.2.1. Application Objects view">Application Objects view (Section 8.2.1)</a> is shown. To verify the visual layout of a particular object (or of the whole window), first, check
+the object's check box. This will make the <a class="xref" href="ide.views.html#ide.verification.point.creator.view" title="8.2.22. Verification Point Creator view">Verification Point Creator view (Section 8.2.22)</a> appear. (If the object
+you're interested in isn't listed, interact with the AUT until the
+object you want is shown and either refresh the <a class="xref" href="ide.views.html#ide.the-application-objects.view" title="8.2.1. Application Objects view">Application Objects view (Section 8.2.1)</a> or use the object picker to
+select the object.)
+</p><p>
+At this point the verification has <span class="emphasis"><em>not</em></span> been
+inserted! Make sure that the “<span class="quote">Visual Verifications</span>” type
+is selected in the combobox and click the <span class="guibutton">Save and Insert
+Verifications</span> button. If you started from an existing test
+and stopped at a breakpoint, either continue the test run or terminate
+it; and if you are inserting verifications during recording, simply
+continue recording and inserting until you are done.  For each
+inserted verification there will be a call to the
+<a class="xref" href="rgs-squish.html#test.vp-function"><code class="function">test.vp</code></a> function—at the breakpoint,
+or at the point in recording where the insertion was made.
+</p><div class="screenshot"><div class="mediaobject" align="center"><img src="images/visual-vp.png" align="middle"></img><div class="caption"><p>The <span class="application">Squish IDE</span> showing a visual verification that is about to be
+added
+</p></div></div></div><p>
+When we insert the verification point, any screenshots that have been
+taken are saved along with object property values and geometries, as
+part of the expected results. Later on, when the test script is
+replayed, whenever <span class="emphasis"><em>Squish</em></span> reaches a visual verification point it
+takes a snapshot of the relevant widget and compares this with the
+corresponding snapshot that it originally took, and reports success
+or failure for the verification point depending on whether the snapshots
+are considered to be the same or not.
+</p><p>
+If a visual verification fails, in addition to recording the failure
+in the log, <span class="emphasis"><em>Squish</em></span> also saves the new (and different) snapshot for
+later inspection. The <span class="application">Squish IDE</span> also has a facility that allows us to view
+the differences between the expected snapshot and the actual snapshot by right
+clicking the failure message in the test log view to pop up the context
+menu, and choosing the <span class="guilabel">View Differences</span>
+action, which will pop up the <a class="xref" href="ide.dialogs.html#ide.vvp.diff" title="8.3.25.2. View visual differences">View visual differences (Section 8.3.25.2)</a> Dialog.
+</p><p>
+<span class="application">squishide</span> can show the differences between snapshots side-by-side and
+allow for tuning of the comparison through changes of the
+checks. Through wildcards for property values, tolerance ranges for
+geometries, correlation threshold for image data, for example. If the
+actual snapshot is correct (perhaps because of a change to the AUT
+that has made the original layout out of date), we can set the actual
+snapshot as the new expected result.
+</p><p>
+The <a class="xref" href="rgs-squish.html#createVisualVP-function"><code class="function">createVisualVP</code></a> function is an
+alternative to the <span class="application">Squish IDE</span>-based creation of a Visual Verification Point.
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="ugvv-checks"></a>5.22.4.2. Visual Verification Check Stages</h4></div></div></div><p>
+The ultimate criteria for visual equivalence is a pixel-by-pixel
+comparison of the appearance as rendered onto the screen. Such a strict
+requirement is only met if the surrounding conditions are kept stable
+however. In practice, several factors can lead to deviations from
+perfect pixel accuracy:
+</p><div class="orderedlist"><ol type="1"><li><p>Screen size and resolution</p></li><li><p>User settings like fonts and system themes</p></li><li><p>Platform (operating system, Web browser)</p></li><li><p>Display of dynamic data (time of day, etc.)</p></li><li><p>UI style changes</p></li></ol></div><p>
+A testing tool should be able to detect such changes and warn the user
+about unwanted regressions. At the same time the tool should help the
+user with getting a good overview. Small changes in e.g. the font size
+can have drastic consequences. And depending on the use cases some
+changes in the visual appearance can be in the acceptable perimeter.
+</p><p>
+When a Visual Verification test is executed the following checks will
+therefore be performed in the listed order:
+</p><div class="section" lang="en"><div class="titlepage"><div><div><h5 class="title"><a id="idp46753600"></a>5.22.4.2.1. Hierarchy Check</h5></div></div></div><p>
+Internally elements of user interfaces are typically modeled as a
+tree. Changes to the tree structure do not necessarily lead to changes
+in visual appearance. Such changes do provide a very strong hint,
+however. That is why Squish will perform a check of the actual tree
+structure found against the expected.
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h5 class="title"><a id="idp46754520"></a>5.22.4.2.2. Identify Check</h5></div></div></div><p>
+In order to perform a detailed per-object analysis Squish needs to map
+each object stored in the Visual Verification Point to an object found
+on the screen. All of the object's type, content properties and
+optional identifying properties are taken into account by the matching
+algorithm.
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h5 class="title"><a id="idp46755416"></a>5.22.4.2.3. Content Check</h5></div></div></div><p>
+Many UI controls base their on-screen rendering on internal
+properties. For a specific text to be displayed in a label or the state
+of a toggle button for example.
+</p><p>
+Similarly to element geometries the comparison of such content
+properties can aid with finding out the underlying cause of UI
+changes.
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h5 class="title"><a id="idp46756528"></a>5.22.4.2.4. Geometry Check</h5></div></div></div><p>
+In case 100% pixel equality is found to not have been achieved it is
+still worth investigating what happened to the individual components of
+the screen. Maybe all UI controls are present including their visual
+appearance but have merely been re-arranged on the screen?
+</p><p>
+The Visual Verification Point checks include a verification of each
+UI element's relative screen position and size. A deviation in the
+expected geometry will likely lead to a deviation of the screen
+rendering.
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h5 class="title"><a id="idp46757816"></a>5.22.4.2.5. Screenshot Check</h5></div></div></div><p>
+A pixel-by-pixel comparison of each control's individual screen
+estate.
+</p><p>
+A Visual Verification Point can be configured to perform pixel
+comparisons for selected GUI elements only. That way inherently
+"unstable" parts of the UI can be omitted from the verification and
+thus lead to stable test results. An example from visual testing of a
+Web site: a page's section displaying a chart of a company's stock
+price will likely be under constant change.
+</p></div></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="ugv-scripting"></a>5.22.5. How to Create and Use Property Verification Points in Test Scripts</h3></div></div></div><p>
+Although it is possible to insert property verification points through the <span class="application">Squish IDE</span>
+without having to write a single line of code, it is also possible to
+add property verifications directly in code. This is especially useful when a
+verification point needs to be more flexible than can be achieved using
+the point &amp; click approach—for example, if we want to iterate
+over every item in a list view to verify each one.
+</p><p>
+There is no harm in starting by creating verification points using the
+<span class="application">Squish IDE</span>'s point &amp; click interface, especially since it is easy to
+convert them into pure script code.
+</p><p>
+When a verification point is created using point &amp; click, there are
+two possible ways that the verification can be recorded. The default
+(and recommended) way is to insert using the “<span class="quote">Scriptified
+Properties VP</span>” option in the <a class="xref" href="ide.views.html#ide.verification.point.creator.view" title="8.2.22. Verification Point Creator view">Verification Point Creator view (Section 8.2.22)</a>'s combobox. This will insert
+the verification using <span class="emphasis"><em>Squish</em></span>'s API, for example, using the <a class="xref" href="rgs-squish.html#test.compare-function"><code class="function">test.compare</code></a> function. An alternative is to use
+the “<span class="quote">Properties VP</span>” option. This will insert a call to the
+<a class="xref" href="rgs-squish.html#test.vp-function"><code class="function">test.vp</code></a> function with the details of what
+to verify saved in an external file. It is clearer and easier to
+maintain tests that use explicit verification functions such as <a class="xref" href="rgs-squish.html#test.compare-function"><code class="function">test.compare</code></a> which is why they are inserted by
+default.
+</p><p>
+To convert a call to the <a class="xref" href="rgs-squish.html#test.vp-function"><code class="function">test.vp</code></a> function
+into an explicit verification, click on the call to the <a class="xref" href="rgs-squish.html#test.vp-function"><code class="function">test.vp</code></a> function and invoke the context menu.
+Choose the <span class="guimenuitem">Scriptify Verification Point</span> menu
+option (this option does not appear for screenshot verifications). This
+will pop up the Refactoring wizard which shows “<span class="quote">before</span>” and
+“<span class="quote">after</span>” views of the test's code. If you are happy with the
+proposed change click the <span class="guibutton">Finish</span> button and the
+change will be applied.
+</p><p>
+For example, if we created a (non-screenshot) verification point through
+the <span class="application">Squish IDE</span>—for example, to check the text of a button—and it
+was inserted into our test script like this:
+</p><pre class="programlisting">
+test.vp("VP1")
+</pre><p>
+If we then scriptified the verification point, it would be replaced
+with code something like this:
+</p><pre class="programlisting">
+test.compare(waitForObjectExists(":Add_QPushButton").text, "Add")
+</pre><p>
+Naturally the actual verification code will match whatever the point
+&amp; click verification point checked, and of course the resultant code
+will be in whichever scripting language is used for the test.
+</p><p>
+Note that for hand written verifications rather than using the
+<a class="xref" href="rgs-squish.html#waitFor-function"><code class="function">waitFor</code></a> function, we normally use the <a class="xref" href="rgs-squish.html#waitForObject-function"><code class="function">waitForObject</code></a> function. So if we were doing this
+verification entirely by hand we would write it as a single line of
+code—for example:
+</p><pre class="programlisting">
+test.compare(waitForObject(":Add_QPushButton").text, "Add")
+</pre><p>
+For more details about the script API for verification test statements,
+see <a class="xref" href="ugs-teststatements.html" title="5.9. How to Use Test Statements">How to Use Test Statements (Section 5.9)</a>.
+</p><p>
+Here is a small example which shows a dynamic verification point that
+iterates over all the items in a Qt list widget—whose
+contents vary from run to run—and checks that no item's text is
+empty. Such a verification point cannot be created using the <span class="application">Squish IDE</span> since
+the number of items is unknown and may be different on each test run.
+Such flexibility can only be achieved by using a scripting language:
+</p><div xmlns="" class="scriptlang"><form><select name="scriptlangcombo" onchange="javascript:changeScriptingLanguage(this)" onclick="javascript:changeScriptingLanguage(this)"><option value="all" selected>Show All</option><option value="JavaScript">Show JavaScript</option><option value="Perl">Show Perl</option><option value="Python">Show Python</option><option value="Ruby">Show Ruby</option><option value="Tcl">Show Tcl</option></select></form></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Python</span><pre class="programlisting">
+def main():
+    listWidget = waitForObject(":Item Views_QListWidget")
+    numberEmpty = 0
+    for row in range(listWidget.count):
+        item = listWidget.item(row)
+        if item.text.isEmpty():
+            numberEmpty += 1
+    if numberEmpty:
+        test.fail("Out of %d list items, %d were empty" % (
+            listWidget.count, numberEmpty))
+    else:
+        test.passes("Verified %d non-empty list items" % (
+            listWidget.count))
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">JavaScript</span><pre class="programlisting">
+function main()
+{
+    var listWidget = waitForObject(":Item Views_QListWidget");
+    var numberEmpty = 0;
+    for (var row = 0; row &lt; listWidget.count; ++row) {
+        var item = listWidget.item(row);
+        if (item.text.isEmpty())
+            ++numberEmpty;
+    }
+    if (numberEmpty)
+        test.fail("Out of " + listWidget.count + " list items, " +
+            numberEmpty + " were empty");
+    else
+        test.pass("Verified " + listWidget.count +
+            " non-empty list items");
+}
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Perl</span><pre class="programlisting">
+sub main
+{
+    my $listWidget = waitForObject(":Item Views_QListWidget");
+    my $numberEmpty = 0;
+    for (my $row = 0; $row &lt; $listWidget-&gt;count; ++$row) {
+        my $item = $listWidget-&gt;item($row);
+        if ($item-&gt;text-&gt;isEmpty()) {
+            ++$numberEmpty;
+        }
+    }
+    if (numberEmpty) {
+        test::fail("Out of " . listWidget.count .
+            " list items, $numberEmpty were empty");
+    }
+    else {
+        test::pass("Verified " . listWidget.count .
+            " non-empty list items");
+    }
+}
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Ruby</span><pre class="programlisting">
+# encoding: UTF-8
+require 'squish'
+include Squish
+
+def main
+    listWidget = waitForObject(":Item Views_QListWidget")
+    numberEmpty = 0
+    for row in 0...listWidget.count
+        item = listWidget.item(row)
+        if item.text.isEmpty()
+            numberEmpty += 1
+        end
+    if numberEmpty != 0
+        Test.fail("Out of #{listWidget.count} list items, " +
+            "#{numberEmpty} were empty")
+    else
+        Test.pass("Verified #{listWidget.count} non-empty list items")
+    end
+end
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Tcl</span><pre class="programlisting">
+proc main {} {
+    set listWidget [waitForObject ":Item Views_QListWidget"]
+    set numberEmpty 0
+    set count [property get $listWidget count]
+    for {set row 0} {$row &lt; $count} {incr row} {
+        set item [invoke $listWidget item $row]
+        if {[invoke [property get $item text] isEmpty]} {
+            incr numberEmpty
+        }
+    }
+    if {numberEmpty != 0} {
+        test fail "Out of $count list items, $numberEmpty were empty"
+    } else {
+        test pass "Verified $count non-empty list items"
+    }
+}
+</pre></div><p>
+The test obtains a reference to the list widget, then iterates over
+every item it contains, keeping a count of those that have empty texts.
+If any are empty the <a class="xref" href="rgs-squish.html#test.fail-function"><code class="function">test.fail</code></a> function is
+called; otherwise the <a class="xref" href="rgs-squish.html#test.pass-function"><code class="function">test.pass</code></a> function is
+called.
+</p><p>
+For examples that show how to iterate over all the items in Qt's
+item-based convenience widgets and for the models that Qt's views use,
+see <a class="xref" href="ugs-qtapi.html#ug-testing-items-in-views-widgets-and-models" title="5.2.6.3. How to Test Items in Item Views, Item Widgets, and Models">How to Test Items in Item Views, Item Widgets, and Models (Section 5.2.6.3)</a>.
+There are similar sections for Java tests, for example, <a class="xref" href="ugs-javaapi.html#ug-testing-lists-tables-and-trees" title="5.4.6.1.2. How to Test JList, JTable, and JTree widgets (Java—AWT/Swing)">How to Test JList, JTable, and JTree widgets
+(Java—AWT/Swing) (Section 5.4.6.1.2)</a> and <a class="xref" href="ugs-javaapi.html#ug-testing-lists-tables-and-trees-swt" title="5.4.6.2.2. How to Test List, Table, and Tree widgets (Java™/SWT)">How to Test List, Table, and Tree widgets (<span class="trademark">Java</span>™/SWT) (Section 5.4.6.2.2)</a>, and also for the
+other GUI toolkits that <span class="emphasis"><em>Squish</em></span> supports.
+</p></div></div><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" type="text/javascript" src="ScriptingLanguage.js"></script><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format">setScriptingLanguage();</script><div class="navfooter"><hr></hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="ug-editdebug.html">Prev</a> </td><td width="20%" align="center"><a accesskey="u" href="users-guide.html">Up</a></td><td width="40%" align="right"> <a accesskey="n" href="ug-shareddata.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">5.21. How to Edit and Debug Test Scripts </td><td width="20%" align="center"><a accesskey="h" href="index-noframes.html">Home</a></td><td width="40%" align="right" valign="top"> 5.23. How to Create and Use Shared Data and Shared Scripts</td></tr></table></div></body>
+<!-- Mirrored from ug-vps.html by HTTrack Website Copier/3.x [XR&CO'2013], Wed, 06 Jul 2022 13:29:00 GMT -->
+</html>

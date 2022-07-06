@@ -1,0 +1,55 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<!-- Mirrored from rgs-tcl.html by HTTrack Website Copier/3.x [XR&CO'2013], Wed, 06 Jul 2022 13:29:00 GMT -->
+<head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><title>6.15. Tcl Notes</title><link rel="stylesheet" href="manual.css" type="text/css"></link><meta name="generator" content="DocBook XSL Stylesheets V1.73.2"></meta><link rel="start" href="index-noframes.html" title="Squish Manual"></link><link rel="up" href="api.man.html" title="Chapter 6. API Reference Manual"></link><link rel="prev" href="rgs-py.html" title="6.14. Python Notes"></link><link rel="next" href="rgs-js.html" title="6.16. JavaScript Notes and Extension APIs"></link><style xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" type="text/css" media="screen">
+        div.toc * { margin-left: 6px; margin-right: auto; max-width: 75em; }
+        div.toc span { margin-left: 0px; }
+        * { margin-left: auto; margin-right: auto; max-width: 75em; }
+        body { margin-left: 6px; margin-right: 6px; }
+        table th { padding: .5ex }
+        table td { padding: .5ex }
+    </style><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format">
+        function keyPress() {
+            var e = window.event;
+            if ( e == undefined ) {
+                return;
+            }
+            /* ### does not properly scroll, yet
+            if ( e.keyCode == 32 ) {
+            var l = document.links;
+            for ( var i = 0; i < l.length; i++ ) {
+                if ( l[i].innerText == "Next" ) {
+                location.href = l[i].href;
+                }
+            }
+            } else
+                */
+                if ( e.keyCode == 0x08 ) {
+            var l = document.links;
+            for ( var i = 0; i < l.length; i++ ) {
+                if ( l[i].innerText == "Prev" ) {
+                location.href = l[i].href;
+                }
+            }
+            }
+        }
+        document.onkeypress = keyPress;
+    </script></head><body><div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="rgs-tcl"></a>6.15. Tcl Notes</h2></div></div></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><span class="section"><a href="rgs-tcl.html#rgs-tcl-documentation">6.15.1. Tcl Language Documentation</a></span></dt></dl></div><p>
+<span class="emphasis"><em>Squish</em></span> assumes that all <code class="filename">test.tcl</code> files use
+the UTF-8 encoding. If you expect to edit such files outside of the
+<span class="application">Squish IDE</span>, make sure that the editor loads and saves the files using UTF-8.
+</p><p>
+To access toolkit enums use the <span class="emphasis"><em>Squish</em></span> API's <code class="code">enum</code>
+function. The function takes two arguments, the first is a class or
+namespace name and the second is an enum name.
+For example, <code class="code">[enum Qt AlignRight]</code>.
+</p><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="rgs-tcl-documentation"></a>6.15.1. Tcl Language Documentation</h3></div></div></div><p>
+For documentation on the Tcl language and standard extension packages
+see the <a class="ulink" href="http://www.tcl.tk/doc/" target="_blank">Tcl/Tk Documentation
+</a> page on the Tcl home page. That page also has links to Tcl
+tutorials. If you prefer books, a good Tcl book is
+<a class="ulink" href="http://www.beedub.com/book/" target="_blank">Practical Programming in Tcl
+and Tk</a> by Brent Welsh and Ken Jones with Jeffrey Hobbs.
+</p></div></div><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" type="text/javascript" src="ScriptingLanguage.js"></script><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format">setScriptingLanguage();</script><div class="navfooter"><hr></hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="rgs-py.html">Prev</a> </td><td width="20%" align="center"><a accesskey="u" href="api.man.html">Up</a></td><td width="40%" align="right"> <a accesskey="n" href="rgs-js.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">6.14. Python Notes </td><td width="20%" align="center"><a accesskey="h" href="index-noframes.html">Home</a></td><td width="40%" align="right" valign="top"> 6.16. JavaScript Notes and Extension APIs</td></tr></table></div></body>
+<!-- Mirrored from rgs-tcl.html by HTTrack Website Copier/3.x [XR&CO'2013], Wed, 06 Jul 2022 13:29:00 GMT -->
+</html>

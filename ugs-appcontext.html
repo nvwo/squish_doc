@@ -1,0 +1,391 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<!-- Mirrored from ugs-appcontext.html by HTTrack Website Copier/3.x [XR&CO'2013], Wed, 06 Jul 2022 13:28:59 GMT -->
+<head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><title>5.12. How to Test Multiple AUTs from a Single Test Script, Using ApplicationContext</title><link rel="stylesheet" href="manual.css" type="text/css"></link><meta name="generator" content="DocBook XSL Stylesheets V1.73.2"></meta><link rel="start" href="index-noframes.html" title="Squish Manual"></link><link rel="up" href="users-guide.html" title="Chapter 5. User Guide"></link><link rel="prev" href="ugs-synchpoints.html" title="5.11. How to Create and Use Synchronization Points"></link><link rel="next" href="ugs-webnonhtml.html" title="5.13. How to Automate Native Browser Dialogs, ActiveX, and more"></link><style xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" type="text/css" media="screen">
+        div.toc * { margin-left: 6px; margin-right: auto; max-width: 75em; }
+        div.toc span { margin-left: 0px; }
+        * { margin-left: auto; margin-right: auto; max-width: 75em; }
+        body { margin-left: 6px; margin-right: 6px; }
+        table th { padding: .5ex }
+        table td { padding: .5ex }
+    </style><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format">
+        function keyPress() {
+            var e = window.event;
+            if ( e == undefined ) {
+                return;
+            }
+            /* ### does not properly scroll, yet
+            if ( e.keyCode == 32 ) {
+            var l = document.links;
+            for ( var i = 0; i < l.length; i++ ) {
+                if ( l[i].innerText == "Next" ) {
+                location.href = l[i].href;
+                }
+            }
+            } else
+                */
+                if ( e.keyCode == 0x08 ) {
+            var l = document.links;
+            for ( var i = 0; i < l.length; i++ ) {
+                if ( l[i].innerText == "Prev" ) {
+                location.href = l[i].href;
+                }
+            }
+            }
+        }
+        document.onkeypress = keyPress;
+    </script></head><body><div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="ugs-appcontext"></a>5.12. How to Test Multiple AUTs from a Single Test Script, Using
+ApplicationContext</h2></div></div></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><span class="section"><a href="ugs-appcontext.html#ugsac-multipleaut">5.12.1. How to Start and Access Multiple Applications Under Test</a></span></dt><dt><span class="section"><a href="ugs-appcontext.html#ugsac-multipleaut-android">5.12.2. Notes on using <code class="code">startApplication</code> with Android</a></span></dt><dt><span class="section"><a href="ugs-appcontext.html#ugsac-appcontext">5.12.3. How to Use ApplicationContext Objects</a></span></dt></dl></div><p>
+Usually, a single application under test is specified for each test
+suite. This AUT is then executed and accessed by each test case. All the
+tutorials show this one test suite/one AUT approach, but in fact it is
+possible to start multiple applications and access and test all of them
+from within a single test suite. This makes it possible to test the
+interaction between different applications or between multiple instances
+of the same application. For example, being able to test multiple
+applications is essential for testing client/server systems.
+</p><p>
+Whenever an AUT is started a corresponding <a class="xref" href="rgs-squish.html#rgss-appcontext" title="6.3.12. Application Context">Application Context (Section 6.3.12)</a> object is created, and it is this object
+that is used by <span class="emphasis"><em>Squish</em></span> to provide access to the AUT. <span class="emphasis"><em>Squish</em></span> allows
+us to access the <code class="code">ApplicationContext</code> object directly in
+our code, and this means that we can query the AUT for information such
+as the command line it was launched with, its current state, and so on.
+This information can also be accessed by making use of the context
+object returned by the <a class="xref" href="rgs-squish.html#currentApplicationContext-function"><code class="function">currentApplicationContext</code></a> function.
+</p><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="ugsac-multipleaut"></a>5.12.1. How to Start and Access Multiple Applications Under Test</h3></div></div></div><p>
+When testing multiple applications from a single test script, the first
+step is to ensure that no application is set to be automatically
+started. Using the <span class="application">Squish IDE</span>, click the <span class="guibutton">Test Suite
+Settings</span> toolbar button (in the <a class="xref" href="ide.views.html#ide.the-test-suites.view" title="8.2.19. Test Suites view">Test Suites view (Section 8.2.19)</a>) to make the test suite's <a class="xref" href="ide.views.html#ide.the-settings.view" title="8.2.16. Test Suite Settings view">Test Suite Settings view (Section 8.2.16)</a> visible. Now, in the editor's "Application Under Test (AUT)"
+section, make sure that the <span class="guibutton">Automatically start the
+AUT</span> checkbox is <span class="emphasis"><em>unchecked</em></span>.
+</p><p>
+The function used to start an application is <a class="xref" href="rgs-squish.html#startApplication-function"><code class="function">startApplication</code></a>. This function starts the given
+application (assuming it is located in an application path—see
+<a class="xref" href="rg-autsettings.html" title="7.3. AUTs and Settings">AUTs and Settings (Section 7.3)</a>) using the given command line arguments
+and returns a corresponding <code class="code">ApplicationContext</code> object.
+The application context object is a handle that refers to the
+application.
+</p><p>
+Optionally, as the second and third parameters, a host and port can be
+passed to the <a class="xref" href="rgs-squish.html#startApplication-function"><code class="function">startApplication</code></a> function.
+This way, the <a class="xref" href="rgs-squish.html#startApplication-function"><code class="function">startApplication</code></a> function
+will connect to the <span class="application">squishserver</span> on the specified host and listen to
+the specified port, instead of using the default host and port (as
+specified in the <span class="application">Squish IDE</span>'s settings or on the <span class="application">squishrunner</span>'s command
+line). This allows us to control multiple applications on multiple
+computers from a single test script.
+</p><p>
+Special care must be taken if the application is using a different GUI
+toolkit than the test suite's default toolkit. The global <a class="xref" href="rgs-squish.html#rgs-testsettings" title="6.3.19. testSettings Object"><code class="code">testSettings</code> Object (Section 6.3.19)</a> object allows us to set the configuration
+of the toolkit wrapper on a per-AUT basis. See the <a class="xref" href="rgs-squish.html#testSettings.setWrappersForApplication-function"><code class="function">testSettings.setWrappersForApplication</code></a> function
+for details on how to do this.
+</p><p>
+If we run two or more AUTs within a test script, which one should test
+code apply to? We can make one of the AUTs the “<span class="quote">active</span>”
+application by using the <a class="xref" href="rgs-squish.html#setApplicationContext-function"><code class="function">setApplicationContext</code></a> function, passing an
+<code class="code">ApplicationContext</code> as the sole parameter. Once the call is
+made, all script code applies to the active application—unless
+another <a class="xref" href="rgs-squish.html#setApplicationContext-function"><code class="function">setApplicationContext</code></a> call is made
+to change the active application. Note that whenever we call the <a class="xref" href="rgs-squish.html#startApplication-function"><code class="function">startApplication</code></a> function, not only is the
+application's <code class="code">ApplicationContext</code> object returned, but the
+application is automatically set to be the active application.
+</p><p>
+We can obtain a list of all the currently running AUTs'
+<code class="code">ApplicationContext</code> objects, by calling the <a class="xref" href="rgs-squish.html#applicationContextList-function"><code class="function">applicationContextList</code></a> function. And we can
+retrieve the context object of the active application by calling the
+<a class="xref" href="rgs-squish.html#currentApplicationContext-function"><code class="function">currentApplicationContext</code></a> function.
+</p><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Note: AUT Sub-processes"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/note.png"></img></td><th align="left">AUT Sub-processes</th></tr><tr><td align="left" valign="top"><p>
+If you want to record and access applications which are started by the
+AUT itself, and not by <span class="emphasis"><em>Squish</em></span>, see the <a class="xref" href="rghsa-sub.html" title="7.7. Record / Replay on Sub-Processes started by the AUT">Record / Replay on Sub-Processes started by the AUT (Section 7.7)</a>
+section.
+</p></td></tr></table></div><p>
+We will now look at some examples that show how to start multiple AUTs
+and how to use <code class="code">ApplicationContext</code> objects to query them.
+</p><p>
+We will take as an example a client/server chat system. The system has a
+chat server called <code class="filename">chatserver</code>, written in Qt, which
+must be running for communication to take place, and two chat clients,
+one written in Qt called <code class="filename">chatclientqt</code>, and the
+other written in Windows called <code class="filename">chatclientwin</code>. We
+will use a <span class="emphasis"><em>Squish</em></span> for Qt package, which includes the wrappers for Qt
+and native Windows applications, and a Qt test suite.
+</p><p>
+In the test we will first start the chat server. Then we start two
+clients; these automatically connect to the chat server at startup. We
+will then type something into the message editor of the first client and
+check that the second client received the message.
+</p><div xmlns="" class="scriptlang"><form><select name="scriptlangcombo" onchange="javascript:changeScriptingLanguage(this)" onclick="javascript:changeScriptingLanguage(this)"><option value="all" selected>Show All</option><option value="JavaScript">Show JavaScript</option><option value="Perl">Show Perl</option><option value="Python">Show Python</option><option value="Ruby">Show Ruby</option><option value="Tcl">Show Tcl</option></select></form></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Python</span><pre class="programlisting">
+startApplication("chatserver")
+client1 = startApplication("chatclientqt")
+testSettings.setWrappersForApplication("chatclientwin", ("Windows"))
+client2 = startApplication("chatclientwin")
+
+setApplicationContext(client1)
+editor = waitForObject("ChatWindow.messageEditor")
+type(editor, "Message for client #2")
+
+setApplicationContext(client2)
+msgView = waitForObject("ChatWindow.messageView")
+test.compare(msgView.text, "Message for client #2")
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">JavaScript</span><pre class="programlisting">
+startApplication("chatserver");
+var client1 = startApplication("chatclientqt");
+testSettings.setWrappersForApplication("chatclientwin", ["Windows"]);
+var client2 = startApplication("chatclientwin");
+
+setApplicationContext(client1);
+var editor = waitForObject("ChatWindow.messageEditor");
+type(editor, "Message for client #2");
+
+setApplicationContext(client2);
+var msgView = waitForObject("ChatWindow.messageView");
+test.compare(msgView.text, "Message for client #2");
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Perl</span><pre class="programlisting">
+startApplication("chatserver");
+my $client1 = startApplication("chatclientqt");
+testSettings-&gt;setWrappersForApplication("chatclientwin", ("Windows"));
+my $client2 = startApplication("chatclientwin");
+
+setApplicationContext($client1);
+my $editor = waitForObject("ChatWindow.messageEditor");
+type($editor, "Message for client #2");
+
+setApplicationContext($client2);
+my $msgView = waitForObject("ChatWindow.messageView");
+test::compare($msgView-&gt;text, "Message for client #2");
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Ruby</span><pre class="programlisting">
+startApplication("chatserver")
+client1 = startApplication("chatclientqt")
+testSettings.setWrappersForApplication("chatclientwin", ("Windows"))
+client2 = startApplication("chatclientwin")
+
+setApplicationContext(client1)
+editor = waitForObject("ChatWindow.messageEditor")
+type(editor, "Message for client #2")
+
+setApplicationContext(client2)
+msgView = waitForObject("ChatWindow.messageView")
+Test.compare(msgView.text, "Message for client #2")
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Tcl</span><pre class="programlisting">
+startApplication "chatserver"
+set client1 [startApplication "chatclientqt"]
+testSettings setWrappersForApplication chatclientwin { Windows }
+set client2 [startApplication "chatclientwin"]
+
+setApplicationContext $client1
+set editor [waitForObject "ChatWindow.messageEditor"]
+invoke type $editor "Message for client #2"
+
+setApplicationContext $client2
+set msgView [waitForObject "ChatWindow.messageView"]
+test compare [property get $msgView text] "Message for client #2"
+</pre></div><p>
+We begin by starting each of the applications in turn, although we only
+keep references to the client AUTs' <code class="code">ApplicationContext</code>
+objects since we don't directly access the server in the test. For the
+Windows client we set the toolkit wrapper to use the Windows wrapper
+instead of the default Qt wrapper. Once the applications are running we
+make the first client the active AUT since the active AUT is currently
+<code class="code">client2</code> since that was the AUT started by the most recent
+<a class="xref" href="rgs-squish.html#startApplication-function"><code class="function">startApplication</code></a> call. Then we get a
+reference to the client's chat editor and type some text into it. And
+at the end, we make the second client the active AUT, get a reference
+to its chat editor (a different widget this time since the toolkit is
+different—Java rather than Qt), and we compare the second
+client's editor's text with the text we sent from the first client.
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="ugsac-multipleaut-android"></a>5.12.2. Notes on using <code class="code">startApplication</code> with Android</h3></div></div></div><p>
+For Android the autName in <a class="xref" href="rgs-squish.html#startApplication-function"><code class="function">startApplication</code></a>
+function is the name of the package. It may be followed by slash plus
+activity. Without an activity, the package main activity is started,
+otherwise the one given.
+</p><p>
+When the activity is a dash, then the application is started
+but no activity is started. Use this when your AUT uses activities
+from other packages.
+</p><p>
+Finally, the package name may be prefixed with a device string, a set
+of <a class="link" href="rg-cmdline.html#androidobserver" title="7.4.7.2. androidobserver">launcher</a> argument settins plus
+colon. So when specifying everything, the autName looks like
+<code class="code">device{option1,...}:package/activity</code> and without options
+<code class="code">device:package/activity</code>. Likewise <code class="code">device</code> maybe
+omitted when options are wanted but the device is the default one (provided
+by the IDE or <span class="application">squishrunner</span>).
+</p><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Note"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/note.png"></img></td><th align="left">Note</th></tr><tr><td align="left" valign="top"><p>
+When using <a class="xref" href="rgs-squish.html#testSettings.setWrappersForApplication-function"><code class="function">testSettings.setWrappersForApplication</code></a>,
+the <code class="code">application</code> argument must be the same as the
+<code class="code">autName</code> used in <a class="xref" href="rgs-squish.html#startApplication-function"><code class="function">startApplication</code></a>.
+</p></td></tr></table></div><p>
+If for example only one of multiple started apps should have their settings
+cleared when started by Squish, the <a class="xref" href="rgs-squish.html#startApplication-function"><code class="function">startApplication</code></a>
+command can use the <a class="xref" href="rg-cmdline.html#androidobserver-clear" title="7.4.7.2.2. --clear-app-settings">--clear-app-settings (Section 7.4.7.2.2)</a> launcher argument
+in the application string. E.g.
+<code class="code">startApplication("{clear-app-settings}:com.froglogic.addressbook")</code>.
+</p><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Note"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/note.png"></img></td><th align="left">Note</th></tr><tr><td align="left" valign="top"><p>
+Packages started by <span class="emphasis"><em>Squish</em></span> must be instrumented, e.g. using the
+<span class="guibutton">New...</span> in <span class="emphasis"><em>Squish</em></span> testsuite settings page,
+<span class="emphasis"><em>Squish</em></span> automatically creates and installs such an instrumentation package.
+</p><p>
+Also see <a class="xref" href="install_android.html" title="3.9. Installing Squish for Android">Installing Squish for Android (Section 3.9)</a>
+</p></td></tr></table></div><p>
+We will take as example a package com.example.android.tools from which
+a package com.example.android.carpenter launches an activity when
+tapping a button. A tool selection will automatically close the
+activity and we are back at our main activity.
+</p><div xmlns="" class="scriptlang"><form><select name="scriptlangcombo" onchange="javascript:changeScriptingLanguage(this)" onclick="javascript:changeScriptingLanguage(this)"><option value="all" selected>Show All</option><option value="JavaScript">Show JavaScript</option><option value="Perl">Show Perl</option><option value="Python">Show Python</option><option value="Ruby">Show Ruby</option><option value="Tcl">Show Tcl</option></select></form></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Python</span><pre class="programlisting">
+ctx0 = startApplication("com.example.android.tools/-")
+ctx1 = startApplication("com.example.android.carpenter")
+tapObject(waitForObject(":Choose Tool_Button")
+setApplicationContext(ctx0)
+tapObject(waitForObjectItem("_List", "Hammer"))
+setApplicationContext(ctx1)
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">JavaScript</span><pre class="programlisting">
+var ctx0 = startApplication("com.example.android.tools/-");
+var ctx1 = startApplication("com.example.android.carpenter");
+tapObject(waitForObject(":Choose Tool_Button");
+setApplicationContext(ctx0);
+tapObject(waitForObjectItem("_List", "Hammer"));
+setApplicationContext(ctx1);
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Perl</span><pre class="programlisting">
+my $ctx0 = startApplication("com.example.android.tools/-");
+my $ctx1 = startApplication("com.example.android.carpenter");
+tapObject(waitForObject(":Choose Tool_Button");
+setApplicationContext(ctx0);
+tapObject(waitForObjectItem("_List", "Hammer"));
+setApplicationContext(ctx1);
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Ruby</span><pre class="programlisting">
+ctx0 = startApplication("com.example.android.tools/-")
+ctx1 = startApplication("com.example.android.carpenter")
+tapObject(waitForObject(":Choose Tool_Button")
+setApplicationContext(ctx0)
+tapObject(waitForObjectItem("_List", "Hammer"))
+setApplicationContext(ctx1)
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Tcl</span><pre class="programlisting">
+set ctx0 [startApplication "com.example.android.tools/-"]
+set ctx1 [startApplication "com.example.android.carpenter"]
+invoke tapObject [waitForObject ":Choose Tool_Button"]
+setApplicationContext $ctx0
+invoke tapObject [waitForObjectItem "_List", "Hammer"]
+setApplicationContext $ctx1
+</pre></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="ugsac-appcontext"></a>5.12.3. How to Use ApplicationContext Objects</h3></div></div></div><p>
+It is possible to use an <code class="code">ApplicationContext</code> object to
+retieve information about the AUT it refers to. The application context
+of the AUT defined in the test suite settings can be retrieved using the
+<a class="xref" href="rgs-squish.html#defaultApplicationContext-function"><code class="function">defaultApplicationContext</code></a>
+function, and of the currently running AUT by the <a class="xref" href="rgs-squish.html#currentApplicationContext-function"><code class="function">currentApplicationContext</code></a> function. When multiple
+AUTs are started there should not be any AUT defined in the test suite
+settings—each AUT's context object can be retrieved as the return
+value of the call to the <a class="xref" href="rgs-squish.html#startApplication-function"><code class="function">startApplication</code></a>
+function which is used to start the AUT, or from the <a class="xref" href="rgs-squish.html#applicationContextList-function"><code class="function">applicationContextList</code></a> function which returns all
+the AUTs' context objects.
+</p><p>
+The <a class="xref" href="rgs-squish.html#rgss-appcontext" title="6.3.12. Application Context">Application Context (Section 6.3.12)</a> section details the properties and
+functions that are accessible from <code class="code">ApplicationContext</code>
+objects. Here are some examples.
+</p><div xmlns="" class="scriptlang"><form><select name="scriptlangcombo" onchange="javascript:changeScriptingLanguage(this)" onclick="javascript:changeScriptingLanguage(this)"><option value="all" selected>Show All</option><option value="JavaScript">Show JavaScript</option><option value="Perl">Show Perl</option><option value="Python">Show Python</option><option value="Ruby">Show Ruby</option><option value="Tcl">Show Tcl</option></select></form></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Python</span><pre class="programlisting">
+ctx = currentApplicationContext()
+test.log(ctx.commandLine)
+test.log(ctx.cwd)
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">JavaScript</span><pre class="programlisting">
+var ctx = currentApplicationContext();
+test.log(ctx.commandLine);
+test.log(ctx.cwd);
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Perl</span><pre class="programlisting">
+my $ctx = currentApplicationContext();
+test::log($ctx-&gt;commandLine);
+test::log($ctx-&gt;cwd);
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Ruby</span><pre class="programlisting">
+ctx = currentApplicationContext()
+Test.log(ctx.commandLine)
+Test.log(ctx.cwd)
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Tcl</span><pre class="programlisting">
+set ctx [currentApplicationContext]
+test log [applicationContext $ctx commandLine]
+test log [applicationContext $ctx cwd]
+</pre></div><p>
+Here we print the command line the AUT was invoked with and its current
+working directory—both are properties.
+</p><div xmlns="" class="scriptlang"><form><select name="scriptlangcombo" onchange="javascript:changeScriptingLanguage(this)" onclick="javascript:changeScriptingLanguage(this)"><option value="all" selected>Show All</option><option value="JavaScript">Show JavaScript</option><option value="Perl">Show Perl</option><option value="Python">Show Python</option><option value="Ruby">Show Ruby</option><option value="Tcl">Show Tcl</option></select></form></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Python</span><pre class="programlisting">
+ctx = currentApplicationContext()
+peakMemory = 0
+while ctx.isRunning:
+    peakMemory = max(ctx.usedMemory, peakMemory)
+    if not ctx.isFrozen(20):
+	break
+test.log("Peak Memory: %d" % peakMemory)
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">JavaScript</span><pre class="programlisting">
+var ctx = currentApplicationContext();
+var peakMemory = 0;
+while (ctx.isRunning) {
+    peakMemory = Math.max(ctx.usedMemory, peakMemory);
+    if (!ctx.isFrozen(20))
+	break;
+}
+test.log("Peak Memory: " + peakMemory);
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Perl</span><pre class="programlisting">
+my $ctx = currentApplicationContext();
+my $peakMemory = 0;
+while ($ctx-&gt;isRunning) {
+    if ($ctx-&gt;usedMemory &gt; $peakMemory) {
+	$peakMemory = $ctx-&gt;usedMemory;
+    }
+    if (!$ctx-&gt;isFrozen(20)) {
+	last;
+    }
+}
+test::log("Peak Memory: $peakMemory")
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Ruby</span><pre class="programlisting">
+ctx = currentApplicationContext()
+peakMemory = 0
+while ctx.isRunning
+    peakMemory = ctx.usedMemory &gt; peakMemory ? ctx.usedMemory : peakMemory
+    if !ctx.isFrozen(20)
+	break
+    end
+end
+Test.log("Peak Memory: #{peakMemory}")
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Tcl</span><pre class="programlisting">
+set ctx [currentApplicationContext]
+set peakMemory 0
+while {[applicationContext $ctx isRunning] == 1} {
+    if {[applicationContext $ctx usedMemory] &gt; $peakMemory} {
+	set peakMemory [applicationContext $ctx usedMemory]
+    }
+    if {![applicationContext $ctx isFrozen 20]} {
+	break
+    }
+}
+test log "Peak Memory: $peakMemory"
+</pre></div><p>
+Here we access the currently running AUT and keep track of the maximum
+amount of memory it is using. We break out of the loop if the
+application stops running (in which case <code class="code">isRunning</code> will be
+false), or if the application becomes unresponsive (frozen), after
+waiting 20 seconds.
+</p><div xmlns="" class="scriptlang"><form><select name="scriptlangcombo" onchange="javascript:changeScriptingLanguage(this)" onclick="javascript:changeScriptingLanguage(this)"><option value="all" selected>Show All</option><option value="JavaScript">Show JavaScript</option><option value="Perl">Show Perl</option><option value="Python">Show Python</option><option value="Ruby">Show Ruby</option><option value="Tcl">Show Tcl</option></select></form></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Python</span><pre class="programlisting">
+ctx = currentApplicationContext()
+test.log("STDOUT", ctx.readStdout())
+test.warning("STDERR", ctx.readStderr())
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">JavaScript</span><pre class="programlisting">
+var ctx = currentApplicationContext();
+test.log("STDOUT", ctx.readStdout());
+test.warning("STDERR", ctx.readStderr());
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Perl</span><pre class="programlisting">
+my $ctx = currentApplicationContext();
+test::log("STDOUT", $ctx-&gt;readStdout());
+test::warning("STDERR", $ctx-&gt;readStderr());
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Ruby</span><pre class="programlisting">
+ctx = currentApplicationContext()
+Test.log("STDOUT", ctx.readStdout())
+Test.warning("STDERR", ctx.readStderr())
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Tcl</span><pre class="programlisting">
+set ctx [currentApplicationContext]
+test log "STDOUT" [applicationContext $ctx readStdout]
+test warning "STDERR" [applicationContext $ctx readStderr]
+</pre></div><p>
+Here we have added everything that the AUT has written to
+<code class="code">stdout</code> and stderr to the test log, classifying all
+<code class="code">stderr</code> messages as warnings.
+</p></div></div><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" type="text/javascript" src="ScriptingLanguage.js"></script><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format">setScriptingLanguage();</script><div class="navfooter"><hr></hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="ugs-synchpoints.html">Prev</a> </td><td width="20%" align="center"><a accesskey="u" href="users-guide.html">Up</a></td><td width="40%" align="right"> <a accesskey="n" href="ugs-webnonhtml.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">5.11. How to Create and Use Synchronization Points </td><td width="20%" align="center"><a accesskey="h" href="index-noframes.html">Home</a></td><td width="40%" align="right" valign="top"> 5.13. How to Automate Native Browser Dialogs, ActiveX, and more</td></tr></table></div></body>
+<!-- Mirrored from ugs-appcontext.html by HTTrack Website Copier/3.x [XR&CO'2013], Wed, 06 Jul 2022 13:28:59 GMT -->
+</html>

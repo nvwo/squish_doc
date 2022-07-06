@@ -1,0 +1,346 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<!-- Mirrored from rel-420.html by HTTrack Website Copier/3.x [XR&CO'2013], Wed, 06 Jul 2022 13:28:56 GMT -->
+<head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><title>2.44. Version 4.2.0</title><link rel="stylesheet" href="manual.css" type="text/css"></link><meta name="generator" content="DocBook XSL Stylesheets V1.73.2"></meta><link rel="start" href="index-noframes.html" title="Squish Manual"></link><link rel="up" href="relnotes.html" title="Chapter 2. Release Notes—for Upgraders"></link><link rel="prev" href="rel-421.html" title="2.43. Version 4.2.1"></link><link rel="next" href="rel-411.html" title="2.45. Version 4.1.1"></link><style xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" type="text/css" media="screen">
+        div.toc * { margin-left: 6px; margin-right: auto; max-width: 75em; }
+        div.toc span { margin-left: 0px; }
+        * { margin-left: auto; margin-right: auto; max-width: 75em; }
+        body { margin-left: 6px; margin-right: 6px; }
+        table th { padding: .5ex }
+        table td { padding: .5ex }
+    </style><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format">
+        function keyPress() {
+            var e = window.event;
+            if ( e == undefined ) {
+                return;
+            }
+            /* ### does not properly scroll, yet
+            if ( e.keyCode == 32 ) {
+            var l = document.links;
+            for ( var i = 0; i < l.length; i++ ) {
+                if ( l[i].innerText == "Next" ) {
+                location.href = l[i].href;
+                }
+            }
+            } else
+                */
+                if ( e.keyCode == 0x08 ) {
+            var l = document.links;
+            for ( var i = 0; i < l.length; i++ ) {
+                if ( l[i].innerText == "Prev" ) {
+                location.href = l[i].href;
+                }
+            }
+            }
+        }
+        document.onkeypress = keyPress;
+    </script></head><body><div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="rel-420"></a>2.44. Version 4.2.0</h2></div></div></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><span class="section"><a href="rel-420.html#idp35901520">2.44.1. General</a></span></dt><dt><span class="section"><a href="rel-420.html#rel-422-version.4.2.0.ide.changes">2.44.2. IDE</a></span></dt><dt><span class="section"><a href="rel-420.html#idp35975840">2.44.3. Qt-specific</a></span></dt><dt><span class="section"><a href="rel-420.html#idp35986496">2.44.4. <span class="trademark">Java</span>™-specific</a></span></dt><dt><span class="section"><a href="rel-420.html#idp35995336">2.44.5. Web-specific</a></span></dt><dt><span class="section"><a href="rel-420.html#idp36008248">2.44.6. Windows (native)-specific</a></span></dt><dt><span class="section"><a href="rel-420.html#idp36014080">2.44.7. macOS-specific (Cocoa/Carbon edition)</a></span></dt><dt><span class="section"><a href="rel-420.html#idp36019704">2.44.8. iOS-specific (iPhone/iPad edition)</a></span></dt><dt><span class="section"><a href="rel-420.html#idp36033432">2.44.9. Tk-specific</a></span></dt><dt><span class="section"><a href="rel-420.html#idp36035784">2.44.10. <span class="trademark">Quality Center</span>™-specific</a></span></dt><dt><span class="section"><a href="rel-420.html#idp36042200">2.44.11. Source Packages</a></span></dt><dt><span class="section"><a href="rel-420.html#idp36043912">2.44.12. Documentation</a></span></dt></dl></div><p><span class="emphasis"><em>Squish</em></span> 4.2 is a major new release with many new features and
+bug fixes. Here is a selected summary of the release's
+highlights—a detailed list of all the main changes is given in the
+sections that follow.</p><div class="itemizedlist"><ul type="disc"><li><p>The IDE now supports the creation of
+verification points for complex item views, such as
+tables.</p></li><li><p>The choice of scripting languages used for
+recording, writing, and executing test scripts has been extended to
+include Ruby—this is in addition to JavaScript, Perl, Python, and
+Tcl.
+</p></li><li><p>Squish for Windows now
+properly recognizes WPF controls.</p></li><li><p>Squish for Web now includes dedicated support for
+SmartGWT controls in web pages.</p></li><li><p>The <span class="trademark">Quality Center</span>™ integration
+has been extended beyond <span class="trademark">Quality Center</span>™ 10 to include
+HP ALM 11; there have also been many bug fixes made.
+</p></li></ul></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="idp35901520"></a>2.44.1. General</h3></div></div></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><span class="section"><a href="rel-420.html#idp35901856">2.44.1.1. New Features</a></span></dt><dt><span class="section"><a href="rel-420.html#idp35907008">2.44.1.2. Important Bug Fixes</a></span></dt></dl></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="idp35901856"></a>2.44.1.1. New Features</h4></div></div></div><div class="itemizedlist"><ul type="disc"><li><p><a class="ulink" href="http://www.ruby-lang.org/" target="_blank">Ruby</a>
+    is now a supported scripting language and can be used for creating
+    and replaying tests.</p></li><li><p>Entire tables can be verified using table
+verification points. Currently this is available for <span class="trademark">Java</span>™, macOS,
+Qt, and Windows AUTs. See <a class="xref" href="ug-vps.html#ugv-table" title="5.22.2. How to Create and Use Table Verifications">How to Create and Use Table Verifications (Section 5.22.2)</a>.)
+    </p></li><li><p>A new <a class="xref" href="rgs-squish.html#applicationContext.detach-function"><code class="function">applicationContext.detach</code></a> method was introduced for
+<a class="xref" href="rgs-squish.html#rgss-appcontext" title="6.3.12. Application Context">Application Context (Section 6.3.12)</a> objects. This method can be used for closing (or
+detaching from) previously started (or attached)
+applications.</p></li><li><p>ApplicationContext objects now allow querying
+    the command line and start time of all launched (or attached)
+    processes, including sub-processes.</p></li><li><p>It is now possible to specify the
+<code class="option">--reportgen</code>
+    option multiple times when invoking <span class="application">squishrunner</span> on the
+    command line; this makes it possible to generate multiple report
+files in different formats at the same time.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="idp35907008"></a>2.44.1.2. Important Bug Fixes</h4></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>The stability of the <span class="application">squishserver</span> processes
+running on Windows has been significantely improved. </p></li><li><p>The support for test scripts interacting
+    with multiple applications at the same time has been greatly
+        improved. This resolves various issues when recording,
+replaying, and spying.</p></li><li><p>Various problems with breakpoints in Python
+        scripts have been resolved.</p></li><li><p>The <a class="xref" href="rgs-squish.html#source-function"><code class="function">source</code></a> function
+when used in Tcl scripts
+        now supports the <code class="code">-encoding</code> option to match
+        a Tcl 8.5 API change. This fixes using the “<span class="quote">clock
+format</span>”
+        command in Tcl 8.5 test scripts.</p></li></ul></div></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="rel-422-version.4.2.0.ide.changes"></a>2.44.2. IDE</h3></div></div></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><span class="section"><a href="rel-420.html#idp35911264">2.44.2.1. User Interface Rearrangement</a></span></dt><dt><span class="section"><a href="rel-420.html#idp35951632">2.44.2.2. Other Changes</a></span></dt><dt><span class="section"><a href="rel-420.html#idp35954552">2.44.2.3. New Features</a></span></dt><dt><span class="section"><a href="rel-420.html#idp35962392">2.44.2.4. Important Bug Fixes</a></span></dt></dl></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="idp35911264"></a>2.44.2.1. User Interface Rearrangement</h4></div></div></div><p>
+The new <span class="emphasis"><em>Squish</em></span> IDE's menus and toolbars have had several changes to
+make them more logical and easier to navigate and use.
+</p><p>
+Here is a table listing the menu changes which include a slimmed-down
+<span class="guimenu">Squish</span> menu and an improved <span class="guimenu">Run</span>
+menu:
+</p><div class="informaltable"><table border="1"><colgroup><col></col><col></col><col></col></colgroup><tbody><tr><td><span class="bold"><strong>Old Menu Option</strong></span></td><td><span class="bold"><strong>New Menu Option</strong></span></td><td><span class="bold"><strong>Notes</strong></span></td></tr><tr><td> </td><td><span class="guimenu">Navigate</span>|<span class="guimenuitem">Open Symbolic
+Name</span></td><td><span class="emphasis"><em>This is a new menu option.</em></span> Clicking this
+menu option makes <span class="emphasis"><em>Squish</em></span> open the Object Map and highlight the
+symbolic name that matches the name at the editor's cursor position or
+that is selected.</td></tr><tr><td><span class="guimenu">Squish</span>|<span class="guimenuitem">Launch AUT</span></td><td><span class="guimenu">Run</span>|<span class="guimenuitem">Launch AUT</span></td><td class="auto-generated"> </td></tr><tr><td><span class="guimenu">Squish</span>|<span class="guimenuitem">Quit AUT</span></td><td><span class="guimenu">Run</span>|<span class="guimenuitem">Quit AUT</span></td><td class="auto-generated"> </td></tr><tr><td><span class="guimenu">Squish</span>|<span class="guimenuitem">Record Test
+Case</span></td><td><span class="guimenu">Run</span>|<span class="guimenuitem">Record Test Case</span></td><td class="auto-generated"> </td></tr><tr><td><span class="guimenu">Squish</span>|<span class="guimenuitem">Record Snippet</span></td><td><span class="guimenu">Run</span>|<span class="guimenuitem">Record Snippet</span></td><td class="auto-generated"> </td></tr><tr><td><span class="guimenu">Squish</span>|<span class="guimenuitem">Run Test Suite</span></td><td><span class="guimenu">Run</span>|<span class="guimenuitem">Run Test Suite</span></td><td class="auto-generated"> </td></tr><tr><td><span class="guimenu">Squish</span>|<span class="guimenuitem">Run Test Case</span></td><td><span class="guimenu">Run</span>|<span class="guimenuitem">Run Test Case</span></td><td class="auto-generated"> </td></tr><tr><td><span class="guimenu">Squish</span>|<span class="guimenuitem">Close Test
+Suite</span></td><td><span class="guimenu">File</span>|<span class="guimenuitem">Close Test Suite</span></td><td class="auto-generated"> </td></tr><tr><td><span class="guimenu">Squish</span>|<span class="guimenuitem">Delete Test
+Suite</span></td><td><span class="guimenu">File</span>|<span class="guimenuitem">Delete Test Suite</span></td><td class="auto-generated"> </td></tr><tr><td><span class="guimenu">Squish</span>|<span class="guimenuitem">Add Symbolic
+Name</span></td><td> </td><td><span class="emphasis"><em>This is no longer a menu entry.</em></span> Click the
+Object Map's Symbolic Names lists's <span class="guibutton">New</span>
+button to create a new symbolic name.</td></tr><tr><td><span class="guimenu">Squish</span>|<span class="guimenuitem">Manage AUTs</span></td><td><span class="guimenu">Edit</span>|<span class="guimenuitem">Server
+Settings</span>|<span class="guimenuitem">Manage
+AUTs</span></td><td>This menu option is
+<span class="guimenu">Window</span>|<span class="guimenuitem">Server
+Settings</span>|<span class="guimenuitem">Manage
+AUTs</span> in the <span class="emphasis"><em>Squish</em></span> Eclipse
+integration.</td></tr><tr><td><span class="guimenu">Squish</span>|<span class="guimenuitem">Check Object
+Existence</span></td><td> </td><td><span class="emphasis"><em>This is no longer a menu entry.</em></span> Click the
+Object Map's <span class="guibutton">Check Existence</span>
+button to perform this check.</td></tr><tr><td><span class="guimenuitem">Preferences</span></td><td><span class="guimenu">Edit</span>|<span class="guimenuitem">Preferences</span></td><td>
+Note that
+on macOS the <span class="guimenuitem">Preferences</span>
+remains in the <span class="guimenu">Application</span> menu.</td></tr></tbody></table></div><p>
+The <span class="guibutton">Create New Test Suite</span> and
+<span class="guibutton">Open Test Suite</span> toolbar buttons have been moved
+out of the Test Suites view and put into the top-level toolbar.
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="idp35951632"></a>2.44.2.2. Other Changes</h4></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>The layout of the AUT section in the test
+        suite settings view has been rearranged to make it easier to
+understand and use.
+        </p></li><li><p>The <span class="guibutton">Check Existence</span>
+        button has been moved into the Object Map editor.</p></li><li><p>The settings which influence the <span class="application">squishserver</span>
+        have been moved into a separate dedicated
+        dialog.</p></li><li><p>Hidden files are no longer shown in the test
+        resources views.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="idp35954552"></a>2.44.2.3. New Features</h4></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Support for the <a class="ulink" href="http://www.ruby-lang.org/" target="_blank">Ruby</a> scripting language
+        has been added.</p></li><li><p>A new filtering dialog has been introduced to the
+        Object Map editor, which greatly simplifies the editing of real
+(multi-property)
+        names.</p></li><li><p>It is now possible to create and edit table
+        verification points as well as displaying the differences
+        between two tables in case a comparison
+        fails.</p></li><li><p>Two new toolbar buttons have been introduced
+        to the toolbar to simplify creating and opening test
+        suites.</p></li><li><p>
+Testing applications which
+        use some sort of “<span class="quote">launcher application</span>” concept has
+been greatly simplified. This makes it
+        easier to configure iOS and Java WebStart test
+        suites.</p></li><li><p>A new setting has been added which can be used
+to specify whether the IDE
+        window should remain visible while a test is recorded or
+        executed.</p></li><li><p>A new <span class="guibutton">Open Symbolic Name</span>
+        option has been added to the menu bar and to the test script
+editor's context menu in case the cursor is on a symbolic
+        name. Its action is to open the Objec Map with the relevant
+symbolic name highlighted.</p></li><li><p>It is now possible to open test suites from the
+        command line by specifying the relevant test suite's directory
+or the test suite's <code class="filename">suite.conf</code> file as an argument to
+the <span class="command"><strong>squishide</strong></span> command.</p></li><li><p>It is now possible to drag and drop test scripts,
+        test data files, and verification point files between
+        test cases, test scripts, and shared script
+        filters.</p></li><li><p>A new <span class="guibutton">Clear</span> option has
+been
+        added to the test summary view.</p></li><li><p>More IDE actions can be associated
+        with keyboard shortcuts.</p></li><li><p>The fonts and colors used for
+        Fails, Warnings, and Passes in the test results view can be
+customized using the
+        theme configuration.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="idp35962392"></a>2.44.2.4. Important Bug Fixes</h4></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>The order of test cases in XML result files
+        and when loading older test results is now
+        correct.</p></li><li><p>Fixed cases where the objects shown in the
+        <span class="guilabel">Application Objects</span> and <span class="guilabel">Property
+        View</span> views did not correspond to the AUT's current state.</p></li><li><p>Fixed a file handle leak which caused the IDE
+        to keep files open after they were no longer being used.
+        </p></li><li><p>Fixed a bug which caused the <span class="guilabel">Import
+        Test Resource</span> wizard to be empty for fresh <span class="emphasis"><em>Squish</em></span>
+        installations.</p></li><li><p>Malformed screenshot verification points are now
+        handled gracefully.</p></li><li><p>The performance of various directory-related
+        dialogs (New/Open Test Suite, Select Squish Directory) when used
+        with network-mounted (or otherwise slow) file systems has been
+        greatly improved.</p></li><li><p>Various issues with working on verification
+        point files stored in subdirectories of the
+        <code class="filename">verificationPoint</code> directory have been
+        resolved.</p></li><li><p>Fixed a problem which caused a <span class="guilabel">File
+        changed externally</span> notification to appear even
+        though there were no such external changes.</p></li><li><p>A bug which caused recorded <a class="xref" href="rgs-squish.html#startApplication-function"><code class="function">startApplication</code></a> statements to be malformed
+        in cases where the application name contains spaces has been
+        fixed.</p></li><li><p>Recording tests on <span class="trademark">Java</span>™ applications for which
+        the <span class="guilabel">Main Class</span> setting in the test suite
+        settings is used.</p></li><li><p>The control bar is no longer shown when integrating
+        the <span class="emphasis"><em>Squish</em></span> plugins into Eclipse and launching non-<span class="emphasis"><em>Squish</em></span>
+        applications.</p></li><li><p>In some situations, entries in the test suite
+setting's
+        <span class="guilabel">Environment Variables</span> section were
+mistakenly duplicated. This problem has been
+        resolved.</p></li><li><p>A problem which appeared when trying to change
+        existing keys in the test suite setting's <span class="guilabel">Environment
+Variables</span>
+        has been solved.</p></li><li><p>The verification point editor no longer has
+problems with non-ASCII characters.
+        </p></li><li><p>An issue which broke stopping at breakpoints
+        after using the 'Step' feature has been fixed.</p></li><li><p>Generating test result files for test cases
+        and test suites which have certain characters (like
+        <code class="literal">&amp;</code>, <code class="literal">&lt;</code> and
+        <code class="literal">&gt;</code>) now works properly.</p></li></ul></div></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="idp35975840"></a>2.44.3. Qt-specific</h3></div></div></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><span class="section"><a href="rel-420.html#idp35976176">2.44.3.1. New Features</a></span></dt><dt><span class="section"><a href="rel-420.html#idp35981024">2.44.3.2. Important Bug Fixes</a></span></dt></dl></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="idp35976176"></a>2.44.3.1. New Features</h4></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Qt 4.8 is now supported.</p></li><li><p>It is now possible to test Qt sub-applications
+        on Windows without modifying the host
+        application.</p></li><li><p>QML objects now expose an 'id' property which is
+the default way that <span class="emphasis"><em>Squish</em></span> identifies them.
+        </p></li><li><p>The <a class="xref" href="rgs-webconvenience.html#web-clearObjectCache-function"><code class="function">clearObjectCache</code></a> function can now be
+        used on <code class="code">QWebView</code>, <code class="code">QDeclarativeWebView</code>,
+and <code class="code">QGraphicsWebView</code>
+        widgets.</p></li><li><p>The <a class="xref" href="rgs-webconvenience.html#web-loadUrl-function"><code class="function">loadUrl</code></a> and
+        <a class="xref" href="rgs-webconvenience.html#web-evalJS-function"><code class="function">evalJS</code></a> functions can now be
+        used on <code class="code">QGraphicsWebView</code> and
+<code class="code">QDeclarativeWebView</code>
+        widgets.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="idp35981024"></a>2.44.3.2. Important Bug Fixes</h4></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Recording actions on <code class="code">QWebKit</code> widgets no longer
+        causes each action to be recorded twice.</p></li><li><p><span class="emphasis"><em>Squish</em></span> no longer overwrites the
+<code class="code">QApplication</code> object's
+        <code class="code">desktopSettingsAware</code> property, so now AUTs
+always run with their correct color palettes.
+        </p></li><li><p>Fixed the recording of mouse clicks on
+<code class="code">QGraphicsView</code>
+        objects which have no item at the clicked
+        position.</p></li><li><p>Improved support for applications using
+<code class="code">QWebView</code>
+        but which do not link against the <code class="code">QDeclarative</code>
+        library.</p></li><li><p>Actions on QML elements which are
+        flagged as having no content (i.e., ones that are not drawn on
+        screen) are no longer recorded.</p></li><li><p>Fixed a problem in the Spy tooltip (when
+        picking objects) for applications which use their own
+        palette.</p></li><li><p><code class="code">QGraphicsWebView</code> objects which are
+contained in <code class="code">QGraphicsView</code> widgets are now displayed
+correctly in the <span class="application">Spy</span>.</p></li></ul></div></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="idp35986496"></a>2.44.4. <span class="trademark">Java</span>™-specific</h3></div></div></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><span class="section"><a href="rel-420.html#idp35987200">2.44.4.1. New Features</a></span></dt><dt><span class="section"><a href="rel-420.html#idp35989872">2.44.4.2. Important Bug Fixes</a></span></dt></dl></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="idp35987200"></a>2.44.4.1. New Features</h4></div></div></div><div class="itemizedlist"><ul type="disc"><li><p><span class="emphasis"><em>Squish</em></span> now supports SWT applications which
+        use multiple Display instances.</p></li><li><p>Web pages embedded into RCP applications (i.e.
+        help viewers) are now supported.</p></li><li><p>SWT ToolItem objects gained a new 'tooltiptext'
+        property.</p></li><li><p><span class="emphasis"><em>Squish</em></span> for <span class="trademark">Java</span>™ is now supported on
+        the AIX platform.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="idp35989872"></a>2.44.4.2. Important Bug Fixes</h4></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Fixed showing native dialogs when using the
+        <span class="command"><strong>startjavaaut</strong></span> command in some
+        situations.</p></li><li><p>Fixed a problem which caused the
+<a class="xref" href="rgs-javaconvenience.html#java-chooseColor-function"><code class="function">chooseColor</code></a>,
+<a class="xref" href="rgs-javaconvenience.html#java-chooseDirectory-function"><code class="function">chooseDirectory</code></a>,
+<a class="xref" href="rgs-javaconvenience.html#java-chooseFile-function"><code class="function">chooseFile</code></a>, and
+<a class="xref" href="rgs-javaconvenience.html#java-closeMessageBox-function"><code class="function">closeMessageBox</code></a> functions
+        to not report an error in case the specified dialog didn't
+        get opened.</p></li><li><p>Resolved a problem with replaying tests on
+        RCP Indigo Cocoa applications on macOS.</p></li><li><p>Made replaying text input using the
+<a class="xref" href="rgs-javaconvenience.html#java-type-function"><code class="function">type</code></a>
+        function more stable.</p></li><li><p>Resolved a problem which caused Webstart
+        applications to get stuck when they start.</p></li><li><p>Fixed a problem with recording
+<code class="code">setValue</code>
+        calls where the 'value' argument was wrong in some
+        cases.</p></li></ul></div></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="idp35995336"></a>2.44.5. Web-specific</h3></div></div></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><span class="section"><a href="rel-420.html#idp35995656">2.44.5.1. New Features</a></span></dt><dt><span class="section"><a href="rel-420.html#idp36001432">2.44.5.2. Important Bug Fixes</a></span></dt></dl></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="idp35995656"></a>2.44.5.1. New Features</h4></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>All Firefox versions up to version 10 are now
+        supported.</p></li><li><p>Much improved support for <a class="ulink" href="http://code.google.com/p/smartgwt/" target="_blank">SmartGWT</a>
+        controls including: Calendar, ColorChooser, ComboBox,
+DateChooser, ListGrid, Menubar, MenuButton, Menus, ProgressBar,
+Sections, SelectItem, TabWidget, and TreeGrid.</p></li><li><p>The <a class="xref" href="rgs-squish.html#waitForObjectItem-function"><code class="function">waitForObjectItem</code></a>
+        function is now fully supported when creating Web
+        tests.</p></li><li><p>The <a class="xref" href="rgs-webconvenience.html#web-clickItem-function"><code class="function">clickItem</code></a>
+        function can now be called with row and column numbers instead
+        of the item's text.</p></li><li><p>When recording web tests, a new <a class="xref" href="rgs-webconvenience.html#web-clickTab-function"><code class="function">clickTab</code></a> function call is recorded in some
+        cases.</p></li><li><p>A new 'overlay mode' was introduced which shows
+        useful information for elements under the mouse cursor. See
+        <a class="ulink" href="https://kb.froglogic.com/display/KB/Article - How to activate the Squish object popup (Web)" target="_blank">How
+to activate the Squish object popup
+        Knowledge Base article</a> for how to enable and use this
+        mode.</p></li><li><p>The
+<a class="xref" href="rgs-webconvenience.html#web-HTML_CustomItemView-class" title="6.10.16. HTML_CustomItemView Class">HTML_CustomItemView Class (Section 6.10.16)</a>
+ extension API now
+        supports modeling trees with multiple columns.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="idp36001432"></a>2.44.5.2. Important Bug Fixes</h4></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>The calculation of on-screen coordinates
+        (including the size) for Web elements has been greatly
+        improved. This makes it much easier to use screenshot
+        verification points in Web tests.</p></li><li><p>The <a class="xref" href="rgs-webconvenience.html#web-scrollTo-function"><code class="function">scrollTo</code></a>
+function now works correctly for elements in item views which have their
+own scrollbar (and also for similiar cases such as tab widgets, pure
+HTML 'windows' etc.).</p></li><li><p>Object lookup (and picking) now works on images
+        which have 'alt' attributes containing special characters (such
+as
+        <code class="code">\n</code> or <code class="code">\r</code>).</p></li><li><p>Fixed calling the <a class="xref" href="rgs-webconvenience.html#web-loadUrl-function"><code class="function">loadUrl</code></a>
+        function right after closing the browser window using the
+        <a class="xref" href="rgs-squish.html#nativeType-function"><code class="function">nativeType</code></a> function (e.g. by typing
+        <code class="literal">&lt;Alt+F4&gt;</code>).</p></li><li><p>Resolved an issue which caused problems when
+        creating screenshot verification points on macOS
+        Lion.</p></li><li><p>The GWT support now works correctly with recent
+        GWT versions.</p></li><li><p>The <a class="xref" href="rgs-webconvenience.html#web-typeText-function"><code class="function">typeText</code></a>
+        function now works correctly with Internet Explorer 8 and
+later versions.</p></li><li><p>A bug which made listing itemview child items
+very slow has been resolved.</p></li><li><p>Generating object names for itemview items has
+been optimized.</p></li><li><p>Interactions with file upload form elements now
+        replay more reliably.</p></li></ul></div></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="idp36008248"></a>2.44.6. Windows (native)-specific</h3></div></div></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><span class="section"><a href="rel-420.html#idp36008568">2.44.6.1. New Features</a></span></dt><dt><span class="section"><a href="rel-420.html#idp36009936">2.44.6.2. Important Bug Fixes</a></span></dt></dl></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="idp36008568"></a>2.44.6.1. New Features</h4></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Dedicated support for the WPF toolkit has been
+        added.</p></li><li><p>Support for recognizing labels in
+        Visual Basic 6 applications has been added.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="idp36009936"></a>2.44.6.2. Important Bug Fixes</h4></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Looking up MFC listbox items using regular
+        expressions now works correctly.</p></li><li><p>Pressing the 'Windows' key is now recorded
+        and replayed correctly.</p></li><li><p>Replaying actions on disabled or hidden .NET
+        controls no longer silently succeeds; instead, an exception
+        is thrown (as intended).</p></li><li><p>Fixed automating Windows Forms applications
+        which show a splash screen in a different thread than the
+        main window.</p></li><li><p>Automating Exontrol, Infragistics, or generic
+        ActiveX controls now works properly if Squish is installed in a
+        path with more than 100 characters.</p></li><li><p>Fixed a crash which occurred when performing
+        object lookups using nested properties (i.e. <code class="code">{type='List'
+        nativeObject.Items.Count='50'}</code>).</p></li><li><p>Fixed a potentially large slowdown of test
+        execution for tests which use the <code class="code">text</code> property for
+        identifying some objects.</p></li><li><p>In some cases, the 'Extra Windows' setting
+        was not respected; this has been fixed.</p></li></ul></div></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="idp36014080"></a>2.44.7. macOS-specific (Cocoa/Carbon edition)</h3></div></div></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><span class="section"><a href="rel-420.html#idp36014448">2.44.7.1. New Features</a></span></dt><dt><span class="section"><a href="rel-420.html#idp36016192">2.44.7.2. Important Bug Fixes</a></span></dt></dl></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="idp36014448"></a>2.44.7.1. New Features</h4></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>The <a class="xref" href="rgs-squish.html#nativeType-function"><code class="function">nativeType</code></a> function
+        now accepts key combinations like
+        <code class="literal">&lt;Ctrl+F2&gt;</code>.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="idp36016192"></a>2.44.7.2. Important Bug Fixes</h4></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Replaying tests will now wake up the display
+        if it is in sleep mode.</p></li><li><p>Various stability issues with the
+        <a class="xref" href="rgs-macconvenience.html#mac-grabWidget-function"><code class="function">grabWidget</code></a> function have been
+        resolved.</p></li><li><p>Fixed a bug which caused the AUT to get stuck
+        when replaying menu interactions.</p></li><li><p>Taking screenshots on macOS 10.7 ("Lion")
+        now works correctly.</p></li><li><p>It is now possible to pick objects even if a
+        completely transparent window is in front of another window (the
+        transparent window is ignored).</p></li><li><p>Recording and replaying presses of the
+<span class="keysym">Enter</span>
+        key now works correctly.</p></li></ul></div></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="idp36019704"></a>2.44.8. iOS-specific (iPhone/iPad edition)</h3></div></div></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><span class="section"><a href="rel-420.html#idp36020064">2.44.8.1. Other Changes</a></span></dt><dt><span class="section"><a href="rel-420.html#idp36024352">2.44.8.2. New Features</a></span></dt><dt><span class="section"><a href="rel-420.html#idp36030880">2.44.8.3. Important Bug Fixes</a></span></dt></dl></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="idp36020064"></a>2.44.8.1. Other Changes</h4></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Changed the wrapper library from a dynamic library
+        to a static library for testing on a device. This was done to make
+        the whole setup for device testing easier and less error prone
+        (especially the additional code signing step for the dynamic
+        library caused a lot of problems and is no longer needed).</p><p>If you already used device testing with <span class="emphasis"><em>Squish</em></span> before the
+        4.2 release, please note that you have to first revert the changes
+        to your Xcode project and follow the steps described in <a class="xref" href="tutorials-iphone.html#testing..iphone..apps.on.an.iphone" title="4.9.1.7. Notes on Testing iOS Apps in an iPhone or iPad">Notes on Testing iOS Apps in an iPhone or iPad (Section 4.9.1.7)</a>.</p><p>Reverting the changes means that you have to remove the
+        <code class="filename">libsquishcocoatouchwrapper.dylib</code> from your
+        project and remove it from the <span class="guilabel">Other Code Signing
+        Flags</span> entry in your project settings. You should also
+        remove the <code class="filename">macbuiltinhook.h</code> from your Xcode
+        project. Then you are ready to do the necessary changes for
+        <span class="emphasis"><em>Squish</em></span> 4.2.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="idp36024352"></a>2.44.8.2. New Features</h4></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Added support for iOS 5.</p></li><li><p>Introduced iOS as its own test suite type. This
+        means that you no longer have to create a Mac test suite and use
+        the <code class="filename">iphonelauncher</code> utility as the AUT. If you
+        have a iOS test suite, you can specify the iOS app (built for
+        running in the simulator) directly as an AUT.</p><p>Your old test suites will continue to work. But when you
+        create new test suites, you should start using the iOS test type
+        instead.</p><p>If you want to convert your existing test suites to the new
+        test type, you can open the <code class="filename">suite.conf</code> of your
+        test suite in a text editor and change the line
+        <code class="code">WRAPPERS=Mac</code> to <code class="code">WRAPPERS=iOS</code>. Then you
+        can open the test suite in the <span class="application">Squish IDE</span> and change the
+        <span class="guilabel">Application:</span> from
+        <code class="filename">iphonelauncher</code> to your iOS application. If you
+        specified any <span class="guilabel">Arguments:</span> other than your iOS
+        app, you have to move them to the <span class="guilabel">Launcher
+        Arguments:</span> line edit. And you should also remove the
+        path to your iOS app from the <span class="guilabel">Arguments:</span> line
+        edit (the entry should be empty).</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="idp36030880"></a>2.44.8.3. Important Bug Fixes</h4></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Fixed various issues with the
+<a class="xref" href="rgs-iphoneconvenience.html#iphone-touchAndDrag-function"><code class="function">touchAndDrag</code></a>
+        function.</p></li><li><p>A bug which broke executing <a class="xref" href="rgs-iphoneconvenience.html#iphone-touchAndDrag-function"><code class="function">touchAndDrag</code></a> right after executing <a class="xref" href="rgs-iphoneconvenience.html#iphone-clickObject-function"><code class="function">clickObject</code></a> has been
+fixed.</p></li></ul></div></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="idp36033432"></a>2.44.9. Tk-specific</h3></div></div></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><span class="section"><a href="rel-420.html#idp36033768">2.44.9.1. New Features</a></span></dt><dt><span class="section"><a href="rel-420.html#idp36034728">2.44.9.2. Important Bug Fixes</a></span></dt></dl></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="idp36033768"></a>2.44.9.1. New Features</h4></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Added a runtime configuration setting to enable
+        or disable the TkInter name generation.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="idp36034728"></a>2.44.9.2. Important Bug Fixes</h4></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>A problem which made it impossible to disable
+        hooking Tk applications' sub-processes applications on Unix has
+been fixed.</p></li></ul></div></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="idp36035784"></a>2.44.10. <span class="trademark">Quality Center</span>™-specific</h3></div></div></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><span class="section"><a href="rel-420.html#idp36036424">2.44.10.1. New Features</a></span></dt><dt><span class="section"><a href="rel-420.html#idp36038040">2.44.10.2. Important Bug Fixes</a></span></dt></dl></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="idp36036424"></a>2.44.10.1. New Features</h4></div></div></div><div class="itemizedlist"><ul type="disc"><li><p><span class="trademark">Quality Center</span>™ 11 is now supported.</p></li><li><p>Screenshots generated by FAIL or FATAL results
+        are now attached to the test run.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="idp36038040"></a>2.44.10.2. Important Bug Fixes</h4></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>The <span class="command"><strong>qcimporter</strong></span> utility
+        program now allows importing test cases which have
+        whitespace in their names.</p></li><li><p>Fixed a problem which caused the test status
+        to be wrong when executing <span class="emphasis"><em>Squish</em></span> tests from within
+        <span class="trademark">Quality Center</span>™.</p></li><li><p>In case the plugin fails to launch
+        <span class="application">squishrunner</span>, an appropriate test result is logged in
+        <span class="trademark">Quality Center</span>™.</p></li><li><p>Resolved an issue which caused the result
+        viewer to show the results of an older test run (instead of
+        the selected run) in some cases.</p></li></ul></div></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="idp36042200"></a>2.44.11. Source Packages</h3></div></div></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><span class="section"><a href="rel-420.html#idp36042624">2.44.11.1. Important Bug Fixes</a></span></dt></dl></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="idp36042624"></a>2.44.11.1. Important Bug Fixes</h4></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Source packages can now be compiled with
+        Xcode 4.2 on macOS.</p></li></ul></div></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="idp36043912"></a>2.44.12. Documentation</h3></div></div></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><span class="section"><a href="rel-420.html#idp36044256">2.44.12.1. New Features</a></span></dt><dt><span class="section"><a href="rel-420.html#idp36045168">2.44.12.2. Important Bug Fixes</a></span></dt></dl></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="idp36044256"></a>2.44.12.1. New Features</h4></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Ruby versions of the examples have been
+added.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="idp36045168"></a>2.44.12.2. Important Bug Fixes</h4></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Minor improvements and additions have been made
+throughout.</p></li><li><p>The documentation of the <span class="trademark">Quality Center</span>™ plugin was
+        rewritten from scratch, now reflecting the current state of
+        things and discussign more recent Quality Center
+        versions.</p></li></ul></div></div></div></div><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" type="text/javascript" src="ScriptingLanguage.js"></script><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format">setScriptingLanguage();</script><div class="navfooter"><hr></hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="rel-421.html">Prev</a> </td><td width="20%" align="center"><a accesskey="u" href="relnotes.html">Up</a></td><td width="40%" align="right"> <a accesskey="n" href="rel-411.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">2.43. Version 4.2.1 </td><td width="20%" align="center"><a accesskey="h" href="index-noframes.html">Home</a></td><td width="40%" align="right" valign="top"> 2.45. Version 4.1.1</td></tr></table></div></body>
+<!-- Mirrored from rel-420.html by HTTrack Website Copier/3.x [XR&CO'2013], Wed, 06 Jul 2022 13:28:56 GMT -->
+</html>

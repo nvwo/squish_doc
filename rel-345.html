@@ -1,0 +1,116 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<!-- Mirrored from rel-345.html by HTTrack Website Copier/3.x [XR&CO'2013], Wed, 06 Jul 2022 13:28:57 GMT -->
+<head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><title>2.56. Version 3.4.5</title><link rel="stylesheet" href="manual.css" type="text/css"></link><meta name="generator" content="DocBook XSL Stylesheets V1.73.2"></meta><link rel="start" href="index-noframes.html" title="Squish Manual"></link><link rel="up" href="relnotes.html" title="Chapter 2. Release Notes—for Upgraders"></link><link rel="prev" href="rel-4-beta1-changes.html" title="2.55. Changes in 4.0 Beta 1"></link><link rel="next" href="rel-344.html" title="2.57. Version 3.4.4"></link><style xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" type="text/css" media="screen">
+        div.toc * { margin-left: 6px; margin-right: auto; max-width: 75em; }
+        div.toc span { margin-left: 0px; }
+        * { margin-left: auto; margin-right: auto; max-width: 75em; }
+        body { margin-left: 6px; margin-right: 6px; }
+        table th { padding: .5ex }
+        table td { padding: .5ex }
+    </style><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format">
+        function keyPress() {
+            var e = window.event;
+            if ( e == undefined ) {
+                return;
+            }
+            /* ### does not properly scroll, yet
+            if ( e.keyCode == 32 ) {
+            var l = document.links;
+            for ( var i = 0; i < l.length; i++ ) {
+                if ( l[i].innerText == "Next" ) {
+                location.href = l[i].href;
+                }
+            }
+            } else
+                */
+                if ( e.keyCode == 0x08 ) {
+            var l = document.links;
+            for ( var i = 0; i < l.length; i++ ) {
+                if ( l[i].innerText == "Prev" ) {
+                location.href = l[i].href;
+                }
+            }
+            }
+        }
+        document.onkeypress = keyPress;
+    </script></head><body><div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="rel-345"></a>2.56. Version 3.4.5</h2></div></div></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><span class="section"><a href="rel-345.html#idp36573504">2.56.1. General</a></span></dt><dt><span class="section"><a href="rel-345.html#idp36582328">2.56.2. IDE</a></span></dt><dt><span class="section"><a href="rel-345.html#idp36585776">2.56.3. Qt-specific</a></span></dt><dt><span class="section"><a href="rel-345.html#idp36595656">2.56.4. Java-specific</a></span></dt><dt><span class="section"><a href="rel-345.html#idp36598824">2.56.5. Web-specific</a></span></dt><dt><span class="section"><a href="rel-345.html#idp36601304">2.56.6. Mac-specific (Cocoa/Carbon edition)</a></span></dt><dt><span class="section"><a href="rel-345.html#idp36604200">2.56.7. Tk-specific</a></span></dt><dt><span class="section"><a href="rel-345.html#idp36607384">2.56.8. Source Builds</a></span></dt></dl></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="idp36573504"></a>2.56.1. General</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Fixed the crash that occurred when invalid switch
+statements were encountered in Tcl test scripts.</p></li><li><p>Fixed backtraces shown in the test result logs for Tcl
+scripts.</p></li><li><p>Fixed the usage of "\[" in wildcard matching patterns for
+property values.</p></li><li><p>Setup: Fixed <code class="code">writeConfiguration()</code> so that
+it now shows the correct license key file if it exists, even if it could
+not be overwritten because it is set to read-only.</p></li><li><p>Added documentation for the Squish Hudson
+Plugin.</p></li><li><p>Fixed the Perl <code class="code">testData::put()</code>
+function.</p></li><li><p>Implemented the
+<code class="code">ApplicationContext.usedMemory</code>
+property on Windows.</p></li><li><p>The <code class="code">objectMap.load()</code> function now throws a
+script exception if passed an invalid file name.</p></li><li><p>Fixed the Python script call stack; this means that
+<code class="code">test.verify()</code> now logs
+the correct filename and line number.</p></li><li><p>Fixed Perl code generation of Verification Points for
+nested properties like geometry.x.</p></li><li><p>Improved the test log messages for Python
+exceptions.</p></li><li><p>Now default to using 'localhost' if an empty host name
+is passed to <code class="code">startApplication()</code>.</p></li><li><p>Fixed the execution of Tcl scripts with one-line command
+definitions such as <code class="code">proc p {} "test log Hello"</code>.</p></li><li><p>Fixed the reporting of errors from functions on the
+JavaScript SQL object.</p></li><li><p>Fixed the parsing of comments in
+<code class="filename">squishserverrc</code> and other
+configuration files.</p></li><li><p>Implemented <code class="code">nativeType("&lt;Alt+Space&gt;")</code>
+for Windows and macOS.</p></li><li><p>macOS only: added support for more special keys
+(like "&lt;Down&gt;") and key combinations (like "&lt;Command+q&gt;") to
+the <code class="code">nativeType()</code> function.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="idp36582328"></a>2.56.2. IDE</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Fixed the extraction of multi-property names from FAIL's
+for copying the new screenshot as expected in a Verification
+Point.</p></li><li><p>Improved the Spy's interaction with the Object Map. This
+fixes, for example, 'Object existence' checks.</p></li><li><p>Pressing Esc in a "Save changed file?" dialog cancels
+the closing of the editor instead of closing without saving the
+changes.</p></li><li><p>Fixed loading Excel files into the Test Data
+Editor—empty cells are no longer ignored.</p></li><li><p>Fixed the test result messages when saving a test report
+via the 'Save Results As...' menu entry.</p></li><li><p>Fixed the replay of tests if the current working directory
+in the suite's settings contains spaces.</p></li><li><p>Fixed a case where the
+<code class="code">SQUISH_TESTCASE_TEMPLATES</code>
+environment variable was not respected.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="idp36585776"></a>2.56.3. Qt-specific</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Added support for Qt 4.6.</p><p>Note: Qt 4.6.0 on Windows renders text differently from previous
+Qt versions—this is likely to break existing screenshot
+verifications. If this is related to the Qt bug (<a class="ulink" href="http://bugreports.qt.io/browse/QTBUG-6578" target="_blank">QTBUG-6578</a>)
+it <span class="emphasis"><em>might</em></span> be reverted in 4.6.1. </p></li><li><p>Now the button's focus policy on
+<code class="code">clickButton()</code> calls is respected.</p></li><li><p>Improved the hooking stability for applications which use
+multiple <code class="code">QApplication</code> objects.</p></li><li><p>Now avoid possible memory corruption in internal
+<code class="code">QObjectList</code>s.</p></li><li><p>Added a 'backgroundColor' property to
+<code class="code">QModelIndex</code> objects.</p></li><li><p>Added a safeguard against crashes caused by reentrant
+calls to the event queue flushing function.</p></li><li><p>Made <code class="code">setMouseTracking()</code>,
+<code class="code">setUniqueProperty()</code>, and
+<code class="code">setAllowKeyEventCompression()</code>, work for custom
+classes.</p></li><li><p>Fixed finding objects that have parenthesis, brackets,
+dot ('.') or star ('*') in their Qt object name.</p></li><li><p>Raise an exception if <code class="code">sendEvent()</code> is called
+with the wrong number of arguments.</p></li><li><p>Monkey tester: now also considers top-level objects for
+user actions in addition to their children.</p></li><li><p>Stopped leaking <code class="code">QString</code> objects that are
+created on-the-fly from native script strings.</p></li><li><p>Fixed the recording of context menu actions on item
+views.</p></li><li><p>Applied stricter type checks in various functions
+accepting <code class="code">QWidget</code> arguments to protect against invalid
+input.</p></li><li><p>macOS with Qt 4 only: fixed a crash that happened
+in rare circumstances when the AUT exited.</p></li><li><p>macOS with Qt 4.5 only: record "&lt;Tab&gt;"
+instead of the non-portable "&lt;-&gt;|&gt;" ("-&gt;|" represents the
+tab symbol as ASCII art).</p></li><li><p>Fixed Qt 4 Wrapper Explorer crash on macOS ("dyld:
+Symbol not found: __ZnwmPv").</p></li><li><p>Return native long integer values if a wrapped API has
+a "long" return type.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="idp36595656"></a>2.56.4. Java-specific</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Added 'MessageBoxOpened' as a possible option for the
+<code class="code">installEventHandler()</code> function.  The event handler will be
+called in SWT when a native message box is shown. </p></li><li><p>Fixed the exception that occurred when running
+<span class="application">setup</span> and <code class="filename">rt.jar</code>
+doesn't contain a manifest.</p></li><li><p>Fixed Eclipse hooking if the "Java for Mac OS X 10.5
+Update 4" is installed.</p></li><li><p>Fixed Java hooking on macOS after installing the
+Java security update of June 15, 2009.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="idp36598824"></a>2.56.5. Web-specific</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Added support for Firefox version 3.5.2 and
+later.</p></li><li><p> Added support for Safari 4 for Web-testing on macOS.</p></li><li><p>Improved the <code class="code">setFrameContext()</code> function to
+also consider the name attribute of frames.</p></li><li><p>Added support for the Richfaces toolkit's Combobox.</p></li><li><p>Fixed the replay of multi-line text input in web page
+&lt;textarea&gt; fields.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="idp36601304"></a>2.56.6. Mac-specific (Cocoa/Carbon edition)</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Fixed a crash in Squish for Mac when accessing
+certain cells in <code class="code">NSTableViews</code>.</p></li><li><p>Added support for <code class="code">NSAttributedStrings</code> for
+testing Cocoa applications.</p></li><li><p>Added support for the event type "SheetOpened" in the
+<code class="code">installEventHandler()</code> function (Cocoa only).</p></li><li><p>Improved the detection of the field editor (i.e. use
+the correct <code class="code">NSTextField</code> object when recording keyboard
+input when a non-default field editor is used).</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="idp36604200"></a>2.56.7. Tk-specific</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Fixed reference-counting of the object returned by
+the <code class="code">tcleval()</code> function.</p></li><li><p>Avoid access to deleted mainwindow to prevent
+crashes.</p></li><li><p>Fixed recording on <code class="code">Canvas</code> widgets when the
+item that was pressed is overlaid by another item before the release
+happens.</p></li><li><p>Make the Tk wrapper compilable with Qt 4 provided that
+the <code class="code">Qt3Support</code> module is present.</p></li><li><p>Don't record redundant <code class="code">snooze()</code> statements
+when the Pause key is used to insert comments into test
+scripts.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="idp36607384"></a>2.56.8. Source Builds</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Fixed compilation on Mac OS 10.6 (Snow Leopard) if the
+system Perl library is being used.</p></li><li><p>Support compilation with Tcl 8.3.</p></li></ul></div></div></div><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" type="text/javascript" src="ScriptingLanguage.js"></script><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format">setScriptingLanguage();</script><div class="navfooter"><hr></hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="rel-4-beta1-changes.html">Prev</a> </td><td width="20%" align="center"><a accesskey="u" href="relnotes.html">Up</a></td><td width="40%" align="right"> <a accesskey="n" href="rel-344.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">2.55. Changes in 4.0 Beta 1 </td><td width="20%" align="center"><a accesskey="h" href="index-noframes.html">Home</a></td><td width="40%" align="right" valign="top"> 2.57. Version 3.4.4</td></tr></table></div></body>
+<!-- Mirrored from rel-345.html by HTTrack Website Copier/3.x [XR&CO'2013], Wed, 06 Jul 2022 13:28:57 GMT -->
+</html>

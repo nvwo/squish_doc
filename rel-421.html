@@ -1,0 +1,139 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<!-- Mirrored from rel-421.html by HTTrack Website Copier/3.x [XR&CO'2013], Wed, 06 Jul 2022 13:28:56 GMT -->
+<head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><title>2.43. Version 4.2.1</title><link rel="stylesheet" href="manual.css" type="text/css"></link><meta name="generator" content="DocBook XSL Stylesheets V1.73.2"></meta><link rel="start" href="index-noframes.html" title="Squish Manual"></link><link rel="up" href="relnotes.html" title="Chapter 2. Release Notes—for Upgraders"></link><link rel="prev" href="rel-422.html" title="2.42. Version 4.2.2"></link><link rel="next" href="rel-420.html" title="2.44. Version 4.2.0"></link><style xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" type="text/css" media="screen">
+        div.toc * { margin-left: 6px; margin-right: auto; max-width: 75em; }
+        div.toc span { margin-left: 0px; }
+        * { margin-left: auto; margin-right: auto; max-width: 75em; }
+        body { margin-left: 6px; margin-right: 6px; }
+        table th { padding: .5ex }
+        table td { padding: .5ex }
+    </style><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format">
+        function keyPress() {
+            var e = window.event;
+            if ( e == undefined ) {
+                return;
+            }
+            /* ### does not properly scroll, yet
+            if ( e.keyCode == 32 ) {
+            var l = document.links;
+            for ( var i = 0; i < l.length; i++ ) {
+                if ( l[i].innerText == "Next" ) {
+                location.href = l[i].href;
+                }
+            }
+            } else
+                */
+                if ( e.keyCode == 0x08 ) {
+            var l = document.links;
+            for ( var i = 0; i < l.length; i++ ) {
+                if ( l[i].innerText == "Prev" ) {
+                location.href = l[i].href;
+                }
+            }
+            }
+        }
+        document.onkeypress = keyPress;
+    </script></head><body><div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="rel-421"></a>2.43. Version 4.2.1</h2></div></div></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><span class="section"><a href="rel-421.html#idp35860296">2.43.1. General</a></span></dt><dt><span class="section"><a href="rel-421.html#idp35864096">2.43.2. IDE</a></span></dt><dt><span class="section"><a href="rel-421.html#idp35868608">2.43.3. Qt-specific</a></span></dt><dt><span class="section"><a href="rel-421.html#idp35876680">2.43.4. <span class="trademark">Java</span>™-specific</a></span></dt><dt><span class="section"><a href="rel-421.html#idp35880312">2.43.5. Web-specific</a></span></dt><dt><span class="section"><a href="rel-421.html#idp35883888">2.43.6. Windows (native)-specific</a></span></dt><dt><span class="section"><a href="rel-421.html#idp35887664">2.43.7. macOS-specific (Cocoa/Carbon edition)</a></span></dt><dt><span class="section"><a href="rel-421.html#idp35889400">2.43.8. iOS-specific (iPhone/iPad edition)</a></span></dt><dt><span class="section"><a href="rel-421.html#idp35891224">2.43.9. Tk-specific</a></span></dt><dt><span class="section"><a href="rel-421.html#idp35892120">2.43.10. Source Packages</a></span></dt><dt><span class="section"><a href="rel-421.html#idp35895096">2.43.11. Documentation</a></span></dt></dl></div><p><span class="emphasis"><em>Squish</em></span> 4.2.1 is a maintenance release containing various bug fixes
+and small improvements as described below:</p><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="idp35860296"></a>2.43.1. General</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Fix exception type for waitForObjectItem() to be
+LookupError again, as functioned in Squish
+4.2.0</p></li><li><p>Fixed setting breakpoints in test cases with non-ascii
+names when using Python as script language.</p></li><li><p>Avoid 'Connection to server closed' test result when
+using ApplicationContext.detach() method to detach from contexts in
+test scripts.</p></li><li><p>Correctly detect syntax errors in Tcl's
+startApplication() and attachToApplication().</p></li><li><p>Output Table VP results in Xml2 test result
+converter.</p></li><li><p>Fixed Table VP comparison with leading or trailing
+whitespace in cell text.</p></li><li><p>Fixed parsing of optional timeout parameter of
+Python's and Tcl's waitForObjectItem() implementations.</p></li><li><p>Signed Windows executables Setup.exe and squishide.exe
+with the froglogic certificate.</p></li><li><p>Upgraded packaged Ruby version to 1.9.3 to fix a crash
+when single stepping through the debugger.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="idp35864096"></a>2.43.2. IDE</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Made clicking 'Copy Symbolic Name' and 'Copy Real
+Name' context menu entries in the IDE try to reuse object names if
+possible.</p></li><li><p>Sped up Test Result export.</p></li><li><p>Insert correct dataset variable name for JavaScript in
+code that is made data-driven.</p></li><li><p>Fixed enabled/disabled state issues of menu
+items.</p></li><li><p>Safely handle imports of test suites when name
+contains case variations.</p></li><li><p>Improved tooltips for Test Cases in Test Suites
+views.</p></li><li><p>Fixed problem with fetching sub-properties too
+often.</p></li><li><p>Automatically update non-active but visible watch
+editors.</p></li><li><p>Fixed testdata file labelling in
+testcases.</p></li><li><p>Switched to a faster table control for viewing table
+VP differences.</p></li><li><p>Fixed finding VP files with relative paths using
+Unix-separators.</p></li><li><p>Fixed display of old-style hierarchical names in
+Object Map editor.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="idp35868608"></a>2.43.3. Qt-specific</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Fixed QWheelEvent recording.</p></li><li><p>Made hooking into 64-bit Windows processes more
+reliably.</p></li><li><p>Disabled low-level Windows COM hooking approach on
+64-bit Windows processes as it does not operate
+reliable.</p></li><li><p>Fixed Object Map name-reuse for nested multiproperty
+names (i.e. container, window).</p></li><li><p>Added support for sending QMouseEvent with Qt 4 constructor
+syntax, i.e. with buttons and modifiers as separate
+arguments.</p></li><li><p>Correctly handle keyboard modifiers from
+openContextMenu on replay.</p></li><li><p>Added missing properties (enabled, opacity, pos, scale,
+transformOriginPoint) to QGraphicsItem and QGraphicsObject
+subclasses.</p></li><li><p>Fixed support for Q_ENUM properties in dynamically
+registered QObject subclasses in Qt 3.</p></li><li><p>Added QList&lt;int&gt; and QList&lt;QString&gt; support as return types
+for methods of dynamically wrapped QObject
+subclasses.</p></li><li><p>Fixed recording using hierarchical names after picking an
+object in Spy-mode.</p></li><li><p>Exposed width and height properties of QML
+Items.</p></li><li><p>Fixed Table VPs when QTableView has hidden or
+reordered rows/columns. Table contents are now stored as they appear
+on-screen. Existing VPs for affected tables need to be updated,
+i.e. by using "Use as Expected Result" in the IDE.</p></li><li><p>Handle QTouchEvent in QtWebkit
+views.</p></li><li><p>Fixed relative coordinates calculation in
+sendEvent().</p></li><li><p>Implemented new properties 'rotation' for
+QGraphicsItem and 'textCursor' for
+QGraphicsTextItem.</p></li><li><p>Mac only: Fixed incorrect "architecture not supported"
+alarm.</p></li><li><p>Improved performance when testing embedded QWebView
+HTML controls.</p></li><li><p>Hide "ghost" widgets showing when attaching to an AUT
+using QGraphicsProxyWidget.</p></li><li><p>Made squishrunner more robust in case of sudden AUT
+context switches.</p></li><li><p>Fixed crashes when accessing references to an already
+deleted QWebView object.</p></li><li><p>Fixed QML id fetching for Qt 4.8.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="idp35876680"></a>2.43.4. <span class="trademark">Java</span>™-specific</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Made closeWindow() script function more reliable in a
+mixed SWT/AWT application.</p></li><li><p>Added alternative hookup method when environment
+SQUISH_NO_QT_GUI variable is set to '1', primarily as a workaround for a
+crash on X11 in libfontconfig.so.</p></li><li><p>Fixed hang during hookup of some SWT
+applications.</p></li><li><p>Fixed crash during picking objects on
+X11.</p></li><li><p>Fixed crash with mixed SWT/AWT application and using
+attachToApplication.</p></li><li><p>Fixed error in setValue() of AWT WebStart
+applications.</p></li><li><p>Avoid crash on JVM shutdown.</p></li><li><p>Made object-readiness and geometry checks more robust
+in Web Start and Applets.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="idp35880312"></a>2.43.5. Web-specific</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Added label property on HTML_CustomComboBox and
+HTML_CustomSelectList support.</p></li><li><p>Fixed recording support using Proxy Browser.</p></li><li><p>Fixed typeText() exception with IE and Firefox.</p></li><li><p>Fixed querying properties with names that collide
+with JavaScript keywords (like 'for').</p></li><li><p>Added SmartGWT button text property.</p></li><li><p>Made selectOption() work with SmartGWT select elements
+including combo boxes.</p></li><li><p>Fixed setting text on invisible file-upload
+elements.</p></li><li><p>Provide more SmartGWT TextField properties.</p></li><li><p>Re-added support for accessing object sub-properties
+like "style.display" using the HTML_Object.property()
+function.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="idp35883888"></a>2.43.6. Windows (native)-specific</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Fixed various problems in which hooking into .NET
+application failed because unzipping a Squish package made Windows
+mark a few important DLL files as 'blocked'.</p></li><li><p>Fixed crash calling a method on a native object in
+some cases.</p></li><li><p>Fixed problems which caused some objects types
+(such as combo boxes) embedded into toolbars of .NET applications to
+cause lookup failures on replay.</p></li><li><p> Fixed accessing System.Windows.Controls.Image objects
+in WPF applications.</p></li><li><p> Show WPF TextBlock controls as children if there is
+more than one TextBlock in a given parent.</p></li><li><p>Fixed clicking .NET WinForms TableCell objects when
+they are scrolled off-screen.</p></li><li><p>Fixed non-working property and method access
+from Perl scripts.</p></li><li><p>Fixed startwinaut to observe the 'AUT timeout'
+setting.</p></li><li><p>Fixed crash when fetching listview item
+properties.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="idp35887664"></a>2.43.7. macOS-specific (Cocoa/Carbon edition)</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p> Fixed race condition when playing back menu
+activations on Mac OS X (in rare occasions, determining the menu
+geometry failed).</p></li><li><p>Fixed waitForObject() for items in a NSTableView,
+NSOutlineView and for NSToolbarItems if the containing window is
+blocked by a sheet.
+</p></li><li><p>Fixed nativeType() on Mac OS for Del and Backspace
+keys.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="idp35889400"></a>2.43.8. iOS-specific (iPhone/iPad edition)</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Created ability to allow starting iOS apps in the iPhone Simulator if the
+SDK version of the build does not exactly match the available SDK
+versions.</p></li><li><p>Automatically turn on accessibility support for iOS
+device testing ensuring properties like accessibilityLabel are
+available for device testing without manually turning on voice
+over.</p></li><li><p>Made the Perl and Ruby saveDesktopScreenshot() implementation work on iOS
+devices.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="idp35891224"></a>2.43.9. Tk-specific</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Fixed internal out-of-bounds memory
+access.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="idp35892120"></a>2.43.10. Source Packages</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Added support for building with MinGW-w64 toolchains for both
+32-bit as well as 64-bit Windows.</p></li><li><p>Honor --with-x11-libdir option when checking for XTest
+library.</p></li><li><p>Qt edition: Fixed build with namespaced Qt
+libraries.</p></li><li><p>Fixed compilation for Qt 4.8.0 on Mac OS X
+Lion.</p></li><li><p>Added Qt 4 system libraries and configuration detection on
+RHEL/CentOS &gt;= 5 (needs
+--with-qtdir=/usr/lib64/qt4).</p></li><li><p>Fixed build with --disable-js
+configuration.</p></li><li><p>Fixed build on some recent Linux distributions by
+linking with libdl.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="idp35895096"></a>2.43.11. Documentation</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Added iOS tutorial and API docs to the offline HTML
+and PDF versions.</p></li><li><p>Updated the waitForObjectItem() and clickItem()
+documentation for Qt, Java and Tk.</p></li><li><p>Updated the list of files to be copy when installing
+for pure Qt 4 apps.</p></li><li><p>Documented how to install QC11 client without admin
+rights.</p></li></ul></div></div></div><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" type="text/javascript" src="ScriptingLanguage.js"></script><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format">setScriptingLanguage();</script><div class="navfooter"><hr></hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="rel-422.html">Prev</a> </td><td width="20%" align="center"><a accesskey="u" href="relnotes.html">Up</a></td><td width="40%" align="right"> <a accesskey="n" href="rel-420.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">2.42. Version 4.2.2 </td><td width="20%" align="center"><a accesskey="h" href="index-noframes.html">Home</a></td><td width="40%" align="right" valign="top"> 2.44. Version 4.2.0</td></tr></table></div></body>
+<!-- Mirrored from rel-421.html by HTTrack Website Copier/3.x [XR&CO'2013], Wed, 06 Jul 2022 13:28:56 GMT -->
+</html>

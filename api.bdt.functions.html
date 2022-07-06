@@ -1,0 +1,830 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<!-- Mirrored from api.bdt.functions.html by HTTrack Website Copier/3.x [XR&CO'2013], Wed, 06 Jul 2022 13:29:00 GMT -->
+<head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><title>6.19. Behavior Driven Testing</title><link rel="stylesheet" href="manual.css" type="text/css"></link><meta name="generator" content="DocBook XSL Stylesheets V1.73.2"></meta><link rel="start" href="https://index-noframes.html" title="Squish Manual"></link><link rel="up" href="https://api.man.html" title="Chapter 6. API Reference Manual"></link><link rel="prev" href="https://rgs-rb.html" title="6.18. Ruby Notes"></link><link rel="next" href="https://api.fmi.interface.html" title="6.20. FMI Interface support"></link><style xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" type="text/css" media="screen">
+        div.toc * { margin-left: 6px; margin-right: auto; max-width: 75em; }
+        div.toc span { margin-left: 0px; }
+        * { margin-left: auto; margin-right: auto; max-width: 75em; }
+        body { margin-left: 6px; margin-right: 6px; }
+        table th { padding: .5ex }
+        table td { padding: .5ex }
+    </style><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format">
+        function keyPress() {
+            var e = window.event;
+            if ( e == undefined ) {
+                return;
+            }
+            /* ### does not properly scroll, yet
+            if ( e.keyCode == 32 ) {
+            var l = document.links;
+            for ( var i = 0; i < l.length; i++ ) {
+                if ( l[i].innerText == "Next" ) {
+                location.href = l[i].href;
+                }
+            }
+            } else
+                */
+                if ( e.keyCode == 0x08 ) {
+            var l = document.links;
+            for ( var i = 0; i < l.length; i++ ) {
+                if ( l[i].innerText == "Prev" ) {
+                location.href = l[i].href;
+                }
+            }
+            }
+        }
+        document.onkeypress = keyPress;
+    </script></head><body><div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="api.bdt.functions"></a>6.19. Behavior Driven Testing</h2></div></div></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><span class="section"><a href="https://api.bdt.functions.html#api.bdt.functions.step">6.19.1. Defining Step Implementations using <code class="code">Step</code></a></span></dt><dt><span class="section"><a href="https://api.bdt.functions.html#api.bdt.functions.simpleplaceholders">6.19.2. Using Step Patterns with Placeholders</a></span></dt><dt><span class="section"><a href="https://api.bdt.functions.html#api.bdt.functions.regexpplaceholders">6.19.3. Using Step Patterns with Regular Expressions</a></span></dt><dt><span class="section"><a href="https://api.bdt.functions.html#api.bdt.members.context">6.19.4.  The BDD context Object </a></span></dt><dt><span class="section"><a href="https://api.bdt.functions.html#api.bdt.members.context.userData">6.19.5. context.userData: Passing Data Between Steps</a></span></dt><dt><span class="section"><a href="https://api.bdt.functions.html#api.bdt.members.context.table.multiLineText">6.19.6. Accessing Tables and Multi-Line Text</a></span></dt><dt><span class="section"><a href="https://api.bdt.functions.html#api.bdt.functions.givenwhenthen">6.19.7. Defining Step Implementations using <code class="code">Given</code>/<code class="code">When</code>/<code class="code">Then</code></a></span></dt><dt><span class="section"><a href="https://api.bdt.functions.html#api.bdt.functions.overriding_steps">6.19.8. Step Lookup Order &amp; Overriding Shared Step Implementations</a></span></dt><dt><span class="section"><a href="https://api.bdt.functions.html#api.bdt.functions.aborting_scenarios">6.19.9. Influencing Scenario Execution from Within Step Implementations</a></span></dt><dt><span class="section"><a href="https://api.bdt.functions.html#api.bdt.functions.hooks">6.19.10. Performing Actions During Test Execution Via Hooks</a></span></dt><dt><span class="section"><a href="https://api.bdt.functions.html#api.bdt.testcase.anatomy">6.19.11.  The Anatomy of a BDD Test Case </a></span></dt><dt><span class="section"><a href="https://api.bdt.functions.html#api.bdt.functions.from">6.19.12. Reading Tables from External Files using the <code class="code">From</code> Keyword</a></span></dt></dl></div><p>
+In order to automate executing a <code class="filename">.feature</code> file, step implementations need to be
+defined which associate a piece of script code with a pattern. Every time a
+step is encountered in a <code class="filename">.feature</code> file,
+<span class="emphasis"><em>Squish</em></span> will try to find a pattern matching the step text. If a match is
+found, the associated code is executed.
+</p><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="api.bdt.functions.step"></a>6.19.1. Defining Step Implementations using <code class="code">Step</code></h3></div></div></div><p>
+A step implementation is defined by calling a pre-defined <code class="code">Step</code>
+function. A simple definition would look like this:
+</p><div xmlns="" class="scriptlang"><form><select name="scriptlangcombo" onchange="javascript:changeScriptingLanguage(this)" onclick="javascript:changeScriptingLanguage(this)"><option value="all" selected>Show All</option><option value="JavaScript">Show JavaScript</option><option value="Perl">Show Perl</option><option value="Python">Show Python</option><option value="Ruby">Show Ruby</option><option value="Tcl">Show Tcl</option></select></form></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Python</span><pre class="programlisting">
+@Step("user starts the addressbook application")
+def step(context):
+    startApplication("addressbook")
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">JavaScript</span><pre class="programlisting">
+Step("user starts the addressbook application", function(context) {
+    startApplication("addressbook");
+});
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Tcl</span><pre class="programlisting">
+Step {user starts the addressbook application} {context} {
+    startApplication addressbook
+}
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Ruby</span><pre class="programlisting">
+Step("user starts the addressbook application") do |context|
+    Squish::startApplication("addressbook")
+end
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Perl</span><pre class="programlisting">
+use Squish::BDD;
+
+Step "user starts the addressbook application", sub {
+    startApplication("addressbook");
+};
+</pre></div><p>
+In this example, a step matching the pattern “<span class="quote">user starts the addressbook
+application</span>” will cause <span class="emphasis"><em>Squish</em></span> to execute
+</p><div xmlns="" class="scriptlang"><form><select name="scriptlangcombo" onchange="javascript:changeScriptingLanguage(this)" onclick="javascript:changeScriptingLanguage(this)"><option value="all" selected>Show All</option><option value="JavaScript">Show JavaScript</option><option value="Perl">Show Perl</option><option value="Python">Show Python</option><option value="Ruby">Show Ruby</option><option value="Tcl">Show Tcl</option></select></form></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Python</span><pre class="programlisting">
+startApplication("addressbook")
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">JavaScript</span><pre class="programlisting">
+startApplication("addressbook");
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Tcl</span><pre class="programlisting">
+startApplication addressbook
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Ruby</span><pre class="programlisting">
+Squish::startApplication("addressbook")
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Perl</span><pre class="programlisting">
+startApplication("addressbook");
+</pre></div><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Note"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/note.png"></img></td><th align="left">Note</th></tr><tr><td align="left" valign="top"><p>
+The step text (after stripping any keywords from the text, such as 'Given') has
+to match the pattern exactly (the match is "anchored" to the start and end of
+the text). The table below shows which step texts would match the pattern
+“<span class="quote">user starts the addressbook application</span>”:
+</p><div class="informaltable"><table border="0"><colgroup><col></col><col></col></colgroup><thead><tr><th>Step text</th><th>Pattern matches?</th></tr></thead><tbody><tr><td>When <span class="emphasis"><em>a user starts the addressbook application</em></span></td><td>Yes</td></tr><tr><td>When <span class="emphasis"><em>a user starts the addressbook application</em></span> we talk about</td><td>No</td></tr><tr><td>Given <span class="emphasis"><em>a user starts the addressbook application</em></span></td><td>Yes</td></tr><tr><td>Given we assume that <span class="emphasis"><em>a user starts the addressbook application</em></span></td><td>No</td></tr></tbody></table></div><p>
+Note how, leaving aside the initial keywords such as 'Given' or 'When', the step text has to
+match the pattern exactly: there must not be any text before or after it.
+</p></td></tr></table></div><p>
+Defining a step via <code class="code">Step</code> will always succeed, except in the
+following cases:
+</p><div class="itemizedlist"><ul type="disc"><li><p>
+The pattern given is empty or otherwise malformed — the latter may occur when
+using regular expressions.
+</p></li><li><p>
+There is already an existing definition for the given pattern.
+</p></li><li><p>
+For script languages in which <code class="code">Step</code> takes a 'signature' argument:
+the signature must at least contain one argument for the context.
+</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="api.bdt.functions.simpleplaceholders"></a>6.19.2. Using Step Patterns with Placeholders</h3></div></div></div><p>
+Patterns can make use of certain placeholders to extract data from the step
+text and pass it to the script code. This allows making step-definitions more
+reusable since it avoids having to hardcode specific values. For instance,
+here's an improvement to the above step definition which avoids hardcoding the
+name of the application to start:
+</p><div xmlns="" class="scriptlang"><form><select name="scriptlangcombo" onchange="javascript:changeScriptingLanguage(this)" onclick="javascript:changeScriptingLanguage(this)"><option value="all" selected>Show All</option><option value="JavaScript">Show JavaScript</option><option value="Perl">Show Perl</option><option value="Python">Show Python</option><option value="Ruby">Show Ruby</option><option value="Tcl">Show Tcl</option></select></form></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Python</span><pre class="programlisting">
+@Step("user starts the |word| application")
+def step(context, appName):
+    startApplication(appName)
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">JavaScript</span><pre class="programlisting">
+Step("user starts the |word| application", function(context, appName) {
+    startApplication(appName);
+});
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Tcl</span><pre class="programlisting">
+Step {user starts the |word| application} {context appName} {
+    startApplication $appName
+}
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Ruby</span><pre class="programlisting">
+Step("user starts the |word| application") do |context, appName|
+    Squish::startApplication(appName)
+end
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Perl</span><pre class="programlisting">
+use Squish::BDD;
+
+Step "user starts the |word| application", sub {
+    my %context = %{shift()};
+    my $appName = shift();
+    startApplication($appName);
+};
+</pre></div><p>
+The application name <code class="literal">addressbook</code> is no longer hardcoded.
+Instead, the <code class="literal">|word|</code> will match the word and pass it via the new
+<code class="code">appName</code> argument.
+</p><p>The following placeholders can be used:</p><div class="informaltable"><table border="1"><colgroup><col></col><col></col></colgroup><thead><tr><th>Placeholder</th><th>Meaning</th></tr></thead><tbody><tr><td><code class="literal">|word|</code></td><td>
+Matches a single word. A word is one or more characters in length and consists
+of letters, digits and underscore (<code class="literal">_</code>) characters.
+</td></tr><tr><td><code class="literal">|integer|</code></td><td>
+Matches a positive or negative integer value, i.e. a number without a
+fractional component.
+</td></tr><tr><td><code class="literal">|any|</code></td><td>
+Matches a sequence of one or more arbitrary characters.
+</td></tr></tbody></table></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="api.bdt.functions.regexpplaceholders"></a>6.19.3. Using Step Patterns with Regular Expressions</h3></div></div></div><p>
+Sometimes, you may find that the above mentioned placeholders are insufficient,
+that you need more control over which portions of a step text gets extracted.
+This can be achieved by not passing a plain string to the <code class="code">Step</code>
+function but rather a regular expression. Regular expressions are vastly
+more powerful, but also require being more careful - they can easily become
+somewhat cryptic to the reader.
+</p><p>
+Regular expressions not only allow much finer
+control over the text being matched. They can make use of <a class="ulink" href="http://www.regular-expressions.info/brackets.html" target="_blank">capturing
+groups</a> to extract data from the step text and pass it to the step code.
+</p><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Note: Python-specific"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/note.png"></img></td><th align="left">Python-specific</th></tr><tr><td align="left" valign="top"><p>
+In Python scripts, you can pass a regular expression object directly (i.e.
+the object returned by Python's <code class="code">re.compile</code> function). But if
+you don't want to import the <code class="code">re</code> module, you can also pass a
+string and the optional argument <code class="code">regexp</code> set to
+<code class="code">True</code>, as in
+</p><pre class="programlisting">
+@Step(r"user starts the (\w+) application", regexp=True)
+def step(context, appName):
+    ...
+</pre><p>
+We also recommend to use Python's raw string syntax (<code class="code">r"..."</code>
+resp. <code class="code">r'...'</code>) for specifying the strings to avoid escaping of
+the backslash character in the regular expression.
+</p></td></tr></table></div><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Note: Tcl-specific"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/note.png"></img></td><th align="left">Tcl-specific</th></tr><tr><td align="left" valign="top"><p>
+In Tcl scripts, there are no regular expression values. Instead, the <code class="code">Step</code>
+command is invoked with the <code class="code">-rx</code> option, as in
+</p><pre class="programlisting">
+Step -rx "This is a reg.lar expression$" {context} { ... }
+</pre></td></tr></table></div><p>For example, the above examples can be expressed using regular expressions
+as follows:</p><div xmlns="" class="scriptlang"><form><select name="scriptlangcombo" onchange="javascript:changeScriptingLanguage(this)" onclick="javascript:changeScriptingLanguage(this)"><option value="all" selected>Show All</option><option value="JavaScript">Show JavaScript</option><option value="Perl">Show Perl</option><option value="Python">Show Python</option><option value="Ruby">Show Ruby</option><option value="Tcl">Show Tcl</option></select></form></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Python</span><pre class="programlisting">
+@Step(r"user starts the (\w+) application", regexp=True)
+def step(context, appName):
+    startApplication(appName)
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">JavaScript</span><pre class="programlisting">
+Step(/user starts the (\w+) application/, function(context, appName) {
+    startApplication(appName);
+});
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Tcl</span><pre class="programlisting">
+Step -rx {user starts the (\w+) application} {context appName} {
+    startApplication $appName
+}
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Ruby</span><pre class="programlisting">
+Step(/user starts the (\w+) application/) do |context, appName|
+    Squish::startApplication(appName)
+end
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Perl</span><pre class="programlisting">
+use Squish::BDD;
+
+Step qr/user starts the (\w+) application/, sub {
+    my %context = %{shift()};
+    my $appName = shift();
+    startApplication($appName);
+};
+</pre></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="api.bdt.members.context"></a>6.19.4.  The BDD context Object </h3></div></div></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><span class="section"><a href="https://api.bdt.functions.html#api.bdt.members.context.scenario-hooks">6.19.4.1.  Context Object of Scenario Hooks (@OnScenarioStart, @OnScenarioEnd) </a></span></dt><dt><span class="section"><a href="https://api.bdt.functions.html#api.bdt.members.context.step-hooks">6.19.4.2.  Context Object of Step Hooks (@OnStepStart, @OnStepEnd) </a></span></dt><dt><span class="section"><a href="https://api.bdt.functions.html#api.bdt.members.context.step-implementations">6.19.4.3.  Context Object of Step Implementations </a></span></dt></dl></div><p> Each BDD implementation function has a <code class="code">context</code> singleton
+object passed in as the first argument. The context objects of scenario
+hooks, step hooks and step implementations provide different properties.
+(See <a class="xref" href="https://api.bdt.functions.html#api.bdt.functions.hooks" title="6.19.10. Performing Actions During Test Execution Via Hooks">Performing Actions During Test Execution Via Hooks (Section 6.19.10)</a> for details on hooks.)</p><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="api.bdt.members.context.scenario-hooks"></a>6.19.4.1.  Context Object of Scenario Hooks (@OnScenarioStart, @OnScenarioEnd) </h4></div></div></div><div class="informaltable"><table border="1"><colgroup><col></col><col></col></colgroup><thead><tr><th>Property</th><th>Description</th></tr></thead><tbody><tr><td><span class="property">context.title</span></td><td>Title (name) of the current scenario</td></tr><tr><td><span class="property">context.userData</span></td><td>An extra property that can be used for passing arbitrary data (typically as a list, map or dictionary) between steps and hooks. (Default: None, null, etc.)</td></tr></tbody></table></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="api.bdt.members.context.step-hooks"></a>6.19.4.2.  Context Object of Step Hooks (@OnStepStart, @OnStepEnd) </h4></div></div></div><div class="informaltable"><table border="1"><colgroup><col></col><col></col></colgroup><thead><tr><th>Property</th><th>Description</th></tr></thead><tbody><tr><td><span class="property">context.text</span></td><td>Text (name) of the current step</td></tr><tr><td><span class="property">context.userData</span></td><td>An extra property that can be used for passing arbitrary data (typically as a list, map or dictionary) between steps and hooks. (Default: None, null, etc.)</td></tr></tbody></table></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="api.bdt.members.context.step-implementations"></a>6.19.4.3.  Context Object of Step Implementations </h4></div></div></div><div class="informaltable"><table border="1"><colgroup><col></col><col></col></colgroup><thead><tr><th>Property</th><th>Description</th></tr></thead><tbody><tr><td><span class="property">context.multiLineText</span></td><td>Stores multi-line text if it is being passed into the step.</td></tr><tr><td><span class="property">context.table</span></td><td>Stores table data if it is being passed into the step.</td></tr><tr><td><span class="property">context.userData</span></td><td>An extra property that can be used for passing arbitrary data (typically as a list, map or dictionary) between steps and hooks. (Default: None, null, etc.)</td></tr></tbody></table></div></div><p> Examples using <span class="property">userData</span>, <span class="property">table</span>
+and <span class="property">multiLineText</span> are in the following sections. </p></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="api.bdt.members.context.userData"></a>6.19.5. context.userData: Passing Data Between Steps</h3></div></div></div><p>The <code class="code">context</code> argument passed to all steps (and <a class="link" href="https://api.bdt.functions.html#api.bdt.functions.hooks" title="6.19.10. Performing Actions During Test Execution Via Hooks">hooks</a>) features a
+<span class="property">userData</span> field which can be used to pass data between steps. This
+property is initially empty but can be written to from within a step. Consider
+e.g. a feature file like:</p><pre class="programlisting">
+Feature: Shopping Cart
+
+  Scenario: Adding three items to the shopping cart
+
+    Given I have an empty shopping cart
+    When I add bananas to the shopping cart
+    And I add apples to the shopping cart
+    And I add milk to the shopping cart
+    Then I have 3 items in the shopping cart
+</pre><p>The implicit state in this scenario (the current contents of the shopping
+cart) can be modeled using <span class="property">userData</span>:</p><div xmlns="" class="scriptlang"><form><select name="scriptlangcombo" onchange="javascript:changeScriptingLanguage(this)" onclick="javascript:changeScriptingLanguage(this)"><option value="all" selected>Show All</option><option value="JavaScript">Show JavaScript</option><option value="Perl">Show Perl</option><option value="Python">Show Python</option><option value="Ruby">Show Ruby</option><option value="Tcl">Show Tcl</option></select></form></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Python</span><pre class="programlisting">
+@Given("I have an empty shopping cart")
+def step(context):
+    context.userData = []
+
+@When("I add |word| to the shopping cart")
+def step(context, itemName):
+    context.userData.append(itemName)
+
+@Then("I have |integer| items in the shopping cart")
+def step(context, expectedAmount):
+    test.compare(len(context.userData), expectedAmount)
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">JavaScript</span><pre class="programlisting">
+Given("I have an empty shopping cart", function(context) {
+    context.userData = [];
+});
+
+When("I add |word| to the shopping cart", function(context, itemName) {
+    context.userData.push(itemName);
+});
+
+Then("I have |integer| items in the shopping cart", function(context, expectedAmount) {
+    test.compare(context.userData.length, expectedAmount);
+});
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Perl</span><pre class="programlisting">
+Given("I have an empty shopping cart", sub {
+    my $context = shift();
+    $context-&gt;{userData} = [];
+});
+
+When("I add |word| to the shopping cart", sub {
+    my($context, $itemName) = @_;
+    push @{$context-&gt;{userData}}, $itemName;
+});
+
+Then("I have |integer| items in the shopping cart", sub {
+    my($context, $expectedAmount) = @_;
+    test::compare(scalar(@{$context-&gt;{userData}}), $expectedAmount);
+});
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Tcl</span><pre class="programlisting">
+Given "I have an empty shopping cart" {context} {
+    $context userData {}
+}
+
+When "I add |word| to the shopping cart" {context itemName} {
+    set items [$context userData]
+    lappend items $itemName
+    $context userData $items
+}
+
+Then "I have |integer| items in the shopping cart" {context expectedAmount} {
+    set items [$context userData]
+    test compare [llength $items] $expectedAmount
+}
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Ruby</span><pre class="programlisting">
+Given("I have an empty shopping cart") do |context|
+  context.userData = []
+end
+
+When("I add |word| to the shopping cart") do |context, itemName|
+  context.userData.push itemName
+end
+
+Then("I have |integer| items in the shopping cart") do |context, expectedAmount|
+  Test.compare context.userData.count, expectedAmount
+end
+</pre></div><p>Here, the <span class="property">userData</span> field keeps track of the items
+added to the shopping cart, because this is extra data related to the context of
+our test. It could also be used to keep track of active <a class="xref" href="https://rgs-squish.html#rgss-appcontext" title="6.3.12. Application Context">Application Context (Section 6.3.12)</a> objects in multiple-AUT test cases, for example.
+</p><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Note"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/note.png"></img></td><th align="left">Note</th></tr><tr><td align="left" valign="top"><p>The <span class="property">userData</span> is never cleared; you can however do so
+explicitly using e.g. a <a class="link" href="https://api.bdt.functions.html#api.bdt.functions.hooks" title="6.19.10. Performing Actions During Test Execution Via Hooks"><code class="code">OnScenarioStart</code></a> hook.</p></td></tr></table></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="api.bdt.members.context.table.multiLineText"></a>6.19.6. Accessing Tables and Multi-Line Text</h3></div></div></div><p>The <code class="code">context</code> object exposes optional extra arguments
+to the step with these two properties:</p><div class="variablelist"><dl><dt><span class="term">multiLineText</span></dt><dd><p>
+Returns an optional multi-line text argument to a step. The text is returned as
+a list of strings, each of which being a single line. For example, a step such
+as
+</p><pre class="programlisting">
+Given I create a file containing
+"""
+[General]
+Mode=Advanced
+"""
+</pre><p>
+The multi-line text can be accessed via
+</p><div xmlns="" class="scriptlang"><form><select name="scriptlangcombo" onchange="javascript:changeScriptingLanguage(this)" onclick="javascript:changeScriptingLanguage(this)"><option value="all" selected>Show All</option><option value="JavaScript">Show JavaScript</option><option value="Perl">Show Perl</option><option value="Python">Show Python</option><option value="Ruby">Show Ruby</option><option value="Tcl">Show Tcl</option></select></form></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Python</span><pre class="programlisting">
+@Step("I create a file containing")
+def step(context):
+    text = context.multiLineText
+    f = open("somefile.txt", "w")
+    f.write("\n".join(text))
+    f.close()
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">JavaScript</span><pre class="programlisting">
+Step("I create a file containing", function(context) {
+  var text = context.multiLineText;
+  var file = File.open("somefile.txt", "w");
+  file.write(text.join("\n"));
+  file.close();
+});
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Tcl</span><pre class="programlisting">
+Step {I create a file containing} {context} {
+  set text [$context multiLineText]
+  set f [open "somefile.txt" "w"]
+  puts $f [join $text "\n"]
+  close $f
+}
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Ruby</span><pre class="programlisting">
+Step("I create a file containing") do |context|
+    File.open("somefile.txt", 'w') { |file|
+        file.write(context.multiLineText.join("\n"))
+    }
+end
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Perl</span><pre class="programlisting">
+use Squish::BDD;
+
+Step "I create a file containing", sub {
+    my %context = %{shift()};
+    my @multiLineText = @{$context{'multiLineText'}};
+
+    my $text = join("\n", @multiLineText);
+
+    open(my $fh, '&gt;', 'somefile.txt') or die;
+    print $fh $text;
+    close $fh;
+};
+</pre></div></dd><dt><span class="term">table</span></dt><dd><p>
+Returns an optional text argument to a step. The table is returned as a list of
+lists: each inner list represents a row, and individual list elements represent
+cells. For example, a step such as
+</p><pre class="programlisting">
+Given I enter the records
+  | firstName | lastName | age |
+  | Bob       | Smith    | 42  |
+  | Alice     | Thomson  | 27  |
+  | John      | Martin   | 33  |
+</pre><p>
+The table argument can be accessed via
+</p><div xmlns="" class="scriptlang"><form><select name="scriptlangcombo" onchange="javascript:changeScriptingLanguage(this)" onclick="javascript:changeScriptingLanguage(this)"><option value="all" selected>Show All</option><option value="JavaScript">Show JavaScript</option><option value="Perl">Show Perl</option><option value="Python">Show Python</option><option value="Ruby">Show Ruby</option><option value="Tcl">Show Tcl</option></select></form></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Python</span><pre class="programlisting">
+@Step("I enter the records")
+def step(context):
+    table = context.table
+
+    # Drop initial row with column headers
+    for row in table[1:]:
+        first = row[0]
+        last = row[1]
+        age = row[2]
+        # ... handle first/last/age
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">JavaScript</span><pre class="programlisting">
+Step("I enter the records", function(context) {
+    var table = context.table;
+
+    // Skip initial row with column headers by starting at index 1
+    for (var i = 1; i &lt; table.length; ++i) {
+        var first = table[i][0];
+        var last = table[i][1];
+        var age = table[i][2];
+        // ... handle first/last/age
+    }
+});
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Tcl</span><pre class="programlisting">
+Step {I enter the records} {context} {
+  set table [$context table]
+
+  # Drop initial row with column headers
+  foreach row [lreplace $table 0 0] {
+    foreach {first last age} $row break
+    # ... handle $first/$last/$age
+  }
+}
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Ruby</span><pre class="programlisting">
+Step("I enter the records") do |context|
+    table = context.table
+
+    # Drop initial row with column headers
+    table.shift
+
+    for first,last,age in table do
+        # ... handle first/last/age
+    end
+end
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Perl</span><pre class="programlisting">
+use Squish::BDD;
+
+Step "I enter the records", sub {
+    my %context = %{shift()};
+    my @table = @{$context{'table'}};
+
+    # Drop initial row with column headers
+    shift(@table);
+
+    for my $row (@table) {
+        my ($first, $last, $age) = @{$row};
+        # ... handle $first/$last/$age
+    }
+};
+
+</pre></div></dd></dl></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="api.bdt.functions.givenwhenthen"></a>6.19.7. Defining Step Implementations using <code class="code">Given</code>/<code class="code">When</code>/<code class="code">Then</code></h3></div></div></div><p>
+In addition to <code class="code">Step</code>, <span class="emphasis"><em>Squish</em></span> supports defining step
+implementations using three more functions, called <code class="code">Given</code>,
+<code class="code">When</code> and <code class="code">Then</code>. These three functions follow the same
+syntax as <code class="code">Step</code> but cause a slightly different behavior when
+executing steps since step implementations registered using <code class="code">Step</code>
+match more step texts than those registered with any of the other three
+functions. The following table illustrates the difference:
+</p><div class="informaltable"><table border="1"><colgroup><col></col><col></col><col></col><col></col><col></col></colgroup><thead><tr><th>Step text</th><th><code class="code">Step("...", ..) matches</code></th><th><code class="code">Given("...", ..) matches</code></th><th><code class="code">When("...", ..) matches</code></th><th><code class="code">Then("...", ..) matches</code></th></tr></thead><tbody><tr><td>Given I say hello</td><td>Yes</td><td>Yes</td><td>No</td><td>No</td></tr><tr><td>When I say hello</td><td>Yes</td><td>No</td><td>Yes</td><td>No</td></tr><tr><td>Then I say hello</td><td>Yes</td><td>No</td><td>No</td><td>Yes</td></tr><tr><td>And I say hello</td><td>Yes</td><td>Maybe</td><td>Maybe</td><td>Maybe</td></tr><tr><td>But I say hello</td><td>Yes</td><td>Maybe</td><td>Maybe</td><td>Maybe</td></tr></tbody></table></div><p>
+Note how patterns registered via <code class="code">Step</code> always match, no matter what keyword the
+step at hand starts with. <code class="code">Given</code>, <code class="code">When</code> and <code class="code">Then</code> only
+match if the step starts with the matching keyword (or a synonym such as "And" or "But").
+</p><div class="tip" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Tip"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Tip]" src="https://images/tip.png"></img></td><th align="left">Tip</th></tr><tr><td align="left" valign="top"><p>
+It is generally preferable to use
+<code class="code">Given</code>/<code class="code">When</code>/<code class="code">Then</code> instead of
+<code class="code">Step</code> for registering patterns since that also improves the
+efficiency of the auto-completion offered by the <span class="application">Squish IDE</span>.
+</p></td></tr></table></div><p>
+Whether patterns registered via <code class="code">Given</code>/<code class="code">When</code>/<code class="code">Then</code>
+match steps starting with <code class="code">And</code> or <code class="code">But</code> depends on the
+keyword preceding the <code class="code">And</code>/<code class="code">But</code>.
+Consider:
+</p><pre class="programlisting">
+Feature: Some Feature
+  Scenario: Some Scenario
+    Given I am hungry
+      And I'm in the mood for 20000 of something
+      But I do not like peas
+     Then I will enjoy rice.
+</pre><p>
+In this feature description, the lines starting with “<span class="quote">And</span>” and
+“<span class="quote">But</span>” succeed a line starting with “<span class="quote">Given</span>”, they are
+synonymous. This means that only patterns registered via <code class="code">Step</code> or
+<code class="code">Given</code> would match the step “<span class="quote">And I'm in the mood for 20000 of
+something</span>”.
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="api.bdt.functions.overriding_steps"></a>6.19.8. Step Lookup Order &amp; Overriding Shared Step Implementations</h3></div></div></div><p>
+When executing a BDD test, <span class="emphasis"><em>Squish</em></span> will respect a specific order when deciding
+which step implementation matches a given step text. Step implementations are
+considered based on the order in which source files containing step
+implementations are loaded when starting a BDD test. By default, this order is
+as follows:
+</p><div class="orderedlist"><ol type="1"><li><p><code class="filename">steps</code> subdirectory of current test
+case.</p></li><li><p><code class="filename">shared/scripts/steps</code> directory of
+current test suite.</p></li></ol></div><p>
+This order causes steps defined in the local test case to be preferred over steps
+defined in the shared scripts directory of the test suite.
+</p><p>
+Actually, <span class="emphasis"><em>Squish</em></span> will not only load step implementations stored in
+above-mentioned directories but also those stored in subdirectories. For
+instance, you can register step implementations in files like
+<code class="filename">steps/basic/basicsteps.py</code> or
+<code class="filename">steps/uisteps/mainwindowsteps.js</code>.
+</p><div class="tip" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Tip"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Tip]" src="https://images/tip.png"></img></td><th align="left">Tip</th></tr><tr><td align="left" valign="top"><p>
+The list of directories from which step implementations are loaded is not
+hard-wired into <span class="emphasis"><em>Squish</em></span>. Instead, it's a list of directories specified in the
+<code class="filename">test.*</code> file stored in the test case directory (e.g.
+<code class="filename">test.js</code> for JavaScript tests. You can adjust this order
+for individual tests, or for all newly created tests by editing the file
+<code class="filename">scriptmodules/*/bdt_driver_template.*</code>, e.g.
+<code class="filename">scriptmodules/javascript/bdt_driver_template.js</code>.
+</p></td></tr></table></div><p>
+Even though registering two step implementations with the same pattern will
+yield an error, registering two step implementations which are defined in
+different directories will <span class="emphasis"><em>not</em></span> trigger an error. This
+means that you can 'override' shared steps by using the exact same pattern in a
+testcase-specific file.
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="api.bdt.functions.aborting_scenarios"></a>6.19.9. Influencing Scenario Execution from Within Step Implementations</h3></div></div></div><p>
+It is possible to define step implementations such that the current scenario
+is aborted and all subsequent steps (if any) are skipped. This is useful in
+case subsequent steps rely on certain conditions (e.g. some file exists) but
+a preceding step which is supposed to establish/verify that condition fails.
+</p><p>
+To skip subsequent steps in the current scenario, step implementations can
+return a special value - the exact name of which depending on the respective
+scripting language:
+</p><div xmlns="" class="scriptlang"><form><select name="scriptlangcombo" onchange="javascript:changeScriptingLanguage(this)" onclick="javascript:changeScriptingLanguage(this)"><option value="all" selected>Show All</option><option value="JavaScript">Show JavaScript</option><option value="Perl">Show Perl</option><option value="Python">Show Python</option><option value="Ruby">Show Ruby</option><option value="Tcl">Show Tcl</option></select></form></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Python</span><pre class="programlisting">
+@Step("I create a file containing")
+def step(context):
+    try:
+        text = context.multiLineText
+        f = open("somefile.txt", "w")
+        f.write("\n".join(text))
+        f.close()
+    except:
+        # Failed to create file; skip subsequent steps in current scenario
+        return AbortScenario
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">JavaScript</span><pre class="programlisting">
+Step("I create a file containing", function(context) {
+  try {
+    var text = context.multiLineText;
+    var file = File.open("somefile.txt", "w");
+    file.write(text);
+    file.close();
+  } catch (e) {
+    // Failed to create file; skip subsequent steps in current scenario
+    return AbortScenario;
+  }
+});
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Tcl</span><pre class="programlisting">
+Step {I create a file containing} {context} {
+  if {[catch {
+    set text [$context multiLineText]
+    set f [open "somefile.txt" "w"]
+    puts $f [join $text "\n"]
+    close $f
+  }]} then {
+    # Failed to create file; skip subsequent steps in current scenario
+    return AbortScenario
+  }
+}
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Ruby</span><pre class="programlisting">
+Step("I create a file containing") do |context|
+    begin
+        File.open("somefile.txt", 'w') { |file|
+            file.write(context.multiLineText.join("\n"))
+        }
+    rescue Exception =&gt; e
+        # Failed to create file; skip subsequent steps in current scenario
+        next ABORT_SCENARIO
+    end
+end
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Perl</span><pre class="programlisting">
+use Squish::BDD;
+
+Step "I create a file containing", sub {
+    my %context = %{shift()};
+    my @multiLineText = @{$context{'multiLineText'}};
+
+    my $text = join("\n", @multiLineText);
+
+    if (open(my $fh, '&gt;', 'somefile.txt')) {
+        print $fh $text;
+        close $fh;
+    } else {
+        # Failed to create file; skip subsequent steps in current scenario
+        return ABORT_SCENARIO;
+    }
+};
+</pre></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="api.bdt.functions.hooks"></a>6.19.10. Performing Actions During Test Execution Via Hooks</h3></div></div></div><p>
+It is common that some actions need to be performed before or after some
+event occurs. This need arises in cases like
+</p><div class="itemizedlist"><ul type="disc"><li><p>
+Global variables should be initialized before test execution starts.
+</p></li><li><p>
+An application needs to be started before a Feature is executed.
+</p></li><li><p>
+Temporary files should be removed after a Scenario is executed.
+</p></li></ul></div><p>
+<span class="emphasis"><em>Squish</em></span> allows defining functions which are hooked into the test execution
+sequence. The functions can be registered with certain events and are executed
+before or after an event occurs. You can register as many functions for an
+event as you like: the hook functions will be called in the same order as they
+were defined. Functions can be associated with any of the following events:
+</p><div class="variablelist"><dl><dt><span class="term"><code class="code">OnFeatureStart</code>/<code class="code">OnFeatureEnd</code></span></dt><dd><p>
+These events are raised before/after the first/last scenario in a specific
+<code class="literal">Feature</code> is executed. The <code class="code">context</code> argument passed
+to functions associated with either of these events provides a
+<code class="code">title</code> field which yields the title of the feature which is about
+to get executed (resp. just finished executing).
+</p></dd><dt><span class="term"><code class="code">OnScenarioStart</code>/<code class="code">OnScenarioEnd</code></span></dt><dd><p>
+These events are raised before/after the first/last step in a specific
+<code class="literal">Scenario</code> is executed. The <code class="code">OnScenarioStart</code> event
+is also raised before any <code class="literal">Background</code> is executed. The
+<code class="code">context</code> argument passed to functions associated with either of
+these events provides a <code class="code">title</code> field which yields the title of the
+scenario which is about to get executed (resp. just finished executing).
+</p></dd><dt><span class="term"><code class="code">OnStepStart</code>/<code class="code">OnStepEnd</code></span></dt><dd><p>
+These events are raised before/after the code in a specific
+<code class="literal">Step</code> is executed. The <code class="code">context</code> argument passed
+to functions associated with either of these events provides a
+<code class="code">text</code> field which yields the text of the step which is about to get
+executed (resp. just finished executing).
+</p></dd></dl></div><p>
+You can associate code to be executed in case any of these events occur using
+language-specific <acronym class="acronym">API</acronym>. In general, the name of the function
+to sign up for an event equals the name of the event except for Python, where
+the name of the function doesn't matter since a decorator is used instead. These
+functions are registered in the same script files in which you would use the
+<code class="code">Step</code> function to register step implementations.
+</p><p>Here are a few examples:</p><p>
+Setting up a <code class="literal">OnFeatureStart</code> hook to setup global variables:
+</p><div xmlns="" class="scriptlang"><form><select name="scriptlangcombo" onchange="javascript:changeScriptingLanguage(this)" onclick="javascript:changeScriptingLanguage(this)"><option value="all" selected>Show All</option><option value="JavaScript">Show JavaScript</option><option value="Perl">Show Perl</option><option value="Python">Show Python</option><option value="Ruby">Show Ruby</option><option value="Tcl">Show Tcl</option></select></form></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">JavaScript</span><pre class="programlisting">
+OnFeatureStart(function(context) {
+    counter = 0;
+    inputFileName = "sample.txt";
+});
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Perl</span><pre class="programlisting">
+my $inputFileName;
+my $counter;
+
+OnFeatureStart sub {
+    $counter = 0;
+    $inputFileName = 'sample.txt';
+};
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Python</span><pre class="programlisting">
+@OnFeatureStart
+def hook(context):
+    global counter
+    global inputFileName
+    counter = 0
+    inputFileName = "sample.txt"
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Ruby</span><pre class="programlisting">
+OnFeatureStart do
+    @counter = 0
+    @inputFileName = 'sample.txt'
+end
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Tcl</span><pre class="programlisting">
+OnFeatureStart {context} {
+  global counter
+  global inputFileName
+  set $counter 0
+  set $inputFileName "sample.txt"
+}
+</pre></div><p>
+Registering <code class="literal">OnScenarioStart</code> &amp; <code class="literal">OnScenarioEnd</code>
+event handlers to start &amp; stop an <acronym class="acronym">AUT</acronym>:
+</p><div xmlns="" class="scriptlang"><form><select name="scriptlangcombo" onchange="javascript:changeScriptingLanguage(this)" onclick="javascript:changeScriptingLanguage(this)"><option value="all" selected>Show All</option><option value="JavaScript">Show JavaScript</option><option value="Perl">Show Perl</option><option value="Python">Show Python</option><option value="Ruby">Show Ruby</option><option value="Tcl">Show Tcl</option></select></form></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">JavaScript</span><pre class="programlisting">
+OnScenarioStart(function(context) {
+    startApplication("addressbook");
+});
+
+OnScenarioEnd(function(context) {
+    currentApplicationContext().detach();
+});
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Perl</span><pre class="programlisting">
+OnScenarioStart sub {
+    ::startApplication('addressbook');
+};
+
+OnScenarioEnd sub {
+    ::currentApplicationContext.detach();
+};
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Python</span><pre class="programlisting">
+@OnScenarioStart
+def hook(context):
+    startApplication("addressbook")
+
+@OnScenarioEnd
+def hook(context):
+    currentApplicationContext().detach()
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Ruby</span><pre class="programlisting">
+OnScenarioStart do |context|
+    Squish::startApplication 'addressbook'
+end
+
+OnScenarioEnd do |context|
+    Squish::currentApplicationContext.detach
+end
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Tcl</span><pre class="programlisting">
+OnScenarioStart {context} {
+  startApplication "addressbook"
+}
+
+OnScenarioEnd {context} {
+    applicationContext [currentApplicationContext] detach
+}
+</pre></div><p>
+Generating extra warning log output whenever a step which mentions the word
+<code class="literal">delete</code> is about to get executed:
+</p><div xmlns="" class="scriptlang"><form><select name="scriptlangcombo" onchange="javascript:changeScriptingLanguage(this)" onclick="javascript:changeScriptingLanguage(this)"><option value="all" selected>Show All</option><option value="JavaScript">Show JavaScript</option><option value="Perl">Show Perl</option><option value="Python">Show Python</option><option value="Ruby">Show Ruby</option><option value="Tcl">Show Tcl</option></select></form></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">JavaScript</span><pre class="programlisting">
+OnStepStart(function(context) {
+    var text = context["text"];
+    if (text.search("delete") &gt; -1) {
+        test.warning("About to execute dangerous step: " + text);
+    }
+});
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Perl</span><pre class="programlisting">
+OnStepStart sub {
+    my %context = %{shift()};
+    if (index( $context{text}, 'delete') != -1) {
+        ::test::warning("About to execute dangerous step: $context{text}");
+    }
+};
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Python</span><pre class="programlisting">
+@OnStepStart
+def hook(context):
+    text = context.text
+    if text.find("delete") &gt; -1:
+        test.warning("About to execute dangerous step: %s" % text)
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Ruby</span><pre class="programlisting">
+OnStepStart do |context|
+    if context['text'].include? 'delete'
+        Squish::Test.warning "About to execute dangerous step: #{context['text']}"
+    end
+end
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Tcl</span><pre class="programlisting">
+OnStepStart {context} {
+  set text [$context text]
+  if {[string first "delete" $text] &gt; -1} {
+    test warning "About to execute dangerous step: $text"
+  }
+}
+</pre></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="api.bdt.testcase.anatomy"></a>6.19.11.  The Anatomy of a BDD Test Case </h3></div></div></div><p> All BDD test cases start by running a regular script in your chosen
+scripting language. This script is auto-generated, can be found in the same
+directory as the corresponding <code class="filename">test.feature</code> file, and is
+called <code class="filename">test.xy</code>, where xy = (pl|py|rb|js|tcl).
+It looks like this: </p><div xmlns="" class="scriptlang"><form><select name="scriptlangcombo" onchange="javascript:changeScriptingLanguage(this)" onclick="javascript:changeScriptingLanguage(this)"><option value="all" selected>Show All</option><option value="JavaScript">Show JavaScript</option><option value="Perl">Show Perl</option><option value="Python">Show Python</option><option value="Ruby">Show Ruby</option><option value="Tcl">Show Tcl</option></select></form></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Python</span><pre class="programlisting">
+
+source(findFile('scripts', 'python/bdd.py'))
+
+setupHooks('../shared/scripts/bdd_hooks.py')
+collectStepDefinitions('./steps', '../shared/steps')
+
+def main():
+    testSettings.throwOnFailure = True
+    runFeatureFile('test.feature')
+
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">JavaScript</span><pre class="programlisting">
+
+source(findFile('scripts', 'javascript/bdd.js'));
+
+setupHooks(['../shared/scripts/bdd_hooks.js']);
+collectStepDefinitions(['./steps', '../shared/steps']);
+
+function main()
+{
+    testSettings.throwOnFailure = true;
+    runFeatureFile("test.feature");
+}
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Perl</span><pre class="programlisting">
+
+use warnings;
+use strict;
+use Squish::BDD;
+
+setupHooks("../shared/scripts/bdd_hooks.pl");
+collectStepDefinitions("./steps", "../shared/steps");
+
+sub main {
+    testSettings-&gt;throwOnFailure(1);
+    runFeatureFile("test.feature");
+}
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Ruby</span><pre class="programlisting">
+
+require 'squish'
+require 'squish/bdd'
+
+include Squish::BDD
+setupHooks "../shared/scripts/bdd_hooks.rb"
+collectStepDefinitions "./steps", "../shared/steps"
+
+def main
+    Squish::TestSettings.throwOnFailure = true
+    Squish::runFeatureFile "test.feature"
+end
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Tcl</span><pre class="programlisting">
+
+source [findFile "scripts" "tcl/bdd.tcl"]
+
+Squish::BDD::setupHooks "../shared/scripts/bdd_hooks.tcl"
+Squish::BDD::collectStepDefinitions "./steps" "../shared/steps"
+
+proc main {} {
+    testSettings set throwOnFailure true
+    runFeatureFile "test.feature"
+}
+</pre></div><p> There are some functions that are called from this script
+which are part of the Squish BDD API, but are rarely used in regular testcases.
+This section will explain what those functions do, in case you wish
+to reuse BDD steps or other BDD features in script-based tests. </p><p><a id="api.bdt.functions.setuphooks"></a>
+  First, <code class="function">setupHooks()</code> is called at the start of each BDD
+  test case to scan for and set up the hook functions described in <a class="xref" href="https://api.bdt.functions.html#api.bdt.functions.hooks" title="6.19.10. Performing Actions During Test Execution Via Hooks">Performing Actions During Test Execution Via Hooks (Section 6.19.10)</a>. </p><p><a id="api.bdt.functions.collectstepdefinitions"></a>
+  Next, <code class="function">collectStepDefinitions()</code> is used to scan for and
+  import step definitions found in the directories specified as arguments to
+  the function. One or more arguments can be provided, and the earlier ones
+  have priority over the later ones. Step implementations are typically located
+  in files called <code class="filename">steps.xy</code>, where xy = (pl|py|rb|js|tcl).
+  </p><div xmlns="" class="scriptlang"><form><select name="scriptlangcombo" onchange="javascript:changeScriptingLanguage(this)" onclick="javascript:changeScriptingLanguage(this)"><option value="all" selected>Show All</option><option value="JavaScript">Show JavaScript</option><option value="Perl">Show Perl</option><option value="Python">Show Python</option><option value="Ruby">Show Ruby</option><option value="Tcl">Show Tcl</option></select></form></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Python</span><pre class="programlisting">
+collectStepDefinitions('./steps', '../shared/steps')
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">JavaScript</span><pre class="programlisting">
+collectStepDefinitions('./steps', '../shared/steps');
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Perl</span><pre class="programlisting">
+use Squish::BDD;
+collectStepDefinitions("./steps", "../shared/steps");
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Ruby</span><pre class="programlisting">
+include Squish::BDD
+collectStepDefinitions "./steps", "../shared/steps"
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Tcl</span><pre class="programlisting">
+source [findFile "scripts" "tcl/bdd.tcl"]
+Squish::BDD::collectStepDefinitions "./steps" "../shared/steps"
+</pre></div><p>
+Hence in above example, the step definition from the current
+<span class="guilabel">Test Case Resources</span> will be used in favor of
+one with the same name, if it is also found in
+<span class="guilabel">Test Suite Resources</span>.
+</p><p> Finally, <code class="function">runFeatureFile()</code> can be called on a BDD
+<code class="filename">.feature</code> file after hooks are set up and steps are
+collected, to run all the Scenarios in the specified Gherkin feature file.
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="api.bdt.functions.from"></a>6.19.12. Reading Tables from External Files using the <code class="code">From</code> Keyword</h3></div></div></div><p>Sometimes it may be more practical to store table data for Scenario Outline
+placeholders or the context table in an external file instead of having the table 
+directly in the feature file. Examples for this are large data sets or use of the 
+same data set in multiple <acronym class="acronym">BDD</acronym> test cases.
+</p><p>In order to read a table from an external file, we use the <code class="code">From</code> keyword 
+followed by the file path relative to the <code class="filename">.feature</code> file.
+For example:</p><pre class="programlisting">
+Scenario: Register orders
+    Given orderbook is running
+      And orderbook is empty
+     When I register orders
+        From testdata/order_list.txt
+     Then orderbook is not empty
+</pre><p>In this case, we store the <code class="filename">order_list.txt</code> file in the <code class="filename">testdata</code> 
+directory next to our feature file. It contains a table in the familiar Gherkin format.</p><pre class="programlisting">
+# testdata/order_list.txt
+| name | date       | type   | amount |
+| Amy  | 04.02.2017 | apple  |      2 |
+| Josh | 04.02.2017 | peach  |      3 |
+| Marc | 05.02.2017 | cheese |     14 |
+| Lea  | 07.02.2017 | soda   |      1 |
+</pre><p><span class="emphasis"><em>Squish</em></span> accepts table files in the following formats:</p><div class="itemizedlist"><ul type="disc"><li><p>Raw text (<code class="filename">.txt</code> or no extension)</p></li><li><p>Comma-separated values (<code class="filename">.csv</code>)</p></li><li><p>Tab-separated values (<code class="filename">.tsv</code>)</p></li><li><p>Microsoft Excel Sheet (<code class="filename">.xls</code>)</p></li></ul></div><p>When reading tables from raw text files (<code class="filename">.txt</code> or no extension), <span class="emphasis"><em>Squish</em></span> simply jumps into
+the file and reads it just like it was written inline in the feature file (thus we could also use further <code class="code">From</code> 
+statements inside of a text table file). For all other formats, <span class="emphasis"><em>Squish</em></span> parses the records directly.</p><p><code class="code">From</code> uses the header (first row) in the table file to map the table columns to script
+variables or Scenario Outline placeholders by default, but it is possible to define a custom header to be
+used instead before reading the table file:</p><pre class="programlisting">
+| customer | date | item | count |
+From testdata/order_list.txt
+</pre><p>This makes it easier to use table files with our test scripts.</p><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Note: "><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/note.png"></img></td><th align="left"></th></tr><tr><td align="left" valign="top"><p>
+Remember that the column count of the header still has to match the column count of the table!
+</p></td></tr></table></div></div></div><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" type="text/javascript" src="ScriptingLanguage.js"></script><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format">setScriptingLanguage();</script><div class="navfooter"><hr></hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="https://rgs-rb.html">Prev</a> </td><td width="20%" align="center"><a accesskey="u" href="https://api.man.html">Up</a></td><td width="40%" align="right"> <a accesskey="n" href="https://api.fmi.interface.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">6.18. Ruby Notes </td><td width="20%" align="center"><a accesskey="h" href="https://index-noframes.html">Home</a></td><td width="40%" align="right" valign="top"> 6.20. FMI Interface support</td></tr></table></div></body>
+<!-- Mirrored from api.bdt.functions.html by HTTrack Website Copier/3.x [XR&CO'2013], Wed, 06 Jul 2022 13:29:00 GMT -->
+</html>

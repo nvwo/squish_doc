@@ -1,0 +1,56 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<!-- Mirrored from rel-322.html by HTTrack Website Copier/3.x [XR&CO'2013], Wed, 06 Jul 2022 13:29:03 GMT -->
+<head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><title>2.66. Version 3.2.2</title><link rel="stylesheet" href="manual.css" type="text/css"></link><meta name="generator" content="DocBook XSL Stylesheets V1.73.2"></meta><link rel="start" href="index-noframes.html" title="Squish Manual"></link><link rel="up" href="relnotes.html" title="Chapter 2. Release Notes—for Upgraders"></link><link rel="prev" href="rel-323.html" title="2.65. Version 3.2.3"></link><link rel="next" href="rel-mac-beta1.html" title="2.67. Squish for macOS, Beta 1"></link><style xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" type="text/css" media="screen">
+        div.toc * { margin-left: 6px; margin-right: auto; max-width: 75em; }
+        div.toc span { margin-left: 0px; }
+        * { margin-left: auto; margin-right: auto; max-width: 75em; }
+        body { margin-left: 6px; margin-right: 6px; }
+        table th { padding: .5ex }
+        table td { padding: .5ex }
+    </style><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format">
+        function keyPress() {
+            var e = window.event;
+            if ( e == undefined ) {
+                return;
+            }
+            /* ### does not properly scroll, yet
+            if ( e.keyCode == 32 ) {
+            var l = document.links;
+            for ( var i = 0; i < l.length; i++ ) {
+                if ( l[i].innerText == "Next" ) {
+                location.href = l[i].href;
+                }
+            }
+            } else
+                */
+                if ( e.keyCode == 0x08 ) {
+            var l = document.links;
+            for ( var i = 0; i < l.length; i++ ) {
+                if ( l[i].innerText == "Prev" ) {
+                location.href = l[i].href;
+                }
+            }
+            }
+        }
+        document.onkeypress = keyPress;
+    </script></head><body><div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="rel-322"></a>2.66. Version 3.2.2</h2></div></div></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><span class="section"><a href="rel-322.html#general.9">2.66.1. General</a></span></dt><dt><span class="section"><a href="rel-322.html#qt-specific.9">2.66.2. Qt-specific</a></span></dt><dt><span class="section"><a href="rel-322.html#web-specific.9">2.66.3. Web-specific</a></span></dt></dl></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="general.9"></a>2.66.1. General</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Added File.readln() JavaScript function.</p></li><li><p>Guess separator used for testdata correctly even for
+very short data tables.</p></li><li><p>Fixed Perl bindings for template, pointer and
+reference C++ types.</p></li><li><p>Compile fixes for Lynx OS. Some workarounds for
+recently discovered compiler bugs are still pending. Please inquire
+with support for a patch.</p></li><li><p>Don't let the IDE crash when creating a new testdata
+file and saving it before a second column was added.</p></li><li><p>Fixed Solaris walkcontext() check.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="qt-specific.9"></a>2.66.2. Qt-specific</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Added --with-moc switch.</p></li><li><p>Added QMenu.title descriptor. This seems got lost
+somehow between Squish 3.1 and 3.2.</p></li><li><p>Fixed Qt 4 library detection on AIX.</p></li><li><p>Deal with quoted built-in, pre-processor macros of
+latest Sun CC compiler.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="web-specific.9"></a>2.66.3. Web-specific</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Fixed clickButton()</p></li><li><p>On replay when an object is not found in the current
+context, try finding it in any other open context before throwing an
+error.</p></li><li><p>Fixed hooking into windows opened by
+subwindows. <span class="emphasis"><em>Squish</em></span> only hooked into windows opened by frames of
+subwindows so far. This will fix many issues with popup
+windows.</p></li><li><p>Record and replay right-mouse-button clicks
+correctly.</p></li><li><p>If, when recording, it took longer that 20 seconds for
+an object or context to be available, record this timeout in
+waitForObject() and waitForContextExists().</p></li><li><p>When a frame, which is the current context, is
+reloaded, reset the context to the new frame window.</p></li><li><p>Fixed case where waitForContextExists() waited 15
+seconds if called in an unfortunate moment.</p></li></ul></div></div></div><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" type="text/javascript" src="ScriptingLanguage.js"></script><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format">setScriptingLanguage();</script><div class="navfooter"><hr></hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="rel-323.html">Prev</a> </td><td width="20%" align="center"><a accesskey="u" href="relnotes.html">Up</a></td><td width="40%" align="right"> <a accesskey="n" href="rel-mac-beta1.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">2.65. Version 3.2.3 </td><td width="20%" align="center"><a accesskey="h" href="index-noframes.html">Home</a></td><td width="40%" align="right" valign="top"> 2.67. Squish for macOS, Beta 1</td></tr></table></div></body>
+<!-- Mirrored from rel-322.html by HTTrack Website Copier/3.x [XR&CO'2013], Wed, 06 Jul 2022 13:29:03 GMT -->
+</html>

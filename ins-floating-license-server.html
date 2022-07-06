@@ -1,0 +1,115 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<!-- Mirrored from ins-floating-license-server.html by HTTrack Website Copier/3.x [XR&CO'2013], Wed, 06 Jul 2022 13:28:58 GMT -->
+<head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><title>3.2. Setting up the Squish Floating License Server</title><link rel="stylesheet" href="manual.css" type="text/css"></link><meta name="generator" content="DocBook XSL Stylesheets V1.73.2"></meta><link rel="start" href="index-noframes.html" title="Squish Manual"></link><link rel="up" href="install.html" title="Chapter 3. How to Install Squish"></link><link rel="prev" href="ins-commandline-tools-server-ide.html" title="3.1. Installing the Command Line Tools, Server, and IDEs"></link><link rel="next" href="ins-source-embedded.html" title="3.3. Installing Squish for Qt from Embedded Source Packages"></link><style xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" type="text/css" media="screen">
+        div.toc * { margin-left: 6px; margin-right: auto; max-width: 75em; }
+        div.toc span { margin-left: 0px; }
+        * { margin-left: auto; margin-right: auto; max-width: 75em; }
+        body { margin-left: 6px; margin-right: 6px; }
+        table th { padding: .5ex }
+        table td { padding: .5ex }
+    </style><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format">
+        function keyPress() {
+            var e = window.event;
+            if ( e == undefined ) {
+                return;
+            }
+            /* ### does not properly scroll, yet
+            if ( e.keyCode == 32 ) {
+            var l = document.links;
+            for ( var i = 0; i < l.length; i++ ) {
+                if ( l[i].innerText == "Next" ) {
+                location.href = l[i].href;
+                }
+            }
+            } else
+                */
+                if ( e.keyCode == 0x08 ) {
+            var l = document.links;
+            for ( var i = 0; i < l.length; i++ ) {
+                if ( l[i].innerText == "Prev" ) {
+                location.href = l[i].href;
+                }
+            }
+            }
+        }
+        document.onkeypress = keyPress;
+    </script></head><body><div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="ins-floating-license-server"></a>3.2. Setting up the Squish Floating License Server</h2></div></div></div><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Note"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/note.png"></img></td><th align="left">Note</th></tr><tr><td align="left" valign="top"><p>
+The <span class="emphasis"><em>Squish License Server</em></span> only serves licenses of Squish GUI Tester (Tester and Execution subscriptions).
+</p><p>
+(<a class="ulink" href="https://www.froglogic.com/coco/" target="_blank">Squish Coco</a> has its own <a class="ulink" href="https://doc.froglogic.com/squish-coco/latest/tutorial.html#sec%3Ainst-license-serv" target="_blank">license server</a>.)
+</p><p>
+(<a class="ulink" href="https://www.froglogic.com/coco/" target="_blank">Squish Test Center</a> has its own <a class="ulink" href="https://doc.froglogic.com/squish-testcenter/latest/install-testcenter.html" target="_blank">activation and license handling</a> mechanism.)
+</p></td></tr></table></div><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Note"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/note.png"></img></td><th align="left">Note</th></tr><tr><td align="left" valign="top"><p>
+The <span class="emphasis"><em>Squish License Server</em></span> is not available or required while evaluating <span class="emphasis"><em>Squish</em></span>. Instead use the evaluation license
+key shown in the <a class="ulink" href="https://www.froglogic.com/squish/download/" target="_blank">Squish Download Area</a> when installing
+<span class="emphasis"><em>Squish</em></span>.
+</p></td></tr></table></div><p>
+The installer for <span class="emphasis"><em>Squish License Server</em></span> is available in the
+<a class="ulink" href="https://www.froglogic.com/squish/download/" target="_blank">Squish Download Area</a> under
+<span class="guilabel">Downloads &gt; Squish [...]</span> with one of the following filenames
+(the version number may differ):
+</p><div class="itemizedlist"><ul type="disc"><li><p>
+macOS: <code class="filename">squish-license-server-7.0.0-macos.pkg</code>
+</p></li><li><p>
+Linux: <code class="filename">squish-license-server-7.0.0-linux-x64.run</code>
+</p></li><li><p>
+Windows: <code class="filename">squish-license-server-7.0.0-windows-x86.exe</code>
+</p></li></ul></div><p>
+Executing the installer will install into one of the following directories:
+</p><div class="itemizedlist"><ul type="disc"><li><p>
+macOS: <code class="filename">/opt/squish-license-server</code>
+</p></li><li><p>
+Linux: <code class="filename">/opt/squish-license-server</code>
+</p></li><li><p>
+Windows: <code class="filename">C:\Program Files(x86)\Squish License Server\</code>
+</p></li></ul></div><p> After
+installation, find the <span class="application">licenseserver(.exe)</span> program in
+the <code class="filename">bin</code> directory. This is a command-line tool that needs
+to be run from a command prompt window.
+</p><p>Running the <span class="application">licenseserver</span> without arguments
+will print out a machine-specific identifier and exit. Send the
+identifier to <code class="email">&lt;<a class="email" href="mailto:sales@froglogic.com">sales@froglogic.com</a>&gt;</code> along with
+your desired listening TCP port number. Note that a floating license
+file will be generated which only works on the machine with the same identifier you sent.
+So take some time and think about which machine you want to host the license server
+on. Modifying the generated floating license file will invalidate it.</p><h3><a id="idp37524008"></a>Linux Example</h3><pre class="programlisting">
+$ /opt/squish-license-server/bin/licenseserver
+2022-01-21T12:14:48 Searching for license files (*.cfg) in '/etc/squish-license-server/licenses'
+2022-01-21T12:14:48 No license files (*.cfg) were found in '/etc/squish-license-server/licenses'. Ensure license file(s) are in place and restart the server.
+2022-01-21T12:14:48 Already activated floating license files can be downloaded from your customer area. To activate a floating license and assign it to this server, send the machine id "f7ff1122a223344f5544ff00", your customer id and the group number of the license you want to activate to our team at &lt;sales@froglogic.com&gt;. The customer id and license group number can be found in the customer area.
+</pre><h3><a id="idp37525872"></a>Windows Example</h3><pre class="programlisting">
+C:\&gt;"C:\Program Files (x86)\Squish License Server\bin\licenseserver.exe"
+2022-01-21T12:19:06 Searching for license files (*.cfg) in 'C:\ProgramData\Squish License Server\licenses'
+2022-01-21T12:19:06 No license files (*.cfg) were found in 'C:\ProgramData\Squish License Server\licenses'. Ensure license file(s) are in place and restart the server.
+2022-01-21T12:19:06 Already activated floating license files can be downloaded from your customer area. To activate a floating license and assign it to this server, send the machine id "f7ab1188a223344f8877bb12", your customer id and the group number of the license you want to activate to our team at &lt;sales@froglogic.com&gt;. The customer id and license group number can be found in the customer area.
+</pre><p>
+After the license file has been generated it can be downloaded from the
+<a class="ulink" href="https://www.froglogic.com/downloads" target="_blank">froglogic customer area</a>.
+Additionally, froglogic support will send it to you via email. Save the license
+file to the following location. You will need system administrator privileges
+to do this.
+</p><div class="itemizedlist"><ul type="disc"><li><p>
+Linux: <code class="filename">/etc/squish-license-server/licenses</code>
+</p></li><li><p>
+macOS: <code class="filename">/etc/squish-license-server/licenses</code>
+</p></li><li><p>
+Windows: <code class="filename">C:\ProgramData\Squish License Server\licenses</code>
+</p></li></ul></div><p>
+To setup and start the service, issue one of the following commands as an administrator:
+</p><div class="itemizedlist"><ul type="disc"><li><p>
+Linux: <code class="code">systemctl start squish-license-server.service</code>
+(or reboot the system once)
+</p></li><li><p>
+macOS: <code class="code">sudo /opt/squish-license-server/bin/licenseserver --install-service</code>
+(installs and immediately starts the service)
+</p></li><li><p>
+Windows: Via the Windows Services list under <span class="guilabel">Start - Services - Squish License Server - Start</span>
+or in an Administrator Command Prompt: <code class="code">sc start squish-license-server</code>
+(or reboot the system once)
+</p></li></ul></div><p>
+After these steps <span class="emphasis"><em>Squish License Server</em></span> should be up and running. For further details on configuration and logging, please
+see <a class="xref" href="rg-licenseserver.html" title="7.16. License Server">License Server (Section 7.16)</a> in the Tools Reference Manual.
+</p></div><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" type="text/javascript" src="ScriptingLanguage.js"></script><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format">setScriptingLanguage();</script><div class="navfooter"><hr></hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="ins-commandline-tools-server-ide.html">Prev</a> </td><td width="20%" align="center"><a accesskey="u" href="install.html">Up</a></td><td width="40%" align="right"> <a accesskey="n" href="ins-source-embedded.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">3.1. Installing the Command Line Tools, Server, and IDEs </td><td width="20%" align="center"><a accesskey="h" href="index-noframes.html">Home</a></td><td width="40%" align="right" valign="top"> 3.3. Installing Squish for Qt from Embedded Source Packages</td></tr></table></div></body>
+<!-- Mirrored from ins-floating-license-server.html by HTTrack Website Copier/3.x [XR&CO'2013], Wed, 06 Jul 2022 13:28:58 GMT -->
+</html>

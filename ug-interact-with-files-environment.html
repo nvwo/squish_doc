@@ -1,0 +1,361 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<!-- Mirrored from ug-interact-with-files-environment.html by HTTrack Website Copier/3.x [XR&CO'2013], Wed, 06 Jul 2022 13:28:59 GMT -->
+<head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><title>5.17. How to Interact with Files and with the Environment in Test Scripts</title><link rel="stylesheet" href="manual.css" type="text/css"></link><meta name="generator" content="DocBook XSL Stylesheets V1.73.2"></meta><link rel="start" href="index-noframes.html" title="Squish Manual"></link><link rel="up" href="users-guide.html" title="Chapter 5. User Guide"></link><link rel="prev" href="how.to.do.keyword.driven.testing.html" title="5.16. How to Do Keyword-Driven Testing"></link><link rel="next" href="how.to.access.databases.from.squish.test.scripts.html" title="5.18. How to Access Databases from Squish Test Scripts"></link><style xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" type="text/css" media="screen">
+        div.toc * { margin-left: 6px; margin-right: auto; max-width: 75em; }
+        div.toc span { margin-left: 0px; }
+        * { margin-left: auto; margin-right: auto; max-width: 75em; }
+        body { margin-left: 6px; margin-right: 6px; }
+        table th { padding: .5ex }
+        table td { padding: .5ex }
+    </style><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format">
+        function keyPress() {
+            var e = window.event;
+            if ( e == undefined ) {
+                return;
+            }
+            /* ### does not properly scroll, yet
+            if ( e.keyCode == 32 ) {
+            var l = document.links;
+            for ( var i = 0; i < l.length; i++ ) {
+                if ( l[i].innerText == "Next" ) {
+                location.href = l[i].href;
+                }
+            }
+            } else
+                */
+                if ( e.keyCode == 0x08 ) {
+            var l = document.links;
+            for ( var i = 0; i < l.length; i++ ) {
+                if ( l[i].innerText == "Prev" ) {
+                location.href = l[i].href;
+                }
+            }
+            }
+        }
+        document.onkeypress = keyPress;
+    </script></head><body><div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="ug-interact-with-files-environment"></a>5.17. How to Interact with Files and with the Environment in Test Scripts</h2></div></div></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><span class="section"><a href="ug-interact-with-files-environment.html#ug-interact-with-external-files">5.17.1. How to Interact with External Files in Test Scripts</a></span></dt><dt><span class="section"><a href="ug-interact-with-files-environment.html#ug-comparingfiles">5.17.2. How to Compare External Files inside Test Scripts</a></span></dt><dt><span class="section"><a href="ug-interact-with-files-environment.html#ug-external-environment">5.17.3. How to Read Environment Variables inside Test Scripts</a></span></dt></dl></div><p>
+In addition to the test-specific functionality that <span class="emphasis"><em>Squish</em></span> provides,
+test scripts can also use the native functionality (including the
+standard libraries) provided by the scripting languages themselves. In
+this subsection we will show how to use native functionality to read
+data from an external file, write data to an external file, check for
+the existence of an external file, and delete an external file. In
+addition, we will see how to compare two external files, and also how to
+read the environment variables that are set when the script is running.
+</p><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Note: Python-specific"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/note.png"></img></td><th align="left">Python-specific</th></tr><tr><td align="left" valign="top"><p>
+The Python examples don't show any <code class="code">import</code> statements, but
+these are of course required when non-global functions are used. The
+<code class="code">import</code>s ought to be done before the <code class="code">main</code>
+function is defined, with those shown below being sufficient for the
+examples shown in this section.
+</p><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Python</span><pre class="programlisting">
+import codecs, filecmp, os, subprocess, sys
+</pre></div></td></tr></table></div><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Note: Perl-specific"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/note.png"></img></td><th align="left">Perl-specific</th></tr><tr><td align="left" valign="top"><p>
+The Perl examples don't show any <code class="code">use</code> statements, but
+these are of course required when non-global functions are used. The
+<code class="code">use</code>s ought to be done before the <code class="code">main</code> function
+is defined, with those shown below being sufficient for the examples
+shown in this section.
+</p><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Perl</span><pre class="programlisting">
+use File::Basename;
+use File::Spec;
+</pre></div></td></tr></table></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="ug-interact-with-external-files"></a>5.17.1. How to Interact with External Files in Test Scripts</h3></div></div></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><span class="section"><a href="ug-interact-with-files-environment.html#ug-read-from-external-files">5.17.1.1. How to Read Data from an External File</a></span></dt><dt><span class="section"><a href="ug-interact-with-files-environment.html#ug-write-to-external-file">5.17.1.2. How to Write Data to an External File</a></span></dt><dt><span class="section"><a href="ug-interact-with-files-environment.html#ug-check-existence-external-files">5.17.1.3. How to Check the Existence of an External File</a></span></dt><dt><span class="section"><a href="ug-interact-with-files-environment.html#ug-remove-external-file">5.17.1.4. How to Remove an External File</a></span></dt></dl></div><p>
+Here we will see how to read data from an external file, write data to
+an external file, check for the existence of an external file, and
+delete an external file.
+</p><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="ug-read-from-external-files"></a>5.17.1.1. How to Read Data from an External File</h4></div></div></div><p>
+Reading an external file involves getting its complete filename
+(including path), and then reading it in the standard way that the
+scripting language supports. For example:
+</p><div xmlns="" class="scriptlang"><form><select name="scriptlangcombo" onchange="javascript:changeScriptingLanguage(this)" onclick="javascript:changeScriptingLanguage(this)"><option value="all" selected>Show All</option><option value="JavaScript">Show JavaScript</option><option value="Perl">Show Perl</option><option value="Python">Show Python</option><option value="Ruby">Show Ruby</option><option value="Tcl">Show Tcl</option></select></form></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Python</span><pre class="programlisting">
+
+    infile = findFile("testdata", "before.csv")
+    infile = infile.replace("/", os.sep)
+    test.log("Reading %s" % infile)
+    file = codecs.open(infile, "r", "utf-8")
+    lines = []
+    for line in file:
+        lines.append(line)
+    file.close()
+    test.verify(len(lines) == 13)
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">JavaScript</span><pre class="programlisting">
+
+    infile = findFile("testdata", "before.csv");
+    infile = infile.replace(/[\/]/g, File.separator);
+    test.log("Reading " + infile);
+    file = File.open(infile, "r");
+    var lines = [];
+    var i = 0;
+    while (true) {
+        var line = file.readln();
+        if (line == null)
+            break;
+        lines[i++] = line;
+    }
+    file.close();
+    test.verify(lines.length == 13);
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Perl</span><pre class="programlisting">
+
+    my $sep = File::Spec-&gt;rootdir();
+
+    # Load data from an external file
+    my $infile = findFile("testdata", "before.csv");
+    $infile =~ s,/,$sep,g;
+    test::log("Reading $infile");
+    open(FILE, "&lt;:encoding(UTF-8)", $infile) or test::fail("Failed to read $infile");
+    my @lines = &lt;FILE&gt;;
+    close(FILE);
+    test::verify(scalar(@lines) == 13);
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Ruby</span><pre class="programlisting">
+
+    infile = natify(findFile("testdata", "before.csv"))
+    Test.log("Reading %s" % infile)
+    lines = []
+    File.open(infile, "r:utf-8") do |file|
+        file.each {|line| lines &lt;&lt; line}
+    end
+    Test.verify(lines.length == 13)
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Tcl</span><pre class="programlisting">
+
+    set infile [file nativename [findFile "testdata" "before.csv"]]
+    test log "Reading $infile"
+    set fh [open $infile]
+    set text [read $fh]
+    close $fh
+    set text [string trimright $text]
+    set lines [split $text "\n"]
+    test compare [llength $lines] 13
+</pre></div><p>
+Here, we read a file called <code class="filename">before.csv</code> that is in
+the suite's (or the test case's) <code class="filename">testdata</code>
+directory. The file is a text file using the UTF-8 encoding. We open the
+file and read it line by line into a list (or array) of lines or into a
+string which we then break into lines, depending on the scripting
+language. And at the end we check that we have got exactly the number of
+lines we expected.
+</p><p>
+<span class="emphasis"><em>Squish</em></span> uses Unix-style path separators internally on all platforms,
+but because we want to show the path to the user (using the <a class="xref" href="rgs-squish.html#test.log-function"><code class="function">test.log</code></a> function), we replace these with the
+path separator that is appropriate for the platform (e.g.,
+“<span class="quote"><code class="code">\</code></span>” on Windows).
+</p><p>
+JavaScript has no native support for file handling or for operating
+system interaction, so <span class="emphasis"><em>Squish</em></span> provides the <a class="xref" href="rgs-js.html#file-object" title="6.16.4. File Object">File Object (Section 6.16.4)</a> and the <a class="xref" href="rgs-js.html#os-object" title="6.16.6. OS Object">OS Object (Section 6.16.6)</a> to fill
+these gaps.
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="ug-write-to-external-file"></a>5.17.1.2. How to Write Data to an External File</h4></div></div></div><p>
+Writing to an external file is simply a matter of creating a filename,
+opening the file for writing, and writing data to it in the standard way
+that the scripting language supports. For example:
+</p><div xmlns="" class="scriptlang"><form><select name="scriptlangcombo" onchange="javascript:changeScriptingLanguage(this)" onclick="javascript:changeScriptingLanguage(this)"><option value="all" selected>Show All</option><option value="JavaScript">Show JavaScript</option><option value="Perl">Show Perl</option><option value="Python">Show Python</option><option value="Ruby">Show Ruby</option><option value="Tcl">Show Tcl</option></select></form></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Python</span><pre class="programlisting">
+
+    outfile = os.path.join(os.getcwd(), os.path.basename(infile) + ".tmp")
+    outfile = outfile.replace("/", os.sep)
+    test.log("Writing %s" % outfile)
+    file = codecs.open(outfile, "w", "utf-8")
+    for line in lines:
+        file.write(line)
+    file.close()
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">JavaScript</span><pre class="programlisting">
+
+    outfile = infile + ".tmp";
+    var i = outfile.lastIndexOf(File.separator);
+    if (i &gt; -1)
+        outfile = outfile.substr(i + 1);
+    outfile = OS.cwd().replace(/[\/]/g, File.separator) + File.separator + outfile;
+    test.log("Writing " + outfile);
+    file = File.open(outfile, "w")
+    for (var i in lines)
+        file.write(lines[i] + "\n");
+    file.close();
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Perl</span><pre class="programlisting">
+
+    # Save data to an external file
+    my $outfile = File::Spec-&gt;rel2abs(basename($infile) . ".tmp");
+    $outfile =~ s,/,$sep,g;
+    test::log("Writing $outfile");
+    open(FILE, "&gt;:encoding(UTF-8)", $outfile) or test::fail("Failed to write $outfile");
+    print FILE @lines;
+    close(FILE);
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Ruby</span><pre class="programlisting">
+
+    outfile = natify(File.join(Dir.getwd, File.basename(infile) + ".tmp"))
+    Test.log("Writing %s" % outfile)
+    File.open(outfile, "w:utf-8") do |file|
+        lines.each {|line| file.write(line)}
+    end
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Tcl</span><pre class="programlisting">
+
+    set outfile [file nativename [file join [pwd] [file tail "$infile.tmp"]]]
+    test log "Writing $outfile"
+    set fh [open $outfile "w"]
+    foreach line $lines {
+        puts $fh $line
+    }
+    close $fh
+</pre></div><p>
+Here, we write a file that has the same basename as the file we read,
+but with <code class="code">.tmp</code> appended (e.g.,
+<code class="filename">before.csv.tmp</code>), and save it into the script's
+current working directory. Since we write exactly the same data as we
+read, this file and the original should be identical. (We'll see how to
+check this in a later subsection.)
+</p><p>
+Just as we did when reading a file, we replace the Unix-style path
+separators with the path separator that is appropriate for the
+platform. This is done purely for the output to the <a class="xref" href="rgs-squish.html#test.log-function"><code class="function">test.log</code></a> function; if we are not showing the
+filename to the user we could safely use Unix path separators no matter
+what the platform.
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="ug-check-existence-external-files"></a>5.17.1.3. How to Check the Existence of an External File</h4></div></div></div><p>
+Here is an example that checks two files: the first is expected to exist
+and the second is not expected to exist.
+</p><div xmlns="" class="scriptlang"><form><select name="scriptlangcombo" onchange="javascript:changeScriptingLanguage(this)" onclick="javascript:changeScriptingLanguage(this)"><option value="all" selected>Show All</option><option value="JavaScript">Show JavaScript</option><option value="Perl">Show Perl</option><option value="Python">Show Python</option><option value="Ruby">Show Ruby</option><option value="Tcl">Show Tcl</option></select></form></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Python</span><pre class="programlisting">
+
+    test.verify(os.path.exists(infile), "infile correctly present")
+    test.verify(not os.path.exists(outfile), "outfile sucessfully deleted")
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">JavaScript</span><pre class="programlisting">
+
+    test.verify(File.exists(infile), "infile correctly present");
+    test.verify(!File.exists(outfile), "outfile sucessfully deleted");
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Perl</span><pre class="programlisting">
+
+    test::verify(-e $infile, "infile correctly present");
+    test::verify(!-e $outfile, "outfile sucessfully deleted");
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Ruby</span><pre class="programlisting">
+
+    Test.verify(File.exist?(infile), "infile correctly present")
+    Test.verify(!File.exist?(outfile), "outfile sucessfully deleted")
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Tcl</span><pre class="programlisting">
+
+    test verify [file exists $infile] "infile correctly present"
+    test verify [expr ![file exists $outfile]] "outfile sucessfully deleted"
+</pre></div><p>
+We have used the two-argument form of the <a class="xref" href="rgs-squish.html#test.verify-function"><code class="function">test.verify</code></a> function to provide more useful
+detail information than simply “<span class="quote">True expression</span>”.
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="ug-remove-external-file"></a>5.17.1.4. How to Remove an External File</h4></div></div></div><p>
+Removing an external file is easy—but not reversible!
+</p><div xmlns="" class="scriptlang"><form><select name="scriptlangcombo" onchange="javascript:changeScriptingLanguage(this)" onclick="javascript:changeScriptingLanguage(this)"><option value="all" selected>Show All</option><option value="JavaScript">Show JavaScript</option><option value="Perl">Show Perl</option><option value="Python">Show Python</option><option value="Ruby">Show Ruby</option><option value="Tcl">Show Tcl</option></select></form></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Python</span><pre class="programlisting">
+
+    os.remove(outfile)
+
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">JavaScript</span><pre class="programlisting">
+
+    File.remove(outfile);
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Perl</span><pre class="programlisting">
+
+    unlink $outfile;
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Ruby</span><pre class="programlisting">
+
+    File.delete(outfile)
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Tcl</span><pre class="programlisting">
+
+    file delete $outfile
+</pre></div><p>
+It would make sense to follow this with a call to the <a class="xref" href="rgs-squish.html#test.verify-function"><code class="function">test.verify</code></a> function in conjunction with an
+existence test to check that the file has been removed as expected.
+</p></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="ug-comparingfiles"></a>5.17.2. How to Compare External Files inside Test Scripts</h3></div></div></div><p>
+To compare two external files, the easiest approach is to use the <a class="xref" href="rgs-squish.html#comparing-files-api" title="6.3.8.3.  Comparing Files"> Comparing Files  (Section 6.3.8.3)</a> Squish API, but it is also possible to use the
+native script language features. It should not be necessary to use an external
+program like <span class="application">diff</span> or <span class="application">fc</span>.
+</p><div xmlns="" class="scriptlang"><form><select name="scriptlangcombo" onchange="javascript:changeScriptingLanguage(this)" onclick="javascript:changeScriptingLanguage(this)"><option value="all" selected>Show All</option><option value="JavaScript">Show JavaScript</option><option value="Perl">Show Perl</option><option value="Python">Show Python</option><option value="Ruby">Show Ruby</option><option value="Tcl">Show Tcl</option></select></form></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Python</span><pre class="programlisting">
+
+    # Compare using Squish API:
+    test.compareTextFiles(infile, outfile)
+    
+    # Compare using Python API:
+    test.verify(filecmp.cmp(infile, outfile, False),
+        "infile and outfile equal according to filecmp library")
+        
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">JavaScript</span><pre class="programlisting">
+
+    // Compare two external files:
+    test.compareTextFiles(infile, outfile)
+    
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Perl</span><pre class="programlisting">
+
+    # Compare two external files
+    test::compareTextFiles($infile, $outfile);
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Ruby</span><pre class="programlisting">
+
+    # Compare two external files
+    Test.compareTextFiles(infile, outfile)
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Tcl</span><pre class="programlisting">
+
+    # Compare two external files
+    test compareTextFiles $infile $outfile 
+</pre></div><p>
+We have to make our script account for the fact that we use the
+<span class="application">fc</span> program on Windows and the
+<span class="application">diff</span> program on other platforms. Fortunately,
+both programs exhibit the same behavior: if the two files are the same
+they return 0 to the operating system (0 is the traditional
+“<span class="quote">success</span>” value for programs) and if the two files differ
+they return 1. (They may return other values, e.g., 2, if an error in
+the command line they are given is encountered.)
+</p><p>
+Note that it is <span class="emphasis"><em>essential</em></span> that the filenames use
+the correct path separators for the platform. We also put the filenames
+in quotes—except for the Tcl example—in case they (or their
+paths) contain spaces—something quite possible on Windows.
+</p><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Note: Python-specific"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/note.png"></img></td><th align="left">Python-specific</th></tr><tr><td align="left" valign="top"><p>
+Python programmers can avoid using an external program and also the
+inefficiency of loading entire files into memory by taking advantage of
+the Python standard library's <code class="code">filecmp</code> module. This reduces
+comparing two files to a single statement:
+</p><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Python</span><pre class="programlisting">
+
+    test.verify(filecmp.cmp(infile, outfile, False),
+        "infile and outfile equal according to filecmp library")
+
+</pre></div><p>
+The <a class="ulink" href="http://docs.python.org/dev/library/filecmp.html#filecmp.cmp" target="_blank">filecmp.cmp</a> function returns a Boolean with
+<code class="code">True</code> indicating that the files are the same. The third
+parameter should always be <code class="code">False</code> to avoid any risk of
+false-positives.
+</p></td></tr></table></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="ug-external-environment"></a>5.17.3. How to Read Environment Variables inside Test Scripts</h3></div></div></div><p>
+Here is an example of how to read some specific environment variables
+that might be set when the test script is running.
+</p><div xmlns="" class="scriptlang"><form><select name="scriptlangcombo" onchange="javascript:changeScriptingLanguage(this)" onclick="javascript:changeScriptingLanguage(this)"><option value="all" selected>Show All</option><option value="JavaScript">Show JavaScript</option><option value="Perl">Show Perl</option><option value="Python">Show Python</option><option value="Ruby">Show Ruby</option><option value="Tcl">Show Tcl</option></select></form></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Python</span><pre class="programlisting">
+
+    for key in ("HOME", "PATH", "MY_ENV_VAR"):
+        test.log("%s = %s" % (key, os.environ.get(key)))
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">JavaScript</span><pre class="programlisting">
+
+    var keys = ["HOME", "PATH", "MY_ENV_VAR"];
+    for (i in keys)
+        test.log(keys[i] + " = " + OS.getenv(keys[i]));
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Perl</span><pre class="programlisting">
+
+    for my $key ("HOME", "PATH", "MY_ENV_VAR") {
+        test::log("$key = $ENV{$key}");
+    }
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Ruby</span><pre class="programlisting">
+
+    ENV.each {|key, value| Test.log("#{key} = #{value}") }
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Tcl</span><pre class="programlisting">
+
+    global env
+    foreach key {"HOME" "PATH" "MY_ENV_VAR"} {
+        set value ""
+        if {[catch {set value $env($key)}]} {
+            # do nothing for missing key: empty default value is fine
+        }
+        test log "$key = $value"
+    }
+</pre></div><p>
+If you use a shell script or batch file as your AUT you can easily set
+some test-suite-specific environment variables which you can then access
+inside your test scripts using the technique shown here. (See <a class="xref" href="rg-autsettings.html#rgas-shellbatch" title="7.3.4. Shell Scripts and .bat-Files as AUT">Shell Scripts and .bat-Files as AUT (Section 7.3.4)</a>.) Note that test scripts do
+<span class="emphasis"><em>not</em></span> have access to the AUT's environment variables
+(e.g., those set in the <a class="xref" href="ide.views.html#ide.the-settings.view" title="8.2.16. Test Suite Settings view">Test Suite Settings view (Section 8.2.16)</a>'s
+Environment section).
+</p><p>
+Notice that for Python, using the <code class="code">dict.get</code> method ensures
+that we get <code class="code">None</code> as the value of missing keys rather than
+an exception. Similarly, for Tcl we achieve the same thing by catching
+the exception that occurs if the looked up key is missing. For
+JavaScript and Perl a missing key's value is a harmless empty value
+which prints as an empty string.
+</p></div></div><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" type="text/javascript" src="ScriptingLanguage.js"></script><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format">setScriptingLanguage();</script><div class="navfooter"><hr></hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="how.to.do.keyword.driven.testing.html">Prev</a> </td><td width="20%" align="center"><a accesskey="u" href="users-guide.html">Up</a></td><td width="40%" align="right"> <a accesskey="n" href="how.to.access.databases.from.squish.test.scripts.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">5.16. How to Do Keyword-Driven Testing </td><td width="20%" align="center"><a accesskey="h" href="index-noframes.html">Home</a></td><td width="40%" align="right" valign="top"> 5.18. How to Access Databases from Squish Test Scripts</td></tr></table></div></body>
+<!-- Mirrored from ug-interact-with-files-environment.html by HTTrack Website Copier/3.x [XR&CO'2013], Wed, 06 Jul 2022 13:28:59 GMT -->
+</html>

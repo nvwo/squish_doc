@@ -1,0 +1,354 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<!-- Mirrored from tutorials-gdc.html by HTTrack Website Copier/3.x [XR&CO'2013], Wed, 06 Jul 2022 13:28:59 GMT -->
+<head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><title>4.11. Squish for GDC Tutorials</title><link rel="stylesheet" href="manual.css" type="text/css"></link><meta name="generator" content="DocBook XSL Stylesheets V1.73.2"></meta><link rel="start" href="index-noframes.html" title="Squish Manual"></link><link rel="up" href="tutorials.html" title="Chapter 4. Tutorials"></link><link rel="prev" href="tutorials-tk.html" title="4.10. Squish for Tk Tutorials"></link><link rel="next" href="tutorials-android.html" title="4.12. Squish for Android Tutorials"></link><style xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" type="text/css" media="screen">
+        div.toc * { margin-left: 6px; margin-right: auto; max-width: 75em; }
+        div.toc span { margin-left: 0px; }
+        * { margin-left: auto; margin-right: auto; max-width: 75em; }
+        body { margin-left: 6px; margin-right: 6px; }
+        table th { padding: .5ex }
+        table td { padding: .5ex }
+    </style><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format">
+        function keyPress() {
+            var e = window.event;
+            if ( e == undefined ) {
+                return;
+            }
+            /* ### does not properly scroll, yet
+            if ( e.keyCode == 32 ) {
+            var l = document.links;
+            for ( var i = 0; i < l.length; i++ ) {
+                if ( l[i].innerText == "Next" ) {
+                location.href = l[i].href;
+                }
+            }
+            } else
+                */
+                if ( e.keyCode == 0x08 ) {
+            var l = document.links;
+            for ( var i = 0; i < l.length; i++ ) {
+                if ( l[i].innerText == "Prev" ) {
+                location.href = l[i].href;
+                }
+            }
+            }
+        }
+        document.onkeypress = keyPress;
+    </script></head><body><div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="tutorials-gdc"></a>4.11. Squish for GDC Tutorials</h2></div></div></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><span class="section"><a href="tutorials-gdc.html#tutorial-getting-started-gdc">4.11.1. Tutorial: Starting to Test GDC Applications</a></span></dt></dl></div><p>
+	Learn how to test GDC applications.
+	</p><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="tutorial-getting-started-gdc"></a>4.11.1. Tutorial: Starting to Test GDC Applications</h3></div></div></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><span class="section"><a href="tutorials-gdc.html#tgs-concepts-gdc">4.11.1.1. Squish Concepts</a></span></dt><dt><span class="section"><a href="tutorials-gdc.html#tgsgdc-testsuite">4.11.1.2. Creating a Test Suite</a></span></dt><dt><span class="section"><a href="tutorials-gdc.html#tgsgdc-record">4.11.1.3. Recording a Test</a></span></dt><dt><span class="section"><a href="tutorials-gdc.html#tgsgdc-vp">4.11.1.4. Inserting a Verification Point</a></span></dt><dt><span class="section"><a href="tutorials-gdc.html#tgsgdc-furtherreading">4.11.1.5. Further Reading</a></span></dt></dl></div><p>In this tutorial we create a first test for a program written with <span class="emphasis"><em>Four J's GDC</em></span>.
+We use a small example program that can convert currencies between Euros, US
+dollars, and Japanese Yens.</p><p>In the screenshot below you can see the GUI of the program: in the right
+pane you can choose a currency you want to convert. Once you clicked on one of
+the buttons, the line edit for that currency becomes editable. After you
+entered a value, the other line edits are updated to show the converted
+values.</p><div class="mediaobject" align="center"><img src="images/gdctutorial-currencyconverter.png" align="middle"></img></div><p>You can find this example program in <code class="filename">example/gdc/currencyconverter</code> of your <span class="emphasis"><em>Squish</em></span>
+installation. The test suite we develop is located in <code class="filename">example/gdc/suite_currencyconverter</code>.</p><p>
+In the following sections we will create a test suite and then create
+some tests, but first we will very briefly review some key <span class="emphasis"><em>Squish</em></span>
+concepts.
+</p><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="tgs-concepts-gdc"></a>4.11.1.1. Squish Concepts</h4></div></div></div><p>
+To perform testing, two things are required:
+</p><div class="orderedlist"><ol type="1"><li><p>
+an application to test—known as the Application
+Under Test (AUT), and
+</p></li><li><p>
+a test script that exercises the AUT.
+</p></li></ol></div><p>
+One fundamental aspect of <span class="emphasis"><em>Squish</em></span>'s approach is that the AUT and the
+test script that exercises it are always executed in two separate
+processes. This ensures that even if the AUT crashes, it should not
+crash <span class="emphasis"><em>Squish</em></span>. (In such cases the test script will fail gracefully and
+log an error message.) In addition to insulating <span class="emphasis"><em>Squish</em></span> and test
+scripts from AUT crashes, running the AUT and the test script in
+separate processes brings other benefits. For example, it makes it
+easier to store the test scripts in a central location, and it also
+makes it possible to perform remote testing on different machines and
+platforms. The ability to do remote testing is particularly useful for
+testing AUTs that run on multiple platforms, and also when testing AUTs
+that run on embedded devices.
+</p><p>
+<span class="emphasis"><em>Squish</em></span> runs a small server (<span class="application">squishserver</span>) that handles the
+communication between the AUT and the test script. The test script is
+executed by the <span class="application">squishrunner</span> tool, which in turn connects to the
+<span class="application">squishserver</span>. The <span class="application">squishserver</span> starts the AUT and injects the
+<span class="emphasis"><em>Squish</em></span> hook into it. The hook is a small library that makes the AUT's
+live running objects accessible and that can communicate with the
+<span class="application">squishserver</span>. With the hook in place, the <span class="application">squishserver</span> can query AUT
+objects regarding their state and can execute commands—all on
+behalf of the <span class="application">squishrunner</span>. And the <span class="application">squishrunner</span> itself requests
+that the AUT performs whatever actions the test script specifies. All
+the communication takes place using network sockets which means that
+everything can be done on a single machine, or the test script can be
+executed on one machine and the AUT can be tested over the network on
+another machine.
+</p><p>
+The following diagram illustrates how the individual <span class="emphasis"><em>Squish</em></span> tools work
+together.
+</p><div class="mediaobject" align="center"><img src="images/design_network.png" align="middle"></img></div><p>
+From the test engineer's perspective this separation is not noticeable,
+since all the communication is handled transparently behind the scenes.
+</p><p>
+Tests can be written and executed using the <span class="application">Squish IDE</span>, in which case the
+<span class="application">squishserver</span> is started and stopped automatically, and the test
+results are displayed in the <span class="application">Squish IDE</span>'s <a class="xref" href="ide.views.html#ide.the-test-results.view" title="8.2.18. Test Results view">Test Results view (Section 8.2.18)</a>. The following diagram illustrates
+what happens behind the scenes when the <span class="application">Squish IDE</span> is used.
+</p><div class="mediaobject" align="center"><img src="images/design_ide.png" align="middle"></img></div><p>
+The <span class="emphasis"><em>Squish</em></span> tools can also be used from the command line without the
+<span class="application">Squish IDE</span>—this is useful for those testers who prefer to use their own
+tools (for example, their favorite editor), and also for performing
+automatic batch testing (for example, when running regression tests
+overnight). In these cases, the <span class="application">squishserver</span> must be started manually,
+and stopped when all the testing is complete (or, if preferred, started
+and stopped for each test).
+</p><p>
+For <span class="emphasis"><em>Squish</em></span> to make it possible for test scripts to be able to query
+and control an AUT, <span class="emphasis"><em>Squish</em></span> must be able to access the AUT's internals,
+and this is made possible by the use of <span class="emphasis"><em>bindings</em></span>.
+Bindings are in effect libraries that provide access to the
+objects—and in turn to the objects' properties and
+methods—that are available from a GUI toolkit, or from the AUT
+itself.
+</p><p>
+There are two sets of bindings that are of interest when developing
+tests using <span class="emphasis"><em>Squish</em></span>.
+</p><div class="orderedlist"><ol type="1"><li><p>
+<span class="emphasis"><em>GUI toolkit bindings</em></span>—<span class="emphasis"><em>Squish</em></span> provides
+bindings for all the GUI toolkits it supports, including Qt, Java
+AWT/Swing, Java SWT, Web, etc. This means that all the standard
+objects (including the GUI widgets) provided by these toolkits
+can be queried and controlled by <span class="emphasis"><em>Squish</em></span> test scripts.
+</p></li><li><p>
+<span class="emphasis"><em>AUT-specific bindings</em></span>—it is possible to
+create bindings that provide access to the AUT's own API for those
+cases where the toolkit's bindings don't provide sufficient
+functionality for proper testing. (Note that for Java- and Qt-based AUTs
+<span class="emphasis"><em>Squish</em></span> automatically creates bindings to the AUTs
+objects—including custom classes; see <a class="xref" href="ug-appbindings.html" title="5.27. How to Create and Access Application Bindings">How to Create and Access Application Bindings (Section 5.27)</a>.)
+</p></li></ol></div><p>
+The need to make AUT-specific bindings is rarely needed in practice,
+but if it really is necessary, <span class="emphasis"><em>Squish</em></span> provides a tool to make the
+process as simple as possible. The tool, <a class="xref" href="rg-cmdline.html#rgc-squishidl" title="7.4.5. squishidl">squishidl (Section 7.4.5)</a>, is used to instrument the AUT (and any
+additional components) to generate AUT-specific bindings. The generated
+bindings library is seamlessly integrated with the standard GUI toolkit
+bindings and in the same way will automatically be loaded on demand by
+the <span class="emphasis"><em>Squish</em></span> test tools.
+</p><p>
+When <span class="emphasis"><em>Squish</em></span> automatically creates bindings to AUT classes, for Qt
+applications this means that the properties and slots of the AUT's
+custom widgets can be accessed without having to take any special
+action, and for Java AUTs this means that objects of custom classes
+are automatically available in test scripts without needing to be
+registered.
+</p><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Note: Terminology"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/note.png"></img></td><th align="left">Terminology</th></tr><tr><td align="left" valign="top"><p>
+The <span class="emphasis"><em>Squish</em></span> documentation mostly uses the term
+<span class="emphasis"><em>widget</em></span> when referring to GUI objects (i.e.,
+buttons, menus, menu items, labels, table controls, etc). Windows users
+might be more familiar with the terms <span class="emphasis"><em>control</em></span> and
+<span class="emphasis"><em>container</em></span>, but here we use the term widget for
+both. Similarly, macOS users may be used to the term
+<span class="emphasis"><em>view</em></span>; again, we use the term widget for this
+concept.
+</p></td></tr></table></div><div class="section" lang="en"><div class="titlepage"><div><div><h5 class="title"><a id="tgsc_apptestable-gdc"></a>4.11.1.1.1. Making an Application Testable</h5></div></div></div><p>
+In most cases, nothing special needs to be done to make an application
+testable, since the toolkit's API (e.g., Qt) provides enough
+functionality to implement and record test scripts. The connection to
+the <span class="application">squishserver</span> is also established automatically, when the <span class="application">Squish IDE</span>
+starts the AUT.
+</p><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Note: The Squish Directory"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/note.png"></img></td><th align="left">The <span class="emphasis"><em>Squish</em></span> Directory</th></tr><tr><td align="left" valign="top"><p>
+Throughout the manual, we often refer to the <code class="filename">SQUISHDIR/</code>
+directory. This means the directory where <span class="emphasis"><em>Squish</em></span> is installed, which
+might be <code class="filename">C:\Squish</code>,
+<code class="filename">/usr/local/squish</code>,
+<code class="filename">~/squish</code>, or somewhere else, depending on
+where you installed it. The exact location doesn't matter, so long as
+you mentally translate the <code class="filename">SQUISHDIR/</code> directory to
+whatever the directory really is when you see paths and filenames in
+this manual.
+</p></td></tr></table></div></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="tgsgdc-testsuite"></a>4.11.1.2. Creating a Test Suite</h4></div></div></div><p><span class="emphasis"><em>Squish</em></span> groups tests into test suites and test cases: test suites are a
+container for the test cases, whereas test cases contain the test scripts. One
+test suite defines certain settings that are used for all test cases it
+contains, like the application that is started for executing the test.</p><p>So first we have to create a new test suite: start the <span class="application">Squish IDE</span> and open the
+new test suite wizard with
+<span class="guimenu">File</span>|<span class="guimenuitem">New Test Suite</span> (<span class="shortcut"><strong><span class="keycap"><strong>Ctrl</strong></span>+<span class="keycap"><strong>Shift</strong></span>+<span class="keycap"><strong>N</strong></span></strong></span>):</p><div class="mediaobject" align="center"><img src="images/gdctutorial-newtestsuite1.png" align="middle"></img></div><p>In the first wizard page, you have to enter a name for the test suite and
+a directory where the test suite is generated. <span class="emphasis"><em>Squish</em></span> requires that a test
+suite's name starts with the prefix <code class="literal">suite_</code>. But it ensures
+this automatically, so it is sufficient to enter just the name -
+<strong class="userinput"><code>currencyconverter</code></strong> in our case.</p><p>In the treeview you have to choose a directory where the test suite is
+stored.</p><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Note"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/note.png"></img></td><th align="left">Note</th></tr><tr><td align="left" valign="top"><p><span class="emphasis"><em>Squish</em></span> organizes test suites, test cases and all other data
+belonging to a test suite in text files in a directory named <code class="filename">suite_&lt;name&gt;</code>. By doing
+so, it is easily possible to check tests into a source control system or edit
+tests outside the <span class="application">Squish IDE</span>.</p></td></tr></table></div><p>Press <span class="guibutton">Next</span> to get to the next wizard page:</p><div class="mediaobject" align="center"><img src="images/gdctutorial-newtestsuite2.png" align="middle"></img></div><p>In this page you must select the toolkit your application uses. For
+testing a <span class="emphasis"><em>Four J's GDC</em></span> application, choose <span class="guilabel">GDC</span>.</p><div class="mediaobject" align="center"><img src="images/gdctutorial-newtestsuite3.png" align="middle"></img></div><p>On the next page, you have to choose the scripting language you want to
+use for writing your tests. In this example we use Python - the other scripting
+languages work very similar.</p><div class="mediaobject" align="center"><img src="images/gdctutorial-newtestsuite4.png" align="middle"></img></div><p>On the last wizard page, you have to select the application under test
+(<acronym class="acronym">AUT</acronym>). For testing <span class="emphasis"><em>Four J's GDC</em></span> based programs, this is always the
+<span class="application">gdc</span> application. The first time you create a new
+test suite, you have to add the application with its full path: click
+the browse button (</p><div class="mediaobject"><img src="images/editfind.png"></img></div><p>) and choose the path to the
+<span class="application">gdc</span> binary.</p><p>Once <span class="application">gdc</span> is registered as an application, you
+can simply select it in the <span class="guilabel">Application</span> combobox.</p><p>Click the <span class="guibutton">Finish</span> button now and the <span class="application">Squish IDE</span> displays
+the newly created test suite. The suite contains some subitems: an item
+for the Object Map (see <a class="xref" href="rg-objectmap.html" title="7.11. Object Map">Object Map (Section 7.11)</a> and the <a class="xref" href="ide.views.html#ide.the-object-map.view" title="8.2.10. Object Map view">Object Map view (Section 8.2.10)</a>), an item for shared
+test data and shared scripts (see <a class="xref" href="ug-shareddata.html" title="5.23. How to Create and Use Shared Data and Shared Scripts">How to Create and Use Shared Data and Shared Scripts (Section 5.23)</a>) and an item
+for listing the results of previous test runs.</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="tgsgdc-record"></a>4.11.1.3. Recording a Test</h4></div></div></div><p>Now that we have a test suite, we can record our first test: first
+you have to create a new test case in the suite; choose
+<span class="guimenu">File</span>|<span class="guimenuitem">New Test Case</span> (<span class="shortcut"><strong><span class="keycap"><strong>Ctrl</strong></span>+<span class="keycap"><strong>N</strong></span></strong></span>). </p><p>
+The <span class="application">Squish IDE</span> inserts a new test case into the tree with the cursor ready to
+enter a name for the test case. Type <strong class="userinput"><code>eur_conversion</code></strong>
+and press <span class="keycap"><strong>Return</strong></span>. This adds the test case with the name
+<code class="literal">tst_eur_conversion</code> (<span class="emphasis"><em>Squish</em></span>'s convention for test case
+naming is similar to the naming of test suites: it requires them to start
+with the prefix <code class="literal">tst_</code>).</p><p>Creating a new test case not only adds the entry to the tree, but
+also creates an empty test script. You can open this test script in the
+editor by clicking on the <span class="guilabel">test.py</span> entry in the
+tree.</p><p>The <span class="application">Squish IDE</span> should now look like:</p><div class="mediaobject" align="center"><img src="images/gdctutorial-newtestcase.png" align="middle"></img></div><p>Next, we start recording the test case: select the entry
+<span class="guilabel">tst_eur_conversion</span> and right-click it to open the
+context menu. Choose <span class="guimenu">Record</span> from the menu. Now the <span class="application">Squish IDE</span>
+opens a dialog where you can choose certain recording options. The defaults
+are just fine for us, so press <span class="guibutton">Ok</span>. The <span class="application">Squish IDE</span> then
+minimizes itself to a window just containing recording controls and it
+starts the application under test, i.e. <span class="emphasis"><em>Four J's GDC</em></span>. All actions you do in <span class="emphasis"><em>Four J's GDC</em></span>
+are now recorded until you exit it.</p><p>For this test we just want to add <strong class="userinput"><code>10</code></strong> in the
+field for the Euros and test that the calculated values are correct. So
+after <span class="emphasis"><em>Four J's GDC</em></span> we start the shortcut for the currency converter (we assume
+that the shortcut is already added).</p><p>In the currency converter window we choose the
+<span class="guibutton">EUR</span> button in the menu and type
+<strong class="userinput"><code>10</code></strong> in the line edit for Euros. Pressing
+<span class="guibutton">Ok</span> calculates and displays the converted values into
+US dollars and Yens.</p><p>Now quit the application: first we close the currency converter
+window and exit <span class="emphasis"><em>Four J's GDC</em></span> with the <span class="guibutton">Quit</span> button. The
+<span class="application">Squish IDE</span> recognizes that you finished <span class="emphasis"><em>Four J's GDC</em></span> and it shows its normal window
+again with the newly recorded script. The script looks like:</p><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Python</span><pre class="programlisting">
+def main():
+    snooze(1.5)<a xmlns="http://www.w3.org/1999/xhtml" id="tgs-gdc-snooze"></a><img src="callouts/1.png" border="0">
+    waitForObject(":MonitorView.qt_central_widget." +
+        "m_ShortcutsStartToolButton")<a xmlns="http://www.w3.org/1999/xhtml" id="tgs-gdc-waitForObject"></a><img src="callouts/2.png" border="0">
+    clickButton(":MonitorView.qt_central_widget." +
+        "m_ShortcutsStartToolButton")<a xmlns="http://www.w3.org/1999/xhtml" id="tgs-gdc-clickButton"></a><img src="callouts/3.png" border="0">
+    waitForObject(":Edit.screen..MenuAction_eur")
+    clickButton(":Edit.screen..MenuAction_eur")
+    waitForObject(":Edit.screen.Edit.FormField_eur")
+    type(":Edit.screen.Edit.FormField_eur", "10")
+    waitForObject(":Edit.screen..Action_accept")
+    clickButton(":Edit.screen..Action_accept")
+    waitForObject(":Edit.screen..")
+    sendEvent("QCloseEvent", ":Edit.screen..")
+    waitForObject(":MonitorView.qt_central_widget.m_ExitToolButton")
+    clickButton(":MonitorView.qt_central_widget.m_ExitToolButton")
+</pre></div><p><span class="emphasis"><em>Squish</em></span> generates scripts that are human readable and that you can
+later edit and change to meet your needs. So let's take a look at some
+statements:</p><div class="calloutlist"><table border="0" summary="Callout list"><tr><td width="5%" valign="top" align="left"><p><a href="#tgs-gdc-snooze"><img xmlns="" src="callouts/1.png" border="0"></a> </p></td><td valign="top" align="left"><p>The <code class="function">snooze</code> function waits for the specified
+number of seconds.</p></td></tr><tr><td width="5%" valign="top" align="left"><p><a href="#tgs-gdc-waitForObject"><img xmlns="" src="callouts/2.png" border="0"></a> </p></td><td valign="top" align="left"><p>The <code class="function">waitForObject</code> waits until an object is
+available. This is important for synchronizing the script; for example,
+starting the application takes a certain amount of time. So when we want to
+press the <span class="guibutton">Start</span> in <span class="emphasis"><em>Four J's GDC</em></span>, we have to be sure that
+the button object is already there. Using
+<code class="function">waitForObject</code> is a very stable way to do it since it
+doesn't depend on any timing (unlike if you would do the synchronization
+with the <code class="function">snooze</code> function.</p></td></tr><tr><td width="5%" valign="top" align="left"><p><a href="#tgs-gdc-clickButton"><img xmlns="" src="callouts/3.png" border="0"></a> </p></td><td valign="top" align="left"><p>With the function <code class="function">clickButton</code> we send a mouse
+click to the object specified. The <code class="function">type</code> function sends
+keyboard input to the object and <code class="function">sendEvent</code> sends other
+events to the object (like the <code class="constant">QCloseEvent</code> in the
+above example).</p></td></tr></table></div><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Note"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/note.png"></img></td><th align="left">Note</th></tr><tr><td align="left" valign="top"><p>Objects are addressed through names. <span class="emphasis"><em>Squish</em></span> automatically
+generates names for objects. If the GUI changes or if you want to use more
+intuitive names, <span class="emphasis"><em>Squish</em></span> supports the concept of Object Maps that allow a
+mapping from symbolic names to the real names. See <a class="xref" href="rg-objectmap.html" title="7.11. Object Map">Object Map (Section 7.11)</a> and the <a class="xref" href="ide.views.html#ide.the-object-map.view" title="8.2.10. Object Map view">Object Map view (Section 8.2.10)</a>for more information on Object
+Maps.</p></td></tr></table></div><p>The recorded script is ready to be played back again. Click the
+play button (</p><div class="mediaobject"><img src="images/run.png"></img></div><p>) and you can watch how <span class="emphasis"><em>Squish</em></span> replays
+the above script and repeats your input. But it actually doesn't test
+anything yet. The next step is to add verification points to the script so
+that it actually tests something.</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="tgsgdc-vp"></a>4.11.1.4. Inserting a Verification Point</h4></div></div></div><p>Now we want to test that the currency converter application converted
+our input (<strong class="userinput"><code>10</code></strong>) correctly to US dollars and Yens.
+<span class="emphasis"><em>Squish</em></span> allows you to insert verification points interactively. For this,
+you have to run the test until the state you want to test. Then you can
+choose the widgets and their properties you want to test.</p><p>In our case we want to run the test until line 12, that is until we
+accepted the input, but before we close the windows. So we place a
+breakpoint on the line</p><pre class="programlisting">
+    sendEvent("QCloseEvent", ":Edit.screen..")
+</pre><p>You do this by clicking in the editor on the area showing the line
+number. The result should look like:</p><div class="mediaobject" align="center"><img src="images/gdctutorial-breakpoint.png" align="middle"></img></div><p>If you play back the script, it is executed until it hits the line
+with the breakpoint and the <span class="application">Squish IDE</span> shows up with all controls again. The
+current script line is highlighted in the editor and the lower half of the
+editor shows the variable watcher. The variable watcher allows you to inspect
+the variables of your script - this is useful if you have to debug a test
+script. But for our case of inserting a verfication point, we have to start
+the <span class="application">Spy</span> instead. You can use the <span class="application">Spy</span> to inspect the objects of your
+application (address the objects by point and click rather than using the
+object name and inspect all properties of the objects that are accessible to
+<span class="emphasis"><em>Squish</em></span>).</p><p>Start the <span class="application">Spy</span> by clicking on the corresponding button
+(<span class="inlinemediaobject"><img src="images/spy.png"></img></span>) in the toolbar. After a
+short moment <span class="emphasis"><em>Squish</em></span> replaces the variable watcher with the spy window.
+Here you can either select an object by choosing it from the tree view or
+by using the object picker. If you want to access a visible object it is
+usually much easier to use the object picker.</p><p>Start the object picking by clicking the picker icon
+(<span class="inlinemediaobject"><img src="images/spypick.png"></img></span>) from the toolbar. The
+<span class="application">Squish IDE</span> goes into mini-mode again and you can select the object you want to
+access with simple point and click: <span class="emphasis"><em>Squish</em></span> draws a red frame around the
+object it finds under the cursor. If you click, it selects the object, the
+<span class="application">Squish IDE</span> leaves the mini-mode and shows the selectd object in the <span class="application">Spy</span>:</p><div class="mediaobject" align="center"><img src="images/gdctutorial-addvp.png" align="middle"></img></div><p>In the above example we picked the line edit that displays the value
+in US dollars. Since we want to verify that the value displayed is
+<span class="guilabel">12.00</span> check the checkbox of the line edit object. The
+<span class="application">Squish IDE</span> automatically checks the text property of the line edit as well. This is
+done for convenience: <span class="emphasis"><em>Squish</em></span> checks the common properties by default
+(i.e. that one that a user is most likely intrested in testing for a
+certain object type).</p><p>You can check additonal properties and uncheck those you are not
+intrested in. In our small example however, we only want to check the text
+property. So we don't have to do anything else.</p><p>So we selected the object we want to verify and the properties of the
+object we want to verify. Now we just have to choose a name for the
+verification point and then we can add the verification point to the
+script: change the text <strong class="userinput"><code>VP1</code></strong> in the
+<span class="guilabel">Verification Point</span> line edit to
+<strong class="userinput"><code>VP_usd</code></strong> and press the green check mark icon to add
+the verifcation point to the script.</p><p>For the line edit dislaying the value in Yens, we do the same
+procedure to add a second verification point:</p><div class="itemizedlist"><ul type="disc"><li><p>Choose the pick tool
+(<span class="inlinemediaobject"><img src="images/spypick.png"></img></span>) from the toolbar and
+pick the line edit that displays the value for Yens.</p></li><li><p>Check the object in the tree and make sure that its text
+property is checked as well.</p></li><li><p>Change the name of the verification point to
+<strong class="userinput"><code>VP_yen</code></strong> and press the green check mark to add the
+verification point.</p></li></ul></div><p>Now we have all verification points we need and we can stop the test
+execution. So select
+<span class="guimenu">Test Suite</span>|<span class="guimenuitem">Stop</span>
+from the menu. If you now take a closer look at the script you see that
+<span class="emphasis"><em>Squish</em></span> added two lines:</p><pre class="programlisting">
+    test.vp("VP_usd")
+    test.vp("VP_yen")
+</pre><p>These are the two verification point tests we just added. So now we
+want to run our test with the verification points. First remove the
+breakpoint by clicking on it and press the play button
+(</p><div class="mediaobject"><img src="images/run.png"></img></div><p>).
+<span class="emphasis"><em>Squish</em></span> replays the test again, but this time when the test is finished
+you can see two additional messages in the <span class="guilabel">Test Log</span>
+view about the verification points that passed.</p><p>If you want to take a closer look at the verification point itself,
+you can open it in the tree: first you have to open the
+<span class="guilabel">tst_eur_conversion</span> entry in the tree and then open the
+<span class="guilabel">verificationPoints</span> entry below it. If you click on one
+of the two verification point, the editor shows what the verification point
+actually tests and you can change the values.</p><p>If you change the value of the <code class="literal">VP_usd</code> verification
+point to <strong class="userinput"><code>13.00</code></strong> and run the test again, you get one
+fail and one pass as the test result.</p><p>See <a class="xref" href="ug-vps.html" title="5.22. How to Create and Use Verification Points">How to Create and Use Verification Points (Section 5.22)</a> for more details on this topic.</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="tgsgdc-furtherreading"></a>4.11.1.5. Further Reading</h4></div></div></div><p>In this tutorial we just saw the basic usage of <span class="emphasis"><em>Squish</em></span>. There is much
+more to discover for efficient usage of <span class="emphasis"><em>Squish</em></span>.</p><p>In order to keep tests maintainable, it might be useful in to edit a test
+script after you recorded it and factor out certain parts to functions. More
+complex tasks (like iterating over the properties of an object or use branching
+depending on certain conditions) can only be done by editing the script. See
+<a class="xref" href="ug-vps.html#ugv-scripting" title="5.22.5. How to Create and Use Property Verification Points in Test Scripts">How to Create and Use Property Verification Points in Test Scripts (Section 5.22.5)</a> for more details on scripting and see <a class="xref" href="api.man.html" title="Chapter 6. API Reference Manual">API Reference Manual (Chapter 6)</a> for a complete reference of the <span class="emphasis"><em>Squish</em></span> specific
+scripting <acronym class="acronym">API</acronym>. If you want to share certain script functions
+between different test cases or test suites, you can used shared scripts - see
+<a class="xref" href="ug-shareddata.html#ugsh-datascripts" title="5.23.1. How to Store and Locate Shared Scripts and Shared Data Files">How to Store and Locate Shared Scripts and Shared Data Files (Section 5.23.1)</a>.</p><p>Apart from the <span class="emphasis"><em>Squish</em></span> specific functions, you can also use the features
+that come with the scripting language of your choice - for example you can use
+all Python modules to achieve your goal, like the modules for accessing a
+<acronym class="acronym">SQL</acronym> database. For more details on this, please refer to the
+documentation of the scripting language you use.</p><p>One exception from this is JavaScript: since <span class="emphasis"><em>Squish</em></span> uses its own
+JavaScript interpreter, only the extensions <span class="emphasis"><em>Squish</em></span> offers are
+available.</p><p>Data-driven testing is a way to separate the test data from the test
+script code. By doing so you can run the same test script with different input
+and test it against different expected results. See <a class="xref" href="ug-shareddata.html#ugsh-datadriven" title="5.23.2. How to Do Data-Driven Testing">How to Do Data-Driven Testing (Section 5.23.2)</a> for details.</p><p><span class="emphasis"><em>Squish</em></span> is actually a collection of commandline tools tied together by
+the <span class="application">Squish IDE</span> with an easy to use interface. But you can use the commandline tools
+without the <span class="application">Squish IDE</span> to achieve the tasks as well. This is especially useful for
+automating the test execution. See <a class="xref" href="ug-batchtesting.html" title="5.26. How to Do Automated Batch Testing">How to Do Automated Batch Testing (Section 5.26)</a> for
+some example Python scripts to execute your tests and to post-process the test
+results. <a class="xref" href="rg-regressiontesting.html" title="7.1. Automated Batch Testing">Automated Batch Testing (Section 7.1)</a> has a more detailed description
+on this topic. You can find a complete reference on the commandline tools in
+<a class="xref" href="rg-cmdline.html" title="7.4. Command Line Reference">Command Line Reference (Section 7.4)</a></p></div></div></div><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" type="text/javascript" src="ScriptingLanguage.js"></script><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format">setScriptingLanguage();</script><div class="navfooter"><hr></hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="tutorials-tk.html">Prev</a> </td><td width="20%" align="center"><a accesskey="u" href="tutorials.html">Up</a></td><td width="40%" align="right"> <a accesskey="n" href="tutorials-android.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">4.10. Squish for Tk Tutorials </td><td width="20%" align="center"><a accesskey="h" href="index-noframes.html">Home</a></td><td width="40%" align="right" valign="top"> 4.12. Squish for Android Tutorials</td></tr></table></div></body>
+<!-- Mirrored from tutorials-gdc.html by HTTrack Website Copier/3.x [XR&CO'2013], Wed, 06 Jul 2022 13:28:59 GMT -->
+</html>

@@ -1,0 +1,389 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<!-- Mirrored from ug-canbus-access.html by HTTrack Website Copier/3.x [XR&CO'2013], Wed, 06 Jul 2022 13:29:00 GMT -->
+<head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><title>5.25. How to Communicate With CANbus Devices</title><link rel="stylesheet" href="manual.css" type="text/css"></link><meta name="generator" content="DocBook XSL Stylesheets V1.73.2"></meta><link rel="start" href="index-noframes.html" title="Squish Manual"></link><link rel="up" href="users-guide.html" title="Chapter 5. User Guide"></link><link rel="prev" href="ug-imagebasedtesting.html" title="5.24. How to Do Image-Based Testing"></link><link rel="next" href="ug-batchtesting.html" title="5.26. How to Do Automated Batch Testing"></link><style xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" type="text/css" media="screen">
+        div.toc * { margin-left: 6px; margin-right: auto; max-width: 75em; }
+        div.toc span { margin-left: 0px; }
+        * { margin-left: auto; margin-right: auto; max-width: 75em; }
+        body { margin-left: 6px; margin-right: 6px; }
+        table th { padding: .5ex }
+        table td { padding: .5ex }
+    </style><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format">
+        function keyPress() {
+            var e = window.event;
+            if ( e == undefined ) {
+                return;
+            }
+            /* ### does not properly scroll, yet
+            if ( e.keyCode == 32 ) {
+            var l = document.links;
+            for ( var i = 0; i < l.length; i++ ) {
+                if ( l[i].innerText == "Next" ) {
+                location.href = l[i].href;
+                }
+            }
+            } else
+                */
+                if ( e.keyCode == 0x08 ) {
+            var l = document.links;
+            for ( var i = 0; i < l.length; i++ ) {
+                if ( l[i].innerText == "Prev" ) {
+                location.href = l[i].href;
+                }
+            }
+            }
+        }
+        document.onkeypress = keyPress;
+    </script></head><body><div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="ug-canbus-access"></a>5.25. How to Communicate With CANbus Devices</h2></div></div></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><span class="section"><a href="ug-canbus-access.html#idp46977552">5.25.1. CAN bus device</a></span></dt><dt><span class="section"><a href="ug-canbus-access.html#idp46989048">5.25.2. Frame contents</a></span></dt><dt><span class="section"><a href="ug-canbus-access.html#idp46996712">5.25.3. Sending CAN frames</a></span></dt><dt><span class="section"><a href="ug-canbus-access.html#idp47006528">5.25.4. Receiving frames</a></span></dt></dl></div><p>
+This section explains the steps necessary to send and receive CAN bus messages
+in Squish tests.
+</p><p>
+CAN is a message bus standard which allows microcontroller and other devices
+(collectively called ECUs) to communicate without a central host or bus manager.
+It originates from automotive industry, but has been adopted for many other
+applications since.
+</p><p>
+The detailed description of the Squish CAN API can be found in the
+<a class="xref" href="api.can.interface.html" title="6.21. CAN bus support">CAN bus support (Section 6.21)</a> API documentation. In case testing requires
+complex interactions or require detailed modeling of ECUs, it may be more
+beneficial to use third party software which specializes in CAN bus simulations
+and can be coupled with <span class="emphasis"><em>Squish</em></span> using the <a class="xref" href="api.fmi.interface.html" title="6.20. FMI Interface support">FMI Interface support (Section 6.20)</a>.
+</p><p>
+In a typical test setup an embedded device which hosts the AUT would be
+connected to a CAN bus. In order to allow interaction with the bus in the test
+script, the test driver must have a compatible CAN controller connected to the
+same bus.
+</p><div class="mediaobject" align="center"><img src="images/can-bus-support-diagram.png" align="middle"></img><div class="caption">Diagram of a Squish CAN bus test setup</div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="idp46977552"></a>5.25.1. CAN bus device</h3></div></div></div><p>
+All references to the CAN interface should take place in its own application
+context which identifies the particular system connected to the bus.
+An application context which supports CAN bus API can be created using the
+<a class="xref" href="api.can.interface.html#startCAN-function"><code class="function">startCAN</code></a> function. Then you can establish a
+connection to the CAN controller and start sending and receiving messages.
+</p><div xmlns="" class="scriptlang"><form><select name="scriptlangcombo" onchange="javascript:changeScriptingLanguage(this)" onclick="javascript:changeScriptingLanguage(this)"><option value="all" selected>Show All</option><option value="JavaScript">Show JavaScript</option><option value="Perl">Show Perl</option><option value="Python">Show Python</option><option value="Ruby">Show Ruby</option><option value="Tcl">Show Tcl</option></select></form></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">JavaScript</span><pre class="programlisting">
+var canContext = startCAN();
+var device = new CanBusDevice("socketcan", "can0");
+var frame = new CanBusFrame(0x100, "4121999a");
+device.writeFrame(frame);
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Python</span><pre class="programlisting">
+canContext = startCAN()
+device = CanBusDevice("socketcan", "can0")
+frame = CanBusFrame( 0x100, "4121999a")
+device.writeFrame(frame)
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Perl</span><pre class="programlisting">
+my $canContext = startCAN();
+my $device = CanBusDevice-&gt;new("socketcan", "can0");
+my $frame = CanBusFrame-&gt;new(0x100, "4121999a");
+$device-&gt;writeFrame(frame);
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Ruby</span><pre class="programlisting">
+canContext = startCAN();
+device = CanBusDevice.new("socketcan", "can0");
+frame = CanBusFrame.new(0x100, "4121999a");
+device.writeFrame(frame);
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Tcl</span><pre class="programlisting">
+set canContext [startCAN]
+set device [CanBusDevice new socketcan can0]
+set frame [CanBusFrame new 0x100 00deadbeef00]
+CanBusDevice invoke $device writeFrame $frame
+</pre></div><p>
+The supported CAN drivers and the devices using it can be enumerated using the
+<a class="xref" href="api.can.interface.html#CanBusDevice.pluginNames-function"><code class="function">CanBusDevice.pluginNames</code></a> and
+<a class="xref" href="api.can.interface.html#CanBusDevice.availableDevices-function"><code class="function">CanBusDevice.availableDevices</code></a> static methods.
+</p><div xmlns="" class="scriptlang"><form><select name="scriptlangcombo" onchange="javascript:changeScriptingLanguage(this)" onclick="javascript:changeScriptingLanguage(this)"><option value="all" selected>Show All</option><option value="JavaScript">Show JavaScript</option><option value="Perl">Show Perl</option><option value="Python">Show Python</option><option value="Ruby">Show Ruby</option><option value="Tcl">Show Tcl</option></select></form></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">JavaScript</span><pre class="programlisting">
+var canContext = startCAN();
+var plugins = CanBusDevice.pluginNames();
+for ( var i in plugins ) {
+    var plugin = plugins[i];
+    test.startSection(plugin);
+    try {
+        var devices = CanBusDevice.availableDevices(plugin);
+        for ( var j in devices ) {
+            test.log("Device: " + devices[j].deviceName);
+        }
+    } catch ( e ) {
+        test.log("Failed: " + e.message );
+    }
+    test.endSection();
+}
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Python</span><pre class="programlisting">
+canContext = startCAN()
+plugins = CanBusDevice.pluginNames()
+for plugin in plugins:
+    test.startSection(plugin)
+    try:
+        devices = CanBusDevice.availableDevices(plugin)
+        for device in devices:
+            test.log("Device: %s" % device.deviceName)
+    except Exception as e:
+        test.log("Failed: %s" % str(e))
+    test.endSection()
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Perl</span><pre class="programlisting">
+my $canContext = startCAN();
+my @plugins = CanBusDevice-&gt;pluginNames();
+foreach ( @plugins ) {
+    my $plugin = $_;
+    test::startSection($plugin);
+    eval {
+        @devices = CanBusDevice-&gt;availableDevices($plugin);
+        foreach ( @devices ) {
+            test::log("Device: $_-&gt;deviceName" );
+        }
+    } or {
+        test::log("Failed: $@" );
+    }
+    test::endSection();
+}
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Ruby</span><pre class="programlisting">
+canContext = Squish.startCAN()
+plugins = CanBusDevice.pluginNames()
+plugins.each { |plugin|
+    Test.startSection(plugin)
+    begin
+        devices = CanBusDevice.availableDevices(plugin)
+        devices.each { |device|
+            Test.log("Device: " + device.deviceName)
+        }
+    rescue Exception =&gt; e
+        Test.log("Failed: " + e.message )
+    end
+    Test.endSection()
+}
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Tcl</span><pre class="programlisting">
+startCAN
+set plugins [invoke CanBusDevice pluginNames]
+foreach plugin $plugins {
+    test startSection $plugin
+    if { [catch {
+        set devices [invoke CanBusDevice availableDevices $plugin]
+        foreach device $devices {
+            test log [concat "Device: " [property get $device deviceName]]
+        }
+    } err] } {
+        test log [concat "Error: " $err ]
+    }
+    test endSection
+}
+</pre></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="idp46989048"></a>5.25.2. Frame contents</h3></div></div></div><p>
+The CAN standard does not define the contents of the frame payloads - this is
+left to the designers of CAN networks and ECUs. Because of that, without any
+additional information Squish can only interpret frame payloads as a hexadecimal
+string. Since using such frame representation is very cumbersome, Squish offers
+a way to describe the contents of chosen frame types. In order to make use of it
+you can create a descriptor file which can be passed to the
+<a class="xref" href="api.can.interface.html#startCAN-function"><code class="function">startCAN</code></a> function.
+</p><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage"></span><pre class="programlisting">
+&lt;canschema version="1"&gt;
+  &lt;frames&gt;
+    &lt;frame id="0x100" name="Thermometer"&gt;
+      &lt;fields&gt;
+        &lt;field name="temperature" type="floating" size="32"/&gt;
+      &lt;/fields&gt;
+    &lt;/frame&gt;
+    &lt;frame id="0x200" name="AirConditioning"&gt;
+      &lt;fields&gt;
+        &lt;field name="targetTemp" type="integral" size="32"/&gt;
+        &lt;field name="cooler" type="integral" size="1"/&gt;
+        &lt;field name="heater" type="integral" size="1"/&gt;
+      &lt;/fields&gt;
+    &lt;/frame&gt;
+  &lt;/frames&gt;
+&lt;/canschema&gt;
+</pre></div><p>
+Using the above descriptor file, the frame members can be accessed in the test
+script.
+</p><div xmlns="" class="scriptlang"><form><select name="scriptlangcombo" onchange="javascript:changeScriptingLanguage(this)" onclick="javascript:changeScriptingLanguage(this)"><option value="all" selected>Show All</option><option value="JavaScript">Show JavaScript</option><option value="Perl">Show Perl</option><option value="Python">Show Python</option><option value="Ruby">Show Ruby</option><option value="Tcl">Show Tcl</option></select></form></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">JavaScript</span><pre class="programlisting">
+var canContext = startCAN({schema: File.open(fileName,"r").read()});
+var device = new CanBusDevice("socketcan", "can0");
+var frame = new ThermometerFrame();
+frame.temperature = 10.1;
+test.log(device.hexPayload); // Logs "4121999a"
+device.writeFrame(frame);
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Python</span><pre class="programlisting">
+canContext = startCAN()
+device = CanBusDevice("socketcan", "can0")
+frame = ThermometerFrame()
+frame.temperature = 10.1
+test.log(device.hexPayload) # Logs "4121999a"
+device.writeFrame(frame)
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Perl</span><pre class="programlisting">
+my $canContext = startCAN();
+my $device = CanBusDevice-&gt;new("socketcan", "can0");
+my $frame = ThermometerFrame-&gt;new();
+$frame-&gt;temperature = 10.1;
+test::log($frame-&gt;hexPayload); # Logs "4121999a"
+$device-&gt;writeFrame(frame);
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Ruby</span><pre class="programlisting">
+canContext = startCAN();
+device = CanBusDevice.new("socketcan", "can0");
+frame = ThermometerFrame.new();
+frame.temperature = 10.1;
+Test.log(frame.hexPayload); # Logs "4121999a"
+device.writeFrame(frame);
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Tcl</span><pre class="programlisting">
+set canContext [startCAN]
+set device [CanBusDevice new socketcan can0]
+set frame [ThermometerFrame new]
+ThermometerFrame set $frame temperature 10.1
+test log [ThermometerFrame get hexPayload $th] # Logs "4121999a"
+invoke [$device writeFrame $frame]
+</pre></div><p>
+The detailed desription of the allowed field types can be found in
+<a class="xref" href="api.can.interface.html#api.can.frameschema" title="6.21.7. CAN frame schema">CAN frame schema (Section 6.21.7)</a> documentation.
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="idp46996712"></a>5.25.3. Sending CAN frames</h3></div></div></div><p>
+Frames can be sent to a CAN device using the
+<a class="xref" href="api.can.interface.html#CanBusDevice.writeFrame-function"><code class="function">CanBusDevice.writeFrame</code></a> function. However, it is a
+common practice to send important CAN frames repeatedly in short intervals.
+In order to simulate that behavior of particular ECU, you can create a
+<a class="xref" href="api.can.interface.html#api.can.canbusframerepeater" title="6.21.5. CanBusFrameRepeater class">CanBusFrameRepeater class (Section 6.21.5)</a> object. Such object will send
+copies of the specified frame repeatedly for as long as it is enabled.
+</p><div xmlns="" class="scriptlang"><form><select name="scriptlangcombo" onchange="javascript:changeScriptingLanguage(this)" onclick="javascript:changeScriptingLanguage(this)"><option value="all" selected>Show All</option><option value="JavaScript">Show JavaScript</option><option value="Perl">Show Perl</option><option value="Python">Show Python</option><option value="Ruby">Show Ruby</option><option value="Tcl">Show Tcl</option></select></form></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">JavaScript</span><pre class="programlisting">
+var canContext = startCAN({schema: File.open(fileName,"r").read()});
+var device = new CanBusDevice("socketcan", "can0");
+var frame = new ThermometerFrame();
+frame.temperature = 10.1;
+var repeater = new CanBusFrameRepeater(device, frame);
+repeater.interval = 200; // 200ms interval
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Python</span><pre class="programlisting">
+canContext = startCAN(open(fileName, "r").read())
+device = CanBusDevice("socketcan", "can0")
+frame = ThermometerFrame()
+frame.temperature = 10.1
+repeater = CanBusFrameRepeater(device, frame)
+repeater.interval = 200 # 200ms interval
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Perl</span><pre class="programlisting">
+my $canContext = startCAN();
+my $device = CanBusDevice-&gt;new("socketcan", "can0");
+my $frame = ThermometerFrame-&gt;new();
+$frame-&gt;temperature = 10.1;
+repeater = CanBusFrameRepeater-&gt;new(device, frame)
+repeater.interval = 200 # 200ms interval
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Ruby</span><pre class="programlisting">
+canContext = startCAN();
+device = CanBusDevice.new("socketcan", "can0");
+frame = ThermometerFrame.new();
+frame.temperature = 10.1;
+repeater = CanBusFrameRepeater.new(device, frame);
+repeater.interval = 200; # 200ms interval
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Tcl</span><pre class="programlisting">
+set canContext [startCAN]
+set device [CanBusDevice new socketcan can0]
+set frame [ThermometerFrame new]
+ThermometerFrame set $frame temperature 10.1
+set repeater [CanBusFrameRepeater new $device $frame]
+CanBusFrameRepeater set $repeater interval 200 # 200ms interval
+</pre></div><p>
+You can modify the original frame object at any time during the test. The change
+will be immediately reflected in the repeater output.
+</p><div xmlns="" class="scriptlang"><form><select name="scriptlangcombo" onchange="javascript:changeScriptingLanguage(this)" onclick="javascript:changeScriptingLanguage(this)"><option value="all" selected>Show All</option><option value="JavaScript">Show JavaScript</option><option value="Perl">Show Perl</option><option value="Python">Show Python</option><option value="Ruby">Show Ruby</option><option value="Tcl">Show Tcl</option></select></form></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">JavaScript</span><pre class="programlisting">
+[...]
+// The measured temperature changes
+frame.temperature = 12.1;
+// or repeater.frame.temperature = 12.1;
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Python</span><pre class="programlisting">
+[...]
+# The measured temperature changes
+frame.temperature = 12.1
+# or repeater.frame.temperature = 12.1
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Perl</span><pre class="programlisting">
+[...]
+# The measured temperature changes
+$frame-&gt;temperature = 12.1;
+# or $repeater-&gt;frame-&gt;temperature = 12.1;
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Ruby</span><pre class="programlisting">
+[...]
+# The measured temperature changes
+frame.temperature = 12.1;
+# or repeater.frame.temperature = 12.1;
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Tcl</span><pre class="programlisting">
+[...]
+# The measured temperature changes
+ThermometerFrame set frame temperature 12.1
+// or ThermometerFrame set [CanBusFrameRepeater get $repeater frame] temperature 12.1
+</pre></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="idp47006528"></a>5.25.4. Receiving frames</h3></div></div></div><p>
+Receiving frames is possible using
+<a class="xref" href="api.can.interface.html#CanBusDevice.readFrame-function"><code class="function">CanBusDevice.readFrame</code></a> function. However, using it
+requires the test writer to inspect all incoming frames in a timely manner.
+While it offers the most versatility, it is not the most convenient tool in a
+typical test. Instead you can use a
+<a class="xref" href="api.can.interface.html#api.can.canbusframereceiver" title="6.21.6. CanBusFrameReceiver class">CanBusFrameReceiver class (Section 6.21.6)</a> object. That object drains the
+incoming frames from the CAN device and keeps a history of received frames of
+specified IDs.
+</p><div xmlns="" class="scriptlang"><form><select name="scriptlangcombo" onchange="javascript:changeScriptingLanguage(this)" onclick="javascript:changeScriptingLanguage(this)"><option value="all" selected>Show All</option><option value="JavaScript">Show JavaScript</option><option value="Perl">Show Perl</option><option value="Python">Show Python</option><option value="Ruby">Show Ruby</option><option value="Tcl">Show Tcl</option></select></form></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">JavaScript</span><pre class="programlisting">
+var canContext = startCAN({schema: File.open(fileName,"r").read()});
+var device = new CanBusDevice("socketcan", "can0");
+var receiver = new CanBusFrameReceiver(device);
+receiver.setHistorySize(AirConditioningFrame.frameId, 1);
+snooze(5);
+// Logs the last-set temperature
+test.log(receiver.lastFrame(AirConditioningFrame.frameId).targetTemp);
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Python</span><pre class="programlisting">
+canContext = startCAN()
+device = CanBusDevice("socketcan", "can0")
+receiver = CanBusFrameReceiver(device)
+receiver.setHistorySize(AirConditioningFrame.frameId, 1)
+snooze(5)
+# Logs the last-set temperature
+test.log(receiver.lastFrame(AirConditioningFrame.frameId).targetTemp)
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Perl</span><pre class="programlisting">
+my $canContext = startCAN();
+my $device = CanBusDevice-&gt;new("socketcan", "can0");
+my $receiver = CanBusFrameReceiver-&gt;new($device);
+$receiver-&gt;setHistorySize(Squish::AirConditioningFrame-&gt;frameId, 1);
+snooze(5);
+// Logs the last-set temperature;
+test::log($receiver-&gt;lastFrame(Squish::AirConditioningFrame-&gt;frameId)-&gt;targetTemp);
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Ruby</span><pre class="programlisting">
+canContext = startCAN();
+device = CanBusDevice.new("socketcan", "can0");
+receiver = CanBusFrameReceiver.new(device);
+receiver.setHistorySize(AirConditioningFrame.frameId, 1);
+snooze(5);
+# Logs the last-set temperature
+Test.log(receiver.lastFrame(AirConditioningFrame.frameId).targetTemp)
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Tcl</span><pre class="programlisting">
+set canContext [startCAN]
+set device [CanBusDevice new socketcan can0]
+set receiver [CanBusFrameReceiver new $device]
+CanBusFrameReceiver invoke $receiver setHistorySize [AirConditioningFrame get frameId] 1
+snooze 5
+# Logs the last-set temperature
+set lastFrame [CanBusFrameReceiver invoke $receiver lastFrame [AirConditioningFrame get frameId]]
+test log [AirConditioningFrame get $lastFrame targetTemp]
+</pre></div><p>
+It is also possible to wait for a frame of specific ID and with specific field
+values.
+</p><div xmlns="" class="scriptlang"><form><select name="scriptlangcombo" onchange="javascript:changeScriptingLanguage(this)" onclick="javascript:changeScriptingLanguage(this)"><option value="all" selected>Show All</option><option value="JavaScript">Show JavaScript</option><option value="Perl">Show Perl</option><option value="Python">Show Python</option><option value="Ruby">Show Ruby</option><option value="Tcl">Show Tcl</option></select></form></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">JavaScript</span><pre class="programlisting">
+[...]
+receiver.setHistorySize(AirConditioningFrame.frameId, 1);
+var frame = receiver.waitForFrame({frameId: AirConditioningFrame.frameId, targetTemp: 18});
+test.log("Expected frame received");
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Python</span><pre class="programlisting">
+[...]
+receiver.setHistorySize(AirConditioningFrame.frameId, 1)
+var frame = receiver.waitForFrame({"frameId": AirConditioningFrame.frameId, "targetTemp": 18})
+test.log("Expected frame received")
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Perl</span><pre class="programlisting">
+[...]
+$receiver-&gt;setHistorySize(Squish::AirConditioningFrame-&gt;frameId, 1);
+my %query = (frameId =&gt; Squish::AirConditioningFrame-&gt;frameId, targetTemp =&gt; 18);
+var frame = $receiver-&gt;waitForFrame(%query);
+test::log("Expected frame received");
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Ruby</span><pre class="programlisting">
+[...]
+receiver.setHistorySize(AirConditioningFrame.frameId, 1);
+frame = receiver.waitForFrame(("frameId"=&gt;Squish::AirConditioningFrame-&gt;frameId,
+                               "targetTemp"=&gt;18));
+Test.log("Expected frame received");
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Tcl</span><pre class="programlisting">
+[...]
+set frameId [AirConditioningFrame get frameId]
+CanBusFrameReceiver invoke $receiver setHistorySize $frameId 1
+set frame [CanBusFrameReceiver invoke waitForFrame (frameId $frameId targetTemp 18)]
+test log "Expected frame received"
+</pre></div><p>
+The <a class="xref" href="api.can.interface.html#CanBusFrameReceiver.waitForFrame-function"><code class="function">CanBusFrameReceiver.waitForFrame</code></a> function searches
+the current history to find a matching frame, and if none is found it waits
+until a matching frame is received. This prevents a situation where the waiting
+API is called too late and misses a just-received frame.
+</p></div></div><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" type="text/javascript" src="ScriptingLanguage.js"></script><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format">setScriptingLanguage();</script><div class="navfooter"><hr></hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="ug-imagebasedtesting.html">Prev</a> </td><td width="20%" align="center"><a accesskey="u" href="users-guide.html">Up</a></td><td width="40%" align="right"> <a accesskey="n" href="ug-batchtesting.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">5.24. How to Do Image-Based Testing </td><td width="20%" align="center"><a accesskey="h" href="index-noframes.html">Home</a></td><td width="40%" align="right" valign="top"> 5.26. How to Do Automated Batch Testing</td></tr></table></div></body>
+<!-- Mirrored from ug-canbus-access.html by HTTrack Website Copier/3.x [XR&CO'2013], Wed, 06 Jul 2022 13:29:00 GMT -->
+</html>

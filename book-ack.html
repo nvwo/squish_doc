@@ -1,0 +1,610 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<!-- Mirrored from book-ack.html by HTTrack Website Copier/3.x [XR&CO'2013], Wed, 06 Jul 2022 13:29:01 GMT -->
+<head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><title>Appendix A. Third-Party Software</title><link rel="stylesheet" href="manual.css" type="text/css"></link><meta name="generator" content="DocBook XSL Stylesheets V1.73.2"></meta><link rel="start" href="https://index-noframes.html" title="Squish Manual"></link><link rel="up" href="https://index-noframes.html" title="Squish Manual"></link><link rel="prev" href="https://book-glossary.html" title="Glossary"></link><link rel="next" href="https://book-index.html" title="Appendix B. Index"></link><style xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" type="text/css" media="screen">
+        div.toc * { margin-left: 6px; margin-right: auto; max-width: 75em; }
+        div.toc span { margin-left: 0px; }
+        * { margin-left: auto; margin-right: auto; max-width: 75em; }
+        body { margin-left: 6px; margin-right: 6px; }
+        table th { padding: .5ex }
+        table td { padding: .5ex }
+    </style><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format">
+        function keyPress() {
+            var e = window.event;
+            if ( e == undefined ) {
+                return;
+            }
+            /* ### does not properly scroll, yet
+            if ( e.keyCode == 32 ) {
+            var l = document.links;
+            for ( var i = 0; i < l.length; i++ ) {
+                if ( l[i].innerText == "Next" ) {
+                location.href = l[i].href;
+                }
+            }
+            } else
+                */
+                if ( e.keyCode == 0x08 ) {
+            var l = document.links;
+            for ( var i = 0; i < l.length; i++ ) {
+                if ( l[i].innerText == "Prev" ) {
+                location.href = l[i].href;
+                }
+            }
+            }
+        }
+        document.onkeypress = keyPress;
+    </script></head><body><div class="appendix" lang="en"><div class="titlepage"><div><div><h2 class="title"><a id="book-ack"></a>Appendix A. Third-Party Software</h2></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>This software ships with a copy of the KDE JavaScript engine
+(KJS) which is copyrighted by the authors of the K Desktop Environment
+and Apple Computer, Inc. (LGPL)</p></li><li><p>To provide regular expression support on all platforms the
+JavaScript engine includes the "Perl-Compatible Regular Expressions"
+library written by Philip Hazel <code class="email">&lt;<a class="email" href="mailto:ph10@cam.ac.uk">ph10@cam.ac.uk</a>&gt;</code> (©
+1997-2003 University of Cambridge).</p></li><li><p>Support for the test data import from <span class="trademark">Excel</span>™ spreadsheets is
+provided by the portable spreadsheet library Swinder (© 2003-2006
+Ariya Hidayat and 2006 Marijn Kruisselbrink) which is part of the
+KOffice application suite.</p></li><li><p>To create bindings to C and C++ API the <span class="application">squishidl</span> tool makes use of
+the KDevelop code parser copyrighted 2002,2003 Roberto Raggi (LGPL).</p></li><li><p>Testing Qt and native applications on macOS uses portions of the <a class="ulink" href="http://github.com/rentzsch/mach_star" target="_blank">mach_star</a> project which
+is licensed under the MIT license:</p><p>
+</p><pre class="screen">
+The MIT License
+
+Copyright (c) 2003-2009 Jonathan 'Wolf' Rentzsch: http://rentzsch.com
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
+</pre><p>
+</p></li><li><p>The <a class="ulink" href="https://code.google.com/archive/p/ajaxslt/" target="_blank">code</a>
+for interpreting XPath expressions used for web tests is copyrighted
+by Google Inc. and subject to the following license:</p><p>
+</p><pre class="screen">
+Copyright (c) 2005, Google Inc.
+All rights reserved.
+
+Redistribution and use in source and binary forms, with or without
+modification, are permitted provided that the following conditions are
+met:
+
+ * Redistributions of source code must retain the above copyright
+   notice, this list of conditions and the following disclaimer.
+
+ * Redistributions in binary form must reproduce the above copyright
+   notice, this list of conditions and the following disclaimer in the
+   documentation and/or other materials provided with the
+   distribution.
+
+ * Neither the name of Google Inc. nor the names of its contributors
+   may be used to endorse or promote products derived from this
+   software without specific prior written permission.
+
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+"AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+(INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+</pre><p>
+</p></li><li><p><acronym class="acronym">XML</acronym> parsing capabilities are provided by
+tinyxml (© 2000-2006 Lee
+Thomason <code class="email">&lt;<a class="email" href="mailto:leethomason@mindspring.com">leethomason@mindspring.com</a>&gt;</code> and others) which
+is subject to the following license (the “<span class="quote">zlib
+license</span>”):</p><p>
+</p><pre class="screen">
+This software is provided 'as-is', without any express or implied
+warranty. In no event will the authors be held liable for any
+damages arising from the use of this software.
+
+Permission is granted to anyone to use this software for any
+purpose, including commercial applications, and to alter it and
+redistribute it freely, subject to the following restrictions:
+
+1. The origin of this software must not be misrepresented; you must
+not claim that you wrote the original software. If you use this
+software in a product, an acknowledgment in the product documentation
+would be appreciated but is not required.
+
+2. Altered source versions must be plainly marked as such, and
+must not be misrepresented as being the original software.
+
+3. This notice may not be removed or altered from any source
+distribution.
+</pre><p>
+</p></li><li><p><acronym class="acronym">FFT</acronym> based capabilities are provided by
+Kiss FFT (© 2003-2010 Mark Borgerding) which
+is subject to the following license (the “<span class="quote">BSD
+license</span>”):</p><p>
+</p><pre class="screen">
+Copyright (c) 2003-2010 Mark Borgerding
+All rights reserved.
+
+Redistribution and use in source and binary forms, with or without
+modification, are permitted provided that the following conditions are
+met:
+
+ * Redistributions of source code must retain the above copyright
+   notice, this list of conditions and the following disclaimer.
+
+ * Redistributions in binary form must reproduce the above copyright
+   notice, this list of conditions and the following disclaimer in the
+   documentation and/or other materials provided with the
+   distribution.
+
+ * Neither  the author nor the names of any contributors may be used
+   to endorse or promote products derived from this software without
+   specific prior written permission.
+
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+"AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+(INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+</pre><p>
+</p></li><li><p>Portions of the code for testing native Windows applications are
+based on WinSpy++ (© 2006 James Brown
+<code class="email">&lt;<a class="email" href="mailto:james@catch22.net">james@catch22.net</a>&gt;</code>).</p></li><li><p>Checksum calculation is performed through an MD5 Algorithm
+implementation copyrighted 1999, 2000, 2002 Aladdin
+Enterprises.</p></li><li><p>The Tk edition ships with an example based on the Multi-column
+listbox package Tablelist copyrighted 2000-2010 Csaba Nemethi.</p></li><li><p>Access to the Windows firewall profile is based on the MSDN code
+sample "Exercising the Firewall using C++" which is copyrighted by
+Microsoft Corporation and governed by the OSI-approved Microsoft
+Public License.</p></li><li><p>The Tcl script bindings make use of
+the <code class="code">tcl_cruncher</code> syntax checker. A utility released under
+the 'Artistic' license with copyright 1994 by Laurent Demailly. The
+source code of the C implementation can be made available upon
+request.</p></li><li><p>The Qt Edition makes use of some helper functions for library
+loading subject to the following conditions:
+</p><pre class="screen">
+  ldpreload.c
+  Copyright (C) 2001 Steven Engelhardt
+  All rights reserved.
+
+  Redistribution and use in source and binary forms, with or without
+  modification, are permitted provided that the following conditions
+  are met:
+  1. Redistributions of source code must retain the above copyright
+  notice, this list of conditions, and the following disclaimer.
+  2. Redistributions in binary form must reproduce the above copyright
+  notice, this list of conditions, and the following disclaimer in the
+  documentation and/or other materials provided with the distribution.
+  3. The name of the author may not be used to endorse or promote products
+  derived from this software without specific prior written permission.
+
+  THIS SOFTWARE IS PROVIDED BY THE AUTHOR ``AS IS'' AND ANY EXPRESS OR
+  IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
+  OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
+  IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT,
+  INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
+  NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+  DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+  THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+  (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
+  THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+</pre><p>
+</p></li><li><p>The Windows Edition makes use of the <a class="ulink" href="http://udis86.sourceforge.net/" target="_blank">udis86 disassembler library</a> which
+is licensed under the BSD license:</p><p>
+</p><pre class="screen">
+Copyright (c) 2002, 2003, 2004, 2005, 2006, 2007, 2008 &lt;vivek@sig9.com&gt;
+All rights reserved.
+
+Redistribution and use in source and binary forms, with or without modification,
+are permitted provided that the following conditions are met:
+
+    * Redistributions of source code must retain the above copyright notice,
+      this list of conditions and the following disclaimer.
+    * Redistributions in binary form must reproduce the above copyright notice,
+      this list of conditions and the following disclaimer in the documentation
+      and/or other materials provided with the distribution.
+
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
+ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR
+ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+(INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
+ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+(INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+</pre><p>
+</p></li><li><p>The Windows Edition makes use of the <a class="ulink" href="https://github.com/dotnet/coreclr/blob/master/src/pal/prebuilt/inc/mscoree.h" target="_blank">mscoree.h</a>
+header file which is licensed under the MIT license:</p><p>
+</p><pre class="screen">
+The MIT License (MIT)
+
+Copyright (c) .NET Foundation and Contributors
+
+All rights reserved.
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+</pre><p>
+</p></li><li><p>The IDE makes use of the Eclipse SDK. (c) Copyright Eclipse
+contributors and others 2000, 2011.  All rights reserved.  Visit
+<a class="ulink" href="http://www.eclipse.org/platform" target="_blank">http://www.eclipse.org/platform</a>. The
+Eclipse SDK includes software developed by the Apache Software
+Foundation <a class="ulink" href="http://www.apache.org/" target="_blank">http://www.apache.org/</a>. Unless
+otherwise indicated, all content made available by the Eclipse
+Foundation is provided under the terms and conditions of the Eclipse
+Public License Version 1.0 ("EPL").  See
+the <a class="ulink" href="http://www.eclipse.org/legal/epl/notice.php" target="_blank">Eclipse
+Foundation Software User Agreement</a> for details.</p></li><li><p>The IDE makes use of the Java SE runtime environment provided by
+AdoptOpenJDK on Windows, macOS and Linux. (c) Copyright Oracle 1993, 2018,
+Oracle and/or its affiliates.  All rights reserved. This software is made
+available under the GPL v2 with the classpath exception, visit <a class="ulink" href="https://openjdk.java.net/legal/gplv2 ce.html" target="_blank">https://openjdk.java.net/legal/gplv2+ce.html</a>.
+</p></li><li><p>The IDE makes use of the OpenJDK runtime environment (11.0.6) on macOS,
+as provided by the <a class="ulink" href="https://adoptopenjdk.net/" target="_blank">AdoptopenJDK
+project</a>. (c) Copyright Oracle 1993, 2018, Oracle and/or its affiliates.
+All rights reserved. This software is made available under the GPL with
+ClassPath Exception license, visit <a class="ulink" href="https://adoptopenjdk.net/about.html" target="_blank">https://adoptopenjdk.net/about.html</a>
+and <a class="ulink" href="https://openjdk.java.net/legal/gplv2 ce.html" target="_blank">https://openjdk.java.net/legal/gplv2+ce.html</a>.
+</p></li><li><p>To improve the embedded Python Interpreter portions of the
+Python code have been copied and modified. Copyright © 2001-2010
+Python Software Foundation; All Rights Reserved.</p></li><li><p>The Web edition makes use of the <a class="ulink" href="https://github.com/open-source-parsers/jsoncpp" target="_blank">JsonCpp library</a> which is
+subject to the following license:</p><p>
+</p><pre class="screen">
+Copyright (c) 2007-2010 Baptiste Lepilleur
+
+Permission is hereby granted, free of charge, to any person
+obtaining a copy of this software and associated documentation
+files (the "Software"), to deal in the Software without
+restriction, including without limitation the rights to use, copy,
+modify, merge, publish, distribute, sublicense, and/or sell copies
+of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be
+included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS
+BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN
+ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
+CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+</pre><p>
+</p></li><li><p>The Android Edition makes use of the adb command line tool
+licensed under the Apache License, Version 2.0, and has the following
+attribution notice:</p><p>
+</p><pre class="screen">
+Copyright (c) 2006-2009, The Android Open Source Project
+Copyright 2006, Brian Swetland &lt;swetland@frotz.net&gt;
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+</pre><p>
+</p></li><li><p>The Web edition makes use parts of the <a class="ulink" href="https://github.com/mikechambers/as3corelib" target="_blank">as3corelib library</a> which is
+subject to the following license:</p><p>
+</p><pre class="screen">
+Copyright (c) 2008, Adobe Systems Incorporated
+All rights reserved.
+
+Redistribution and use in source and binary forms, with or without
+modification, are permitted provided that the following conditions are
+met:
+
+* Redistributions of source code must retain the above copyright notice,
+  this list of conditions and the following disclaimer.
+
+* Redistributions in binary form must reproduce the above copyright
+  notice, this list of conditions and the following disclaimer in the
+  documentation and/or other materials provided with the distribution.
+
+* Neither the name of Adobe Systems Incorporated nor the names of its
+  contributors may be used to endorse or promote products derived from
+  this software without specific prior written permission.
+
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS
+IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,
+THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
+PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR
+CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
+EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
+PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
+LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
+NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+</pre><p>
+</p></li><li><p>The AddressBook example web application in examples/web/addressbook/AddressBook.html makes use of the jQuery, jQuery-UI and jqGrid libraries, all licensed under the MIT license.</p><p>
+jQuery
+</p><pre class="screen">
+Copyright 2012 jQuery Foundation and other contributors
+http://jquery.com/
+
+Permission is hereby granted, free of charge, to any person obtaining
+a copy of this software and associated documentation files (the
+"Software"), to deal in the Software without restriction, including
+without limitation the rights to use, copy, modify, merge, publish,
+distribute, sublicense, and/or sell copies of the Software, and to
+permit persons to whom the Software is furnished to do so, subject to
+the following conditions:
+
+The above copyright notice and this permission notice shall be
+included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+</pre><p>
+</p><p>
+jQuery-UI
+</p><pre class="screen">
+Copyright 2012 jQuery Foundation and other contributors,
+http://jqueryui.com/
+
+This software consists of voluntary contributions made by many
+individuals (AUTHORS.txt, http://jqueryui.com/about) For exact
+contribution history, see the revision history and logs, available
+at http://jquery-ui.googlecode.com/svn/
+
+Permission is hereby granted, free of charge, to any person obtaining
+a copy of this software and associated documentation files (the
+"Software"), to deal in the Software without restriction, including
+without limitation the rights to use, copy, modify, merge, publish,
+distribute, sublicense, and/or sell copies of the Software, and to
+permit persons to whom the Software is furnished to do so, subject to
+the following conditions:
+
+The above copyright notice and this permission notice shall be
+included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+</pre><p>
+</p><p>
+jqGrid
+</p><pre class="screen">
+The MIT License (MIT)
+Copyright (c) 2008 Tony Tomov tony@trirand.com
+http://www.trirand.com/blog/
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+</pre><p>
+</p></li><li><p>The Android edition makes use of the <a class="ulink" href="https://github.com/crmulliner/ddi" target="_blank">Dynamic Dalvik Instrumentation
+Toolkit</a> which is LGPL v2.1</p></li><li><p>The Web edition optionally makes use of a JSON encoder from <a class="ulink" href="../../../github.com/douglascrockford/JSON-js/blob/master/json2.html" target="_blank">Douglas Crockford JSON in JavaScript</a> which is Public Domain.</p></li><li><p>The Web edition makes use of an algorithm inspired by the IEDriver of the <a class="ulink" href="https://github.com/SeleniumHQ/selenium/" target="_blank">Selenium project</a> to obtain full page screenshots from the browser. Selenium is licensed under the <a class="ulink" href="http://www.apache.org/licenses/LICENSE-2.0" target="_blank">Apache 2.0 license</a>, copyright holders are:
+</p><pre class="screen">
+Copyright 2011-2016 Software Freedom Conservancy
+Copyright 2004-2011 Selenium committers
+</pre><p>
+</p></li><li><p>The Squish installer makes use of
+<a class="ulink" href="https://doc.qt.io/qtinstallerframework/" target="_blank">Qt Installer Framework</a>
+version 2.0.3 which is
+<a class="ulink" href="http://code.qt.io/cgit/installer-framework/installer-framework.git/tree/LICENSE.LGPLv21?h=2.0.3" target="_blank">LGPL v2.1</a>
+with
+<a class="ulink" href="http://code.qt.io/cgit/installer-framework/installer-framework.git/tree/LGPL_EXCEPTION.txt?h=2.0.3" target="_blank">LGPL_EXCEPTION 1.1</a>
+</p></li><li><p>Parts of Squish use the <a class="ulink" href="https://libwebsockets.org/" target="_blank">Libwebsockets</a> library which is licensed under the "LGPL2 + Static Linking Exception".</p></li><li><p>Parts of Squish use the <a class="ulink" href="https://github.com/chemeris/msinttypes" target="_blank">msinttypes</a> project which is licensed under the BSD license:</p><p>
+</p><pre class="screen">
+Copyright (c) 2006-2013 Alexander Chemeris
+
+Redistribution and use in source and binary forms, with or without
+modification, are permitted provided that the following conditions are met:
+
+  1. Redistributions of source code must retain the above copyright notice,
+     this list of conditions and the following disclaimer.
+
+  2. Redistributions in binary form must reproduce the above copyright
+     notice, this list of conditions and the following disclaimer in the
+     documentation and/or other materials provided with the distribution.
+
+  3. Neither the name of the product nor the names of its contributors may
+     be used to endorse or promote products derived from this software
+     without specific prior written permission.
+
+THIS SOFTWARE IS PROVIDED BY THE AUTHOR ``AS IS'' AND ANY EXPRESS OR IMPLIED
+WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
+MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO
+EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS;
+OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
+WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR
+OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
+ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+</pre><p>
+</p></li><li><p>Parts of Squish use the <a class="ulink" href="http://tinyxpath.sourceforge.net/doc/" target="_blank">TinyXPath</a> library which is licensed under the zlib license:</p><p>
+</p><pre class="screen">
+www.sourceforge.net/projects/tinyxpath
+Copyright (c) 2002-2004 Yves Berquin (yvesb@users.sourceforge.net)
+
+This software is provided 'as-is', without any express or implied
+warranty. In no event will the authors be held liable for any
+damages arising from the use of this software.
+
+Permission is granted to anyone to use this software for any
+purpose, including commercial applications, and to alter it and
+redistribute it freely, subject to the following restrictions:
+
+1. The origin of this software must not be misrepresented; you must
+not claim that you wrote the original software. If you use this
+software in a product, an acknowledgment in the product documentation
+would be appreciated but is not required.
+
+2. Altered source versions must be plainly marked as such, and
+must not be misrepresented as being the original software.
+
+3. This notice may not be removed or altered from any source
+distribution.
+</pre><p>
+</p></li><li><p>Parts of Squish use the <a class="ulink" href="https://github.com/microsoft/Detours" target="_blank">Microsoft Research Detours Package</a> which is subject to the following license (the MIT license):</p><p>
+</p><pre class="screen">
+Copyright (c) Microsoft Corporation
+All rights reserved.
+
+MIT License
+Permission is hereby granted, free of charge, to any person obtaining a copy of
+this software and associated documentation files (the "Software"), to deal in
+the Software without restriction, including without limitation the rights to
+use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies
+of the Software, and to permit persons to whom the Software is furnished to do
+so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED AS IS, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
+DEALINGS IN THE SOFTWARE.
+</pre><p>
+</p></li><li><p>Parts of Squish use the <a class="ulink" href="http://zlib.net/" target="_blank">zlib</a> library which is licensed under the zlib license:</p><p>
+</p><pre class="screen">
+Copyright (C) 1995-2017 Jean-loup Gailly and Mark Adler
+
+This software is provided 'as-is', without any express or implied
+warranty.  In no event will the authors be held liable for any damages
+arising from the use of this software.
+
+Permission is granted to anyone to use this software for any purpose,
+including commercial applications, and to alter it and redistribute it
+freely, subject to the following restrictions:
+
+1. The origin of this software must not be misrepresented; you must not
+   claim that you wrote the original software. If you use this software
+   in a product, an acknowledgment in the product documentation would be
+   appreciated but is not required.
+2. Altered source versions must be plainly marked as such, and must not be
+   misrepresented as being the original software.
+3. This notice may not be removed or altered from any source distribution.
+</pre><p>
+</p></li><li><p>Parts of Squish use the <a class="ulink" href="https://github.com/froglogic/tracetool/" target="_blank">tracetool hooklib</a> which is licensed under the GPL v3 and LGPL v3</p></li><li><p>
+The tracetool hooklib uses the <a class="ulink" href="https://github.com/JochenKalmbach/StackWalker" target="_blank">StackWalker project</a> which is licensed under the BSD license
+</p></li><li><p>
+The IDE makes use of the Open JavaFX toolkit. Copyright (c) 2011, 2020, Oracle
+and/or its affiliates. All rights reserved. This software is made available
+under the GPL v2 with the Classpath exception License, visit <a class="ulink" href="https://github.com/openjdk/jfx/blob/jfx16/LICENSE" target="_blank">https://github.com/openjdk/jfx/blob/jfx16/LICENSE</a>.
+</p></li><li><p>The Web edition and editions integrating parts of the Web edition to support embedded Browser controls make use of the <a class="ulink" href="https://github.com/deanm/css-color-parser-js" target="_blank">Javascript parser for CSS color strings</a> which is licensed under the MIT license.</p><p>
+  </p><pre class="screen">
+  Permission is hereby granted, free of charge, to any person obtaining a copy
+  of this software and associated documentation files (the "Software"), to
+  deal in the Software without restriction, including without limitation the
+  rights to use, copy, modify, merge, publish, distribute, sublicense, and/or
+  sell copies of the Software, and to permit persons to whom the Software is
+  furnished to do so, subject to the following conditions:
+
+  The above copyright notice and this permission notice shall be included in
+  all copies or substantial portions of the Software.
+
+  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+  FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
+  IN THE SOFTWARE.
+  </pre><p>
+  </p></li><li><p>The optional Video Capture feature makes of the FFmpeg library for
+  encoding and decoding of videos. FFmpeg is licensed under the GNU
+  Lesser General Public License (LGPL) 2.1 or later. Some other files
+  have MIT/X11/BSD-style licenses. Optional components with other
+  licensing terms have been disabled. In combination the LGPL v2.1+
+  applies to FFmpeg.</p><p>
+  </p><pre class="screen">
+    FFmpeg is free software; you can redistribute it and/or
+    modify it under the terms of the GNU Lesser General Public
+    License as published by the Free Software Foundation; either
+    version 2.1 of the License, or (at your option) any later version.
+
+    FFmpeg is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+    Lesser General Public License for more details.
+
+    You should have received a copy of the GNU Lesser General Public
+    License along with FFmpeg; if not, write to the Free Software
+    Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
+  </pre><p>
+  </p><p>In addition, above feature makes use of patented technology
+  subject to the following license grants:</p><p>
+
+  </p><pre class="screen">
+  THIS PRODUCT IS LICENSED UNDER THE AVC PATENT PORTFOLIO
+  LICENSE. SUCH LICENSE EXTENDS TO THIS PRODUCT ONLY AND ONLY TO THE
+  EXTENT OF OTHER NOTICES WHICH MAY BE INCLUDED HEREIN. THE LICENSE
+  DOES NOT EXTEND TO ANY OTHER PRODUCT REGARDLESS OF WHETHER SUCH
+  PRODUCT IS INCLUDED WITH THIS LICENSED PRODUCT IN A SINGLE ARTICLE.
+  ADDITIONAL INFORMATION MAY BE OBTAINED FROM MPEG LA, L.L.C. SEE
+  HTTP://WWW.MPEGLA.COM
+
+  THIS PRODUCT IS LICENSED UNDER THE MPEG-4 VISUAL PATENT PORTFOLIO
+  LICENSE FOR THE PERSONAL AND NON-COMMERCIAL USE OF A CONSUMER FOR
+  ENCODING VIDEO IN COMPLIANCE WITH THE MPEG-4 VISUAL STANDARD
+  ("MPEG-4 VIDEO") AND/OR (ii) DECODING MPEG-4 VIDEO THAT WAS ENCODED
+  BY A CONSUMER ENGAGED IN A PERSONAL AND NONCOMMERCIAL ACTIVITY
+  AND/OR WAS OBTAINED FROM A VIDEO PROVIDER LICENSED BY MPEG LA TO
+  PROVIDE MPEG-4 VIDEO. NO LICENSE IS GRANTED OR SHALL BE IMPLIED FOR
+  ANY OTHER USE. ADDITIONAL INFORMATION INCLUDING THAT RELATING TO
+  PROMOTIONAL, INTERNAL AND COMMERCIAL USES AND LICENSING MAY BE
+  OBTAINED FROM MPEG LA, LLC. SEE HTTP://WWW.MPEGLA.COM.
+  </pre><p>
+  </p><p>Video capturing is disabled by default. Code covered by above
+  licenses gets used only when using
+  the <code class="code">test.startVideoCapture</code> script function,
+  the <code class="option">--enable-video-capture</code> command line switch, or
+  equivalent options in <span class="application">Squish IDE</span> and elsewhere.
+  </p></li></ul></div></div><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" type="text/javascript" src="ScriptingLanguage.js"></script><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format">setScriptingLanguage();</script><div class="navfooter"><hr></hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="https://book-glossary.html">Prev</a> </td><td width="20%" align="center"> </td><td width="40%" align="right"> <a accesskey="n" href="https://book-index.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">Glossary </td><td width="20%" align="center"><a accesskey="h" href="https://index-noframes.html">Home</a></td><td width="40%" align="right" valign="top"> Appendix B. Index</td></tr></table></div></body>
+<!-- Mirrored from book-ack.html by HTTrack Website Copier/3.x [XR&CO'2013], Wed, 06 Jul 2022 13:29:02 GMT -->
+</html>

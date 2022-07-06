@@ -1,0 +1,634 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<!-- Mirrored from ug-shareddata.html by HTTrack Website Copier/3.x [XR&CO'2013], Wed, 06 Jul 2022 13:29:00 GMT -->
+<head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><title>5.23. How to Create and Use Shared Data and Shared Scripts</title><link rel="stylesheet" href="manual.css" type="text/css"></link><meta name="generator" content="DocBook XSL Stylesheets V1.73.2"></meta><link rel="start" href="index-noframes.html" title="Squish Manual"></link><link rel="up" href="users-guide.html" title="Chapter 5. User Guide"></link><link rel="prev" href="ug-vps.html" title="5.22. How to Create and Use Verification Points"></link><link rel="next" href="ug-imagebasedtesting.html" title="5.24. How to Do Image-Based Testing"></link><style xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" type="text/css" media="screen">
+        div.toc * { margin-left: 6px; margin-right: auto; max-width: 75em; }
+        div.toc span { margin-left: 0px; }
+        * { margin-left: auto; margin-right: auto; max-width: 75em; }
+        body { margin-left: 6px; margin-right: 6px; }
+        table th { padding: .5ex }
+        table td { padding: .5ex }
+    </style><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format">
+        function keyPress() {
+            var e = window.event;
+            if ( e == undefined ) {
+                return;
+            }
+            /* ### does not properly scroll, yet
+            if ( e.keyCode == 32 ) {
+            var l = document.links;
+            for ( var i = 0; i < l.length; i++ ) {
+                if ( l[i].innerText == "Next" ) {
+                location.href = l[i].href;
+                }
+            }
+            } else
+                */
+                if ( e.keyCode == 0x08 ) {
+            var l = document.links;
+            for ( var i = 0; i < l.length; i++ ) {
+                if ( l[i].innerText == "Prev" ) {
+                location.href = l[i].href;
+                }
+            }
+            }
+        }
+        document.onkeypress = keyPress;
+    </script></head><body><div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="ug-shareddata"></a>5.23. How to Create and Use Shared Data and Shared Scripts</h2></div></div></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><span class="section"><a href="ug-shareddata.html#ugsh-datascripts">5.23.1. How to Store and Locate Shared Scripts and Shared Data Files</a></span></dt><dt><span class="section"><a href="ug-shareddata.html#ugsh-datadriven">5.23.2. How to Do Data-Driven Testing</a></span></dt><dt><span class="section"><a href="ug-shareddata.html#ugsh-aut">5.23.3. How to Use Test Data in the AUT</a></span></dt></dl></div><p>
+This section discusses how to split tests into multiple files and how to
+share, access and use, shared scripts and shared data files.
+(It is also possible to share an <a class="xref" href="rg-objectmap.html" title="7.11. Object Map">Object Map (Section 7.11)</a>; see
+<a class="xref" href="rg-objectmap.html#rgos-create" title="7.11.2. Creating an Object Map">Creating an Object Map (Section 7.11.2)</a> for details.)
+</p><p>
+Sharing scripts is ideal when you have functionality that is common to
+more than one test case. However, if you generally create test scripts
+from scratch and they all tend to have the same basic structure you
+might find it convenient to create test script templates to save having
+to copy and paste whenever you create a new test: see <a class="xref" href="rg-templates.html" title="7.14. Testcase Templates">Testcase Templates (Section 7.14)</a> for how to do this.
+</p><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="ugsh-datascripts"></a>5.23.1. How to Store and Locate Shared Scripts and Shared Data Files</h3></div></div></div><p>
+Each test case contains a default test script file called
+<code class="filename">test.js</code> (JavaScript) or
+<code class="filename">test.py</code> (Python) or
+<code class="filename">test.pl</code> (Perl) or
+<code class="filename">test.rb</code> (Ruby) or
+<code class="filename">test.tcl</code> (Tcl), depending on which scripting language
+has been set for the test suite.
+</p><p>
+When creating test suites it often happens that many of the test cases
+require some common functionality or common data. <span class="emphasis"><em>Squish</em></span> makes it
+possible to create separate script files that contain the common
+functionality and which can be used by all the test cases that need it.
+And <span class="emphasis"><em>Squish</em></span> also makes it possible to create or import test data that
+can be shared by any of a test suite's test cases.
+</p><p>
+For test data, <span class="emphasis"><em>Squish</em></span> provides two options: test data that is specific
+to a test case, and test data that can be shared by any of a test
+suite's test cases. For test scripts, <span class="emphasis"><em>Squish</em></span> provides three options:
+test scripts that are specific to a test case (in addition to the
+<code class="filename">test.*</code> file), test scripts that can be shared by
+any of a test suite's test cases, and—from
+global test scripts that can be shared by any
+test case in any test suite.
+(Global scripts are an advanced feature and not recommended for new
+<span class="emphasis"><em>Squish</em></span> users.)
+</p><p>
+Let's assume for ease of explanation that we have a test suite in a
+folder called <code class="filename">myapp_suite</code>. Let us further assume
+that we have two test cases for this suite in the folders
+<code class="filename">myapp_suite/tst_case1</code> and
+<code class="filename">myapp_suite/tst_case2</code>. If we are using the Python
+scripting language, the first test case's filename will be
+<code class="filename">myapp_suite/tst_case1/test.py</code>, and it is easy
+to see what the name would be for the other scripting languages.
+</p><p>
+Given the above assumptions, if we want to store some test case-specific
+data for the first test case it must be stored in the
+<code class="filename">myapp_suite/tst_case1/testdata</code> folder, for example,
+<code class="filename">myapp_suite/tst_case1/testdata/case1_data.csv</code>.
+And if we wanted to store some test data that could be shared by both
+test cases (and by any others we create later), it must be stored in the
+<code class="filename">myapp_suite/shared/testdata</code> folder. These details
+are important for command line users, but if you use the <span class="application">Squish IDE</span>, there's
+no need to remember them since the <span class="application">Squish IDE</span> can be used to create or import
+test data and will store it in the right place, and only filenames (not
+paths) are used to access test data in test scripts.
+</p><p>
+Regardless of whether test data is test case-specific or shared by the
+whole test suite, we always use the same technique to access the data:
+we call the <a class="xref" href="rgs-squish.html#testData.dataset-function"><code class="function">testData.dataset</code></a> function with
+the test data's filename (without any path) to get a reference to an
+array or tuple (depending on scripting language) that can be used to
+access the data using the other <a class="xref" href="rgs-squish.html#rgss-testdata" title="6.3.10. Test Data Functions">Test Data Functions (Section 6.3.10)</a>
+functions. (It is also possible to access test data
+<span class="emphasis"><em>anywhere</em></span> by giving a filename with a path, but we
+recommend storing test data in the relevant test suite or test case.)
+</p><p>
+If we want to have one or more additional scripts to neatly
+compartmentalize functionality, or to simplify our
+<code class="filename">test.*</code> test script, we can create additional script
+files. Given the earlier assumptions, if we want to have an extra test
+case-specific script we must put it in the same directory as the
+<code class="filename">test.*</code> test script, for example,
+<code class="filename">myapp_suite/tst_case1/extra.py</code>. If we have extra
+functionality that we want to be accessible to all of our test suite's
+test scripts, we must put the additional script in the test suite's
+shared scripts folder, e.g.,
+<code class="filename">myapp_suite/shared/scripts/common.py</code>.
+If we want to have functionality
+that can be shared by any test case in any test suite we can add a
+global test script to the <a class="xref" href="ide.views.html#ide.the-global-scripts.view" title="8.2.7. Global Scripts view">Global Scripts view (Section 8.2.7)</a>.
+</p><p>
+Regardless of whether the test script is test case-specific or shared by
+the whole test suite or global to all of our test suites, we always use
+the same technique to access the script's functionality: we call the
+<a class="xref" href="rgs-squish.html#source-function"><code class="function">source</code></a> function with the script's name
+(including its path). Typically we get the name by calling the <a class="xref" href="rgs-squish.html#findFile-function"><code class="function">findFile</code></a> function giving it a first argument of
+“<span class="quote">scripts</span>” and a second argument of the script's name
+(without any path)—this will work for test case-specific scripts
+and for scripts shared by any of the test suite's test cases, and also
+for global shared scripts. Note that on Ruby we use the
+<code class="code">require</code> function instead of <code class="code">souce</code>.
+</p><p>
+To create a script that can be shared by any test case in a test suite,
+in the <span class="application">Squish IDE</span>'s <a class="xref" href="ide.views.html#ide.the-test-suites.view" title="8.2.19. Test Suites view">Test Suites view (Section 8.2.19)</a>'s Test Suite
+Resources section, click the <span class="guibutton">New Test Script File</span>
+toolbar button. This will create a new empty shared script called
+<code class="filename">script_1.py</code> (or <code class="filename">script_1.js</code>,
+and so on, depending on the scripting language in use). The script can
+be renamed to something more meaningful, either immediately by entering
+a new name, or later by clicking it and invoking the context menu and
+using the <span class="guimenuitem">Rename</span> option. (In the screenshot
+we have renamed the shared script <code class="filename">common.py</code> since
+it contains common functionality.)
+</p><div class="screenshot"><div class="mediaobject" align="center"><img src="images/new_testsuite_created.png" align="middle"></img><div class="caption"><p>The <span class="application">Squish IDE</span> with the New Test Script File toolbutton tooltip
+visible
+</p></div></div></div><p>
+Once the shared script has been renamed, click (or double-click
+depending on your platform and settings) to show it in an <a class="xref" href="ide.views.html#ide.the-editor.view" title="8.2.6. Editor view">Editor view (Section 8.2.6)</a>. You can now edit the script to add any
+shared functionality you require.
+</p><p>
+It is also possible (although less common) to add a shared script that
+can only be used by a particular test case. To do this click the
+<span class="guibutton">New Test Script File</span> toolbar button in the
+<a class="xref" href="ide.views.html#ide.the-test-suites.view" title="8.2.19. Test Suites view">Test Suites view (Section 8.2.19)</a>'s Test Case Resources
+panel. And, of course, we can add as many shared script files to our
+test suites (and test cases) as we like.
+</p><p>
+If you want to create a global shared script, that is, one that can be
+accessed by any test case in any test suite, open or click the <a class="xref" href="ide.views.html#ide.the-global-scripts.view" title="8.2.7. Global Scripts view">Global Scripts view (Section 8.2.7)</a> and add it through that view.
+</p><p>
+If you want to import an existing script into a test suite's (or test
+case's) shared script's folder, click
+<span class="guimenu">File</span>|<span class="guimenuitem">Import Test
+Resource</span>. This will pop up the <a class="xref" href="ide.dialogs.html#ide.import.squish.resource.dialog" title="8.3.7. Import Squish Resource dialog">Import Squish Resource dialog (Section 8.3.7)</a>. Enter the name of the
+script file to import (or choose it using the
+<span class="guibutton">Browse...</span> button. Then set the <span class="guilabel">Import
+As</span> combobox item to “<span class="quote">Script</span>”. If you want the
+script to be shared by all of the test suite's test cases (rather than
+just the current one that is shown), check the <span class="guibutton">Create shared
+File in Test Suite</span> radio button. (Clicking this radio button
+is recommended since it is usually more convenient to share scripts
+amongst all test cases.) Now click the <span class="guibutton">Finish</span>
+button and the imported script will be available in the <span class="application">Squish IDE</span>.
+</p><div class="sidebar"><p class="title"><b><span class="emphasis"><em>For command-line users</em></span></b></p><p>
+It is possible to create shared scripts without using the <span class="application">Squish IDE</span> at all.
+First, in the console, change directory to the test suite's directory.
+Then create a new subdirectory called <code class="filename">shared</code> if it
+doesn't already exist. Now change into this directory and create a new
+subdirectory called <code class="filename">scripts</code> if it doesn't already
+exist. Now use your editor or IDE to create the shared script and be
+sure to save it in the test suite's <code class="filename">shared/scripts</code>
+directory. And if you already have the script simply copy it into that
+directory. If you want to add a global shared script just create or copy
+it to the directory (or one of the directories) you want to use for that
+purpose.
+</p></div><div class="sidebar"><p class="title"><b>How to Globally Share Scripts amongst Test Suites</b></p><p>
+There may be situations where shared functionality might be useful not
+only in one particular test suite, but in most or all test suites.
+<span class="emphasis"><em>Squish</em></span> makes it possible for all test suites to access globally shared
+scripts. This is achieved by creating one or more directories (wherever
+you like) that you will put all the globally shared scripts into. Then,
+to tell <span class="emphasis"><em>Squish</em></span> that there are such directories, either register them
+using the <a class="xref" href="ide.views.html#ide.the-global-scripts.view" title="8.2.7. Global Scripts view">Global Scripts view (Section 8.2.7)</a> (which will add
+them to the <code class="filename">paths.ini</code> file—see <a class="xref" href="rg-ini-files.html" title="7.6. Squish Initialization Files"><span class="emphasis"><em>Squish</em></span> Initialization Files (Section 7.6)</a>), or set the <code class="envar">SQUISH_SCRIPT_DIR</code>
+environment variable to one or more paths. For example, on Unix
+using the <span class="application">bash</span> shell, <code class="code">export
+SQUISH_SCRIPT_DIR=$HOME/tests/shared_scripts</code>. See also, <a class="xref" href="rg-envvars.html" title="7.5. Environment Variables">Environment Variables (Section 7.5)</a> and <a class="xref" href="rg-autsettings.html#rgas-autenv" title="7.3.3.1. Setting Environment Variables for the AUT">Setting Environment Variables for the AUT (Section 7.3.3.1)</a>.
+</p></div><p>
+Once a shared script has been created, it can be used by any
+test case-specific scripts that need it. Note though, that shared
+scripts are not usually imported using the language-specific import
+mechanism—after all, not all languages have such a mechanism, for
+example, JavaScript doesn't. Instead, the <span class="emphasis"><em>Squish</em></span> API provides the
+necessary functions.
+</p><p>
+The standard way to locate a shared script file (or shared data file),
+is to use the <a class="xref" href="rgs-squish.html#findFile-function"><code class="function">findFile</code></a> function. The first
+argument is the type of file, which for shared scripts should be
+“<span class="quote">scripts</span>”. The second argument is the script's filename
+(with no path). The function will search all the standard locations that
+<span class="emphasis"><em>Squish</em></span> uses, and will return the filename including its full path.
+</p><p>
+Once we have the full path to the shared script, we can include it in
+our test case's script. This is done by evaluating the shared
+script using the <a class="xref" href="rgs-squish.html#source-function"><code class="function">source</code></a> function—this
+means that it is in effect executed as if the actual text of the shared
+script was in the test case at the point where we call the <a class="xref" href="rgs-squish.html#source-function"><code class="function">source</code></a> function. After this is done, all the
+objects created in the shared script—typically, classes and
+functions—become accessible in the test case's script.
+</p><p>
+Here is an example where we want to share a script file called
+<code class="filename">address_utility.py</code> (or
+<code class="filename">address_utility.js</code>, etc., depending on the
+scripting language being used), so that we can access a function inside
+it—in this example, the
+<code class="code">insertDummyNamesAndAddresses</code> function—that populates an
+addressbook AUT with some names and addresses so that there is some data
+present for further tests to work on.
+</p><div xmlns="" class="scriptlang"><form><select name="scriptlangcombo" onchange="javascript:changeScriptingLanguage(this)" onclick="javascript:changeScriptingLanguage(this)"><option value="all" selected>Show All</option><option value="JavaScript">Show JavaScript</option><option value="Perl">Show Perl</option><option value="Python">Show Python</option><option value="Ruby">Show Ruby</option><option value="Tcl">Show Tcl</option></select></form></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Python</span><pre class="programlisting">
+def main():
+    ...
+    source(findFile("scripts", "address_utility.py"))
+    insertDummyNamesAndAddresses()
+    ...
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">JavaScript</span><pre class="programlisting">
+function main()
+{
+    // ...
+    source(findFile("scripts", "address_utility.js"));
+    insertDummyNamesAndAddresses();
+    // ...
+}
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Perl</span><pre class="programlisting">
+sub main
+{
+    # ...
+    source(findFile("scripts", "address_utility.pl"));
+    insertDummyNamesAndAddresses();
+    # ...
+}
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Ruby</span><pre class="programlisting">
+# encoding: UTF-8
+require 'squish'
+include Squish
+
+def main
+    # ...
+    require findFile("scripts", "address_utility.rb")
+    insertDummyNamesAndAddresses
+    # ...
+end
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Tcl</span><pre class="programlisting">
+proc main {} {
+    # ...
+    source [findFile scripts "address_utility.tcl"]
+    insertDummyNamesAndAddresses
+    # ...
+}
+</pre></div><p>
+Here we import the <code class="filename">address_utility.py</code> (or similar)
+script which defines a function called
+<code class="code">insertDummyNamesAndAddresses</code>, which we are then able to
+call. (You should already be familiar with this, since we used this
+mechanism in several examples earlier in this User Guide.)
+</p><p>
+For scripting languages such as Python that support importing, it is
+possible to use the language's standard import mechanism. However,
+<span class="emphasis"><em>Squish</em></span>'s approach is usually more convenient, since in most cases our
+shared scripts are only relevant to our tests. In general, for shared
+scripts it is best to use <span class="emphasis"><em>Squish</em></span>'s <a class="xref" href="rgs-squish.html#source-function"><code class="function">source</code></a>
+function, but to import standard modules it is best to use the
+language-specific mechanism (e.g., <code class="code">import</code> in Python and
+<code class="code">use</code> in Perl). In Ruby, use the standard
+<code class="code">require</code> function instead of <span class="emphasis"><em>Squish</em></span>'s <code class="code">source</code>
+function.
+</p><p>
+Just as we have a test case script, we can also have test case-specific
+data files. Such files are stored in the test case's
+<code class="filename">testdata</code> directory. However, in some cases, we want
+to share the test data so that more than one test case can access it. In
+this case we store the test data in the test suite's
+<code class="filename">shared/testdata</code> directory.
+</p><p>
+Test data can be added through the <span class="application">Squish IDE</span> by importing
+files—<span class="emphasis"><em>Squish</em></span> can read <code class="filename">.tsv</code>
+(tab-separated values format), <code class="filename">.csv</code>
+(comma-separated values format), <code class="filename">.xls</code>
+or <code class="filename">.xlsx</code> (<span class="trademark">Microsoft</span>® <span class="trademark">Excel</span>™ spreadsheet format).
+Or we can
+simply create the directories on the command line in a console and copy
+our test data into them. The techniques used for adding shared test
+data, whether using the <span class="application">Squish IDE</span> or manually, are exactly the same as for
+adding shared test scripts, only we use the appropriate
+<code class="filename">testdata</code> directory (rather than the
+<code class="filename">scripts</code> directory).
+</p><p>
+Although the top-level directory structure must follow what we have
+described, <span class="emphasis"><em>within</em></span> that structure—i.e., under
+a <code class="filename">testdata</code> directory—you are free to
+create subdirectories and structure them however you like.
+</p><p>
+Retrieving test data is done using the <a class="xref" href="rgs-squish.html#findFile-function"><code class="function">findFile</code></a> function we mentioned earlier, only this
+time the first argment must be “<span class="quote">testdata</span>”, and the second
+argument the name of the test data file you want to access. In practice
+we don't usually need to use the <a class="xref" href="rgs-squish.html#findFile-function"><code class="function">findFile</code></a>
+function for test data; instead we use the <a class="xref" href="rgs-squish.html#testData.dataset-function"><code class="function">testData.dataset</code></a> function and access the data using
+<span class="emphasis"><em>Squish</em></span>'s <a class="xref" href="rgs-squish.html#rgss-testdata" title="6.3.10. Test Data Functions">Test Data Functions (Section 6.3.10)</a> API, as we will see in the
+next section.
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="ugsh-datadriven"></a>5.23.2. How to Do Data-Driven Testing</h3></div></div></div><p>
+Data-driven testing is an approach where the test data (input, and
+expected output), is kept separate from the test script code which only
+contains the test's logic. The normal practice is for the test data to
+be read from a file or database one item or record at a time, and for
+the test script to use the data to test the AUT and then compare the
+results with those that are expected.
+</p><p>
+One benefit of this approach is that it makes it possible to modify a
+test without actually having to change the test case's
+code—instead we simply add more data which the test then reads and
+processes along with the rest of the data. This makes it possible to
+separate responsibility for creating tests between test engineers who
+have coding skills and those who don't. Those with coding skills can
+create test scripts and encode the test logic in them, and test
+engineers who don't have coding skills can create and edit the test data
+that the test scripts use to test the AUT.
+</p><p>
+<span class="emphasis"><em>Squish</em></span> provides an API for handling test data (see <a class="xref" href="rgs-squish.html#rgss-testdata" title="6.3.10. Test Data Functions">Test Data Functions (Section 6.3.10)</a>), that makes it easy to create data-driven
+tests. Here we will look at how to use <span class="emphasis"><em>Squish</em></span>'s script API to read
+and use test data, and will assume that the test data has already be
+imported or copied into the appropriate <code class="filename">testdata</code>
+directory.
+</p><p>
+Test data always contains data in a tabular format. <span class="emphasis"><em>Squish</em></span> can read
+files in <code class="filename">.tsv</code> (tab-separated values format),
+<code class="filename">.csv</code> (comma-separated values format),
+<code class="filename">.xls</code> or <code class="filename">.xlsx</code> (<span class="trademark">Microsoft</span>® <span class="trademark">Excel</span>™ spreadsheet
+format)
+format). In the case of <code class="filename">.csv</code> and
+<code class="filename">.tsv</code> files, <span class="emphasis"><em>Squish</em></span> assumes that they use the
+Unicode UTF-8 encoding—the same encoding that is used for test
+scripts. In <code class="filename">.tsv</code> files, records are separated by
+new lines and fields are separated by tabs. The first record is used to
+describe the columns. Here is an example <code class="filename">.tsv</code> data
+file—<code class="filename">addresses.tsv</code>—with tabs indicated
+by “<span class="quote">\t</span>” and newlines indicated by “<span class="quote">\n</span>”
+characters:
+</p><pre class="screen">
+First Name\tLast Name\tAddress\tEmail\tNumber\n
+Max\tMustermann\tBakerstreet 55\tmax@mustermann.net\t1\n
+John\tKelly\tRhodeo Drv. 678\tjkelly@acompany.com\t2\n
+Joe\tSmith\tQueens Blvd. 37\tjoe@smith.com\t3\n
+</pre><p>
+Each field (column) is separated by a tab, and each record (row, or
+line) is separated by a newline. As is common practice with
+<code class="filename">.tsv</code> (and <code class="filename">.csv</code>) files, the
+first line is not data as such, but instead the field (column) names
+(“<span class="quote">First Name</span>”, “<span class="quote">Last Name</span>”, etc.). All the
+other lines are data records.
+</p><p>
+Here is an example where we read each record in turn and print its
+values to <span class="emphasis"><em>Squish</em></span>'s log:
+</p><div xmlns="" class="scriptlang"><form><select name="scriptlangcombo" onchange="javascript:changeScriptingLanguage(this)" onclick="javascript:changeScriptingLanguage(this)"><option value="all" selected>Show All</option><option value="JavaScript">Show JavaScript</option><option value="Perl">Show Perl</option><option value="Python">Show Python</option><option value="Ruby">Show Ruby</option><option value="Tcl">Show Tcl</option></select></form></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Python</span><pre class="programlisting">
+for record in testData.dataset("addresses.tsv"):
+    firstName = testData.field(record, "First Name")
+    lastName = testData.field(record, "Last Name")
+    address = testData.field(record, "Address")
+    email = testData.field(record, "Email")
+    test.log("%s %s, %s; email: %s" % (
+        firstName, lastName, address, email))
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">JavaScript</span><pre class="programlisting">
+var records = testData.dataset("addresses.tsv");
+for (var row = 0; row &lt; records.length; ++row) {
+    var record = records[row];
+    firstName = testData.field(record, "First Name");
+    lastName = testData.field(record, "Last Name");
+    address = testData.field(record, "Address");
+    email = testData.field(record, "Email");
+    test.log(firstName + " " + lastName + ", " + address +
+        "; email:" + email);
+}
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Perl</span><pre class="programlisting">
+my @records = testData::dataset("addresses.tsv");
+for (my $row = 0; $row &lt; scalar(@records); $row++) {
+    my $record = $records[$row];
+    my $firstName = testData::field($record, "First Name");
+    my $lastName = testData::field($record, "Last Name");
+    my $address = testData::field($record, "Address");
+    my $email = testData::field($record, "Email");
+    test::log("$firstName $lastName, $address; email: $email");
+}
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Ruby</span><pre class="programlisting">
+TestData.dataset("addresses.tsv").each do |record, row|
+    firstName = TestData.field(record, "First Name")
+    lastName = TestData.field(record, "Last Name")
+    address = TestData.field(record, "Address")
+    email = TestData.field(record, "Email")
+    Test.log("#{firstName} #{lastName}, #{address}; email: #{email}")
+end
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Tcl</span><pre class="programlisting">
+set records [testData dataset "addresses.tsv"]
+for {set row 0} {$row &lt; [llength $data]} {incr row} {
+    set record [lindex $records $row]
+    set firstName [testData field $record "First Name"]
+    set lastName [testData field $record "Last Name"]
+    set address [testData field $record "Address"]
+    set email [testData field $record "Email"]
+    test log "$firstName $lastName, $address; email: $email"
+}
+</pre></div><p>
+Notice that we access fields by name, so the names we use in our test
+case's code must match those in the first line of the test data file.
+Also, although the data has a “<span class="quote">Number</span>” field at the end, we
+ignore it because we don't need it.
+</p><p>
+In typical cases the test data file is found using the <a class="xref" href="rgs-squish.html#testData.dataset-function"><code class="function">testData.dataset</code></a> function which searches for test
+data in standard locations and returns an array or tuple of records. (It
+is also possible to give this function the name of a file including a
+path—for example, as returned by the <a class="xref" href="rgs-squish.html#findFile-function"><code class="function">findFile</code></a> function). We then use the <a class="xref" href="rgs-squish.html#testData.field-function"><code class="function">testData.field</code></a> function to access the contents of
+individual fields within a given record.
+</p><p>
+By using a <code class="code">for</code> loop we can iterate over every record in the
+testdata—without having to know in advance how many records there
+are, so the code is unaffected if records are removed or added. And of
+course, in a realistic test we would feed the data to the AUT and
+compare expected with actual results rather than simply printing the
+data to the log as we have done here.
+</p><p>
+Most of the tutorials include a complete example of a data-driven test.
+For a Qt example, see <a class="xref" href="tutorials-qt.html#tgs-datadriven" title="4.1.1.5.2. Creating Data Driven Tests">Creating Data Driven Tests (Section 4.1.1.5.2)</a>;
+for a Java AWT/Swing example, see <a class="xref" href="tutorials-java-awt.html#tut-java-awt-creating-data-driven-tests" title="4.2.1.5.2. Creating Data Driven Tests">Creating Data Driven Tests (Section 4.2.1.5.2)</a>;
+for a Java SWT example, see <a class="xref" href="tutorials-java-swt.html#creating-data-driven-tests" title="4.3.1.5.2. Creating Data Driven Tests">Creating Data Driven Tests (Section 4.3.1.5.2)</a>; and
+for a Tk/Tcl example, see <a class="xref" href="tutorials-tk.html#tgs-datadriven-tk" title="4.10.1.5.2. Creating Data Driven Tests">Creating Data Driven Tests (Section 4.10.1.5.2)</a>.
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="ugsh-aut"></a>5.23.3. How to Use Test Data in the AUT</h3></div></div></div><p>
+So far this section has only discussed using test data in test scripts
+to create data driven tests. But two other use cases arise in practice.
+One use case is where test data files are provided for the AUT to read,
+and another is where we want to retrieve files that the AUT has created
+during the test run so that they can be verified.
+</p><p>
+Let's start by looking at the first use case where we provide a data
+file for the AUT to read. For example, imagine we are using the
+<code class="filename">addressbook</code> AUT and we want it to load a file
+called <code class="filename">customers.adr</code> at the start of the test
+script so that it has a known set of data to work on. This is easily
+achieved by storing the data file in the test case's directory, or its
+<code class="filename">testdata</code> directory—or in the test suite's
+<code class="filename">shared/testdata</code> directory, if we want more than one
+test case to be able to access it.
+</p><p>
+We want to avoid hard-coding the path to the data file in our test
+script since we want the flexibility to run our tests on different
+machines, and even on different platforms. We can copy a data file into
+the AUT's current working directory (without having to know its path)
+using the <a class="xref" href="rgs-squish.html#testData.put-function"><code class="function">testData.put</code></a> function. We only need
+to give the name of the file to this function since it will
+automatically look in the test case's directory. If we want to put a
+file from the test case's <code class="filename">testdata</code> directory or
+from the test suite's <code class="filename">shared/testdata</code> directory, we
+can call the <a class="xref" href="rgs-squish.html#testData.put-function"><code class="function">testData.put</code></a> function with the
+results of a call to the <a class="xref" href="rgs-squish.html#findFile-function"><code class="function">findFile</code></a> function,
+giving the latter a first argument of “<span class="quote">testdata</span>” and a
+second argument of the filename (without a path). Another benefit of
+using the <a class="xref" href="rgs-squish.html#testData.put-function"><code class="function">testData.put</code></a> function is that once
+the test run has finished, <span class="emphasis"><em>Squish</em></span> will automatically clean up for us
+(i.e., <span class="emphasis"><em>Squish</em></span> will delete the file from the AUT's working directory).
+</p><p>
+Here is an example where we copy a test data file from the current test
+case's directory into the AUT's working directory. Then we access the
+AUT's main window object (<code class="code">Addressbook</code>), and call that
+object's <code class="code">fileOpen</code> method with the name of the file we want
+it to load.
+</p><div xmlns="" class="scriptlang"><form><select name="scriptlangcombo" onchange="javascript:changeScriptingLanguage(this)" onclick="javascript:changeScriptingLanguage(this)"><option value="all" selected>Show All</option><option value="JavaScript">Show JavaScript</option><option value="Perl">Show Perl</option><option value="Python">Show Python</option><option value="Ruby">Show Ruby</option><option value="Tcl">Show Tcl</option></select></form></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Python</span><pre class="programlisting">
+def main():
+    ...
+    testData.put("customers.adr")
+    findObject("Addressbook").fileOpen("customers.adr")
+    ...
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">JavaScript</span><pre class="programlisting">
+function main()
+{
+    // ...
+    testData.put("customers.adr");
+    findObject("Addressbook").fileOpen("customers.adr");
+    // ...
+}
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Perl</span><pre class="programlisting">
+sub main()
+{
+    # ...
+    testData::put("customers.adr");
+    findObject("Addressbook")-&gt;fileOpen("customers.adr");
+    # ...
+}
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Ruby</span><pre class="programlisting">
+# encoding: UTF-8
+require 'squish'
+include Squish
+
+def main
+    #...
+    TestData.put("customers.adr")
+    findObject("Addressbook").fileOpen("customers.adr")
+    #...
+end
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Tcl</span><pre class="programlisting">
+proc main {} {
+    # ...
+    invoke testData put "customers.adr"
+    [invoke [invoke findObject "Addressbook"] fileOpen "customers.adr"]
+    # ...
+}
+</pre></div><p>
+Another use case is where we need to verify that a file which has been
+created by the AUT has the contents we expect. For example, let's assume
+that during a test the <code class="filename">addressbook</code> AUT loads a data
+file, <code class="filename">customers.adr</code>, performs various operations
+(adds, edits, and deletes, addresses), and then saves its current
+address data into a new file, <code class="filename">edited-customers.adr</code>.
+After this has happened we want our test script to compare the
+<code class="filename">edited-customers.adr</code> file with another file,
+<code class="filename">expected-customers.adr</code> which has the contents we
+expect the file to have after accounting for the changes to the data
+made earlier in the script.
+</p><p>
+We can copy a file to the AUT's current directory using the <a class="xref" href="rgs-squish.html#testData.put-function"><code class="function">testData.put</code></a> function. Here's an example that
+saves a file to the AUT's current working directory, copies an
+“<span class="quote">expected</span>” file into the AUT's current working directory,
+and then reads both files and compares them to see if they match.
+</p><div xmlns="" class="scriptlang"><form><select name="scriptlangcombo" onchange="javascript:changeScriptingLanguage(this)" onclick="javascript:changeScriptingLanguage(this)"><option value="all" selected>Show All</option><option value="JavaScript">Show JavaScript</option><option value="Perl">Show Perl</option><option value="Python">Show Python</option><option value="Ruby">Show Ruby</option><option value="Tcl">Show Tcl</option></select></form></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Python</span><pre class="programlisting">
+def main():
+    # Load customers.adr and add/edit/delete addresses
+    ...
+    mainwindow = waitForObject("Addressbook")
+    # Use the AUT's API to save the data to the AUT's directory
+    mainwindow.saveAs("edited-customers.adr")
+
+    # Copy "expected" from the AUT's directory to the test case's directory
+    testData.get("expected-customers.adr")
+
+    edited = open("edited-customers.adr").read()
+    expected = open("expected-customers.adr").read()
+    test.compare(edited, expected)
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">JavaScript</span><pre class="programlisting">
+function main()
+{
+    // Load customers.adr and add/edit/delete addresses
+    ...
+    var mainwindow = waitForObject("Addressbook");
+    // Use the AUT's API to save the data to the AUT's directory
+    mainwindow.saveAs("edited-customers.adr");
+
+    // Copy "expected" from the AUT's directory to the test case's directory
+    testData.get("expected-customers.adr");
+
+    var edited = File.open("edited-customers.adr").read();
+    var expected = File.open("expected-customers.adr").read();
+    test.compare(edited, expected);
+}
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Perl</span><pre class="programlisting">
+sub main
+{
+    # Load customers.adr and add/edit/delete addresses
+    ...
+    my $mainwindow = waitForObject("Addressbook");
+    # Use the AUT's API to save the data to the AUT's directory
+    $mainwindow-&gt;saveAs("edited-customers.adr");
+
+    # Copy "expected" from the AUT's directory to the test case's directory
+    testData::get("expected-customers.adr");
+
+    open(FH1, "edited-customers.adr");
+    open(FH2, "expected-customers.adr");
+    my $edited = join("", &lt;F1&gt;);
+    my $expected = join("", &lt;F2&gt;);
+    test.compare($edited, $expected);
+}
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Ruby</span><pre class="programlisting">
+# encoding: UTF-8
+require 'squish'
+include Squish
+
+def main
+    # Load customers.adr and add/edit/delete addresses
+    # ...
+    mainwindow = waitForObject("Addressbook")
+    # Use the AUT's API to save the data to the AUT's directory
+    mainwindow.saveAs("edited-customers.adr")
+
+    # Copy "expected" from the AUT's directory to the test case's directory
+    TestData.get("expected-customers.adr")
+
+    edited = open("edited-customers.adr").read
+    expected = open("expected-customers.adr").read
+    Test.compare(edited, expected)
+end
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Tcl</span><pre class="programlisting">
+proc main {} {
+    # Load customers.adr and add/edit/delete addresses
+    ...
+    set mainwindow [waitForObject "Addressbook"]
+    # Use the AUT's API to save the data to the AUT's working directory
+    invoke $mainwindow saveAs "edited-customers.adr"
+
+    # Copy "expected" from the AUT's directory to the test case's directory
+    testData get "expected-customers.adr"
+
+    set edited [read [open "edited-customers.adr"]]
+    set expected [read [open "expected-customers.adr"]]
+    test compare $edited $expected
+}
+</pre></div><p>
+We begin by getting a reference to the AUT's main window object; then we
+call the main window's <code class="code">saveAs</code> method to save the edited
+data. Then we open both the newly saved data and the expected data
+files (the latter copied into the AUT's working directory), and read
+their entire contents. Finally, we compare the contents of the files
+using the <a class="xref" href="rgs-squish.html#test.compare-function"><code class="function">test.compare</code></a> function.
+</p><p>
+<span class="emphasis"><em>Squish</em></span>'s data handling API (see <a class="xref" href="rgs-squish.html#rgss-testdata" title="6.3.10. Test Data Functions">Test Data Functions (Section 6.3.10)</a>) has
+other useful functions. For example, if we only need to test that a file
+has been created without concern for its contents we can call the <a class="xref" href="rgs-squish.html#testData.exists-function"><code class="function">testData.exists</code></a> function. And if we want to
+remove a file in the course of a test we can call the <a class="xref" href="rgs-squish.html#testData.remove-function"><code class="function">testData.remove</code></a> function.
+</p></div></div><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" type="text/javascript" src="ScriptingLanguage.js"></script><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format">setScriptingLanguage();</script><div class="navfooter"><hr></hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="ug-vps.html">Prev</a> </td><td width="20%" align="center"><a accesskey="u" href="users-guide.html">Up</a></td><td width="40%" align="right"> <a accesskey="n" href="ug-imagebasedtesting.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">5.22. How to Create and Use Verification Points </td><td width="20%" align="center"><a accesskey="h" href="index-noframes.html">Home</a></td><td width="40%" align="right" valign="top"> 5.24. How to Do Image-Based Testing</td></tr></table></div></body>
+<!-- Mirrored from ug-shareddata.html by HTTrack Website Copier/3.x [XR&CO'2013], Wed, 06 Jul 2022 13:29:00 GMT -->
+</html>

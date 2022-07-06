@@ -1,0 +1,135 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<!-- Mirrored from rel-423.html by HTTrack Website Copier/3.x [XR&CO'2013], Wed, 06 Jul 2022 13:28:56 GMT -->
+<head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><title>2.41. Version 4.2.3</title><link rel="stylesheet" href="manual.css" type="text/css"></link><meta name="generator" content="DocBook XSL Stylesheets V1.73.2"></meta><link rel="start" href="index-noframes.html" title="Squish Manual"></link><link rel="up" href="relnotes.html" title="Chapter 2. Release Notes—for Upgraders"></link><link rel="prev" href="rel-500.html" title="2.40. Version 5.0.0"></link><link rel="next" href="rel-422.html" title="2.42. Version 4.2.2"></link><style xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" type="text/css" media="screen">
+        div.toc * { margin-left: 6px; margin-right: auto; max-width: 75em; }
+        div.toc span { margin-left: 0px; }
+        * { margin-left: auto; margin-right: auto; max-width: 75em; }
+        body { margin-left: 6px; margin-right: 6px; }
+        table th { padding: .5ex }
+        table td { padding: .5ex }
+    </style><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format">
+        function keyPress() {
+            var e = window.event;
+            if ( e == undefined ) {
+                return;
+            }
+            /* ### does not properly scroll, yet
+            if ( e.keyCode == 32 ) {
+            var l = document.links;
+            for ( var i = 0; i < l.length; i++ ) {
+                if ( l[i].innerText == "Next" ) {
+                location.href = l[i].href;
+                }
+            }
+            } else
+                */
+                if ( e.keyCode == 0x08 ) {
+            var l = document.links;
+            for ( var i = 0; i < l.length; i++ ) {
+                if ( l[i].innerText == "Prev" ) {
+                location.href = l[i].href;
+                }
+            }
+            }
+        }
+        document.onkeypress = keyPress;
+    </script></head><body><div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="rel-423"></a>2.41. Version 4.2.3</h2></div></div></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><span class="section"><a href="rel-423.html#idp35770928">2.41.1. General</a></span></dt><dt><span class="section"><a href="rel-423.html#idp35775232">2.41.2. IDE</a></span></dt><dt><span class="section"><a href="rel-423.html#idp35785896">2.41.3. Qt-specific</a></span></dt><dt><span class="section"><a href="rel-423.html#idp35791200">2.41.4. <span class="trademark">Java</span>™-specific</a></span></dt><dt><span class="section"><a href="rel-423.html#idp35795672">2.41.5. Web-specific</a></span></dt><dt><span class="section"><a href="rel-423.html#idp35797840">2.41.6. Windows (native)-specific</a></span></dt><dt><span class="section"><a href="rel-423.html#idp35801032">2.41.7. macOS-specific (Cocoa/Carbon edition)</a></span></dt><dt><span class="section"><a href="rel-423.html#idp35803712">2.41.8. iOS-specific (iPhone/iPad edition)</a></span></dt><dt><span class="section"><a href="rel-423.html#idp35805344">2.41.9. Tk-specific</a></span></dt><dt><span class="section"><a href="rel-423.html#idp35806680">2.41.10. Add-Ons</a></span></dt><dt><span class="section"><a href="rel-423.html#idp35809768">2.41.11. Source Packages</a></span></dt><dt><span class="section"><a href="rel-423.html#idp35810688">2.41.12. Documentation</a></span></dt></dl></div><p><span class="emphasis"><em>Squish</em></span> 4.2.3 is a maintenance release containing various bug fixes
+and small improvements as described below:</p><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="idp35770928"></a>2.41.1. General</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Avoid Perl error messages being swallowed after
+testData.dataset() calls.</p></li><li><p>Fixed ApplicationContext.usedMemory property on Mac OS
+X.</p></li><li><p>Fixed passing of arguments to event handlers in
+Perl.</p></li><li><p>Bail out when encountering invalid VP files during
+test execution.</p></li><li><p>Added support for Python scripting on AIX.</p></li><li><p>Fixed a bug which might caused <span class="application">squishrunner</span> to crash
+or yield a 'Fatal Python error: Deallocating None' error message when
+calling the detach() method on an application context object very
+often.</p></li><li><p>Fixed a "no such method" error in Ruby scripts when
+calling Mutex.synchronize.</p></li><li><p>Fixed conflict with Tcl's built-in <code class="code">index</code>
+type.</p></li><li><p>Fixed lack of cursor animation setting when using
+attachToApplication() on Windows.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="idp35775232"></a>2.41.2. IDE</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Fixed access to result logs in Windows UNC
+directories.</p></li><li><p>Fixed NullPointerException when
+editing <span class="guilabel">Suite
+Settings</span>/<span class="guilabel">Envvars</span>.</p></li><li><p>Prevent global scripts from being deleted because of
+an invalid renaming.</p></li><li><p>Prepend colon if missing when pasting objectmap
+entries.</p></li><li><p>Improved background for small images in VP
+editor.</p></li><li><p>Avoid superfluous "Do you want to close...?" dialog
+when re-opening a test suite.</p></li><li><p>Fixed error occurring when closing a <span class="guilabel">Test
+Suite</span> while an <span class="guilabel">Object Map Editor</span> is
+still open.</p></li><li><p>Fixed Tcl code generated
+for <code class="code">[waitFor]</code> and <code class="code">[object exists]</code> commands.</p></li><li><p>Fixed "widget disposed" errors on
+shutdown.</p></li><li><p>Fixed exception when trying to rename VP during creation.</p></li><li><p>Fixed display of properties with empty values
+in <span class="guilabel">Properties</span> view.</p></li><li><p>Fixed default CWD setting.</p></li><li><p>Made <span class="guilabel">Open Symbolic Name</span> respect
+quoted characters.</p></li><li><p>Improved performance of <span class="guilabel">Test
+Results</span> view on Windows.</p></li><li><p>Fixed exception when
+pressing <span class="guilabel">Pause</span> in <span class="guilabel">Control
+Bar</span>.</p></li><li><p>Tuned Eclipse memory parameters to ensure longer
+runtime.</p></li><li><p>Gracefully handle files disappearing that were opened
+in an editor.</p></li><li><p>More robust handling of corrupted test data on
+import.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="idp35785896"></a>2.41.3. Qt-specific</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Fixed screenshots of Qt header view items on Mac OS.</p></li><li><p>Greatly improved recording speed on huge scenes by
+avoiding calls to Squish QML Extension propertyFor() functions. Please
+note that this change removes support for overriding values of
+existing Qt object properties.</p></li><li><p>Fixed QML Flickable container for layouted
+children.</p></li><li><p>Forward exitcode of AUT if dllpreload.exe is renamed
+for hooking into sub-AUTs on Windows.</p></li><li><p>Further improved recording and replay speed on huge
+QML scenes with many invisible items when looking up items with the
+"visible" property set to "true".</p></li><li><p>Add extension-wide option to disable support for
+QGraphicsItems in pure QML scenes. This is optional optimization for
+huge QML scenes where QGraphicsItem lookups can cause performance
+problems.</p></li><li><p>Fixed name generation for widgets embedded into Qt
+views (QTableView, QTreeView etc.). For backward compatibility newly
+generated names for such widgets will contain rowIndex and columnIndex
+properties instead of the previous pair of row and column
+properties.</p></li><li><p>Fix crash during lookup of HTML elements when running
+tests in a loop that cause the AUT to delete and re-create QWebView
+objects.</p></li><li><p>Fix handling of signals caught for
+installLazySignalHandler() when the objectname contains a type
+property. Disallow handling of signals caught for objects not living
+in the GUI-thread.</p></li><li><p>Fix clickItem() on items inside QTreeView when the
+item is scrolled-off and not a toplevel-item.</p></li><li><p>Fixed generation of hierarchical names for nested
+QListViewItems.</p></li><li><p>Fix hierarchical name generation for
+QListViewItem</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="idp35791200"></a>2.41.4. <span class="trademark">Java</span>™-specific</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Catch Error throwables in Windows OLE code.</p></li><li><p>Fixed AWT thread problem on object look-ups</p></li><li><p>Record basetype for inner SWT classes like already
+done for Swing.</p></li><li><p>Fixed a recording regression in mixed SWT/Swing
+applications.</p></li><li><p>Fix SWT context menus on AIX.</p></li><li><p>Fixed spurious recordings of the closeWindow()
+function in SWT applications.</p></li><li><p>Fixed screenshots for Java applications on
+Mac OS X.</p></li><li><p>Enable object highlighting for Java objects on Mac OS
+X.</p></li><li><p>Fixed glass pane handling for
+JInternalFrame.</p></li><li><p>Fixed calculation of SWT item dimensions when using
+64-bit Java on Mac.</p></li><li><p>Fixed SWT ToolItem 'selected' application object
+property.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="idp35795672"></a>2.41.5. Web-specific</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Added support for Firefox 18.</p></li><li><p>Fixed right-click in Firefox when coordinates are
+used.</p></li><li><p>Avoid spurious JS errors from IE when using Launch
+AUT.</p></li><li><p>Fixed property access to document object while
+spying.</p></li><li><p>Fixed logic error for IE screen
+coordinates.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="idp35797840"></a>2.41.6. Windows (native)-specific</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Fixed crash and leaks when accessing native properties
+and properties.</p></li><li><p>Implemented support for calling doubleClick() on list
+box items.</p></li><li><p>Fixed replaying of clicks on items in Windows Forms
+ListView controls which have VirtualMode enabled.</p></li><li><p>Add .NET "class" as an identifying property for
+WinForms controls that are treated as generic 'WindowsFormsControl' to
+avoid high occurrence counts.</p></li><li><p>Improve object synchronization for Windows Forms
+controls that are blocked by modal dialogs.</p></li><li><p>Fixed a problem with double-clicking system tray
+buttons on Windows which would make the test replay abort with an
+'Error in doubleClick() invocation' message.</p></li><li><p>Fixed a problem which caused replaying clicks on
+Windows system tray buttons to fail.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="idp35801032"></a>2.41.7. macOS-specific (Cocoa/Carbon edition)</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Fixed crashes resp. exceptions in some cases when
+accessing items of an NSOutlineView.</p></li><li><p>Fixed visibility property check in context menu items
+and pop-up menu items.</p></li><li><p>Fixed hanging when ending the recording resp. adding
+VPs during recording in some circumstances on 64-bit
+systems.</p></li><li><p>Added support for subviews of
+NSTableView.</p></li><li><p>Fixed spying of objects when property accessor throws
+exception.</p></li><li><p>Fixed continuous memory growth for
+long running tests by releasing unneeded memory
+earlier.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="idp35803712"></a>2.41.8. iOS-specific (iPhone/iPad edition)</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Fixed a crash when inspecting a UIWebBrowserView in
+the spy with iOS 6.</p></li><li><p>Fixed spying of objects when property accessor throws
+exception.</p></li><li><p>Fixed continuous memory growth for long running tests
+by releasing unneeded memory earlier.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="idp35805344"></a>2.41.9. Tk-specific</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Include <span class="application">startaut</span> utility
+into binary packages.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="idp35806680"></a>2.41.10. Add-Ons</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Maven: added option to continue builds if tests
+contain errors.</p></li><li><p>Rational Quality Manager: support for non-ASCII
+characters in user IDs and passwords on Windows.</p></li><li><p>CruiseControl: documented previously introduced
+attributes.</p></li><li><p>Quality Center: dump partial results even when execution
+gets aborted via the add-on.</p></li><li><p>Quality Center: import of shared test suite
+folders into test cases
+via <span class="application">qcimporter</span>.</p></li><li><p>Quality Center: record information about "Host" and
+"Duration" of the executed test inside a test run.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="idp35809768"></a>2.41.11. Source Packages</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Fix compilation of Firefox support code with MinGW
+4.6.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="idp35810688"></a>2.41.12. Documentation</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Fixed pre-recorded Ruby sample for addressbook test on
+Mac OS X.</p></li><li><p>Include "Installation for Safari Testing on iOS"
+section in Squish for Web packages.</p></li><li><p>Added more Ruby-based example suites to binary
+packages.</p></li></ul></div></div></div><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" type="text/javascript" src="ScriptingLanguage.js"></script><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format">setScriptingLanguage();</script><div class="navfooter"><hr></hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="rel-500.html">Prev</a> </td><td width="20%" align="center"><a accesskey="u" href="relnotes.html">Up</a></td><td width="40%" align="right"> <a accesskey="n" href="rel-422.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">2.40. Version 5.0.0 </td><td width="20%" align="center"><a accesskey="h" href="index-noframes.html">Home</a></td><td width="40%" align="right" valign="top"> 2.42. Version 4.2.2</td></tr></table></div></body>
+<!-- Mirrored from rel-423.html by HTTrack Website Copier/3.x [XR&CO'2013], Wed, 06 Jul 2022 13:28:56 GMT -->
+</html>

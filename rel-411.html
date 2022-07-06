@@ -1,0 +1,67 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<!-- Mirrored from rel-411.html by HTTrack Website Copier/3.x [XR&CO'2013], Wed, 06 Jul 2022 13:28:56 GMT -->
+<head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><title>2.45. Version 4.1.1</title><link rel="stylesheet" href="manual.css" type="text/css"></link><meta name="generator" content="DocBook XSL Stylesheets V1.73.2"></meta><link rel="start" href="index-noframes.html" title="Squish Manual"></link><link rel="up" href="relnotes.html" title="Chapter 2. Release Notes—for Upgraders"></link><link rel="prev" href="rel-420.html" title="2.44. Version 4.2.0"></link><link rel="next" href="rel-410final.html" title="2.46. Version 4.1.0 Final"></link><style xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" type="text/css" media="screen">
+        div.toc * { margin-left: 6px; margin-right: auto; max-width: 75em; }
+        div.toc span { margin-left: 0px; }
+        * { margin-left: auto; margin-right: auto; max-width: 75em; }
+        body { margin-left: 6px; margin-right: 6px; }
+        table th { padding: .5ex }
+        table td { padding: .5ex }
+    </style><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format">
+        function keyPress() {
+            var e = window.event;
+            if ( e == undefined ) {
+                return;
+            }
+            /* ### does not properly scroll, yet
+            if ( e.keyCode == 32 ) {
+            var l = document.links;
+            for ( var i = 0; i < l.length; i++ ) {
+                if ( l[i].innerText == "Next" ) {
+                location.href = l[i].href;
+                }
+            }
+            } else
+                */
+                if ( e.keyCode == 0x08 ) {
+            var l = document.links;
+            for ( var i = 0; i < l.length; i++ ) {
+                if ( l[i].innerText == "Prev" ) {
+                location.href = l[i].href;
+                }
+            }
+            }
+        }
+        document.onkeypress = keyPress;
+    </script></head><body><div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="rel-411"></a>2.45. Version 4.1.1</h2></div></div></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><span class="section"><a href="rel-411.html#idp36047664">2.45.1. General</a></span></dt><dt><span class="section"><a href="rel-411.html#idp36049008">2.45.2. Qt-specific</a></span></dt><dt><span class="section"><a href="rel-411.html#idp36052688">2.45.3. <span class="trademark">Java</span>™-specific</a></span></dt><dt><span class="section"><a href="rel-411.html#idp36054912">2.45.4. Web-specific</a></span></dt><dt><span class="section"><a href="rel-411.html#idp36056864">2.45.5. Windows (native)-specific</a></span></dt><dt><span class="section"><a href="rel-411.html#idp36059408">2.45.6. Mac-specific (Cocoa/Carbon edition)</a></span></dt><dt><span class="section"><a href="rel-411.html#idp36061008">2.45.7. iPhone/iPad-specific</a></span></dt><dt><span class="section"><a href="rel-411.html#idp36063032">2.45.8. Source Builds</a></span></dt><dt><span class="section"><a href="rel-411.html#idp36064240">2.45.9. Documentation</a></span></dt></dl></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="idp36047664"></a>2.45.1. General</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Fixed false alarm triggered by installEventHandler()
+function (4.1.0 regression).</p></li><li><p>Fixed detaching from application after
+attachToApplication() (4.1.0 regression).</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="idp36049008"></a>2.45.2. Qt-specific</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Record id property of QML elements if
+available. QObject names are still preferred.</p></li><li><p>Fixed a 4.1.0 regression that lead to member functions
+of template classes like QList not being available for
+scripting.</p></li><li><p>Added missing example script files.</p></li><li><p>Fixed spying of widgets embedded via
+QX11EmbedWidget.</p></li><li><p>Fixed recording with Qt+Web applications that monitor
+HTTP requests.</p></li><li><p>Fixed replay of scripts with input fields in QWebkit
+controls.</p></li><li><p>Fixed screen grabbing on Mac OS 10.7
+(Lion).</p></li><li><p>Fixed Spy tooltip for Qt 4 applications with custom
+palette.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="idp36052688"></a>2.45.3. <span class="trademark">Java</span>™-specific</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Added Java 1.7 support.</p></li><li><p>Fixed a problem with Drag and Drop of Swing tree
+items.</p></li><li><p>Fixed recording of '@' sign with UK keyboard layout in
+AWT applications.</p></li><li><p>Added missing Shift modifier for SWT DropMove
+operation.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="idp36054912"></a>2.45.4. Web-specific</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Fixed a text encoding problem with special
+characters.</p></li><li><p>Fixed escaping of '\' characters in property
+values.</p></li><li><p>Fixed picking of images that have newline or similar
+characters in their ALT attribute.</p></li><li><p>Stop the Windows wrapper interfering when recording on
+a Web browser usign the proxy approach.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="idp36056864"></a>2.45.5. Windows (native)-specific</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Improved speed of access to 'text'
+properties.</p></li><li><p>Fixed crash when fetching value of nested properties
+in real names.</p></li><li><p>Fixed crash in object lookup with Visual Basic 6
+applications.</p></li><li><p>Fixed loading problem caused by installation in
+directories with long path names.</p></li><li><p>Fixed coordinate calculation issues in Exontrol tree
+control.</p></li><li><p>Improved hit test for VB6 labels.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="idp36059408"></a>2.45.6. Mac-specific (Cocoa/Carbon edition)</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Fixed Spy highlighting in case of multiple windows
+that are created after initial application startup.</p></li><li><p>Ignore transparent windows when
+picking.</p></li><li><p>Fixed screenshot taking on Mac OS 10.7
+(Lion).</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="idp36061008"></a>2.45.7. iPhone/iPad-specific</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Added support of iOS 5.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="idp36063032"></a>2.45.8. Source Builds</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Fixed detection of 64-bit Mac OS X
+systems.</p></li><li><p>Fixed building against Qt/Embedded with no X11 headers
+present.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="idp36064240"></a>2.45.9. Documentation</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Added an Uninstall sidebar.</p></li><li><p>Documented additional Tk activateItem overloads.</p></li><li><p>Updated the Squish Eclipse Integration
+documentation.</p></li></ul></div></div></div><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" type="text/javascript" src="ScriptingLanguage.js"></script><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format">setScriptingLanguage();</script><div class="navfooter"><hr></hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="rel-420.html">Prev</a> </td><td width="20%" align="center"><a accesskey="u" href="relnotes.html">Up</a></td><td width="40%" align="right"> <a accesskey="n" href="rel-410final.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">2.44. Version 4.2.0 </td><td width="20%" align="center"><a accesskey="h" href="index-noframes.html">Home</a></td><td width="40%" align="right" valign="top"> 2.46. Version 4.1.0 Final</td></tr></table></div></body>
+<!-- Mirrored from rel-411.html by HTTrack Website Copier/3.x [XR&CO'2013], Wed, 06 Jul 2022 13:28:56 GMT -->
+</html>

@@ -1,0 +1,90 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<!-- Mirrored from book-glossary.html by HTTrack Website Copier/3.x [XR&CO'2013], Wed, 06 Jul 2022 13:29:01 GMT -->
+<head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><title>Glossary</title><link rel="stylesheet" href="manual.css" type="text/css"></link><meta name="generator" content="DocBook XSL Stylesheets V1.73.2"></meta><link rel="start" href="https://index-noframes.html" title="Squish Manual"></link><link rel="up" href="https://index-noframes.html" title="Squish Manual"></link><link rel="prev" href="https://faq.html" title="Chapter 10. Frequently Asked Questions"></link><link rel="next" href="https://book-ack.html" title="Appendix A. Third-Party Software"></link><style xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" type="text/css" media="screen">
+        div.toc * { margin-left: 6px; margin-right: auto; max-width: 75em; }
+        div.toc span { margin-left: 0px; }
+        * { margin-left: auto; margin-right: auto; max-width: 75em; }
+        body { margin-left: 6px; margin-right: 6px; }
+        table th { padding: .5ex }
+        table td { padding: .5ex }
+    </style><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format">
+        function keyPress() {
+            var e = window.event;
+            if ( e == undefined ) {
+                return;
+            }
+            /* ### does not properly scroll, yet
+            if ( e.keyCode == 32 ) {
+            var l = document.links;
+            for ( var i = 0; i < l.length; i++ ) {
+                if ( l[i].innerText == "Next" ) {
+                location.href = l[i].href;
+                }
+            }
+            } else
+                */
+                if ( e.keyCode == 0x08 ) {
+            var l = document.links;
+            for ( var i = 0; i < l.length; i++ ) {
+                if ( l[i].innerText == "Prev" ) {
+                location.href = l[i].href;
+                }
+            }
+            }
+        }
+        document.onkeypress = keyPress;
+    </script></head><body><div class="glossary"><div class="titlepage"><div><div><h2 class="title"><a id="book-glossary"></a>Glossary</h2></div></div></div><dl><dt><a id="glossary.aut"></a>AUT</dt><dd><p>
+This is the Application Under Test, that is, the application that is to
+be tested by <span class="emphasis"><em>Squish</em></span>
+</p></dd><dt><a id="glossary.application.bindings"></a>Application Bindings</dt><dd><p>
+See <a class="xref" href="https://book-glossary.html#glossary.wrapper" title="Wrapper">Wrapper</a>.
+</p></dd><dt><a id="glossary.bindings"></a>Bindings</dt><dd><p>
+See <a class="xref" href="https://book-glossary.html#glossary.wrapper" title="Wrapper">Wrapper</a>.
+</p></dd><dt><a id="glossary.record.and.insert"></a>Record and Insert</dt><dd><p>
+This is the process whereby <span class="emphasis"><em>Squish</em></span> executes an AUT and records
+the user's interactions with it and inserts the recorded script
+<span class="emphasis"><em>inside</em></span> the current test case's script—thus
+extending the existing script. See also <a class="xref" href="https://book-glossary.html#glossary.execute.and.record" title="Run and Record">Run and Record</a>.
+</p></dd><dt><a id="glossary.ocr"></a>OCR</dt><dd><p>
+Optical Character Recognition - In Squish's case, using an external program to
+analyze pixel image data and recognize text in it.
+</p></dd><dt><a id="glossary.execute.and.record"></a>Run and Record</dt><dd><p>
+This is the process whereby <span class="emphasis"><em>Squish</em></span> executes an AUT and records the
+user's interactions with it into a test script (which can then be edited
+and played back later). See also <a class="xref" href="https://book-glossary.html#glossary.record.and.insert" title="Record and Insert">Record and Insert</a>.
+</p></dd><dt><a id="glossary.squishrunner"></a>SquishRunner</dt><dd><p>
+The process that reads and writes test scripts, and writes test results. It
+communicates with the SquishServer and the AUT using TCP/IP.
+</p></dd><dt><a id="glossary.squishserver"></a>SquishServer</dt><dd><p>
+The process that starts and stops the AUT or browser, and establishes a
+communication hook for SquishRunner to use. Also used for attaching to running
+AUT, possibly on a remote machine, and started with start*aut.
+</p></dd><dt><a id="glossary.squishdir"></a>SQUISHDIR</dt><dd><p>
+This is the directory where Squish is installed on your system.
+</p></dd><dt><a id="glossary.squish.user.settings.dir"></a>Squish User Settings Directory</dt><dd><p>
+This is the directory where Squish reads and writes its user
+settings. By default, it is <code class="filename">%APPDATA%\froglogic\Squish</code>
+on Windows and <code class="filename">~/.squish</code> on other systems.
+It can be changed by setting the <a class="xref" href="https://rg-envvars.html#SQUISH_USER_SETTINGS_DIR">SQUISH_USER_SETTINGS_DIR</a>
+environment variable.
+</p></dd><dt><a id="glossary.synchronization"></a>Synchronization</dt><dd><p>
+Using a waitFor* function to tell Squish to wait until a certain object
+or item is ready. Or using a snooze() function. Generally, these are
+things that slow down the execution of Squish's test runner, to
+allow the AUT to catch up to it.
+</p></dd><dt><a id="glossary.wrapper"></a>Wrapper</dt><dd><p>
+A <span class="emphasis"><em>wrapper</em></span> is a function or class through which it
+is possible to access another function or class (the wrapped function or
+class). Synonymous terms are <span class="emphasis"><em>application bindings</em></span>,
+and plain <span class="emphasis"><em>bindings</em></span>.
+</p><p>
+For example, <span class="emphasis"><em>Squish</em></span> has a whole set of wrapper functions and classes
+that make toolkit functions and classes accessible in test scripts. It
+is also possible to create custom wrappers to make AUT-specific
+functions and classes scriptable, although this is rarely necessary
+since <span class="emphasis"><em>Squish</em></span> 4 creates such wrappers automatically.
+(See <a class="xref" href="https://ug-appbindings.html" title="5.27. How to Create and Access Application Bindings">How to Create and Access Application Bindings (Section 5.27)</a>.)
+</p></dd></dl></div><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" type="text/javascript" src="ScriptingLanguage.js"></script><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format">setScriptingLanguage();</script><div class="navfooter"><hr></hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="https://faq.html">Prev</a> </td><td width="20%" align="center"> </td><td width="40%" align="right"> <a accesskey="n" href="https://book-ack.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">Chapter 10. Frequently Asked Questions </td><td width="20%" align="center"><a accesskey="h" href="https://index-noframes.html">Home</a></td><td width="40%" align="right" valign="top"> Appendix A. Third-Party Software</td></tr></table></div></body>
+<!-- Mirrored from book-glossary.html by HTTrack Website Copier/3.x [XR&CO'2013], Wed, 06 Jul 2022 13:29:01 GMT -->
+</html>

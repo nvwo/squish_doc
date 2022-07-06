@@ -1,0 +1,86 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<!-- Mirrored from rel-341.html by HTTrack Website Copier/3.x [XR&CO'2013], Wed, 06 Jul 2022 13:28:57 GMT -->
+<head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><title>2.60. Version 3.4.1</title><link rel="stylesheet" href="manual.css" type="text/css"></link><meta name="generator" content="DocBook XSL Stylesheets V1.73.2"></meta><link rel="start" href="index-noframes.html" title="Squish Manual"></link><link rel="up" href="relnotes.html" title="Chapter 2. Release Notes—for Upgraders"></link><link rel="prev" href="rel-342.html" title="2.59. Version 3.4.2"></link><link rel="next" href="rel-340.html" title="2.61. Version 3.4.0"></link><style xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" type="text/css" media="screen">
+        div.toc * { margin-left: 6px; margin-right: auto; max-width: 75em; }
+        div.toc span { margin-left: 0px; }
+        * { margin-left: auto; margin-right: auto; max-width: 75em; }
+        body { margin-left: 6px; margin-right: 6px; }
+        table th { padding: .5ex }
+        table td { padding: .5ex }
+    </style><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format">
+        function keyPress() {
+            var e = window.event;
+            if ( e == undefined ) {
+                return;
+            }
+            /* ### does not properly scroll, yet
+            if ( e.keyCode == 32 ) {
+            var l = document.links;
+            for ( var i = 0; i < l.length; i++ ) {
+                if ( l[i].innerText == "Next" ) {
+                location.href = l[i].href;
+                }
+            }
+            } else
+                */
+                if ( e.keyCode == 0x08 ) {
+            var l = document.links;
+            for ( var i = 0; i < l.length; i++ ) {
+                if ( l[i].innerText == "Prev" ) {
+                location.href = l[i].href;
+                }
+            }
+            }
+        }
+        document.onkeypress = keyPress;
+    </script></head><body><div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="rel-341"></a>2.60. Version 3.4.1</h2></div></div></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><span class="section"><a href="rel-341.html#general.3">2.60.1. General</a></span></dt><dt><span class="section"><a href="rel-341.html#qt-specific.3">2.60.2. Qt-specific</a></span></dt><dt><span class="section"><a href="rel-341.html#java-specific.3">2.60.3. Java-specific</a></span></dt><dt><span class="section"><a href="rel-341.html#web-specific.3">2.60.4. Web-specific</a></span></dt><dt><span class="section"><a href="rel-341.html#tk-specific.3">2.60.5. Tk-specific</a></span></dt><dt><span class="section"><a href="rel-341.html#native-win32-support">2.60.6. Native Win32 Support</a></span></dt><dt><span class="section"><a href="rel-341.html#native-x11-support">2.60.7. Native X11 Support</a></span></dt></dl></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="general.3"></a>2.60.1. General</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Support Ctrl+A select all in the object map
+editor.</p></li><li><p>Fixed various problems when executing Tcl scripts
+which involved the 'array set xyz { ... }'
+statement.</p></li><li><p>Fixed occasional crash when right-clicking on test
+script code in the IDE while having selected not more than one line of
+text.</p></li><li><p>Fixed an infinite loop at the end of executing certain
+test cases with the Valgrind add-on.</p></li><li><p>Avoid a bug in the spy which occurred when selecting
+an unnamed object in the object spy.</p></li><li><p>Fixed occasional creation of broken test case
+templates on Windows.</p></li><li><p>Pass additional commandline arguments in startaut to
+the AUT on Windows as well.</p></li><li><p>Properly show texts with '&lt;' or '&gt;' in the control bar
+while recording a test.</p></li><li><p>Make removing breakpoints from a test script while the
+test is being executed work on Windows.</p></li><li><p>Accelerate creation of verification points by about
+600%.</p></li><li><p>Avoid crashing the squishrunner when attempting to
+create a verification point while a previous VP is still being
+created.</p></li><li><p>Fixed Perl debugger when compiled with Perl
+5.10.</p></li><li><p>Fixed setting of string properties on object via
+Perl.</p></li><li><p>Fixed PATH_MAX declaration was not found on some Linux
+systems.</p></li><li><p>Fixed void symbol conflict with applications that use
+the TinyXML parser.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="qt-specific.3"></a>2.60.2. Qt-specific</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Fixed support of scrolling in comboboxes using the
+scrollbar as well as the mouse wheel.</p></li><li><p>Improved the monkey test example so that it's more
+fair when deciding between multiple available widgets in Qt4
+applications.</p></li><li><p>Fixed the monkey test example so that it properly
+selects menu items which have no accelerator key associated (and also
+ignore separator items).</p></li><li><p>Fixed the monkey test example so that it properly
+interacts with QMenu objects in Qt 4 applications.</p></li><li><p>Avoid that the monkey test example gets stuck
+sometimes when encountering popup widgets.</p></li><li><p>Fixed a crash in dllpreload if the AUT and its
+commandline arguments got too long.</p></li><li><p>Added the Unix utility 'whoami' to the list of ignored
+applications.</p></li><li><p>Fixed crash when spying a QListView which has no
+model.</p></li><li><p>Fix screenshots on Mac OS X for
+	OpenGL widgets.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="java-specific.3"></a>2.60.3. Java-specific</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Fixed getLocationOnScreen exception occuring both during
+recording and replaying.</p></li><li><p>Added a --with-java-home switch which is equivalent to
+setting the JAVA_HOME environment variable for detecting the location
+of the Java development kit.</p></li><li><p>Fixed SWT webstart applications using the JRE javaws
+tool. Unfortunately, the SQUISH_DISABLE_AWT environment variable has
+to be set to workaround the fact that the AWT classes are wrapped
+during the javaws startup and the SWT classes as soon as the webstart
+application is started.</p></li><li><p>Fixed 'java.lang.SecurityException: class
+"com.froglogic.squish.swt.SquishClassLoader"'s signer information does
+not match signer information of other classes in the same
+package'</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="web-specific.3"></a>2.60.4. Web-specific</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Fixed detecting context switches in all cases with
+Safari.</p></li><li><p>Added support for automateLogin on
+X11</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="tk-specific.3"></a>2.60.5. Tk-specific</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Fixed double-click support on canvas based tk
+widgets.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="native-win32-support"></a>2.60.6. Native Win32 Support</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Added support for various special key combinations
+like <span class="keycap"><strong>Shift</strong></span>+<span class="keycap"><strong>End</strong></span>
+or <span class="keycap"><strong>Shift</strong></span>+<span class="keycap"><strong>Home</strong></span>.</p></li><li><p>Fixed replaying key combos involving the Ctrl key on
+native Windows controls.</p></li><li><p>Record &amp; replay pressing the context menu key on
+native Windows controls.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="native-x11-support"></a>2.60.7. Native X11 Support</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Added support for sending special keys like <span class="keycap"><strong>Tab</strong></span> as
+native events for X11</p></li></ul></div></div></div><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" type="text/javascript" src="ScriptingLanguage.js"></script><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format">setScriptingLanguage();</script><div class="navfooter"><hr></hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="rel-342.html">Prev</a> </td><td width="20%" align="center"><a accesskey="u" href="relnotes.html">Up</a></td><td width="40%" align="right"> <a accesskey="n" href="rel-340.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">2.59. Version 3.4.2 </td><td width="20%" align="center"><a accesskey="h" href="index-noframes.html">Home</a></td><td width="40%" align="right" valign="top"> 2.61. Version 3.4.0</td></tr></table></div></body>
+<!-- Mirrored from rel-341.html by HTTrack Website Copier/3.x [XR&CO'2013], Wed, 06 Jul 2022 13:28:57 GMT -->
+</html>

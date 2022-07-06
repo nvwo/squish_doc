@@ -1,0 +1,319 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<!-- Mirrored from ug-accessing-objects.html by HTTrack Website Copier/3.x [XR&CO'2013], Wed, 06 Jul 2022 13:28:59 GMT -->
+<head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><title>5.1. How to Identify and Access Objects</title><link rel="stylesheet" href="manual.css" type="text/css"></link><meta name="generator" content="DocBook XSL Stylesheets V1.73.2"></meta><link rel="start" href="index-noframes.html" title="Squish Manual"></link><link rel="up" href="users-guide.html" title="Chapter 5. User Guide"></link><link rel="prev" href="users-guide.html" title="Chapter 5. User Guide"></link><link rel="next" href="ugs-qtapi.html" title="5.2. How to Use the Qt API"></link><style xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" type="text/css" media="screen">
+        div.toc * { margin-left: 6px; margin-right: auto; max-width: 75em; }
+        div.toc span { margin-left: 0px; }
+        * { margin-left: auto; margin-right: auto; max-width: 75em; }
+        body { margin-left: 6px; margin-right: 6px; }
+        table th { padding: .5ex }
+        table td { padding: .5ex }
+    </style><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format">
+        function keyPress() {
+            var e = window.event;
+            if ( e == undefined ) {
+                return;
+            }
+            /* ### does not properly scroll, yet
+            if ( e.keyCode == 32 ) {
+            var l = document.links;
+            for ( var i = 0; i < l.length; i++ ) {
+                if ( l[i].innerText == "Next" ) {
+                location.href = l[i].href;
+                }
+            }
+            } else
+                */
+                if ( e.keyCode == 0x08 ) {
+            var l = document.links;
+            for ( var i = 0; i < l.length; i++ ) {
+                if ( l[i].innerText == "Prev" ) {
+                location.href = l[i].href;
+                }
+            }
+            }
+        }
+        document.onkeypress = keyPress;
+    </script></head><body><div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="ug-accessing-objects"></a>5.1. How to Identify and Access Objects</h2></div></div></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><span class="section"><a href="ug-accessing-objects.html#ug-how-to-access-named-objects">5.1.1. How to Access Named Objects</a></span></dt><dt><span class="section"><a href="ug-accessing-objects.html#how-to-access-objects-using-real-multi-property-names">5.1.2. How to Access Objects Using Real (Multi-Property) Names</a></span></dt><dt><span class="section"><a href="ug-accessing-objects.html#how-to-access-objects-using-symbolic-names">5.1.3. How to Access Objects Using Symbolic Names</a></span></dt><dt><span class="section"><a href="ug-accessing-objects.html#how-to-access-objects-using-images">5.1.4. How to Access Objects Using Images</a></span></dt></dl></div><p>
+Probably the most important issue to face testers when writing scripts
+from scratch (or when modifying recorded scripts), is how to access
+objects in the user interface. We can obtain a reference to an object
+using the <a class="xref" href="rgs-squish.html#waitForObject-function"><code class="function">waitForObject</code></a> function. This
+function waits for the object to become visible and available and then
+returns a reference to it, or raises a catchable exception if it times
+out. If we need a reference to an object that isn't visible we must use
+the <a class="xref" href="rgs-squish.html#findObject-function"><code class="function">findObject</code></a> function, which does not
+wait. Both these functions take an object name, but getting the right
+name can be tricky, so we will explain the issues and solutions here
+before going into the Squish edition-specific and scripting
+language-specific details.
+</p><p>
+Squish supports a few completely different naming schemes,
+“<span class="quote">symbolic names</span>”, “<span class="quote">real names</span>” (also known as
+“<span class="quote">multi-property names</span>”), “<span class="quote">qualified
+names</span>”, and “<span class="quote">hierarchical</span>” names. In most editions of <span class="emphasis"><em>Squish</em></span>,
+symbolic names are used by Squish when recording scripts.
+In the cases of S/Tk and S/Web, qualified and hierarchical names may also be
+used. For hand-written code, we can use symbolic names or real names. It
+is best to use symbolic names, although for some purposes real names are
+more convenient.
+</p><p>
+In cases where an object cannot be identified by name, a purely visual
+search can be performed based on a sub-image.
+</p><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="ug-how-to-access-named-objects"></a>5.1.1. How to Access Named Objects</h3></div></div></div><p>
+The easiest situation is where an application object has been given an
+explicit name by the programmer. For example, using the Qt toolkit, an
+object can be given a name like this:
+
+</p><div xmlns:fo="http://www.w3.org/1999/XSL/Format" xmlns="" class="programlistingcontainer"><span class="programlistinglanguage"></span><pre class="programlisting">
+
+    cashWidget-&gt;setObjectName("CashWidget");
+</pre></div><p>
+
+When an object is given a name in this way, we can identify it using a real
+name that specifies just two properties: <span class="property">type</span> and
+<span class="property">name</span>.
+Depending on the <a class="xref" href="rg-objectmap.html" title="7.11. Object Map">Object Map (Section 7.11)</a> implementation used, the syntax
+for accessing the <code class="code">cashWidget</code> label differs slightly.
+</p><p>
+Here are examples in the various scripting languages using the <a class="xref" href="rgs-squish.html#waitForObject-function"><code class="function">waitForObject</code></a> function when using a <a class="xref" href="rg-objectmap.html#rgo-squish-textbased" title="7.11.5. Text-Based Object Map">Text-Based Object Map (Section 7.11.5)</a>:
+</p><div xmlns="" class="scriptlang"><form><select name="scriptlangcombo" onchange="javascript:changeScriptingLanguage(this)" onclick="javascript:changeScriptingLanguage(this)"><option value="all" selected>Show All</option><option value="JavaScript">Show JavaScript</option><option value="Perl">Show Perl</option><option value="Python">Show Python</option><option value="Ruby">Show Ruby</option><option value="Tcl">Show Tcl</option></select></form></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Python</span><pre class="programlisting">
+cashWidget = waitForObject("{name='CashWidget' type='QLabel'}")
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">JavaScript</span><pre class="programlisting">
+var cashWidget = waitForObject("{name='CashWidget' type='QLabel'}");
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Perl</span><pre class="programlisting">
+my $cashWidget = waitForObject("{name='CashWidget' type='QLabel'}");
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Ruby</span><pre class="programlisting">
+  cashWidget = waitForObject("{name='CashWidget' type='QLabel'}")
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Tcl</span><pre class="programlisting">
+set cashWidget [waitForObject "{name='CashWidget' type='QLabel'}"]
+</pre></div><p>
+To create a string that represents a real (multi-property) name, we
+create a string which has an opening brace, then one or more
+space-separated property items (each having the form,
+<code class="code"><span class="emphasis"><em>propertyname</em></span>='<span class="emphasis"><em>value</em></span>'</code>),
+and finally a closing brace.
+</p><p>
+When using a <a class="xref" href="rg-objectmap.html#rgo-squish-scriptbased" title="7.11.4. Script-Based Object Map">Script-Based Object Map (Section 7.11.4)</a>, we are able to pass
+dictionaries to the <a class="xref" href="rgs-squish.html#waitForObject-function"><code class="function">waitForObject</code></a> function:
+
+</p><div xmlns="" class="scriptlang"><form><select name="scriptlangcombo" onchange="javascript:changeScriptingLanguage(this)" onclick="javascript:changeScriptingLanguage(this)"><option value="all" selected>Show All</option><option value="JavaScript">Show JavaScript</option><option value="Perl">Show Perl</option><option value="Python">Show Python</option><option value="Ruby">Show Ruby</option><option value="Tcl">Show Tcl</option></select></form></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Python</span><pre class="programlisting">
+
+    cashWidget = waitForObject({"name": "CashWidget", "type": "QLabel"})
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">JavaScript</span><pre class="programlisting">
+
+    var cashWidget = waitForObject({'name':'CashWidget', 'type':'QLabel'});
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Perl</span><pre class="programlisting">
+
+    my $cashWidget = waitForObject({'name'=&gt;'CashWidget', 'type'=&gt;'QLabel'});
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Ruby</span><pre class="programlisting">
+
+    cashWidget = waitForObject({:name=&gt;'CashWidget', :type=&gt;'QLabel'})
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Tcl</span><pre class="programlisting">
+
+    set cashWidget [waitForObject [::Squish::ObjectName name CashWidget type QLabel ]]
+</pre></div><p>
+With Script-Based object maps, a dictionary object is constructed which accepts
+the properties to match a given object against as a set of key-value pairs. See
+<a class="xref" href="rg-objectmap.html#rgo-squish-scriptbased-api" title="7.11.4.3. Script-Based Object Map API">Script-Based Object Map API (Section 7.11.4.3)</a> for more information on the
+available <acronym class="acronym">API</acronym> for constructing object names.
+</p><p>
+For most toolkits at least two properties must be specified with one being the
+object's <code class="code">type</code>. If the object has an object name, using just the
+<code class="code">type</code> and <code class="code">name</code> properties is sufficient (providing
+that the name is unique amongst objects of the specified type).
+</p><p>
+Once we have a reference to an object we can access its properties, for
+example, to check them against expected values, or to change them. We will see
+how to do this in the Squish edition-specific sections that follow.
+</p><p>
+See also, the <a class="xref" href="ide.views.html#ide.the-application-objects.view" title="8.2.1. Application Objects view">Application Objects view (Section 8.2.1)</a> and the
+<a class="xref" href="ide.views.html#ide.the-properties.view" title="8.2.12. Properties view">Properties view (Section 8.2.12)</a>.
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="how-to-access-objects-using-real-multi-property-names"></a>5.1.2. How to Access Objects Using Real (Multi-Property) Names</h3></div></div></div><p>
+Some objects are not identifiable by name, in which case,
+a special property, <span class="property">unnamed</span> is 1.
+When we are faced with unnamed objects we can usually identify
+them using other properties. For example, here is
+one way to identify and access a <code class="code">payButton</code> button.
+</p><div xmlns="" class="scriptlang"><form><select name="scriptlangcombo" onchange="javascript:changeScriptingLanguage(this)" onclick="javascript:changeScriptingLanguage(this)"><option value="all" selected>Show All</option><option value="JavaScript">Show JavaScript</option><option value="Perl">Show Perl</option><option value="Python">Show Python</option><option value="Ruby">Show Ruby</option><option value="Tcl">Show Tcl</option></select></form></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Python</span><pre class="programlisting">
+
+    payButtonName = {"text": "Pay", "type": "QPushButton", "visible": 1}
+    payButton = waitForObject(payButtonName)
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">JavaScript</span><pre class="programlisting">
+
+    var payButtonName = {'type':'QPushButton', 'text':'Pay', 'visible':'1'};
+    var payButton = waitForObject(payButtonName);
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Perl</span><pre class="programlisting">
+
+    my $payButtonName = {'type'=&gt;'QPushButton', 'text'=&gt;'Pay', 'visible'=&gt;'1'};
+    my $payButton = waitForObject($payButtonName);
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Ruby</span><pre class="programlisting">
+
+    payButtonName = {:type=&gt;'QPushButton', :text=&gt;'Pay', :visible=&gt;'1'}
+    payButton = waitForObject(payButtonName)
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Tcl</span><pre class="programlisting">
+
+    set payButtonName [::Squish::ObjectName text Pay type QPushButton visible 1]
+    set payButton [waitForObject $payButtonName] 
+</pre></div><p> The real name above is expressed as a native key-value mapping in each
+script language, which is how the <a class="xref" href="rg-objectmap.html#rgo-squish-scriptbased" title="7.11.4. Script-Based Object Map">Script-Based Object Map (Section 7.11.4)</a> works.
+Real names can also be expressed as strings using the legacy
+<a class="xref" href="rg-objectmap.html#rgo-squish-textbased" title="7.11.5. Text-Based Object Map">Text-Based Object Map (Section 7.11.5)</a>, used prior to Squish 6.4:
+</p><div xmlns="" class="scriptlang"><form><select name="scriptlangcombo" onchange="javascript:changeScriptingLanguage(this)" onclick="javascript:changeScriptingLanguage(this)"><option value="all" selected>Show All</option><option value="JavaScript">Show JavaScript</option><option value="Perl">Show Perl</option><option value="Python">Show Python</option><option value="Ruby">Show Ruby</option><option value="Tcl">Show Tcl</option></select></form></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Python</span><pre class="programlisting">
+payButtonName = "{type='QPushButton' text='Pay' visible='1'}"
+payButton = waitForObject(payButtonName)
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">JavaScript</span><pre class="programlisting">
+    var payButtonName = "{type='QPushButton' text='Pay' visible='1'}";
+    var payButton = waitForObject(payButtonName);
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Perl</span><pre class="programlisting">
+my $payButtonName = "{type='QPushButton' text='Pay' visible='1'}"
+my $payButton = waitForObject($payButtonName);
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Ruby</span><pre class="programlisting">
+paybuttonName = "{type='QPushButton' text='Pay' visible='1'}"
+payButton = waitForObject(payButtonName)
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Tcl</span><pre class="programlisting">
+set payButtonName {{type='QPushButton' text='Pay' visible='1'}}
+set payButton [waitForObject $payButtonName]
+</pre></div><p>
+These names specify enough criteria for this particular GUI, such that
+there is only one button on the form with the <span class="property">text</span>
+of <span class="guilabel">Pay</span>.
+</p><p>
+In some cases, the object we are interested in has neither a name nor
+any unique text of its own. But even in such cases it is usually possible
+to identify it. For example, an unnamed spinbox might well be the
+<span class="property">buddy</span> of an associated label,
+so we can use this relationship to uniquely identify the spinbox. A <a class="xref" href="rg-objectmap.html#rgo-squish-scriptbased" title="7.11.4. Script-Based Object Map">Script-Based Object Map (Section 7.11.4)</a> allows referencing other object names using
+plain script variables. Here, the <span class="property">buddy</span> is identified using
+a symbolic name copied from the <a class="xref" href="rg-objectmap.html" title="7.11. Object Map">Object Map (Section 7.11)</a>.
+</p><div xmlns="" class="scriptlang"><form><select name="scriptlangcombo" onchange="javascript:changeScriptingLanguage(this)" onclick="javascript:changeScriptingLanguage(this)"><option value="all" selected>Show All</option><option value="JavaScript">Show JavaScript</option><option value="Perl">Show Perl</option><option value="Python">Show Python</option><option value="Ruby">Show Ruby</option><option value="Tcl">Show Tcl</option></select></form></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Python</span><pre class="programlisting">
+
+    paymentSpinBoxName = {"buddy": names.make_Payment_This_Payment_QLabel, 
+                          "type": "QSpinBox", "unnamed": 1}
+    paymentSpinBox = waitForObject(paymentSpinBoxName)
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">JavaScript</span><pre class="programlisting">
+
+    var paymentSpinBoxName = {'buddy':names.makePaymentThisPaymentQLabel,
+        'type':'QSpinBox', 'unnamed':'1'};
+    var paymentSpinBox = waitForObject(paymentSpinBoxName);
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Perl</span><pre class="programlisting">
+
+    my $paymentSpinBoxName = {'buddy'=&gt;$Names::make_payment_this_payment_qlabel,
+        'type'=&gt;'QSpinBox', 'unnamed'=&gt;'1'};
+    my $paymentSpinBox = waitForObject($paymentSpinBoxName);
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Ruby</span><pre class="programlisting">
+
+    paymentSpinBoxName = {:buddy=&gt;Names::Make_Payment_This_Payment_QLabel,
+        :type=&gt;'QSpinBox', :unnamed=&gt;'1'}
+    paymentSpinBox = waitForObject(paymentSpinBoxName)
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Tcl</span><pre class="programlisting">
+
+    set paymentSpinBoxName [::Squish::ObjectName type QSpinBox unnamed 1 \
+        buddy $names::Make_Payment_This_Payment_QLabel ]
+    set paymentSpinBox [waitForObject $paymentSpinBoxName]
+</pre></div><p>
+If there is no obvious way of identifying an object, either use Squish's
+<span class="application">Spy</span> tool (<a class="xref" href="ug-editdebug.html#uged-spy" title="5.21.3. How to Use the Spy">How to Use the Spy (Section 5.21.3)</a>) to get Squish to provide a
+suitable name, or record a quick throwaway test in which you interact
+with the object of interest and then put the mouse over the symbolic name,
+right-click and select <span class="guilabel">Open Symbolic Name</span> to see its real
+name in the <a class="xref" href="rg-objectmap.html" title="7.11. Object Map">Object Map (Section 7.11)</a>. You can use one or the other
+in your real test.
+</p><p>
+In some cases we might want to use a property whose text varies. For
+example, if we want to identify a window whose caption text changes
+depending on the window's contents. This is possible using Squish's
+sophisticated matching capabilities and is described later in
+<a class="xref" href="rg-namelookup.html" title="7.10. Improving Object Identification">Improving Object Identification (Section 7.10)</a>.
+</p><p>
+If the <a class="xref" href="rgs-squish.html#waitForObject-function"><code class="function">waitForObject</code></a> function cannot find the
+object with the given name, an exception is raised. For most languages
+this is a base class exception, but for Python it is the more
+specialized <code class="code">LookupError</code> and for Ruby
+<code class="code">Squish::LookupError</code>. If the exception isn't caught an error
+entry to be added to <span class="emphasis"><em>Squish</em></span>'s log in the <a class="xref" href="ide.views.html#ide.the-test-results.view" title="8.2.18. Test Results view">Test Results view (Section 8.2.18)</a>. (See <a class="xref" href="ug-how-to-handle-exceptions-raised-in-test-scripts.html" title="5.19. How to Handle Exceptions Raised in Test Scripts">How to Handle Exceptions Raised in Test Scripts (Section 5.19)</a>.) This is
+normally what we want since it probably means we mistyped one of the
+property's values. However, if an object may exist only in some cases
+(for example, if a particular tab of a tab widget is chosen), we can use
+the <a class="xref" href="rgs-squish.html#object.exists-function"><code class="function">object.exists</code></a> function to check if an
+object of the given name exists, and if it does to perform any tests we
+want on it in that case. For example, in Python we could write this (assuming
+an <a class="xref" href="rg-objectmap.html#rgo-squish-scriptbased" title="7.11.4. Script-Based Object Map">Script-Based Object Map (Section 7.11.4)</a> is used):
+</p><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Python</span><pre class="programlisting">
+moreOptionsButtonName = {'type': 'QPushButton', 'name': 'More Options'}
+if object.exists(moreOptionsButtonName):
+    moreOptionsButton = waitForObject(moreOptionsButtonName)
+    clickButton(moreOptionsButton)
+</pre></div><p>
+One advantage of this approach is that if the object does not exist the
+script finds out straight away. Compare it with this approach:</p><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Python</span><pre class="programlisting">
+try:
+    moreOptionsButtonName = {'type': 'QPushButton', 'name': 'More Options'}
+    moreOptionsButton = waitForObject(moreOptionsButtonName)
+except LookupError:
+    pass # button doesn't exist so don't try to click it
+else:
+    clickButton(moreOptionsButton)
+</pre></div><p>
+This is potentially slower than using the <a class="xref" href="rgs-squish.html#object.exists-function"><code class="function">object.exists</code></a> function since the <a class="xref" href="rgs-squish.html#waitForObject-function"><code class="function">waitForObject</code></a> function will wait for 20 seconds
+(the default timeout, which can be changed by giving a second argument),
+although both approaches are valid.
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="how-to-access-objects-using-symbolic-names"></a>5.1.3. How to Access Objects Using Symbolic Names</h3></div></div></div><p>
+When Squish records a test it uses symbolic names to identify the widgets.
+Symbolic names assume different forms depending on whether the test uses a
+<a class="xref" href="rg-objectmap.html#rgo-squish-textbased" title="7.11.5. Text-Based Object Map">Text-Based Object Map (Section 7.11.5)</a> or a <a class="xref" href="rg-objectmap.html#rgo-squish-scriptbased" title="7.11.4. Script-Based Object Map">Script-Based Object Map (Section 7.11.4)</a>: in the former case, symbolic names are
+plain strings starting with a <code class="literal">:</code>, in the latter case symbolic
+names are script variables.  Some symbolic names are quite easy to
+understand, for example, <code class="code">":fileNameEdit_QLineEdit"</code>, while others
+can be more cryptic, for example, <code class="code">":CSV Table -
+before.csv.File_QTableWidget"</code>—this symbolic name includes the
+window caption which shows the name of the current file. Symbolic names are
+generated programmatically by Squish although they can also be used in
+hand-written code, or when modifying or using extracts from recorded tests.
+</p><p>
+Symbolic names have one major advantage over real names: if a property
+that a real name depends on changes (i.e., due to a change in the AUT),
+the real name will no longer be valid, and all uses of it in test
+scripts will have to be updated. But if a symbolic name has been used,
+the real name that the symbolic name refers to, (i.e., the name's
+properties and their values), can simply be updated in the Object Map,
+and no changes to tests are necessary. It is for this reason that it is
+almost always better to use symbolic names rather than real names
+whenever possible. (See <a class="xref" href="rg-objectmap.html" title="7.11. Object Map">Object Map (Section 7.11)</a> and the <a class="xref" href="ide.views.html#ide.the-object-map.view" title="8.2.10. Object Map view">Object Map view (Section 8.2.10)</a>.)
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="how-to-access-objects-using-images"></a>5.1.4. How to Access Objects Using Images</h3></div></div></div><p>
+Accessing objects by name as described above is the preferred
+approach. In case of dynamic user interfaces the selection of fitting
+properties may require some work but will result in the most robust
+test scripts. In light of changes in the application's GUI style for
+example.
+</p><p>
+In some cases, however, object identification cannot be tackled by
+properties. Not as easily at least. Such cases are:
+</p><div class="itemizedlist"><ul type="disc"><li><p>
+Controls belonging to a custom or 3rd party UI toolkit.
+</p></li><li><p>
+Graphical shapes on a 2D or 3D canvas.
+</p></li><li><p>
+Access to applications other than the main AUT. This includes menus,
+task bars and desktop controls of the operating system itself.
+</p></li></ul></div><p>
+To deal with such cases outside of the direct control Squish provides
+an alternative look-up based on sub-images. Images of arbitrary size
+and shape can be searched for on the screen with
+<a class="xref" href="rgs-squish.html#waitForImage-function"><code class="function">waitForImage</code></a>. The determined location will
+be returned as a <a class="xref" href="rgs-squish.html#rgss-screenrectangle-object" title="6.3.21.3. UiTypes.ScreenRectangle Class">ScreenRectangle</a> which
+can again serve as an input to interaction functions like
+<a class="xref" href="rgs-squish.html#mouseClick-function"><code class="function">mouseClick</code></a>.
+</p><pre class="programlisting">
+mouseClick(waitForImage("customcontrol.png"))
+</pre><p>
+Creation of the needed sub-images as well as insertion of the
+respective script functions is most conveniently achieved
+interactively by using the <span class="guiicon">Record Test Case</span>
+action
+(<span class="guiicon"><img src="images/ide/record.png"></img></span>)
+and e.g. the <span class="guiicon">Insert &gt; mouseClick([Image])</span> action
+(<span class="guiicon"><img src="images/ide/insert_action.gif"></img></span>).
+</p></div></div><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" type="text/javascript" src="ScriptingLanguage.js"></script><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format">setScriptingLanguage();</script><div class="navfooter"><hr></hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="users-guide.html">Prev</a> </td><td width="20%" align="center"><a accesskey="u" href="users-guide.html">Up</a></td><td width="40%" align="right"> <a accesskey="n" href="ugs-qtapi.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">Chapter 5. User Guide </td><td width="20%" align="center"><a accesskey="h" href="index-noframes.html">Home</a></td><td width="40%" align="right" valign="top"> 5.2. How to Use the Qt API</td></tr></table></div></body>
+<!-- Mirrored from ug-accessing-objects.html by HTTrack Website Copier/3.x [XR&CO'2013], Wed, 06 Jul 2022 13:28:59 GMT -->
+</html>

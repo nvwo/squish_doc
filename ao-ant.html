@@ -1,0 +1,362 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<!-- Mirrored from ao-ant.html by HTTrack Website Copier/3.x [XR&CO'2013], Wed, 06 Jul 2022 13:29:03 GMT -->
+<head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><title>9.14. Ant integration</title><link rel="stylesheet" href="manual.css" type="text/css"></link><meta name="generator" content="DocBook XSL Stylesheets V1.73.2"></meta><link rel="start" href="index-noframes.html" title="Squish Manual"></link><link rel="up" href="addons.html" title="Chapter 9. Add-Ons Reference Manual"></link><link rel="prev" href="ao-cc.html" title="9.13. CruiseControl integration"></link><link rel="next" href="faq.html" title="Chapter 10. Frequently Asked Questions"></link><style xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" type="text/css" media="screen">
+        div.toc * { margin-left: 6px; margin-right: auto; max-width: 75em; }
+        div.toc span { margin-left: 0px; }
+        * { margin-left: auto; margin-right: auto; max-width: 75em; }
+        body { margin-left: 6px; margin-right: 6px; }
+        table th { padding: .5ex }
+        table td { padding: .5ex }
+    </style><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format">
+        function keyPress() {
+            var e = window.event;
+            if ( e == undefined ) {
+                return;
+            }
+            /* ### does not properly scroll, yet
+            if ( e.keyCode == 32 ) {
+            var l = document.links;
+            for ( var i = 0; i < l.length; i++ ) {
+                if ( l[i].innerText == "Next" ) {
+                location.href = l[i].href;
+                }
+            }
+            } else
+                */
+                if ( e.keyCode == 0x08 ) {
+            var l = document.links;
+            for ( var i = 0; i < l.length; i++ ) {
+                if ( l[i].innerText == "Prev" ) {
+                location.href = l[i].href;
+                }
+            }
+            }
+        }
+        document.onkeypress = keyPress;
+    </script></head><body><div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="ao-ant"></a>9.14. Ant integration</h2></div></div></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><span class="section"><a href="ao-ant.html#ao-ant-obtaining">9.14.1. Obtaining the Ant Plugin</a></span></dt><dt><span class="section"><a href="ao-ant.html#ao-ant-installation">9.14.2. Installing the Ant Plugin</a></span></dt><dt><span class="section"><a href="ao-ant.html#ao-ant-example">9.14.3. Using the Ant Plugin</a></span></dt><dt><span class="section"><a href="ao-ant.html#ao-ant-xml">9.14.4. Ant Plugin XML reference</a></span></dt></dl></div><p>
+<a class="ulink" href="http://ant.apache.org/" target="_blank">Apache Ant</a> is a software
+tool for automating software build processes. It is similar to
+<span class="application">make</span> but it is written in Java and
+requires a Java runtime to execute it. Ant is cross-platform to the
+extent that Java is, and is best suited to building Java projects.
+</p><p>
+The <span class="emphasis"><em>Squish</em></span> plugin for Ant makes it possible to run <span class="emphasis"><em>Squish</em></span> tests from
+an Ant build file.
+</p><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="ao-ant-obtaining"></a>9.14.1. Obtaining the Ant Plugin</h3></div></div></div><p>
+The Ant plugin is available from:
+<a class="ulink" href="https://download.froglogic.com/resources/squish-ant-plugin_latest.zip" target="_blank">download.froglogic.com/resources/squish-ant-plugin_latest.zip</a>
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="ao-ant-installation"></a>9.14.2. Installing the Ant Plugin</h3></div></div></div><p>
+After the zip file has been unzipped the Ant plugin can be installed in any of the ways listed below:
+</p><div class="itemizedlist"><ul type="disc"><li><p>
+Copy the jar files to <code class="filename">ANT_HOME/lib</code>. This often
+requires Administrator rights.
+</p></li><li><p>
+Copy the jar files to <code class="filename">USER_HOME/.ant/lib</code>.
+</p></li><li><p>
+When calling <span class="application">ant</span> use the <code class="code">-lib</code>
+option to specify the folder which contains the <span class="emphasis"><em>Squish</em></span> plugin.
+</p></li></ul></div><p>
+Details for installing external Ant libraries are described in the <a class="ulink" href="http://ant.apache.org/manual/install.html#optionalTasks" target="_blank">Ant
+Installation Manual</a>.
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="ao-ant-example"></a>9.14.3. Using the Ant Plugin</h3></div></div></div><p>
+Here is a typical Ant <code class="filename">build.xml</code> file:</p><pre class="programlisting">
+
+&lt;project name="MyProject" basedir="." xmlns:squish="antlib:com.froglogic.squish.ant"&gt;
+  &lt;description&gt;
+    simple example build file
+  &lt;/description&gt;
+
+  &lt;!-- set global properties for this build --&gt;
+  &lt;property name="src" location="src" /&gt;
+  &lt;property name="build" location="build" /&gt;
+  &lt;property name="dist" location="dist" /&gt;
+
+  &lt;target name="init"&gt;
+    &lt;!-- create the time stamp --&gt;
+    &lt;tstamp /&gt;
+    &lt;!-- create the build directory structure used by compile --&gt;
+    &lt;mkdir dir="${build}" /&gt;
+  &lt;/target&gt;
+
+  &lt;target name="compile" depends="init" description="compile the source"&gt;
+    &lt;!-- compile the Java code from ${src} into ${build} --&gt;
+    &lt;javac srcdir="${src}" destdir="${build}" includeantruntime="false" /&gt;
+  &lt;/target&gt;
+
+  &lt;target name="dist" depends="compile" description="generate the distribution"&gt;
+    &lt;!-- create the distribution directory --&gt;
+    &lt;mkdir dir="${dist}/lib" /&gt;
+
+    &lt;!-- put everything in ${build} into the MyProject-${DSTAMP}.jar file --&gt;
+    &lt;jar jarfile="${dist}/lib/MyProject-${DSTAMP}.jar" basedir="${build}" /&gt;
+  &lt;/target&gt;
+
+  &lt;target name="test" depends="compile" description="run the tests"&gt;
+    &lt;squish:runtest
+      suite="C:\Squish\examples\qt\addressbook\suite_py"
+      path="C:\Squish" /&gt;
+  &lt;/target&gt;
+
+  &lt;target name="clean" description="clean up"&gt;
+    &lt;!-- delete the ${build} and ${dist} directory trees --&gt;
+    &lt;delete dir="${build}" /&gt;
+    &lt;delete dir="${dist}" /&gt;
+  &lt;/target&gt;
+&lt;/project&gt;
+
+</pre><p>
+To use the plugin functionality, the <code class="code">squish</code> namespace must
+be mentioned. For example:
+</p><pre class="programlisting">
+&lt;project name="MyProject" basedir="." <span class="bold"><strong>xmlns:squish="antlib:com.froglogic.squish.ant"</strong></span>&gt;
+  &lt;description&gt;
+    simple example build file
+  &lt;/description&gt;
+  ...
+</pre><p>
+In this case it may make sense to run the <span class="emphasis"><em>Squish</em></span> test as a separate
+target. The following will accomplish this:
+</p><pre class="programlisting">
+  ...
+  &lt;target name="test" depends="compile" description="run the tests"&gt;
+    &lt;squish:runtest
+      suite="C:\Squish\examples\qt\addressbook\suite_py"
+      path="C:\Squish" /&gt;
+  &lt;/target&gt;
+  ...
+</pre><p>
+Running a <span class="emphasis"><em>Squish</em></span> test from the command line produces the following
+output for the above example when using target <code class="code">test</code>:
+</p><pre class="programlisting">
+$ ant test
+Buildfile: C:\ant-test\build.xml
+
+init:
+
+compile:
+
+test:
+[squish:runtest] Squish Ant Plugin version 5.0
+[squish:runtest] Tests run : 3, Failures : 0, Errors : 0, Fatals : 0
+[squish:runtest] Running test cases took 17 seconds
+
+BUILD SUCCESSFUL
+Total time: 20 seconds
+</pre></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="ao-ant-xml"></a>9.14.4. Ant Plugin XML reference</h3></div></div></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><span class="section"><a href="ao-ant.html#book-ant-squish-config-tag">9.14.4.1. squish:config</a></span></dt><dt><span class="section"><a href="ao-ant.html#book-ant-squish-runtest-tag">9.14.4.2. squish:runtest</a></span></dt><dt><span class="section"><a href="ao-ant.html#book-ant-squish-testcase-tag">9.14.4.3. squish:testcase</a></span></dt><dt><span class="section"><a href="ao-ant.html#book-ant-squish-report-tag">9.14.4.4. squish:report</a></span></dt></dl></div><p>
+This section provides an overview of the tags that can be used after
+installing the Ant plugin.
+</p><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="book-ant-squish-config-tag"></a>9.14.4.1. squish:config</h4></div></div></div><p>
+The <code class="code">squish:config</code> tag can be used as a convenient way to set the
+path to the <span class="emphasis"><em>Squish</em></span> installation that should be used to run the tests.
+The table below shows the attributes that can be used:
+</p><div class="table"><a id="idp59070752"></a><p class="title"><b>Table 9.9. squish:config tag</b></p><div class="table-contents"><table summary="squish:config tag" border="1"><colgroup><col></col><col></col></colgroup><thead><tr><th>
+          Attribute
+        </th><th>
+          Description
+        </th></tr></thead><tbody><tr><td>
+          <code class="code">path</code>
+        </td><td>
+          The absolute path to <span class="emphasis"><em>Squish</em></span>'s root directory.
+        </td></tr><tr><td>
+          <code class="code">host</code>
+        </td><td>
+          The hostname where the <span class="application">squishserver</span> is running.
+          Leave this attribute out to let the plugin start the <span class="application">squishserver</span> automatically.
+        </td></tr><tr><td>
+          <code class="code">port</code>
+        </td><td>
+          The port number that the <span class="application">squishserver</span> is listening on.
+          Leave this attribute out to let the plugin start the <span class="application">squishserver</span> automatically.
+        </td></tr><tr><td>
+          <code class="code">snoozefactor</code>
+        </td><td>
+          The snooze factor to use when running <span class="emphasis"><em>Squish</em></span> tests, defaults to 1.
+        </td></tr><tr><td>
+          <code class="code">reportdir</code>
+        </td><td>
+          <span class="bold"><strong>Deprecated</strong></span> The directory where test reports should be output to,
+          available for backwards compatibility only. To generate reports use the <a class="xref" href="ao-ant.html#book-ant-squish-report-tag" title="9.14.4.4. squish:report">squish:report (Section 9.14.4.4)</a> element instead.
+        </td></tr><tr><td>
+          <code class="code">webbrowser</code>
+        </td><td>
+          When executing a web test the browser to be used. Supported values are listed at the <span class="application">squishrunner</span>'s
+          <code class="option">--webbrowser</code> option at <a class="xref" href="rg-cmdline.html#rg-squishrunner-cli--testcase" title="7.4.3.25. Executing a Test Case (Advanced)">Executing a Test Case (Advanced) (Section 7.4.3.25)</a>.
+        </td></tr><tr><td>
+          <code class="code">webbrowserargs</code>
+        </td><td>
+          When executing a web test the command line arguments passed to the used browser.
+        </td></tr></tbody></table></div></div><br class="table-break"></br><p>
+Here is an example of using the <code class="code">squish:config</code> tag in an Ant build
+file:
+</p><pre class="programlisting">
+&lt;project name="MyProject" basedir="." xmlns:squish="antlib:com.froglogic.squish.ant"&gt;
+    <span class="bold"><strong>&lt;squish:config path="C:\Squish" /&gt;</strong></span>
+    ...
+</pre><p>
+When the <code class="code">squish:config</code> tag is used at the start of the
+document—as in the above example—the path that is set is
+used for all the <span class="emphasis"><em>Squish</em></span> tests in the targets. For finer control, the
+<code class="code">squish:config</code> tag can be used inside a target container, in
+which case the path will only apply to tests in that container.
+</p><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Note"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/note.png"></img></td><th align="left">Note</th></tr><tr><td align="left" valign="top"><p>
+It is also possible to set the <span class="emphasis"><em>Squish</em></span> path in the <code class="code">squish:runtest</code>
+tag, but if there are many <span class="emphasis"><em>Squish</em></span> tests to be run and they all use the
+same <span class="emphasis"><em>Squish</em></span> installation, using the <code class="code">squish:config</code> tag is much
+more convenient.
+</p></td></tr></table></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="book-ant-squish-runtest-tag"></a>9.14.4.2. squish:runtest</h4></div></div></div><p>
+The <code class="code">squish:runtest</code> tag can be used to run a <span class="emphasis"><em>Squish</em></span> test case or
+test suite. The table below shows the attributes that can be used:
+</p><div class="table"><a id="idp59088888"></a><p class="title"><b>Table 9.10. squish:runtest tag</b></p><div class="table-contents"><table summary="squish:runtest tag" border="1"><colgroup><col></col><col></col><col></col></colgroup><thead><tr><th>
+          Attribute
+        </th><th>
+          Description
+        </th><th>
+          Required
+        </th></tr></thead><tbody><tr><td>
+          <code class="code">suite</code>
+        </td><td>
+          The absolute path to the <span class="emphasis"><em>Squish</em></span> suite that is to be run.
+        </td><td>
+          Yes
+        </td></tr><tr><td>
+          <code class="code">testcase</code>
+        </td><td>
+          <span class="bold"><strong>Deprecated</strong></span> The <span class="bold"><strong>one</strong></span> test case from the suite
+          to be run, available for backwards compatibility only. Leave this attribute out to run the complete test suite.
+          To specify which test cases should be executed explicitly use the <a class="xref" href="ao-ant.html#book-ant-squish-testcase-tag" title="9.14.4.3. squish:testcase">squish:testcase (Section 9.14.4.3)</a> element instead.
+        </td><td>
+          No
+        </td></tr><tr><td>
+          <code class="code">path</code>
+        </td><td>
+          The absolute path to <span class="emphasis"><em>Squish</em></span>'s root directory.
+        </td><td>
+          Only if not set in the <a class="xref" href="ao-ant.html#book-ant-squish-config-tag" title="9.14.4.1. squish:config">squish:config (Section 9.14.4.1)</a> tag.
+        </td></tr><tr><td>
+          <code class="code">host</code>
+        </td><td>
+          The hostname of the machine where the <span class="application">squishserver</span> is running.
+          Leave this parameter out to let the plugin start the <span class="application">squishserver</span> automatically.
+        </td><td>
+          No
+        </td></tr><tr><td>
+          <code class="code">port</code>
+        </td><td>
+          The port number that the <span class="application">squishserver</span> is listening on.
+          Leave this parameter out to let the plugin start the <span class="application">squishserver</span> automatically.
+        </td><td>
+          No
+        </td></tr><tr><td>
+          <code class="code">snoozefactor</code>
+        </td><td>
+          The snooze factor to use when running <span class="emphasis"><em>Squish</em></span> tests, defaults to 1.
+        </td><td>
+          No
+        </td></tr><tr><td>
+          <code class="code">resultdir</code>
+        </td><td>
+          The absolute path to a directory which is used to save test results, corresponds to
+          the <span class="application">squishrunner</span>'s <code class="option">--resultdir</code> which is documented at
+          <a class="xref" href="rg-cmdline.html#rg-squishrunner-cli--testcase" title="7.4.3.25. Executing a Test Case (Advanced)">Executing a Test Case (Advanced) (Section 7.4.3.25)</a>.
+        </td><td>
+          No
+        </td></tr><tr><td>
+          <code class="code">webbrowser</code>
+        </td><td>
+          When executing a web test the browser to be used. Supported values are listed at the <span class="application">squishrunner</span>'s
+          <code class="option">--webbrowser</code> option at <a class="xref" href="rg-cmdline.html#rg-squishrunner-cli--testcase" title="7.4.3.25. Executing a Test Case (Advanced)">Executing a Test Case (Advanced) (Section 7.4.3.25)</a>.
+        </td><td>
+          No
+        </td></tr><tr><td>
+          <code class="code">webbrowserargs</code>
+        </td><td>
+          When executing a web test the command line arguments passed to the used browser.
+        </td><td>
+          No
+        </td></tr><tr><td>
+          <code class="code">haltonerror</code>
+        </td><td>
+          Whether to stop the build when a test error or test fatal occurs, defaults to <code class="code">false</code>.
+        </td><td>
+          No
+        </td></tr><tr><td>
+          <code class="code">haltonfailedverification</code>
+        </td><td>
+          Whether to stop the build when a test verification failed, defaults to <code class="code">false</code>.
+        </td><td>
+          No
+        </td></tr></tbody></table></div></div><br class="table-break"></br><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Note"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/note.png"></img></td><th align="left">Note</th></tr><tr><td align="left" valign="top"><p>
+Attributes set in the <code class="code">squish:runtest</code> tag will overwrite attributes set in the <code class="code">squish:config</code> tag.
+</p></td></tr></table></div><p>
+Here is an example of using the <code class="code">squish:runtest</code> tag in an Ant build
+file:
+</p><pre class="programlisting">
+&lt;project name="MyProject" basedir="." xmlns:squish="antlib:com.froglogic.squish.ant"&gt;
+  ...
+  &lt;target name="test" depends="compile" description="run the tests"&gt;
+    <span class="bold"><strong>&lt;squish:runtest
+      suite="C:\Squish\examples\qt\addressbook\suite_py"
+      path="C:\Squish" /&gt;</strong></span>
+  &lt;/target&gt;
+  ...
+</pre><p>
+For the <code class="code">squish:runtest</code> tag to work, the <code class="code">suite</code>
+attribute must indicate a valid <span class="emphasis"><em>Squish</em></span> suite. Also, the absolute path
+to the <span class="emphasis"><em>Squish</em></span> installation to use for running tests must be known,
+either by using the <code class="code">squish:runtest</code> tag's <code class="code">path</code>
+attribute or the <code class="code">squish:config</code> tag's <code class="code">path</code>
+attribute. When an <span class="application">ant</span> process runs a
+<span class="emphasis"><em>Squish</em></span> test, it waits for the test to be completed; the results are
+reported back on the standard output (e.g., the console).
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="book-ant-squish-testcase-tag"></a>9.14.4.3. squish:testcase</h4></div></div></div><p>
+The <code class="code">squish:testcase</code> tag can be used to specify which test cases should be
+executed explicitly. It must be a child of the <code class="code">squish:runtest</code> tag.
+</p><p>
+Here is an example of using the <code class="code">squish:testcase</code> tag in an Ant build file:
+</p><pre class="programlisting">
+&lt;project name="MyProject" basedir="." xmlns:squish="antlib:com.froglogic.squish.ant"&gt;
+  ...
+  &lt;target name="test" depends="compile" description="run the tests"&gt;
+    &lt;squish:runtest
+      suite="C:\Squish\examples\qt\addressbook\suite_py"
+      path="C:\Squish"
+      <span class="bold"><strong>&lt;squish:testcase&gt;tst_adding&lt;/squish:testcase&gt;
+      &lt;squish:testcase&gt;tst_general&lt;/squish:testcase&gt;</strong></span>
+    &lt;/squish:runtest&gt;
+  &lt;/target&gt;
+  ...
+</pre></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="book-ant-squish-report-tag"></a>9.14.4.4. squish:report</h4></div></div></div><p>
+The <code class="code">squish:report</code> tag can be used to specify which reports should be generated.
+</p><div class="table"><a id="idp59120104"></a><p class="title"><b>Table 9.11. squish:report tag</b></p><div class="table-contents"><table summary="squish:report tag" border="1"><colgroup><col></col><col></col><col></col></colgroup><thead><tr><th>
+          Attribute
+        </th><th>
+          Description
+        </th><th>
+          Required
+        </th></tr></thead><tbody><tr><td>
+          <code class="code">format</code>
+        </td><td>
+          Report format to be generated. Supported values are listed at the <span class="application">squishrunner</span>'s
+          <code class="option">--reportgen</code> option at <a class="xref" href="rg-cmdline.html#rg-squishrunner-cli--testcase" title="7.4.3.25. Executing a Test Case (Advanced)">Executing a Test Case (Advanced) (Section 7.4.3.25)</a>.
+        </td><td>
+          Yes
+        </td></tr></tbody></table></div></div><br class="table-break"></br><p>
+Here is an example of using the <code class="code">squish:report</code> tag in an Ant build file:
+</p><pre class="programlisting">
+&lt;project name="MyProject" basedir="." xmlns:squish="antlib:com.froglogic.squish.ant"&gt;
+  ...
+  &lt;target name="test" depends="compile" description="run the tests"&gt;
+    &lt;squish:runtest
+      suite="C:\Squish\examples\qt\addressbook\suite_py"
+      path="C:\Squish"
+      &lt;squish:testcase&gt;tst_adding&lt;/squish:testcase&gt;
+      &lt;squish:testcase&gt;tst_general&lt;/squish:testcase&gt;
+      <span class="bold"><strong>&lt;squish:report format="xml2.2"&gt;C:\xml_reports\addressbook.xml&lt;/squish:report&gt;
+      &lt;squish:report format="xmljunit"&gt;C:\junit_reports\addressbook.xml&lt;/squish:report&gt;</strong></span>
+    &lt;/squish:runtest&gt;
+  &lt;/target&gt;
+  ...
+</pre></div></div></div><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" type="text/javascript" src="ScriptingLanguage.js"></script><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format">setScriptingLanguage();</script><div class="navfooter"><hr></hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="ao-cc.html">Prev</a> </td><td width="20%" align="center"><a accesskey="u" href="addons.html">Up</a></td><td width="40%" align="right"> <a accesskey="n" href="faq.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">9.13. CruiseControl integration </td><td width="20%" align="center"><a accesskey="h" href="index-noframes.html">Home</a></td><td width="40%" align="right" valign="top"> Chapter 10. Frequently Asked Questions</td></tr></table></div></body>
+<!-- Mirrored from ao-ant.html by HTTrack Website Copier/3.x [XR&CO'2013], Wed, 06 Jul 2022 13:29:03 GMT -->
+</html>

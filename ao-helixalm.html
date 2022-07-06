@@ -1,0 +1,225 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<!-- Mirrored from ao-helixalm.html by HTTrack Website Copier/3.x [XR&CO'2013], Wed, 06 Jul 2022 13:29:01 GMT -->
+<head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><title>9.11. Helix ALM integration</title><link rel="stylesheet" href="manual.css" type="text/css"></link><meta name="generator" content="DocBook XSL Stylesheets V1.73.2"></meta><link rel="start" href="index-noframes.html" title="Squish Manual"></link><link rel="up" href="addons.html" title="Chapter 9. Add-Ons Reference Manual"></link><link rel="prev" href="eclipse.ide.integration.html" title="9.10. Eclipse IDE Integration"></link><link rel="next" href="ao-maven.html" title="9.12. Maven integration"></link><style xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" type="text/css" media="screen">
+        div.toc * { margin-left: 6px; margin-right: auto; max-width: 75em; }
+        div.toc span { margin-left: 0px; }
+        * { margin-left: auto; margin-right: auto; max-width: 75em; }
+        body { margin-left: 6px; margin-right: 6px; }
+        table th { padding: .5ex }
+        table td { padding: .5ex }
+    </style><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format">
+        function keyPress() {
+            var e = window.event;
+            if ( e == undefined ) {
+                return;
+            }
+            /* ### does not properly scroll, yet
+            if ( e.keyCode == 32 ) {
+            var l = document.links;
+            for ( var i = 0; i < l.length; i++ ) {
+                if ( l[i].innerText == "Next" ) {
+                location.href = l[i].href;
+                }
+            }
+            } else
+                */
+                if ( e.keyCode == 0x08 ) {
+            var l = document.links;
+            for ( var i = 0; i < l.length; i++ ) {
+                if ( l[i].innerText == "Prev" ) {
+                location.href = l[i].href;
+                }
+            }
+            }
+        }
+        document.onkeypress = keyPress;
+    </script></head><body><div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="ao-helixalm"></a>9.11. Helix ALM integration</h2></div></div></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><span class="section"><a href="ao-helixalm.html#ao-helixalm-plugin-obtaining">9.11.1. Obtaining the <span class="trademark">Helix ALM</span>™ Plugin</a></span></dt><dt><span class="section"><a href="ao-helixalm.html#ao-helixalm-installation">9.11.2. Installing the <span class="trademark">Helix ALM</span>™ Plugin</a></span></dt><dt><span class="section"><a href="ao-helixalm.html#ao-helixalm-configuration">9.11.3. Configuring the <span class="trademark">Helix ALM</span>™ Plugin</a></span></dt><dt><span class="section"><a href="ao-helixalm.html#ao-helixalm-formatdescriptionfile">9.11.4. The .squishtcm description file</a></span></dt><dt><span class="section"><a href="ao-helixalm.html#ao-helixalm-formatconfigfile">9.11.5. The configuration file</a></span></dt><dt><span class="section"><a href="ao-helixalm.html#ao-helixalm-example">9.11.6. Example: How to run a <span class="emphasis"><em>Squish</em></span> test case</a></span></dt></dl></div><p>
+<span class="trademark">Helix ALM</span>™, formerly known as TestTrack TCM, is a test management tool from
+Perforce. (For more about <span class="trademark">Helix ALM</span>™, see <a class="ulink" href="https://www.perforce.com/products/helix-alm" target="_blank">perforce.com</a>.)
+</p><p>
+<span class="emphasis"><em>Squish</em></span> tests can be executed from within <span class="trademark">Helix ALM</span>™ by a program
+called <span class="application">squishTcmAgent</span>. This script agent will
+process a <code class="filename">.squishtcm</code> description file which
+contains all the information necessary to run a <span class="emphasis"><em>Squish</em></span> test.
+</p><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="ao-helixalm-plugin-obtaining"></a>9.11.1. Obtaining the <span class="trademark">Helix ALM</span>™ Plugin</h3></div></div></div><p>
+The plugin is supplied as a <code class="filename">.zip</code> file.
+</p><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Note"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/note.png"></img></td><th align="left">Note</th></tr><tr><td align="left" valign="top"><p>
+This add-on must be bought separately. Contact
+<code class="email">&lt;<a class="email" href="mailto:sales@froglogic.com">sales@froglogic.com</a>&gt;</code> for details.
+</p></td></tr></table></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="ao-helixalm-installation"></a>9.11.2. Installing the <span class="trademark">Helix ALM</span>™ Plugin</h3></div></div></div><p>
+The <code class="filename">zip</code> file contains the plugin compiled for Linux and for Windows. For Linux use the file which ends with <code class="filename">.tar.gz</code>, for Windows use the file which ends with <code class="filename">.zip</code>.
+To install the plugin unzip the respective <code class="filename">.tar.gz</code> or <code class="filename">.zip</code>
+file and copy the <span class="application">squishTcmAgent</span> executable
+and the <span class="application">defaultTestCaseResolver</span> executable
+into the <span class="trademark">Helix ALM</span>™'s script agent directory. The default directory is
+called <code class="filename">ScriptAgents</code> and is located inside the
+<span class="trademark">Helix ALM</span>™ installation directory.
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="ao-helixalm-configuration"></a>9.11.3. Configuring the <span class="trademark">Helix ALM</span>™ Plugin</h3></div></div></div><p>
+To run <span class="emphasis"><em>Squish</em></span> tests within <span class="trademark">Helix ALM</span>™ it is necessary to associate
+the <code class="filename">.squishtcm</code> file with the <span class="emphasis"><em>Squish</em></span> script agent.
+This can be done inside <span class="trademark">Helix ALM</span>™ by clicking
+<span class="guimenu">Tools</span>|<span class="guimenuitem">Local
+Options...</span> to invoke the Local
+Options dialog.
+</p><div class="screenshot"><div class="mediaobject" align="center"><img src="images/testtracktcmPlugin-local_options.png" align="middle"></img><div class="caption"><p>The <span class="guimenu">Tools</span>|<span class="guimenuitem">Local
+Options...</span> menu item</p></div></div></div><p>
+Inside the Local Options dialog, click the <span class="guibutton">View
+File</span> item in the list shown on the left to invoke the View
+File Settings dialog. Use this dialog to associate the
+<code class="filename">.squishtcm</code> file extension with the
+<span class="application">squishTcmAgent</span> executable.
+</p><div class="screenshot"><div class="mediaobject" align="center"><img src="images/testtracktcmPlugin-view_file_settings.png" align="middle"></img><div class="caption">The View File Settings dialog</div></div></div><p>
+Note that the path to the executable may be different from that shown in
+the screenshot, so adapt the path as necessary depending on where you
+installed <span class="trademark">Helix ALM</span>™.
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="ao-helixalm-formatdescriptionfile"></a>9.11.4. The .squishtcm description file</h3></div></div></div><p>
+The <code class="filename">.squishtcm</code> file describes the <span class="emphasis"><em>Squish</em></span> test
+which should be executed. The file is formatted as plain text with one
+<code class="code">key/value</code> item per line. Two <code class="code">key/value</code> pairs
+must be specified:
+</p><div class="informaltable"><table width="100%" border="1"><colgroup><col></col><col></col><col></col></colgroup><thead><tr><th align="left">Key</th><th align="left">Value</th><th align="left">Example</th></tr></thead><tbody valign="top"><tr><td align="left" valign="top">testCase</td><td align="left" valign="top">Name of the test case</td><td align="left" valign="top"><code class="code">testCase = "tst_adding"</code></td></tr><tr><td align="left" valign="top">configFile</td><td align="left" valign="top">Name of the used configuration file</td><td align="left" valign="top"><code class="code">configFile = "master_win32"</code></td></tr></tbody></table></div><p>
+For maximum flexibility, the test case folder which is needed to run a <span class="emphasis"><em>Squish</em></span> test is provided by a program called <span class="application">testCaseResolver</span>.
+The default <span class="application">testCaseResolver</span> which is shipped with the plugin ( <span class="application">defaultTestCaseResolver</span> ) simply echos the
+value which has been assigned to the <code class="code">testCase</code> key of the <code class="filename">.squishtcm</code> file. Thus to use the default <span class="application">testCaseResolver</span>
+the absolute path to the test case folder has to be assigned to the <code class="code">testCase</code> key.
+</p><p>
+An alternative is to write a custom <span class="application">testCaseResolver</span> program. When executed the program is passed the value which has been used for the
+<code class="code">testCase</code> key of the <code class="filename">.squishtcm</code> file, as its sole command line argument. The plugin expects that the <span class="application">testCaseResolver</span>
+will respond by outputting the absolute test case path to <code class="code">stdout</code>. The path to the <span class="application">testCaseResolver</span> must be specified inside the configuration file.
+</p><p>
+The plugin uses the environment variable <code class="envar">SQUISH_TCM_CONFIGDIR</code> to search for the configuration file which is named inside the <code class="filename">.squishtcm</code> file for the
+<code class="code">configFile</code> key.
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="ao-helixalm-formatconfigfile"></a>9.11.5. The configuration file</h3></div></div></div><p>
+The configuration file describes the general settings which are used to
+execute a <span class="emphasis"><em>Squish</em></span> test case.
+</p><div class="informaltable"><table width="100%" border="1"><colgroup><col></col><col></col><col></col><col></col></colgroup><thead><tr><th align="left">Key</th><th align="left">Value</th><th align="left">Required</th><th align="left">Example</th></tr></thead><tbody valign="top"><tr><td align="left" valign="top">squishDir</td><td align="left" valign="top">Path to the <span class="emphasis"><em>Squish</em></span> root directory</td><td align="center" valign="middle">yes</td><td align="left" valign="top"><code class="code">squishDir = "C:\\Squish"</code></td></tr><tr><td align="left" valign="top">testCaseResolverPath</td><td align="left" valign="top">Absolute path to the
+    <span class="application">testCaseResolver</span> which is responsible for providing
+    the absolute path of the test case folder to the plugin on <code class="code">stdout</code></td><td align="center" valign="middle">yes</td><td align="left" valign="top">
+      <p>
+        <code class="code">testCaseResolverPath = "C:\\HelixALM\\ScriptAgents\\defaultTestCaseResolver.exe"</code>
+      </p>
+      <p>
+      or:
+      </p>
+      <p>
+        <code class="code">testCaseResolverPath = "C:\\Python27\\python.exe"</code>
+      </p>
+    </td></tr><tr><td align="left" valign="top">testCaseResolverScript</td><td align="left" valign="top">Absolute path to a script which is executed by the <span class="application">testCaseResolver</span> which is specified by the <code class="code">testCaseResolverPath</code> key.
+    This key is only required if the <span class="application">testCaseResolver</span> requires a script as argument e.g. if Python is specified at <code class="code">testCaseResolverPath</code>
+    the Python script to be executed must be specified by using this key.
+    </td><td align="center" valign="middle">yes / no</td><td align="left" valign="top">
+      <code class="code">testCaseResolverScript = "C:\\myTestCaseResolver.py"</code>
+    </td></tr><tr><td align="left" valign="top">wrapper</td><td align="left" valign="top">The wrapper <span class="emphasis"><em>Squish</em></span> needs to use</td><td align="center" valign="middle">yes</td><td align="left" valign="top"><code class="code">wrapper = "Qt"</code></td></tr><tr><td align="left" valign="top">aut</td><td align="left" valign="top">This can be omitted if the test case uses the <a class="xref" href="rgs-squish.html#startApplication-function"><code class="function">startApplication</code></a> function to start the
+    AUT; otherwise the AUT must be specified</td><td align="center" valign="middle">no</td><td align="left" valign="top"><code class="code">aut = "addressbook"</code></td></tr><tr><td align="left" valign="top">cwd</td><td align="left" valign="top">This can be omitted if the default behavior of using the
+    current working directory is acceptable; otherwise see the
+    <code class="code">--cwd</code> option at <a class="xref" href="rg-cmdline.html#rg-squishrunner-cli--testcase" title="7.4.3.25. Executing a Test Case (Advanced)">Executing a Test Case (Advanced) (Section 7.4.3.25)</a>
+    for alternatives</td><td align="center" valign="middle">no</td><td align="left" valign="top"><code class="code">cwd = "@server"</code></td></tr><tr><td align="left" valign="top">host</td><td align="left" valign="top">This can be omitted if the <span class="application">squishserver</span> should be started
+    locally; otherwise set this to the IP Address or host
+    name of the remote PC where <span class="application">squishserver</span> is running</td><td align="center" valign="middle">no</td><td align="left" valign="top"><code class="code">host = "192.168.0.42"</code></td></tr><tr><td align="left" valign="top">port</td><td align="left" valign="top">This can be omitted if the default behavior of using any
+    random free port is acceptable; otherwise specify a port</td><td align="center" valign="middle">no</td><td align="left" valign="top"><code class="code">port = "4711"</code></td></tr><tr><td align="left" valign="top">objectMapPath</td><td align="left" valign="top">The absolute path to the object map which is used by the test
+    case</td><td align="center" valign="middle">no</td><td align="left" valign="top"><code class="code">objectMapPath = "C:\\Squish\\examples\\qt4\\suite_addressbook_py\\objects.map"</code></td></tr><tr><td align="left" valign="top">preExecutable</td><td align="left" valign="top">The absolute path to an executable which will be executed at
+    the beginning of a test case.
+    The current working directory where the result and log files are stored is passed as argument.
+    </td><td align="center" valign="middle">no</td><td align="left" valign="top"><code class="code">preExecutable = "C:\\preTask.exe"</code></td></tr><tr><td align="left" valign="top">postExecutable</td><td align="left" valign="top">The absolute path to an executable which will be executed at
+    the end of a test case.
+    The current working directory where the result and log files are stored is passed as first
+    argument and the test run ID is passed as second argument.
+    </td><td align="center" valign="middle">no</td><td align="left" valign="top"><code class="code">postExecutable = "C:\\postTask.bat"</code></td></tr><tr><td align="left" valign="top">pythonExecutable</td><td align="left" valign="top">Absolute path to a Python interpreter. This is only required if the <span class="emphasis"><em>Squish</em></span> package specified
+    by the <code class="code">squishDir</code> key is not shipped with a Python interpreter. Python 2.4, 2.5, 2.6 or 2.7 is required.
+    </td><td align="center" valign="middle">yes / no</td><td align="left" valign="top"><code class="code">pythonExecutable = "C:\\Python27\\python.exe"</code></td></tr></tbody></table></div><p>
+As the table shows, the paths to the <span class="emphasis"><em>Squish</em></span> directory and to the
+<span class="application">testCaseResolver</span> program are required, as is
+the wrapper to use, while the other <code class="code">key/value</code> pairs
+are—or can be—optional.
+</p><p>
+Note that if Windows-style paths are used each backslash must be escaped
+and the paths quoted; however, on all platforms, forward slashes can be
+used instead and these do not require escaping. (Paths that contain
+spaces must be quoted though.)
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="ao-helixalm-example"></a>9.11.6. Example: How to run a <span class="emphasis"><em>Squish</em></span> test case</h3></div></div></div><p>
+This example shows how to setup the configuration and <code class="filename">.squishtcm</code> files to run a <span class="emphasis"><em>Squish</em></span> test in <span class="trademark">Helix ALM</span>™. It uses the test
+case <code class="filename">tst_adding</code> from the test suite <code class="filename">suite_py</code> of a <span class="emphasis"><em>Squish</em></span> for Qt package. <span class="emphasis"><em>Squish</em></span> is assumed to be installed
+at <code class="filename">C:\Squish</code>, the test suite is located inside the <span class="emphasis"><em>Squish</em></span> folder at <code class="filename">C:\Squish\examples\qt4\addressbook\suite_py</code>.
+</p><p>
+First of all we decide to not use the default <span class="application">testCaseResolver</span> as we don't want to specify the absolute path to the test case
+folder inside the <code class="filename">.squishtcm</code> file. If we would use the absolute path, every time the location of the test case folder changes we would
+have to touch the <code class="filename">.squishtcm</code> file attached to the <span class="trademark">Helix ALM</span>™ test. This can happen for example if the test should be executed on
+another host.
+</p><p>
+For this example we'll create a Python script at <code class="filename">C:\myTestCaseResolver.py</code> and use it as <span class="application">testCaseResolver</span>.
+The Python script is quite simple, it just prepends the absolute path to the test suite to the test case name and prints this path to <code class="code">stdout</code>:
+</p><pre class="screen">
+import sys
+testCaseName = sys.argv[1]
+print "C:\\Squish\\examples\\qt4\\addressbook\\suite_py\\" + testCaseName
+</pre><p>
+</p><p>
+The next step is to create the configuration file. The configuration file can have any file extension or none. For the example we'll create the
+configuration file at <code class="filename">C:\master_win32</code> with no file extension:
+</p><pre class="screen">
+squishDir="C:\\Squish"
+testCaseResolverPath="C:\\Squish\\python\\python.exe"
+testCaseResolverScript="C:\\myTestCaseResolver.py"
+wrapper="Qt"
+objectMapPath="C:\\Squish\\examples\\qt4\\addressbook\\suite_py\\objects.map"
+</pre><p>
+We have to specify where <span class="emphasis"><em>Squish</em></span> is installed by the <code class="code">squishDir</code> key. As we want to use a Python script as <span class="application">testCaseResolver</span>
+we specify the script by the <code class="code">testCaseResolverScript</code> key and as the plugin needs to know how to run a Python script we need to specify a Python
+interpreter too by the <code class="code">testCaseResolverPath</code> key. Fortunately the default <span class="emphasis"><em>Squish</em></span> packages for Windows are shipped with a Python interpreter inside
+the <span class="emphasis"><em>Squish</em></span> sub folder <code class="filename">C:\Squish\python</code> so we can use that one. Finally we need to specify the wrapper and the absolute path to the
+object map as the test case <code class="filename">tst_adding</code> uses symbolic names which are stored inside the object map.
+</p><p>
+After the configuration file has been created we need the <code class="filename">.squishtcm</code> file which will be attached to the <span class="trademark">Helix ALM</span>™ test later. For the
+example we'll create the <code class="filename">.squishtcm</code> file at <code class="filename">C:\test_a.squishtcm</code>. The content consists of two lines:
+</p><pre class="screen">
+testCase="tst_adding"
+configFile="master_win32"
+</pre><p>
+The first line specifies the test case we want to execute. As we're using our Python script as <span class="application">testCaseResolver</span> which prepends the
+absolute path to the test suite, we can just enter the name of the test case. The second line specifies the configuration file we want to use. Here we've to
+enter only the file name of the configuration file but not its absolute path. In which path the plugin will search for configuration files will be configured
+by using the environment variable <code class="envar">SQUISH_TCM_CONFIGDIR</code>. The reason for this is similiar to why we're not putting an absolute path into the
+<code class="filename">.squishtcm</code> file. If the test case should be executed on a different host which installed <span class="emphasis"><em>Squish</em></span> e.g. at <code class="filename">S:\tools\squish</code>
+we only have to create a separate configuration file for this host in which the <span class="emphasis"><em>Squish</em></span> installation path of the <code class="code">squishDir</code> key is adapted. Again,
+the <code class="filename">.squishtcm</code> file which resides inside <span class="trademark">Helix ALM</span>™ has not to be touched for this.
+</p><p>
+Before starting <span class="trademark">Helix ALM</span>™ we need to setup the environment variable <code class="envar">SQUISH_TCM_CONFIGDIR</code> to tell the plugin where to search for configuration
+files. To do this we can either setup the environment variable inside Windows or create a batch file which does this for us. Let's create a batch file at
+<code class="filename">C:\helixalm.bat</code>:
+</p><pre class="screen">
+set SQUISH_TCM_CONFIGDIR=C:\
+"C:\Program Files\Perforce\HelixALM\TestTrack Client.exe"
+</pre><p>
+which assumes that <span class="trademark">Helix ALM</span>™ is installed at <code class="filename">C:\Program Files\Perforce\HelixALM</code>.
+</p><p>
+After the custom <span class="application">testCaseResolver</span>, configuration and <code class="filename">.squishtcm</code> files have been created and <span class="trademark">Helix ALM</span>™ is
+started by using the batch file <code class="filename">C:\helixalm.bat</code> create a test case inside <span class="trademark">Helix ALM</span>™ and switch to the test case's
+<span class="guilabel">Files</span> tab:
+</p><div class="screenshot"><div class="mediaobject" align="center"><img src="images/testtracktcmPlugin-edit_test_case.png" align="middle"></img><div class="caption">The Edit Helix ALM Test Case view</div></div></div><p>
+Now click the <span class="guibutton">Select Scripts...</span> button to choose
+the <code class="filename">C:\test_a.squishtcm</code> description file:
+</p><div class="screenshot"><div class="mediaobject" align="center"><img src="images/testtracktcmPlugin-select_scripts.png" align="middle"></img><div class="caption">The Select Scripts dialog</div></div></div><p>
+Close the Select Scripts dialog by clicking the <span class="guibutton">OK</span> button and apply the changes by
+clicking the <span class="guibutton">Apply</span> button. To run the <span class="emphasis"><em>Squish</em></span> test select the recently added script
+in the <span class="guibutton">Files</span> tab and click the <span class="guibutton">Run Script...</span> button. This will
+cause the test to be run and the Script File Status dialog to appear.
+</p><div class="screenshot"><div class="mediaobject" align="center"><img src="images/testtracktcmPlugin-script_file_status.png" align="middle"></img><div class="caption">The Script File Status dialog</div></div></div><p>
+After the test has finished the results file can be shown by clicking
+the Script File Status dialog's <span class="guibutton">View Results...</span>
+button:
+</p><div class="screenshot"><div class="mediaobject" align="center"><img src="images/testtracktcmPlugin-result.png" align="middle"></img><div class="caption"><p>A <span class="emphasis"><em>Squish</em></span> Tests Results inside <span class="trademark">Helix ALM</span>™</p></div></div></div><p>
+The results shown are only stored <span class="emphasis"><em>temporarily</em></span>; as
+soon as the Script File Status dialog's <span class="guibutton">OK</span> button
+is clicked the results are deleted. This happens because <span class="trademark">Helix ALM</span>™
+associates executed tests with test runs which have to be generated for
+the test case.
+</p><p>
+The temporary results are written to the
+<code class="filename">ScheduledScripts</code> directory inside the <span class="trademark">Helix ALM</span>™
+installation path. The directory contains the following files after
+running a <span class="emphasis"><em>Squish</em></span> test:
+</p><div class="informaltable"><table width="100%" border="1"><colgroup><col></col><col></col></colgroup><thead><tr><th align="left">Filename</th><th align="left">Description</th></tr></thead><tbody valign="top"><tr><td align="left" valign="top"><code class="filename"><span class="emphasis"><em>test_a</em></span>.squishtcm</code></td><td align="left" valign="top">A copy of the <span class="emphasis"><em>Squish</em></span> description file.</td></tr><tr><td align="left" valign="top"><code class="filename"><span class="emphasis"><em>test_a</em></span>.trjob</code></td><td align="left" valign="top">An interface file for synchronizing <span class="trademark">Helix ALM</span>™ and the
+    <span class="application">squishTcmAgent</span>.</td></tr><tr><td align="left" valign="top"><code class="filename">report.html</code></td><td align="left" valign="top">The test results in HTML format.</td></tr><tr><td align="left" valign="top"><code class="filename">report.xml</code></td><td align="left" valign="top">The test results in XML format.</td></tr><tr><td align="left" valign="top"><code class="filename">squishTcmAgent.log</code></td><td align="left" valign="top">The <span class="application">squishTcmAgent</span> program's log file.</td></tr><tr><td align="left" valign="top"><code class="filename">server.log</code></td><td align="left" valign="top">The <span class="application">squishserver</span>'s log file.</td></tr><tr><td align="left" valign="top"><code class="filename">runner.log</code></td><td align="left" valign="top">The <span class="application">squishrunner</span>'s log file.</td></tr></tbody></table></div></div></div><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" type="text/javascript" src="ScriptingLanguage.js"></script><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format">setScriptingLanguage();</script><div class="navfooter"><hr></hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="eclipse.ide.integration.html">Prev</a> </td><td width="20%" align="center"><a accesskey="u" href="addons.html">Up</a></td><td width="40%" align="right"> <a accesskey="n" href="ao-maven.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">9.10. Eclipse IDE Integration </td><td width="20%" align="center"><a accesskey="h" href="index-noframes.html">Home</a></td><td width="40%" align="right" valign="top"> 9.12. Maven integration</td></tr></table></div></body>
+<!-- Mirrored from ao-helixalm.html by HTTrack Website Copier/3.x [XR&CO'2013], Wed, 06 Jul 2022 13:29:01 GMT -->
+</html>

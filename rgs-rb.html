@@ -1,0 +1,76 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<!-- Mirrored from rgs-rb.html by HTTrack Website Copier/3.x [XR&CO'2013], Wed, 06 Jul 2022 13:29:00 GMT -->
+<head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><title>6.18. Ruby Notes</title><link rel="stylesheet" href="manual.css" type="text/css"></link><meta name="generator" content="DocBook XSL Stylesheets V1.73.2"></meta><link rel="start" href="index-noframes.html" title="Squish Manual"></link><link rel="up" href="api.man.html" title="Chapter 6. API Reference Manual"></link><link rel="prev" href="rgs-pl.html" title="6.17. Perl Notes"></link><link rel="next" href="api.bdt.functions.html" title="6.19. Behavior Driven Testing"></link><style xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" type="text/css" media="screen">
+        div.toc * { margin-left: 6px; margin-right: auto; max-width: 75em; }
+        div.toc span { margin-left: 0px; }
+        * { margin-left: auto; margin-right: auto; max-width: 75em; }
+        body { margin-left: 6px; margin-right: 6px; }
+        table th { padding: .5ex }
+        table td { padding: .5ex }
+    </style><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format">
+        function keyPress() {
+            var e = window.event;
+            if ( e == undefined ) {
+                return;
+            }
+            /* ### does not properly scroll, yet
+            if ( e.keyCode == 32 ) {
+            var l = document.links;
+            for ( var i = 0; i < l.length; i++ ) {
+                if ( l[i].innerText == "Next" ) {
+                location.href = l[i].href;
+                }
+            }
+            } else
+                */
+                if ( e.keyCode == 0x08 ) {
+            var l = document.links;
+            for ( var i = 0; i < l.length; i++ ) {
+                if ( l[i].innerText == "Prev" ) {
+                location.href = l[i].href;
+                }
+            }
+            }
+        }
+        document.onkeypress = keyPress;
+    </script></head><body><div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="rgs-rb"></a>6.18. Ruby Notes</h2></div></div></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><span class="section"><a href="rgs-rb.html#rgs-ruby-documentation">6.18.1. Ruby Language Documentation</a></span></dt></dl></div><p>
+<span class="emphasis"><em>Squish</em></span> assumes that all <code class="filename">test.rb</code> files use
+the UTF-8 encoding. Every <code class="filename">.rb</code> you use should begin
+with the line:
+</p><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Ruby</span><pre class="programlisting">
+# encoding: UTF-8
+</pre></div><p>
+<span class="emphasis"><em>Squish</em></span> tests written in Ruby should always begin:
+</p><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Ruby</span><pre class="programlisting">
+# encoding: UTF-8
+require 'squish'
+include Squish
+</pre></div><p>
+A Ruby-savvy editor will notice the first line and will correctly load
+and save using the UTF-8 encoding that <span class="emphasis"><em>Squish</em></span> expects, as a result.
+</p><p>Furthermore, the Ruby versions of the functions documented in
+<a class="xref" href="rgs-squish.html#rgss-objh" title="6.3.3. Object Access Functions">Object Access Functions (Section 6.3.3)</a> <span class="emphasis"><em>need</em></span> to be
+fully-qualified with <code class="literal">Squish::</code> to avoid clashes with
+the default Ruby <code class="literal">Object</code> type. For instance, you
+<span class="emphasis"><em>have to</em></span> use</p><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Ruby</span><pre class="programlisting">
+list = Squish::Object.children(o);
+</pre></div><p>instead of</p><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Ruby</span><pre class="programlisting">
+list = Object.children(o);
+</pre></div><p>The latter will cause an error when replaying the test script since the
+Ruby interpreter will attempt to access the (non-existant)
+<code class="literal">children</code> method on the built-in <code class="literal">Object</code>
+type.</p><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="rgs-ruby-documentation"></a>6.18.1. Ruby Language Documentation</h3></div></div></div><p>
+The official Ruby website has many documentation links on the
+<a class="ulink" href="http://www.ruby-lang.org/en/documentation/" target="_blank">http://www.ruby-lang.org/en/documentation/</a>
+page. There is also an online book:
+<a class="ulink" href="http://www.ruby-doc.org/docs/ProgrammingRuby/" target="_blank">Programming
+Ruby: The Pragmatic Programmer's Guide</a>.
+</p><p>
+If you prefer books, a good Ruby book is
+<a class="ulink" href="http://shop.oreilly.com/product/9780596516178.do" target="_blank">The Ruby
+Programming Language</a> by David Flanagan and Yukihiro Matsumoto
+(Ruby's creator).
+</p></div></div><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" type="text/javascript" src="ScriptingLanguage.js"></script><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format">setScriptingLanguage();</script><div class="navfooter"><hr></hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="rgs-pl.html">Prev</a> </td><td width="20%" align="center"><a accesskey="u" href="api.man.html">Up</a></td><td width="40%" align="right"> <a accesskey="n" href="api.bdt.functions.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">6.17. Perl Notes </td><td width="20%" align="center"><a accesskey="h" href="index-noframes.html">Home</a></td><td width="40%" align="right" valign="top"> 6.19. Behavior Driven Testing</td></tr></table></div></body>
+<!-- Mirrored from rgs-rb.html by HTTrack Website Copier/3.x [XR&CO'2013], Wed, 06 Jul 2022 13:29:00 GMT -->
+</html>

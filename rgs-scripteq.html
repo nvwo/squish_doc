@@ -1,0 +1,118 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<!-- Mirrored from rgs-scripteq.html by HTTrack Website Copier/3.x [XR&CO'2013], Wed, 06 Jul 2022 13:29:00 GMT -->
+<head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><title>6.2. Equivalent Script API</title><link rel="stylesheet" href="manual.css" type="text/css"></link><meta name="generator" content="DocBook XSL Stylesheets V1.73.2"></meta><link rel="start" href="index-noframes.html" title="Squish Manual"></link><link rel="up" href="api.man.html" title="Chapter 6. API Reference Manual"></link><link rel="prev" href="api.special.functions.html" title="6.1. Tester-Created Special Functions"></link><link rel="next" href="rgs-squish.html" title="6.3. Squish API"></link><style xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" type="text/css" media="screen">
+        div.toc * { margin-left: 6px; margin-right: auto; max-width: 75em; }
+        div.toc span { margin-left: 0px; }
+        * { margin-left: auto; margin-right: auto; max-width: 75em; }
+        body { margin-left: 6px; margin-right: 6px; }
+        table th { padding: .5ex }
+        table td { padding: .5ex }
+    </style><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format">
+        function keyPress() {
+            var e = window.event;
+            if ( e == undefined ) {
+                return;
+            }
+            /* ### does not properly scroll, yet
+            if ( e.keyCode == 32 ) {
+            var l = document.links;
+            for ( var i = 0; i < l.length; i++ ) {
+                if ( l[i].innerText == "Next" ) {
+                location.href = l[i].href;
+                }
+            }
+            } else
+                */
+                if ( e.keyCode == 0x08 ) {
+            var l = document.links;
+            for ( var i = 0; i < l.length; i++ ) {
+                if ( l[i].innerText == "Prev" ) {
+                location.href = l[i].href;
+                }
+            }
+            }
+        }
+        document.onkeypress = keyPress;
+    </script></head><body><div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="rgs-scripteq"></a>6.2. Equivalent Script API</h2></div></div></div><p>
+<span class="emphasis"><em>Squish</em></span> provides the same fundamental APIs in all the scripting
+languages it supports, plus some extra language-specific features where
+required (e.g., file handling in JavaScript since this isn't provided by
+the standard language). In this section we will discuss how the APIs are
+used, noting the usage differences that are due to differences between
+the scripting languages themselves.
+</p><p>
+But before reviewing the differences, we will first look at the sample
+class that is used in the table that follows.
+</p><p>
+For non-macOS platforms the table uses the following example C++
+class:
+</p><pre class="programlisting">
+    class C
+    {
+    public:
+        C();
+        C(const char *s);
+
+        void doA(bool b);
+        static void doB();
+
+        int p;
+        ...
+    };
+</pre><p>
+For macOS the table uses following Objective-C class:
+</p><pre class="programlisting">
+    @interface C : NSObject
+    {
+        ...
+    }
+
+    - (void)doA;
+    - (void)doB:(BOOL)b;
+    + (void)doC;
+    + (void)doD:(BOOL)b;
+
+    - (int)p;
+    - (void)setP:(int)newP;
+
+    ...
+
+    @end
+</pre><p>
+The table also assumes the existence of an object of type <span class="type">C</span>
+called <code class="varname">c</code>.
+</p><p>
+The following table provides a brief overview of the equivalent script
+functions for the most basic tasks such as creating an object, getting
+and setting a property, and performing comparisons. Although the actions
+performed on each row are the same and use the same APIs, the actual
+example code differs because of the syntactic and structural differences
+between the scripting languages that <span class="emphasis"><em>Squish</em></span> supports.
+</p><div class="informaltable"><table border="1"><colgroup><col></col><col></col></colgroup><thead><tr><th>Feature</th><th>Python</th></tr></thead><tbody><tr><td>Construct a default object</td><td><code class="code">c = C()</code></td></tr><tr><td>Construct an object using an argument</td><td><code class="code">c = C("apple")</code></td></tr><tr><td>Get property <code class="code">p</code>'s value</td><td><code class="code">x = c.p</code></td></tr><tr><td>Set property <code class="code">p</code>'s value</td><td><code class="code">c.p = 10</code></td></tr><tr><td>Call a member function</td><td><code class="code">c.doA(True)</code></td></tr><tr><td>Verify equality</td><td><code class="code">test.compare(c.p, 2)</code></td></tr><tr><td>Compare a wrapped string-like object with a native string</td><td><code class="code">s == "Orange"</code></td></tr><tr><td>Convert to a native string</td><td><div class="literallayout"><p><code class="code">s = str(val) # or<br></br>
+s = unicode(val)</code></p></div></td></tr><tr><td>Send key presses</td><td><code class="code">type(":lineEdit_Widget", "Orange")</code></td></tr><tr><td>Native boolean values</td><td><code class="code">True, False</code></td></tr></tbody></table></div><div class="informaltable"><table border="1"><colgroup><col></col><col></col></colgroup><thead><tr><th>Feature</th><th>JavaScript</th></tr></thead><tbody><tr><td>Construct a default object</td><td><code class="code">var c = new C();</code></td></tr><tr><td>Construct an object using an argument</td><td><code class="code">var c = new C("apple");</code></td></tr><tr><td>Get property <code class="code">p</code>'s value</td><td><code class="code">var x = c.p;</code></td></tr><tr><td>Set property <code class="code">p</code>'s value</td><td><code class="code">c.p = 10;</code></td></tr><tr><td>Call a member function</td><td><code class="code">c.doA(true);</code></td></tr><tr><td>Verify equality</td><td><code class="code">test.compare(c.p, 2);</code></td></tr><tr><td>Compare a wrapped string-like object with a native string</td><td><code class="code">s == "Orange"</code></td></tr><tr><td>Convert to a native string</td><td><code class="code">var s = String(val);</code></td></tr><tr><td>Send key presses</td><td><code class="code">type(":lineEdit_Widget", "Orange");</code></td></tr><tr><td>Native boolean values</td><td><code class="code">true, false</code></td></tr></tbody></table></div><div class="informaltable"><table border="1"><colgroup><col></col><col></col></colgroup><thead><tr><th>Feature</th><th>Perl</th></tr></thead><tbody><tr><td>Construct a default object</td><td><div class="literallayout"><p><code class="code">my $c = new C();  # new-style</code><br></br>
+<code class="code">my $c = C-&gt;new(); # old-style</code></p></div></td></tr><tr><td>Construct an object using an argument</td><td><div class="literallayout"><p><code class="code">my $c = new C("apple");  # new-style</code><br></br>
+<code class="code">my $c = C-&gt;new("apple"); # old-style</code></p></div>
+</td></tr><tr><td>Get property <code class="code">p</code>'s value</td><td><code class="code">my $x = $c-&gt;p;</code></td></tr><tr><td>Set property <code class="code">p</code>'s value</td><td><code class="code">$c-&gt;p(10);</code></td></tr><tr><td>Call a member function</td><td><code class="code">$c-&gt;doA(1);</code></td></tr><tr><td>Verify equality</td><td><code class="code">test::compare($c-&gt;p, 2);</code></td></tr><tr><td>Compare a wrapped string-like object with a native string</td><td><code class="code">$s eq "Orange"</code></td></tr><tr><td>Convert to a native string</td><td><code class="code">my $s = "" . $val;</code></td></tr><tr><td>Send key presses</td><td><code class="code">type(":lineEdit_Widget", "Orange");</code></td></tr><tr><td>Native boolean values</td><td><code class="code">1, 0</code></td></tr></tbody></table></div><div class="informaltable"><table border="1"><colgroup><col></col><col></col></colgroup><thead><tr><th>Feature</th><th>Ruby</th></tr></thead><tbody><tr><td>Construct a default object</td><td><code class="code">c = C.new</code></td></tr><tr><td>Construct an object using an argument</td><td><code class="code">c = C.new("apple")</code></td></tr><tr><td>Get property <code class="code">p</code>'s value</td><td><code class="code">x = c.p</code></td></tr><tr><td>Set property <code class="code">p</code>'s value</td><td><code class="code">c.p = 10</code></td></tr><tr><td>Call a member function</td><td><code class="code">c.doA(true)</code></td></tr><tr><td>Verify equality</td><td><code class="code">Test.compare(c.p, 2)</code></td></tr><tr><td>Compare a wrapped string-like object with a native string</td><td><code class="code">s == "Orange"</code></td></tr><tr><td>Convert to a native string</td><td><code class="code">s = String(val)</code></td></tr><tr><td>Send key presses</td><td><code class="code">type(":lineEdit_Widget", "Orange")</code></td></tr><tr><td>Native boolean values</td><td><code class="code">true, false</code></td></tr></tbody></table></div><div class="informaltable"><table border="1"><colgroup><col></col><col></col></colgroup><thead><tr><th>Feature</th><th>Tcl</th></tr></thead><tbody><tr><td>Construct a default object</td><td><code class="code">set c [construct C]</code></td></tr><tr><td>Construct an object using an argument</td><td><code class="code">set c [construct C "apple"]</code></td></tr><tr><td>Get property <code class="code">p</code>'s value</td><td><code class="code">set x [property get $c p]</code></td></tr><tr><td>Set property <code class="code">p</code>'s value</td><td><code class="code">property set $c p 10</code></td></tr><tr><td>Call a member function</td><td><code class="code">invoke $c doA true</code></td></tr><tr><td>Verify equality</td><td><code class="code">test compare [property get $c p] 2</code></td></tr><tr><td>Compare a wrapped string-like object with a native string</td><td><code class="code">compare $s "Orange"</code></td></tr><tr><td>Convert to a native string</td><td><code class="code">set s [toString $val]</code></td></tr><tr><td>Send key presses</td><td><code class="code">invoke type ":lineEdit_Widget" "Orange"</code></td></tr><tr><td>Native boolean values</td><td><code class="code">true, false</code></td></tr></tbody></table></div><p>
+There are also language-specific notes further on in the manual. For
+example, the <a class="xref" href="rgs-py.html" title="6.14. Python Notes">Python Notes (Section 6.14)</a> show how to access Python's
+built-in <code class="code">type</code> function instead of <span class="emphasis"><em>Squish</em></span>'s <a class="xref" href="rgs-qtconvenience.html#qt-type-function"><code class="function">type</code></a> function, and the <a class="xref" href="rgs-js.html" title="6.16. JavaScript Notes and Extension APIs">JavaScript Notes and Extension APIs (Section 6.16)</a>
+describe the additional APIs <span class="emphasis"><em>Squish</em></span> makes available—for example,
+for file handling, interacting with the operating system, using XML, and
+using SQL.
+</p><p>
+For macOS, here are the bindings specific to Objective-C objects:
+</p><div class="informaltable"><table border="1"><colgroup><col></col><col></col><col></col><col></col><col></col><col></col></colgroup><thead><tr><th>Feature</th><th>Python</th><th>JavaScript</th><th>Perl</th><th>Ruby</th><th>Tcl</th></tr></thead><tbody><tr><td>Call a member function (without arguments)</td><td><code class="code">c.doA()</code></td><td><code class="code">c.doA();</code></td><td><code class="code">$c-&gt;doA();</code></td><td><code class="code">c.doA()</code></td><td><code class="code">invoke $c doA</code></td></tr><tr><td>Call a member function (with arguments)</td><td><code class="code">c.doB_(True)</code></td><td><code class="code">c.doB_(true);</code></td><td><code class="code">$c-&gt;doB_(1);</code></td><td><code class="code">c.doB_(true)</code></td><td><code class="code">invoke $c doB_ true</code></td></tr><tr><td>Call a class (static) function (without arguments)</td><td><code class="code">C.doC()</code></td><td><code class="code">C.doC();</code></td><td><code class="code">C::doC();</code></td><td><code class="code">C.doC()</code></td><td><code class="code">invoke C doC</code></td></tr><tr><td>Call a class (static) function (with arguments)</td><td><code class="code">C.doD_(True)</code></td><td><code class="code">C.doD_(true);</code></td><td><code class="code">C::doD_(1);</code></td><td><code class="code">C.doD_(true)</code></td><td><code class="code">invoke C doD_ true</code></td></tr></tbody></table></div><p>
+Note that the underscores shown in some of the calls shown in the table
+relate to Objective C; see <a class="xref" href="rgs-squish.html#api.functions-and-properties" title="6.3.2. Functions and Properties (macOS)">Functions and Properties (macOS) (Section 6.3.2)</a>
+for details.
+</p><p>
+<span class="emphasis"><em>Squish</em></span>'s APIs are described in the following sections. Some are shown
+with examples (almost always in all the supported scripting languages),
+and some of the descriptions have links to examples elsewhere in the
+manual. For the rare cases where an example is not shown in the
+scripting language you want to use, the above table should make it easy
+to convert from one of the languages shown to the language you want.
+</p></div><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" type="text/javascript" src="ScriptingLanguage.js"></script><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format">setScriptingLanguage();</script><div class="navfooter"><hr></hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="api.special.functions.html">Prev</a> </td><td width="20%" align="center"><a accesskey="u" href="api.man.html">Up</a></td><td width="40%" align="right"> <a accesskey="n" href="rgs-squish.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">6.1. Tester-Created Special Functions </td><td width="20%" align="center"><a accesskey="h" href="index-noframes.html">Home</a></td><td width="40%" align="right" valign="top"> 6.3. Squish API</td></tr></table></div></body>
+<!-- Mirrored from rgs-scripteq.html by HTTrack Website Copier/3.x [XR&CO'2013], Wed, 06 Jul 2022 13:29:00 GMT -->
+</html>

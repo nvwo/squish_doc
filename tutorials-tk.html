@@ -1,0 +1,1799 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<!-- Mirrored from tutorials-tk.html by HTTrack Website Copier/3.x [XR&CO'2013], Wed, 06 Jul 2022 13:28:59 GMT -->
+<head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><title>4.10. Squish for Tk Tutorials</title><link rel="stylesheet" href="manual.css" type="text/css"></link><meta name="generator" content="DocBook XSL Stylesheets V1.73.2"></meta><link rel="start" href="index-noframes.html" title="Squish Manual"></link><link rel="up" href="tutorials.html" title="Chapter 4. Tutorials"></link><link rel="prev" href="tutorials-iphone.html" title="4.9. Squish for iOS Tutorials"></link><link rel="next" href="tutorials-gdc.html" title="4.11. Squish for GDC Tutorials"></link><style xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" type="text/css" media="screen">
+        div.toc * { margin-left: 6px; margin-right: auto; max-width: 75em; }
+        div.toc span { margin-left: 0px; }
+        * { margin-left: auto; margin-right: auto; max-width: 75em; }
+        body { margin-left: 6px; margin-right: 6px; }
+        table th { padding: .5ex }
+        table td { padding: .5ex }
+    </style><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format">
+        function keyPress() {
+            var e = window.event;
+            if ( e == undefined ) {
+                return;
+            }
+            /* ### does not properly scroll, yet
+            if ( e.keyCode == 32 ) {
+            var l = document.links;
+            for ( var i = 0; i < l.length; i++ ) {
+                if ( l[i].innerText == "Next" ) {
+                location.href = l[i].href;
+                }
+            }
+            } else
+                */
+                if ( e.keyCode == 0x08 ) {
+            var l = document.links;
+            for ( var i = 0; i < l.length; i++ ) {
+                if ( l[i].innerText == "Prev" ) {
+                location.href = l[i].href;
+                }
+            }
+            }
+        }
+        document.onkeypress = keyPress;
+    </script></head><body><div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="tutorials-tk"></a>4.10. Squish for Tk Tutorials</h2></div></div></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><span class="section"><a href="tutorials-tk.html#tutorial-getting-started-tk">4.10.1. Tutorial: Starting to Test Tk Applications</a></span></dt></dl></div><p>
+	Learn how to test Tk applications.
+	</p><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="tutorial-getting-started-tk"></a>4.10.1. Tutorial: Starting to Test Tk Applications</h3></div></div></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><span class="section"><a href="tutorials-tk.html#tgs-concepts-tk">4.10.1.1. Squish Concepts</a></span></dt><dt><span class="section"><a href="tutorials-tk.html#tut-tk-creating-a-test-suite">4.10.1.2. Creating a Test Suite</a></span></dt><dt><span class="section"><a href="tutorials-tk.html#tut-tk-recording-tests">4.10.1.3. Recording Tests and Verification Points</a></span></dt><dt><span class="section"><a href="tutorials-tk.html#tgs-vp-tk">4.10.1.4. Inserting Additional Verification Points</a></span></dt><dt><span class="section"><a href="tutorials-tk.html#tut-tk-creating-manual-tests">4.10.1.5. Creating Tests by Hand</a></span></dt><dt><span class="section"><a href="tutorials-tk.html#tk-tut-learning-more">4.10.1.6. Learning More</a></span></dt></dl></div><p>
+This tutorial will show you how to create, run, and modify tests for an
+example Tk application. In the process you will learn about
+<span class="emphasis"><em>Squish</em></span>'s most frequently used features so that by the end of the
+tutorial you will be able to start writing your own tests for your own
+applications.
+</p><p>
+This chapter presents most of the major concepts behind <span class="emphasis"><em>Squish</em></span> and
+provides the information you need to get started using <span class="emphasis"><em>Squish</em></span> for
+testing your own applications. This tutorial does not discuss all
+of <span class="emphasis"><em>Squish</em></span>'s features, and those that it does cover are not covered in
+full detail. After reading this tutorial we recommend reading the
+<a class="xref" href="users-guide.html" title="Chapter 5. User Guide">User Guide (Chapter 5)</a>, and at least skimming the
+<a class="xref" href="api.man.html" title="Chapter 6. API Reference Manual">API Reference Manual (Chapter 6)</a> and the
+<a class="xref" href="ref.man.html" title="Chapter 7. Tools Reference Manual">Tools Reference Manual (Chapter 7)</a>, so that you are familiar with all the
+features that <span class="emphasis"><em>Squish</em></span> has to offer, even if you don't need to use them
+all straight away.
+</p><p>
+This tutorial is divided into several sections. If you are new to
+<span class="emphasis"><em>Squish</em></span> it is best
+to read all of them. If you are already using <span class="emphasis"><em>Squish</em></span> you might want to
+just skim the tutorial, stopping only to read those sections that cover
+any new features that you haven't used before—or you could just
+skip straight to the <a class="xref" href="users-guide.html" title="Chapter 5. User Guide">User Guide (Chapter 5)</a>.
+</p><p>
+Whenever we show how to achieve something using the IDE we will always
+follow with an explanation of how to do the same thing using the command
+line tools. Using an IDE is the easiest and best way to start, but once
+you build up lots of tests you will want to automate them, (e.g., doing
+nightly runs of your regression test suite), so it is worth knowing how
+to use the command line tools since they can be run from batch files or
+shell scripts.
+</p><p>
+For this chapter we will use a simple Address Book script as our
+AUT. It is shipped with <span class="emphasis"><em>Squish</em></span> as
+<code class="filename">SQUISHDIR/examples/tk/addressbook.tcl</code>. This is a Tcl/Tk
+script that allows users to load an existing address book or
+create a new one, add, edit, and remove entries, and save (or save as),
+the new or modified addressbook. Despite the application's simplicity,
+it has all the key features that most standard applications have: a menu
+bar with pull down menus, a toolbar, and a central area—in this
+case showing a table. It pop-up modal dialogs for adding and editing
+items. All the ideas and practices that you
+learn to test this application can easily be adapted to your own
+applications. And naturally, the <a class="xref" href="users-guide.html" title="Chapter 5. User Guide">User Guide (Chapter 5)</a> has many
+more examples and shows how to test lots of Tk-specific features,
+as well as all the standard editing widgets.
+</p><p>
+To execute the Tk Address Book application you will need to have a working
+Tcl/Tk installation on your system.
+</p><p>
+The screenshot shows the application in action with a user adding a new
+name and address.
+</p><div class="screenshot"><div class="mediaobject" align="center"><img src="images/tk-tut-addressbook1.png" align="middle"></img><div class="caption"><p>The Tk <code class="code">addressbook.tcl</code> example.
+</p></div></div></div><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Note: Using the Examples"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/note.png"></img></td><th align="left">Using the Examples</th></tr><tr><td align="left" valign="top"><p>
+The first time you try running a test for one of the example AUTs
+you might get a fatal error that begins “<span class="quote">Squish couldn't find
+the AUT to start...</span>”. If this occurs, click the <span class="guibutton">Test
+Suite Settings</span> toolbar button, and in the
+<span class="guilabel">Application Under Test (AUT)</span> section choose the AUT
+from the combobox if it is available, or click the
+<span class="guibutton">Browse...</span> button and choose the AUT's executable
+via the file open dialog that pops up. (Some versions of <span class="emphasis"><em>Squish</em></span> will
+automatically pop up this dialog if no AUT is specified.) This only
+needs to be done once per example AUT. (This doesn't arise when testing
+your own AUTs.) </p><p> On *nix systems, the executable may be a script such as
+<code class="filename">addressbook.tcl</code>, while on Windows, it may need to
+be the <span class="application">tclsh</span> installed by ActiveState, in which case,
+the <span class="guilabel">Arguments</span> should be <code class="filename">addressbook.tcl</code>,
+and the <span class="guilabel">Working Directory</span> should be the absolute path to
+that script.
+</p></td></tr></table></div><p>
+In the following sections we will create a test suite and then create
+some tests, but first we will very briefly review some key <span class="emphasis"><em>Squish</em></span>
+concepts.
+</p><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="tgs-concepts-tk"></a>4.10.1.1. Squish Concepts</h4></div></div></div><p>
+To perform testing, two things are required:
+</p><div class="orderedlist"><ol type="1"><li><p>
+The Application Under Test (AUT), and
+</p></li><li><p>
+a test script that exercises the AUT.
+</p></li></ol></div><p>
+One fundamental aspect of <span class="emphasis"><em>Squish</em></span>'s approach is that the AUT and the
+test script that exercises it are always executed in two separate
+processes. This ensures that even if the AUT crashes, it should not
+crash <span class="emphasis"><em>Squish</em></span>. (In such cases the test script will fail gracefully and
+log an error message.) In addition to insulating <span class="emphasis"><em>Squish</em></span> and test
+scripts from AUT crashes, running the AUT and the test script in
+separate processes brings other benefits. For example, it makes it
+easier to store the test scripts in a central location, and it also
+makes it possible to perform remote testing on different machines and
+platforms. The ability to do remote testing is particularly useful for
+testing AUTs that run on multiple platforms, and also when testing AUTs
+that run on embedded devices.
+</p><p>
+<span class="emphasis"><em>Squish</em></span> runs a small server (<span class="application">squishserver</span>) that handles the
+communication between the AUT and the test script. The test script is
+executed by the <span class="application">squishrunner</span> tool, which in turn connects to the
+<span class="application">squishserver</span>. The <span class="application">squishserver</span> starts the AUT and injects the
+<span class="emphasis"><em>Squish</em></span> hook into it. The hook is a small library that makes the AUT's
+live running objects accessible and that can communicate with the
+<span class="application">squishserver</span>. With the hook in place, the <span class="application">squishserver</span> can query AUT
+objects regarding their state and can execute commands—all on
+behalf of the <span class="application">squishrunner</span>. And the <span class="application">squishrunner</span> itself requests
+that the AUT performs whatever actions the test script specifies. All
+the communication takes place using network sockets which means that
+everything can be done on a single machine, or the test script can be
+executed on one machine and the AUT can be tested over the network on
+another machine.
+</p><p>
+The following diagram illustrates how the individual <span class="emphasis"><em>Squish</em></span> tools work
+together.
+</p><div class="mediaobject" align="center"><img src="images/design_network.png" align="middle"></img></div><p>
+From the test engineer's perspective this separation is not noticeable,
+since all the communication is handled transparently behind the scenes.
+</p><p>
+Tests can be written and executed using the <span class="application">Squish IDE</span>, in which case the
+<span class="application">squishserver</span> is started and stopped automatically, and the test
+results are displayed in the <span class="application">Squish IDE</span>'s <a class="xref" href="ide.views.html#ide.the-test-results.view" title="8.2.18. Test Results view">Test Results view (Section 8.2.18)</a>. The following diagram illustrates
+what happens behind the scenes when the <span class="application">Squish IDE</span> is used.
+</p><div class="mediaobject" align="center"><img src="images/design_ide.png" align="middle"></img></div><p>
+The <span class="emphasis"><em>Squish</em></span> tools can also be used from the command line without the
+<span class="application">Squish IDE</span>—this is useful for those testers who prefer to use their own
+tools (for example, their favorite editor), and also for performing
+automatic batch testing (for example, when running regression tests
+overnight). In these cases, the <span class="application">squishserver</span> must be started manually,
+and stopped when all the testing is complete (or, if preferred, started
+and stopped for each test).
+</p><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Note: Terminology"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/note.png"></img></td><th align="left">Terminology</th></tr><tr><td align="left" valign="top"><p>
+The <span class="emphasis"><em>Squish</em></span> documentation mostly uses the term
+<span class="emphasis"><em>widget</em></span> when referring to GUI objects (i.e.,
+buttons, menus, menu items, labels, table controls, etc). Windows users
+might be more familiar with the terms <span class="emphasis"><em>control</em></span> and
+<span class="emphasis"><em>container</em></span>, but here we use the term widget for
+both. Similarly, macOS users may be used to the term
+<span class="emphasis"><em>view</em></span>; again, we use the term widget for this
+concept.
+</p></td></tr></table></div><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Note: The Squish Directory"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/note.png"></img></td><th align="left">The <span class="emphasis"><em>Squish</em></span> Directory</th></tr><tr><td align="left" valign="top"><p>
+Throughout the manual, we often refer to the <code class="filename">SQUISHDIR/</code>
+directory. This means the directory where <span class="emphasis"><em>Squish</em></span> is installed, which
+might be <code class="filename">C:\Squish</code>,
+<code class="filename">/usr/local/squish</code>,
+<code class="filename">~/squish</code>, or somewhere else, depending on
+where you installed it. The exact location doesn't matter, so long as
+you mentally translate the <code class="filename">SQUISHDIR/</code> directory to
+whatever the directory really is when you see paths and filenames in
+this manual.
+</p></td></tr></table></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="tut-tk-creating-a-test-suite"></a>4.10.1.2. Creating a Test Suite</h4></div></div></div><p>
+A test suite is a collection of one or more test cases
+(<span class="emphasis"><em>tests</em></span>).
+Using a test suite is convenient since it makes it easy to share tests
+scripts and test data between tests.
+</p><p>
+Here, and throughout the tutorial, we will start by describing how to do
+things using the IDE, with the information for command line users
+following.
+</p><p>
+To begin with start up the <span class="application">Squish IDE</span>, either by clicking or double-clicking
+the <span class="application">squishide</span> icon, or by launching <span class="application">squishide</span> from the taskbar menu
+or by executing <span class="application">squishide</span> on the command line—whichever you
+prefer and that is suitable for the platform you are using. Once
+<span class="emphasis"><em>Squish</em></span> starts up you might be greeted with a <span class="emphasis"><em>Welcome Page</em></span>
+in case you're starting the <span class="application">squishide</span> for the first time. Click the
+<span class="emphasis"><em>Workbench</em></span> button in the upper right to dismiss it. Then, the
+<span class="application">squishide</span> will look <span class="emphasis"><em>similar</em></span> to the screenshot—but probably
+slightly different depending on the windowing system, colors, fonts, and
+theme that you use, and so on.
+</p><div class="screenshot"><div class="mediaobject" align="center"><img src="images/tk-tut-squish1.png" align="middle"></img><div class="caption">The Squish IDE with no Test Suites
+</div></div></div><p>
+Now, click
+<span class="guimenu">File</span>|<span class="guimenuitem">New Test
+Suite...</span> to
+pop-up the New Test Suite wizard shown below.
+</p><div class="screenshot"><div class="mediaobject" align="center"><img src="images/tut-squish-newtestsuite1-tk.png" align="middle"></img><div class="caption">The New Test Suite wizard's Name &amp; Directory page
+</div></div></div><p>
+Enter a name for your test suite and choose the folder where you want
+the test suite to be stored. In the screenshot we have called the test
+suite <code class="filename">suite_tcl</code> and will put it inside the
+<code class="filename">addressbook</code> folder. (For your own tests you might
+use a more meaningful name such as "suite_addressbook"; we chose
+"suite_tcl" because the tutorial contains test suites for each scripting
+language that <span class="emphasis"><em>Squish</em></span> supports.)
+Naturally, you can choose whatever name and folder you prefer. Once the
+details are complete, click <span class="guibutton">Next</span> to go on to the
+Toolkit (or Scripting Language) page.
+</p><div class="screenshot"><div class="mediaobject" align="center"><img src="images/tut-squish-newtestsuite2-tk.png" align="middle"></img><div class="caption">The New Test Suite wizard's Toolkit page
+</div></div></div><p>
+If you get this wizard page, click the toolkit your AUT uses. For this
+example, we must click <span class="guilabel">Tk</span> since we are testing a Tk
+application. Then click <span class="guibutton">Next</span> to go to the
+<span class="guilabel">Scripting Language</span> page.
+</p><div class="screenshot"><div class="mediaobject" align="center"><img src="images/tk-tut-squish-newtestsuite3.png" align="middle"></img><div class="caption">The New Test Suite wizard's Scripting Language page
+</div></div></div><p>
+Choose whichever scripting language you want—the only constraint
+is that you can only use one scripting language per test suite.
+Naturally, if you are a Tcl/Tk programmer, Tcl would be your choice here.
+Having chosen a scripting language, click <span class="guibutton">Next</span>
+once more to get to the wizard's last page.
+</p><div class="screenshot"><div class="mediaobject" align="center"><img src="images/tk-tut-squishgui4.png" align="middle"></img><div class="caption">The New Test Suite wizard's AUT page
+</div></div></div><p>
+If you are creating a new test suite for an AUT that <span class="emphasis"><em>Squish</em></span> already
+knows about, simply click the combobox to drop-down the list of AUTs and
+choose the one you want. If the combobox is empty or your AUT isn't
+listed, click the <span class="guibutton">Browse</span> button to the right
+of the combobox—this will pop-up a file open dialog from which you
+can choose your AUT. Once you have chosen the AUT, click
+<span class="guibutton">Finish</span> and <span class="emphasis"><em>Squish</em></span> will create a sub-folder with
+the same name as the test suite, and will create a file inside that
+folder called <code class="filename">suite.conf</code> that contains the test
+suite's configuration details. <span class="emphasis"><em>Squish</em></span> will also register the AUT with
+the <span class="application">squishserver</span>. The wizard will then close and <span class="emphasis"><em>Squish</em></span>'s IDE will
+look similar to the screenshot below.
+</p><div class="screenshot"><div class="mediaobject" align="center"><img src="images/tk-tut-squish2.png" align="middle"></img><div class="caption">The Squish IDE with the suite_tcl test suite
+</div></div></div><p>
+We are now ready to start creating tests. Read on to learn how to create
+test suites without using the IDE, or skip ahead to <a class="xref" href="tutorials-tk.html#tut-tk-recording-tests" title="4.10.1.3. Recording Tests and Verification Points">Recording Tests and Verification Points (Section 4.10.1.3)</a> if you prefer.
+</p><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Note: For command-line users"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/note.png"></img></td><th align="left"><span class="emphasis"><em>For command-line users</em></span></th></tr><tr><td align="left" valign="top"><p>
+To create a new test suite from the command line, three steps are
+necessary: first, create a directory for the test suite; second, create
+a test suite configuration file; and third, register the AUT with
+<span class="application">squishserver</span>.
+</p><div class="orderedlist"><ol type="1"><li><p>
+Create a new directory to hold the test suite—the directory's name
+should begin with <code class="code">suite</code>. For this tutorial, we have created
+the <code class="filename">SQUISHDIR/examples/tk/addressbook/suite_tcl</code>
+directory for Tcl tests. (We also have similar subdirectories for
+other languages but this is purely for the sake of example, since
+normally we only use one language for all our tests.)
+</p></li><li><p>
+Create a plain text file (ASCII or UTF-8 encoding) called
+<code class="filename">suite.conf</code> in the suite subdirectory. This is the
+test suite's configuration file, and at the minimum it must identify the
+AUT, the scripting language used for the tests, and the wrappers (i.e.,
+the GUI toolkit or library) that the AUT uses. The format of the file is
+<span class="emphasis"><em><code class="code">key</code></em></span> <code class="code">=</code>
+<span class="emphasis"><em><code class="code">value</code></em></span>, with one
+<span class="emphasis"><em>key–value</em></span> pair per line. For example:
+</p><pre class="screen">
+AUT      = addressbook.tcl
+LANGUAGE = Tcl
+WRAPPERS = Tk
+</pre><p> On Windows, it might look more like this: </p><pre class="screen">
+AUT      = tclsh addressbook.tcl
+CWD      = SQUISHDIR/examples/tk/addressbook
+LANGUAGE = Tcl
+WRAPPERS = Tk
+</pre><p>
+The <span class="property">AUT</span> can be a Tcl script (on *nix systems),
+or the <span class="application">tclsh</span> executable, or a batch file/shell
+script that starts the Tk AUT in the foreground. The
+<span class="property">LANGUAGE</span> can be set to whichever script language you
+prefer. The <span class="property">WRAPPERS</span> should be set to
+<code class="literal">Tk</code>. </p><p> On Windows, since the Tcl script may not be executable, we set the
+<span class="property">AUT</span> to be <span class="application">tclsh</span>, and supply the
+name of the Tcl script as an argument. We must also set the
+<span class="property">CWD</span> to the location of the
+<code class="filename">addressbook.tcl</code> AUT script.
+</p></li><li><p>
+Register the AUT with the <span class="application">squishserver</span>.
+<sup>[<a id="idp42775920" href="#ftn.idp42775920" class="footnote">15</a>]</sup>
+This is done by executing the <span class="application">squishserver</span> on the command line with
+the <code class="code">--config</code> option and the <code class="code">addAUT</code>
+command. For example, assuming we are in the <code class="filename">SQUISHDIR/bin</code>
+directory, on Linux:
+</p><pre class="screen">
+./squishserver --config addAUT addressbook.tcl $SQUISHDIR/examples/tk/addressbook
+</pre><p>
+Windows users can add a .bat file that starts the AUT, or
+<span class="application">tclsh.exe</span> as the AUT like this:
+</p><pre class="screen">
+squishserver --config addAUT tclsh.exe C:\TCL\bin
+</pre><p>
+We must give the <code class="code">addAUT</code> command the name of the AUT's
+executable and—separately—the AUT's path.
+(For more information about application paths,
+see <a class="xref" href="rg-autsettings.html" title="7.3. AUTs and Settings">AUTs and Settings (Section 7.3)</a> in the <a class="xref" href="users-guide.html" title="Chapter 5. User Guide">User Guide (Chapter 5)</a>, and for more about the <span class="application">squishserver</span>'s command
+line options see <a class="xref" href="rg-cmdline.html#rgc-squishserver" title="7.4.4. squishserver">squishserver (Section 7.4.4)</a> in the <a class="xref" href="ref.man.html" title="Chapter 7. Tools Reference Manual">Tools Reference Manual (Chapter 7)</a>.)
+</p></li></ol></div></td></tr></table></div><p>
+We are now ready to record our first test.
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="tut-tk-recording-tests"></a>4.10.1.3. Recording Tests and Verification Points</h4></div></div></div><p>
+<span class="emphasis"><em>Squish</em></span> records tests using the desired scripting language. Once a
+test has been recorded we can <span class="guibutton">Run Test</span> (<span class="guiicon"><img src="images/ide/run.png"></img></span>) the test and
+<span class="emphasis"><em>Squish</em></span> will faithfully repeat all the actions that we performed when
+recording the test, but without the human pauses that happened during
+recording. It is also possible—and very
+common—to edit recorded tests, or to copy parts of recorded tests
+into manually created tests, as we will see later on in the tutorial.
+</p><p>
+Recordings are made into existing test cases. We begin by
+creating a <span class="guilabel">New Script Test Case</span>.
+There are two ways we can do this. One way
+is to click <span class="guimenu">File</span>|<span class="guimenuitem">New Test
+Case...</span>. This will pop up the <a class="xref" href="ide.dialogs.html#ide.new.squish.test.case.wizard" title="8.3.10. New Squish Test Case wizard">New Squish Test Case wizard (Section 8.3.10)</a>—simply enter the name
+for the test case and then click <span class="guibutton">Finish</span>. Another
+way is to click the <span class="guibutton">New Script Test Case</span> (<span class="guiicon"><img src="images/ide/new_test_case.png"></img></span>) (to
+the right of the <span class="guilabel">Test Cases</span> label in the
+<span class="guilabel">Test Suites</span> view); this will create a new test
+case with a default name (which you can easily change). Use one of these
+methods and give the new test case the name “<span class="quote">tst_general</span>”.
+<span class="emphasis"><em>Squish</em></span> automatically creates a sub-folder inside the test suite's
+folder with this name and also a test file, for example
+<code class="filename">test.tcl</code>. (If we had chosen JavaScript as our
+scripting language the file would be called
+<code class="filename">test.js</code>, and correspondingly for Perl, Ruby, or Tcl.)
+</p><div class="screenshot"><div class="mediaobject" align="center"><img src="images/tk-tut-squish3.png" align="middle"></img><div class="caption">The Squish IDE with the tst_general test case
+</div></div></div><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Note"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/note.png"></img></td><th align="left">Note</th></tr><tr><td align="left" valign="top"><div class="mediaobject" align="right"><img src="images/tut-squish-testcase-type.png" align="right"></img></div><p>
+If you get a sample <code class="filename">.feature</code> file instead of a "Hello
+World" script, then click on the arrow left to the <span class="guibutton">Run Test Suite</span> (<span class="guiicon"><img src="images/ide/run_test_suite.png"></img></span>)
+and select <span class="guibutton">New Script Test Case</span> (<span class="guiicon"><img src="images/ide/new_test_case.png"></img></span>).
+</p></td></tr></table></div><p>
+To make the test script file (e.g., <code class="filename">test.tcl</code>) appear
+in an <a class="xref" href="ide.views.html#ide.the-editor.view" title="8.2.6. Editor view">Editor view (Section 8.2.6)</a>, click—or double-click
+depending on the
+<span class="guimenuitem">Preferences</span>|<span class="guimenuitem">General</span>|<span class="guimenuitem">Open mode</span> setting—the test case.
+(Incidentally, the checkboxes next to each test case are used to control which ones are
+run when the <span class="guibutton">Run Test Suite</span> (<span class="guiicon"><img src="images/ide/run_test_suite.png"></img></span>) is clicked; we
+can always run a single test case by clicking its <span class="guibutton">Run Test</span> (<span class="guiicon"><img src="images/ide/run.png"></img></span>).) Initially, the
+script is empty. If we were to create a test manually (as we will do
+later on in the tutorial), we <span class="emphasis"><em>must</em></span> create a
+<code class="code">main</code> function. The name "main" is special to
+<span class="emphasis"><em>Squish</em></span>—tests may contain as many functions and other code as we
+like (providing it is legal for the scripting language), but when the
+test is executed (i.e., run), <span class="emphasis"><em>Squish</em></span> always executes the
+<code class="function">main</code> function. This is actually very convenient since it
+means we are free to create other functions, import libraries, and so
+on, without problems. It is also possible to share commonly used code
+between test scripts—this is covered in the <a class="xref" href="users-guide.html" title="Chapter 5. User Guide">User Guide (Chapter 5)</a>. (In fact, two other function names are special
+to <span class="emphasis"><em>Squish</em></span>, <code class="code">cleanup</code> and <code class="code">init</code>; see <a class="xref" href="api.special.functions.html" title="6.1. Tester-Created Special Functions">Tester-Created Special Functions (Section 6.1)</a> for details.)
+</p><p>
+Once the new empty test case has been created, we are now free to write
+test code manually, or to record a test. If we choose to record, we can
+either replace all the test's code with the recorded code, or record a
+snippet into the middle of some existing test code.
+</p><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Note: For command-line users"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/note.png"></img></td><th align="left"><span class="emphasis"><em>For command-line users</em></span></th></tr><tr><td align="left" valign="top"><p>
+Creating a new test case from the command line is an easy two-step
+process: first, create a test case directory; and second, create an
+empty test case script.
+</p><div class="orderedlist"><ol type="1"><li><p>
+Create a new subdirectory inside the test suite directory. For example,
+inside the
+<code class="filename">SQUISHDIR/examples/tk/addressbook/suite_tcl</code>
+directory, create the <code class="filename">tst_general</code> directory.
+</p></li><li><p>
+Inside the test case's directory create an empty file called
+<code class="filename">test.tcl</code> (or <code class="filename">test.js</code> if you are
+using the JavaScript scripting language, and similarly for the other
+languages).
+</p></li></ol></div></td></tr></table></div><p>
+Before we dive into recording let's briefly review our very simple test scenario:
+</p><div class="orderedlist"><ol type="1"><li><p>
+Open the <code class="filename">MyAddresses.adr</code> address file.
+</p></li><li><p>
+Navigate to the second address and then add a new name and address.
+</p></li><li><p>
+Navigate to the fourth address (that was the third address) and change
+the surname field.
+</p></li><li><p>
+Navigate to the first address and remove it.
+</p></li><li><p>
+Verify that the first address is now the new one that was added.
+</p></li></ol></div><p>
+We are now ready to record our first test. Click the <span class="guibutton">Record</span> (<span class="guiicon"><img src="images/ide/record.png"></img></span>)
+to the right of the <code class="code">tst_general</code> test case shown in the <a class="xref" href="ide.views.html#ide.the-test-suites.view" title="8.2.19. Test Suites view">Test Suites view (Section 8.2.19)</a>'s <span class="guilabel">Test Cases</span> list.
+This will cause <span class="emphasis"><em>Squish</em></span> to run the AUT so that we can interact with it. Once
+the AUT is running, perform the following actions—and don't worry about how
+long it takes since <span class="emphasis"><em>Squish</em></span> doesn't record idle time:
+</p><div class="orderedlist"><ol type="1"><li><p>
+From the main menu bar, click
+<span class="guimenu">File</span>|<span class="guimenuitem">Open</span>,
+and once the file dialog appears, click somewhere in the line input widget for
+<span class="guilabel">Filename</span>, and type into it: <code class="filename">MyAddresses.adr</code>,
+then click the <span class="guibutton">Open</span> button. </p></li><li><p>
+Click the second row, then from the menu bar, click
+<span class="guimenu">Edit</span>|<span class="guimenuitem">Add...</span>,
+then in the Add dialog's first line edit type in "Jane". Now
+click (or tab to) the second line edit and type in "Doe". Continue
+similarly, to set an email address of "jane.doe@nowhere.com" and a phone
+number of "555 123 4567". Don't worry about typing mistakes—just
+backspace delete as normal and fix them. Finally, click the
+<span class="guibutton">OK</span> button. There should now be a new second
+address with the details you typed in.
+</p></li><li><p>
+Click the fourth row, then click
+<span class="guimenu">Edit</span>|<span class="guimenuitem">Edit...</span>
+to pop up the Edit dialog. In this dialog change the surname to "Doe"
+and click <span class="guibutton">Ok</span> to confirm the change.
+</p></li><li><p>
+Now click the first row, then click
+<span class="guimenu">Edit</span>|<span class="guimenuitem">Remove...</span>.
+
+The first row should be gone, so your "Jane Doe" entry should now be
+the first one.
+</p></li><li><p>
+Click the first row, then click
+<span class="guimenu">Edit</span>|<span class="guimenuitem">Edit...</span>
+to pop up the Edit dialog (which should show the "Jane Doe" entry's
+details). </p></li><li><p>
+Now click the <span class="guibutton">Verify</span> toolbar button in
+the <span class="emphasis"><em>Squish</em></span> <a class="xref" href="ide.main.window.html#ide-the-controlbar-window" title="8.1.3. Control Bar Window">Control Bar Window (Section 8.1.3)</a> (the second
+button from the left) and select <span class="guibutton">Properties</span>.
+
+</p><div class="mediaobject"><img src="images/controlbar.png"></img></div><p>
+
+This will make the <span class="application">Squish IDE</span> appear.</p></li><li><p>In the Application
+Objects view expand the <code class="code">addressbook.tcl</code> Tk_Window object,
+and then the <code class="code">dialog</code> object. Click the
+“<span class="quote">forename</span>” object to make its properties appear in the
+<a class="xref" href="ide.views.html#ide.the-properties.view" title="8.2.12. Properties view">Properties view (Section 8.2.12)</a>, and then check the
+<code class="code">getvalue</code> property's checkbox. Now click the
+“<span class="quote">surname</span>” object and check its <code class="code">getvalue</code>
+property. </p></li><li><p>Finally, click the <span class="guibutton">Save and Insert Verifications</span> button (at the
+bottom of the <a class="xref" href="ide.views.html#ide.verification.point.creator.view" title="8.2.22. Verification Point Creator view">Verification Point Creator view (Section 8.2.22)</a>)
+to have the forename and surname verifications for the first row
+inserted into the recorded test script. (See the screenshot below.) Once
+the verification points are inserted the <span class="application">Squish IDE</span>'s window will be hidden
+again and the Control Bar window and the AUT will be back in view.
+</p></li><li><p>
+We've now completed the test plan, so in the AUT, click
+<span class="guibutton">Cancel</span> to close the Edit dialog, then click
+<span class="guimenu">File</span>|<span class="guimenuitem">Quit</span>,
+then click <span class="guibutton">No</span> in the message box, since we don't
+want to save any changes.
+</p></li></ol></div><div class="screenshot"><div class="mediaobject" align="center"><img src="images/tk-tut-squishgui16.png" align="middle"></img><div class="caption">The Squish IDE showing two verification points about to be inserted
+</div></div></div><p>
+Once we quit the AUT, the recorded test will appear in <span class="emphasis"><em>Squish</em></span>'s IDE as
+the screenshot illustrates. (Note that the exact code that is recorded
+will vary depending on how you interact. For example, you might invoke
+menu options by clicking them or by using key sequences—it doesn't
+matter which you use, but since they are different, <span class="emphasis"><em>Squish</em></span> will record
+them differently.)
+</p><div class="screenshot"><div class="mediaobject" align="center"><img src="images/tk-tut-squishgui6.png" align="middle"></img><div class="caption">The Squish IDE showing the recorded tst_general test
+</div></div></div><p>
+If the recorded test doesn't appear, click (or double-click depending on
+your platform and settings) the <code class="filename">tst_general</code> test
+case; this will make <span class="emphasis"><em>Squish</em></span> show the test's
+<code class="filename">test.tcl</code> file in an editor window as shown in the
+screenshot.
+</p><p>
+Now that we've recorded the test, we can play it back, i.e.,
+run it. Now, the two verifications we put in will be checked on play back as the
+screenshot shows.
+</p><p>
+Inserting verification points during test recording is very convenient.
+Here we inserted two in one go, but we can insert as many as we like as
+often as we like during the test recording process. However, sometimes
+we might forget to insert one, or later we might want to insert a new one.
+We can insert additional verifications into a recorded test script,
+as we will see in the next section, <a class="xref" href="tutorials-tk.html#tgs-vp-tk" title="4.10.1.4. Inserting Additional Verification Points">Inserting Additional Verification Points (Section 4.10.1.4)</a>.
+</p><p>
+Before going further, we will look at how to record a test from the
+command line. Then we will see how to run a test, and we will also
+look at some of the code that <span class="emphasis"><em>Squish</em></span> generated to record the test and
+discuss some of its features.
+</p><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Note: For command-line users"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/note.png"></img></td><th align="left"><span class="emphasis"><em>For command-line users</em></span></th></tr><tr><td align="left" valign="top"><p>
+First and foremost, the <span class="application">squishserver</span> must always be running when
+recording or running a test. This is handled automatically by the <span class="application">Squish IDE</span>,
+but for command line users the <span class="application">squishserver</span> must be started manually.
+(See <a class="xref" href="rg-cmdline.html#rgc-squishserver" title="7.4.4. squishserver">squishserver (Section 7.4.4)</a> for further details.)
+</p><p>
+To record a test from the command line we execute the <span class="application">squishrunner</span>
+program and specify the test suite we want to record inside and the name
+we want to give to the test case. For example (assuming we are in the
+directory that contains the test suite's directory):
+</p><pre class="screen">
+squishrunner --testsuite suite_tcl --record tst_general --useWaitFor
+</pre><p>
+It is always best to record using the <code class="option">--useWaitFor</code>
+option since this records calls to the <a class="xref" href="rgs-squish.html#waitForObject-function"><code class="function">waitForObject</code></a> function which is more reliable
+than using the <a class="xref" href="rgs-squish.html#snooze-function"><code class="function">snooze</code></a> function which for
+historical reasons is the default. (Note that the <span class="application">Squish IDE</span> automatically
+uses the <a class="xref" href="rgs-squish.html#waitForObject-function"><code class="function">waitForObject</code></a> function.)
+</p></td></tr></table></div><p>
+To run a test case in the IDE just click the <span class="guibutton">Run Test</span> (<span class="guiicon"><img src="images/ide/run.png"></img></span>) that
+appears when the test case is selected in the <a class="xref" href="ide.views.html#ide.the-test-suites.view" title="8.2.19. Test Suites view">Test Suites view (Section 8.2.19)</a>. This will cause <span class="emphasis"><em>Squish</em></span> to run
+the AUT and replay every action (omitting human idle time, but allowing
+just enough time for the GUI toolkit to keep up). It is worth trying out
+since it has quite an impressive effect, especially if you haven't seen
+it in action before.
+</p><p>
+When we have two or more test cases, we can run them individually by
+selecting the test case we want to run and then clicking its
+<span class="guibutton">Run Test</span> (<span class="guiicon"><img src="images/ide/run.png"></img></span>) or we can
+run them all (as long as they're checked) by clicking the
+<span class="guibutton">Run Test Suite</span> (<span class="guiicon"><img src="images/ide/run_test_suite.png"></img></span>) (which is above
+and slightly to the left of the <span class="guibutton">Run Test</span> (<span class="guiicon"><img src="images/ide/run.png"></img></span>)).
+</p><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Note: For command-line users"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/note.png"></img></td><th align="left"><span class="emphasis"><em>For command-line users</em></span></th></tr><tr><td align="left" valign="top"><p>
+As noted earlier, the <span class="application">squishserver</span> must always be running when
+recording or running a test, or the <code class="code">--local</code> option
+be provided to <span class="application">squishrunner</span>. (See <a class="xref" href="rg-cmdline.html#rgc-squishserver" title="7.4.4. squishserver">squishserver (Section 7.4.4)</a>
+for further details.)
+</p><p>
+To play back a recorded test from the command line we use the
+<span class="application">squishrunner</span> program and specify the test suite our recorded script is
+in and optionally, the test case we want to play. For example (assuming we are in
+the directory that contains the test suite's directory):
+</p><pre class="screen">
+squishrunner --testsuite suite_tcl --testcase tst_general --local
+</pre></td></tr></table></div><p>
+If you look at the code in the screenshot (or the code snippet shown
+below) you will see that it consists of lots of <a class="xref" href="rgs-squish.html#waitForObject-function"><code class="function">waitForObject</code></a> calls as parameters to various
+other calls such as <a class="xref" href="rgs-tkconvenience.html#tk-activateItem-function"><code class="function">activateItem</code></a>,
+<a class="xref" href="rgs-tkconvenience.html#tk-clickItem-function"><code class="function">clickItem</code></a>,
+<a class="xref" href="rgs-tkconvenience.html#tk-clickButton-function"><code class="function">clickButton</code></a>,
+and <a class="xref" href="rgs-tkconvenience.html#tk-type-function"><code class="function">type</code></a>, as well as many calls to the
+<a class="xref" href="rgs-squish.html#waitForObjectItem-function"><code class="function">waitForObjectItem</code></a>. The <a class="xref" href="rgs-squish.html#waitForObject-function"><code class="function">waitForObject</code></a> and <a class="xref" href="rgs-squish.html#waitForObjectItem-function"><code class="function">waitForObjectItem</code></a>functions wait until a GUI object
+is ready to be interacted with (i.e., becomes visible and enabled), and
+is then followed by some function that interacts with the object. The
+typical interactions are activate (pop-up) a menu, click a menu option
+or a button, or type in some text. (For a complete overview of
+<span class="emphasis"><em>Squish</em></span>'s script commands see the <a class="xref" href="users-guide.html" title="Chapter 5. User Guide">User Guide (Chapter 5)</a>, the
+<a class="xref" href="api.man.html" title="Chapter 6. API Reference Manual">API Reference Manual (Chapter 6)</a>, and the <a class="xref" href="ref.man.html" title="Chapter 7. Tools Reference Manual">Tools Reference Manual (Chapter 7)</a>. Objects are
+identified by names that <span class="emphasis"><em>Squish</em></span> generates. (See <a class="xref" href="ug-accessing-objects.html" title="5.1. How to Identify and Access Objects">How to Identify and Access Objects (Section 5.1)</a> for full details.)
+</p><p>
+The generated code is about 80 lines of code. Here's an extract that
+just shows how <span class="emphasis"><em>Squish</em></span> records clicking the Edit menu's Add option,
+typing in Jane Doe's details into the Add dialog, and clicking OK at the
+end to close the dialog and update the table.
+</p><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Note: Scripting Language Support"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/note.png"></img></td><th align="left">Scripting Language Support</th></tr><tr><td align="left" valign="top"><p>
+Although the screenshots only show the Tcl test suite in action, for
+the code snippets quoted here and throughout the tutorial, we show the
+code for all the scripting languages that <span class="emphasis"><em>Squish</em></span> supports. In practice
+you would normally only use one of them of course, so feel free to just
+look at the snippets in the language you are interested in and skip the
+others. (In the HTML version of this manual you can use a combobox next
+to each code snippet to select the language you wish to see—this will hide
+the code snippets in other languages.)
+</p></td></tr></table></div><div xmlns="" class="scriptlang"><form><select name="scriptlangcombo" onchange="javascript:changeScriptingLanguage(this)" onclick="javascript:changeScriptingLanguage(this)"><option value="all" selected>Show All</option><option value="JavaScript">Show JavaScript</option><option value="Perl">Show Perl</option><option value="Python">Show Python</option><option value="Ruby">Show Ruby</option><option value="Tcl">Show Tcl</option></select></form></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Tcl</span><pre class="programlisting">
+
+    waitForObjectItem ":addressbook\\.tcl.#menuBar" "Edit"
+    invoke activateItem ":addressbook\\.tcl.#menuBar" "Edit"
+    waitForObjectItem ":addressbook\\.tcl.#menuBar.#edit" "Add..."
+    invoke activateItem ":addressbook\\.tcl.#menuBar.#edit" "Add..."
+    invoke type [waitForObject ":addressbook\\.tcl.dialog.forename"] "&lt;Shift_L&gt;"
+    invoke type [waitForObject ":addressbook\\.tcl.dialog.forename"] "J" 17
+    invoke type [waitForObject ":addressbook\\.tcl.dialog.forename"] "ane"
+    invoke type [waitForObject ":addressbook\\.tcl.dialog.forename"] "&lt;Tab&gt;"
+    invoke type [waitForObject ":addressbook\\.tcl.dialog.surname"] "&lt;Shift_L&gt;"
+    invoke type [waitForObject ":addressbook\\.tcl.dialog.surname"] "D" 17
+    invoke type [waitForObject ":addressbook\\.tcl.dialog.surname"] "oe"
+    invoke type [waitForObject ":addressbook\\.tcl.dialog.surname"] "&lt;Tab&gt;"
+    invoke type [waitForObject ":addressbook\\.tcl.dialog.phone"] "555"
+    invoke type [waitForObject ":addressbook\\.tcl.dialog.phone"] "&lt;space&gt;"
+    invoke type [waitForObject ":addressbook\\.tcl.dialog.phone"] "123"
+    invoke type [waitForObject ":addressbook\\.tcl.dialog.phone"] "&lt;space&gt;"
+    invoke type [waitForObject ":addressbook\\.tcl.dialog.phone"] "4567"
+    invoke type [waitForObject ":addressbook\\.tcl.dialog.phone"] "&lt;Tab&gt;"
+    invoke type [waitForObject ":addressbook\\.tcl.dialog.email"] "jane"
+    invoke type [waitForObject ":addressbook\\.tcl.dialog.email"] "&lt;period&gt;"
+    invoke type [waitForObject ":addressbook\\.tcl.dialog.email"] "doe"
+    invoke type [waitForObject ":addressbook\\.tcl.dialog.email"] "&lt;Shift_L&gt;"
+    invoke type [waitForObject ":addressbook\\.tcl.dialog.email"] "&lt;at&gt;" 17
+    invoke type [waitForObject ":addressbook\\.tcl.dialog.email"] "nowhere"
+    invoke type [waitForObject ":addressbook\\.tcl.dialog.email"] "&lt;period&gt;"
+    invoke type [waitForObject ":addressbook\\.tcl.dialog.email"] "com"
+    invoke clickButton [waitForObject ":addressbook\\.tcl.dialog.buttonarea.ok"]
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Python</span><pre class="programlisting">
+
+    waitForObjectItem(":addressbook\\.tcl.#menuBar", "Edit")
+    activateItem(":addressbook\\.tcl.#menuBar", "Edit")
+    waitForObjectItem(":addressbook\\.tcl.#menuBar.#edit", "Add...")
+    activateItem(":addressbook\\.tcl.#menuBar.#edit", "Add...")
+    type(waitForObject(":addressbook\\.tcl.dialog.forename"), "&lt;Shift_L&gt;")
+    type(waitForObject(":addressbook\\.tcl.dialog.forename"), "J", 17)
+    type(waitForObject(":addressbook\\.tcl.dialog.forename"), "ane")
+    type(waitForObject(":addressbook\\.tcl.dialog.forename"), "&lt;Tab&gt;")
+    type(waitForObject(":addressbook\\.tcl.dialog.surname"), "&lt;Shift_L&gt;")
+    type(waitForObject(":addressbook\\.tcl.dialog.surname"), "D", 17)
+    type(waitForObject(":addressbook\\.tcl.dialog.surname"), "oe")
+    type(waitForObject(":addressbook\\.tcl.dialog.surname"), "&lt;Tab&gt;")
+    type(waitForObject(":addressbook\\.tcl.dialog.phone"), "555")
+    type(waitForObject(":addressbook\\.tcl.dialog.phone"), "&lt;space&gt;")
+    type(waitForObject(":addressbook\\.tcl.dialog.phone"), "123")
+    type(waitForObject(":addressbook\\.tcl.dialog.phone"), "&lt;space&gt;")
+    type(waitForObject(":addressbook\\.tcl.dialog.phone"), "4567")
+    type(waitForObject(":addressbook\\.tcl.dialog.phone"), "&lt;Tab&gt;")
+    type(waitForObject(":addressbook\\.tcl.dialog.email"), "jane")
+    type(waitForObject(":addressbook\\.tcl.dialog.email"), "&lt;period&gt;")
+    type(waitForObject(":addressbook\\.tcl.dialog.email"), "doe")
+    type(waitForObject(":addressbook\\.tcl.dialog.email"), "&lt;Shift_L&gt;")
+    type(waitForObject(":addressbook\\.tcl.dialog.email"), "&lt;at&gt;", 17)
+    type(waitForObject(":addressbook\\.tcl.dialog.email"), "nowhere")
+    type(waitForObject(":addressbook\\.tcl.dialog.email"), "&lt;period&gt;")
+    type(waitForObject(":addressbook\\.tcl.dialog.email"), "com")
+    clickButton(waitForObject(":addressbook\\.tcl.dialog.buttonarea.ok"))
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">JavaScript</span><pre class="programlisting">
+
+    waitForObjectItem(":addressbook\\.tcl.#menuBar", "Edit");
+    activateItem(":addressbook\\.tcl.#menuBar", "Edit");
+    waitForObjectItem(":addressbook\\.tcl.#menuBar.#edit", "Add...");
+    activateItem(":addressbook\\.tcl.#menuBar.#edit", "Add...");
+    type(waitForObject(":addressbook\\.tcl.dialog.forename"), "&lt;Shift_L&gt;");
+    type(waitForObject(":addressbook\\.tcl.dialog.forename"), "J", 17);
+    type(waitForObject(":addressbook\\.tcl.dialog.forename"), "ane");
+    type(waitForObject(":addressbook\\.tcl.dialog.forename"), "&lt;Tab&gt;");
+    type(waitForObject(":addressbook\\.tcl.dialog.surname"), "&lt;Shift_L&gt;");
+    type(waitForObject(":addressbook\\.tcl.dialog.surname"), "D", 17);
+    type(waitForObject(":addressbook\\.tcl.dialog.surname"), "oe");
+    type(waitForObject(":addressbook\\.tcl.dialog.surname"), "&lt;Tab&gt;");
+    type(waitForObject(":addressbook\\.tcl.dialog.phone"), "555");
+    type(waitForObject(":addressbook\\.tcl.dialog.phone"), "&lt;space&gt;");
+    type(waitForObject(":addressbook\\.tcl.dialog.phone"), "123");
+    type(waitForObject(":addressbook\\.tcl.dialog.phone"), "&lt;space&gt;");
+    type(waitForObject(":addressbook\\.tcl.dialog.phone"), "4567");
+    type(waitForObject(":addressbook\\.tcl.dialog.phone"), "&lt;Tab&gt;");
+    type(waitForObject(":addressbook\\.tcl.dialog.email"), "jane");
+    type(waitForObject(":addressbook\\.tcl.dialog.email"), "&lt;period&gt;");
+    type(waitForObject(":addressbook\\.tcl.dialog.email"), "doe");
+    type(waitForObject(":addressbook\\.tcl.dialog.email"), "&lt;Shift_L&gt;");
+    type(waitForObject(":addressbook\\.tcl.dialog.email"), "&lt;at&gt;", 17);
+    type(waitForObject(":addressbook\\.tcl.dialog.email"), "nowhere");
+    type(waitForObject(":addressbook\\.tcl.dialog.email"), "&lt;period&gt;");
+    type(waitForObject(":addressbook\\.tcl.dialog.email"), "com");
+    clickButton(waitForObject(":addressbook\\.tcl.dialog.buttonarea.ok"));
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Perl</span><pre class="programlisting">
+
+    waitForObjectItem(":addressbook\\.tcl.#menuBar", "Edit");
+    activateItem(":addressbook\\.tcl.#menuBar", "Edit");
+    waitForObjectItem(":addressbook\\.tcl.#menuBar.#edit", "Add...");
+    activateItem(":addressbook\\.tcl.#menuBar.#edit", "Add...");
+    type(waitForObject(":addressbook\\.tcl.dialog.forename"), "&lt;Shift_L&gt;");
+    type(waitForObject(":addressbook\\.tcl.dialog.forename"), "J", 17);
+    type(waitForObject(":addressbook\\.tcl.dialog.forename"), "ane");
+    type(waitForObject(":addressbook\\.tcl.dialog.forename"), "&lt;Tab&gt;");
+    type(waitForObject(":addressbook\\.tcl.dialog.surname"), "&lt;Shift_L&gt;");
+    type(waitForObject(":addressbook\\.tcl.dialog.surname"), "D", 17);
+    type(waitForObject(":addressbook\\.tcl.dialog.surname"), "oe");
+    type(waitForObject(":addressbook\\.tcl.dialog.surname"), "&lt;Tab&gt;");
+    type(waitForObject(":addressbook\\.tcl.dialog.phone"), "555");
+    type(waitForObject(":addressbook\\.tcl.dialog.phone"), "&lt;space&gt;");
+    type(waitForObject(":addressbook\\.tcl.dialog.phone"), "123");
+    type(waitForObject(":addressbook\\.tcl.dialog.phone"), "&lt;space&gt;");
+    type(waitForObject(":addressbook\\.tcl.dialog.phone"), "4567");
+    type(waitForObject(":addressbook\\.tcl.dialog.phone"), "&lt;Tab&gt;");
+    type(waitForObject(":addressbook\\.tcl.dialog.email"), "jane");
+    type(waitForObject(":addressbook\\.tcl.dialog.email"), "&lt;period&gt;");
+    type(waitForObject(":addressbook\\.tcl.dialog.email"), "doe");
+    type(waitForObject(":addressbook\\.tcl.dialog.email"), "&lt;Shift_L&gt;");
+    type(waitForObject(":addressbook\\.tcl.dialog.email"), "&lt;at&gt;", 17);
+    type(waitForObject(":addressbook\\.tcl.dialog.email"), "nowhere");
+    type(waitForObject(":addressbook\\.tcl.dialog.email"), "&lt;period&gt;");
+    type(waitForObject(":addressbook\\.tcl.dialog.email"), "com");
+    clickButton(waitForObject(":addressbook\\.tcl.dialog.buttonarea.ok"));
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Ruby</span><pre class="programlisting">
+
+    waitForObjectItem(":addressbook\\.tcl.#menuBar", "Edit")
+    activateItem(":addressbook\\.tcl.#menuBar", "Edit")
+    waitForObjectItem(":addressbook\\.tcl.#menuBar.#edit", "Add...")
+    activateItem(":addressbook\\.tcl.#menuBar.#edit", "Add...")
+    type(waitForObject(":addressbook\\.tcl.dialog.forename"), "&lt;Shift_L&gt;", 0)
+    type(waitForObject(":addressbook\\.tcl.dialog.forename"), "J", 1)
+    type(waitForObject(":addressbook\\.tcl.dialog.forename"), "ane", 0)
+    type(waitForObject(":addressbook\\.tcl.dialog.forename"), "&lt;Tab&gt;", 0)
+    type(waitForObject(":addressbook\\.tcl.dialog.surname"), "&lt;Shift_L&gt;", 0)
+    type(waitForObject(":addressbook\\.tcl.dialog.surname"), "D", 1)
+    type(waitForObject(":addressbook\\.tcl.dialog.surname"), "oe", 0)
+    type(waitForObject(":addressbook\\.tcl.dialog.surname"), "&lt;Tab&gt;", 0)
+    type(waitForObject(":addressbook\\.tcl.dialog.phone"), "555", 0)
+    type(waitForObject(":addressbook\\.tcl.dialog.phone"), "&lt;space&gt;", 0)
+    type(waitForObject(":addressbook\\.tcl.dialog.phone"), "123", 0)
+    type(waitForObject(":addressbook\\.tcl.dialog.phone"), "&lt;space&gt;", 0)
+    type(waitForObject(":addressbook\\.tcl.dialog.phone"), "4567", 0)
+    type(waitForObject(":addressbook\\.tcl.dialog.phone"), "&lt;Tab&gt;", 0)
+    type(waitForObject(":addressbook\\.tcl.dialog.email"), "jane", 0)
+    type(waitForObject(":addressbook\\.tcl.dialog.email"), "&lt;period&gt;", 0)
+    type(waitForObject(":addressbook\\.tcl.dialog.email"), "doe", 0)
+    type(waitForObject(":addressbook\\.tcl.dialog.email"), "&lt;Shift_L&gt;", 0)
+    type(waitForObject(":addressbook\\.tcl.dialog.email"), "&lt;Shift_L&gt;", 0)
+    type(waitForObject(":addressbook\\.tcl.dialog.email"), "&lt;at&gt;", 1)
+    type(waitForObject(":addressbook\\.tcl.dialog.email"), "nowhere", 0)
+    type(waitForObject(":addressbook\\.tcl.dialog.email"), "&lt;period&gt;", 0)
+    type(waitForObject(":addressbook\\.tcl.dialog.email"), "com", 0)
+    clickButton(waitForObject(":addressbook\\.tcl.dialog.buttonarea.ok"))
+</pre></div><p>
+While recording the test above, the tester used the keyboard to tab from one
+text field to another and clicked <span class="guibutton">OK</span> using the mouse,
+rather than with a key press. If the tester had clicked the button any other way
+(for example, by tabbing to the OK button and pressing the spacebar), the
+outcome should be the same, but <span class="emphasis"><em>Squish</em></span> will have recorded different
+actions.
+</p><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Note: Object Names"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/note.png"></img></td><th align="left">Object Names</th></tr><tr><td align="left" valign="top"><p>
+Notice that some object names are strings that begin with a colon.
+These are <span class="emphasis"><em>symbolic names</em></span>. <span class="emphasis"><em>Squish</em></span> supports several
+naming schemes, all of which can be used—and mixed—in scripts.</p><p> The advantage of using symbolic names is that if the application changes in
+a way that results in different names being generated, we can simply
+update <span class="emphasis"><em>Squish</em></span>'s Object Map (which relates symbolic names to real
+names), and thereby avoid the need to change our test scripts. (See the
+<a class="xref" href="rg-objectmap.html" title="7.11. Object Map">Object Map (Section 7.11)</a> and the <a class="xref" href="ide.views.html#ide.the-object-map.view" title="8.2.10. Object Map view">Object Map view (Section 8.2.10)</a> for more about the Object Map.)
+</p><p> Unlike other editions of Squish, the real names used in Squish/Tk
+are <span class="emphasis"><em>hierarchical</em></span> instead of multi-property names.
+This means that the object name represents a <span class="emphasis"><em>path</em></span> of class
+names in the object tree that stores the GUI in memory. Symbolic names are based
+on this hierarchy also. </p></td></tr></table></div><p>
+Now that we have seen how to record and play back a test and have seen
+the code that <span class="emphasis"><em>Squish</em></span> generates, let's go a step further and make sure
+that at particular points in the test's execution certain conditions hold.
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="tgs-vp-tk"></a>4.10.1.4. Inserting Additional Verification Points</h4></div></div></div><p>
+In the previous section, we saw how easy it is to insert verification
+points during the recording of test scripts. Verification points can
+also be inserted into existing test scripts, either by setting a
+breakpoint and using the <span class="application">Squish IDE</span>, or simply by editing a test script and
+putting in calls to <span class="emphasis"><em>Squish</em></span>'s test functions such as <a class="xref" href="rgs-squish.html#test.compare-function"><code class="function">test.compare</code></a> and <a class="xref" href="rgs-squish.html#test.verify-function"><code class="function">test.verify</code></a>.
+</p><p>
+<span class="emphasis"><em>Squish</em></span> supports four kinds of verification points: those that verify
+that object properties have particular values—known as "Object Property
+Verifications"; those that verify that an entire table has the contents
+we expect—known as "Table Verifications"; those that verify
+that two images match—known as "Screenshot Verifications"; and
+a hybrid verification type that includes properties and screenshots
+from multiple objects, known as "Visual Verifications".
+The most commonly used kind is object property verifications, and it is
+these that we will cover in the tutorial. For further reading, see <a class="xref" href="ug-vps.html" title="5.22. How to Create and Use Verification Points">How to Create and Use Verification Points (Section 5.22)</a>).
+</p><p>
+<span class="emphasis"><em>Regular</em></span> (non-scriptified) property
+verification points are stored as XML files in the test case or test suite
+resources, and contain the value(s) that need to be passed to
+<code class="code">test.compare()</code>. These verification points can be reused across test
+cases, and can verify many values in a single line of script code. </p><p> <span class="emphasis"><em>Scriptified</em></span> property verification points are direct
+calls to the <a class="xref" href="rgs-squish.html#test.compare-function"><code class="function">test.compare</code></a> function, with two
+arguments—the value of a particular property for a particular
+object, and an expected value. We can manually insert calls to the <a class="xref" href="rgs-squish.html#test.compare-function"><code class="function">test.compare</code></a> function in a recorded or hand
+written script, or we can get <span class="emphasis"><em>Squish</em></span> to insert them for us using scriptified
+verification points. In the previous section we showed how to use the <span class="application">Squish IDE</span> to insert
+verifications during recording. Here we will first show how to use the
+<span class="application">Squish IDE</span> to insert verifications into an existing test script, and then we
+will show how to insert a verification by hand.
+</p><p>
+Before asking <span class="emphasis"><em>Squish</em></span> to insert verification points, it is best to make
+sure that we have a list of what we want to verify and when. There are many
+potential verifications we could add to the <code class="code">tst_general</code>
+test case, but since our concern here is simply to show how to do it, we
+will only do two—we will verify that the "Jane Doe"
+entry's email address and phone number match the ones entered, and put
+the verifications immediately after the ones we inserted during
+recording.
+</p><p>
+To insert a verification point using the IDE, we start by putting a break
+point in the script (whether recorded or manually written—it
+does not matter to <span class="emphasis"><em>Squish</em></span>), at the point where we want to verify.
+</p><div class="screenshot"><div class="mediaobject" align="center"><img src="images/tk-tut-squishgui8.png" align="middle"></img><div class="caption"><p>The <span class="application">Squish IDE</span> showing the tst_general test case with a breakpoint
+</p></div></div></div><p>
+As the above screenshot shows, we have set a breakpoint at line 71. This
+is done simply by right-clicking the line number and then clicking the
+<span class="guimenuitem">Toggle Breakpoint</span> menu item in the context
+menu. We chose this line because it follows the script lines
+where the first address is removed, and where we have invoked the Edit
+dialog. So at this point (just before
+invoking the File menu to close the application), the first address (and
+the one shown in the Edit dialog)
+should be that of "Jane Doe". The screenshot shows the verifications
+that were entered using the <span class="application">Squish IDE</span> during recording. Our additional
+verifications will follow them. (Note that your line number may be
+different if you recorded the test in a different way, for example,
+using keyboard shortcuts rather than clicking menu items.)
+</p><p>
+Having set the breakpoint, we now run the test as usual by clicking the
+<span class="guibutton">Run Test</span> (<span class="guiicon"><img src="images/ide/run.png"></img></span>) or by clicking the
+<span class="guimenu">Run</span>|<span class="guimenuitem">Run Test Case
+</span> menu option. Unlike a normal test run the
+test will stop when the breakpoint is reached (i.e., at line 71, or at
+whatever line you set), and <span class="emphasis"><em>Squish</em></span>'s main window will reappear (which
+will probably obscure the AUT). At this point the <span class="application">Squish IDE</span> will
+automatically switch to the <a class="xref" href="ide.main.window.html#ide.squish.test.debugging.perspective" title="8.1.2.3. Squish Test Debugging Perspective">Squish Test Debugging Perspective (Section 8.1.2.3)</a>.
+</p><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Note: Perspectives and Views"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/note.png"></img></td><th align="left"><a id="perspectives-and-views-tk"></a>Perspectives and Views</th></tr><tr><td align="left" valign="top"><p>
+The <span class="application">Squish IDE</span> works just like the <a class="ulink" href="https://en.wikipedia.org/wiki/Eclipse_(software)" target="_blank">
+Eclipse IDE</a>. If you aren't used to
+Eclipse it is crucial to understand one key concept:
+<span class="emphasis"><em>Views</em></span> and <span class="emphasis"><em>Perspectives</em></span>. In
+Eclipse (and therefore in the <span class="application">Squish IDE</span>), a
+<span class="emphasis"><em>View</em></span> is essentially a child window (perhaps a dock
+window, or a tab in an existing window). And a
+<span class="emphasis"><em>Perspective</em></span> is a collection of Views arranged
+together. Both are accessible through the
+<span class="guimenuitem">Window</span> menu.
+</p><p>
+The <span class="application">Squish IDE</span> is supplied with three Perspectives—the <a class="xref" href="ide.main.window.html#ide.squish.test.management.perspective" title="8.1.2.2. Squish Test Management Perspective">Squish Test Management Perspective (Section 8.1.2.2)</a> (which is the
+Perspective that the <span class="application">Squish IDE</span> starts with, and the one we have seen in all
+previous screenshots), <a class="xref" href="ide.main.window.html#ide.squish.test.debugging.perspective" title="8.1.2.3. Squish Test Debugging Perspective">Squish Test Debugging Perspective (Section 8.1.2.3)</a>, and <a class="xref" href="ide.main.window.html#ide.squish.spy.perspective" title="8.1.2.1. Squish Spy Perspective">Squish Spy Perspective (Section 8.1.2.1)</a>. You can change these
+Perspectives to include additional Views (or to get rid of any Views
+that you don't want), and you can create your own Perspectives with
+exactly the Views you want. So if your windows change dramatically it
+just means that the Perspective changed; you can always use the
+<span class="guimenuitem">Window</span> menu to change back to the Perspective
+you want. In practice, <span class="emphasis"><em>Squish</em></span> will automatically change perspective to
+reflect the current situation, so it isn't really necessary to change
+perspective manually.
+</p></td></tr></table></div><p><a id="tutorial-getting-started-tk-breakpoint-hit"></a>
+As the screenshot below shows, when <span class="emphasis"><em>Squish</em></span> stops at a breakpoint
+the <span class="application">Squish IDE</span> automatically changes to the <a class="xref" href="ide.main.window.html#ide.squish.test.debugging.perspective" title="8.1.2.3. Squish Test Debugging Perspective">Squish Test Debugging Perspective (Section 8.1.2.3)</a>. The perspective shows
+the <a class="xref" href="ide.views.html#ide.the-variables.view" title="8.2.21. Variables view">Variables view (Section 8.2.21)</a>, the <a class="xref" href="ide.views.html#ide.the-editor.view" title="8.2.6. Editor view">Editor view (Section 8.2.6)</a>, the <a class="xref" href="ide.views.html#ide.the-debug.view" title="8.2.5. Debug view">Debug view (Section 8.2.5)</a>, the <a class="xref" href="ide.views.html#ide.the-application-objects.view" title="8.2.1. Application Objects view">Application Objects view (Section 8.2.1)</a>, and the <a class="xref" href="ide.views.html#ide.the-properties.view" title="8.2.12. Properties view">Properties view (Section 8.2.12)</a>, <a class="xref" href="ide.views.html#ide.the-methods.view" title="8.2.9. Methods view">Methods view (Section 8.2.9)</a>, and <a class="xref" href="ide.views.html#ide.the-test-results.view" title="8.2.18. Test Results view">Test Results view (Section 8.2.18)</a>.
+</p><p>
+To insert a verification point we can expand items in the <span class="guilabel">Application
+Objects</span> view until we find the object we want to verify. In this example
+we want to verify the table's first row's texts, so
+we expand the <code class="code">addressbook.tcl</code> Tk_Window object, and
+then the <code class="code">dialog</code> object to find the items we are interested
+in: in this case the <code class="code">phone</code> and <code class="code">email</code> items.
+Once we click an object its
+properties are shown in the <a class="xref" href="ide.views.html#ide.the-properties.view" title="8.2.12. Properties view">Properties view (Section 8.2.12)</a> as
+the screenshot shows.
+</p><div class="screenshot"><div class="mediaobject" align="center"><img src="images/tk-tut-squishgui9.png" align="middle"></img><div class="caption">Picking an object to verify in the Application Objects view
+</div></div></div><p>
+The normal <a class="xref" href="ide.main.window.html#ide.squish.test.management.perspective" title="8.1.2.2. Squish Test Management Perspective">Squish Test Management Perspective (Section 8.1.2.2)</a> can
+be returned to at any time by choosing it from the
+<span class="guimenuitem">Window</span> menu (or by clicking its toolbar
+button), although the <span class="application">Squish IDE</span> will automatically return to it if you stop
+the script or run it to completion.
+</p><p>
+Here, we can see that the <span class="property">getvalue</span> property of the forename
+item has the value “<span class="quote">Jane</span>”; we already have a verification for
+this that we inserted during recording. Scroll down so that you can see
+the phone item. To make sure that
+this is verified every time the test is run, click the
+phone item in the <a class="xref" href="ide.views.html#ide.the-application-objects.view" title="8.2.1. Application Objects view">Application Objects view (Section 8.2.1)</a> to
+make its properties appear, and then click the <code class="code">getvalue</code>
+property to check its check box. When we check it the <a class="xref" href="ide.views.html#ide.verification.point.creator.view" title="8.2.22. Verification Point Creator view">Verification Point Creator view (Section 8.2.22)</a> appears as shown in the
+screenshot.
+</p><div class="screenshot"><div class="mediaobject" align="center"><img src="images/tut-squish-vp2-tk.png" align="middle"></img><div class="caption">Choosing a property value to verify
+</div></div></div><p>
+At this point the verification point has <span class="emphasis"><em>not</em></span> been
+added to the test script. We could easily add it by clicking the
+<span class="guibutton">Save and Insert Verifications</span> button.
+But before doing that we'll add one more thing to be
+verified.
+</p><p>
+Scroll down and click the email item in the
+<a class="xref" href="ide.views.html#ide.the-application-objects.view" title="8.2.1. Application Objects view">Application Objects view (Section 8.2.1)</a>; then click its
+<code class="code">getvalue</code> property. Now both verifications will appear in
+the <a class="xref" href="ide.views.html#ide.verification.point.creator.view" title="8.2.22. Verification Point Creator view">Verification Point Creator view (Section 8.2.22)</a> as the screenshot
+shows.
+</p><div class="screenshot"><div class="mediaobject" align="center"><img src="images/tut-squish-vp3-tk.png" align="middle"></img><div class="caption">Choosing several property values to verify
+</div></div></div><p>
+We have now said that we expect these properties to have the values
+shown, that is, an email address of “<span class="quote">jane.doe@nowhere.com</span>”
+and phone number of “<span class="quote">555 123 4567</span>”. We
+<span class="emphasis"><em>must</em></span> click the <span class="guibutton">Insert</span> button
+to actually insert the verification point, so do that now.
+</p><p>
+We don't need to continue running the test now, so we can either stop
+running the test at this point (by clicking the
+<span class="guibutton">Stop</span> toolbar button), or we can continue (by
+clicking the <span class="guibutton">Resume</span> button).
+</p><p>
+Once we have finished inserting verifications and stopped or finished
+running the test we should now disable the break point. Just right click
+the break point and click the <span class="guimenuitem">Disable
+Breakpoint</span> menu option in the context menu. We are now
+ready to run the test without any breakpoints but with the verification
+points in place. Click the <span class="guibutton">Run Test</span> (<span class="guiicon"><img src="images/ide/run.png"></img></span>) button. This
+time we will get some additional test results—as the screenshot
+shows—one of which we have expanded to show its details. (We have
+also selected the lines of code that <span class="emphasis"><em>Squish</em></span> inserted to perform the
+verifications—notice that the code is structurally identical to
+the code inserted during recording.)
+</p><div class="screenshot"><div class="mediaobject" align="center"><img src="images/tk-tut-squish6.png" align="middle"></img><div class="caption">The newly inserted verification points in action
+</div></div></div><p>
+These particular verification points generate four tests comparing
+the forename, surname, phone number, and email of the newly inserted
+entry.
+</p><p>
+Another way to insert verification points is to insert them in code
+form. In theory we can just add our own calls to <span class="emphasis"><em>Squish</em></span>'s test
+functions such as <a class="xref" href="rgs-squish.html#test.compare-function"><code class="function">test.compare</code></a> and <a class="xref" href="rgs-squish.html#test.verify-function"><code class="function">test.verify</code></a> anywhere we like in an existing
+script. In practice it is best to make sure that <span class="emphasis"><em>Squish</em></span> knows about
+the objects we want to verify first so that it can find them when the
+test is run. This involves a very similar procedure as using the <span class="application">Squish IDE</span>.
+First we set a breakpoint where we intend adding our verifications. Then
+we run the test script until it stops. Next we navigate in the
+<a class="xref" href="ide.views.html#ide.the-application-objects.view" title="8.2.1. Application Objects view">Application Objects view (Section 8.2.1)</a> until we find the
+object we want to verify. At this point it is wise to right-click the
+object we are interested in and click the <span class="guimenuitem">Add to Object
+Map</span> context menu option. This will ensure that <span class="emphasis"><em>Squish</em></span>
+can access the object. Then right click again and click the
+<span class="guimenuitem">Copy to clipboard (Symbolic Name)</span> context
+menu option—this gives us the name of the object that <span class="emphasis"><em>Squish</em></span>
+will use to identify it. Now we can edit the test script to add in our
+own verification and finish or stop the execution. (Don't forget to
+disable the break point once it isn't needed any more.)
+</p><p>
+Although we can write our test script code to be exactly the same style
+as the automatically generated code, it is usually clearer and easier to
+do things in a slightly different style, as we will explain in a moment.
+</p><p>
+For our manual verifications we want to check the number of addresses
+present in the table after reading in the
+<code class="filename">MyAddresses.adr</code> file, then after the new address is
+added, and finally after the first address is removed. The screenshot
+shows three of the lines of code we entered to get one of these three
+verifications, plus the results of running the test script.
+</p><div class="screenshot"><div class="mediaobject" align="center"><img src="images/tut-squish7-tk.png" align="middle"></img><div class="caption">Manually entered verification points in action
+</div></div></div><p>
+When writing scripts by hand, we use <span class="emphasis"><em>Squish</em></span>'s <code class="code">test</code>
+module's functions to verify conditions at certain points during our
+test script's execution. As the screenshot (and the code snippets below)
+show, we begin by making sure that the object we are interested
+in is available. Using the <a class="xref" href="rgs-squish.html#waitForObject-function"><code class="function">waitForObject</code></a> function is
+standard practice for manually written test scripts. This function waits
+for the object to be available (i.e., visible and enabled).
+(Otherwise it times out and raises a
+catchable exception.)
+Once we know that the object is available we use the <a class="xref" href="rgs-tkconvenience.html#tk-tcleval-function"><code class="function">tcleval</code></a> function to interact with the object—in
+this case to retrieve the number of rows (which the table reports as its
+“<span class="quote">size</span>”). We then compare the actual number of rows with the
+expected number using the
+<a class="xref" href="rgs-squish.html#test.compare-function"><code class="function">test.compare</code></a>
+function. Notice that <span class="emphasis"><em>Squish</em></span> functions normally require object names
+prefixed by the AUT's name, but the <a class="xref" href="rgs-tkconvenience.html#tk-tcleval-function"><code class="function">tcleval</code></a> function does not need the prefix.
+</p><p>
+Here is the code we entered manually for the first verification for all
+the scripting languages that <span class="emphasis"><em>Squish</em></span> supports. Naturally, you only need
+to look at the code for the language that you will be using for your own
+tests. It is usually more convenient in Tcl to use the <a class="xref" href="rgs-squish.html#test.compare-function"><code class="function">test.compare</code></a> function, but we can of course use
+any of <span class="emphasis"><em>Squish</em></span>'s <code class="code">test</code> functions, such as the <a class="xref" href="rgs-squish.html#test.verify-function"><code class="function">test.verify</code></a> function which we use for the other
+scripting languages.
+</p><div xmlns="" class="scriptlang"><form><select name="scriptlangcombo" onchange="javascript:changeScriptingLanguage(this)" onclick="javascript:changeScriptingLanguage(this)"><option value="all" selected>Show All</option><option value="JavaScript">Show JavaScript</option><option value="Perl">Show Perl</option><option value="Python">Show Python</option><option value="Ruby">Show Ruby</option><option value="Tcl">Show Tcl</option></select></form></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Tcl</span><pre class="programlisting">
+
+    waitForObject ":addressbook\\.tcl.view.tree"
+    set rows [invoke tcleval ".view.tree size"]
+    test compare $rows "125"
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Python</span><pre class="programlisting">
+
+    waitForObject(":addressbook\\.tcl.view.tree")
+    rows = tcleval(".view.tree size")
+    test.verify(rows == "125")
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">JavaScript</span><pre class="programlisting">
+
+    waitForObject(":addressbook\\.tcl.view.tree");
+    var rows = tcleval(".view.tree size");
+    test.verify(parseInt(rows) == 125);
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Perl</span><pre class="programlisting">
+
+    waitForObject(":addressbook\\.tcl.view.tree");
+    my $rows = tcleval(".view.tree size");
+    test::verify($rows eq 125);
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Ruby</span><pre class="programlisting">
+
+    waitForObject(":addressbook\\.tcl.view.tree")
+    rows = tcleval(".view.tree size")
+    Test.verify(rows == "125")
+</pre></div><p>
+The coding pattern is very simple: we ensure that the object
+we are interested in is available, access its properties using
+the <a class="xref" href="rgs-tkconvenience.html#tk-tcleval-function"><code class="function">tcleval</code></a> function, and then verify
+the results using <span class="emphasis"><em>Squish</em></span>'s verification functions.
+</p><p>
+We will see more examples of manually written code shortly, in the
+<a class="xref" href="tutorials-tk.html#tut-tk-creating-manual-tests" title="4.10.1.5. Creating Tests by Hand">Creating Tests by Hand (Section 4.10.1.5)</a> section, and
+further examples are in the <a class="xref" href="users-guide.html" title="Chapter 5. User Guide">User Guide (Chapter 5)</a>.
+</p><p>
+For complete coverage of verification points, see <a class="xref" href="ug-vps.html" title="5.22. How to Create and Use Verification Points">How to Create and Use Verification Points (Section 5.22)</a> in the <a class="xref" href="users-guide.html" title="Chapter 5. User Guide">User Guide (Chapter 5)</a>.
+</p><div class="section" lang="en"><div class="titlepage"><div><div><h5 class="title"><a id="test-results-tk.1"></a>4.10.1.4.1. Test Results</h5></div></div></div><p>
+After each test run finishes, the test results—including those
+for the verification points—are shown in the Test Results view at
+the bottom of the <span class="application">Squish IDE</span>.
+</p><p>
+This is a detailed report of the test run and would also contain details
+of any failures or errors, etc. If you click on a Test Results item, the
+<span class="application">Squish IDE</span> highlights the script line which generated the test result. And if
+you expand a Test Results item, you can see additional details of the
+test.
+</p><div class="sidebar"><p class="title"><b>Processing Test Results</b></p><p>
+<span class="emphasis"><em>Squish</em></span>'s interface for test results is very flexible. By implementing
+custom report generators it is possible to process test results in many
+different ways, for example to store them in a database, or to output
+them as HTML files. The default report generator simply prints the
+results to <code class="filename">stdout</code> when <span class="emphasis"><em>Squish</em></span> is run from the
+command line, or to XML and the Test Results view when <span class="emphasis"><em>Squish</em></span>'s IDE is being
+used. You can <span class="guilabel">Export</span> the XML test results from the <span class="emphasis"><em>Squish</em></span>
+IDE by right clicking on the Test Results and choosing the
+<span class="guimenuitem">Export</span> button or menu action.
+</p><p>
+If you run tests on the command line using <span class="application">squishrunner</span>, you can also
+export the results in different formats and save them to files. For a list of
+report generators available, see <a class="xref" href="rg-cmdline.html#rg-squishrunner-report-generators" title="7.4.3.6.  squishrunner --reportgen: Generating Reports"> <code class="option">squishrunner --reportgen</code>: Generating Reports (Section 7.4.3.6)</a>. See the
+sections <a class="xref" href="rg-regressiontesting.html#rgr-processresults" title="7.1.3. Processing Test Results">Processing Test Results (Section 7.1.3)</a> and <a class="xref" href="ugs-teststatements.html" title="5.9. How to Use Test Statements">How to Use Test Statements (Section 5.9)</a> in the <a class="xref" href="users-guide.html" title="Chapter 5. User Guide">User Guide (Chapter 5)</a> for
+more information. It is also possible to
+log test results directly to a database; see <a class="xref" href="how.to.access.databases.from.squish.test.scripts.html" title="5.18. How to Access Databases from Squish Test Scripts">How to Access Databases from Squish Test Scripts (Section 5.18)</a>.
+</p></div></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="tut-tk-creating-manual-tests"></a>4.10.1.5. Creating Tests by Hand</h4></div></div></div><p>
+Now that we have seen how to record a test and modify it by inserting
+verification points, we are ready to see how to create tests manually.
+The easiest way to do this is to modify and refactor recorded tests,
+although it is also perfectly possible to create manual tests from
+scratch.
+</p><p>
+Potentially the most challenging part of writing manual tests is to use
+the right object names, but in practice, this is rarely a problem. We
+can either copy the symbolic names that <span class="emphasis"><em>Squish</em></span> has already added to
+the Object Map when recording previous tests, or we can copy object
+names directly from recorded tests. And if we haven't recorded any tests
+and are starting from scratch we can use the <span class="application">Spy</span>. We do this by
+clicking the <span class="guibutton">Launch AUT</span> toolbar button. This
+starts the AUT and switches to the <a class="xref" href="ide.main.window.html#ide.squish.spy.perspective" title="8.1.2.1. Squish Spy Perspective">Squish Spy Perspective (Section 8.1.2.1)</a>. We can then interact with the
+AUT until the object we are interested in is visible. Then, inside the
+<span class="application">Squish IDE</span> we can navigate to the object in the
+<span class="guilabel">Application Objects</span> view and
+use the context menu to both <span class="guilabel">Add to Object Map</span> (so that
+<span class="emphasis"><em>Squish</em></span> will remember it) and to <span class="guilabel">Copy Real Name</span> to
+clipboard (so that we can paste it into our test script). When finished, we can
+click the <span class="guibutton">Quit AUT</span> toolbar button to terminate the AUT and
+return <span class="emphasis"><em>Squish</em></span> to the <a class="xref" href="ide.main.window.html#ide.squish.test.management.perspective" title="8.1.2.2. Squish Test Management Perspective">Squish Test Management Perspective (Section 8.1.2.2)</a>.
+</p><p>
+To see the object map entry for a particular symbolic name, you can highlight
+it in the Editor view, right click, and select <span class="guilabel">Open Symbolic Name</span>.
+We can also see the Object Map by clicking the <span class="guibutton">Object Map</span> (<span class="guiicon"><img src="images/ide/object_map_button.png"></img></span>) button (see also, the
+<a class="xref" href="ide.views.html#ide.the-object-map.view" title="8.2.10. Object Map view">Object Map view (Section 8.2.10)</a>). Every application object that
+<span class="emphasis"><em>Squish</em></span> interacts with is listed here, either as a top-level object, or
+as a child object (the view is a tree view). We can retrieve the
+object names used for it by right-clicking the
+object map entry and clicking <span class="guilabel">Copy Object Name</span> or,
+if a string is desired instead, <span class="guilabel">Copy Real Name</span>.
+This is useful for when we want to modify existing test scripts or
+when we want to create test scripts from scratch, as we will see later
+on in the tutorial.
+</p><div class="screenshot"><div class="mediaobject" align="center"><img src="images/tut-squish-omap-tk.png" align="middle"></img><div class="caption"><p><span class="emphasis"><em>Squish</em></span>'s Object Map
+</p></div></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h5 class="title"><a id="tut-tk-modifying-and-refactoring-recorded-tests"></a>4.10.1.5.1. Modifying and Refactoring Recorded Tests</h5></div></div></div><p>
+Suppose we want to test the AUT's Add functionality by adding three new
+names and addresses. We could record such a test, but it may be easier
+to code things manually.  The steps we need the test script
+to do are: first click <span class="guilabel">File|New</span> to create a new address book, then for
+each new name and address:
+</p><div class="itemizedlist"><ul type="disc"><li><p>Click <span class="guilabel">Edit|Add</span></p></li><li><p>Fill in the details </p></li><li><p>Click <span class="guibutton">OK</span></p></li></ul></div><p>
+Finally, click <span class="guilabel">File|Quit</span> without saving. </p><p> We also want to verify at the start that there are no rows of data and at
+the end that there are three rows. We will refactor as we go, to make our code
+as neat and modular as possible.
+</p><p>
+First we must create a new empty test case. Click
+<span class="guimenu">File</span>|<span class="guimenuitem">New Test
+Case...</span> and set the test case's name to be
+<code class="filename">tst_adding</code>. <span class="emphasis"><em>Squish</em></span> will automatically create an
+empty <code class="filename">test.tcl</code> (or <code class="filename">test.js</code>, and
+so on) file.
+</p><p>
+Command line users can simply create a <code class="filename">tst_adding</code>
+directory inside the test suite's directory and create and edit the
+<code class="filename">test.tcl</code> file (or <code class="filename">test.js</code> and
+so on) within that directory.
+</p><p>
+The first thing we need is a way to start the AUT and then invoke a menu
+option. Here are the first few lines from the
+<span class="emphasis"><em>recorded</em></span> <code class="filename">tst_general</code> script:
+</p><div xmlns="" class="scriptlang"><form><select name="scriptlangcombo" onchange="javascript:changeScriptingLanguage(this)" onclick="javascript:changeScriptingLanguage(this)"><option value="all" selected>Show All</option><option value="JavaScript">Show JavaScript</option><option value="Perl">Show Perl</option><option value="Python">Show Python</option><option value="Ruby">Show Ruby</option><option value="Tcl">Show Tcl</option></select></form></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Tcl</span><pre class="programlisting">
+
+proc main {} {
+    startApplication "addressbook.tcl"
+    waitForObjectItem ":addressbook\\.tcl.#menuBar" "File"
+    invoke activateItem ":addressbook\\.tcl.#menuBar" "File"
+    waitForObjectItem ":addressbook\\.tcl.#menuBar.#file" "Open..."
+    invoke activateItem ":addressbook\\.tcl.#menuBar.#file" "Open..."
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Python</span><pre class="programlisting">
+
+def main():
+    startApplication("addressbook.tcl")
+    waitForObjectItem(":addressbook\\.tcl.#menuBar", "File")
+    activateItem(":addressbook\\.tcl.#menuBar", "File")
+    waitForObjectItem(":addressbook\\.tcl.#menuBar.#file", "Open...")
+    activateItem(":addressbook\\.tcl.#menuBar.#file", "Open...")
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">JavaScript</span><pre class="programlisting">
+
+function main()
+{
+    startApplication("addressbook.tcl");
+    waitForObjectItem(":addressbook\\.tcl.#menuBar", "File");
+    activateItem(":addressbook\\.tcl.#menuBar", "File");
+    waitForObjectItem(":addressbook\\.tcl.#menuBar.#file", "Open...");
+    activateItem(":addressbook\\.tcl.#menuBar.#file", "Open...");
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Perl</span><pre class="programlisting">
+
+sub main
+{
+    startApplication("addressbook.tcl");
+    waitForObjectItem(":addressbook\\.tcl.#menuBar", "File");
+    activateItem(":addressbook\\.tcl.#menuBar", "File");
+    waitForObjectItem(":addressbook\\.tcl.#menuBar.#file", "Open...");
+    activateItem(":addressbook\\.tcl.#menuBar.#file", "Open...");
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Ruby</span><pre class="programlisting">
+
+def main
+    startApplication("addressbook.tcl")
+    waitForObject(":addressbook\\.tcl.#menuBar")
+    activateItem(":addressbook\\.tcl.#menuBar", "")
+    waitForObjectItem(":addressbook\\.tcl.#menuBar", "File")
+    activateItem(":addressbook\\.tcl.#menuBar", "File")
+    waitForObjectItem(":addressbook\\.tcl.#menuBar.#file", "Open...")
+    activateItem(":addressbook\\.tcl.#menuBar.#file", "Open...")
+</pre></div><p>
+Notice that the pattern in the code is simple: start the AUT, then wait
+for the menu bar, then activate the menu bar; wait for the menu item,
+then activate the menu item. In both cases we have used the
+<a class="xref" href="rgs-squish.html#waitForObjectItem-function"><code class="function">waitForObjectItem</code></a> function. This function
+is used for a multi-valued objects (such as lists, tables,
+trees—or in this case, a menubar and a menu), and allows us to
+access the object's items (which are themselves objects of course), by
+passing the name of the object containing the item and the item's text
+as arguments.
+</p><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Note"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/note.png"></img></td><th align="left">Note</th></tr><tr><td align="left" valign="top"><p>
+It may seem a waste to copy our functions into
+<code class="filename">tst_adding</code> because we could also use them from
+<code class="filename">tst_general</code> and in other test cases. However, to
+keep this tutorial simple, we will duplicate the code in
+<code class="filename">tst_adding</code>. We cover shared scripts
+in the user guide (See <a class="xref" href="ug-shareddata.html" title="5.23. How to Create and Use Shared Data and Shared Scripts">How to Create and Use Shared Data and Shared Scripts (Section 5.23)</a>).
+</p></td></tr></table></div><p>
+Sometimes the AUT will appear to freeze during test execution.
+When this happens, just wait for <span class="emphasis"><em>Squish</em></span> to time out the AUT
+(about 20 seconds), and then it will pop up an
+<a class="xref" href="ide.dialogs.html#ide.object.not.found.dialog" title="8.3.14. Object Not Found dialog">Object Not Found dialog (Section 8.3.14)</a>, indicating an
+error like this:
+
+</p><pre class="screen">
+Error Script Error Apr 9, 2010
+Detail LookupError: Item 'New...' in object ':addressbook.tcl' not found or ready.
+Called from: C:\squish\examples\tk\addressbook\suite_py\tst_adding\test.tcl: 18
+Location C:\squish\examples\tk\addressbook\suite_py\tst_adding\test.tcl:3
+</pre><p>
+
+This usually means that <span class="emphasis"><em>Squish</em></span> doesn't have an object with the given
+name, or property values, in the Object Map. From here, we can
+<span class="guilabel">Pick a new object</span>, <span class="guilabel">Debug</span>,
+<span class="guilabel">Throw Error</span> or, after picking
+a new object, <span class="guilabel">Retry</span>. In addition to the <span class="application">Spy</span>'s <a class="xref" href="ide.views.html#object-picker">Object Picker</a> (<span class="guiicon"><img src="images/ide/pick-application-object.png"></img></span>) we
+can use the <a class="xref" href="ide.views.html#ide.the-application-objects.view" title="8.2.1. Application Objects view">Application Objects view (Section 8.2.1)</a> to locate the
+objects we are interested in and use a context menu action to
+<span class="guilabel">Add to the Object Map</span>. In general, recording a dummy test
+case that interacts with all of the relevant AUT objects is a much more
+efficient way to initially populate the Object Map. </p><p>
+We've spent a bit of time on the issue of naming since it is probably
+the part of writing scripts that leads to the most error messages
+(usually of the "object ... not found" kind shown above.) Once we have
+identified the objects we are going to access in our tests, writing test
+scripts using <span class="emphasis"><em>Squish</em></span> is very straightforward. And of course you can
+almost certainly use the scripting language you are most familiar with
+since <span class="emphasis"><em>Squish</em></span> supports the most popular ones available.
+</p><p>
+We are now almost ready to write our own test script. It is probably
+easiest to begin by recording a dummy test. So click
+<span class="guimenu">File</span>|<span class="guimenuitem">New Test
+Case...</span> and set the test case's name to be
+<code class="filename">tst_dummy</code>. Then click the dummy test case's
+<span class="guibutton">Record</span> (<span class="guiicon"><img src="images/ide/record.png"></img></span>). Once the AUT starts, click <span class="guilabel">File|New</span>, then
+click the (empty) table, then click <span class="guilabel">Edit|Add</span> and add an
+item, then press Return or click <span class="guibutton">OK</span>. Finally,
+click <span class="guilabel">File|Quit</span> to finish, and say No to saving changes.</p><p> Replay this test just to confirm that everything works okay. The sole purpose
+of this is to make sure that <span class="emphasis"><em>Squish</em></span> adds the necessary names to the
+Object Map since it is probably quicker to do it this way than to use
+the <span class="application">Spy</span> for every object of interest. After replaying the dummy test
+you can delete it if you want to.
+</p><div xmlns="" class="scriptlang"><form><select name="scriptlangcombo" onchange="javascript:changeScriptingLanguage(this)" onclick="javascript:changeScriptingLanguage(this)"><option value="all" selected>Show All</option><option value="JavaScript">Show JavaScript</option><option value="Perl">Show Perl</option><option value="Python">Show Python</option><option value="Ruby">Show Ruby</option><option value="Tcl">Show Tcl</option></select></form></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Tcl</span><pre class="programlisting">
+
+proc main {} {
+    startApplication "addressbook.tcl"
+    invokeMenuItem "File" "New"
+    verifyRows 0
+    set data [list \
+        [list "Andy" "Beach" "andy.beach@nowhere.com" "555 123 6786"] \
+        [list "Candy" "Deane" "candy.deane@nowhere.com" "555 234 8765"] \
+        [list "Ed" "Fernleaf" "ed.fernleaf@nowhere.com" "555 876 4654"] ]
+    for {set i 0} {$i &lt; [llength $data]} {incr i} {
+        addNameAndAddress [lindex $data $i]
+    }
+    verifyRows [llength $data]
+    closeWithoutSaving
+}
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Python</span><pre class="programlisting">
+
+def main():
+    startApplication("addressbook.tcl")
+    invokeMenuItem("File", "New")
+    verifyRows(0)
+    data = [("Andy", "Beach", "andy.beach@nowhere.com", "555 123 6786"),
+            ("Candy", "Deane", "candy.deane@nowhere.com", "555 234 8765"),
+            ("Ed", "Fernleaf", "ed.fernleaf@nowhere.com", "555 876 4654")]
+    for oneNameAndAddress in data:
+        addNameAndAddress(oneNameAndAddress)
+    verifyRows(len(data))
+    closeWithoutSaving()
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">JavaScript</span><pre class="programlisting">
+
+function main()
+{
+    startApplication("addressbook.tcl");
+    invokeMenuItem("File", "New");
+    verifyRows(0);
+    var data = new Array(
+        new Array("Andy", "Beach", "andy.beach@nowhere.com", "555 123 6786"),
+        new Array("Candy", "Deane", "candy.deane@nowhere.com", "555 234 8765"),
+        new Array("Ed", "Fernleaf", "ed.fernleaf@nowhere.com", "555 876 4654"));
+    for (var row = 0; row &lt; data.length; ++row)
+        addNameAndAddress(data[row]);
+    verifyRows(data.length);
+    closeWithoutSaving();
+}
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Perl</span><pre class="programlisting">
+
+sub main
+{
+    startApplication("addressbook.tcl");
+    invokeMenuItem("File", "New");
+    verifyRows(0);
+    my @data = (["Andy", "Beach", "andy.beach\@nowhere.com", "555 123 6786"],
+                ["Candy", "Deane", "candy.deane\@nowhere.com", "555 234 8765"],
+                ["Ed", "Fernleaf", "ed.fernleaf\@nowhere.com", "555 876 4654"]);
+    foreach $oneNameAndAddress (@data) {
+        addNameAndAddress(@{$oneNameAndAddress});
+    }
+    verifyRows(scalar(@data));
+    closeWithoutSaving;
+}
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Ruby</span><pre class="programlisting">
+
+def main
+    startApplication("addressbook.tcl")
+    invokeMenuItem("File", "New")
+    verifyRows(0)
+    data = [["Andy", "Beach", "andy.beach@nowhere.com", "555 123 6786"],
+        ["Candy", "Deane", "candy.deane@nowhere.com", "555 234 8765"],
+        ["Ed", "Fernleaf", "ed.fernleaf@nowhere.com", "555 876 4654"]]
+    data.each do |oneNameAndAddress|
+        addNameAndAddress(oneNameAndAddress)
+    end
+    verifyRows(data.length)
+    closeWithoutSaving
+end
+</pre></div><p>
+We begin by starting the application with a call to the <a class="xref" href="rgs-squish.html#startApplication-function"><code class="function">startApplication</code></a> function. The name we pass as a
+string is the name registered with <span class="emphasis"><em>Squish</em></span> (normally the name of the
+executable).
+</p><p>
+The <code class="function">invokeMenuItem</code> function is one we have created
+specially for this test. It takes a menu name and a menu option name and
+invokes the menu option. After using the <code class="code">invokeMenuItem</code>
+function to do
+<span class="guilabel">File|New</span>, we verify that the table's row count is 0. The
+<a class="xref" href="rgs-squish.html#test.verify-function"><code class="function">test.verify</code></a> function is useful when we simply
+want to verify that a condition is true rather than compare two
+different values. (For Tcl we usually use the <a class="xref" href="rgs-squish.html#test.compare-function"><code class="function">test.compare</code></a> function rather than the <a class="xref" href="rgs-squish.html#test.verify-function"><code class="function">test.verify</code></a> function simply because it is
+slightly simpler to use in Tcl.)
+</p><p>
+Next, we create some sample data and call a custom
+<code class="function">addNameAndAddress </code> to populate the table with the
+data using the AUT's Add dialog. Then we again compare the table's row
+count, this time to the number of rows in our sample data. And finally
+we call a custom <code class="function">closeWithoutSaving</code> to terminate
+the application.
+</p><p>
+We will now review each of the four supporting functions (and a fifth
+helper function), so as to
+cover all the code in the <code class="filename">tst_adding</code> test case,
+starting with <code class="function">invokeMenuItem</code>.
+</p><div xmlns="" class="scriptlang"><form><select name="scriptlangcombo" onchange="javascript:changeScriptingLanguage(this)" onclick="javascript:changeScriptingLanguage(this)"><option value="all" selected>Show All</option><option value="JavaScript">Show JavaScript</option><option value="Perl">Show Perl</option><option value="Python">Show Python</option><option value="Ruby">Show Ruby</option><option value="Tcl">Show Tcl</option></select></form></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Tcl</span><pre class="programlisting">
+
+proc invokeMenuItem {menu item} {
+    waitForObjectItem ":addressbook\\.tcl.#menuBar" $menu
+    invoke activateItem ":addressbook\\.tcl.#menuBar" $menu
+    set menuName [string tolower $menu]
+    waitForObjectItem ":addressbook\\.tcl.#menuBar.#$menuName" $item
+    invoke activateItem ":addressbook\\.tcl.#menuBar.#$menuName" $item
+}
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Python</span><pre class="programlisting">
+
+def invokeMenuItem(menu, item):
+    waitForObjectItem(":addressbook\\.tcl.#menuBar", menu)
+    activateItem(":addressbook\\.tcl.#menuBar", menu)
+    waitForObjectItem(":addressbook\\.tcl.#menuBar.#%s" % menu.lower(), item)
+    activateItem(":addressbook\\.tcl.#menuBar.#%s" % menu.lower(), item)
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">JavaScript</span><pre class="programlisting">
+
+function invokeMenuItem(menu, item)
+{
+    waitForObjectItem(":addressbook\\.tcl.#menuBar", menu);
+    activateItem(":addressbook\\.tcl.#menuBar", menu);
+    var menuText = menu.toLowerCase();
+    waitForObjectItem(":addressbook\\.tcl.#menuBar.#" + menuText, item);
+    activateItem(":addressbook\\.tcl.#menuBar.#" + menuText, item);
+}
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Perl</span><pre class="programlisting">
+
+sub invokeMenuItem
+{
+    my ($menu, $item) = @_;
+    waitForObjectItem(":addressbook\\.tcl.#menuBar", $menu);
+    activateItem(":addressbook\\.tcl.#menuBar", $menu);
+    my $menuText = lc $menu;
+    waitForObjectItem(":addressbook\\.tcl.#menuBar.#$menuText", $item);
+    activateItem(":addressbook\\.tcl.#menuBar.#$menuText", $item);
+}
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Ruby</span><pre class="programlisting">
+
+def invokeMenuItem(menu, item)
+    waitForObjectItem(":addressbook\\.tcl.#menuBar", menu)
+    activateItem(":addressbook\\.tcl.#menuBar", menu)
+    waitForObjectItem(":addressbook\\.tcl.#menuBar.#%s" % menu.downcase, item)
+    activateItem(":addressbook\\.tcl.#menuBar.#%s" % menu.downcase, item)
+end
+</pre></div><p>
+Symbolic names are based on the hierarchy of an object in its GUI.
+In Squish/Tk, real names are strings that also represent that hierarchy.
+Here, we've used the string names that <span class="emphasis"><em>Squish</em></span>
+generated, except that for the menus and item, we parametrize the
+label text.
+</p><p>
+Once we have identified the object we want to interact with, we use the
+<a class="xref" href="rgs-squish.html#waitForObjectItem-function"><code class="function">waitForObjectItem</code></a> function to retrieve a
+reference to it and in this case we then apply the
+<a class="xref" href="rgs-tkconvenience.html#tk-activateItem-function"><code class="function">activateItem</code></a> function to it. The <a class="xref" href="rgs-squish.html#waitForObjectItem-function"><code class="function">waitForObjectItem</code></a> function pauses <span class="emphasis"><em>Squish</em></span> until
+the specified object and its item are visible and enabled. So, here, we
+waited for the menu bar and one of its menu bar items, and then we
+waited for a menu bar item and one of its menu items. And as soon as the
+waiting is over each time we activate the object and its item using the
+<a class="xref" href="rgs-tkconvenience.html#tk-activateItem-function"><code class="function">activateItem</code></a> function.
+</p><div xmlns="" class="scriptlang"><form><select name="scriptlangcombo" onchange="javascript:changeScriptingLanguage(this)" onclick="javascript:changeScriptingLanguage(this)"><option value="all" selected>Show All</option><option value="JavaScript">Show JavaScript</option><option value="Perl">Show Perl</option><option value="Python">Show Python</option><option value="Ruby">Show Ruby</option><option value="Tcl">Show Tcl</option></select></form></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Tcl</span><pre class="programlisting">
+
+proc verifyRows {expected_rows} {
+    waitForObject ":addressbook\\.tcl.view.tree"
+    set rows [invoke tcleval ".view.tree size"]
+    test compare $rows "$expected_rows"
+}
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Python</span><pre class="programlisting">
+
+def verifyRows(expected_rows):
+    waitForObject(":addressbook\\.tcl.view.tree")
+    rows = tcleval(".view.tree size")
+    test.verify(cast(rows, int) == expected_rows)
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">JavaScript</span><pre class="programlisting">
+
+function verifyRows(expected_rows)
+{
+    waitForObject(":addressbook\\.tcl.view.tree");
+    var rows = tcleval(".view.tree size");
+    test.verify(parseInt(rows) == expected_rows);
+}
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Perl</span><pre class="programlisting">
+
+sub verifyRows
+{
+    my $expected_rows = shift;
+    waitForObject(":addressbook\\.tcl.view.tree");
+    my $rows = tcleval(".view.tree size");
+    test::verify($rows eq $expected_rows);
+}
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Ruby</span><pre class="programlisting">
+
+def verifyRows(expected_rows)
+    waitForObject(":addressbook\\.tcl.view.tree")
+    rows = tcleval(".view.tree size")
+    Test.compare(String(rows), String(expected_rows))
+end
+</pre></div><p>
+Rather than duplicate the three lines needed to verify the row count in
+two separate places we have packaged the functionality up into a tiny
+function. (Note that for the Python version we used the <a class="xref" href="rgs-squish.html#cast-function"><code class="function">cast</code></a> function since <span class="emphasis"><em>Squish</em></span> has its own
+<code class="code">int</code> object; see also, <a class="xref" href="rgs-py.html#squish.python.modules" title="6.14.3. Squish's Python Modules">Squish's Python Modules (Section 6.14.3)</a>.)
+</p><div xmlns="" class="scriptlang"><form><select name="scriptlangcombo" onchange="javascript:changeScriptingLanguage(this)" onclick="javascript:changeScriptingLanguage(this)"><option value="all" selected>Show All</option><option value="JavaScript">Show JavaScript</option><option value="Perl">Show Perl</option><option value="Python">Show Python</option><option value="Ruby">Show Ruby</option><option value="Tcl">Show Tcl</option></select></form></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Tcl</span><pre class="programlisting">
+
+proc addNameAndAddress {oneNameAndAddress} {
+    invokeMenuItem "Edit" "Add..."
+    set fieldNames [list "forename" "surname" "phone" "email"]
+    for {set field 0} {$field &lt; [llength $fieldNames]} {incr field} {
+        set fieldName [lindex $fieldNames $field]
+        set text [lindex $oneNameAndAddress $field]
+        invoke type [waitForObject ":addressbook\\.tcl.dialog.$fieldName"] $text
+    }
+    invoke clickButton [waitForObject ":addressbook\\.tcl.dialog.buttonarea.ok"]
+}
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Python</span><pre class="programlisting">
+
+def addNameAndAddress(oneNameAndAddress):
+    invokeMenuItem("Edit", "Add...")
+    for fieldName, text in zip(("forename", "surname", "phone", "email"), oneNameAndAddress):
+        type(waitForObject(":addressbook\\.tcl.dialog.%s" % fieldName), text)
+    clickButton(waitForObject(":addressbook\\.tcl.dialog.buttonarea.ok"))
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">JavaScript</span><pre class="programlisting">
+
+function addNameAndAddress(oneNameAndAddress)
+{
+    invokeMenuItem("Edit", "Add...");
+    var fieldNames = new Array("forename", "surname", "phone", "email");
+    for (var i = 0; i &lt; oneNameAndAddress.length; ++i) {
+        var fieldName = fieldNames[i];
+        var text = oneNameAndAddress[i];
+        type(waitForObject(":addressbook\\.tcl.dialog." + fieldName), text);
+    }
+    clickButton(waitForObject(":addressbook\\.tcl.dialog.buttonarea.ok"));
+}
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Perl</span><pre class="programlisting">
+
+sub addNameAndAddress
+{
+    my (@oneNameAndAddress) = @_;
+    invokeMenuItem("Edit", "Add...");
+    my @fieldNames = ("forename", "surname", "phone", "email");
+    my $fieldName = "";
+    for (my $i = 0; $i &lt; scalar(@fieldNames); $i++) {
+        $fieldName = $fieldNames[$i];
+        my $text = $oneNameAndAddress[$i];
+        type(waitForObject(":addressbook\\.tcl.dialog.$fieldName"), $text);
+    }
+    clickButton(waitForObject(":addressbook\\.tcl.dialog.buttonarea.ok"));
+}
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Ruby</span><pre class="programlisting">
+
+def addNameAndAddress(oneNameAndAddress)
+    invokeMenuItem("Edit", "Add...")
+    ["forename", "surname", "email", "phone"].each_with_index do
+        |fieldName, index|
+        text = oneNameAndAddress[index]
+        type(waitForObject(":addressbook\\.tcl.dialog.#{fieldName}"), text)
+    end
+    clickButton(waitForObject(":addressbook\\.tcl.dialog.buttonarea.ok"))
+end
+</pre></div><p>
+For each set of name and address data we invoke the
+<span class="guilabel">Edit|Add</span> menu option to pop up the Add dialog. Then for
+each value received, we populate the
+appropriate field by waiting for the relevant line edit to be ready and
+then typing in the text using the <a class="xref" href="rgs-tkconvenience.html#tk-type-function"><code class="function">type</code></a>
+function. We got the <a class="xref" href="rgs-tkconvenience.html#tk-type-function"><code class="function">type</code></a> function call by
+copying it from the recorded <code class="filename">tst_general</code> test and
+parametrizing it by the field name and the text. And at the end, we
+click the dialog's <span class="guibutton">OK</span>, again using code we copied from the
+recorded <code class="filename">tst_general</code> test case.
+</p><div xmlns="" class="scriptlang"><form><select name="scriptlangcombo" onchange="javascript:changeScriptingLanguage(this)" onclick="javascript:changeScriptingLanguage(this)"><option value="all" selected>Show All</option><option value="JavaScript">Show JavaScript</option><option value="Perl">Show Perl</option><option value="Python">Show Python</option><option value="Ruby">Show Ruby</option><option value="Tcl">Show Tcl</option></select></form></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Tcl</span><pre class="programlisting">
+
+proc closeWithoutSaving {} {
+    invokeMenuItem "File" "Quit"
+    invoke clickButton [waitForObject ":addressbook\\.tcl.__tk__messagebox.no"]
+}
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Python</span><pre class="programlisting">
+
+def closeWithoutSaving():
+    invokeMenuItem("File", "Quit")
+    clickButton(waitForObject(":addressbook\\.tcl.__tk__messagebox.no"))
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">JavaScript</span><pre class="programlisting">
+
+function closeWithoutSaving()
+{
+    invokeMenuItem("File", "Quit");
+    clickButton(waitForObject(":addressbook\\.tcl.__tk__messagebox.no"));
+}
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Perl</span><pre class="programlisting">
+
+sub closeWithoutSaving
+{
+    invokeMenuItem("File", "Quit");
+    clickButton(waitForObject(":addressbook\\.tcl.__tk__messagebox.no"));
+}
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Ruby</span><pre class="programlisting">
+
+def closeWithoutSaving
+    invokeMenuItem("File", "Quit")
+    clickButton(waitForObject(":addressbook\\.tcl.__tk__messagebox.no"))
+end
+</pre></div><p>
+Here we use the <code class="function">invokeMenuItem</code> to do
+<span class="guilabel">File|Quit</span>,
+and then click the <span class="guilabel">Save unsaved changes?</span> dialog's
+<span class="guibutton">No</span>. The last line was copied from the recorded test.
+</p><p>
+The entire test is around 75 lines of code—and would be even less
+if we moved the common functions (such as <code class="function">invokeMenuItem</code>,
+<code class="function">enterText</code>, <code class="function">verifyRows</code>, and
+<code class="function">closeWithoutSaving</code>) into a shared script. And much of the code was
+copied directly from the recorded test, and in some cases parametrized.
+</p><p>
+This should be sufficient to give a flavor of writing test scripts for
+an AUT. Keep in mind that <span class="emphasis"><em>Squish</em></span> provides far more functionality than
+we used here, (all of which is covered in the <a class="xref" href="api.man.html" title="Chapter 6. API Reference Manual">API Reference Manual (Chapter 6)</a> and the <a class="xref" href="ref.man.html" title="Chapter 7. Tools Reference Manual">Tools Reference Manual (Chapter 7)</a>). And
+<span class="emphasis"><em>Squish</em></span> also provides access to the entire public APIs of the AUT's
+objects.
+</p><p>
+However, one aspect of the test case is not very satisfactory. Although
+embedding test data as we did here is sensible for small amounts, it is
+rather limiting, especially when we want to use a lot of test data.
+Also, we didn't test any of the data that was added to see if it
+correctly ended up in the table.
+In the next section we will create another version of this test, only this
+time we will pull in the data from an external data source, and check
+that the actual data we added to the table is correct.
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h5 class="title"><a id="tgs-datadriven-tk"></a>4.10.1.5.2. Creating Data Driven Tests</h5></div></div></div><p>
+In the previous section we put three hard-coded names and addresses in
+our test. But what if we want to test <span class="emphasis"><em>lots</em></span> of data?
+Or what if we want to change the data without having to change our test
+script's source code. One approach is to import a dataset into <span class="emphasis"><em>Squish</em></span>
+and use the dataset as the source of the values we insert into our
+tests. <span class="emphasis"><em>Squish</em></span> can import data in <code class="filename">.tsv</code>
+(tab-separated values format), <code class="filename">.csv</code>
+(comma-separated values format), <code class="filename">.xls</code> or
+<code class="filename">.xlsx</code> (<span class="trademark">Microsoft</span>® <span class="trademark">Excel</span>™ spreadsheet formats).
+<sup>[<a id="idp43080408" href="#ftn.idp43080408" class="footnote">16</a>]</sup>
+</p><p>
+Test data can be imported using the <span class="application">Squish IDE</span>, or manually using a
+file manager or console commands. We will describe both approaches,
+starting with using the <span class="application">Squish IDE</span>.
+</p><p>
+For the <span class="application">addressbook.tcl</span> application we want to
+import the <code class="filename">MyAddresses.tsv</code> data file. To do this, we
+must start by clicking <span class="guimenu">File</span>|<span class="guimenuitem">Import Test Resource</span> to pop-up the
+<a class="xref" href="ide.dialogs.html#ide.import.squish.resource.dialog" title="8.3.7. Import Squish Resource dialog">Import Squish Resource dialog (Section 8.3.7)</a>. Inside the dialog, click
+the <span class="guibutton">Browse</span> button to choose the file to
+import—in this case <code class="filename">MyAddresses.tsv</code>. Make
+sure that the <span class="guilabel">Import As</span> combobox is set to
+“<span class="quote">TestData</span>”. By default the <span class="application">Squish IDE</span> will import the test data
+just for the current test case, but we want the test data to be
+available to all the test suite's test cases: to do this check the
+<span class="guibutton">Copy to Test Suite for Sharing</span> radio button. Now
+click the <span class="guibutton">Finish</span> button. You can now see the file
+listed in the Test Suite Resources view (in the Test Data tab), and if
+you click the file's name it will be shown in an <a class="xref" href="ide.views.html#ide.the-editor.view" title="8.2.6. Editor view">Editor view (Section 8.2.6)</a>. The screenshot shows <span class="emphasis"><em>Squish</em></span> after the
+test data has been added.
+</p><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Note: For command-line users"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/note.png"></img></td><th align="left"><span class="emphasis"><em>For command-line users</em></span></th></tr><tr><td align="left" valign="top"><p>
+It is also possible to import test data outside the <span class="application">Squish IDE</span> using a file
+manager (such as File Explorer) or console commands. To do this, create or go to
+a directory inside the test suite's directory called
+<code class="filename">shared</code>. Now make a directory inside the
+<code class="filename">shared</code> directory called
+<code class="filename">testdata</code>. Now copy the data file (in this example,
+<code class="filename">MyAddresses.tsv</code>) into the
+<code class="filename">shared/testdata</code> directory. Now quit the <span class="application">Squish IDE</span> if it
+is running and start it up again. If you click the <span class="guilabel">Test Suite
+Resources</span> view's <span class="guilabel">Test Data</span> tab you should see
+the data file. Click the file's name to see it in an
+<a class="xref" href="ide.views.html#ide.the-editor.view" title="8.2.6. Editor view">Editor view (Section 8.2.6)</a>.
+</p></td></tr></table></div><div class="screenshot"><div class="mediaobject" align="center"><img src="images/tut-squish8-tk.png" align="middle"></img><div class="caption"><p><span class="emphasis"><em>Squish</em></span> with some imported test data
+</p></div></div></div><p>
+Although in real life we would modify our
+<code class="filename">tst_adding</code> test case to use the test data, for the
+purpose of the tutorial we will make a new test case called
+<code class="filename">tst_adding_data</code> that is a copy of
+<code class="filename">tst_adding</code> and which we will modify to make use of
+the test data.
+</p><p>
+The only function we have to change is <code class="code">main</code>, where
+instead of iterating over hard-coded items of data, we iterate over all
+the records in the dataset. We also need to update the expected row
+count at the end since we are adding a lot more records now, and we will
+also add a function to verify each record that's added.
+</p><div xmlns="" class="scriptlang"><form><select name="scriptlangcombo" onchange="javascript:changeScriptingLanguage(this)" onclick="javascript:changeScriptingLanguage(this)"><option value="all" selected>Show All</option><option value="JavaScript">Show JavaScript</option><option value="Perl">Show Perl</option><option value="Python">Show Python</option><option value="Ruby">Show Ruby</option><option value="Tcl">Show Tcl</option></select></form></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Tcl</span><pre class="programlisting">
+
+proc main {} {
+    startApplication "addressbook.tcl"
+    invokeMenuItem "File" "New"
+    verifyRows 0
+    # Set a limit to avoid testing 100s of rows
+    set limit 10
+    set data [testData dataset "MyAddresses.tsv"]
+    set columns [llength [testData fieldNames [lindex $data 0]]]
+    set row 0
+    for {} {$row &lt; [llength $data]} {incr row} {
+        set record [lindex $data $row]
+        set forename [testData field $record "Forename"]
+        set surname [testData field $record "Surname"]
+        set phone [testData field $record "Phone"]
+        set email [testData field $record "Email"]
+        set details [list $forename $surname $phone $email]
+        addNameAndAddress $details
+        checkNameAndAddress $record
+        if {$row &gt; $limit} {
+            break
+        }
+    }
+    verifyRows [expr $row + 1]
+    closeWithoutSaving
+}
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Python</span><pre class="programlisting">
+
+def main():
+    startApplication("addressbook.tcl")
+    invokeMenuItem("File", "New")
+    verifyRows(0)
+    limit = 10 # To avoid testing 100s of rows since that would be boring
+    for row, record in enumerate(testData.dataset("MyAddresses.tsv")):
+        forename = testData.field(record, "Forename")
+        surname = testData.field(record, "Surname")
+        phone = testData.field(record, "Phone")
+        email = testData.field(record, "Email")
+        addNameAndAddress((forename, surname, phone, email)) # pass as a single tuple
+        checkNameAndAddress(record)
+        if row &gt; limit:
+            break
+    verifyRows(row + 1)
+    closeWithoutSaving()
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">JavaScript</span><pre class="programlisting">
+
+function main()
+{
+    startApplication("addressbook.tcl");
+    invokeMenuItem("File", "New");
+    verifyRows(0);
+    var limit = 10; // To avoid testing 100s of rows since that would be boring
+    var records = testData.dataset("MyAddresses.tsv");
+    for (var row = 0; row &lt; records.length; ++row) {
+        var record = records[row];
+        var forename = testData.field(record, "Forename");
+        var surname = testData.field(record, "Surname");
+        var phone = testData.field(record, "Phone");
+        var email = testData.field(record, "Email");
+        addNameAndAddress(new Array(forename, surname, phone, email));
+        checkNameAndAddress(record);
+        if (row &gt; limit)
+            break;
+    }
+    verifyRows(row + 1);
+    closeWithoutSaving();
+}
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Perl</span><pre class="programlisting">
+
+sub main
+{
+    startApplication("addressbook.tcl");
+    invokeMenuItem("File", "New");
+    verifyRows(0);
+    my $limit = 10; # To avoid testing 100s of rows since that would be boring
+    my @records = testData::dataset("MyAddresses.tsv");
+    my $row = 0;
+    for (; $row &lt; scalar(@records); ++$row) {
+        my $record = $records[$row];
+        my $forename = testData::field($record, "Forename");
+        my $surname = testData::field($record, "Surname");
+        my $phone = testData::field($record, "Phone");
+        my $email = testData::field($record, "Email");
+        addNameAndAddress($forename, $surname, $phone, $email);
+        checkNameAndAddress($record);
+        if ($row &gt; $limit) {
+            last;
+        }
+    }
+    verifyRows($row + 1);
+    closeWithoutSaving;
+}
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Ruby</span><pre class="programlisting">
+
+def main
+    startApplication("addressbook.tcl")
+    invokeMenuItem("File", "New")
+    verifyRows(0)
+    limit = 10 # To avoid testing 100s of rows since that would be boring
+    rows = 0
+    TestData.dataset("MyAddresses.tsv").each_with_index do
+        |record, row|
+        forename = TestData.field(record, "Forename")
+        surname = TestData.field(record, "Surname")
+        email = TestData.field(record, "Email")
+        phone = TestData.field(record, "Phone")
+        addNameAndAddress([forename, surname, email, phone]) # pass as a single Array
+        checkNameAndAddress(record)
+        break if row &gt; limit
+        rows += 1
+    end
+    verifyRows(rows + 1)
+    closeWithoutSaving
+end
+</pre></div><p>
+<span class="emphasis"><em>Squish</em></span> provides access to test data through its <code class="code">testData</code>
+module's functions—here we used the <a class="xref" href="rgs-squish.html#testData.dataset-function"><code class="function">testData.dataset</code></a> function to access the data file
+and make its records available, and the <a class="xref" href="rgs-squish.html#testData.field-function"><code class="function">testData.field</code></a> function to retrieve each record's
+individual fields.
+</p><p>
+Having used the test data to populate table we
+want to be confident that the data in the table is the same as what we
+have added, so that's why we added the
+<code class="function">checkNameAndAddress</code> function. We also added a limit to
+how many records we would compare, just to make the test run faster.
+</p><div xmlns="" class="scriptlang"><form><select name="scriptlangcombo" onchange="javascript:changeScriptingLanguage(this)" onclick="javascript:changeScriptingLanguage(this)"><option value="all" selected>Show All</option><option value="JavaScript">Show JavaScript</option><option value="Perl">Show Perl</option><option value="Python">Show Python</option><option value="Ruby">Show Ruby</option><option value="Tcl">Show Tcl</option></select></form></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Tcl</span><pre class="programlisting">
+
+proc checkNameAndAddress {record} {
+    set columns [llength [testData fieldNames $record]]
+    for {set column 0} {$column &lt; $columns} {incr column} {
+        set expected_text [testData field $record $column]
+        waitForObject ":addressbook\\.tcl.view.tree"
+        # New items are always inserted before the current one, so the row is always 0
+        set cell [toString [invoke tcleval ".view.tree cellindex 0,$column"]]
+        set actual_text [invoke tcleval ".view.tree cellcget $cell -text"]
+        test compare $expected_text $actual_text
+    }
+}
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Python</span><pre class="programlisting">
+
+def checkNameAndAddress(record):
+    for column in range(len(testData.fieldNames(record))):
+        expected_text = testData.field(record, column)
+        waitForObject(":addressbook\\.tcl.view.tree")
+        # New items are always inserted before the current one, so the row is always 0
+        actual_text = tcleval(".view.tree cellcget [.view.tree cellindex 0,%d] -text" % column)
+        test.compare(expected_text, actual_text)
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">JavaScript</span><pre class="programlisting">
+
+function checkNameAndAddress(record)
+{
+    for (var column = 0; column &lt; testData.fieldNames(record).length; ++column) {
+        var expected_text = testData.field(record, column);
+        waitForObject(":addressbook\\.tcl.view.tree");
+        var actual_text = tcleval(".view.tree cellcget [.view.tree cellindex 0," + column + "] -text");
+        test.compare(expected_text, actual_text);
+    }
+}
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Perl</span><pre class="programlisting">
+
+sub checkNameAndAddress
+{
+    my $record = shift;
+    my @columnNames = testData::fieldNames($record);
+    for (my $column = 0; $column &lt; scalar(@columnNames); $column++) {
+        my $expected_text = testData::field($record, $column);
+        waitForObject(":addressbook\\.tcl.view.tree");
+        # New items are always inserted before the current one, so the row is always 0
+        my $actual_text = tcleval(".view.tree cellcget [.view.tree cellindex 0,$column] -text");
+        test::compare($expected_text, $actual_text);
+    }
+}
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Ruby</span><pre class="programlisting">
+
+def checkNameAndAddress(record)
+    for column in 0...TestData.fieldNames(record).length
+        actual_text = tcleval(
+        ".view.tree cellcget [.view.tree cellindex 0,#{column}] -text")
+        Test.compare(actual_text, TestData.field(record, column))
+    end
+end
+</pre></div><p>
+This function accesses the table's
+first row and extracts each of its columns' values. We use <span class="emphasis"><em>Squish</em></span>'s
+<a class="xref" href="rgs-squish.html#testData.fieldNames-function"><code class="function">testData.fieldNames</code></a> function to get a
+column count and then use the <a class="xref" href="rgs-squish.html#test.compare-function"><code class="function">test.compare</code></a>
+function to check that each value in the table is the same as the value in the test
+data we used. Note that for this particular test we always insert new
+rows at the start of the table. The effect of this is that every new
+name and address is always added as the first row, so this is why we
+hard-coded the row to be 0.
+</p><p>
+The screenshot shows <span class="emphasis"><em>Squish</em></span>'s Test Summary log after the data-driven tests have
+been run.
+</p><div class="screenshot"><div class="mediaobject" align="center"><img src="images/tk-tut-squishgui15.png" align="middle"></img><div class="caption"><p><span class="emphasis"><em>Squish</em></span> after a successful data-driven test run
+</p></div></div></div></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="tk-tut-learning-more"></a>4.10.1.6. Learning More</h4></div></div></div><p>
+We have now completed the tutorial! <span class="emphasis"><em>Squish</em></span> can of course do
+<span class="emphasis"><em>much</em></span> more than we have shown here, but the aim has
+been to get you started with basic testing as quickly and easily as
+possible.
+</p><p>
+The <a class="xref" href="api.man.html" title="Chapter 6. API Reference Manual">API Reference Manual (Chapter 6)</a> and <a class="xref" href="ref.man.html" title="Chapter 7. Tools Reference Manual">Tools Reference Manual (Chapter 7)</a> give full
+details of <span class="emphasis"><em>Squish</em></span>'s testing API and the numerous functions it offers
+to make testing as easy and efficient as possible. It is well worth
+reading the <a class="xref" href="users-guide.html" title="Chapter 5. User Guide">User Guide (Chapter 5)</a> and at least skimming the
+<a class="xref" href="api.man.html" title="Chapter 6. API Reference Manual">API Reference Manual (Chapter 6)</a> and <a class="xref" href="ref.man.html" title="Chapter 7. Tools Reference Manual">Tools Reference Manual (Chapter 7)</a>—especially
+since the time invested will be repaid because you'll know what
+functionality <span class="emphasis"><em>Squish</em></span> provides out of the box and can avoid reinventing
+things that are already available.
+</p><p>
+In addition to the documented examples listed above, further Tk example
+applications and their corresponding tests are provided in
+<code class="filename">SQUISHDIR/examples/tk</code>.
+</p></div></div><div class="footnotes"><br></br><hr width="100" align="left"></hr><div class="footnote"><p><sup>[<a id="ftn.idp42775920" href="#idp42775920" class="para">15</a>] </sup>
+Each AUT must be registered with the <span class="application">squishserver</span> so that test scripts
+do not need to include the AUT's path, thus making the tests
+platform-independent. Another benefit of registering is that AUTs can be
+tested without the <span class="application">Squish IDE</span>—for example, when doing regression
+testing.
+</p></div><div class="footnote"><p><sup>[<a id="ftn.idp43080408" href="#idp43080408" class="para">16</a>] </sup>
+Both <code class="filename">.csv</code> and <code class="filename">.tsv</code> files are
+assumed to use the Unicode UTF-8 encoding—the same encoding used
+for all test scripts.
+</p></div></div></div><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" type="text/javascript" src="ScriptingLanguage.js"></script><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format">setScriptingLanguage();</script><div class="navfooter"><hr></hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="tutorials-iphone.html">Prev</a> </td><td width="20%" align="center"><a accesskey="u" href="tutorials.html">Up</a></td><td width="40%" align="right"> <a accesskey="n" href="tutorials-gdc.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">4.9. Squish for iOS Tutorials </td><td width="20%" align="center"><a accesskey="h" href="index-noframes.html">Home</a></td><td width="40%" align="right" valign="top"> 4.11. Squish for GDC Tutorials</td></tr></table></div></body>
+<!-- Mirrored from tutorials-tk.html by HTTrack Website Copier/3.x [XR&CO'2013], Wed, 06 Jul 2022 13:28:59 GMT -->
+</html>

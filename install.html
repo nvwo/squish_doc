@@ -1,0 +1,125 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<!-- Mirrored from install.html by HTTrack Website Copier/3.x [XR&CO'2013], Wed, 06 Jul 2022 13:28:58 GMT -->
+<head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><title>Chapter 3. How to Install Squish</title><link rel="stylesheet" href="manual.css" type="text/css"></link><meta name="generator" content="DocBook XSL Stylesheets V1.73.2"></meta><link rel="start" href="index-noframes.html" title="Squish Manual"></link><link rel="up" href="index-noframes.html" title="Squish Manual"></link><link rel="prev" href="rel-31final.html" title="2.71. Version 3.1.0"></link><link rel="next" href="ins-commandline-tools-server-ide.html" title="3.1. Installing the Command Line Tools, Server, and IDEs"></link><style xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" type="text/css" media="screen">
+        div.toc * { margin-left: 6px; margin-right: auto; max-width: 75em; }
+        div.toc span { margin-left: 0px; }
+        * { margin-left: auto; margin-right: auto; max-width: 75em; }
+        body { margin-left: 6px; margin-right: 6px; }
+        table th { padding: .5ex }
+        table td { padding: .5ex }
+    </style><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format">
+        function keyPress() {
+            var e = window.event;
+            if ( e == undefined ) {
+                return;
+            }
+            /* ### does not properly scroll, yet
+            if ( e.keyCode == 32 ) {
+            var l = document.links;
+            for ( var i = 0; i < l.length; i++ ) {
+                if ( l[i].innerText == "Next" ) {
+                location.href = l[i].href;
+                }
+            }
+            } else
+                */
+                if ( e.keyCode == 0x08 ) {
+            var l = document.links;
+            for ( var i = 0; i < l.length; i++ ) {
+                if ( l[i].innerText == "Prev" ) {
+                location.href = l[i].href;
+                }
+            }
+            }
+        }
+        document.onkeypress = keyPress;
+    </script></head><body><div class="chapter" lang="en"><div class="titlepage"><div><div><h2 class="title"><a id="install"></a>Chapter 3. How to Install Squish</h2></div></div></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><span class="section"><a href="ins-commandline-tools-server-ide.html">3.1. Installing the Command Line Tools, Server, and IDEs</a></span></dt><dd><dl><dt><span class="section"><a href="ins-commandline-tools-server-ide.html#ins-binary">3.1.1. Installing from Binary Packages</a></span></dt><dt><span class="section"><a href="ins-commandline-tools-server-ide.html#ins-source">3.1.2. Installing Squish for Qt from Desktop Source Packages</a></span></dt><dt><span class="section"><a href="ins-commandline-tools-server-ide.html#ins-renamedqt">3.1.3. Installation for testing with a renamed Qt library</a></span></dt><dt><span class="section"><a href="ins-commandline-tools-server-ide.html#ins-build-errors">3.1.4. Solving Build Errors</a></span></dt></dl></dd><dt><span class="section"><a href="ins-floating-license-server.html">3.2. Setting up the Squish Floating License Server</a></span></dt><dt><span class="section"><a href="ins-source-embedded.html">3.3. Installing Squish for Qt from Embedded Source Packages</a></span></dt><dt><span class="section"><a href="ins-qt-ios.html">3.4. Installing Squish for Qt for iOS testing</a></span></dt><dt><span class="section"><a href="ins-qt-android.html">3.5. Installing Squish for Qt for Android testing</a></span></dt><dt><span class="section"><a href="ins-distributing.html">3.6. Distributing and Sharing an Installation</a></span></dt><dt><span class="section"><a href="installation.for.web.testing.html">3.7. Installing Squish for Web</a></span></dt><dd><dl><dt><span class="section"><a href="installation.for.web.testing.html#installation.for.web.testing.supported.browsers">3.7.1. Supported browsers</a></span></dt><dt><span class="section"><a href="installation.for.web.testing.html#installation.for.web.testing.configure.firefox">3.7.2. Mozilla Firefox</a></span></dt><dt><span class="section"><a href="installation.for.web.testing.html#installation.for.web.testing.configure.chrome">3.7.3. Google Chrome/Chromium</a></span></dt><dt><span class="section"><a href="installation.for.web.testing.html#installation.for.web.testing.configure.ie">3.7.4. Microsoft Internet Explorer</a></span></dt><dt><span class="section"><a href="installation.for.web.testing.html#installation.for.web.testing.configure.edge.on.windows.10">3.7.5. <span class="trademark">Microsoft</span>® Edge on Windows 10</a></span></dt><dt><span class="section"><a href="installation.for.web.testing.html#installation.for.web.testing.with.chromium.based.applications">3.7.6. Chromium-based applications</a></span></dt><dt><span class="section"><a href="installation.for.web.testing.html#installation.for.web.testing.with.safari">3.7.7. <span class="trademark">Safari</span>®</a></span></dt><dt><span class="section"><a href="installation.for.web.testing.html#installation.for.web.testing.with.opera">3.7.8. <span class="trademark">Opera</span>® up to version 12</a></span></dt><dt><span class="section"><a href="installation.for.web.testing.html#installation.for.web.testing.on.mobile.devices">3.7.9. Browsers on mobile devices</a></span></dt></dl></dd><dt><span class="section"><a href="installation.for.flex.testing.html">3.8. Installation for Flex applets in web pages</a></span></dt><dt><span class="section"><a href="install_android.html">3.9. Installing Squish for Android</a></span></dt><dd><dl><dt><span class="section"><a href="install_android.html#android_app_instrumentation">3.9.1. Make the Android app testable</a></span></dt></dl></dd><dt><span class="section"><a href="ins-new-ide.html">3.10. Standalone Installation of the IDE</a></span></dt><dd><dl><dt><span class="section"><a href="ins-new-ide.html#ins-ide-win">3.10.1. Installing the IDE on Windows</a></span></dt><dt><span class="section"><a href="ins-new-ide.html#ins-ide-linux">3.10.2. Installing the IDE on Linux</a></span></dt><dt><span class="section"><a href="ins-new-ide.html#ins-ide-mac">3.10.3. Installing the IDE on macOS</a></span></dt></dl></dd><dt><span class="section"><a href="ins-tessseract-for-squish.html">3.11. OCR and Installing Tesseract for <span class="emphasis"><em>Squish</em></span></a></span></dt><dd><dl><dt><span class="section"><a href="ins-tessseract-for-squish.html#idp37892816">3.11.1. OCR Functionality in Squish</a></span></dt><dt><span class="section"><a href="ins-tessseract-for-squish.html#idp37897896">3.11.2. Configuring the Package</a></span></dt><dt><span class="section"><a href="ins-tessseract-for-squish.html#ins-tesseract-unattended">3.11.3. Performing Unattended Installations</a></span></dt></dl></dd><dt><span class="section"><a href="ins-source-squishrunner.html">3.12.  Building <span class="application">squishrunner</span> with Video support </a></span></dt><dt><span class="section"><a href="ins-binary-usage.html">3.13. Using <span class="emphasis"><em>Squish</em></span></a></span></dt></dl></div><p>
+This chapter explains how to install <span class="emphasis"><em>Squish</em></span> on Windows, and on
+Unix-like systems such as Linux, macOS, and Embedded Linux.
+</p><p>
+<span class="emphasis"><em>Squish</em></span> is supplied as a single, easy-to-install and
+set up binary package that contains the Tools and the IDE.
+<span class="emphasis"><em>Squish</em></span> is also available in separate packages
+for when this is preferred or necessary—a Tools package in source
+form, and a separate binary for the
+Eclipse-based <span class="application">Squish IDE</span>. (It is also possible to use Eclipse as your IDE
+by integrating the <span class="emphasis"><em>Squish</em></span> IDE plugins into it. See <a class="xref" href="eclipse.ide.integration.html" title="9.10. Eclipse IDE Integration">Eclipse IDE Integration (Section 9.10)</a>.)
+</p><p>
+In most cases <span class="emphasis"><em>Squish</em></span>'s command line tools can be successfully
+installed using binary packages, but there are some situations where it
+is necessary to build them from source.
+</p><p>
+The cases where it is not possible to use a standard build are when you
+want to test applications built with a non-standard Qt library or
+running on a platform that is not yet supported. If any of
+these applies, the following sections describe how to create and use
+a custom build of <span class="emphasis"><em>Squish</em></span> from source in the relevant circumstances:
+</p><div class="itemizedlist"><ul type="disc"><li><p><a class="xref" href="ins-commandline-tools-server-ide.html#ins-source" title="3.1.2. Installing Squish for Qt from Desktop Source Packages">Installing Squish for Qt from Desktop Source Packages (Section 3.1.2)</a></p></li><li><p><a class="xref" href="ins-source-embedded.html" title="3.3. Installing Squish for Qt from Embedded Source Packages">Installing Squish for Qt from Embedded Source Packages (Section 3.3)</a></p></li></ul></div><p>
+If you are testing Java or Web applications or native macOS or Windows
+applications, or Qt 4 applications using a standard (multi-threaded and shared)
+library, then using a binary package is the quickest and easiest way to
+get <span class="emphasis"><em>Squish</em></span> up and running. The process is explained in <a class="xref" href="ins-commandline-tools-server-ide.html#ins-binary" title="3.1.1. Installing from Binary Packages">Installing from Binary Packages (Section 3.1.1)</a>.
+</p><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Note: Using Squish
+with Qt debug libraries"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/note.png"></img></td><th align="left"><a id="using.squish.with.qt.debug.libraries"></a>Using <span class="emphasis"><em>Squish</em></span>
+with Qt debug libraries</th></tr><tr><td align="left" valign="top"><p>
+The prebuilt binary packages are built against
+<span class="emphasis"><em>release</em></span> versions of the Qt libraries—not
+against the <span class="emphasis"><em>debug</em></span> versions. If you want to use
+<span class="emphasis"><em>Squish</em></span> with Qt debug libraries inquire with technical support about
+the availability of a debug version for your configuration. If not available
+you will need to build <span class="emphasis"><em>Squish</em></span> from source. (See <a class="xref" href="ins-commandline-tools-server-ide.html#ins-pure-qt4" title="3.1.2.3. Installation for Testing Pure Qt 4 Applications">Installation for Testing Pure Qt 4 Applications (Section 3.1.2.3)</a>.)
+</p></td></tr></table></div><p>
+However, if for some reason—perhaps you are using an unusual Unix
+system or setup, or if you want to use Qt debug libraries—a binary
+package is not suitable, you can always build the tools from source.
+This is explained in the section <a class="xref" href="ins-commandline-tools-server-ide.html#ins-source" title="3.1.2. Installing Squish for Qt from Desktop Source Packages">Installing Squish for Qt from Desktop Source Packages (Section 3.1.2)</a>, although
+it is also worth reading <a class="xref" href="ins-commandline-tools-server-ide.html#ins-configSwitches" title="3.1.2.2.1. Configure Switches">Configure Switches (Section 3.1.2.2.1)</a> first, so
+that you know what options are available to you when you run
+<span class="application">configure</span>.
+</p><p>
+If you want to use a <span class="emphasis"><em>Squish</em></span> installation on more than one machine,
+you will find it helpful to read <a class="xref" href="ins-distributing.html" title="3.6. Distributing and Sharing an Installation">Distributing and Sharing an Installation (Section 3.6)</a>.
+</p><p>
+Once the binary package is unpacked you can immediately start up the
+<span class="application">Squish IDE</span>—its executable is
+<code class="filename">SQUISHDIR\squishide.exe</code> on Windows,
+<code class="filename">SQUISHDIR/squishide</code> on Unix, and
+<code class="filename">SQUISHDIR/squishide.app</code> on macOS.
+</p><div class="warning" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Warning: iOS (e.g., iPhone and iPad) Testing"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Warning]" src="images/warning.png"></img></td><th align="left"><a id="ios.e.g.iphone.and.ipad.testing"></a>iOS (e.g., iPhone and iPad) Testing</th></tr><tr><td align="left" valign="top"><p>
+Note that iPhone and iPad applications can only be tested on Apple
+hardware—either on the devices themselves or on simulators that
+run under macOS.
+</p></td></tr></table></div><div class="tip" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Tip: Uninstalling"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Tip]" src="images/tip.png"></img></td><th align="left"><a id="ins-uninstalling"></a>Uninstalling</th></tr><tr><td align="left" valign="top"><p>
+When you unpack a <span class="emphasis"><em>Squish</em></span> package it is put into the directory you
+specify. The <span class="emphasis"><em>Squish</em></span> installation and setup do not not touch the
+Windows registry or interfere with any system files or
+directories—for example, <span class="emphasis"><em>Squish</em></span> doesn't put any files in
+<code class="filename">C:\Windows</code> or <code class="filename">/usr/bin</code>.
+</p><p>
+The only files that <span class="emphasis"><em>Squish</em></span> creates outside of its own directory are
+listed here:
+</p><a id="idp36902904" class="indexterm"></a><div class="orderedlist"><ol type="1"><li><p>
+Configuration files stored in the Squish User Settings
+directory, by default in  <code class="filename">%APPDATA%\froglogic\Squish</code> or
+<code class="filename">~/.squish</code>.
+</p></li><li><p>
+License file stored as <code class="filename">%USERPROFILE%\.squish-3-license</code>
+or <code class="filename">~/.squish-3-license</code>.
+</p></li><li><p> Test results written to
+<code class="filename">%USERPROFILE%\My Documents\Squish Test Results</code>
+or <code class="filename">~/.squish/Test Results</code>.
+</p></li></ol></div><p>
+If you want to uninstall <span class="emphasis"><em>Squish</em></span>, run the
+<code class="filename">SQUISHDIR/Uninstall</code> script, or activate it from
+the corresponding applications menu item (Windows/MacOS). It is also ok to
+simply delete <code class="filename">SQUISHDIR</code>.
+</p><p>
+It is best to keep the license file and to leave the configuration files
+alone so that if you install a new version it will already have all your
+settings in place. However, if you want to do a complete uninstallation
+simply delete the configuration directory (and on Windows the test
+results directory), and the license file, in addition to the <span class="emphasis"><em>Squish</em></span> directory.
+</p></td></tr></table></div></div><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" type="text/javascript" src="ScriptingLanguage.js"></script><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format">setScriptingLanguage();</script><div class="navfooter"><hr></hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="rel-31final.html">Prev</a> </td><td width="20%" align="center"> </td><td width="40%" align="right"> <a accesskey="n" href="ins-commandline-tools-server-ide.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">2.71. Version 3.1.0 </td><td width="20%" align="center"><a accesskey="h" href="index-noframes.html">Home</a></td><td width="40%" align="right" valign="top"> 3.1. Installing the Command Line Tools, Server, and IDEs</td></tr></table></div></body>
+<!-- Mirrored from install.html by HTTrack Website Copier/3.x [XR&CO'2013], Wed, 06 Jul 2022 13:28:58 GMT -->
+</html>

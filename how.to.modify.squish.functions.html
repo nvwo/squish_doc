@@ -1,0 +1,198 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<!-- Mirrored from how.to.modify.squish.functions.html by HTTrack Website Copier/3.x [XR&CO'2013], Wed, 06 Jul 2022 13:29:00 GMT -->
+<head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><title>5.20. How to Modify Squish Functions</title><link rel="stylesheet" href="manual.css" type="text/css"></link><meta name="generator" content="DocBook XSL Stylesheets V1.73.2"></meta><link rel="start" href="https://index-noframes.html" title="Squish Manual"></link><link rel="up" href="https://users-guide.html" title="Chapter 5. User Guide"></link><link rel="prev" href="https://ug-how-to-handle-exceptions-raised-in-test-scripts.html" title="5.19. How to Handle Exceptions Raised in Test Scripts"></link><link rel="next" href="https://ug-editdebug.html" title="5.21. How to Edit and Debug Test Scripts"></link><style xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" type="text/css" media="screen">
+        div.toc * { margin-left: 6px; margin-right: auto; max-width: 75em; }
+        div.toc span { margin-left: 0px; }
+        * { margin-left: auto; margin-right: auto; max-width: 75em; }
+        body { margin-left: 6px; margin-right: 6px; }
+        table th { padding: .5ex }
+        table td { padding: .5ex }
+    </style><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format">
+        function keyPress() {
+            var e = window.event;
+            if ( e == undefined ) {
+                return;
+            }
+            /* ### does not properly scroll, yet
+            if ( e.keyCode == 32 ) {
+            var l = document.links;
+            for ( var i = 0; i < l.length; i++ ) {
+                if ( l[i].innerText == "Next" ) {
+                location.href = l[i].href;
+                }
+            }
+            } else
+                */
+                if ( e.keyCode == 0x08 ) {
+            var l = document.links;
+            for ( var i = 0; i < l.length; i++ ) {
+                if ( l[i].innerText == "Prev" ) {
+                location.href = l[i].href;
+                }
+            }
+            }
+        }
+        document.onkeypress = keyPress;
+    </script></head><body><div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="how.to.modify.squish.functions"></a>5.20. How to Modify <span class="emphasis"><em>Squish</em></span> Functions</h2></div></div></div><p>
+In some situations it is useful to modify <span class="emphasis"><em>Squish</em></span> functions—for
+example, to record every call to a particular function in the test log.
+Some scripting languages support the replacing of one function with
+another of the same name, so we can take advantage of this facility in
+<span class="emphasis"><em>Squish</em></span>. Keep in mind though, that most of <span class="emphasis"><em>Squish</em></span>'s functions are not
+accessible until <span class="emphasis"><em>after</em></span> a call to the <a class="xref" href="https://rgs-squish.html#startApplication-function"><code class="function">startApplication</code></a> function, so any modifications
+we want to do must be done after that call.
+</p><p>
+Suppose, for example, that we want to change the
+<code class="code">clickButton</code> function so that it writes to the test log
+every time it is called. Here's how it can be done:
+</p><div xmlns="" class="scriptlang"><form><select name="scriptlangcombo" onchange="javascript:changeScriptingLanguage(this)" onclick="javascript:changeScriptingLanguage(this)"><option value="all" selected>Show All</option><option value="JavaScript">Show JavaScript</option><option value="Perl">Show Perl</option><option value="Python">Show Python</option><option value="Ruby">Show Ruby</option><option value="Tcl">Show Tcl</option></select></form></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Python</span><pre class="programlisting">
+
+
+import sys # Add this line
+
+def wrapSquishFunction(functionName, wrappedFunctionGetter): # Add this function
+    module = sys.modules["squish"]
+    if functionName in dir(module):
+        wrappedFunction = wrappedFunctionGetter(getattr(module, functionName))
+        setattr(module, functionName, wrappedFunction)
+    else:
+        raise RuntimeError("function %s not part of squish module" % functionName)
+
+    if functionName in globals():
+        globals()[functionName] = wrappedFunction
+
+def addLoggingToClickButton(clickButtonFunction): # Add this function
+    def wrappedFunction(button, logText="clickButton() called"):
+        test.log(logText, str(button))
+        clickButtonFunction(button)
+    return wrappedFunction
+
+def main():
+    startApplication('"' + os.environ["SQUISH_PREFIX"] + '/examples/qt/addressbook/addressbook"')
+    wrapSquishFunction("clickButton", addLoggingToClickButton) # Add this line
+    # ...
+
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">JavaScript</span><pre class="programlisting">
+
+function addLoggingToClickButton(clickButtonFunction) // Add this function
+{
+    return function(button, logText) {
+        if (!logText)
+            logText = "clickButton() called";
+        test.log(logText, button);
+        clickButtonFunction(button);
+    }
+}
+
+function main()
+{
+    startApplication('"' + OS.getenv("SQUISH_PREFIX") + '/examples/qt/addressbook/addressbook"');
+    clickButton = addLoggingToClickButton(clickButton) // Add this line
+    // ...
+
+</pre></div><p>
+This creates a custom <code class="code">clickButton</code> function that has a
+different API from <span class="emphasis"><em>Squish</em></span>'s built-in <code class="code">clickButton</code>
+function in that the custom function can accept an additional optional
+argument. This means that existing calls will continue to work as normal
+(only now each call will result in a test log entry), and that we can
+add additional information to any calls to the <code class="code">clickButton</code>
+function as we like. For example, we could replace, say:
+</p><pre class="programlisting">
+clickButton(waitForObject(names.address_Book_Add_OK_QPushButton));
+</pre><p>
+with:
+</p><pre class="programlisting">
+clickButton(waitForObject(names.address_Book_Add_OK_QPushButton),
+        "Add Requested");
+</pre><p>
+If we make this change the Test Results will list a Log entry with the
+Message text “<span class="quote">Add Requested</span>”, and with a Location of the
+file and line number where the call was made. And for all calls of the
+<code class="code">clickButton</code> function that are left unchanged each one will
+result in a Log entry with a Message text of “<span class="quote">clickButton()
+called</span>” since that's the default text we have used in the
+<code class="code">addLoggingToClickButton</code> function.
+</p><p>
+Naturally, the <code class="code">addLoggingToClickButton</code> function could be
+put in a shared script if you wanted to use it in several different test
+cases. And it should be straightforward to use the
+<code class="code">addLoggingToClickButton</code> function as a model for wrapping
+other <span class="emphasis"><em>Squish</em></span> functions, either to add logging, or to make them do
+other things before or after calling the original function—or both
+before and after.
+</p><p>
+If you want to keep access to the original function, then just before
+the call to the <code class="code">addLoggingToClickButton</code> function, put a
+line such as <code class="code">originalClickButton = clickButton</code>. Now,
+whenever you want to use the original function use
+<code class="code">originalClickButton</code>.
+</p><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Note: Perl, Ruby, and Tcl-specific"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/note.png"></img></td><th align="left">Perl, Ruby, and Tcl-specific</th></tr><tr><td align="left" valign="top"><p>
+We do not have working Perl, Ruby, or Tcl equivalents of the
+<code class="code">addLoggingToClickButton</code> function although it should be
+achievable in these languages (probably with some rather subtle code for
+Perl and Ruby, and with quite a bit of code for Tcl).
+</p></td></tr></table></div><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Note: Python-specific"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/note.png"></img></td><th align="left">Python-specific</th></tr><tr><td align="left" valign="top"><p>
+If we are willing to assume that <span class="emphasis"><em>Squish</em></span> will always use
+positional rather than keyword arguments (or are willing to take the
+chance), we can make a single generic wrapping function that can be used
+to add logging to <span class="emphasis"><em>any</em></span> <span class="emphasis"><em>Squish</em></span> Python function
+rather than having to use one wrapping function per function to be
+wrapped.
+</p><p>
+Here's the function and how we'd register it for use:
+</p><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Python</span><pre class="programlisting">
+
+
+import sys # Add this line
+
+def wrapSquishFunction(functionName, wrappedFunctionGetter): # Add this function
+    module = sys.modules["squish"]
+    if functionName in dir(module):
+        wrappedFunction = wrappedFunctionGetter(getattr(module, functionName))
+        setattr(module, functionName, wrappedFunction)
+    else:
+        raise RuntimeError("function %s not part of squish module" % functionName)
+
+    if functionName in globals():
+        globals()[functionName] = wrappedFunction
+
+def addLogging(function): # Add this function
+    def wrappedFunction(*args, **kwargs):
+        if "logText" in kwargs:
+            logText = kwargs["logText"]
+        else:
+            logText = "Logged function called"
+        arg0 = ""
+        if args:
+            arg0 = args[0]
+        test.log(logText, str(arg0))
+        function(*args)
+    return wrappedFunction
+
+def main():
+    startApplication('"' + os.environ["SQUISH_PREFIX"] + '/examples/qt/addressbook/addressbook"')
+    wrapSquishFunction("clickButton", addLogging) # Add this line
+    # ...
+
+</pre></div><p>
+As before the <code class="code">clickButton</code> function will behave normally,
+but now it will accept an optional keyword argument called
+<code class="code">logText</code>. So now, for example, we could replace, say:
+</p><pre class="programlisting">
+clickButton(waitForObject(names.address_Book_Add_OK_QPushButton));
+</pre><p>
+with:
+</p><pre class="programlisting">
+clickButton(waitForObject(names.address_Book_Add_OK_QPushButton),
+        logText="Add Requested");
+</pre><p>
+The advantage of this more generic wrapper is that it can be used on
+<span class="emphasis"><em>any</em></span> <span class="emphasis"><em>Squish</em></span> function, even those that take more
+than one positional argument.
+</p></td></tr></table></div><p>
+See also, FAQ, <a class="xref" href="https://faq.html#waitforobject-defaulttime" title="Question">Q: 10.1.1</a>.
+</p></div><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" type="text/javascript" src="ScriptingLanguage.js"></script><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format">setScriptingLanguage();</script><div class="navfooter"><hr></hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="https://ug-how-to-handle-exceptions-raised-in-test-scripts.html">Prev</a> </td><td width="20%" align="center"><a accesskey="u" href="https://users-guide.html">Up</a></td><td width="40%" align="right"> <a accesskey="n" href="https://ug-editdebug.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">5.19. How to Handle Exceptions Raised in Test Scripts </td><td width="20%" align="center"><a accesskey="h" href="https://index-noframes.html">Home</a></td><td width="40%" align="right" valign="top"> 5.21. How to Edit and Debug Test Scripts</td></tr></table></div></body>
+<!-- Mirrored from how.to.modify.squish.functions.html by HTTrack Website Copier/3.x [XR&CO'2013], Wed, 06 Jul 2022 13:29:00 GMT -->
+</html>

@@ -1,0 +1,261 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<!-- Mirrored from rg-cppapi.html by HTTrack Website Copier/3.x [XR&CO'2013], Wed, 06 Jul 2022 13:29:00 GMT -->
+<head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><title>7.13. Squish's C++ API</title><link rel="stylesheet" href="manual.css" type="text/css"></link><meta name="generator" content="DocBook XSL Stylesheets V1.73.2"></meta><link rel="start" href="index-noframes.html" title="Squish Manual"></link><link rel="up" href="ref.man.html" title="Chapter 7. Tools Reference Manual"></link><link rel="prev" href="rg-namingconfig.html" title="7.12. Object Name Generation"></link><link rel="next" href="rg-templates.html" title="7.14. Testcase Templates"></link><style xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" type="text/css" media="screen">
+        div.toc * { margin-left: 6px; margin-right: auto; max-width: 75em; }
+        div.toc span { margin-left: 0px; }
+        * { margin-left: auto; margin-right: auto; max-width: 75em; }
+        body { margin-left: 6px; margin-right: 6px; }
+        table th { padding: .5ex }
+        table td { padding: .5ex }
+    </style><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format">
+        function keyPress() {
+            var e = window.event;
+            if ( e == undefined ) {
+                return;
+            }
+            /* ### does not properly scroll, yet
+            if ( e.keyCode == 32 ) {
+            var l = document.links;
+            for ( var i = 0; i < l.length; i++ ) {
+                if ( l[i].innerText == "Next" ) {
+                location.href = l[i].href;
+                }
+            }
+            } else
+                */
+                if ( e.keyCode == 0x08 ) {
+            var l = document.links;
+            for ( var i = 0; i < l.length; i++ ) {
+                if ( l[i].innerText == "Prev" ) {
+                location.href = l[i].href;
+                }
+            }
+            }
+        }
+        document.onkeypress = keyPress;
+    </script></head><body><div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="rg-cppapi"></a>7.13. <span class="emphasis"><em>Squish</em></span>'s C++ API</h2></div></div></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><span class="section"><a href="rg-cppapi.html#rgcpp-recordhints">7.13.1. Recording Hints to Influence and Control the Event Recorder</a></span></dt><dt><span class="section"><a href="rg-cppapi.html#rgcpp-qtbuiltin">7.13.2. Using the Built-in Hook</a></span></dt></dl></div><p>
+This section covers the C++ API that <span class="emphasis"><em>Squish</em></span> provides to make it
+possible to achieve even tighter integration with the AUT, and to solve
+some specific problems that occasionally arise.
+</p><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="rgcpp-recordhints"></a>7.13.1. Recording Hints to Influence and Control the Event Recorder</h3></div></div></div><p>
+Recording hints allow an application to influence <span class="emphasis"><em>Squish</em></span>'s event
+recorder while a test engineer records a test script. Using a recording
+hint an application can insert comments or function calls into the test
+script at particular points.
+</p><p>
+Recording hints are made possible by the <code class="code">RecordHint</code>
+class. This class is supplied with <span class="emphasis"><em>Squish</em></span> and is defined in the file
+<code class="filename">recordhint.h</code> in <span class="emphasis"><em>Squish</em></span>'s
+<code class="filename">include</code> directory. The public API is implemented
+inline in this file, so the application only needs to include the file
+itself—there is no need to link against an additional library.
+</p><p>
+To see how the <code class="code">RecordHint</code> class is used in practice, we
+will review an example.
+</p><p>
+Let's assume that we have an application which defines a function called
+<code class="code">myfunc</code> which we have also wrapped so that a test script
+can access it. After the user clicks a particular button in the
+application we want the test script to call <code class="code">myfunc</code>. To do
+this, we add the following C++ code at the point where the button click
+is handled:
+</p><pre class="programlisting">
+Squish::RecordHint myfunc_comment(Squish::RecordHint::Comment,
+        "Call myfunc");
+myfunc_comment.send();
+Squish::RecordHint myfunc_caller(Squish::RecordHint::Function,
+        "myfunc");
+myfunc_caller.send();
+</pre><p>
+Now when recording a script and clicking on the button, two extra lines
+in the test script will be generated, as the code snippet below
+illustrates:
+</p><div xmlns="" class="scriptlang"><form><select name="scriptlangcombo" onchange="javascript:changeScriptingLanguage(this)" onclick="javascript:changeScriptingLanguage(this)"><option value="all" selected>Show All</option><option value="JavaScript">Show JavaScript</option><option value="Perl">Show Perl</option><option value="Python">Show Python</option><option value="Ruby">Show Ruby</option><option value="Tcl">Show Tcl</option></select></form></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Python</span><pre class="programlisting">
+def main():
+    ...
+    clickButton("....")
+    # Call myfunc
+    myfunc()
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">JavaScript</span><pre class="programlisting">
+function main()
+{
+    ...
+    clickButton("....");
+    // Call myfunc
+    myfunc();
+}
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Perl</span><pre class="programlisting">
+sub main
+{
+    ...
+    clickButton("....");
+    # Call myfunc
+    myfunc();
+}
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Ruby</span><pre class="programlisting">
+# encoding: UTF-8
+require 'squish'
+include Squish
+
+def main
+    # ...
+    clickButton("....")
+    # Call myfunc
+    myfunc()
+    # ...
+end
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Tcl</span><pre class="programlisting">
+proc main {} {
+    ...
+    invoke clickButton "...."
+    # Call myfunc
+    invoke myfunc
+}
+</pre></div><p>
+This small example shows when and how to use record hints. The
+complete API is in the <code class="filename">recordhint.h</code> file; look for
+the <code class="code">RecordHint</code> class inside the <code class="code">Squish</code>
+namespace.
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="rgcpp-qtbuiltin"></a>7.13.2. Using the Built-in Hook</h3></div></div></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><span class="section"><a href="rg-cppapi.html#rgcppqti-details">7.13.2.1. Details</a></span></dt><dt><span class="section"><a href="rg-cppapi.html#enforcing-the-built-in-hook">7.13.2.2. Enforcing the Built-in Hook</a></span></dt><dt><span class="section"><a href="rg-cppapi.html#rgcppqti-attach">7.13.2.3. Attaching to a Running Application with the Built-in Hook</a></span></dt></dl></div><p>
+In most cases, <span class="emphasis"><em>Squish</em></span> hooks into the AUT without requiring any special
+preparation. However, in some cases (e.g., on AIX) this is not possible
+due to technical limitations of the operating system.
+</p><p>
+In such cases the built-in hook approach can be used. This requires two
+tiny changes to the AUT:
+</p><div class="orderedlist"><ol type="1"><li><p>
+Include the <code class="filename">qtbuiltinhook.h</code> header file, which can
+be found in <span class="emphasis"><em>Squish</em></span>'s <code class="filename">include</code> directory, in the
+application's code where the <code class="code">main</code> function is defined or
+where the <code class="code">QApplication</code> object is created.
+</p></li><li><p>
+Call the <code class="code">Squish::installBuiltinHook</code> function as soon as
+you have created the <code class="code">QApplication</code> object.
+</p></li></ol></div><p>
+Example:
+</p><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage"></span><pre class="programlisting">
+#include &lt;QApplication&gt;
+#include "qtbuiltinhook.h"
+
+int main(int argc, char **argv)
+{
+    QApplication app(argc, argv);
+    Squish::installBuiltinHook();
+    // ...
+    return app.exec();
+}
+</pre></div><p>
+This is the only preparation needed to make your program testable on
+most platforms that don't support the preloading mechanism. It does not
+matter if you leave in this code on other platforms, since the
+function is smart enough to do nothing if it isn't needed.
+</p><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Note: Enforcing the built-in hook on Windows"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/note.png"></img></td><th align="left">Enforcing the built-in hook on Windows</th></tr><tr><td align="left" valign="top"><p>
+On Windows an extra setting is required to enable the built-in hook, please see <a class="xref" href="rg-cppapi.html#enforcing-the-built-in-hook" title="7.13.2.2. Enforcing the Built-in Hook">Enforcing the Built-in Hook (Section 7.13.2.2)</a> for more details.
+</p></td></tr></table></div><p>
+The <code class="code">Squish::installBuiltinHook</code> function is very
+lightweight and won't make any difference to the program's performance.
+Nonetheless, we recommend removing it for publicly released versions of
+the program. This can easily be done using an <code class="code">#ifdef</code> that
+includes the header and the function call for testing builds and
+excludes them for release builds.
+</p><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="rgcppqti-details"></a>7.13.2.1. Details</h4></div></div></div><p>
+The <code class="code">Squish::installBuiltinHook</code> function performs the
+following actions:
+</p><div class="itemizedlist"><ul type="disc"><li><p>
+If the environment variable <code class="envar">SQUISH_PREFIX</code> is not set, it
+does nothing and returns immediately.
+</p></li><li><p>
+Otherwise it tries to load the Qt toolkit support library
+<code class="filename">squishqtwrapper</code> and its dependencies from the
+<code class="filename">lib</code> (or <code class="filename">bin</code>) subdirectory in the
+directory specified by <code class="envar">SQUISH_PREFIX</code>, and tries to resolve and
+call an initialization function in that library.  If it fails to find the
+library or finds it but fails to resolve the initialization function, it does
+nothing and returns.
+</p></li></ul></div><p>
+The <code class="code">Squish::installBuiltinHook</code> function returns
+<code class="code">true</code> if the hooking succeeded, that is, the application is
+executed by <span class="emphasis"><em>Squish</em></span>; otherwise it returns <code class="code">false</code>.
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="enforcing-the-built-in-hook"></a>7.13.2.2. Enforcing the Built-in Hook</h4></div></div></div><p>
+The built-in hook is meant as a fallback mechanism on platforms where
+the normal hooking doesn't work. So if you want to use the built-in hook
+on platforms where <span class="emphasis"><em>Squish</em></span> supports non-intrusive hooking, <span class="emphasis"><em>Squish</em></span>
+will still use the non-intrusive hooking mechanism by default, although
+the built-in hook is included in the <acronym class="acronym">AUT</acronym>.
+</p><p>
+Nonetheless, it is possible to force the <span class="application">squishserver</span> to use the
+built-in hook rather than <span class="emphasis"><em>Squish</em></span>'s non-intrusive hooking mechanism.
+This can be done by setting a <span class="application">squishserver</span> configuration option (see
+<a class="xref" href="rg-cmdline.html#rg-squishserver--config" title="7.4.4.3. Configuring squishserver">Configuring <span class="application">squishserver</span> (Section 7.4.4.3)</a>):
+</p><p>
+<code class="code">squishserver --config usesBuiltinHook <span class="emphasis"><em>aut</em></span></code>
+</p><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Note: Clearing the AUT Hook Setting"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/note.png"></img></td><th align="left">Clearing the AUT Hook Setting</th></tr><tr><td align="left" valign="top"><p>
+At the moment, the only way to delete this setting is to manually edit
+the <span class="application">squishserver</span>'s configuration file. On Unix-like systems, this file
+is located in <code class="filename">$HOME/.squish/ver1/server.ini</code> and on
+Windows it is in
+<code class="filename">%APPDATA%\froglogic\Squish\ver1\server.ini</code>.
+</p><p>
+To disable the <code class="option">usesBuiltinHook</code> option, remove the line:
+</p><p>
+<code class="code">UsesBuiltinHook/<span class="emphasis"><em>aut</em></span> = "1"</code>
+</p><p>
+from the <code class="filename">server.ini</code> file.
+</p></td></tr></table></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="rgcppqti-attach"></a>7.13.2.3. Attaching to a Running Application with the Built-in Hook</h4></div></div></div><p>
+It is also possible to use the built-in hook mechanism to attach to a
+running application (see  <a class="xref" href="rghsa-attach.html" title="7.8. Attaching to Running Applications">Attaching to Running Applications (Section 7.8)</a> for more
+details on attaching to a running application).
+</p><p>
+To make an application attachable with the built-in hook, you must call
+the <code class="function">Squish::allowAttaching</code> function after the
+<code class="classname">QApplication</code> has been created. The argument to
+this function is a port number that the application should listen on for
+a <span class="application">squishserver</span> to connect to. The function is declared in
+<code class="filename">qtbuiltinhook.h</code>.
+</p><p>
+Here is the standard pattern for making an application
+attachable:</p><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage"></span><pre class="programlisting">
+#include &lt;QApplication&gt;
+#include "qtbuiltinhook.h" <a xmlns="http://www.w3.org/1999/xhtml" id="rghsa-attach-prepare-inc"></a><img src="callouts/1.png" border="0">
+
+int main(int argc, char **argv)
+{
+    QApplication app(argc, argv);
+    Squish::allowAttaching(11233); <a xmlns="http://www.w3.org/1999/xhtml" id="rghsa-attach-prepare-all"></a><img src="callouts/2.png" border="0">
+    //...
+    return app.exec();
+}
+</pre></div><div class="calloutlist"><table border="0" summary="Callout list"><tr><td width="5%" valign="top" align="left"><p><a href="#rghsa-attach-prepare-inc"><img xmlns="" src="callouts/1.png" border="0"></a> </p></td><td valign="top" align="left"><p>
+Include the file <code class="filename">qtbuiltinhook.h</code> that is in
+<span class="emphasis"><em>Squish</em></span>'s <code class="filename">include</code> directory.
+</p></td></tr><tr><td width="5%" valign="top" align="left"><p><a href="#rghsa-attach-prepare-all"><img xmlns="" src="callouts/2.png" border="0"></a> </p></td><td valign="top" align="left"><p>
+Make the application listen on port <code class="constant">11233</code>.
+</p></td></tr></table></div><p>
+Rebuild the application with these changes to make it possible for
+<span class="emphasis"><em>Squish</em></span> to attach to it. Now start the AUT using the <a class="xref" href="rg-cmdline.html#rgc-startaut-cli" title="7.4.7. start*aut">start*aut (Section 7.4.7)</a> program supplied with <span class="emphasis"><em>Squish</em></span> (in the
+<span class="emphasis"><em>Squish</em></span> tool's <code class="filename">bin</code> directory):
+</p><pre class="screen">
+startaut --uses-builtin-hook <span class="emphasis"><em>aut</em></span>
+</pre><p>
+This starts the <acronym class="acronym">AUT</acronym> running and listening on the
+specified port, so you can now attach to it from within a test script.
+The next step is to register the <acronym class="acronym">AUT</acronym> as an attachable
+<acronym class="acronym">AUT</acronym> as described in <a class="xref" href="rghsa-attach.html#rghsa-attach-registeraut" title="7.8.3. Register the Attachable AUT">Register the Attachable <acronym class="acronym">AUT</acronym> (Section 7.8.3)</a>. See <a class="xref" href="rghsa-attach.html#rghsa-attach-scripting" title="7.8.4. Attaching from a Script">Attaching from a Script (Section 7.8.4)</a> for details on how to attach to the
+application from a test script.
+</p><div class="warning" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Warning: Troubleshooting Attachable AUTs"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Warning]" src="images/warning.png"></img></td><th align="left">Troubleshooting Attachable AUTs</th></tr><tr><td align="left" valign="top"><p>
+In some situations doing the above is not sufficient to make the AUT
+attachable. In such cases it is necessary to create or adjust up to four
+environment variables: <code class="envar">SQUISH_PREFIX</code>,
+<code class="envar">LD_LIBRARY_PATH</code>, <code class="envar">DYLD_LIBRARY_PATH</code>, and
+<code class="envar">PATH</code>.
+
+</p><p>
+In some situations, <code class="code">startaut</code> cannot be used—for
+example, if an application is downloaded and started via a web browser.
+In such cases the built-in hook can be made active by setting the
+<code class="code">SQUISH_PREFIX</code> environment variable to point to a <span class="emphasis"><em>Squish</em></span>
+for Qt directory.
+</p></td></tr></table></div></div></div></div><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" type="text/javascript" src="ScriptingLanguage.js"></script><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format">setScriptingLanguage();</script><div class="navfooter"><hr></hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="rg-namingconfig.html">Prev</a> </td><td width="20%" align="center"><a accesskey="u" href="ref.man.html">Up</a></td><td width="40%" align="right"> <a accesskey="n" href="rg-templates.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">7.12. Object Name Generation </td><td width="20%" align="center"><a accesskey="h" href="index-noframes.html">Home</a></td><td width="40%" align="right" valign="top"> 7.14. Testcase Templates</td></tr></table></div></body>
+<!-- Mirrored from rg-cppapi.html by HTTrack Website Copier/3.x [XR&CO'2013], Wed, 06 Jul 2022 13:29:00 GMT -->
+</html>

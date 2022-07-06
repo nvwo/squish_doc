@@ -1,0 +1,126 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<!-- Mirrored from ins-qt-android.html by HTTrack Website Copier/3.x [XR&CO'2013], Wed, 06 Jul 2022 13:28:58 GMT -->
+<head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><title>3.5. Installing Squish for Qt for Android testing</title><link rel="stylesheet" href="manual.css" type="text/css"></link><meta name="generator" content="DocBook XSL Stylesheets V1.73.2"></meta><link rel="start" href="index-noframes.html" title="Squish Manual"></link><link rel="up" href="install.html" title="Chapter 3. How to Install Squish"></link><link rel="prev" href="ins-qt-ios.html" title="3.4. Installing Squish for Qt for iOS testing"></link><link rel="next" href="ins-distributing.html" title="3.6. Distributing and Sharing an Installation"></link><style xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" type="text/css" media="screen">
+        div.toc * { margin-left: 6px; margin-right: auto; max-width: 75em; }
+        div.toc span { margin-left: 0px; }
+        * { margin-left: auto; margin-right: auto; max-width: 75em; }
+        body { margin-left: 6px; margin-right: 6px; }
+        table th { padding: .5ex }
+        table td { padding: .5ex }
+    </style><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format">
+        function keyPress() {
+            var e = window.event;
+            if ( e == undefined ) {
+                return;
+            }
+            /* ### does not properly scroll, yet
+            if ( e.keyCode == 32 ) {
+            var l = document.links;
+            for ( var i = 0; i < l.length; i++ ) {
+                if ( l[i].innerText == "Next" ) {
+                location.href = l[i].href;
+                }
+            }
+            } else
+                */
+                if ( e.keyCode == 0x08 ) {
+            var l = document.links;
+            for ( var i = 0; i < l.length; i++ ) {
+                if ( l[i].innerText == "Prev" ) {
+                location.href = l[i].href;
+                }
+            }
+            }
+        }
+        document.onkeypress = keyPress;
+    </script></head><body><div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="ins-qt-android"></a>3.5. Installing Squish for Qt for Android testing</h2></div></div></div><p>
+The <span class="emphasis"><em>Squish</em></span> for Qt for Android testing package is suitable for preparing a Qt
+on Android application for testing. You also need a <span class="emphasis"><em>Squish</em></span> for Qt package on
+your desktop machine for recording, managing and replaying tests. Please see
+<a class="xref" href="ins-commandline-tools-server-ide.html#ins-binary" title="3.1.1. Installing from Binary Packages">Installing from Binary Packages (Section 3.1.1)</a> for details on installing such a package.
+</p><p>
+In order to build your application instrumented for using with <span class="emphasis"><em>Squish</em></span> for Qt
+on Android, you have to unpack the package and do a build of your application
+with <span class="emphasis"><em>Squish</em></span>'s Qt support included in the build, followed by deploying the
+application:
+</p><div class="orderedlist"><ol type="1"><li><p>
+Add the following to your applications qmake project file:
+</p><div xmlns:fo="http://www.w3.org/1999/XSL/Format" xmlns="" class="programlistingcontainer"><span class="programlistinglanguage"></span><pre class="programlisting">
+SQUISH_ATTACH_PORT = &lt;portnumber&gt;
+include(&lt;/path-to-squish&gt;/qtbuiltinhook.pri)
+</pre></div><p>
+</p><p>
+&lt;path-to-squish&gt; has to be replaced with the full path
+to the location where you unpacked <span class="emphasis"><em>Squish</em></span> for Qt for Android.
+</p><p>
+&lt;portnumber&gt; has to be replaced by a freely choosen
+TCP port number that is greater than 1024. It will be used to attach to the
+application.
+</p></li><li><p>
+Ensure your project is deployed with Qt libraries as part of your
+<acronym class="acronym">APK</acronym>. Using the Ministro service to install Qt is unlikely to
+work. This setting can be found in
+<span class="application">Qt Creator</span> in
+<span class="guilabel">Projects</span>,
+<span class="guilabel">Build</span>,
+<span class="guilabel">Build Steps</span>,
+<span class="guilabel">Build Android APK</span>,
+<span class="guilabel">Additional Libraries</span>.
+Outside of <span class="application">Qt Creator</span> this can be configured via a
+commandline argument of <span class="application">androiddeployqt</span> (see also
+<a class="ulink" href="https://doc.qt.io/qt-5/deployment-android.html" target="_blank">https://doc.qt.io/qt-5/deployment-android.html</a>).
+</p></li><li><p>
+In <span class="application">Qt Creator</span> choose <span class="guilabel">Clean</span>, to
+ensure that qmake picks up all parts of <span class="emphasis"><em>Squish</em></span> for Qt to include them in the
+final application package. Afterwards choose <span class="guilabel">Run</span> or
+<span class="guilabel">Debug</span> to build, deploy and run the application on the
+device.
+</p></li><li><p>
+The application should be running on the Android device now. The
+<span class="guilabel">Application Output</span> in <span class="application">Qt
+Creator</span> should (among other log output) show several lines
+starting with the word <span class="emphasis"><em>Squish</em></span>, including <code class="prompt">Squish: Listening on port
+4567 for incoming connections</code> where 4567 is the port number specified
+earlier in the qmake project file.
+</p></li><li><p>
+If the application is running inside the Android Emulator or if testing over a
+USB connection is required, the <acronym class="acronym">TCP</acronym> port will need to be
+forwarded to the desktop machine in order to attach to the
+<acronym class="acronym">AUT</acronym>. To do that, call the following from a commandline
+prompt on the desktop machine:
+</p><pre class="screen">
+<code class="prompt">$ </code><span class="application">adb</span> forward tcp:&lt;portnumber&gt; tcp:&lt;portnumber&gt;
+</pre><p>
+Again replace &lt;portnumber&gt; with the one set in the
+qmake project file. The <span class="application">adb</span> commandline tool is part
+of <a class="ulink" href="https://developer.android.com/studio/" target="_blank">Android Studio</a>.
+</p></li><li><p>
+If not done already, install a <span class="emphasis"><em>Squish</em></span> for Qt binary package on the desktop
+machine. For remote testing Qt on Android the Qt version and compiler version
+of this package do not matter.
+</p></li><li><p>
+In <span class="application">squishide</span> choose <span class="guilabel">File</span>, <span class="guilabel">New Test
+Suite...</span> to create a new Test Suite and follow the wizard.  When
+asked for the <span class="guilabel">GUI Toolkit</span> choose Qt. When asked for the
+<span class="guilabel">Application Under Test</span> choose <span class="guilabel">&lt;No
+Application&gt;</span>.
+</p></li><li><p>
+Follow the steps from <a class="xref" href="rghsa-attach.html#rghsa-attach-registeraut" title="7.8.3. Register the Attachable AUT">Register the Attachable <acronym class="acronym">AUT</acronym> (Section 7.8.3)</a> to register
+the application as an attachable <acronym class="acronym">AUT</acronym>. In case
+<acronym class="acronym">TCP</acronym> port forwarding via <span class="application">ADB</span> is
+used, the <span class="guilabel">Host</span> will be <code class="code">localhost</code>.
+</p></li></ol></div><p>
+To verify if the <acronym class="acronym">AUT</acronym> is accepting incoming connections the
+output of netstat can be used (for a Windows command prompt replace
+<span class="application">grep</span> with <span class="application">findstr</span>)
+</p><pre class="screen">
+<code class="prompt">$ </code><span class="application">adb</span> shell netstat -a | <span class="application">grep</span> &lt;portnumber&gt;
+ tcp       0      0 0.0.0.0:&lt;portnumber&gt;   0.0.0.0:*        LISTEN
+</pre><p>
+Attaching to the running <acronym class="acronym">AUT</acronym> will work if an entry with
+state <code class="code">LISTEN</code> and the previously passed portnumber is present in
+the tabular output.
+</p></div><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" type="text/javascript" src="ScriptingLanguage.js"></script><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format">setScriptingLanguage();</script><div class="navfooter"><hr></hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="ins-qt-ios.html">Prev</a> </td><td width="20%" align="center"><a accesskey="u" href="install.html">Up</a></td><td width="40%" align="right"> <a accesskey="n" href="ins-distributing.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">3.4. Installing Squish for Qt for iOS testing </td><td width="20%" align="center"><a accesskey="h" href="index-noframes.html">Home</a></td><td width="40%" align="right" valign="top"> 3.6. Distributing and Sharing an Installation</td></tr></table></div></body>
+<!-- Mirrored from ins-qt-android.html by HTTrack Website Copier/3.x [XR&CO'2013], Wed, 06 Jul 2022 13:28:58 GMT -->
+</html>

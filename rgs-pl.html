@@ -1,0 +1,60 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<!-- Mirrored from rgs-pl.html by HTTrack Website Copier/3.x [XR&CO'2013], Wed, 06 Jul 2022 13:29:00 GMT -->
+<head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><title>6.17. Perl Notes</title><link rel="stylesheet" href="manual.css" type="text/css"></link><meta name="generator" content="DocBook XSL Stylesheets V1.73.2"></meta><link rel="start" href="index-noframes.html" title="Squish Manual"></link><link rel="up" href="api.man.html" title="Chapter 6. API Reference Manual"></link><link rel="prev" href="rgs-js.html" title="6.16. JavaScript Notes and Extension APIs"></link><link rel="next" href="rgs-rb.html" title="6.18. Ruby Notes"></link><style xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" type="text/css" media="screen">
+        div.toc * { margin-left: 6px; margin-right: auto; max-width: 75em; }
+        div.toc span { margin-left: 0px; }
+        * { margin-left: auto; margin-right: auto; max-width: 75em; }
+        body { margin-left: 6px; margin-right: 6px; }
+        table th { padding: .5ex }
+        table td { padding: .5ex }
+    </style><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format">
+        function keyPress() {
+            var e = window.event;
+            if ( e == undefined ) {
+                return;
+            }
+            /* ### does not properly scroll, yet
+            if ( e.keyCode == 32 ) {
+            var l = document.links;
+            for ( var i = 0; i < l.length; i++ ) {
+                if ( l[i].innerText == "Next" ) {
+                location.href = l[i].href;
+                }
+            }
+            } else
+                */
+                if ( e.keyCode == 0x08 ) {
+            var l = document.links;
+            for ( var i = 0; i < l.length; i++ ) {
+                if ( l[i].innerText == "Prev" ) {
+                location.href = l[i].href;
+                }
+            }
+            }
+        }
+        document.onkeypress = keyPress;
+    </script></head><body><div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="rgs-pl"></a>6.17. Perl Notes</h2></div></div></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><span class="section"><a href="rgs-pl.html#rgs-perl-documentation">6.17.1. Perl Language Documentation</a></span></dt></dl></div><p>
+<span class="emphasis"><em>Squish</em></span> assumes that all <code class="filename">test.pl</code> files use
+the UTF-8 encoding. If you expect to edit such files outside of the
+<span class="application">Squish IDE</span>, we recommend putting the following line at the start of each
+<code class="filename">test.pl</code> file:
+</p><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Perl</span><pre class="programlisting">
+use utf8;
+</pre></div><p>
+A Perl-savvy editor will notice this and will correctly load and save
+using the UTF-8 encoding that <span class="emphasis"><em>Squish</em></span> expects, as a result. This
+statement should also be used in any <code class="filename">.pl</code> files you
+<code class="code">require</code> and for which you want to use the UTF-8 encoding.
+</p><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="rgs-perl-documentation"></a>6.17.1. Perl Language Documentation</h3></div></div></div><p>
+The Perl documentation contains a manual page <a class="ulink" href="http://perldoc.perl.org/perlintro.html" target="_blank">perlintro</a> that can
+serve as a good starting point. Links to other manual pages, tutorials
+and FAQs can be found on the <a class="ulink" href="http://www.perl.org/docs.html" target="_blank">Online Documentation</a> and the
+<a class="ulink" href="http://perldoc.perl.org/" target="_blank">perldoc</a> page.
+</p><p>
+If you prefer books, a good Perl book is
+<a class="ulink" href="http://oreilly.com/catalog/9780596000271/" target="_blank">Programming
+Perl</a> by Larry Wall (Perl's creator), Tom Christiansen, Jon Orwant.
+</p></div></div><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" type="text/javascript" src="ScriptingLanguage.js"></script><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format">setScriptingLanguage();</script><div class="navfooter"><hr></hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="rgs-js.html">Prev</a> </td><td width="20%" align="center"><a accesskey="u" href="api.man.html">Up</a></td><td width="40%" align="right"> <a accesskey="n" href="rgs-rb.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">6.16. JavaScript Notes and Extension APIs </td><td width="20%" align="center"><a accesskey="h" href="index-noframes.html">Home</a></td><td width="40%" align="right" valign="top"> 6.18. Ruby Notes</td></tr></table></div></body>
+<!-- Mirrored from rgs-pl.html by HTTrack Website Copier/3.x [XR&CO'2013], Wed, 06 Jul 2022 13:29:00 GMT -->
+</html>

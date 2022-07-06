@@ -1,0 +1,174 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<!-- Mirrored from ugs-synchpoints.html by HTTrack Website Copier/3.x [XR&CO'2013], Wed, 06 Jul 2022 13:28:59 GMT -->
+<head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><title>5.11. How to Create and Use Synchronization Points</title><link rel="stylesheet" href="manual.css" type="text/css"></link><meta name="generator" content="DocBook XSL Stylesheets V1.73.2"></meta><link rel="start" href="index-noframes.html" title="Squish Manual"></link><link rel="up" href="users-guide.html" title="Chapter 5. User Guide"></link><link rel="prev" href="ugs-eventhandlers.html" title="5.10. How to Use Event Handlers"></link><link rel="next" href="ugs-appcontext.html" title="5.12. How to Test Multiple AUTs from a Single Test Script, Using ApplicationContext"></link><style xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" type="text/css" media="screen">
+        div.toc * { margin-left: 6px; margin-right: auto; max-width: 75em; }
+        div.toc span { margin-left: 0px; }
+        * { margin-left: auto; margin-right: auto; max-width: 75em; }
+        body { margin-left: 6px; margin-right: 6px; }
+        table th { padding: .5ex }
+        table td { padding: .5ex }
+    </style><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format">
+        function keyPress() {
+            var e = window.event;
+            if ( e == undefined ) {
+                return;
+            }
+            /* ### does not properly scroll, yet
+            if ( e.keyCode == 32 ) {
+            var l = document.links;
+            for ( var i = 0; i < l.length; i++ ) {
+                if ( l[i].innerText == "Next" ) {
+                location.href = l[i].href;
+                }
+            }
+            } else
+                */
+                if ( e.keyCode == 0x08 ) {
+            var l = document.links;
+            for ( var i = 0; i < l.length; i++ ) {
+                if ( l[i].innerText == "Prev" ) {
+                location.href = l[i].href;
+                }
+            }
+            }
+        }
+        document.onkeypress = keyPress;
+    </script></head><body><div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="ugs-synchpoints"></a>5.11. How to Create and Use Synchronization Points</h2></div></div></div><p>
+When recording a script in <span class="emphasis"><em>Squish</em></span>, the event recorder must ensure that
+the AUT and the test script are synchronized. One way of achieving this
+is for the recorder to automatically insert <a class="xref" href="rgs-squish.html#snooze-function"><code class="function">snooze</code></a> statements into the script. These
+statements force the script to wait for a specified number of seconds
+(which might be a fractional amount such as 2.5). This is necessary to
+ensure that a script is replayed at the same speed as it was recorded.
+For example, if the user waited for a window to pop up, the script will
+wait for the same amount of time. This is important to prevent <span class="emphasis"><em>Squish</em></span>
+from running the AUT too fast for the AUT's toolkit to keep up.
+</p><p>
+Using <a class="xref" href="rgs-squish.html#snooze-function"><code class="function">snooze</code></a> statements is the simplest way
+to synchronize the AUT and a test script. But in many cases, simply
+waiting for a certain amount of time isn't sufficient. For example, if a
+script is recorded on a fast machine and later replayed on a slow
+machine the time waited by <a class="xref" href="rgs-squish.html#snooze-function"><code class="function">snooze</code></a> might
+not be long enough.
+</p><p>
+Another way of synchronizing is to use <a class="xref" href="rgs-squish.html#waitForObject-function"><code class="function">waitForObject</code></a> statements instead of <a class="xref" href="rgs-squish.html#snooze-function"><code class="function">snooze</code></a> statements. If the <a class="xref" href="rgs-squish.html#waitForObject-function"><code class="function">waitForObject</code></a> function is used, before every
+action that is recorded, a <a class="xref" href="rgs-squish.html#waitForObject-function"><code class="function">waitForObject</code></a>
+statement will be recorded so that the object can be accessed. So on
+replay, instead of waiting for a specific amount of time, <span class="emphasis"><em>Squish</em></span> will
+wait for the given object to exist and be accessible (i.e., visible).
+Since using the <a class="xref" href="rgs-squish.html#waitForObject-function"><code class="function">waitForObject</code></a> function has
+proved much more reliable than using the <a class="xref" href="rgs-squish.html#snooze-function"><code class="function">snooze</code></a>, it is the default method used when
+recording test cases.
+</p><p>
+A third alternative is to use the <a class="xref" href="rgs-squish.html#waitFor-function"><code class="function">waitFor</code></a>
+function. This function waits until a given condition becomes true, or
+optionally, until a specified time out expires. The condition can be
+anything from a property to a complex script statement. Here is an
+example that waits for a particular dialog to pop up, and logs a fatal
+error if the dialog doesn't appear within 5 seconds:
+</p><div xmlns="" class="scriptlang"><form><select name="scriptlangcombo" onchange="javascript:changeScriptingLanguage(this)" onclick="javascript:changeScriptingLanguage(this)"><option value="all" selected>Show All</option><option value="JavaScript">Show JavaScript</option><option value="Perl">Show Perl</option><option value="Python">Show Python</option><option value="Ruby">Show Ruby</option><option value="Tcl">Show Tcl</option></select></form></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Python</span><pre class="programlisting">
+ok = waitFor("object.exists(':Address Book - Save As_QFileDialog')",
+    5000)
+if not ok:
+    test.fatal("AddressBook Save As dialog didn't appear")
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">JavaScript</span><pre class="programlisting">
+var ok = waitFor("object.exists(':Address Book - Save As_QFileDialog')",
+    5000);
+if (!ok)
+    test.fatal("AddressBook Save As dialog didn't appear");
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Perl</span><pre class="programlisting">
+my $ok = waitFor("object::exists(':Address Book - Save As_QFileDialog')",
+    5000);
+if (!$ok) {
+    test::fatal("AddressBook Save As dialog didn't appear");
+}
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Ruby</span><pre class="programlisting">
+ok = waitFor("Squish::Object.exists(':Address Book - Save As_QFileDialog')",
+    5000)
+if !ok
+    Test.fatal("AddressBook Save As dialog didn't appear")
+end
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Tcl</span><pre class="programlisting">
+set ok [waitFor {object exists ":Address Book - Save As_QFileDialog"} \
+    5000]
+if {!$ok} {
+    test fatal "AddressBook Save As dialog didn't appear"
+}
+</pre></div><p>
+Here is another example, this time one that will wait
+“<span class="quote">forever</span>” since no timeout is specified. So if the expected
+file doesn't exist and isn't created, the test script will be stuck:
+</p><div xmlns="" class="scriptlang"><form><select name="scriptlangcombo" onchange="javascript:changeScriptingLanguage(this)" onclick="javascript:changeScriptingLanguage(this)"><option value="all" selected>Show All</option><option value="JavaScript">Show JavaScript</option><option value="Perl">Show Perl</option><option value="Python">Show Python</option><option value="Ruby">Show Ruby</option><option value="Tcl">Show Tcl</option></select></form></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Python</span><pre class="programlisting">
+waitFor("QFile.exists('addresses.tsv')")
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">JavaScript</span><pre class="programlisting">
+waitFor("QFile.exists('addresses.tsv')");
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Perl</span><pre class="programlisting">
+waitFor("QFile::exists('addresses.tsv')");
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Ruby</span><pre class="programlisting">
+waitFor("QFile.exists('addresses.tsv')")
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Tcl</span><pre class="programlisting">
+waitFor {invoke QFile exists "addresses.tsv"}
+</pre></div><p>
+This next example waits up to 2 seconds for an <span class="guibutton">OK</span>
+button to become enabled. The <a class="xref" href="rgs-squish.html#waitFor-function"><code class="function">waitFor</code></a>
+function repeatedly evaluates the code it has been given as its first
+argument and returns <code class="code">true</code> as soon as the code evaluates to
+<code class="code">true</code>; or returns <code class="code">false</code> if the code doesn't
+evaluate to <code class="code">true</code> within the number of
+milliseconds specified by its second argument.
+</p><div xmlns="" class="scriptlang"><form><select name="scriptlangcombo" onchange="javascript:changeScriptingLanguage(this)" onclick="javascript:changeScriptingLanguage(this)"><option value="all" selected>Show All</option><option value="JavaScript">Show JavaScript</option><option value="Perl">Show Perl</option><option value="Python">Show Python</option><option value="Ruby">Show Ruby</option><option value="Tcl">Show Tcl</option></select></form></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Python</span><pre class="programlisting">
+button = findObject(":Address Book - Add.OK_QPushButton")
+enabled = waitFor("button.enabled", 2000)
+if not enabled:
+    test.fatal("OK button has not been enabled")
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">JavaScript</span><pre class="programlisting">
+var button = findObject(":Address Book - Add.OK_QPushButton");
+var enabled = waitFor("button.enabled", 2000);
+if (!enabled)
+    test.fatal("OK button has not been enabled");
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Perl</span><pre class="programlisting">
+my $button = findObject(":Address Book - Add.OK_QPushButton");
+my $enabled = waitFor("$button-&gt;enabled", 2000);
+if (!$enabled) {
+    test::fatal("OK button has not been enabled");
+}
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Ruby</span><pre class="programlisting">
+button = findObject(":Address Book - Add.OK_QPushButton")
+enabled = waitFor("button.enabled", 2000)
+if !enabled
+    Test.fatal("OK button has not been enabled")
+end
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Tcl</span><pre class="programlisting">
+set button [findObject ":Address Book - Add.OK_QPushButton"]
+set enabled [waitFor {property get $button enabled} 2000]
+if {!$enabled} {
+    test fatal "OK button has not been enabled"
+}
+</pre></div><p>
+These examples show different variations of synchronization points. As
+the condition which is passed to the <a class="xref" href="rgs-squish.html#waitFor-function"><code class="function">waitFor</code></a> function can be any script code which can
+be evaluated, including function calls, there are no limits to
+creating synchronization points.
+</p><p>
+More on synchronization for Web applications and advanced AJAX
+synchronization can be found at <a class="xref" href="ugs-webapi.html#ugsweb-sync" title="5.3.8. How to Synchronize Web Page Loading for Testing">How to Synchronize Web Page Loading for Testing (Section 5.3.8)</a>.
+</p><div class="sidebar"><p class="title"><b>Event-Driven Testing</b></p><p>
+By combining the <a class="xref" href="rgs-squish.html#waitFor-function"><code class="function">waitFor</code></a> function and event
+handlers (<a class="xref" href="ugs-eventhandlers.html" title="5.10. How to Use Event Handlers">How to Use Event Handlers (Section 5.10)</a>), it is possible to make
+the test script execution wait until a specific event has been handled.
+This can be done by installing an event handler, setting a global
+variable (e.g. <code class="code">eventHandled</code>) to false, and passing this
+global variable as condition to the <a class="xref" href="rgs-squish.html#waitFor-function"><code class="function">waitFor</code></a>
+function. In the event handler, just set <code class="code">eventHandled</code> to
+true and you are done.
+</p><p>
+Using this approach makes it is possible to create completely event
+driven tests, where the test's <code class="code">main</code> function just
+installs event handlers and then starts things off by making a call to
+<a class="xref" href="rgs-squish.html#waitFor-function"><code class="function">waitFor</code></a>, with all the testing being done
+inside the event handlers.
+</p></div></div><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" type="text/javascript" src="ScriptingLanguage.js"></script><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format">setScriptingLanguage();</script><div class="navfooter"><hr></hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="ugs-eventhandlers.html">Prev</a> </td><td width="20%" align="center"><a accesskey="u" href="users-guide.html">Up</a></td><td width="40%" align="right"> <a accesskey="n" href="ugs-appcontext.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">5.10. How to Use Event Handlers </td><td width="20%" align="center"><a accesskey="h" href="index-noframes.html">Home</a></td><td width="40%" align="right" valign="top"> 5.12. How to Test Multiple AUTs from a Single Test Script, Using
+ApplicationContext</td></tr></table></div></body>
+<!-- Mirrored from ugs-synchpoints.html by HTTrack Website Copier/3.x [XR&CO'2013], Wed, 06 Jul 2022 13:28:59 GMT -->
+</html>

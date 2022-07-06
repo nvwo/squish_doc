@@ -1,0 +1,424 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<!-- Mirrored from installation.for.web.testing.html by HTTrack Website Copier/3.x [XR&CO'2013], Wed, 06 Jul 2022 13:29:02 GMT -->
+<head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><title>3.7. Installing Squish for Web</title><link rel="stylesheet" href="manual.css" type="text/css"></link><meta name="generator" content="DocBook XSL Stylesheets V1.73.2"></meta><link rel="start" href="index-noframes.html" title="Squish Manual"></link><link rel="up" href="install.html" title="Chapter 3. How to Install Squish"></link><link rel="prev" href="ins-distributing.html" title="3.6. Distributing and Sharing an Installation"></link><link rel="next" href="installation.for.flex.testing.html" title="3.8. Installation for Flex applets in web pages"></link><style xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" type="text/css" media="screen">
+        div.toc * { margin-left: 6px; margin-right: auto; max-width: 75em; }
+        div.toc span { margin-left: 0px; }
+        * { margin-left: auto; margin-right: auto; max-width: 75em; }
+        body { margin-left: 6px; margin-right: 6px; }
+        table th { padding: .5ex }
+        table td { padding: .5ex }
+    </style><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format">
+        function keyPress() {
+            var e = window.event;
+            if ( e == undefined ) {
+                return;
+            }
+            /* ### does not properly scroll, yet
+            if ( e.keyCode == 32 ) {
+            var l = document.links;
+            for ( var i = 0; i < l.length; i++ ) {
+                if ( l[i].innerText == "Next" ) {
+                location.href = l[i].href;
+                }
+            }
+            } else
+                */
+                if ( e.keyCode == 0x08 ) {
+            var l = document.links;
+            for ( var i = 0; i < l.length; i++ ) {
+                if ( l[i].innerText == "Prev" ) {
+                location.href = l[i].href;
+                }
+            }
+            }
+        }
+        document.onkeypress = keyPress;
+    </script></head><body><div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="installation.for.web.testing"></a>3.7. Installing Squish for Web</h2></div></div></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><span class="section"><a href="installation.for.web.testing.html#installation.for.web.testing.supported.browsers">3.7.1. Supported browsers</a></span></dt><dt><span class="section"><a href="installation.for.web.testing.html#installation.for.web.testing.configure.firefox">3.7.2. Mozilla Firefox</a></span></dt><dt><span class="section"><a href="installation.for.web.testing.html#installation.for.web.testing.configure.chrome">3.7.3. Google Chrome/Chromium</a></span></dt><dt><span class="section"><a href="installation.for.web.testing.html#installation.for.web.testing.configure.ie">3.7.4. Microsoft Internet Explorer</a></span></dt><dt><span class="section"><a href="installation.for.web.testing.html#installation.for.web.testing.configure.edge.on.windows.10">3.7.5. <span class="trademark">Microsoft</span>® Edge on Windows 10</a></span></dt><dt><span class="section"><a href="installation.for.web.testing.html#installation.for.web.testing.with.chromium.based.applications">3.7.6. Chromium-based applications</a></span></dt><dt><span class="section"><a href="installation.for.web.testing.html#installation.for.web.testing.with.safari">3.7.7. <span class="trademark">Safari</span>®</a></span></dt><dt><span class="section"><a href="installation.for.web.testing.html#installation.for.web.testing.with.opera">3.7.8. <span class="trademark">Opera</span>® up to version 12</a></span></dt><dt><span class="section"><a href="installation.for.web.testing.html#installation.for.web.testing.on.mobile.devices">3.7.9. Browsers on mobile devices</a></span></dt></dl></div><p>
+This section covers the necessary installation steps for different browsers and
+automation methods when using <span class="emphasis"><em>Squish</em></span> for Web. Each subsection targets one
+browser or browser type and may be further divided in multiple parts.
+</p><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="installation.for.web.testing.supported.browsers"></a>3.7.1. Supported browsers</h3></div></div></div><p>
+<span class="emphasis"><em>Squish</em></span> for Web supports a wide range of different browsers and browser versions. The following table attempts to provide an overview of the browsers and browser versions being supported. More detailed information for each browser can be found in the following sections
+</p><div class="table"><a id="idp37636072"></a><p class="title"><b>Table 3.2. Supported Browsers</b></p><div class="table-contents"><table summary="Supported Browsers" border="1"><colgroup><col></col><col></col><col></col></colgroup><thead><tr><th>Browser</th><th>Version</th><th>Operating System</th><th>Attach to Running Instances</th></tr></thead><tbody><tr><td><a class="link" href="installation.for.web.testing.html#installation.for.web.testing.configure.firefox" title="3.7.2. Mozilla Firefox">Mozilla Firefox</a></td><td>since 12</td><td>Linux, macOS, Windows</td><td>yes</td></tr><tr><td><a class="link" href="installation.for.web.testing.html#installation.for.web.testing.configure.chrome" title="3.7.3. Google Chrome/Chromium">Google Chrome/Chromium</a></td><td>since 40</td><td>Linux, macOS, Windows</td><td>yes</td></tr><tr><td><a class="link" href="installation.for.web.testing.html#installation.for.web.testing.configure.ie" title="3.7.4. Microsoft Internet Explorer">Microsoft Internet Explorer</a></td><td>9 to 11</td><td>Windows</td><td>yes</td></tr><tr><td><a class="link" href="installation.for.web.testing.html#installation.for.web.testing.configure.edge.on.windows.10" title="3.7.5. Microsoft® Edge on Windows 10">Microsoft Edge</a></td><td>since 38</td><td>Windows</td><td>no</td></tr><tr><td><a class="link" href="installation.for.web.testing.html#installation.for.web.testing.with.safari" title="3.7.7. Safari®">Apple Safari</a></td><td>since 9</td><td>macOS</td><td>only Safari 9 to 11</td></tr><tr><td><a class="link" href="installation.for.web.testing.html#installation.for.web.testing.with.chromium.based.applications" title="3.7.6. Chromium-based applications">Applications based on Chromium</a></td><td>since 40</td><td>Linux, macOS, Windows</td><td>yes</td></tr><tr><td><a class="link" href="installation.for.web.testing.html#installation.for.web.testing.with.opera" title="3.7.8. Opera® up to version 12">Opera</a></td><td>11 to 12</td><td>Windows, Linux</td><td>no</td></tr><tr><td><a class="link" href="installation.for.web.testing.html#installation.for.web.testing.on.mobile.devices" title="3.7.9. Browsers on mobile devices">Browsers on mobile devices</a></td><td>all</td><td>iOS, Android</td><td>no</td></tr></tbody></table></div></div><br class="table-break"></br></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="installation.for.web.testing.configure.firefox"></a>3.7.2. Mozilla Firefox</h3></div></div></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><span class="section"><a href="installation.for.web.testing.html#installation.for.web.testing.configure.firefox.for.attaching">3.7.2.1. Setup for attaching to running instances</a></span></dt></dl></div><p>
+You can execute, record and inspect web applications running in Firefox
+by selecting it in the <span class="guilabel">Server Settings</span> dialog in the Squish IDE.
+Open the dialog using <span class="guimenu">Edit</span>|<span class="guimenuitem">Server
+Settings</span> and then select the
+<span class="guilabel">Browser</span> page. In the dropdown on the right select
+<span class="guilabel">Firefox</span>. The <span class="guilabel">Executable</span> field allows
+you to specify the firefox executable if it is not found automatically by
+<span class="emphasis"><em>Squish</em></span>.
+</p><p>
+<span class="emphasis"><em>Squish</em></span> for Web needs to install an extension for Firefox to be able to
+automate the browser. The installation of the extension is automatically
+started from the IDE but it needs to be completed manually by accepting the
+extension and closing the browser. The extension installation process can be
+started at any time from the <span class="guilabel">Server Settings</span> dialog, but
+it is being started as well when the Squish IDE detects a missing or too old extension
+version. You can start the extension installation process manually from a
+terminal by issuing the following command after changing to the Squish
+installation directory:
+</p><p>
+</p><pre class="screen">
+lib/exec/browserextensionhelper installBrowserExtension firefox
+</pre><p>
+</p><p>
+<span class="emphasis"><em>Squish</em></span> for Web uses a separate profile folder to separate passwords and other
+browser data between the automation session and your normal usage of the
+browser. The profile is being stored in a folder named
+<code class="filename">squish_firefox_profile_dir</code> in the directory
+<code class="filename">$HOME/.squish</code> on Linux and macOS and
+<code class="filename">%APPDATA%\froglogic\Squish\</code> on Windows. The folder will be
+created by Firefox the first time Squish starts the browser.
+</p><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Note"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/note.png"></img></td><th align="left">Note</th></tr><tr><td align="left" valign="top"><p>
+Squish for Web will start Firefox with a special URL that usually leads to
+Firefox displaying an error message about the server not responding or the URL
+not being found. This is normal and intended. The URL being passed as initial
+URL is necessary to transport information from Squish to its extension running
+inside Firefox. Once the extension has read the information from the URL it
+will start loading the URL specified for recording or in the startBrowser
+command.
+</p></td></tr></table></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="installation.for.web.testing.configure.firefox.for.attaching"></a>3.7.2.1. Setup for attaching to running instances</h4></div></div></div><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Note"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/note.png"></img></td><th align="left">Note</th></tr><tr><td align="left" valign="top"><p>
+You only need to follow these instructions when you want to use the
+<code class="function"><a class="xref" href="rgs-webconvenience.html#web-attachToBrowser-function"><code class="function">attachToBrowser</code></a></code> function. The following instructions
+are only needed if you plan to automate a Firefox process that is being started by some other program and not directly
+by <span class="emphasis"><em>Squish</em></span> for Web.
+</p></td></tr></table></div><p>
+In order to automate Firefox you need to make sure the Squish Firefox Extension
+is installed in the user profile used by Firefox when it is started outside of
+Squish. The easiest way to install the extension is to open a file browser and
+navigate to your <span class="emphasis"><em>Squish</em></span> for Web package. From there go into the
+<code class="filename">lib</code> subfolder in the package. Drag and drop the file
+<code class="filename">squishWebExt@froglogic.com.xpi</code> into the Firefox browser
+window and acknowledge the installation.
+</p><p>
+The Squish Firefox Extension by default uses the port 9932 for communication with the rest of <span class="emphasis"><em>Squish</em></span> for Web. If this port
+is already used by some other program on your system you can configure the extension to use a different port. In order
+to do this just open the Firefox menu, click on the <span class="guimenuitem">Tools</span> entry and in the submenu click on
+<span class="guimenuitem">Addons</span> item. This opens a new tab with the extensions loaded by Firefox, make sure the
+<span class="guibutton">Addons</span> entry on the left of the page is selected. You should see the Squish Firefox Extension there and
+below it a button labeled <span class="guibutton">Options</span> or <span class="guibutton">Preferences</span> depending on your system. If you
+click that button a new popup window appears where you can change the port number. This port number should then be passed to the
+<code class="function"><a class="xref" href="rgs-webconvenience.html#web-attachToBrowser-function"><code class="function">attachToBrowser</code></a></code> function to attach to this instance of
+Firefox.
+</p><p>
+Usually Firefox will delay WebSocket connection attempts to a given WebSocket server for some time if the last attempt
+failed. This is a problem when wanting to attach to the browser from Squish as the Extension will repeatedly
+try to connect to Squish, but this connection will fail as long as there is no Squish test script executed with the
+<code class="function"><a class="xref" href="rgs-webconvenience.html#web-attachToBrowser-function"><code class="function">attachToBrowser</code></a></code> function. Hence after a while these connection
+attempts will be delayed by Firefox and eventually the delay will be longer than the AUT timeout configured in Squish
+which will cause the connection to fail to be established.
+</p><p>
+This behavior of Firefox can be disabled by opening the special about:config URL in a new browser tab. Please acknowledge
+the warning by clicking the <span class="guibutton">I'll be careful, I promise</span> button. The setting to change is
+<span class="guilabel">network.websocket.delay-failed-reconnects</span> and it should be set to <span class="guilabel">false</span>. You can
+search for the setting by typing the name into the search field and changing the setting can be done with a simple
+double click of the mouse on the value.
+</p></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="installation.for.web.testing.configure.chrome"></a>3.7.3. Google Chrome/Chromium</h3></div></div></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><span class="section"><a href="installation.for.web.testing.html#installation.for.web.testing.configure.chrome.for.attaching">3.7.3.1. Setup for attaching to running instances</a></span></dt></dl></div><p>
+You can execute, record and inspect web applications running in Google
+Chrome/Chromium by selecting it in the <span class="guilabel">Server Settings</span> dialog
+in the Squish IDE.  Open the dialog using
+<span class="guimenu">Edit</span>|<span class="guimenuitem">Server
+Settings</span> and then select the
+<span class="guilabel">Browser</span> page. In the dropdown on the right select
+<span class="guilabel">Google Chrome</span>. The <span class="guilabel">Executable</span> field
+allows you to specify the executable if it is not found automatically
+by <span class="emphasis"><em>Squish</em></span>.
+</p><p>
+<span class="emphasis"><em>Squish</em></span> for Web needs to install an extension for Google Chrome/Chromium to be able to
+automate the browser. The installation of the extension is automatically
+started from the IDE but it needs to be completed manually by accepting the
+extension and closing the browser. The extension installation process can be
+started at any time from the <span class="guilabel">Server Settings</span> dialog, but
+it is being started as well when the Squish IDE detects a missing or too old extension
+version. You can start the extension installation process manually from a
+terminal by issuing the following command after changing to the Squish
+installation directory:
+</p><p>
+</p><pre class="screen">
+lib/exec/browserextensionhelper installBrowserExtension google-chrome
+</pre><p>
+</p><p>
+In order to automate Google Chrome/Chromium <span class="emphasis"><em>Squish</em></span> for Web needs to install
+an extension for Google Chrome/Chromium. The installation of the extension is
+automatically started from the IDE when you try to run a test against Google
+Chrome/Chromium or start the browser using the <span class="guibutton">Launch
+AUT</span> button. The <a class="ulink" href="https://chrome.google.com/webstore/detail/mkfebldlkodkmhpdlgigfneaajboegdl" target="_blank">froglogic
+Squish Chrome extension</a> is distributed through the Chrome Web Store.
+</p><p>
+<span class="emphasis"><em>Squish</em></span> for Web uses a separate profile folder to separate passwords and other
+browser data between the automation session and your normal usage of the
+browser. The profile is being stored in a folder named
+<code class="filename">squish_chrome_data_dir</code> in the directory
+<code class="filename">$HOME/.squish</code> on Linux and macOS and
+<code class="filename">%APPDATA%\froglogic\Squish\</code> on Windows. The folder will be
+created by Google Chrome/Chromium the first time Squish starts the browser.
+</p><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Note"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/note.png"></img></td><th align="left">Note</th></tr><tr><td align="left" valign="top"><p>
+Squish for Web will start Google Chrome/Chromium with a special URL that
+usually leads to Google Chrome/Chromium displaying an error message about the
+server not responding or the URL not being found. This is normal and intended.
+The URL being passed as initial URL is necessary to transport information from
+Squish to its extension running inside Google Chrome/Chromium. Once the
+extension has read the information from the URL it will start loading the URL
+specified for recording or in the startBrowser command.
+</p></td></tr></table></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="installation.for.web.testing.configure.chrome.for.attaching"></a>3.7.3.1. Setup for attaching to running instances</h4></div></div></div><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Note"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/note.png"></img></td><th align="left">Note</th></tr><tr><td align="left" valign="top"><p>
+You only need to follow these instructions when you want to use the
+<code class="function"><a class="xref" href="rgs-webconvenience.html#web-attachToBrowser-function"><code class="function">attachToBrowser</code></a></code> function. The following instructions
+are only needed if you plan to automate a Chrome process that is being started by some other program and not directly
+by <span class="emphasis"><em>Squish</em></span> for Web.
+</p></td></tr></table></div><p>
+In order to automate Google Chrome you need to make sure the froglogic Squish Integration is loaded in the user profile used
+by Google Chrome when it is started outside of Squish. The easiest way to make Chrome use the extension is to start
+the browser and navigate to the Chrome store page for the Squish Integration:
+<a class="ulink" href="https://chrome.google.com/webstore/detail/mkfebldlkodkmhpdlgigfneaajboegdl" target="_blank">https://chrome.google.com/webstore/detail/mkfebldlkodkmhpdlgigfneaajboegdl</a>.
+Once the page has loaded click the "Add To Chrome" button and on the popup that is being opened up acknowledge the
+installation. You can verify that loading the extension succeeded by opening the Chrome menu and then selecting
+<span class="guimenuitem">Tools</span> and then <span class="guimenuitem">Extensions</span> entry. This opens up a new tab with
+the list of extensions, you should see an entry for froglogic Squish Integration in that list.
+</p><p>
+The froglogic Squish Integration by default uses the port 9935 for communication with the rest of <span class="emphasis"><em>Squish</em></span> for Web. If this port
+is already used by some other program on your system you can configure the extension to use a different port. In order
+to do this open the Chrome menu and then click on <span class="guimenuitem">Tools</span> and
+in the opened submenu click on <span class="guimenuitem">Extensions</span>. This opens a new tab with the Extensions loaded in Chrome.
+Below the entry for the froglogic Squish Integration you see a link labeled <span class="guibutton">Options</span>. If you click
+that link a new popup window appears where you can change the port number and save the change. This port number should then be passed to the
+<code class="function"><a class="xref" href="rgs-webconvenience.html#web-attachToBrowser-function"><code class="function">attachToBrowser</code></a></code> function to attach to this instance of
+Google Chrome.
+</p></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="installation.for.web.testing.configure.ie"></a>3.7.4. Microsoft Internet Explorer</h3></div></div></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><span class="section"><a href="installation.for.web.testing.html#installation.for.web.testing.configure.ie.for.attaching">3.7.4.1. Setup to attach to running instances</a></span></dt></dl></div><p>
+You can execute, record and inspect web applications running in Internet Explorer
+by selecting it in the <span class="guilabel">Server Settings</span> dialog in the Squish IDE.
+Open the dialog using <span class="guimenu">Edit</span>|<span class="guimenuitem">Server
+Settings</span> and then select the
+<span class="guilabel">Browser</span> page. In the dropdown on the right select
+<span class="guilabel">Internet Explorer</span>.
+</p><p>
+Squish does not require any special setup steps to be able to automate Internet
+Explorer, all necessary setup is being done automatically when you start the
+browser the first time.
+</p><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="installation.for.web.testing.configure.ie.for.attaching"></a>3.7.4.1. Setup to attach to running instances</h4></div></div></div><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Note"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/note.png"></img></td><th align="left">Note</th></tr><tr><td align="left" valign="top"><p>
+You only need to follow these instructions when you want to use the
+<code class="function"><a class="xref" href="rgs-webconvenience.html#web-attachToBrowser-function"><code class="function">attachToBrowser</code></a></code> function. The following instructions
+are only needed if you plan to automate an Internet Explorer window that is being started by some other program and not directly
+by <span class="emphasis"><em>Squish</em></span> for Web.
+</p></td></tr></table></div><p>
+In order to automate Internet Explorer using <span class="emphasis"><em>Squish</em></span> for Web it is necessary to instruct it to use just a single process
+for all its tabs. Internet Explorer 10 and newer will usually use multiple processes for rendering websites as can be
+seen in the task manager.
+</p><p>
+Internet Explorer can be instructed to use only one process by changing a registry setting using the registry editor.
+The editor can be started by opening the Windows menu and then start typing <code class="filename">regedit</code> and
+select the entry running the <code class="filename">regedit</code> command.
+</p><p>
+The registry editor shows a tree on the left, locate the entry <span class="guilabel">HKEY_CURRENT_USER</span> and expand it.
+Following the tree structure expand the <span class="guilabel">Software</span> entry, below that <span class="guilabel">Microsoft</span>
+and finally inside <span class="guilabel">Microsoft</span> expand <span class="guilabel">Internet Explorer</span>. In this section
+there's an entry called <span class="guilabel">Main</span> and once it is selected you see a couple of keys on the right
+side of the editor. There should be a <code class="code">DWORD</code> entry called <span class="guilabel">TabProcGrowth</span> there. The
+<span class="guilabel">TabProcGrowth</span> entry has to be set to 0 in order for <span class="emphasis"><em>Squish</em></span> for Web to be able to automate
+Internet Explorer after attaching to it. Once this is done make sure to restart any running instances of the browser.
+</p></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="installation.for.web.testing.configure.edge.on.windows.10"></a>3.7.5. <span class="trademark">Microsoft</span>® Edge on Windows 10</h3></div></div></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><span class="section"><a href="installation.for.web.testing.html#web.testing.with.microsoft.edge.known.issues">3.7.5.1. Known issues when using <span class="emphasis"><em>Squish</em></span> with <span class="trademark">Microsoft</span>® Edge</a></span></dt></dl></div><p><span class="trademark">Microsoft</span>® Edge support on Windows 10 is realized through the Edge Driver.
+The Edge Driver is not redistributed with squish so you have to download it from <span class="trademark">Microsoft</span>®.
+<a class="ulink" href="https://developer.microsoft.com/en-us/microsoft-edge/tools/webdriver/" target="_blank">
+Download <span class="trademark">Microsoft</span>® Edge Driver</a></p><p>When using the Edge Driver implementation <span class="emphasis"><em>Squish</em></span> does not start the browser itself but the Edge Driver.
+Since the Edge Driver executable can be located anywhere on the system you need to specify the path to the Edge Driver.
+If you're using the IDE you can simply use the Browser-Executable field in the <a class="link" href="ide.dialogs.html#ide.squish.server.settings.dialog" title="8.3.22. Squish Server Settings dialog">
+Server Settings Dialog</a> under <span class="guimenu">Edit</span>|<span class="guimenuitem">Server Settings</span>|<span class="guimenuitem">Browser</span> and <span class="guilabel">Microsoft Edge</span>.
+In case you do not use the IDE you can set the environment variable <code class="envar">SQUISH_BROWSERPATH</code>
+to point to the Edge Driver-Executable.</p><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="web.testing.with.microsoft.edge.known.issues"></a>3.7.5.1. Known issues when using <span class="emphasis"><em>Squish</em></span> with <span class="trademark">Microsoft</span>® Edge</h4></div></div></div><p><span class="trademark">Microsoft</span>® Edge support is still in an early stage so there are some known issues.</p><div class="itemizedlist"><ul type="disc"><li><p>Switching to Fullscreen mode is not supported.</p></li><li><p>Tab support is limited to playback. While recording only a single tab is supported.
+If you try to open multiple tabs or try to switch between tabs during recording the focus
+will  always go back to the initial tab.</p></li><li><p><a class="xref" href="rgs-webconvenience.html#web-automateLogin-function"><code class="function">automateLogin</code></a> is not supported. In general
+websites with native login dialogs are not supported.</p></li><li><p>When you start recording the browser window is sometimes opened before the initialization is
+complete, which might lead to events not being recorded. Make sure the <span class="emphasis"><em>Squish</em></span> recording Control Bar is opened.</p></li><li><p>When a new page is loaded there might be up to a 100ms gap in which no events are recorded by <span class="emphasis"><em>Squish</em></span>.</p></li><li><p>When a new page is loaded that has a different origin or domain it's possible that events recorded directly
+before the page change happens are lost.</p></li><li><p>Drag and Drop on HTML input fields does not work reliably. As a workaround
+you can either drop the item with the relative x drop location set to 1. Or call
+<a class="xref" href="rgs-squish.html#mouseMove-function"><code class="function">mouseMove</code></a> between the drag and drop calls (the mouseMove
+coordinates should be the target coordinates offset by 1). This could be a general
+problem with how <span class="trademark">Microsoft</span>® Edge processes drag and drop events and might therefore
+be applicable to other scenarios as well.</p></li><li><p>If you experience crashes of Edge Driver after test script execution you might need to
+increase the SoftExitTimeout: <a class="xref" href="rg-cmdline.html#rg-squishrunner-cli--config" title="7.4.3.27. Configuring squishrunner">Configuring <span class="application">squishrunner</span> (Section 7.4.3.27)</a></p></li></ul></div></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="installation.for.web.testing.with.chromium.based.applications"></a>3.7.6. Chromium-based applications</h3></div></div></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><span class="section"><a href="installation.for.web.testing.html#installation.for.web.testing.configure.chromium.for.attaching">3.7.6.1. Setup for attaching to a running instance</a></span></dt><dt><span class="section"><a href="installation.for.web.testing.html#web.testing.with.chromium.based.applications.known.issues">3.7.6.2. Known issues when using <span class="emphasis"><em>Squish</em></span> with Chromium-based Applications</a></span></dt></dl></div><p>Support for automating the web content in Chromium-based applications is provided
+through the Webdriver for Chromium.
+The Webdriver is not redistributed with <span class="emphasis"><em>Squish</em></span> so you have to download it from Google.
+<a class="ulink" href="https://sites.google.com/a/chromium.org/chromedriver/downloads/" target="_blank">
+Download Chromium Webdriver</a></p><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Note"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/note.png"></img></td><th align="left">Note</th></tr><tr><td align="left" valign="top"><p>
+Different versions of Chromium require to use different versions of the
+chromedriver executable, in particular newer chromedriver versions do not
+support older versions of Chromium. In order to find the right chromedriver
+executable you need to determine the exact version of Chromium being used in
+your application and check the release notes of chromedriver on the above
+linked download page to find the chromedriver version suitable for your
+application.
+Older releases can be accessed by going to the parent directory from one of the
+newer download links, which leads to <a class="ulink" href="https://chromedriver.storage.googleapis.com/index.html" target="_blank">a directory listing all versions</a>.
+</p></td></tr></table></div><p>In order for Squish to find the downloaded Chromium webdriver executable you can place it into a directory
+that is in your PATH. As an alternative you can configure the location in the file webwrapper.ini that you can find
+in the etc directory of your Squish installation. Open the file in a text editor and replace the value 'chromedriver'
+in the line starting with 'ChromeDriverForChromiumBasedApps' with the absolute path of the downloaded chromedriver
+executable. On Windows it is necessary to duplicate the backslashes in the path
+to fulfill the formatting requirements of the file.
+</p><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Note"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/note.png"></img></td><th align="left">Note</th></tr><tr><td align="left" valign="top"><p>
+If you want to automate an application that is using nw.js please make sure to use the chromedriver executable
+provided as part of the nw.js SDK download as the standard chromedriver seems to not work properly at the time of
+writing this.
+</p></td></tr></table></div><p>In order to tell Squish about your Chromium-based application please select it as the browser executable in the
+<a class="link" href="ide.dialogs.html#ide.squish.server.settings.dialog" title="8.3.22. Squish Server Settings dialog">Server Settings Dialog</a> of the IDE. You can access the dialog
+by opening the <span class="guimenu">Edit</span> menu and below that the <span class="guimenuitem">Server Settings</span>
+submenu. In this submenu select the entry labeled <span class="guimenuitem">Browser</span>. In the dialog
+fill in the field below <span class="guilabel">Chromium-based Applications (using CEF, Electron, nw.js etc.)</span> and make sure that entry
+is selected.
+</p><p>
+In case you do not use the IDE you can set the environment variable <code class="envar">SQUISH_BROWSERPATH</code>
+to point to your application.
+</p><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="installation.for.web.testing.configure.chromium.for.attaching"></a>3.7.6.1. Setup for attaching to a running instance</h4></div></div></div><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Note"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/note.png"></img></td><th align="left">Note</th></tr><tr><td align="left" valign="top"><p>
+You only need to follow these instructions when you want to use the
+<code class="function"><a class="xref" href="rgs-webconvenience.html#web-attachToBrowser-function"><code class="function">attachToBrowser</code></a></code> function. The following instructions
+are only needed if you plan to automate a Chromium-based application that is being started by some other program and not directly
+by <span class="emphasis"><em>Squish</em></span> for Web.
+</p></td></tr></table></div><p>
+In order to attach to a Chromium-based application its necessary to prepare
+Squish for automating Chromium-based applications as explained in <a class="xref" href="installation.for.web.testing.html#installation.for.web.testing.with.chromium.based.applications" title="3.7.6. Chromium-based applications">Chromium-based applications (Section 3.7.6)</a>. After
+the basic setup has been finished it is necessary to enable remote debugging
+features in the Chromium-part of the application.  This is sometimes exposed as
+a commandline flag named <em class="parameter"><code>--remote-debugging-port</code></em> but it
+can also be set through code in your application. The port number used for the
+remote debugging port number needs to be passed to the <code class="function"><a class="xref" href="rgs-webconvenience.html#web-attachToBrowser-function"><code class="function">attachToBrowser</code></a></code> function in the test
+script to connect to the Chromium web content in the application.
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="web.testing.with.chromium.based.applications.known.issues"></a>3.7.6.2. Known issues when using <span class="emphasis"><em>Squish</em></span> with Chromium-based Applications</h4></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Window interaction methods (maximizing, minimizing, setting to fullscreen, changing the size) are not
+supported as Squish only controls the web contents but not the whole application.</p></li><li><p>Interaction with multiple web views in an application is possible, but limited to the web content
+inside them. Squish cannot make them visible/invisible or bring one view to the foreground as a human user
+may do.</p></li><li><p>Screenshot verifications and Visual verifications will be using a desktop screenshot method which requires
+that the webview to be verified in is visible on screen fully. Web views that are not visible, for example because
+they are part of another tab inside the application cannot be grabbed. In addition the Chromium-based application
+must not be overlapped by other applications at the time of grabbing the screenshot as the screenshot will include
+such overlapped applications if they're covering the web view.
+</p></li><li><p>
+The <a class="xref" href="rgs-webconvenience.html#web-isBrowserDialogOpen-function"><code class="function">isBrowserDialogOpen</code></a> function always yields false for Chromium-based applications.
+</p></li></ul></div></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="installation.for.web.testing.with.safari"></a>3.7.7. <span class="trademark">Safari</span>®</h3></div></div></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><span class="section"><a href="installation.for.web.testing.html#installation.for.web.testing.safari.12.on.osx.10.13">3.7.7.1. Safari 12 or newer on macOS 10.13 or latser</a></span></dt><dt><span class="section"><a href="installation.for.web.testing.html#installation.for.web.testing.with.safari.on.osx.10.11.5">3.7.7.2. <span class="application">Safari</span> on <span class="trademark">macOS</span>® 10.11.5 or later</a></span></dt></dl></div><p>
+You can execute, record and inspect web applications running in Safari
+by selecting it in the <span class="guilabel">Server Settings</span> dialog in the Squish IDE.
+Open the dialog using <span class="guimenu">Edit</span>|<span class="guimenuitem">Server
+Settings</span> and then select the
+<span class="guilabel">Browser</span> page. In the dropdown on the right select
+<span class="guilabel">Safari</span>.
+</p><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="installation.for.web.testing.safari.12.on.osx.10.13"></a>3.7.7.1. Safari 12 or newer on macOS 10.13 or latser</h4></div></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h5 class="title"><a id="idp37738344"></a>3.7.7.1.1. Manual Setup Steps for Enabling Automation</h5></div></div></div><p>
+Safari 12 stopped supporting the use of Plug-In's which Squish relied on so
+far, so Squish adopted a different mechanism for automation, based on Safari's
+support for WebDriver. In order to allow automation via Safari's WebDriver  you
+must enable this through the <span class="guimenu">Develop</span> menu. This menu option
+is usually hidden, but can be shown by opening the Preferences of <span class="application">Safari</span> and
+selecting the Advanced tab. On the tab ensure the <span class="guibutton">Show Develop menu
+in menu bar</span> option is checked.</p><p>Once the <span class="guimenu">Develop</span> menu is shown open it and make sure
+the <span class="guimenuitem">Allow Remote Automation</span> option is
+checked.</p><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Note:  Safari 12 "><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/note.png"></img></td><th align="left"> Safari 12 </th></tr><tr><td align="left" valign="top"><p> There are certain restrictions when automating Safari 12 as well as
+things to be aware of, we documented all of those in <a class="xref" href="installation.for.web.testing.html#web.testing.safari.12.limitations" title="3.7.7.1.3. Limitations">Limitations (Section 3.7.7.1.3)</a>.</p></td></tr></table></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h5 class="title"><a id="idp37743176"></a>3.7.7.1.2. Semi-Automatic Setup Steps for Enabling Automation</h5></div></div></div><p>
+It is possible to enable the automation of Safari without starting the browser
+and going through the <span class="guimenu">Develop</span> menu. Safari's webdriver
+utility safaridriver allows to enable the Remote Automation through its
+commandline arguments. You can invoke safaridriver as shown below and provide
+the administrator password to enable automation, please make sure that Safari
+is not running on the system while doing this.
+</p><p>
+<code class="code">safaridriver --enable</code>
+</p><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Note:  Safari 12 "><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/note.png"></img></td><th align="left"> Safari 12 </th></tr><tr><td align="left" valign="top"><p> There are certain restrictions when automating Safari 12 as well as
+things to be aware of, we documented all of those in <a class="xref" href="installation.for.web.testing.html#web.testing.safari.12.limitations" title="3.7.7.1.3. Limitations">Limitations (Section 3.7.7.1.3)</a>. </p></td></tr></table></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h5 class="title"><a id="web.testing.safari.12.limitations"></a>3.7.7.1.3. Limitations</h5></div></div></div><p> The automation of Safari through the WebDriver protocol and Safari's
+behavior when being automated through this protocol impose certain restrictions
+on what can be done in the test scripts. In particular Safari is being executed
+in a separate dedicated Session which does not share any data with the normal
+browsing session, so cookies and other data is not being taken over from the
+normal browsing session. In addition to that the following limitations apply as well.
+</p><div class="itemizedlist"><ul type="disc"><li><p>
+No support for recording or picking objects. Since Safari ends the automation
+as soon as a native click appears on the window there is no way for Squish to
+receive such click events (or text input) and hence neither recording
+interactions nor picking elements is possible. Only script execution and
+navigation of the object structure via the Application Objects view's tree are
+possible.
+</p></li><li><p>No support for native native text input (nativeType) or native mouse
+input via the mousePress/mouseRelease functions. Safari disallows native events
+in the special automation session, causing abortion of the automation if
+attempted.
+</p></li><li><p>Limited support for the nativeMouseClick function. The overload taking a
+HTML object can be used, but the relative coordinates will be ignored and only
+left button clicks can be performed. The WebDriver protocol only allows to
+click on the center of html elements with the left mouse button.
+</p></li><li><p>Squish's automateLogin function, used for the Basic HTTP Authentication
+dialogs used on some websites, cannot be used. The function uses native events
+which would break the automation session and the WebDriver protocol does not
+provide a way to interact with these dialogs. The login on such a website
+must be achieved through different means.
+</p></li><li><p>Automation of file uploads requires that the input element used for the
+actual file upload is visible and interactable. Websites hiding this html
+element and showing customized upload buttons require some manual scripting
+that makes the hidden input field visible and then automates that field via
+setText, similar to the following snippet.</p><p>
+</p><div xmlns:fo="http://www.w3.org/1999/XSL/Format" xmlns="" class="programlistingcontainer"><span class="programlistinglanguage">Python</span><pre class="programlisting">
+hiddenInput = waitForObjectExists({"tagName":"INPUT", "id":"userfile"})
+hiddenInput.setProperty("style", "display:block;visibility:visible")
+snooze(1)
+setText(hiddenInput, "/Users/andreas/dummyfile.txt")
+</pre></div><p>
+</p></li><li><p>The active browser tab will be changing regularly. In order to use the
+WebDriver protocol the active tab needs to be activated for certain operations.
+In Safari such a change of the active also visually changes the active tab in
+the UI. Since Squish does such operations behind the scenes during the normal
+operation some 'flickering' of tabs may occur
+</p></li></ul></div></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="installation.for.web.testing.with.safari.on.osx.10.11.5"></a>3.7.7.2. <span class="application">Safari</span> on <span class="trademark">macOS</span>® 10.11.5 or later</h4></div></div></div><p>macOS 10.11.5 updated the version of <span class="application">Safari</span> shipped with the system which now defaults to disallow the execution of JavaScript code in the web page through AppleScript. Squish relies on this method of executing JavaScript and thus it is necessary to enable this support again when using <span class="application">Safari</span> on macOS 10.11.5 or later.</p><p>In order to enable this option its necessary to make <span class="application">Safari</span> show the "Develop" menu. This can be done by opening the Preferences of <span class="application">Safari</span>, then selecting the Advanced tab and ensure the option "Show Develop menu in menu bar" is checked.</p><p>Once the "Develop" menu is available in the menu bar, open the menu and make sure the option "Allow JavaScript from Apple Events" is checked. This enables <span class="emphasis"><em>Squish</em></span> for Web to automate <span class="application">Safari</span> on macOS 10.11.5 and later.</p></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="installation.for.web.testing.with.opera"></a>3.7.8. <span class="trademark">Opera</span>® up to version 12</h3></div></div></div><p>
+You can execute, record and inspect web applications running in Opera
+by selecting it in the <span class="guilabel">Server Settings</span> dialog in the Squish IDE.
+Open the dialog using <span class="guimenu">Edit</span>|<span class="guimenuitem">Server
+Settings</span> and then select the
+<span class="guilabel">Browser</span> page. In the dropdown on the right select
+<span class="guilabel">Opera</span>.
+</p><p>The Opera browser in versions up to 12 uses its own configuration settings
+for proxy servers. This makes it necessary to configure it to use the <span class="emphasis"><em>Squish</em></span> for Web proxy manually, so <span class="emphasis"><em>Squish</em></span> is
+able to automate Websites running in Opera.</p><p>Configuring the proxy can be done in the settings of Opera, they can be opened from the Menu by
+selecting the "Settings" entry and then in the submenu again selecting "Settings". In the dialog that
+appears the tab labeled "Advanced" needs to be selected to allow accessing the network configuration.
+The list on the left side of the tabs content has a corresponding entry called "Network" which needs to
+be selected. Click the button "Proxy servers" in the dialog to configure the proxy servers that Opera
+uses. In the newly opened dialog make sure the radio button "Use manual proxyserver configuration" is selected
+and check the checkbox next the "HTTP" entry. The fields "proxyserver" and "port" need to be filled with the
+values "localhost" and "8000" respectively. In addition the checkbox "Use the proxy for local servers" further down
+should be activated to make it possible to test the addressbook application that ships with <span class="emphasis"><em>Squish</em></span>.</p><p>In addition to configuring the proxy, the Crash Recovery dialog in Opera should be disabled. Since
+the dialog cannot be automated with <span class="emphasis"><em>Squish</em></span> for Web it would otherwise cause test execution abortion as it
+appears on each start of Opera after <span class="emphasis"><em>Squish</em></span> has exited the browser. This setting needs to be changed in
+Operas configuration editor, which can be opened by putting "about:config" into the location bar. The page
+that is being opened allows searching for specific settings. Use "Problem" as keyword for the search so it
+will reveal the configuration entry for enabling and disabling the dialog. The title of the setting is
+"Show Problem Dialog" and the configuration entry needs to be disabled by unchecking the checkbox next to
+the text.</p><p>This completes the steps needed to setup Opera for testing with <span class="emphasis"><em>Squish</em></span>, you can now select the Opera
+executable as a browser in the IDE and record and replay tests with it.</p><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Note"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/note.png"></img></td><th align="left">Note</th></tr><tr><td align="left" valign="top"><p>Opera versions newer than 12 are currently not supported by <span class="emphasis"><em>Squish</em></span> for Web</p></td></tr></table></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="installation.for.web.testing.on.mobile.devices"></a>3.7.9. Browsers on mobile devices</h3></div></div></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><span class="section"><a href="installation.for.web.testing.html#installation.for.web.testing.on.mobile.devices.configure.http.proxy">3.7.9.1. Start the HTTP proxy</a></span></dt><dt><span class="section"><a href="installation.for.web.testing.html#installation.for.web.testing.on.mobile.devices.configure.device.proxy.connection">3.7.9.2. Configure Device Proxy Connection</a></span></dt><dt><span class="section"><a href="installation.for.web.testing.html#installation.for.web.testing.on.mobile.devices.configure.squish.ide">3.7.9.3. Configure <span class="emphasis"><em>Squish</em></span> for Web IDE</a></span></dt><dt><span class="section"><a href="installation.for.web.testing.html#installation.for.web.testing.on.mobile.devices.limitations">3.7.9.4. Limitations</a></span></dt></dl></div><p>
+This section assumes <span class="emphasis"><em>Squish</em></span> for Web 6.1 or later is installed on a desktop operating system.
+(see <a class="xref" href="ins-commandline-tools-server-ide.html" title="3.1. Installing the Command Line Tools, Server, and IDEs">Installing the Command Line Tools, Server, and IDEs (Section 3.1)</a>)
+</p><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Note"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/note.png"></img></td><th align="left">Note</th></tr><tr><td align="left" valign="top"><p>
+Examples contain system prompt symbols which may vary, and using Windows, the commands do not include the leading <code class="code">./</code>
+</p></td></tr></table></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="installation.for.web.testing.on.mobile.devices.configure.http.proxy"></a>3.7.9.1. Start the HTTP proxy</h4></div></div></div><p>Start the HTTP-Proxy server by executing the following command in the console (this uses the default HTTP-proxy server port 8000):</p><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Note: Mac users"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/note.png"></img></td><th align="left">Mac users</th></tr><tr><td align="left" valign="top"><p>Confirm Python 2.6 or greater installed before proceeding</p></td></tr></table></div><pre class="screen">
+<code class="prompt">$</code> <span class="application">./bin/webproxy/proxy</span>
+</pre><p>
+        Please see
+        <a class="xref" href="rg-cmdline.html#rg-webproxy" title="7.4.8. Web Proxy">Web Proxy (Section 7.4.8)</a>
+        for details about the options that the webproxy supports.
+    </p></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="installation.for.web.testing.on.mobile.devices.configure.device.proxy.connection"></a>3.7.9.2. Configure Device Proxy Connection</h4></div></div></div><p>
+Connect your mobile device or tablet to the same network as your computer, and configure the device to use the computer's proxy server as follows:</p><div class="itemizedlist"><ul type="disc"><li><p>
+<span class="emphasis"><em>Android Device</em></span>
+</p><div class="orderedlist"><ol type="1"><li><p>From Settings, tap <span class="guibutton">Wi-Fi</span></p></li><li><p>Tap and hold the currently active wireless network connection, and select <span class="guibutton">Modify network</span></p></li><li><p>Tap the <span class="guibutton">Show advanced options</span> check box</p></li><li><p>Click the <span class="guibutton">Proxy</span> box and select <span class="guibutton">Manual</span></p></li><li><p>Enter the computer's IP address or name in the <span class="guibutton">Proxy hostname</span> box</p></li><li><p>Enter 8000 in the <span class="guibutton">Proxy port</span> box, this is the standard port used by the HTTP-proxy</p></li><li><p>Tap <span class="guibutton">Save</span></p></li></ol></div><p>
+</p></li><li><p>
+<span class="emphasis"><em>iOS Device</em></span>
+</p><div class="orderedlist"><ol type="1"><li><p>From Settings, tap <span class="guibutton">Wi-Fi</span></p></li><li><p>Tap the Information button <span class="guibutton">(i)</span> for the currently active wireless network connection</p></li><li><p>Tap <span class="guibutton">Manual</span> in the HTTP PROXY section</p></li><li><p>Enter the computer's IP address or name in the <span class="guibutton">Server</span> box</p></li><li><p>Enter 8000 in the <span class="guibutton">Port</span> box, this is the standard port used by the HTTP-proxy</p></li><li><p>Tap <span class="guibutton">&lt;Wi-Fi</span></p></li></ol></div><p>
+</p></li><li><p>
+<span class="emphasis"><em>Test Device Connection</em></span>
+To test the connection, open a browser on the device and navigate to "http://<span class="emphasis"><em>&lt;anyURL&gt;</em></span>/startsquish/". The browser page loads: “<span class="quote">Squish/Web Automated GuiTesting Waiting for start of next testcase...</span>”
+</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="installation.for.web.testing.on.mobile.devices.configure.squish.ide"></a>3.7.9.3. Configure <span class="emphasis"><em>Squish</em></span> for Web IDE</h4></div></div></div><p>From the computer, open the <span class="emphasis"><em>Squish</em></span> (for Web) IDE, select <span class="guimenu">Edit</span>|<span class="guimenuitem">Server Settings</span>|<span class="guimenuitem">Browser</span>, and choose the <span class="guibutton">Browser on Mobile Device</span> option.
+</p><p>
+This completes the device-specific setup for <span class="emphasis"><em>Squish</em></span> for Web! You can now
+record and playback tests using the <span class="application">Squish IDE</span> on the computer just as you can with
+standard web testing; only now when recording, the actions all take place
+on the device—and, of course, the playback also takes place
+on the device.
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="installation.for.web.testing.on.mobile.devices.limitations"></a>3.7.9.4. Limitations</h4></div></div></div><p>
+At the time of publication, testing Browsers on devices had some
+limitations compared with web testing on desktops. The most significant known limitations are:
+</p><div class="itemizedlist"><ul type="disc" compact><li><p>No support for testing native dialogs; this includes file upload fields.</p></li><li><p>Cannot use one proxy for multiple parallel test executions/recordings.</p></li><li><p>Does not work with popup blockers when using a manually-started browser/proxy; popup blockers need to be disabled in the browser prior to testing.</p></li><li><p>Cannot use Screenshot Verification points with remote browsers (iphone/ipad browser testing), this is due to the screenshot code being purely C++ code in the webhook.</p></li><li><p>Complex Touch/Gesture events are currently not recognized/recorded/replayable with Safari on iOS. Simple tap interactions do work.</p></li><li><p>The HTTPS protocol is not supported.</p></li><li><p>Windows: Sometimes picking only works on the complete browser window and buttons; this can be fixed by renaming SQUISHDIR\bin\winhook.dll.</p></li><li><p>Browser shows a "session not correctly ended" dialog. This is due to the way we exit the browser; usually the browser has a setting to avoid the dialog.</p></li><li><p>Browser shows a progress indicator all the time. This is due to the way the internal communication with Squish/Web and the proxy works.</p></li></ul></div><p>
+</p></div></div></div><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" type="text/javascript" src="ScriptingLanguage.js"></script><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format">setScriptingLanguage();</script><div class="navfooter"><hr></hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="ins-distributing.html">Prev</a> </td><td width="20%" align="center"><a accesskey="u" href="install.html">Up</a></td><td width="40%" align="right"> <a accesskey="n" href="installation.for.flex.testing.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">3.6. Distributing and Sharing an Installation </td><td width="20%" align="center"><a accesskey="h" href="index-noframes.html">Home</a></td><td width="40%" align="right" valign="top"> 3.8. Installation for Flex applets in web pages</td></tr></table></div></body>
+<!-- Mirrored from installation.for.web.testing.html by HTTrack Website Copier/3.x [XR&CO'2013], Wed, 06 Jul 2022 13:29:02 GMT -->
+</html>

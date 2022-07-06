@@ -1,0 +1,193 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<!-- Mirrored from rg-envvars.html by HTTrack Website Copier/3.x [XR&CO'2013], Wed, 06 Jul 2022 13:29:00 GMT -->
+<head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><title>7.5. Environment Variables</title><link rel="stylesheet" href="manual.css" type="text/css"></link><meta name="generator" content="DocBook XSL Stylesheets V1.73.2"></meta><link rel="start" href="index-noframes.html" title="Squish Manual"></link><link rel="up" href="ref.man.html" title="Chapter 7. Tools Reference Manual"></link><link rel="prev" href="rg-cmdline.html" title="7.4. Command Line Reference"></link><link rel="next" href="rg-ini-files.html" title="7.6. Squish Initialization Files"></link><style xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" type="text/css" media="screen">
+        div.toc * { margin-left: 6px; margin-right: auto; max-width: 75em; }
+        div.toc span { margin-left: 0px; }
+        * { margin-left: auto; margin-right: auto; max-width: 75em; }
+        body { margin-left: 6px; margin-right: 6px; }
+        table th { padding: .5ex }
+        table td { padding: .5ex }
+    </style><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format">
+        function keyPress() {
+            var e = window.event;
+            if ( e == undefined ) {
+                return;
+            }
+            /* ### does not properly scroll, yet
+            if ( e.keyCode == 32 ) {
+            var l = document.links;
+            for ( var i = 0; i < l.length; i++ ) {
+                if ( l[i].innerText == "Next" ) {
+                location.href = l[i].href;
+                }
+            }
+            } else
+                */
+                if ( e.keyCode == 0x08 ) {
+            var l = document.links;
+            for ( var i = 0; i < l.length; i++ ) {
+                if ( l[i].innerText == "Prev" ) {
+                location.href = l[i].href;
+                }
+            }
+            }
+        }
+        document.onkeypress = keyPress;
+    </script></head><body><div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="rg-envvars"></a>7.5. Environment Variables</h2></div></div></div><p>
+There are three separate environments that must be considered when
+testing AUTs:
+</p><div class="itemizedlist"><ul type="disc" compact><li><p>The <span class="application">squishrunner</span> environment where test scripts are
+executed.</p></li><li><p>The <span class="application">squishserver</span>'s environment.</p></li><li><p>The AUT's environment (in which some <span class="emphasis"><em>Squish</em></span> code also
+runs).</p></li></ul></div><p>
+For AUTs started with <a class="xref" href="rgs-squish.html#startApplication-function"><code class="function">startApplication</code></a>, we can easily add
+environment variables in the <a class="xref" href="ide.views.html#ide.the-settings.view" title="8.2.16. Test Suite Settings view">Test Suite Settings view (Section 8.2.16)</a>'s
+Environment section. In addition,
+the <span class="application">squishserver</span> sets some environment variables that are visible to
+the AUT; for more about these see <a class="xref" href="rg-autsettings.html#rgas-envars" title="7.3.3. Setting Environment Variables">Setting Environment Variables (Section 7.3.3)</a>.
+</p><p>
+On the command-line, for attachable AUTs started with
+<span class="application">start*aut</span>, or for <span class="application">squishserver</span> and <span class="application">squishrunner</span>,
+we can set the environment variables that influence them before running them.
+</p><div class="itemizedlist"><ul type="disc"><li><p>
+<code class="envar"><a id="SQUISH_DUMP_FILE_PATH"></a>
+SQUISH_DUMP_FILE_PATH</code> – This is read in the AUT's,
+squishrunner's and squishserver's environment on the Windows platform. When set
+the value defines where Squish stores dumps from crashed processes (its own as
+well as AUT processes). The default value for this variable points to a
+directory named SquishDumps in the users temporary files directory.
+</p></li><li><p>
+<code class="envar"><a id="SQUISH_DUMP_FILE_USE_MSGBOX"></a>
+SQUISH_DUMP_FILE_USE_MSGBOX</code> – This is read in the AUT's,
+squishrunners and squishserver's environment on the Windows platform. If set to
+1 (the default value) Squish will show a dialog when it detects a crash in one
+of its own processes or the AUT process indicating where to a find a dump file
+from the crash which can be used to obtain further details. When being set to 0
+Squish will not show a dialog, but instead print a message to the output of the
+process with the path to the dump file that has been generated. It is advised
+to set this environment variable to 0 for automated execution of Squish tests
+as the dialog will block further execution of tests.
+</p></li><li><p>
+  <code class="envar"><a id="SQUISH_LIBQTDIR"></a>
+  SQUISH_LIBQTDIR</code> – This is read in the AUT's
+  environment by the <span class="emphasis"><em>Squish</em></span> hooking code and by <span class="application">squishserver</span> for
+  Qt-based AUTs. If set, <span class="emphasis"><em>Squish</em></span> will look in the directory specified by
+  this variable for the Qt library during AUT startup and hooking.
+  </p><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Note:  Deprecated "><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/note.png"></img></td><th align="left"> Deprecated </th></tr><tr><td align="left" valign="top"><p>
+  <code class="envar">SQUISH_LIBQTDIR</code> is deprecated. With Qt5, this variable only
+  works on Windows. Use the <code class="envar">LD_LIBRARY_PATH</code> on Linux,
+  <code class="envar">DYLD_LIBRARY_PATH</code> or <code class="envar">DYLD_FRAMEWORK_PATH</code>
+  on MacOS, or the <code class="envar">PATH</code> on Windows to help the OS find
+  Qt libraries, in the case where they are not being found by Squish during
+  AUT startup. </p></td></tr></table></div></li><li><p>
+<code class="envar"><a id="SQUISH_LICENSEKEY_DIR"></a>
+SQUISH_LICENSEKEY_DIR</code> – This is read in the AUT's
+environment by the <span class="emphasis"><em>Squish</em></span> hooking code, by <span class="application">squishrunner</span>, and
+by <span class="application">squishserver</span>. If set, <span class="emphasis"><em>Squish</em></span> will look in the directory
+specified by this variable when looking for the <span class="emphasis"><em>Squish</em></span> license key
+file; otherwise the key will be looked for in <code class="filename">$HOME</code>
+on Unix-like systems and in <code class="filename">%HOMEPATH%</code> (or
+<code class="filename">%USERPROFILE%</code> if <code class="filename">%HOMEPATH%</code>
+isn't defined) on Windows systems.
+</p></li><li><p>
+<code class="envar"><a id="SQUISH_PREFIX"></a>
+SQUISH_PREFIX</code> – This variable is set by
+<span class="application">squishrunner</span> before the script engine is started, and it is also set by
+<span class="application">squishserver</span> before the AUT is started. This variable can be used to find the
+installation directory of <span class="emphasis"><em>Squish</em></span> from test cases, as well as from the AUT.
+</p></li><li><p>
+<code class="envar"><a id="SQUISH_QML_EXTENSION_PATH"></a>
+SQUISH_QML_EXTENSION_PATH</code> – This is read in the AUT's
+environment by the <span class="emphasis"><em>Squish</em></span> hooking code for Qt-based AUTs. If set, <span class="emphasis"><em>Squish</em></span>
+will look for QtQuick 1.x QML extensions in the directory specified by
+this variable in addition to the standard extension directory. (See <a class="xref" href="rgs-qtconvenience.html#installing.qml.extensions" title="6.4.2.2. Installing QML Extensions">Installing QML Extensions (Section 6.4.2.2)</a>.)
+</p></li><li><p>
+<code class="envar"><a id="SQUISH_QTQUICK_EXTENSION_PATH"></a>
+SQUISH_QTQUICK_EXTENSION_PATH</code> – This is read in the AUT's
+environment by the <span class="emphasis"><em>Squish</em></span> hooking code for Qt-based AUTs. If set, <span class="emphasis"><em>Squish</em></span>
+will look for QtQuick 2.x extensions in the directory specified by this
+variable in addition to the standard extension directory. (See <a class="xref" href="rgs-qtconvenience.html#installing.qml.extensions" title="6.4.2.2. Installing QML Extensions">Installing QML Extensions (Section 6.4.2.2)</a>.)
+</p></li><li><p>
+<code class="envar"><a id="SQUISH_SCRIPT_DIR"></a>
+SQUISH_SCRIPT_DIR</code> – This is read by the
+<span class="application">squishrunner</span> and the Squish IDE. (The latter adds the paths
+contained in this environment variable to the Global Scripts
+view.)</p><p>If set, in addition to looking in the test case's
+scripts directory and in the test suite's shared scripts directory,
+<span class="emphasis"><em>Squish</em></span> will also search the directories listed in this variable when
+trying to locate a script file. (From <span class="emphasis"><em>Squish</em></span> 4.1 the search also
+includes the paths listed in the <code class="filename">paths.ini</code>
+file—which will be tried <span class="emphasis"><em>before</em></span> those in this
+environment variable; see <a class="xref" href="rg-ini-files.html" title="7.6. Squish Initialization Files"><span class="emphasis"><em>Squish</em></span> Initialization Files (Section 7.6)</a> and the <a class="xref" href="rgs-squish.html#findFile-function"><code class="function">findFile</code></a> function.)
+</p></li><li><p>
+<code class="envar"><a id="SQUISH_DLLPRELOAD_DISABLE"></a>
+SQUISH_DLLPRELOAD_DISABLE</code> – This is read by
+<span class="application">squishserver</span> for Qt-based AUTs on Windows. If set to <code class="literal">1</code>,
+the <span class="application">dllpreload</span> program will not inject any
+code into the AUT process but rather start it right away, i.e.
+<span class="application">dllpreload</span> merely executes the given command
+line but provides no extra functionality.</p><p>This can be useful in complex test scenarios involving various
+scripts to launch tests and it's desirable to disable the functionality
+provided by <span class="application">dllpreload</span> in certain cases without
+modifying the launcher scripts.</p></li><li><p>
+<code class="envar"><a id="SQUISH_SHELL_ORIG_LD_LIBRARY_PATH"></a>
+SQUISH_SHELL_ORIG_LD_LIBRARY_PATH</code> –
+On Linux systems, <code class="envar">LD_LIBRARY_PATH</code> variable is modified by
+<span class="application">squishrunner</span> and <span class="application">squishserver</span> to help Squish find libraries. The original
+value of this variable is available here.
+</p></li><li><p>
+<code class="envar"><a id="SQUISH_SHELL_ORIG_PATH"></a>
+SQUISH_SHELL_ORIG_PATH</code> – on Windows, the <code class="envar">PATH</code>
+variable is modified by <span class="application">squishrunner</span> and <span class="application">squishserver</span> to help Squish
+find DLLs. The original value of this variable can be found here. </p></li><li><p>
+<code class="envar"><a id="SQUISH_TRANSLATION_AWARE_LOOKUP"></a>
+SQUISH_TRANSLATION_AWARE_LOOKUP</code> – This is read by
+<span class="emphasis"><em>Squish</em></span> when testing Qt AUTs. If set to 1 <span class="emphasis"><em>Squish</em></span> will attempt to do
+reverse translations when matching AUT object properties. See <a class="xref" href="ugs-qtapi.html#rg-how.to.test.internationalized.qt.auts" title="5.2.9. How to Test Internationalized Qt AUTs">How to Test Internationalized Qt AUTs (Section 5.2.9)</a> .
+</p></li><li><p>
+<code class="envar"><a id="SQUISH_USE_SWT"></a>
+SQUISH_USE_SWT</code> – This is read in the AUT's
+environment by the <span class="emphasis"><em>Squish</em></span> hooking code for Java SWT-based AUTs. This
+<span class="emphasis"><em>can</em></span> be set to <code class="code">1</code> on macOS systems
+being used to test Java SWT AUTs. (Not needed for any recent Eclipse/RCP
+based application, which have the for SWT required -XstartOnFirstThread
+option in their <code class="filename">eclipse.ini</code>.)
+</p></li><li><p>
+
+<a id="idp55895304" class="indexterm"></a>
+<a id="idp55896040" class="indexterm"></a>
+
+<code class="envar"><a id="SQUISH_USER_SETTINGS_DIR"></a>
+SQUISH_USER_SETTINGS_DIR</code> – This is read in the
+AUT's environment by the <span class="emphasis"><em>Squish</em></span> hooking code, by <span class="application">squishrunner</span>,
+and by <span class="application">squishserver</span>. If set, <span class="emphasis"><em>Squish</em></span> will use this directory to
+load and store its user settings, instead of the default location.
+On Windows, this is <code class="filename">%APPDATA%\froglogic\Squish</code>, and on
+Unix-like systems (Linux, macOS, etc.), it is <code class="filename">~/.squish</code>.
+</p></li><li><p>
+<code class="envar"><a id="SQUISH_WRAPPER_PATH"></a>
+SQUISH_WRAPPER_PATH</code> – This is read by the
+<span class="application">squishserver</span>. If set, in addition to searching all the paths in the
+AUT Paths list, <span class="emphasis"><em>Squish</em></span> will also search all the paths listed in this
+variable when trying to locate a wrapper library. (For more about the
+AUT Path see <a class="xref" href="rg-autsettings.html#rgas-pathmapped" title="7.3.2. AUT Paths and Mapped AUTs">AUT Paths and Mapped AUTs (Section 7.3.2)</a>.)
+</p></li></ul></div><p>
+Test scripts can access environment variables using the
+scripting-language-specific technique. For example, in Python, we can
+use <code class="code">home = os.environ["HOME"]</code> (having done <code class="code">import
+os</code> at the top of our script), and in JavaScript we can use
+<code class="code">var home = OS.getenv("HOME");</code>. Test scripts can also access
+the AUT's environment by retrieving an <code class="code">ApplicationContext</code>
+object and using the <a class="xref" href="rgs-squish.html#applicationContext.environmentVariable-function"><code class="function">applicationContext.environmentVariable</code></a> function;
+see <a class="xref" href="rgs-squish.html#rgss-appcontext" title="6.3.12. Application Context">Application Context (Section 6.3.12)</a>.
+</p><p>
+<span class="emphasis"><em>Squish</em></span> also supports other environment variables, but unlike those
+shown above—which must be set before <span class="emphasis"><em>Squish</em></span> is run (for example,
+by using a shell script or batch file to set them and then to run the
+<span class="application">Squish IDE</span>)—the other environment variables can be set inside <span class="emphasis"><em>Squish</em></span>
+using the <a class="xref" href="ide.views.html#ide.the-settings.view" title="8.2.16. Test Suite Settings view">Test Suite Settings view (Section 8.2.16)</a>'s
+<span class="guilabel">Environment</span> section; see <a class="xref" href="rg-autsettings.html#rgas-autenv" title="7.3.3.1. Setting Environment Variables for the AUT">Setting Environment Variables for the AUT (Section 7.3.3.1)</a>
+for more details.
+</p></div><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" type="text/javascript" src="ScriptingLanguage.js"></script><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format">setScriptingLanguage();</script><div class="navfooter"><hr></hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="rg-cmdline.html">Prev</a> </td><td width="20%" align="center"><a accesskey="u" href="ref.man.html">Up</a></td><td width="40%" align="right"> <a accesskey="n" href="rg-ini-files.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">7.4. Command Line Reference </td><td width="20%" align="center"><a accesskey="h" href="index-noframes.html">Home</a></td><td width="40%" align="right" valign="top"> 7.6. <span class="emphasis"><em>Squish</em></span> Initialization Files</td></tr></table></div></body>
+<!-- Mirrored from rg-envvars.html by HTTrack Website Copier/3.x [XR&CO'2013], Wed, 06 Jul 2022 13:29:00 GMT -->
+</html>

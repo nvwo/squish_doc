@@ -1,0 +1,159 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<!-- Mirrored from rel-650.html by HTTrack Website Copier/3.x [XR&CO'2013], Wed, 06 Jul 2022 13:28:55 GMT -->
+<head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><title>2.11. Version 6.5</title><link rel="stylesheet" href="manual.css" type="text/css"></link><meta name="generator" content="DocBook XSL Stylesheets V1.73.2"></meta><link rel="start" href="index-noframes.html" title="Squish Manual"></link><link rel="up" href="relnotes.html" title="Chapter 2. Release Notes—for Upgraders"></link><link rel="prev" href="rel-651.html" title="2.10. Version 6.5.1"></link><link rel="next" href="rel-643.html" title="2.12. Version 6.4.3"></link><style xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" type="text/css" media="screen">
+        div.toc * { margin-left: 6px; margin-right: auto; max-width: 75em; }
+        div.toc span { margin-left: 0px; }
+        * { margin-left: auto; margin-right: auto; max-width: 75em; }
+        body { margin-left: 6px; margin-right: 6px; }
+        table th { padding: .5ex }
+        table td { padding: .5ex }
+    </style><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format">
+        function keyPress() {
+            var e = window.event;
+            if ( e == undefined ) {
+                return;
+            }
+            /* ### does not properly scroll, yet
+            if ( e.keyCode == 32 ) {
+            var l = document.links;
+            for ( var i = 0; i < l.length; i++ ) {
+                if ( l[i].innerText == "Next" ) {
+                location.href = l[i].href;
+                }
+            }
+            } else
+                */
+                if ( e.keyCode == 0x08 ) {
+            var l = document.links;
+            for ( var i = 0; i < l.length; i++ ) {
+                if ( l[i].innerText == "Prev" ) {
+                location.href = l[i].href;
+                }
+            }
+            }
+        }
+        document.onkeypress = keyPress;
+    </script></head><body><div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="rel-650"></a>2.11. Version 6.5</h2></div></div></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><span class="section"><a href="rel-650.html#rel-650-platform-support">2.11.1. Platform Support</a></span></dt><dt><span class="section"><a href="rel-650.html#rel-650-general">2.11.2. General</a></span></dt><dt><span class="section"><a href="rel-650.html#rel-650-ide">2.11.3. Squish IDE-specific</a></span></dt><dt><span class="section"><a href="rel-650.html#rel-650-scripting">2.11.4. Scripting</a></span></dt><dt><span class="section"><a href="rel-650.html#rel-650-qt">2.11.5. Qt-specific</a></span></dt><dt><span class="section"><a href="rel-650.html#rel-650-java">2.11.6. <span class="trademark">Java</span>™-specific</a></span></dt><dt><span class="section"><a href="rel-650.html#rel-650-web">2.11.7. Web-specific</a></span></dt><dt><span class="section"><a href="rel-650.html#rel-650-windows">2.11.8. Windows (native)-specific</a></span></dt><dt><span class="section"><a href="rel-650.html#rel-650-mac">2.11.9. macOS-specific (Cocoa/Carbon edition)</a></span></dt><dt><span class="section"><a href="rel-650.html#rel-650-ios">2.11.10. iOS-specific (iPhone/iPad edition)</a></span></dt><dt><span class="section"><a href="rel-650.html#rel-650-source">2.11.11. Source Packages</a></span></dt><dt><span class="section"><a href="rel-650.html#rel-650-known-issues">2.11.12. Known Issues</a></span></dt></dl></div><p><span class="emphasis"><em>Squish</em></span> 6.5 is a feature release which delivers new features to all
+  editions of the product.</p><p>Furthermore, a lot of features and bug fixes were applied to individual
+  <span class="emphasis"><em>Squish</em></span> editions since <span class="emphasis"><em>Squish</em></span> 6.4; see the following sections for a detailed
+  list of all changes.</p><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="rel-650-platform-support"></a>2.11.1. Platform Support</h3></div></div></div><p>To improve the support for High DPI setups and modern operating
+    systems such as Windows 10, several internal components of <span class="emphasis"><em>Squish</em></span> were
+    updated, resulting in a change to the set of binary packages which are part
+    of the Squish release.</p><p>Please note that <span class="emphasis"><em>testing applications continues to work on any
+    platform</em></span> supported by prior versions of <span class="emphasis"><em>Squish</em></span>. The below
+    changes only apply to certain client-side components:</p><div class="itemizedlist"><ul type="disc"><li><p>Due to lack of demand, no 32 bit packages for macOS
+      are provided anymore. Customers who would like to execute the client-side
+      tools of <span class="emphasis"><em>Squish</em></span> as 32bit binaries can follow the <a class="xref" href="ins-commandline-tools-server-ide.html#ins-quick" title="3.1.2.1. Quick Install">Quick Install (Section 3.1.2.1)</a> instructions for building the relevant components
+      locally.</p></li><li><p>Similarly, <span class="emphasis"><em>Squish</em></span> 6.5 binary packages are not supported
+      on Windows XP anymore. Customers who require running <span class="application">squishrunner</span> on
+      Windows XP can follow the <a class="xref" href="ins-commandline-tools-server-ide.html#ins-quick" title="3.1.2.1. Quick Install">Quick Install (Section 3.1.2.1)</a> instructions to
+      compile the client-side programs using Qt 4.</p></li><li><p>The client-side tools of <span class="emphasis"><em>Squish</em></span> as well as the <span class="application">Squish IDE</span>
+      are not supported on AIX or Solaris anymore. To continue testing
+      applications on these platforms, please see the section <a class="xref" href="rg-regressiontesting.html#rgr-disttesting" title="7.1.2. Distributed Tests">Distributed Tests (Section 7.1.2)</a> on how to run tests
+      remotely.</p></li><li><p>The <code class="literal">Squish for Qt</code> edition releases no
+      longer include binary packages built for testing Qt applications built
+      with Visual Studio 6, Visual Studio 2003 or Visual Studio 2005. Please
+      see the <a class="xref" href="ins-commandline-tools-server-ide.html#ins-quick" title="3.1.2.1. Quick Install">Quick Install (Section 3.1.2.1)</a> instructions on how to compile the
+      relevant components of Squish using these compilers manually.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="rel-650-general"></a>2.11.2. General</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p><a id="rel-650-general-ocr"></a><span class="emphasis"><em>Squish</em></span> now supports OCR with
+      several engines that can be chosen from. The tesseract engine requires
+      installation of additional package available in our download
+      center.</p></li><li><p>Installing <span class="emphasis"><em>Squish</em></span> on Windows may now recommend a
+      restart of the system to make some configuration changes related to the
+      recording accuracy effective.</p></li><li><p>The <code class="option">daemon</code> option of <span class="application">squishserver</span> now
+      supports specifying a log file to write any output to.</p></li><li><p><a id="rel-650-general-visualvp"></a>The <span class="guilabel">Visual
+      Verification Point</span> supports now mask rectangles for
+      screenshots. The VisualVP editor utility gained support for creating and
+      editing these image masks.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="rel-650-ide"></a>2.11.3. Squish IDE-specific</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>The <span class="application">Squish IDE</span> now requires Windows Vista,
+      <acronym class="acronym">RHEL</acronym> 6.5 or macOS 10.10 to run. Solaris and AIX are
+      no longer supported for running the IDE (but are still supported via
+      remote testing).</p></li><li><p>The <span class="application">Squish IDE</span> now supports recording and debugging of the new
+      OCR script API functions.</p></li><li><p>Shortened the window title of the main window, removing
+      redundant information.</p></li><li><p>Resolved spurious warning when editing
+      <acronym class="acronym">BDD</acronym> test cases claiming that no matching step
+      definition can be found.</p></li><li><p>Fixed a problem causing error messages to be shown when
+      opening test suites.</p></li><li><p>The <span class="application">Squish IDE</span> will now try harder to verify that the
+      configured <span class="application">squishserver</span> instance is accessible. The connection will be
+      checkede before creating a new test suite, launching an
+      <acronym class="acronym">AUT</acronym> or running/recording a test. In case
+      <span class="application">squishserver</span> cannot be contacted, a diagnostic message is
+      shown.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="rel-650-scripting"></a>2.11.4. Scripting</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Fixed an issue in the <a class="xref" href="rgs-squish.html#findImage-function"><code class="function">findImage</code></a> and <a class="xref" href="rgs-squish.html#waitForImage-function"><code class="function">waitForImage</code></a> functions causing the test to
+      terminated unexpectedly in case the script is executed via a standard
+      Python interpreter (via the <code class="code">squishtest</code> Python
+      module).</p></li><li><p>Fixed an issue in the Tcl interpreter which caused
+      passing <span class="emphasis"><em>Squish</em></span> objects to e.g. <code class="code">test pass</code> to not
+      work.</p></li><li><p>Introduced new <code class="code">setDebugFlags</code> function to
+      <code class="code">squishtest</code> Python module which can be used to enable more
+      verbose logging.</p></li><li><p>The <a class="xref" href="rgs-squish.html#nativeType-function"><code class="function">nativeType</code></a> function now
+      replays key combos involving letters and the <code class="literal">Ctrl</code> key
+      as expected when running tests on Windows.</p></li><li><p>Introduced the <a class="xref" href="rgs-squish.html#getOcrText-function"><code class="function">getOcrText</code></a>,
+      <a class="xref" href="rgs-squish.html#findOcrText-function"><code class="function">findOcrText</code></a>,
+      <a class="xref" href="rgs-squish.html#waitForOcrText-function"><code class="function">waitForOcrText</code></a> and
+      <a class="xref" href="rgs-squish.html#findAllOcrText-function"><code class="function">findAllOcrText</code></a> script API functions that
+      allow querying the results of the desktop screenshot OCR.
+      </p></li><li><p>Introduced the <a class="xref" href="rgs-squish.html#test.imagePresent-function"><code class="function">test.imagePresent</code></a>
+      and <a class="xref" href="rgs-squish.html#test.ocrTextPresent-function"><code class="function">test.ocrTextPresent</code></a> to allow image-search
+      and OCR verifications without additional boilerplate script code.
+      </p></li><li><p>The OCR and image search script APIs now support limiting
+      the search area to the specific region.</p></li><li><p><a id="rel-650-scripting-attachfile"></a>Introduced <a class="xref" href="rgs-squish.html#test.attachFile-function"><code class="function">test.attachFile</code></a> for attaching files to the test
+      report.</p></li><li><p>Introduced <a class="xref" href="rgs-squish.html#test.attachDesktopScreenshot-function"><code class="function">test.attachDesktopScreenshot</code></a> for attaching desktop
+      screenshots to the test report.</p></li><li><p>Added support for JavaScript array destructuring
+      like <code class="code">var [a, b] = [10, 20];</code>.</p></li><li><p>Added <code class="code">includes()</code>, <code class="code">startsWith()</code>
+      and <code class="code">endsWith()</code> functions to JavaScript <code class="code">String</code>
+      object.</p></li><li><p>Use native JavaScript types for class properties. Makes
+      Java's <a class="xref" href="rgs-javaconvenience.html#java-lastAlert.text-property">JavaArray.text</a> property a more
+      convenient <code class="code">String</code> object.</p></li><li><p>Fixed rounding errors in time attribute of xmljunit and
+      junit reports.</p></li><li><p>Disabled locale-aware formatting of times im xmljunit
+      reports.  Times always use <code class="literal">.</code> as decimal separator
+      now.</p></li><li><p>Fixed a memory leak for <a class="xref" href="rgs-squish.html#rgss-appcontext" title="6.3.12. Application Context">Application Context (Section 6.3.12)</a>
+      objects in Perl.</p></li><li><p>Errors inside event-handlers in Perl are now properly
+      logged in test results.</p></li><li><p>Added <a class="xref" href="rgs-squish.html#test.xvp-function"><code class="function">test.xvp</code></a> to be
+      consistent with <a class="xref" href="rgs-squish.html#test.xverify-function"><code class="function">test.xverify</code></a> and <a class="xref" href="rgs-squish.html#test.xcompare-function"><code class="function">test.xcompare</code></a>.</p></li><li><p>Added <a class="xref" href="rgs-squish.html#test.compareJSONFiles-function"><code class="function">test.compareJSONFiles</code></a>
+      function to Ruby and Perl.</p></li><li><p>Added <a class="xref" href="rgs-squish.html#testSettings.breakOnFailure-property">testSettings.breakOnFailure</a>
+      property to make it possible to debug a failing verification.</p></li><li><p>The functions <a class="xref" href="rgs-qtconvenience.html#qt-dragAndDrop-function"><code class="function">dragAndDrop</code></a>
+      as well as <a class="xref" href="rgs-qtconvenience.html#qt-dropOn-function"><code class="function">dropOn</code></a> now correctly report any
+      <acronym class="acronym">AUT</acronym> crashes which may have occurred as part of the
+      drag operation.</p></li><li><p>Fixed an issue in the <a class="xref" href="rgs-squish.html#findAllObjects-function"><code class="function">findAllObjects</code></a> which caused it to abort the test
+      execution abnormally in some cases.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="rel-650-qt"></a>2.11.5. Qt-specific</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Fixed order for <a class="xref" href="rgs-qtconvenience.html#qt-gesture-function"><code class="function">gesture</code></a>
+      recordings on QtQuick scenes.</p></li><li><p>Fixed recording actions on the global menu bar in
+      macOS with Qt 5.12.</p></li><li><p><a id="rel-650-qt-qt3d"></a>Introduced Basic support for Qt3D (from Qt 5.11.2) and
+      Qt3D Studio scenes (from Qt 5.12).</p></li><li><p>Fixed behaviour of Ctrl+Click when picking Qt controls on
+      Windows.</p></li><li><p><code class="code">QQmlContext::resolvedUrl()</code> is now callable
+      from test scripts.</p></li><li><p>Fixed incomplete recordings for QtQuick 2 when using
+      <span class="guilabel">Stop Recording</span> from the <span class="application">Squish IDE</span> Control
+      Bar.</p></li><li><p>Added support for recording of touch-based flicking of
+      QtQuick <code class="code">Flickable</code> objects.</p></li><li><p>Added support for recording/replaying of keyboard
+      shortcuts in QtQuick based <acronym class="acronym">AUT</acronym>s.</p></li><li><p>Fixed an issue causing <acronym class="acronym">HTML</acronym> components
+      in QtQuick <code class="code">WebEngineView</code> controls to not get detected
+      correctly when using Qt 5.12 or later.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="rel-650-java"></a>2.11.6. <span class="trademark">Java</span>™-specific</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Fixed a defect in the <a class="xref" href="rgs-squish.html#findAllObjects-function"><code class="function">findAllObjects</code></a> function due to which the returned
+      array was sometimes missing one object.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="rel-650-web"></a>2.11.7. Web-specific</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Added support for automating Safari 12 and later
+      versions. See <a class="xref" href="installation.for.web.testing.html#installation.for.web.testing.safari.12.on.osx.10.13" title="3.7.7.1. Safari 12 or newer on macOS 10.13 or latser">Safari 12 or newer on macOS 10.13 or latser (Section 3.7.7.1)</a> for
+      configuration instructions.</p></li><li><p>Improved error reporting for all Squish for web
+      functions.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="rel-650-windows"></a>2.11.8. Windows (native)-specific</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Improved recognition of TextBlocks in templated
+      <acronym class="acronym">WPF</acronym> controls.</p></li><li><p><a id="rel-650-windows-choosefile"></a>Introduced new <a class="xref" href="rgs-windowsconvenienceapi.html#win-chooseFile-function"><code class="function">chooseFile</code></a> function for portably automating
+      native Windows file dialogs.</p></li><li><p>The <a class="xref" href="rgs-windowsconvenienceapi.html#win-setValue-function"><code class="function">setValue</code></a> now accepts
+      fractional values when used with <acronym class="acronym">WPF</acronym>
+      sliders.</p></li><li><p>Added <code class="literal">checked</code> property to button
+      controls accessed via UIAutomation.</p></li><li><p>Improved robustness of code for fetching bounding
+      rectangle of <acronym class="acronym">MFC</acronym> scrollbars.</p></li><li><p>Fixed value returned by <a class="xref" href="rgs-squish.html#applicationContext.commandLine-property">ApplicationContext.commandLine</a> such that it yields
+      the command line of the <acronym class="acronym">AUT</acronym>, as
+      intended.</p></li><li><p>Fixed a bug causing the test to abort in some cases when
+      interacting with <acronym class="acronym">MFC</acronym> toolbar
+      controls..</p></li><li><p>Fixed intermittent issue causing <a class="xref" href="rgs-windowsconvenienceapi.html#win-mouseDrag-function"><code class="function">mouseDrag</code></a> and <a class="xref" href="rgs-windowsconvenienceapi.html#win-dragAndDrop-function"><code class="function">dragAndDrop</code></a> to not replay correctly in case
+      mouse cursor animation is enabled.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="rel-650-mac"></a>2.11.9. macOS-specific (Cocoa/Carbon edition)</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>The picker tooltip now works correctly with the Dark Mode
+      on macOS - it no longer shows light text on light
+      background.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="rel-650-ios"></a>2.11.10. iOS-specific (iPhone/iPad edition)</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Fixed a problem with <code class="filename">iphonelauncher</code>
+      not listing any devices when the Xcode installation has been
+      renamed.</p></li><li><p>Added ability to pass command-line arguments to the
+      <acronym class="acronym">AUT</acronym>.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="rel-650-source"></a>2.11.11. Source Packages</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Qt 4/5 is now autodetected if <code class="filename">qmake</code>
+      was found in the <code class="envar">PATH</code>.</p></li><li><p>Builds with Qt 3 may now require passing the
+      <code class="option">with-qtdir</code> option to the
+      <span class="application">configure</span> program.</p></li><li><p>Builds with Qt 5 either need <code class="filename">qmake</code>
+      in the <code class="envar">PATH</code>, or need to pass the
+      <code class="option">with-qmake</code> to the <span class="application">configure</span>
+      program.</p></li><li><p>Added support for <code class="envar">CXX</code> environment
+      variables that also contain compiler arguments.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="rel-650-known-issues"></a>2.11.12. Known Issues</h3></div></div></div><p>For a list of noteworthy issues which were found after the release of
+    <span class="emphasis"><em>Squish</em></span> 6.5, please see the <a class="ulink" href="https://kb.froglogic.com/display/KB/Squish 6.5.0 Known Issues" target="_blank">Known
+    Issues page</a> on the froglogic Knowledge Base.</p></div></div><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" type="text/javascript" src="ScriptingLanguage.js"></script><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format">setScriptingLanguage();</script><div class="navfooter"><hr></hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="rel-651.html">Prev</a> </td><td width="20%" align="center"><a accesskey="u" href="relnotes.html">Up</a></td><td width="40%" align="right"> <a accesskey="n" href="rel-643.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">2.10. Version 6.5.1 </td><td width="20%" align="center"><a accesskey="h" href="index-noframes.html">Home</a></td><td width="40%" align="right" valign="top"> 2.12. Version 6.4.3</td></tr></table></div></body>
+<!-- Mirrored from rel-650.html by HTTrack Website Copier/3.x [XR&CO'2013], Wed, 06 Jul 2022 13:28:55 GMT -->
+</html>

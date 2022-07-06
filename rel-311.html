@@ -1,0 +1,73 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<!-- Mirrored from rel-311.html by HTTrack Website Copier/3.x [XR&CO'2013], Wed, 06 Jul 2022 13:28:58 GMT -->
+<head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><title>2.70. Version 3.1.1</title><link rel="stylesheet" href="manual.css" type="text/css"></link><meta name="generator" content="DocBook XSL Stylesheets V1.73.2"></meta><link rel="start" href="index-noframes.html" title="Squish Manual"></link><link rel="up" href="relnotes.html" title="Chapter 2. Release Notes—for Upgraders"></link><link rel="prev" href="rel-312.html" title="2.69. Version 3.1.2"></link><link rel="next" href="rel-31final.html" title="2.71. Version 3.1.0"></link><style xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" type="text/css" media="screen">
+        div.toc * { margin-left: 6px; margin-right: auto; max-width: 75em; }
+        div.toc span { margin-left: 0px; }
+        * { margin-left: auto; margin-right: auto; max-width: 75em; }
+        body { margin-left: 6px; margin-right: 6px; }
+        table th { padding: .5ex }
+        table td { padding: .5ex }
+    </style><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format">
+        function keyPress() {
+            var e = window.event;
+            if ( e == undefined ) {
+                return;
+            }
+            /* ### does not properly scroll, yet
+            if ( e.keyCode == 32 ) {
+            var l = document.links;
+            for ( var i = 0; i < l.length; i++ ) {
+                if ( l[i].innerText == "Next" ) {
+                location.href = l[i].href;
+                }
+            }
+            } else
+                */
+                if ( e.keyCode == 0x08 ) {
+            var l = document.links;
+            for ( var i = 0; i < l.length; i++ ) {
+                if ( l[i].innerText == "Prev" ) {
+                location.href = l[i].href;
+                }
+            }
+            }
+        }
+        document.onkeypress = keyPress;
+    </script></head><body><div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="rel-311"></a>2.70. Version 3.1.1</h2></div></div></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><span class="section"><a href="rel-311.html#general.12">2.70.1. General</a></span></dt><dt><span class="section"><a href="rel-311.html#qt.2">2.70.2. Qt</a></span></dt><dt><span class="section"><a href="rel-311.html#java.2">2.70.3. Java</a></span></dt><dt><span class="section"><a href="rel-311.html#web.2">2.70.4. Web</a></span></dt></dl></div><p>Version 3.1.1 is a maintenance release that incorporates a
+couple of bug fixes. See the <code class="filename">ChangeLog</code> file in
+the package for a detailed list. User visible changes and improvements
+are listed below.</p><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="general.12"></a>2.70.1. General</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>A test suite has a default naming scheme property
+now. If not specified in the <code class="filename">suite.conf</code> file, it
+is set to old, hierarchical names. This way existing pre-3.1 test
+suites keep using hierarchical as default. This is also true for using
+the Spy when picking objects and inserting Verification Points. Modify
+the <em class="parameter"><code>NAMINGSCHEME</code></em> entry to
+<em class="parameter"><code>MULTIPROP</code></em> or <em class="parameter"><code>HIERACHICAL</code></em>
+in <code class="filename">suite.conf</code> to change the default naming
+scheme.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="qt.2"></a>2.70.2. Qt</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>The following classes that appeared in the Qt 4.2
+release were added to the Qt Wrapper and are therefore available in
+test scripts: QGraphicsView and related classes, QCalendarWidget,
+QFontComboBox, QDialogButtonBox, QWidgetAction, QSystemTrayIcon,
+QDesktopServices and Q3(H|V)GroupBox.</p></li><li><p>The multi-property object identification scheme added
+in version 3.1.0 has undergone some improvements to provide more
+robust names.</p></li><li><p>When building a Squish for Qt package from sources a Qt
+setup with the source directory being different than the Qt
+installation directory is automatically detected. This enables builds
+with custom Qt and Qtopia installations without manually setting the
+<em class="parameter"><code>QTSRCDIR</code></em> build variable.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="java.2"></a>2.70.3. Java</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Important fix for <span class="emphasis"><em>Squish</em></span> Spy for <acronym class="acronym">SWT</acronym>, it
+had a serious threading problem in 3.1.0. </p></li><li><p>Screenshots for a <code class="code">JFrame</code>, or <code class="code">Shell</code>
+in <acronym class="acronym">SWT</acronym>, is now supported as well. </p></li><li><p>Added <code class="code">closeWindow(object)</code> to the <span class="trademark">Java</span>™
+convenient API for scripts, which closes a top level window or dialog. Also
+closing such a window with recording by the system window menu or close
+button, will now record it as a <code class="code">closeWindow(object)</code>.
+</p></li><li><p>The object picker from spy now prevents that the click
+event, triggered by the actual picking, does not reach the AUT event processing.
+</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="web.2"></a>2.70.4. Web</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Input into file upload elements (INPUT elements of
+type FILE) can be recorded and replayed now.</p></li><li><p>During setup any running Mozilla and Firefox
+instances are automatically shut down to ensure a proper plug-in
+installation.</p></li><li><p>DIV and SPAN elements that have a reasonable innerText
+property are now identified by this property rather than by fragile,
+hierarchical names.</p></li></ul></div></div></div><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" type="text/javascript" src="ScriptingLanguage.js"></script><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format">setScriptingLanguage();</script><div class="navfooter"><hr></hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="rel-312.html">Prev</a> </td><td width="20%" align="center"><a accesskey="u" href="relnotes.html">Up</a></td><td width="40%" align="right"> <a accesskey="n" href="rel-31final.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">2.69. Version 3.1.2 </td><td width="20%" align="center"><a accesskey="h" href="index-noframes.html">Home</a></td><td width="40%" align="right" valign="top"> 2.71. Version 3.1.0</td></tr></table></div></body>
+<!-- Mirrored from rel-311.html by HTTrack Website Copier/3.x [XR&CO'2013], Wed, 06 Jul 2022 13:28:58 GMT -->
+</html>

@@ -1,0 +1,67 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<!-- Mirrored from rel-600beta.html by HTTrack Website Copier/3.x [XR&CO'2013], Wed, 06 Jul 2022 13:28:56 GMT -->
+<head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><title>2.29. Version 6.0 Beta</title><link rel="stylesheet" href="manual.css" type="text/css"></link><meta name="generator" content="DocBook XSL Stylesheets V1.73.2"></meta><link rel="start" href="index-noframes.html" title="Squish Manual"></link><link rel="up" href="relnotes.html" title="Chapter 2. Release Notes—for Upgraders"></link><link rel="prev" href="rel-600.html" title="2.28. Version 6.0"></link><link rel="next" href="rel-515.html" title="2.30. Version 5.1.5"></link><style xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" type="text/css" media="screen">
+        div.toc * { margin-left: 6px; margin-right: auto; max-width: 75em; }
+        div.toc span { margin-left: 0px; }
+        * { margin-left: auto; margin-right: auto; max-width: 75em; }
+        body { margin-left: 6px; margin-right: 6px; }
+        table th { padding: .5ex }
+        table td { padding: .5ex }
+    </style><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format">
+        function keyPress() {
+            var e = window.event;
+            if ( e == undefined ) {
+                return;
+            }
+            /* ### does not properly scroll, yet
+            if ( e.keyCode == 32 ) {
+            var l = document.links;
+            for ( var i = 0; i < l.length; i++ ) {
+                if ( l[i].innerText == "Next" ) {
+                location.href = l[i].href;
+                }
+            }
+            } else
+                */
+                if ( e.keyCode == 0x08 ) {
+            var l = document.links;
+            for ( var i = 0; i < l.length; i++ ) {
+                if ( l[i].innerText == "Prev" ) {
+                location.href = l[i].href;
+                }
+            }
+            }
+        }
+        document.onkeypress = keyPress;
+    </script></head><body><div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="rel-600beta"></a>2.29. Version 6.0 Beta</h2></div></div></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><span class="section"><a href="rel-600beta.html#idp35491080">2.29.1. Support for Behavior-Driven Development (BDD)</a></span></dt><dt><span class="section"><a href="rel-600beta.html#idp35493968">2.29.2. Advanced Reporting</a></span></dt><dt><span class="section"><a href="rel-600beta.html#idp35497392">2.29.3. Script Language Updates</a></span></dt><dt><span class="section"><a href="rel-600beta.html#idp35500072">2.29.4. GUI Coverage (Experimental)</a></span></dt></dl></div><p>
+Squish 6.0 delivers new features applicable to all editions of the
+product.
+</p><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="idp35491080"></a>2.29.1. Support for Behavior-Driven Development (BDD)</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>A
+new <a class="ulink" href="https://en.wikipedia.org/wiki/Behavior-driven_development" target="_blank">BDD</a>
+test case type was added. It can co-exist with previously created test
+cases and make use of existing script functions. See the
+<a class="ulink" href="https://www.froglogic.com/squish/features/bdd-behavior-driven-development-testing/" target="_blank">product
+feature page</a> for an overview including a demo video. Tutorials
+are available for each edition.</p></li><li><p>Gherkin step skeleton generation and
+completion.</p></li><li><p>Test step recording in any of Squish's supported scripting languages.</p></li><li><p>Switch between BDD feature and script implementation
+files.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="idp35493968"></a>2.29.2. Advanced Reporting</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Modernized and dynamic HTML reports that can be
+created through a single command line call:
+<span class="command"><strong>squishrunner --testsuite C:\TestSuits\MyTestSuite --reportgen html,C:\Report\</strong></span>
+. Repeated runs will append merge the results of multiple suites into a single report.
+</p></li><li><p>Added new <code class="option">xml3</code>
+and <code class="option">json</code> result formats for post-processing in other
+tools.</p></li><li><p>Added <a class="xref" href="rgs-squish.html#test.startSection-function"><code class="function">test.startSection</code></a> and
+<a class="xref" href="rgs-squish.html#test.endSection-function"><code class="function">test.endSection</code></a> functions that allow for
+grouping test results into logical sections.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="idp35497392"></a>2.29.3. Script Language Updates</h3></div></div></div><p>The default versions of the five available scripting languages
+as used by the binary packages got upgraded:</p><div class="itemizedlist"><ul type="disc"><li><p>JavaScript: addition of various ECMAScript 5.x
+functions.</p></li><li><p>Perl: version 5.22.0</p></li><li><p>Python: version 2.7.10. Experimental versions of a
+Python 3 port are available on demand.</p></li><li><p>Ruby: version 2.2.2</p></li><li><p>Tcl: version 8.6.4</p></li></ul></div><p>In case anyone relied on the old versions custom builds can be
+created on demand.</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="idp35500072"></a>2.29.4. GUI Coverage (Experimental)</h3></div></div></div><p>In addition an experimental new capability for tracking the
+coverage of UI tests was added. See
+<a class="xref" href="tutorials-qt.html#tutorial-guicoverage-qt" title="4.1.4. Tutorial: Coverage of GUI elements">Tutorial: Coverage of GUI elements (Section 4.1.4)</a> for an overview and usage
+instructions.</p><p>It's currently available for the Qt edition only. If you would
+like to see it work with native Java, Windows, Web, iOS or Android
+applications as well please contact us!</p></div></div><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" type="text/javascript" src="ScriptingLanguage.js"></script><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format">setScriptingLanguage();</script><div class="navfooter"><hr></hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="rel-600.html">Prev</a> </td><td width="20%" align="center"><a accesskey="u" href="relnotes.html">Up</a></td><td width="40%" align="right"> <a accesskey="n" href="rel-515.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">2.28. Version 6.0 </td><td width="20%" align="center"><a accesskey="h" href="index-noframes.html">Home</a></td><td width="40%" align="right" valign="top"> 2.30. Version 5.1.5</td></tr></table></div></body>
+<!-- Mirrored from rel-600beta.html by HTTrack Website Copier/3.x [XR&CO'2013], Wed, 06 Jul 2022 13:28:56 GMT -->
+</html>

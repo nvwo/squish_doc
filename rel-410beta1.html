@@ -1,0 +1,419 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<!-- Mirrored from rel-410beta1.html by HTTrack Website Copier/3.x [XR&CO'2013], Wed, 06 Jul 2022 13:28:56 GMT -->
+<head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><title>2.48. Version 4.1.0 Beta 1</title><link rel="stylesheet" href="manual.css" type="text/css"></link><meta name="generator" content="DocBook XSL Stylesheets V1.73.2"></meta><link rel="start" href="index-noframes.html" title="Squish Manual"></link><link rel="up" href="relnotes.html" title="Chapter 2. Release Notes—for Upgraders"></link><link rel="prev" href="rel-410beta2.html" title="2.47. Version 4.1.0 Beta 2"></link><link rel="next" href="rel-402.html" title="2.49. Version 4.0.2"></link><style xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" type="text/css" media="screen">
+        div.toc * { margin-left: 6px; margin-right: auto; max-width: 75em; }
+        div.toc span { margin-left: 0px; }
+        * { margin-left: auto; margin-right: auto; max-width: 75em; }
+        body { margin-left: 6px; margin-right: 6px; }
+        table th { padding: .5ex }
+        table td { padding: .5ex }
+    </style><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format">
+        function keyPress() {
+            var e = window.event;
+            if ( e == undefined ) {
+                return;
+            }
+            /* ### does not properly scroll, yet
+            if ( e.keyCode == 32 ) {
+            var l = document.links;
+            for ( var i = 0; i < l.length; i++ ) {
+                if ( l[i].innerText == "Next" ) {
+                location.href = l[i].href;
+                }
+            }
+            } else
+                */
+                if ( e.keyCode == 0x08 ) {
+            var l = document.links;
+            for ( var i = 0; i < l.length; i++ ) {
+                if ( l[i].innerText == "Prev" ) {
+                location.href = l[i].href;
+                }
+            }
+            }
+        }
+        document.onkeypress = keyPress;
+    </script></head><body><div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="rel-410beta1"></a>2.48. Version 4.1.0 Beta 1</h2></div></div></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><span class="section"><a href="rel-410beta1.html#idp36176968">2.48.1. General</a></span></dt><dt><span class="section"><a href="rel-410beta1.html#idp36196968">2.48.2. New IDE</a></span></dt><dt><span class="section"><a href="rel-410beta1.html#idp36223976">2.48.3. Qt-specific</a></span></dt><dt><span class="section"><a href="rel-410beta1.html#idp36252344">2.48.4. <span class="trademark">Java</span>™-specific</a></span></dt><dt><span class="section"><a href="rel-410beta1.html#idp36264968">2.48.5. Web-specific</a></span></dt><dt><span class="section"><a href="rel-410beta1.html#idp36271872">2.48.6. Windows (native)-specific</a></span></dt><dt><span class="section"><a href="rel-410beta1.html#idp36289080">2.48.7. Mac-specific (Cocoa/Carbon edition)</a></span></dt><dt><span class="section"><a href="rel-410beta1.html#idp36292280">2.48.8. iPhone/iPad-specific</a></span></dt><dt><span class="section"><a href="rel-410beta1.html#idp36295888">2.48.9. Tk-specific</a></span></dt><dt><span class="section"><a href="rel-410beta1.html#idp36302568">2.48.10. Documentation</a></span></dt><dt><span class="section"><a href="rel-410beta1.html#idp36308384">2.48.11. Source Builds</a></span></dt><dt><span class="section"><a href="rel-410beta1.html#idp36315648">2.48.12. Classic IDE</a></span></dt></dl></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="idp36176968"></a>2.48.1. General</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>There is now a single package that contains
+everything—the new IDE, the <span class="emphasis"><em>Squish</em></span> tools, and the classic IDE,
+so there is only one package (a <code class="filename">.zip</code> file) to
+download each time you upgrade.
+</p></li><li><p>Added new functions, <code class="code">mouseMove</code>,
+<code class="code">mousePress</code>, and <code class="code">mouseRelease</code> for all
+toolkits.</p></li><li><p>Added new visualization features that show differences
+between expected and actual images. In addition to strict pixel-by-pixel
+comparisons, it is also possible to configure them to do a couple of
+kinds of “<span class="quote">fuzzy</span>” matching.</p></li><li><p>Added a new <span class="application">squishrunner</span> <code class="option">--resultdir</code>
+option to set the output directory for test results. This was introduced
+to make it possible to set up a custom directory for test results such
+as failed images of screenshot verification point comparisons. The
+report file's default format has now been updated to
+<span class="application">squishrunner</span> xml2.1 format.</p></li><li><p>In addition to the existing support for sharing scripts
+across all the test cases in a test suite, it is now possible to share
+scripts globally so that they are accessible by any test case in any test
+suite. This feature is also supported by the new IDE which can be used
+to create and manage global script directories and the scripts they
+contain.
+</p></li><li><p>Special characters in verification point property
+values are now handled correctly.</p></li><li><p>Fixed debugging callbacks in
+JavaScript.</p></li><li><p>Added a <code class="code">File.size</code> function for JavaScript.
+</p></li><li><p>Made sure that all binary packages contain JavaScript
+SQL support and scripting languages support.</p></li><li><p>Added support for switching encodings on JavaScript
+<code class="code">File</code>
+instances (e.g., to make it easier to work with Windows file
+encodings).</p></li><li><p>Show JavaScript's <code class="code">this</code> object when
+debugging “<span class="quote">owned</span>” functions.</p></li><li><p>Made sure that application context objects returned by
+the <code class="code">applicationContextList</code> function have their
+<code class="code">name</code> property correctly updated for subprocesses.
+</p></li><li><p>AUT processes are no longer killed too early. Older
+versions of <span class="emphasis"><em>Squish</em></span> waited for the AUT's GUI to shut down and then
+killed the process if it didn't terminate of its own accord. This could
+cause problems for AUTs that shut down their GUI but wanted to continue
+processing afterwards. Now <span class="emphasis"><em>Squish</em></span> waits for the process to
+terminate—and only if it doesn't terminate after a reasonable
+amount of time does <span class="emphasis"><em>Squish</em></span> kill it. (This new approach can be disabled
+using <span class="application">squishrunner</span> <code class="option">--config</code> option's
+<code class="code">eagerAUTShutdown</code> action.)
+</p></li><li><p><span class="emphasis"><em>Squish</em></span> no longer crashes when the
+<code class="code">object.properties</code> function encounters
+unreadable properties.</p></li><li><p>Fixed a <span class="application">squishrunner</span> problem that could occur when an
+AUT suddenly exited.</p></li><li><p>Fixed the Perl constants passed to the
+<code class="code">sendEvent</code> function if the AUT is started using the
+<code class="code">startApplication</code> function rather than
+implicitly.</p></li><li><p>When recording using the <code class="option">--testsuite</code>
+option, <span class="application">squishrunner</span> now supports the <code class="option">--aut</code> option.</p></li><li><p>Fixed some race conditions during the AUT's startup process
+that could make <span class="application">squishrunner</span> crash.</p></li><li><p>If file <code class="filename">squishserverrc</code> cannot be
+found <span class="emphasis"><em>Squish</em></span> will fallback to using
+<code class="filename">squishserverrc.txt</code>.</p></li><li><p>Added a new <code class="code">Library</code> class to load C and C++
+libraries. This features the <code class="code">Library.prototype.invoke</code>
+function for calling functions in DLLs and a
+<code class="code">Library.initModule</code> function. At the moment only functions
+with the primitive signature <code class="code">void
+<em class="parameter"><code>funcName</code></em>()</code> are
+supported.</p></li><li><p>Added a new TSL function, <code class="code">list_select_item</code>
+using <code class="code">GUIObjectProxy</code>.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="idp36196968"></a>2.48.2. New IDE</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Added a Pause/Resume button to the Control Bar so that
+it is possible to pause and resume test case execution.</p></li><li><p>Added completion support for Symbolic Names. For
+example, if you press
+<span class="keycap"><strong>Ctrl</strong></span>+<span class="keycap"><strong>Space</strong></span> after
+typing <code class="code">waitForObject</code> or <code class="code">findObject</code>, the IDE
+will look up Symbolic Names from the Object Map that you can choose
+from. Completion support has also been added to support some of
+<span class="emphasis"><em>Squish</em></span>'s built in objects such as <code class="code">squishinfo</code> and
+<code class="code">testData</code>. </p></li><li><p>Added <span class="guibutton">Recent Test Results</span> button
+to the Test Results view that when clicked provides a drop-down list of
+the ten most recent test execution results for each
+suite.</p></li><li><p>Added a GUI setting to change the output directory used
+for recent test results.</p></li><li><p>Added a new Mask Editor tool.</p></li><li><p>Improved support for Screenshot Verification Points by
+allowing edit masks and customizable comparison modes.
+</p></li><li><p>Added support for nested subdirectories in test suite
+and test case resources.</p></li><li><p>Added support for opening Test Suites by dragging and
+dropping their directory or <code class="filename">suite.conf</code> file onto
+the IDE. Similarly, support for adding test resources by dragging and
+dropping has been added.
+</p></li><li><p>Test cases can be reordered in the Test Suites view's
+Test Cases list using drag and drop. (When an entire test suite is
+executed the those test cases that are checked are executed in order
+from top to bottom in the list.)
+</p></li><li><p>Added support for checking or unchecking multiple Test
+Cases in one go.</p></li><li><p>The <span class="guimenu">Squish</span> menu now has a
+<span class="guimenuitem">Close Test Suite</span> menu option and a separate
+<span class="guimenuitem">Delete Test Suite</span> menu option that do exactly
+what they say.
+</p></li><li><p>Added a <span class="guimenuitem">Run Test Suite</span> menu
+option to the <span class="guimenu">Squish</span> menu.</p></li><li><p>Added a <span class="guimenuitem">Copy Property Value</span>
+menu option to the to Object Properties view's context
+menu.</p></li><li><p>Switched to a more capable third party editor (PyDev)
+for editing Python scripts. This provides better syntax highlighting,
+improved code completion, and many other useful
+features.</p></li><li><p>Added an <span class="guibutton">Edit</span> button for
+attachable AUTs shown in the Manage AUTs dialog. This makes it easy to
+change the host and port settings of <span class="emphasis"><em>Squish</em></span>-registered applications.
+</p></li><li><p>The <span class="guimenuitem">Launch AUT</span> action now
+also supports selecting one of the registered “<span class="quote">attachable</span>”
+applications. Similary, it is now possible to record an attachable AUT
+in which case an <code class="code">attachToApplication</code> statement will be
+recorded rather than a <code class="code">startApplication</code>
+call.</p></li><li><p>Added an option for removing entries from Screenshot
+Verification Points.</p></li><li><p>Fixed a problem where the Object Map could accidentally
+lose entries.</p></li><li><p>Prevented QTP causing errors in the IDE.</p></li><li><p>Fixed a problem that could occur during the extraction
+of failed screenshot information when the test result message contained
+quotes.</p></li><li><p>Fixed a problem that could occur when viewing
+screenshots made due to failed verifications.</p></li><li><p>Fixed a bug which could make the JavaScript Script
+Console lock up.</p></li><li><p>Test suites can now only be deleted when their
+associated AUT is not being run.
+</p></li><li><p>Accidentally renaming the main test script
+file is now prevented.</p></li><li><p>Fixed a problem that could occur when handling Property
+Verification Points with multi-line text comparisons.</p></li><li><p>Prevented the appearance of multiple verification point
+editors that could occur in some situations when starting verification
+point creation.</p></li><li><p>Added a GUI option to switch on or off the logging of
+<span class="emphasis"><em>Squish</em></span>'s internal tool communications—<span class="emphasis"><em>froglogic</em></span> support
+engineers may ask you to switch this on to help debug
+problems.</p></li><li><p>Fixed some cases where Null Pointer Exceptions occurred.
+</p></li><li><p>Ensured that the focus is given to newly opened
+editors.</p></li><li><p>Introduced a new Global Scripts view for the management
+and editing of globally shared scripts.</p></li><li><p>Improved the layout of the verification point
+editor.</p></li><li><p>Verification points can now be fully deleted (including
+all their properties).
+</p></li><li><p>Verification points are now correctly created even when
+using the deprecated hierarchical naming scheme.</p></li><li><p>The Add Mapped AUT dialog now behaves correctly when
+canceled.</p></li><li><p>Fixed spurious deadlocks that could occur when checking
+an object in the Application Objects view.</p></li><li><p>Fixed the displayed result text when a verification
+point is not verified (i.e., the when the test failed).
+</p></li><li><p>Set the default identation width to four spaces for
+Perl. (This can, of course, be changed through the IDE's
+Preferences dialog.)</p></li><li><p>Fixed rendering problems that could occur with the
+focus-cell highlighter.</p></li><li><p>Fixed a problem that could occur when reloading
+externally modified CSV data files.</p></li><li><p>Fixed a problem that could occur when fetching image
+screenshots to be used as the expected image in cases where the object
+wasn't previously selected in the Spy.</p></li><li><p>Fixed the usage of the Squish IDE plugins in a standard
+Eclipse installation. Ask <span class="emphasis"><em>froglogic</em></span> Technical Support for installation
+instructions.</p></li><li><p>Fixed a problem that occurred when grabbing
+screenshots of an object whose name contains dots.</p></li><li><p>Fixed spurious startup hangs that could occur on
+Windows.</p></li><li><p>Fixed a problem that could occur when executing multiple
+suites immediately after each other.</p></li><li><p>Fixed a problem with Spy context handling in multi-AUT
+scenarios.</p></li><li><p>Fixed a problem that could occur when handling legacy
+object names such as <code class="code">"{foo='bar'}.a.b.c"</code>.</p></li><li><p>Limited the maximum length of the stored <span class="application">squishserver</span>
+output.</p></li><li><p>Screenshots are now only grabbed after the IDE has been
+completely hidden.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="idp36223976"></a>2.48.3. Qt-specific</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Added support for various QML components including
+the recording and playback of "flick" actions, the detection of HTML and
+GridView components, and synchronization on animations. Also added a new
+<code class="code">pressAndHold</code> function and a JavaScript-based QML extension
+mechanism.</p></li><li><p>Added an extension for Qt Quick Components for
+Qt/Desktop</p></li><li><p>Introduced a new <code class="code">installSignalHandler</code>
+function for eavesdropping on Qt signals.</p></li><li><p>Improved <span class="emphasis"><em>Squish</em></span>'s response to reloads in
+<code class="code">QWebView</code>s.</p></li><li><p>Made name generation significantly
+faster.</p></li><li><p>Added support for using the <code class="code">QProcess</code> class
+in test scripts.</p></li><li><p>Improved the error message when invalid row or column
+values are used when searching for a table or tree
+item.</p></li><li><p>Added support for properties of type <code class="code">QUrl</code>
+for auto-wrapped classes.</p></li><li><p>Custom <code class="code">QObject</code> classes' enums are now
+automatically wrapped.
+</p></li><li><p>Added support for getting the values of
+<code class="code">QPointF</code>, <code class="code">QRectF</code>, and <code class="code">QIcon</code>
+properties with dynamic wrapping.</p></li><li><p>When wrapping <code class="code">QObject</code>-based classes
+<span class="emphasis"><em>Squish</em></span> now also wraps properties of type <code class="code">QVariant</code> and
+properties of other Qt types.</p></li><li><p>Added support for properties of type <code class="code">QChar</code>,
+<code class="code">char</code> and <code class="code">unsigned
+char</code>.</p></li><li><p>Improved graphics/view support so that the focus item
+can be the subject of a call to the <code class="code">type</code>
+function.</p></li><li><p>Enhanced <span class="emphasis"><em>Squish</em></span>'s ability to spy and pick in
+<code class="code">QGraphicsWebView</code> widgets so that <span class="emphasis"><em>Squish</em></span> can now spy
+recursively into HTML elements.</p></li><li><p>Made the <code class="code">grabWidget</code> function handle null
+objects gracefully.</p></li><li><p>Improved robustness by invalidating <span class="emphasis"><em>Squish</em></span>'s internal
+object cache when <span class="emphasis"><em>Squish</em></span> detects that a <code class="code">QObject</code> has been
+deleted.</p></li><li><p>Correctly record and replay interactions with empty
+combobox items.</p></li><li><p>Added <code class="code">mouseClick</code> overloads for
+<code class="code">Q3TableItem</code>s and
+<code class="code">Q3ListViewItem</code>s.</p></li><li><p>Fixed crash which could occur when an embedded HTML
+component opened a popup window.</p></li><li><p>For <code class="code">QDeclarativeImage</code>s the
+<code class="code">source</code> property is now recorded and matching has been fixed
+accordingly.
+</p></li><li><p>Binary packages build with MSVC 10 are now
+available.</p></li><li><p>MinGW packages for Qt &gt;= 4.7 are now built with a
+newer compiler version. This fixes crashes that occurred during
+recording on Windows 7 with the standard style using animations.
+</p></li><li><p>MeeGo device RPM packages are now available upon
+request.</p></li><li><p>Avoid incorrectly recording multiple
+<code class="code">clickLink</code> statements on
+embedded HTML viewers.</p></li><li><p>Added support for finer-grained movement in the
+<code class="code">dragItem</code> function for more realistic
+replay.</p></li><li><p>Fixed the enabling and disabling of native file dialogs
+on X11 systems.</p></li><li><p>Fixed testing of Qt 4 tables and trees that have a
+non-default root item set.</p></li><li><p>Fixed a case where <code class="code">openContextMenu</code> was not
+recorded when it should have been.</p></li><li><p>Added script conversions to and from
+<code class="code">QVariant</code>
+objects.</p></li><li><p>Improved the lookup of <code class="code">QActions</code> by taking
+account the <code class="code">QObject</code> <code class="code">name</code> and
+<code class="code">visible</code> properties.</p></li><li><p>Fixed crashes for an NSWindow without a content view.
+(This occurs, for example, in Photoshop CS5.)</p></li><li><p>Added <code class="code">QWebView</code> constructors.</p></li><li><p>Fixed the recording of <code class="code">type</code> on
+<code class="code">QGraphicsProxyWidget</code>s.</p></li><li><p>Fixed AUT crashes on exit on macOS.</p></li><li><p>Added a <code class="code">castToQObject</code> overload that accepts
+a <code class="code">QObject</code> and down-casts it to the most-derived type. Safer
+than using <code class="code">cast</code> for this special purpose.</p></li><li><p>Improved the speed of subprocess
+handling.</p></li><li><p>Fixed the recording of relative coordinates for Qt 3
+<code class="code">QListView</code> items.</p></li><li><p>Added support for doing <code class="code">activateItem</code> calls
+on <code class="code">QAction</code> objects that were retrieved using Qt API calls
+(such as <code class="code">menuAction</code>) rather than using
+<code class="code">findObject</code>.</p></li><li><p>Fixed the finding of custom
+<code class="code">QGraphicsTextItem</code>s with Qt 4.5
+and older.</p></li><li><p>Made hardcoded Qt library path names optional.
+Previously, it was necessary to specify the absolute path name of the Qt
+library used by the AUT. Now, the <span class="application">setup</span> tool
+can be used to set <span class="emphasis"><em>Squish</em></span> to use dynamic detection.</p></li><li><p>Unix only: standard paths like
+<code class="filename">/usr/lib</code> are no longer added to
+the library search paths to avoid library conflicts.</p></li><li><p>Dropped support for AUTs built with Qt 2.3 and 3.0.
+Later Qt 3 versions, e.g., 3.1 and later, are still
+supported.</p></li><li><p>Dropped support for the remaining wstring functions
+due to wchar_t problems.</p></li><li><p>Dropped special support for hooking into AUTs that are
+statically linked against Qt. This has not been supported by Qt itself
+since Qt 4.1. This change also allows using AUTs which are not
+themselves based on Qt but which start Qt-based subprocesses. The
+recording of such subprocesses is now possible.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="idp36252344"></a>2.48.4. <span class="trademark">Java</span>™-specific</h3></div></div></div><p>
+<span class="emphasis"><em>All Java AUTs.</em></span>
+</p><div class="itemizedlist"><ul type="disc"><li><p>When spying, the object picker no longer highlights
+widgets on hidden tabs.</p></li><li><p>Fixed a problem with Tree items and column picking when
+the Tree has been scrolled.</p></li><li><p>Fixed menu recording when the mouse is
+dragged.</p></li><li><p>Typing double-quotes is no longer recorded as a
+special key combination.
+</p></li><li><p>Provided a more robust launcher call for 32-bit
+applications on macOS with JDK version 1.6 or later.</p></li><li><p>The Java wrapper now honors the “<span class="quote">Whitelisted
+Objects</span>” of native Windows controls.</p></li><li><p><span class="emphasis"><em>Squish</em></span> now uses a more robust setting of the
+<code class="envar">CLASSPATH</code> environment variable.</p></li><li><p>Added support for the testing of Eclipse Helios AUTs on
+macOS—in general all applications that have both an executable
+and a <code class="filename">.app</code> directory with the same
+name.</p></li><li><p>Fixed the coordinate calculation when replaying clicks
+on scrolled views.</p></li><li><p>Fixed crashes that occurred when using the IBM
+JVM.</p></li><li><p>Prevent Windows C Run-Time Error R6034 when trying to
+start Java applications with 64-bit JREs.</p></li></ul></div><p>
+<span class="emphasis"><em>Java AWT/Swing AUTs.</em></span>
+</p><div class="itemizedlist"><ul type="disc"><li><p>The <code class="code">basetype</code> pseudo-property is now
+recorded for AWT objects that have an inner class type.
+</p></li><li><p>Fixed a problem with <code class="code">waitForObjectItem</code>
+calls for Swing menu items on macOS.</p></li><li><p>Fixed the Java screen capturing support for
+AWT.</p></li></ul></div><p>
+<span class="emphasis"><em>Java SWT AUTs.</em></span>
+</p><div class="itemizedlist"><ul type="disc"><li><p>Various fixes for the bounding rectangles of SWT menus
+and menu items.</p></li><li><p>Prevented mouse presses going to the AUT when picking
+an SWT (Gtk) object in the Spy.</p></li><li><p><span class="emphasis"><em>Squish</em></span> now looks for SWT Cocoa when Carbon is not
+found on 32-bit macOS</p></li><li><p>Fixed a problem with SWT/Cocoa menu
+handling.</p></li><li><p>Fixed a problem with the SWT/Cocoa <code class="code">type</code>
+function replaying when modifiers are used.</p></li><li><p>Fixed the calculation of SWT/Cocoa List item
+bounds.</p></li><li><p>Fixed the calculation of bounds for SWT/Cocoa
+TableColumns when the Table is scrolled.</p></li><li><p>Fixed an off-by-one error when handling SWT Table
+items.</p></li><li><p>Worked around a text-typing bug in the SWT Cocoa
+implementation on macOS.</p></li><li><p>Fixed architecture detection of SWT
+module on Windows.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="idp36264968"></a>2.48.5. Web-specific</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Introduced an alternative, proxy-based approach to Web
+testing that makes it possible to test more browsers in more
+contexts—for example, Chrome, Opera, and Mobile Safari (the latter
+on iOS devices).</p></li><li><p>Added a property that holds an object's DOM path.
+</p></li><li><p>Added a <code class="code">raiseWindow</code> function. This function
+tries to raise the browser over other windows that may overlap it.
+</p></li><li><p>Added a new <code class="option">--config</code> option action of
+<code class="code">setBrowserPath</code> to the <span class="application">squishrunner</span>. This makes it
+possible for the new IDE to be able to update the browser executable (in
+particular for the proxy-case).</p></li><li><p>Add a <code class="code">scrollTo</code> function.</p></li><li><p>Added support for object picking through touch events on
+browsers that provide this feature.</p></li><li><p>Fixed the recording of <code class="code">setText</code> when typing
+text is interrupted by other events such as focus
+changes.</p></li><li><p>Fixed the fetching of properties from remote browsers
+and from browsers that respond very slowly.</p></li><li><p>Allow multiple Firefox instances to be driven from a
+single user account on a Unix system.</p></li><li><p>Fixed the passing of double quotes via the <span class="application">squishrunner</span>
+<code class="option">--webbrowserargs</code> option.
+</p></li><li><p>Fixed the fetching of style properties in Firefox.
+</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="idp36271872"></a>2.48.6. Windows (native)-specific</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Greatly speeded up lookups for native Windows controls
+in large GUIs by changing the order in which the object hierarchy is
+traversed.
+</p></li><li><p>Improved the playback speed for object names with
+leftObject and/or aboveObject properties.</p></li><li><p>No longer accidentally use the wrong menu in some cases
+when clicking on menu items in Windows Forms
+applications.</p></li><li><p>Improved the reliability of recording for Windows Forms
+menu items.</p></li><li><p>Mouse clicks are no longer recorded on disabled toolbar
+items.</p></li><li><p>Improved <span class="emphasis"><em>Squish</em></span>'s event processing to enhance the
+reliability of the recording of mouse and keyboard actions.
+</p></li><li><p>Added support for testing PowerBuilder-based
+applications. Inquire with support for more details.</p></li><li><p>Stopped the mouse cursor from changing position when
+picking native Windows objects.</p></li><li><p>Added support for the CA Plex ObGrid
+control.</p></li><li><p>Made it possible for the toolkit wrappers (Qt, Web
+etc.) to specify the list of objects which the Windows wrapper should
+ignore by specifying a list of object names.</p></li><li><p>Fixed blocking events when picking objects.</p></li><li><p>Fixed the recording of table cell clicks when the mouse
+down event causes the cell to turn into an edit field.</p></li><li><p>Added a <code class="code">visible</code> property for Excel
+tables.</p></li><li><p>Made it possible to use wildcards (* and ?) in 'Extra
+Windows'.</p></li><li><p>Added a <code class="code">selected</code> property on MFC ListBoxItem
+objects.</p></li><li><p>Added an <code class="code">itemCount</code> property that holds the
+number of items contained in objects which contain other items, such as
+tree views, list views, list boxes, menus, menu items, tabs, and status
+bars.
+</p></li><li><p>Added a <code class="code">postMessageLong</code> method for
+<code class="code">WindowsControl</code>s.</p></li><li><p>Added a <code class="code">setForegroundWindow</code>
+function.</p></li><li><p>Added a <code class="code">nativeObject</code> property for all
+Windows Forms objects. This property can be used to access all the
+Windows Forms object's native properties.</p></li><li><p>Added support for the Infragistics
+<code class="code">UltraWinGrid</code>, <code class="code">UltraWinTree</code>,
+<code class="code">UltraWinTabs</code>, <code class="code">UltraStatusBar</code>, and
+<code class="code">UltraToolbar</code>
+components.</p></li><li><p>Made the Object Map name reuse feature much less
+expensive for Windows tests.</p></li><li><p>Added a <code class="code">getActiveXProperty</code>
+function.</p></li><li><p>Added support for identifying Windows objects by
+subproperties. For example, <code class="code">"{type='Window'
+nativeObject.Text='Update'}"</code>.</p></li><li><p>It is now possible for the Windows wrapper to ignore
+processes by specifying “<span class="quote">Blacklisted Processes</span>” in the
+wrapper configuration file.</p></li><li><p>The <code class="filename">_startwinaut.exe</code> is now
+correctly terminated after test execution.
+</p></li><li><p>The <span class="application">startwinaut.exe</span> can now
+accept AUT executable names without absolute paths.</p></li><li><p>Improved MsoCommandBar identification.</p></li><li><p>Imroved the reliability of combobox expansion when a
+list item is selected.
+</p></li><li><p>It is now possible to use <code class="filename">.bat</code>
+files as AUTs for Windows test suites.</p></li><li><p>Hooking into 32-bit Windows Forms applications
+now works on both 32-bit and 64-bit Windows.</p></li><li><p>Introduced a Visual Basic module which, when injected
+into a VB6 application, adds support for the <code class="code">vb_name</code>
+property. Installation instructions are in the file
+<code class="filename">vb6hook/README.txt</code>.</p></li><li><p>Started work on an Exontrol extension. Enquire with
+sales@froglogic.com for availability.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="idp36289080"></a>2.48.7. Mac-specific (Cocoa/Carbon edition)</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Added support for macOS 10.6.</p></li><li><p>Added support for testing 64-bit AUTs.</p></li><li><p>Fixed a problem with verification point generation for
+Boolean properties.</p></li><li><p>Fixed a <span class="application">squishserver</span> problem regarding the detection
+of 32-bit and 64-bit executables.</p></li><li><p>Improved the reliability of finding the executable when
+there is both an AUT executable and a <code class="filename">.app</code>
+directory of the same name.
+</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="idp36292280"></a>2.48.8. iPhone/iPad-specific</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Added special case support for <code class="code">type("UITextField",
+"&lt;Return&gt;")</code> so that the onscreen keyboard is hidden and the
+actions associated with the <span class="keysym">Return</span> are
+executed.</p></li><li><p>Correctly record
+<code class="code">type("&lt;Return&gt;")</code>.</p></li><li><p>Fixed internal object cache problem.</p></li><li><p>The <code class="code">touchAndDrag</code> function now gracefully
+handles interacting with null objects.
+</p></li><li><p>Added an extra step in <code class="code">touchAndDrag</code>
+replaying to correctly mimic the initial drag trigger.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="idp36295888"></a>2.48.9. Tk-specific</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Added support for the <code class="code">attachToApplication</code>
+function.</p></li><li><p>Added support for launching Tk AUTs with the
+<span class="emphasis"><em>Squish</em></span> <span class="application">startaut</span> tool.</p></li><li><p>Fixed a problem with the replay of iwidgets TabNotebook
+clicks.</p></li><li><p>Made the windows fallback wrapper work
+correctly.</p></li><li><p>Fixed a problem that prevented building Squish/Tk on
+64-bit Windows.</p></li><li><p>Added support for the recording and replaying of
+image-information on menu items.</p></li><li><p>Fixed a problem with object identification when
+recording in the face of overlapping windows.</p></li><li><p>Fixed a problem with clicking native widgets that are
+children of Tk windows.</p></li><li><p><span class="emphasis"><em>Squish</em></span> now ensures that listbox items are visible
+before clicking them.</p></li><li><p><span class="emphasis"><em>Squish</em></span> now ensures that tkTable widget items are visible
+before clicking them.</p></li><li><p><span class="emphasis"><em>Squish</em></span> now highlights widgets that could be picked in
+spy mode as the mouse hovers over them.
+</p></li><li><p>Fixed the handling of mixed-case strings in the
+<code class="code">type</code> function.</p></li><li><p>Added a statically linked Tk example.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="idp36302568"></a>2.48.10. Documentation</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>The Qt, Java AWT/Swing, Java SWT, Windows, macOS, and
+Tk tutorials have all been updated and harmonized for <span class="emphasis"><em>Squish</em></span> 4.</p></li><li><p>All the newly added <span class="emphasis"><em>Squish</em></span> functions and features have
+been documented (with some of the larger items mentioned below). All the
+documentation has had numerous updates, improvements and corrections.
+</p></li><li><p>The User Guide has been reorganized to group
+toolkit-specific sections together.</p></li><li><p>The User Guide has new Qt-specific sections covering the
+support for Qt signal handlers and the QML Extension
+API.</p></li><li><p>The User Guide has a new section that shows how to do
+keyword-driven testing.</p></li><li><p>The User Guide's coverage of shared scripts and data now
+also covers shared global scripts. And the IDE Reference Manual now has
+a section on the Global Scripts view.</p></li><li><p>The Test Script APIs are now in their own manual (before
+they were in the Tools Reference Manual).</p></li><li><p>The Installation Guide now has information on Safari
+Testing (on iOS devices), on Maemo devices, and on MeeGo.
+</p></li><li><p>The Add-Ons Reference manual now covers how to integrate
+the <span class="application">Squish IDE</span> with an existing Eclipse and the TestTrack TCM integration.
+</p></li><li><p>A global “<span class="quote">back of the book</span>”-style index has
+been added which covers all of the documentation.</p></li><li><p>The PDF version of the manual has been
+improved.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="idp36308384"></a>2.48.11. Source Builds</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>For split builds, the
+<code class="option">--enable-ide-utils</code> configure option is now needed.
+</p></li><li><p>The <span class="emphasis"><em>Squish</em></span> build system now automatically detects the
+Qt include directory on debian and debian-based systems.</p></li><li><p>Qt 4 headers are now read from the dedicated
+sub-directories such as <code class="filename">QtCore/</code>; this avoids
+compiler warnings that would otherwise occur with
+Qt 4.7.</p></li><li><p><span class="emphasis"><em>Squish</em></span> can now be compiled with a custom Qt
+namespace.</p></li><li><p>Experimental support for parallel builds has been added.
+Pass the <code class="option">-j <span class="emphasis"><em>n</em></span></code> option (where
+<code class="option"><span class="emphasis"><em>n</em></span></code> is the number of jobs to do in
+parallel) to the <span class="emphasis"><em>Squish</em></span> <span class="application">build</span> tool.
+</p></li><li><p>Added
+<code class="option">--withmoc</code>,
+<code class="option">--withrcc</code>, and
+<code class="option">--withuic</code>
+<span class="application">configure</span> options for
+customized Qt installations such as those found in the MeeGo
+SDKs.</p></li><li><p>It is now possible to do builds for the Qt
+Simulator.</p></li><li><p>Support for compiling with mingw-w64 has been
+added..</p></li><li><p>Qt visibility detection has been enabled on
+Solaris.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="idp36315648"></a>2.48.12. Classic IDE</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>
+The Classic IDE has been renamed
+<span class="application">squishclassicide</span>.
+</p></li><li><p>The Classic IDE had a bug that could result in 100% CPU
+usage (i.e., hanging) when doing snippet recording; this has now been
+worked around.
+</p></li></ul></div></div></div><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" type="text/javascript" src="ScriptingLanguage.js"></script><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format">setScriptingLanguage();</script><div class="navfooter"><hr></hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="rel-410beta2.html">Prev</a> </td><td width="20%" align="center"><a accesskey="u" href="relnotes.html">Up</a></td><td width="40%" align="right"> <a accesskey="n" href="rel-402.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">2.47. Version 4.1.0 Beta 2 </td><td width="20%" align="center"><a accesskey="h" href="index-noframes.html">Home</a></td><td width="40%" align="right" valign="top"> 2.49. Version 4.0.2</td></tr></table></div></body>
+<!-- Mirrored from rel-410beta1.html by HTTrack Website Copier/3.x [XR&CO'2013], Wed, 06 Jul 2022 13:28:56 GMT -->
+</html>

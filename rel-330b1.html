@@ -1,0 +1,84 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<!-- Mirrored from rel-330b1.html by HTTrack Website Copier/3.x [XR&CO'2013], Wed, 06 Jul 2022 13:28:57 GMT -->
+<head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><title>2.64. Version 3.3.0 Beta 1</title><link rel="stylesheet" href="manual.css" type="text/css"></link><meta name="generator" content="DocBook XSL Stylesheets V1.73.2"></meta><link rel="start" href="index-noframes.html" title="Squish Manual"></link><link rel="up" href="relnotes.html" title="Chapter 2. Release Notes—for Upgraders"></link><link rel="prev" href="rel-330.html" title="2.63. Version 3.3.0"></link><link rel="next" href="rel-323.html" title="2.65. Version 3.2.3"></link><style xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" type="text/css" media="screen">
+        div.toc * { margin-left: 6px; margin-right: auto; max-width: 75em; }
+        div.toc span { margin-left: 0px; }
+        * { margin-left: auto; margin-right: auto; max-width: 75em; }
+        body { margin-left: 6px; margin-right: 6px; }
+        table th { padding: .5ex }
+        table td { padding: .5ex }
+    </style><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format">
+        function keyPress() {
+            var e = window.event;
+            if ( e == undefined ) {
+                return;
+            }
+            /* ### does not properly scroll, yet
+            if ( e.keyCode == 32 ) {
+            var l = document.links;
+            for ( var i = 0; i < l.length; i++ ) {
+                if ( l[i].innerText == "Next" ) {
+                location.href = l[i].href;
+                }
+            }
+            } else
+                */
+                if ( e.keyCode == 0x08 ) {
+            var l = document.links;
+            for ( var i = 0; i < l.length; i++ ) {
+                if ( l[i].innerText == "Prev" ) {
+                location.href = l[i].href;
+                }
+            }
+            }
+        }
+        document.onkeypress = keyPress;
+    </script></head><body><div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="rel-330b1"></a>2.64. Version 3.3.0 Beta 1</h2></div></div></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><span class="section"><a href="rel-330b1.html#general.7">2.64.1. General</a></span></dt><dt><span class="section"><a href="rel-330b1.html#qt-specific.7">2.64.2. Qt-specific</a></span></dt><dt><span class="section"><a href="rel-330b1.html#java-specific.7">2.64.3. Java-specific</a></span></dt><dt><span class="section"><a href="rel-330b1.html#web-specific.7">2.64.4. Web-specific</a></span></dt><dt><span class="section"><a href="rel-330b1.html#mac-specific.1">2.64.5. Mac-specific</a></span></dt><dt><span class="section"><a href="rel-330b1.html#source-builds.5">2.64.6. Source Builds</a></span></dt></dl></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="general.7"></a>2.64.1. General</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Highly improved Object Map editor</p></li><li><p>Added object.children() and properties() functions
+that return a list of child objects and a property map,
+respectively. Available in all scripting languages.</p></li><li><p>waitForObjectItem() and findObjectItem() functions for
+improved synchronization</p></li><li><p>Support for live Object Map maintenance while Spy is
+running</p></li><li><p>Support for an append mode in JavaScript's File.open()
+function.</p></li><li><p>Support an optional SQUISH_LICENSEKEY_DIR environment
+variable which can be used to define where the license key file should
+be read (and written).</p></li><li><p>Safe handling of NULL values in the Variable
+Watcher.</p></li><li><p>Let the "Uncomment" feature of the script editor only
+remove the comment marker once so that this operation is symmetric to
+"Comment".</p></li><li><p>Avoid crash in Variable Watcher in case it's triggered
+after the application exited and tries to access a value of the
+destructed application.</p></li><li><p>Don't show the "File modification" message box in case
+an entry was added to the object map using the context menu in the
+Spy.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="qt-specific.7"></a>2.64.2. Qt-specific</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Dedicated QGraphicsView support. QGraphicsItems are
+exposed as fully-fledged objects including properties. The objects are
+recognized during recording and their state can be inspected and
+verified.</p></li><li><p>Support for testing (record and replay) of native
+Windows controls (MFC, ActiveX, etc.) in Qt
+applications.</p></li><li><p>New simplified and non-intrusive setup for tests
+attaching to a running application.</p></li><li><p>Support testing of Qt Jambi
+applications.</p></li><li><p>Wrap QListView and QFontMetrics(F) classes in the Qt 4
+wrapper.</p></li><li><p>Avoid crash with Qt 3.0.5 and earlier
+versions.</p></li><li><p>Fixed name generation for objects that have property
+values having am &amp;-characters in them.</p></li><li><p>Consider 'objectName' for the symbolic
+name.</p></li><li><p>Support the QFileOpenEvent event type in sendEvent()
+calls.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="java-specific.7"></a>2.64.3. Java-specific</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Support testing of applications which mix AWT/Swing
+and SWT/RCP controls.</p></li><li><p>Greatly simplified setup procedure for hooking into
+Java applications. Applications launched through a .bat file do not
+have to be patched anymore for example.</p></li><li><p>Pre-built binary packages for
+Solaris.</p></li><li><p>Support for record and replay of drag'n'drop and mouse
+drag operations.</p></li><li><p>Dedicated record and replay support for Eclipse
+GEF-based controls</p></li><li><p>Fixed access to object members via Perl test
+scripts.</p></li><li><p>A plug-in that adds a Squish Test Type to the Eclipse
+Testing and Performance Testing Tools Platform (TPTP). It allows for
+Squish tests to be driven by tools based on the TPTP
+framework.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="web-specific.7"></a>2.64.4. Web-specific</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Support record and replay of actions on Java applets
+embedded in a Web page.</p></li><li><p>On Windows, support record and replay of basic
+interactions with native browser dialogs (e.g. certificate and
+password dialogs), native browser control elements and embedded
+ActiveX objects. This includes Flash/Flex plug-ins.</p></li><li><p>Several small improvements for better synchronization
+and object identification.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="mac-specific.1"></a>2.64.5. Mac-specific</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>New edition available for automated testing of Carbon
+and Cocoa applications on Mac OS X</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="source-builds.5"></a>2.64.6. Source Builds</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Compile with a Qt installation that was stripped down
+with QT_NO_MESSAGEBOX, QT_NO_MENU, QT_NO_MENUBAR and QT_NO_TOOLBUTTON
+being defined.</p></li><li><p>Avoid compilation error by not using a
+possibly-reserved "constant" identifier.</p></li></ul></div></div></div><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" type="text/javascript" src="ScriptingLanguage.js"></script><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format">setScriptingLanguage();</script><div class="navfooter"><hr></hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="rel-330.html">Prev</a> </td><td width="20%" align="center"><a accesskey="u" href="relnotes.html">Up</a></td><td width="40%" align="right"> <a accesskey="n" href="rel-323.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">2.63. Version 3.3.0 </td><td width="20%" align="center"><a accesskey="h" href="index-noframes.html">Home</a></td><td width="40%" align="right" valign="top"> 2.65. Version 3.2.3</td></tr></table></div></body>
+<!-- Mirrored from rel-330b1.html by HTTrack Website Copier/3.x [XR&CO'2013], Wed, 06 Jul 2022 13:28:57 GMT -->
+</html>

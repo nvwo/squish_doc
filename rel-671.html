@@ -1,0 +1,145 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<!-- Mirrored from rel-671.html by HTTrack Website Copier/3.x [XR&CO'2013], Wed, 06 Jul 2022 13:28:55 GMT -->
+<head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><title>2.4. Version 6.7.1</title><link rel="stylesheet" href="manual.css" type="text/css"></link><meta name="generator" content="DocBook XSL Stylesheets V1.73.2"></meta><link rel="start" href="index-noframes.html" title="Squish Manual"></link><link rel="up" href="relnotes.html" title="Chapter 2. Release Notes—for Upgraders"></link><link rel="prev" href="rel-672.html" title="2.3. Version 6.7.2"></link><link rel="next" href="rel-670.html" title="2.5. Version 6.7"></link><style xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" type="text/css" media="screen">
+        div.toc * { margin-left: 6px; margin-right: auto; max-width: 75em; }
+        div.toc span { margin-left: 0px; }
+        * { margin-left: auto; margin-right: auto; max-width: 75em; }
+        body { margin-left: 6px; margin-right: 6px; }
+        table th { padding: .5ex }
+        table td { padding: .5ex }
+    </style><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format">
+        function keyPress() {
+            var e = window.event;
+            if ( e == undefined ) {
+                return;
+            }
+            /* ### does not properly scroll, yet
+            if ( e.keyCode == 32 ) {
+            var l = document.links;
+            for ( var i = 0; i < l.length; i++ ) {
+                if ( l[i].innerText == "Next" ) {
+                location.href = l[i].href;
+                }
+            }
+            } else
+                */
+                if ( e.keyCode == 0x08 ) {
+            var l = document.links;
+            for ( var i = 0; i < l.length; i++ ) {
+                if ( l[i].innerText == "Prev" ) {
+                location.href = l[i].href;
+                }
+            }
+            }
+        }
+        document.onkeypress = keyPress;
+    </script></head><body><div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="rel-671"></a>2.4. Version 6.7.1</h2></div></div></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><span class="section"><a href="rel-671.html#rel-671-general">2.4.1. General</a></span></dt><dt><span class="section"><a href="rel-671.html#rel-671-ide">2.4.2. Squish IDE-specific</a></span></dt><dt><span class="section"><a href="rel-671.html#rel-671-java">2.4.3. <span class="trademark">Java</span>™-specific</a></span></dt><dt><span class="section"><a href="rel-671.html#rel-671-mac">2.4.4. macOS-specific (Cocoa/Carbon edition)</a></span></dt><dt><span class="section"><a href="rel-671.html#rel-671-qt">2.4.5. Qt-specific</a></span></dt><dt><span class="section"><a href="rel-671.html#rel-671-source">2.4.6. Source Packages</a></span></dt><dt><span class="section"><a href="rel-671.html#rel-671-web">2.4.7. Web-specific</a></span></dt><dt><span class="section"><a href="rel-671.html#rel-671-win">2.4.8. Windows (native)-specific</a></span></dt><dt><span class="section"><a href="rel-671.html#rel-671-known-issues">2.4.9. Known Issues</a></span></dt></dl></div><p><span class="emphasis"><em>Squish</em></span> 6.7.1 is a maintenance release containing bug fixes for all
+  editions of the product. See the following sections for a detailed list of
+  all changes.</p><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="rel-671-general"></a>2.4.1. General</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>
+          Fixed a problem where test cases encountered license errors when
+          <span class="emphasis"><em>Squish</em></span> got blocked by the debugger or script functions for
+          too long.
+        </p></li><li><p>
+          The <span class="emphasis"><em>Squish</em></span> license server can be run as a Windows Service now.
+        </p></li><li><p>
+          Fixed a <span class="application">squishrunner</span> crash when the <span class="application">squishserver</span> configuration
+          contained invalid <acronym class="acronym">AUT</acronym> registrations (due to
+          manual <code class="filename">server.ini</code> editing).
+        </p></li><li><p>
+          Fixed reading test suite-wide settings if the test suite name does
+          not begin with <code class="literal">suite_</code>.
+        </p></li><li><p>
+          Empty files will no longer be ignored by the <a class="xref" href="rgs-squish.html#RemoteSystem.upload-function"><code class="function">RemoteSystem.upload</code></a>
+          <acronym class="acronym">API</acronym>.
+        </p></li><li><p>
+          Improved handling of sections in test results when test execution is
+          aborted due to crashes, timeouts or other conditions.
+        </p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="rel-671-ide"></a>2.4.2. Squish IDE-specific</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>
+          Fixed a problem where the <span class="application">Squish IDE</span> would stay in
+          <span class="guilabel">Control Bar</span> mode indefinitely on macOS after
+          running a few tests with breakpoints.
+        </p></li><li><p>
+          Fixed a problem where in rare cases the <span class="application">Squish IDE</span> would not shut down
+          completely on macOS 11 when being quit.
+        </p></li><li><p>
+          Fixed a rare problem where the <span class="application">Squish IDE</span> would terminate all user
+          processes on Linux and macOS when pausing test execution.
+        </p></li><li><p>
+          Fixed crash in Squish Script Console when <span class="keycap"><strong>Enter</strong></span>
+          was pressed on an empty line.
+        </p></li><li><p>
+          Fixed a problem that made it impossible to open a test suite by
+          passing the absolute path of the <code class="filename">suite.conf</code>
+          as an argument to the invocation of the <span class="application">Squish IDE</span>.
+        </p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="rel-671-java"></a>2.4.3. <span class="trademark">Java</span>™-specific</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>
+          Fixed a regression in <span class="emphasis"><em>Squish</em></span> 6.7.0 for finding tab handles in
+          <code class="code">CTabFolder</code>.
+        </p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="rel-671-mac"></a>2.4.4. macOS-specific (Cocoa/Carbon edition)</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>
+          Fixed a problem with <a class="xref" href="rgs-macconvenience.html#mac-scrollToObject-function"><code class="function">scrollToObject</code></a>
+          that would make the function report errors when no scrolling has
+          been done because the object was already visible.
+        </p></li><li><p>
+          Fixed a crash occurring with <a class="xref" href="rgs-squish.html#nativeType-function"><code class="function">nativeType</code></a>
+          on macOS with certain launchers for <span class="trademark">Java</span>™ applications.
+        </p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="rel-671-qt"></a>2.4.5. Qt-specific</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>
+          Fixed <span class="emphasis"><em>Squish</em></span> logging with built-in hook for Qt on iOS.
+        </p><p>
+          The <code class="literal">Listening on port xxx...</code> log message is
+          printed again when running a Qt <acronym class="acronym">AUT</acronym> with the
+          built-in hook on iOS.
+        </p></li><li><p>
+          Fixed Qt symbol lookup on recent Linux systems where
+          <code class="literal">nm</code> output contains version information.
+        </p></li><li><p>
+          Hooking into Qt 6 <acronym class="acronym">AUT</acronym>s now properly logs loaded Qt
+          modules on Linux and macOS.
+        </p></li><li><p>
+          Fixed hooking of Qt 4 <acronym class="acronym">AUT</acronym>s running on
+          <acronym class="acronym">QWS</acronym>
+        </p></li><li><p>
+          Fixed incorrect <a class="xref" href="rgs-qtconvenience.html#qt-type-function"><code class="function">type</code></a> recording for
+          text input that includes the <span class="keycap"><strong>AltGr</strong></span>-modifier key
+          on QtWidgets.
+        </p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="rel-671-source"></a>2.4.6. Source Packages</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>
+          Disable WebSocket support when building <span class="application">squishserver</span> by default to
+          avoid a possibly undesired dependency on QtWebSockets. Users who
+          build from source and want to automate Qt for WebAssembly
+          <acronym class="acronym">AUT</acronym>s need to pass
+          <code class="option">--enable-server-websockets</code> to enable this feature
+          again.
+        </p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="rel-671-web"></a>2.4.7. Web-specific</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>
+          <span class="emphasis"><em>Squish</em></span> for Web detects browsers on macOS automatically via
+          their <code class="literal">bundle id</code> instead of bundle (file) name.
+        </p><p>
+          With multiple <span class="application">Firefox</span> or Chrome installations it may happen that a
+          different installation is found and started than before under rare
+          circumstances.
+        </p></li><li><p>
+          Fixed a problem causing a <code class="literal">connection refused
+          repeatedly</code> error to appear when attaching to or starting
+          Chromium-based applications.
+        </p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="rel-671-win"></a>2.4.8. Windows (native)-specific</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>
+          Fixed wrong JavaScript <a class="xref" href="rgs-js.html#js-OS.version-property">OS.version</a>
+          information on Windows 10.
+        </p></li><li><p>
+          Fixed a problem with the <code class="code">testInteraction</code> message boxes
+          and dialogs when they were hidden behind <acronym class="acronym">AUT</acronym>
+          windows or a command line prompt on Windows.
+        </p><p>
+          The dialogs and message boxes are displayed as always-on-top windows now.
+        </p></li><li><p>
+          The issue with inaccurate recording on menus and menu items in
+          Visual Studio 2019 has been fixed.
+        </p></li><li><p>
+          Fixed replaying and recording problems on some machines with Chinese
+          system locale.
+        </p></li><li><p>
+          In some cases it was not possible to pick (select) WPF controls
+          when they were embedded in Windows Forms controls.
+          This regression in <span class="emphasis"><em>Squish</em></span> 6.7.0 is fixed now.
+        </p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="rel-671-known-issues"></a>2.4.9. Known Issues</h3></div></div></div><p>For a list of noteworthy issues which were found after the release of
+    <span class="emphasis"><em>Squish</em></span> 6.7.1, please see the <a class="ulink" href="https://kb.froglogic.com/squish/known-issues/6-7-1/" target="_blank">Known
+    Issues page</a> in the froglogic Knowledge Base.</p></div></div><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" type="text/javascript" src="ScriptingLanguage.js"></script><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format">setScriptingLanguage();</script><div class="navfooter"><hr></hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="rel-672.html">Prev</a> </td><td width="20%" align="center"><a accesskey="u" href="relnotes.html">Up</a></td><td width="40%" align="right"> <a accesskey="n" href="rel-670.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">2.3. Version 6.7.2 </td><td width="20%" align="center"><a accesskey="h" href="index-noframes.html">Home</a></td><td width="40%" align="right" valign="top"> 2.5. Version 6.7</td></tr></table></div></body>
+<!-- Mirrored from rel-671.html by HTTrack Website Copier/3.x [XR&CO'2013], Wed, 06 Jul 2022 13:28:55 GMT -->
+</html>

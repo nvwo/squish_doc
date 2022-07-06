@@ -1,0 +1,58 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<!-- Mirrored from ugs-screenshotsonfail.html by HTTrack Website Copier/3.x [XR&CO'2013], Wed, 06 Jul 2022 13:28:59 GMT -->
+<head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><title>5.15. How to Create Automatic Screenshots on Test Failures and Errors</title><link rel="stylesheet" href="manual.css" type="text/css"></link><meta name="generator" content="DocBook XSL Stylesheets V1.73.2"></meta><link rel="start" href="index-noframes.html" title="Squish Manual"></link><link rel="up" href="users-guide.html" title="Chapter 5. User Guide"></link><link rel="prev" href="ugs-semiautomatic.html" title="5.14. How to Create Semi-Automatic Tests that Query for User Input"></link><link rel="next" href="how.to.do.keyword.driven.testing.html" title="5.16. How to Do Keyword-Driven Testing"></link><style xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" type="text/css" media="screen">
+        div.toc * { margin-left: 6px; margin-right: auto; max-width: 75em; }
+        div.toc span { margin-left: 0px; }
+        * { margin-left: auto; margin-right: auto; max-width: 75em; }
+        body { margin-left: 6px; margin-right: 6px; }
+        table th { padding: .5ex }
+        table td { padding: .5ex }
+    </style><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format">
+        function keyPress() {
+            var e = window.event;
+            if ( e == undefined ) {
+                return;
+            }
+            /* ### does not properly scroll, yet
+            if ( e.keyCode == 32 ) {
+            var l = document.links;
+            for ( var i = 0; i < l.length; i++ ) {
+                if ( l[i].innerText == "Next" ) {
+                location.href = l[i].href;
+                }
+            }
+            } else
+                */
+                if ( e.keyCode == 0x08 ) {
+            var l = document.links;
+            for ( var i = 0; i < l.length; i++ ) {
+                if ( l[i].innerText == "Prev" ) {
+                location.href = l[i].href;
+                }
+            }
+            }
+        }
+        document.onkeypress = keyPress;
+    </script></head><body><div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="ugs-screenshotsonfail"></a>5.15. How to Create Automatic Screenshots on Test Failures and Errors</h2></div></div></div><p>
+To make it easier to track down the causes of test failures and errors,
+it is possible to tell <span class="emphasis"><em>Squish</em></span> to take a screenshot whenever a test
+fails or has errors. We can then view the screenshot of the complete
+desktop taken at the time the failure or error occurred. This is
+especially helpful when it comes to the debugging of test failures and
+errors that occur during unattended automated test runs.
+</p><p>
+To enable this feature, it is necessary to set the global settings
+object, <a class="xref" href="rgs-squish.html#rgs-testsettings" title="6.3.19. testSettings Object"><code class="code">testSettings</code> Object (Section 6.3.19)</a>'s
+<code class="code">logScreenshotOnFail</code> and/or
+<code class="code">logScreenshotOnError</code> properties to true (or True or 1
+depending on your scripting language—see <a class="xref" href="rgs-scripteq.html" title="6.2. Equivalent Script API">Equivalent Script API (Section 6.2)</a>.).
+</p><p>
+Once one or both of these properties are activated, all tests that
+result in failures or errors will produce a message text that contains
+the path to an image file that contains the saved screenshot. In the <span class="application">Squish IDE</span>
+the screenshots can be viewed by double-clicking the corresponding
+Test Results entry.
+</p></div><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" type="text/javascript" src="ScriptingLanguage.js"></script><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format">setScriptingLanguage();</script><div class="navfooter"><hr></hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="ugs-semiautomatic.html">Prev</a> </td><td width="20%" align="center"><a accesskey="u" href="users-guide.html">Up</a></td><td width="40%" align="right"> <a accesskey="n" href="how.to.do.keyword.driven.testing.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">5.14. How to Create Semi-Automatic Tests that Query for User Input </td><td width="20%" align="center"><a accesskey="h" href="index-noframes.html">Home</a></td><td width="40%" align="right" valign="top"> 5.16. How to Do Keyword-Driven Testing</td></tr></table></div></body>
+<!-- Mirrored from ugs-screenshotsonfail.html by HTTrack Website Copier/3.x [XR&CO'2013], Wed, 06 Jul 2022 13:28:59 GMT -->
+</html>

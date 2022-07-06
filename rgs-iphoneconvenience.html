@@ -1,0 +1,266 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<!-- Mirrored from rgs-iphoneconvenience.html by HTTrack Website Copier/3.x [XR&CO'2013], Wed, 06 Jul 2022 13:29:00 GMT -->
+<head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><title>6.9. iOS Convenience API</title><link rel="stylesheet" href="manual.css" type="text/css"></link><meta name="generator" content="DocBook XSL Stylesheets V1.73.2"></meta><link rel="start" href="index-noframes.html" title="Squish Manual"></link><link rel="up" href="api.man.html" title="Chapter 6. API Reference Manual"></link><link rel="prev" href="rgs-macconvenience.html" title="6.8. macOS Convenience API"></link><link rel="next" href="rgs-webconvenience.html" title="6.10. Web Object API"></link><style xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" type="text/css" media="screen">
+        div.toc * { margin-left: 6px; margin-right: auto; max-width: 75em; }
+        div.toc span { margin-left: 0px; }
+        * { margin-left: auto; margin-right: auto; max-width: 75em; }
+        body { margin-left: 6px; margin-right: 6px; }
+        table th { padding: .5ex }
+        table td { padding: .5ex }
+    </style><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format">
+        function keyPress() {
+            var e = window.event;
+            if ( e == undefined ) {
+                return;
+            }
+            /* ### does not properly scroll, yet
+            if ( e.keyCode == 32 ) {
+            var l = document.links;
+            for ( var i = 0; i < l.length; i++ ) {
+                if ( l[i].innerText == "Next" ) {
+                location.href = l[i].href;
+                }
+            }
+            } else
+                */
+                if ( e.keyCode == 0x08 ) {
+            var l = document.links;
+            for ( var i = 0; i < l.length; i++ ) {
+                if ( l[i].innerText == "Prev" ) {
+                location.href = l[i].href;
+                }
+            }
+            }
+        }
+        document.onkeypress = keyPress;
+    </script></head><body><div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="rgs-iphoneconvenience"></a>6.9. iOS Convenience API</h2></div></div></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><span class="section"><a href="rgs-iphoneconvenience.html#iphone-GestureBuilder-class">6.9.1. GestureBuilder</a></span></dt></dl></div><div class="important" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Important: iOS-specific"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Important]" src="images/important.png"></img></td><th align="left">iOS-specific</th></tr><tr><td align="left" valign="top"><p>
+The iOS Convenience API is <span class="emphasis"><em>only</em></span> available for
+the Squish for iOS editions.
+</p></td></tr></table></div><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Note: Terminology"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/note.png"></img></td><th align="left">Terminology</th></tr><tr><td align="left" valign="top"><p>
+The <span class="emphasis"><em>Squish</em></span> documentation uses the term <span class="emphasis"><em>widget</em></span>
+when referring to GUI objects. macOS developers may be more
+familiar with the term <span class="emphasis"><em>view</em></span> for this concept.
+</p></td></tr></table></div><p>
+Here are some quick links to the iOS Convenience API's functions:
+</p><div class="informaltable"><table border="0"><colgroup><col></col><col></col><col></col></colgroup><tbody><tr valign="top"><td valign="top">
+<div class="itemizedlist"><ul type="disc" compact><li><p><a class="xref" href="rgs-iphoneconvenience.html#iphone-clearWebObjectCache-function"><code class="function">clearWebObjectCache</code></a></p></li><li><p><a class="xref" href="rgs-iphoneconvenience.html#iphone-clickObject-function"><code class="function">clickObject</code></a></p></li><li><p><a class="xref" href="rgs-iphoneconvenience.html#iphone-doubleClick-function"><code class="function">doubleClick</code></a></p></li><li><p><a class="xref" href="rgs-iphoneconvenience.html#iphone-doubleTap-function"><code class="function">doubleTap</code></a></p></li><li><p><a class="xref" href="rgs-iphoneconvenience.html#iphone-gesture-function"><code class="function">gesture</code></a></p></li></ul></div>
+</td><td valign="top">
+<div class="itemizedlist"><ul type="disc" compact><li><p><a class="xref" href="rgs-iphoneconvenience.html#iphone-grabWidget-function"><code class="function">grabWidget</code></a></p></li><li><p><a class="xref" href="rgs-iphoneconvenience.html#iphone-hideKeyboard-function"><code class="function">hideKeyboard</code></a></p></li><li><p><a class="xref" href="rgs-iphoneconvenience.html#iphone-installEventHandler-function"><code class="function">installEventHandler</code></a></p></li><li><p><a class="xref" href="rgs-iphoneconvenience.html#iphone-readGesture-function"><code class="function">readGesture</code></a></p></li><li><p><a class="xref" href="rgs-iphoneconvenience.html#iphone-selectPickerRowInComponent-function"><code class="function">selectPickerRowInComponent</code></a></p></li></ul></div>
+</td><td valign="top">
+<div class="itemizedlist"><ul type="disc" compact><li><p><a class="xref" href="rgs-iphoneconvenience.html#iphone-tapObject-function"><code class="function">tapObject</code></a></p></li><li><p><a class="xref" href="rgs-iphoneconvenience.html#iphone-touchAndDrag-function"><code class="function">touchAndDrag</code></a></p></li><li><p><a class="xref" href="rgs-iphoneconvenience.html#iphone-touchAndHold-function"><code class="function">touchAndHold</code></a></p></li><li><p><a class="xref" href="rgs-iphoneconvenience.html#iphone-type-function"><code class="function">type</code></a></p></li><li><p><a class="xref" href="rgs-iphoneconvenience.html#iphone-uninstallEventHandler-function"><code class="function">uninstallEventHandler</code></a></p></li></ul></div>
+</td></tr></tbody></table></div><div class="funcsynopsis"><a id="iphone-clearWebObjectCache-function"></a><p><code class="funcdef"><b class="fsfunc">clearWebObjectCache</b>(</code><var class="pdparam"></var><code>)</code>;</p></div><p>
+This function clears the cache for hierarchical names for objects in a WebView.
+This can be useful in cases where a web application removes some elements of
+a web page after interacting with it and then the same hierarchical name used
+before should find a different object. Without clearing the cache in this situation
+the old object will be retrieved from the cache when searching for the hierarchical
+name after the website has changed its content. The cache however is necessary to keep
+lookup for hierarchical performant and scalable for deeper hierarchies.
+</p><div class="funcsynopsis"><a id="iphone-clickObject-function"></a><p><code class="funcdef"><b class="fsfunc">clickObject</b>(</code><var class="pdparam">objectOrName</var><code>)</code>;</p></div><div class="funcsynopsis"><p><code class="funcdef"><b class="fsfunc">clickObject</b>(</code><var class="pdparam">objectOrName</var>, <var class="pdparam">x</var>, <var class="pdparam">y</var><code>)</code>;</p></div><p>
+This function is identical to <a class="xref" href="rgs-iphoneconvenience.html#iphone-tapObject-function"><code class="function">tapObject</code></a>.
+It is kept for compatibility with older scripts but new recordings use
+<a class="xref" href="rgs-iphoneconvenience.html#iphone-tapObject-function"><code class="function">tapObject</code></a> instead.
+</p><div class="funcsynopsis"><a id="iphone-doubleClick-function"></a><p><code class="funcdef"><b class="fsfunc">doubleClick</b>(</code><var class="pdparam">objectOrName</var><code>)</code>;</p></div><div class="funcsynopsis"><p><code class="funcdef"><b class="fsfunc">doubleClick</b>(</code><var class="pdparam">objectOrName</var>, <var class="pdparam">x</var>, <var class="pdparam">y</var><code>)</code>;</p></div><p>
+This function is identical to <a class="xref" href="rgs-iphoneconvenience.html#iphone-doubleTap-function"><code class="function">doubleTap</code></a>.
+It is kept for compatibility with older scripts.
+</p><div class="funcsynopsis"><a id="iphone-doubleTap-function"></a><p><code class="funcdef"><b class="fsfunc">doubleTap</b>(</code><var class="pdparam">objectOrName</var><code>)</code>;</p></div><div class="funcsynopsis"><p><code class="funcdef"><b class="fsfunc">doubleTap</b>(</code><var class="pdparam">objectOrName</var>, <var class="pdparam">x</var>, <var class="pdparam">y</var><code>)</code>;</p></div><p>
+This function performs a double tap on the specified
+<em class="parameter"><code>objectOrName</code></em> widget.
+</p><p>
+By default the <em class="parameter"><code>objectOrName</code></em> widget is
+double-tapped in the middle, but this can be overridden
+by passing object-relative coordinates, <em class="parameter"><code>x</code></em> and
+<em class="parameter"><code>y</code></em>.
+</p><div class="funcsynopsis"><a id="iphone-gesture-function"></a><p><code class="funcdef"><b class="fsfunc">gesture</b>(</code><var class="pdparam">objectOrName</var>, <var class="pdparam">touches</var><code>)</code>;</p></div><p>
+This function plays a gesture. The specified
+<em class="parameter"><code>objectOrName</code></em> can refer to any object that is
+visible and serves for synchronization only.
+The specified <em class="parameter"><code>touches</code></em> refers to a
+<a class="xref" href="rgs-iphoneconvenience.html#iphone-GestureBuilder-class" title="6.9.1. GestureBuilder">GestureBuilder</a> object, which can be
+retrieved using <a class="xref" href="rgs-iphoneconvenience.html#iphone-readGesture-function"><code class="function">readGesture</code></a>.
+</p><div class="funcsynopsis"><a id="iphone-grabWidget-function"></a><p><code class="funcdef">QImage <b class="fsfunc">grabWidget</b>(</code><var class="pdparam">object</var><code>)</code>;</p></div><p>
+This function takes a screenshot of the <em class="parameter"><code>object</code></em>
+window (or widget) and returns it as an <a class="xref" href="rgs-squish.html#rgss-image-object" title="6.3.13. QImage Object"><code class="code">QImage</code> Object (Section 6.3.13)</a>.
+</p><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Note: The Newer Way to Grab a Widget "><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/note.png"></img></td><th align="left">The Newer Way to Grab a Widget </th></tr><tr><td align="left" valign="top"><p> Instead of using <code class="function">grabWidget</code> to get an
+AUT-side QImage, it is easier to capture an <a class="xref" href="rgs-squish.html#script-image-object" title="6.3.14. Image Object">Image Object (Section 6.3.14)</a>
+using <a class="xref" href="rgs-squish.html#object.grabScreenshot-function"><code class="function">object.grabScreenshot</code></a>.
+The <a class="xref" href="rgs-squish.html#Image.save-function"><code class="function">Image.save</code></a> function allows you to save
+directly to a location on the <span class="application">squishrunner</span> host.
+</p></td></tr></table></div><p>
+See the <a class="xref" href="rgs-squish.html#waitForObject-function"><code class="function">waitForObject</code></a> and <a class="xref" href="rgs-squish.html#findObject-function"><code class="function">findObject</code></a> functions for how to get an object
+reference to a window or widget.
+</p><div class="funcsynopsis"><a id="iphone-hideKeyboard-function"></a><p><code class="funcdef"><b class="fsfunc">hideKeyboard</b>(</code><var class="pdparam"></var><code>)</code>;</p></div><p>
+This function hides the on-screen keyboard when it is showing.
+</p><div class="funcsynopsis"><a id="iphone-installEventHandler-function"></a><p><code class="funcdef"><b class="fsfunc">installEventHandler</b>(</code><var class="pdparam">eventName</var>, <var class="pdparam">handlerFunctionName</var><code>)</code>;</p></div><p>
+This function installs a global event handler. The script function
+named in <em class="parameter"><code>handlerFunctionName</code></em> (which must be passed
+as a string, not as a function reference, except for Python, which
+supports passing a function reference, too), will be called when an event
+of the <em class="parameter"><code>eventName</code></em> type occurs.
+</p><p>
+The <em class="parameter"><code>eventName</code></em> can be the name of any of the
+following event types:
+</p><div class="itemizedlist"><ul type="disc" compact><li><p>"Crash" – occurs if the AUT crashes</p></li><li><p>"AlertOpened" – occurs when an alert is shown</p></li></ul></div><p>
+When the <code class="code">AlertOpened</code> event occurs, the function
+named in <em class="parameter"><code>handlerFunctionName</code></em> is called. The
+function is passed one argument—the alert object that was opened
+(i.e. an object of type <span class="type">UIAlertView</span>).
+</p><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Note: Python-specific"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/note.png"></img></td><th align="left">Python-specific</th></tr><tr><td align="left" valign="top"><p>
+In Python scripts, you can specify the callback function to invoke by
+passing an actual function or a lambda function.
+</p></td></tr></table></div><p>
+For examples see <a class="xref" href="ugs-eventhandlers.html" title="5.10. How to Use Event Handlers">How to Use Event Handlers (Section 5.10)</a>.
+</p><div class="important" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Important: The AUT Must be Running"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Important]" src="images/important.png"></img></td><th align="left">The AUT Must be Running</th></tr><tr><td align="left" valign="top"><p>
+The <code class="code">installEventHandler</code> function will only work if it is
+called <span class="emphasis"><em>after</em></span> the AUT has been started (e.g., using
+the <a class="xref" href="rgs-squish.html#startApplication-function"><code class="function">startApplication</code></a> function).
+</p></td></tr></table></div><div class="funcsynopsis"><a id="iphone-readGesture-function"></a><p><code class="funcdef"><b class="fsfunc">readGesture</b>(</code><var class="pdparam">gesture-file</var><code>)</code>;</p></div><p>
+This function opens a gesture file from a test suite directory and returns
+a <a class="xref" href="rgs-iphoneconvenience.html#iphone-GestureBuilder-class" title="6.9.1. GestureBuilder">GestureBuilder</a> object.
+This can then be passed to <a class="xref" href="rgs-iphoneconvenience.html#iphone-gesture-function"><code class="function">gesture</code></a>.
+The specified <em class="parameter"><code>gesture-file</code></em> refers to the filename.
+</p><div class="funcsynopsis"><a id="iphone-selectPickerRowInComponent-function"></a><p><code class="funcdef"><b class="fsfunc">selectPickerRowInComponent</b>(</code><var class="pdparam">objectOrName</var>, <var class="pdparam">row</var>, <var class="pdparam">componentIndex</var><code>)</code>;</p></div><p>
+This function selects an item in the specified
+<em class="parameter"><code>objectOrName</code></em> <code class="classname">UIPickerView</code>
+object (a picker widget is a spinning-wheel control that allows users to
+choose things such as dates).
+</p><p>
+The <em class="parameter"><code>row</code></em> is the 0-based index position of the row
+that should be selected. The <em class="parameter"><code>componentIndex</code></em> is the
+0-based index position of the component (or column) that contains the
+row.
+</p><div class="funcsynopsis"><a id="iphone-tapObject-function"></a><p><code class="funcdef"><b class="fsfunc">tapObject</b>(</code><var class="pdparam">objectOrName</var><code>)</code>;</p></div><div class="funcsynopsis"><p><code class="funcdef"><b class="fsfunc">tapObject</b>(</code><var class="pdparam">objectOrName</var>, <var class="pdparam">x</var>, <var class="pdparam">y</var><code>)</code>;</p></div><p>
+This function performs a tap on the specified
+<em class="parameter"><code>objectOrName</code></em> widget.
+</p><p>
+By default the <em class="parameter"><code>objectOrName</code></em> widget is clicked in
+the middle, but this can be overridden by passing
+object-relative coordinates, <em class="parameter"><code>x</code></em> and
+<em class="parameter"><code>y</code></em>.
+</p><div class="funcsynopsis"><a id="iphone-touchAndDrag-function"></a><p><code class="funcdef"><b class="fsfunc">touchAndDrag</b>(</code><var class="pdparam">objectOrName</var>, <var class="pdparam">x</var>, <var class="pdparam">y</var>, <var class="pdparam">dx</var>, <var class="pdparam">dy</var><code>)</code>;</p></div><p>
+This function performs a dragging gesture (also known as a panning
+gesture). The gesture starts at position <em class="parameter"><code>x</code></em> and
+<em class="parameter"><code>y</code></em> relative to the
+<em class="parameter"><code>objectOrName</code></em> widget and continues for
+<em class="parameter"><code>dx</code></em> pixels to the righ (left if the amount is
+negative), and <em class="parameter"><code>dy</code></em> pixels down (up if the
+amount is negative).
+</p><div class="funcsynopsis"><a id="iphone-touchAndHold-function"></a><p><code class="funcdef"><b class="fsfunc">touchAndHold</b>(</code><var class="pdparam">objectOrName</var>, <var class="pdparam">duration</var><code>)</code>;</p></div><div class="funcsynopsis"><p><code class="funcdef"><b class="fsfunc">touchAndHold</b>(</code><var class="pdparam">objectOrName</var>, <var class="pdparam">x</var>, <var class="pdparam">y</var>, <var class="pdparam">duration</var><code>)</code>;</p></div><p>
+This function performs a touch and hold gesture on the specified
+<em class="parameter"><code>objectOrName</code></em> widget. The touch lasts for
+<em class="parameter"><code>duration</code></em> seconds (use floating point numbers if you
+want to specify fractions of a second).
+</p><p>
+By default the <em class="parameter"><code>objectOrName</code></em> widget is touched in the
+middle, but this can be overridden by passing object-relative coordinates,
+<em class="parameter"><code>x</code></em> and <em class="parameter"><code>y</code></em>.
+</p><div class="funcsynopsis"><a id="iphone-type-function"></a><p><code class="funcdef"><b class="fsfunc">type</b>(</code><var class="pdparam">objectOrName</var>, <var class="pdparam">text</var><code>)</code>;</p></div><p>
+This function types the specified <em class="parameter"><code>text</code></em> (as if the
+user had entered the text using the on-screen keyboard) into the
+<em class="parameter"><code>objectOrName</code></em> editable widget. If the text is
+surrounded by angle brackets (&lt;&gt;), it is interpreted as a special
+key, e.g <span class="keysym">"&lt;Return&gt;"</span>. The input is case-sensitive, so
+<code class="code">type(<span class="emphasis"><em>object</em></span>, "R")</code> is different from
+<code class="code">type(<span class="emphasis"><em>object</em></span>, "r")</code>.
+</p><p>
+Currently the following special keys are supported:
+</p><div class="itemizedlist"><ul type="disc" compact><li><p><span class="keysym">"&lt;Return&gt;"</span> – the return key
+on the on-screen keyboard (depending on the configuration, it is not
+necessarily labeled <span class="keysym">Return</span>—it might be called
+<span class="keysym">Done</span> or <span class="keysym">Search</span> or something else
+depending on the <code class="code">UIReturnKeyType</code> used)
+</p></li><li><p><span class="keysym">"&lt;Backspace&gt;"</span> – the
+backspace key; this is used to delete the character to left of the cursor
+</p></li></ul></div><div class="funcsynopsis"><a id="iphone-uninstallEventHandler-function"></a><p><code class="funcdef"><b class="fsfunc">uninstallEventHandler</b>(</code><var class="pdparam">eventName</var>, <var class="pdparam">handlerFunctionName</var><code>)</code>;</p></div><p>
+This function uninstalls an event handler that has been previously
+installed using <a class="xref" href="rgs-iphoneconvenience.html#iphone-installEventHandler-function"><code class="function">installEventHandler</code></a>.
+</p><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="iphone-GestureBuilder-class"></a>6.9.1. GestureBuilder</h3></div></div></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><span class="section"><a href="rgs-iphoneconvenience.html#iphone-GestureBuilder-create-functions">6.9.1.1. Gesture creation</a></span></dt><dt><span class="section"><a href="rgs-iphoneconvenience.html#iphone-GestureBuilder-manipulate-functions">6.9.1.2. Gesture manipulation</a></span></dt></dl></div><p>
+Objects of this type hold the touch strokes information needed to
+replay <a class="xref" href="rgs-iphoneconvenience.html#iphone-gesture-function"><code class="function">gesture</code></a>.
+An instance of this class is returned by
+<a class="xref" href="rgs-iphoneconvenience.html#iphone-readGesture-function"><code class="function">readGesture</code></a>.
+Strokes are defined by screen coordinates points, pressure and
+touch size.
+</p><p>
+For examples of how <code class="code">GestureBuilder</code> objects can be used to
+manipulate the gesture information, see <a class="xref" href="ug-how.to.use.the.ios.api.html#ug-how.to.use.the.ios.GestureBuilder" title="5.8.1. How to Use the GestureBuilder class">How to Use the GestureBuilder class (Section 5.8.1)</a>.
+</p><a id="iphone-GestureBuilder-areaWidth-property"></a>int
+<span class="property">GestureBuilder.areaWidth</span><p>
+The width of the area in which this gesture is defined. This will be
+the device or emulator screen width.
+</p><a id="iphone-GestureBuilder-areaHeight-property"></a>int
+<span class="property">GestureBuilder.areaHeight</span><p>
+The height of the area in which this gesture is defined. This will be
+the device or emulator screen height.
+</p><p>
+All <a class="xref" href="rgs-iphoneconvenience.html#iphone-GestureBuilder-class" title="6.9.1. GestureBuilder">GestureBuilder</a> methods listed in the
+<a class="xref" href="rgs-iphoneconvenience.html#iphone-GestureBuilder-create-functions" title="6.9.1.1. Gesture creation">Gesture creation (Section 6.9.1.1)</a> and
+<a class="xref" href="rgs-iphoneconvenience.html#iphone-GestureBuilder-manipulate-functions" title="6.9.1.2. Gesture manipulation">Gesture manipulation (Section 6.9.1.2)</a> section,
+return the <a class="xref" href="rgs-iphoneconvenience.html#iphone-GestureBuilder-class" title="6.9.1. GestureBuilder">GestureBuilder</a> object
+itself, unless specified differently.
+</p><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="iphone-GestureBuilder-create-functions"></a>6.9.1.1. Gesture creation</h4></div></div></div><p>
+This section lists the methods for manually creating a
+<a class="xref" href="rgs-iphoneconvenience.html#iphone-GestureBuilder-class" title="6.9.1. GestureBuilder">GestureBuilder</a> object.
+</p><div class="funcsynopsis"><p><code class="funcdef"><b class="fsfunc">GestureBuilder</b>(</code><var class="pdparam">width</var>, <var class="pdparam">height</var>, <var class="pdparam">unit</var><code>)</code>;</p></div><div class="funcsynopsis"><p><code class="funcdef"><b class="fsfunc">GestureBuilder</b>(</code><var class="pdparam">xml</var><code>)</code>;</p></div><p>
+Two constructor functions for creating a
+<a class="xref" href="rgs-iphoneconvenience.html#iphone-GestureBuilder-class" title="6.9.1. GestureBuilder">GestureBuilder</a> object. The
+<em class="parameter"><code>width</code></em> and <em class="parameter"><code>height</code></em> are
+the target screen size. The <em class="parameter"><code>unit</code></em> can be either
+1 or 2, meaning respectively in millimeters or logical points. The constants
+<code class="constant">GestureBuilder.MilliMeter</code> and
+<code class="constant">GestureBuilder.LogicalPoint</code> can be used as well.
+</p><p>
+The second constructor function constructs a
+<a class="xref" href="rgs-iphoneconvenience.html#iphone-GestureBuilder-class" title="6.9.1. GestureBuilder">GestureBuilder</a> object by passing a
+string containing <acronym class="acronym">XML</acronym>, which should be in the same
+format as the recorded gesture files.
+</p><div class="funcsynopsis"><p><code class="funcdef">Object <b class="fsfunc">GestureBuilder.addStroke</b>(</code><var class="pdparam">x</var>, <var class="pdparam">y</var><code>)</code>;</p></div><div class="funcsynopsis"><p><code class="funcdef">Object <b class="fsfunc">GestureBuilder.addStroke</b>(</code><var class="pdparam">startTime</var>, <var class="pdparam">x</var>, <var class="pdparam">y</var><code>)</code>;</p></div><p>
+Starts a new stroke. The whole movement of one finger or pen from
+touch down to releasing the screen is called a stroke. The touch down
+coordinate is (<em class="parameter"><code>x</code></em>, <em class="parameter"><code>y</code></em>).
+For the non-first stroke, a time offset can be specified in milliseconds using
+the <em class="parameter"><code>startTime</code></em> argument. Strokes cannot be disjointed
+in time, at least one finger or pen has to be down during the whole gesture.
+The maximum simultaneous touches is device dependent.
+</p><div class="funcsynopsis"><p><code class="funcdef">Object <b class="fsfunc">GestureBuilder.curveTo</b>(</code><var class="pdparam">duration</var>, <var class="pdparam">controlX</var>, <var class="pdparam">controlY</var>, <var class="pdparam">endX</var>, <var class="pdparam">endy</var><code>)</code>;</p></div><div class="funcsynopsis"><p><code class="funcdef">Object <b class="fsfunc">GestureBuilder.curveTo</b>(</code><var class="pdparam">duration</var>, <var class="pdparam">control1X</var>, <var class="pdparam">control1Y</var>, <var class="pdparam">control2X</var>, <var class="pdparam">control2Y</var>, <var class="pdparam">endX</var>, <var class="pdparam">endy</var><code>)</code>;</p></div><p>
+Adds a bézier curve movement to the latest added stroke in
+<em class="parameter"><code>duration</code></em> milliseconds.
+The curve starts with the end coordinate of the last added movement or, if
+none added to the stroke, the stroke touch down coordinate. The end coordinate
+is specified with <em class="parameter"><code>endX</code></em> and <em class="parameter"><code>endY</code></em>.
+One or two so called control points can be used.
+</p><div class="funcsynopsis"><p><code class="funcdef">Object <b class="fsfunc">GestureBuilder.lineTo</b>(</code><var class="pdparam">duration</var>, <var class="pdparam">endX</var>, <var class="pdparam">endy</var><code>)</code>;</p></div><p>
+Adds a line movement to the latest added stroke in
+<em class="parameter"><code>duration</code></em> milliseconds.
+The line starts with the end coordinate of the last added movement or, if none
+added to the stroke, the stroke touch down coordinate. The end coordinate is
+specified with <em class="parameter"><code>endX</code></em> and <em class="parameter"><code>endY</code></em>.
+</p><div class="funcsynopsis"><p><code class="funcdef">Object <b class="fsfunc">GestureBuilder.build</b>(</code><code>)</code>;</p></div><p>
+Creates the gesture from the added strokes and movements. After calling this
+method, no strokes or movements can be added.
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="iphone-GestureBuilder-manipulate-functions"></a>6.9.1.2. Gesture manipulation</h4></div></div></div><div class="funcsynopsis"><p><code class="funcdef">Object <b class="fsfunc">GestureBuilder.accelerate</b>(</code><var class="pdparam">factor</var><code>)</code>;</p></div><p>
+Changes stroke speed given a factor. A factor between 0.0 and 1.0
+slows down the gesture, above 1.0 will speed it up.
+</p><div class="funcsynopsis"><p><code class="funcdef">Object <b class="fsfunc">GestureBuilder.rotate</b>(</code><var class="pdparam">degrees</var><code>)</code>;</p></div><div class="funcsynopsis"><p><code class="funcdef">Object <b class="fsfunc">GestureBuilder.rotate</b>(</code><var class="pdparam">degrees</var>, <var class="pdparam">originX</var>, <var class="pdparam">originY</var><code>)</code>;</p></div><p>
+Rotates the strokes. The <em class="parameter"><code>degrees</code></em>
+is the agle in degrees in a counter clockwise direction.
+The <em class="parameter"><code>originX</code></em> and <em class="parameter"><code>originY</code></em> define
+the origin of the rotate operation. If omitted, the area center is
+taken as origin.
+</p><div class="funcsynopsis"><p><code class="funcdef">Object <b class="fsfunc">GestureBuilder.scale</b>(</code><var class="pdparam">scale</var><code>)</code>;</p></div><div class="funcsynopsis"><p><code class="funcdef">Object <b class="fsfunc">GestureBuilder.scale</b>(</code><var class="pdparam">scaleX</var>, <var class="pdparam">scaleY</var><code>)</code>;</p></div><div class="funcsynopsis"><a id="iphone-GestureBuilder.scale-function"></a><p><code class="funcdef">Object <b class="fsfunc">GestureBuilder.scale</b>(</code><var class="pdparam">scaleX</var>, <var class="pdparam">scaleY</var>, <var class="pdparam">originX</var>, <var class="pdparam">originY</var><code>)</code>;</p></div><p>
+Changes the size of the strokes. The <em class="parameter"><code>scaleX</code></em>
+is the scale factor in the horizontal direction and
+<em class="parameter"><code>scaleY</code></em> in the vertical direction.
+The <em class="parameter"><code>originX</code></em> and <em class="parameter"><code>originY</code></em> define
+the origin of the scale operation. If omitted, the area center is
+taken as origin. When also <em class="parameter"><code>scaleY</code></em> is omitted, then
+the scaling is homogeneous in both directions.
+</p><div class="funcsynopsis"><a id="iphone-GestureBuilder.translate-function"></a><p><code class="funcdef">Object <b class="fsfunc">GestureBuilder.translate</b>(</code><var class="pdparam">x</var>, <var class="pdparam">y</var><code>)</code>;</p></div><p>
+Moves the strokes. The <em class="parameter"><code>x</code></em> and
+<em class="parameter"><code>y</code></em> specifies the movement. A positive value for
+<em class="parameter"><code>x</code></em> moves the strokes to the right and a positive
+value for <em class="parameter"><code>y</code></em> moves the strokes downwards.
+</p></div></div></div><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" type="text/javascript" src="ScriptingLanguage.js"></script><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format">setScriptingLanguage();</script><div class="navfooter"><hr></hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="rgs-macconvenience.html">Prev</a> </td><td width="20%" align="center"><a accesskey="u" href="api.man.html">Up</a></td><td width="40%" align="right"> <a accesskey="n" href="rgs-webconvenience.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">6.8. macOS Convenience API </td><td width="20%" align="center"><a accesskey="h" href="index-noframes.html">Home</a></td><td width="40%" align="right" valign="top"> 6.10. Web Object API</td></tr></table></div></body>
+<!-- Mirrored from rgs-iphoneconvenience.html by HTTrack Website Copier/3.x [XR&CO'2013], Wed, 06 Jul 2022 13:29:00 GMT -->
+</html>

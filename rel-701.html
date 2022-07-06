@@ -1,0 +1,102 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<!-- Mirrored from rel-701.html by HTTrack Website Copier/3.x [XR&CO'2013], Wed, 06 Jul 2022 13:28:55 GMT -->
+<head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><title>2.1. Version 7.0.1</title><link rel="stylesheet" href="manual.css" type="text/css"></link><meta name="generator" content="DocBook XSL Stylesheets V1.73.2"></meta><link rel="start" href="index-noframes.html" title="Squish Manual"></link><link rel="up" href="relnotes.html" title="Chapter 2. Release Notes—for Upgraders"></link><link rel="prev" href="relnotes.html" title="Chapter 2. Release Notes—for Upgraders"></link><link rel="next" href="rel-700.html" title="2.2. Version 7.0"></link><style xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" type="text/css" media="screen">
+        div.toc * { margin-left: 6px; margin-right: auto; max-width: 75em; }
+        div.toc span { margin-left: 0px; }
+        * { margin-left: auto; margin-right: auto; max-width: 75em; }
+        body { margin-left: 6px; margin-right: 6px; }
+        table th { padding: .5ex }
+        table td { padding: .5ex }
+    </style><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format">
+        function keyPress() {
+            var e = window.event;
+            if ( e == undefined ) {
+                return;
+            }
+            /* ### does not properly scroll, yet
+            if ( e.keyCode == 32 ) {
+            var l = document.links;
+            for ( var i = 0; i < l.length; i++ ) {
+                if ( l[i].innerText == "Next" ) {
+                location.href = l[i].href;
+                }
+            }
+            } else
+                */
+                if ( e.keyCode == 0x08 ) {
+            var l = document.links;
+            for ( var i = 0; i < l.length; i++ ) {
+                if ( l[i].innerText == "Prev" ) {
+                location.href = l[i].href;
+                }
+            }
+            }
+        }
+        document.onkeypress = keyPress;
+    </script></head><body><div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="rel-701"></a>2.1. Version 7.0.1</h2></div></div></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><span class="section"><a href="rel-701.html#rel-701-ide">2.1.1. Squish IDE</a></span></dt><dt><span class="section"><a href="rel-701.html#rel-701-qt">2.1.2. Qt</a></span></dt><dt><span class="section"><a href="rel-701.html#rel-701-web">2.1.3. Web</a></span></dt><dt><span class="section"><a href="rel-701.html#rel-701-macos">2.1.4. macOS</a></span></dt><dt><span class="section"><a href="rel-701.html#rel-701-ios">2.1.5. iOS</a></span></dt><dt><span class="section"><a href="rel-701.html#rel-701-squishrunner">2.1.6. squishrunner</a></span></dt><dt><span class="section"><a href="rel-701.html#rel-701-source">2.1.7. Source packages/building from source</a></span></dt></dl></div><p><span class="emphasis"><em>Squish</em></span> 7.0.1 is a maintenance release containing bug fixes for
+  different editions of the product. See the following sections for a detailed
+  list of all changes.</p><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="rel-701-ide"></a>2.1.1. Squish IDE</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>
+          Fixed missing dependencies in <a class="xref" href="eclipse.ide.integration.html" title="9.10. Eclipse IDE Integration">Eclipse IDE Integration (Section 9.10)</a>
+          package that rendered Squish as Eclipse IDE plugin not installable
+          or upgradable on Windows or macOS
+        </p></li><li><p>
+          Fixed problem with inability to close some IDE views
+        </p></li><li><p>
+          Fixed missing <span class="guilabel">File</span>|<span class="guilabel">Exit</span> menu in
+          the IDE
+        </p></li><li><p>
+          Improved performance of replaying BDD tests with large example sets
+        </p></li><li><p>
+          Improved behavior of the <span class="emphasis"><em>Image Verification Difference viewer</em></span>
+          when opened from the IDE so that it is automatically centered on the IDE window
+          and merges with the IDE taskbar entry on Linux and Windows
+        </p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="rel-701-qt"></a>2.1.2. Qt</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>
+          Testing AUTs built with Qt 6.3 is now supported
+        </p></li><li><p>
+          Fixed crash with Qt 6 and Linux/X11 in <code class="code">nativeType("")</code> i.e.
+          with empty string as an argument
+        </p></li><li><p>
+          Fixed crash when using <code class="code">RemoteSystem.upload()</code> and squishserver
+          built with Qt 6 or <code class="code">testData.put()</code> when squishrunner is built
+          with Qt 6
+        </p></li><li><p>
+          Fixed <code class="code">RemoteSystem.execute()</code> incorrectly splitting command
+          line arguments when squishserver is built with Qt 6. This fix drops
+          undocumented support for nested arrays or lists of command line
+          arguments
+        </p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="rel-701-web"></a>2.1.3. Web</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>
+          Fixed crash in webhook when testing with <span class="emphasis"><em>MS Edge</em></span> browser
+        </p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="rel-701-macos"></a>2.1.4. macOS</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>
+          Fixed recording clicks on <span class="emphasis"><em>NSButton</em></span> with an image, where
+           a click on <span class="emphasis"><em>NSButtonImageView</em></span> was recorded instead 
+           of a click on <span class="emphasis"><em>NSButton</em></span> itself
+        </p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="rel-701-ios"></a>2.1.5. iOS</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>
+          <code class="code">ApplicationContext.usedMemory</code> is now supported on iOS too
+        </p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="rel-701-squishrunner"></a>2.1.6. squishrunner</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>
+          Fixed hang at the end of test execution when using multiple
+          report generators and enabling video capture in the test.
+          This problem affected setups using squishrunner in combination
+          with various CI systems e.g. Jenkins
+        </p></li><li><p>
+          JUnit report generator (<code class="code">--reportgen junit</code>) now also logs
+          attachments and video recordings including file paths
+        </p></li><li><p>
+          Fixed JavaScript sporadic crash occurring on access to
+          values of <code class="code">let</code> or <code class="code">const</code>
+          declarations found in a local scope. Triggered by control
+          flow interruptions via e.g. <code class="code">installEventHandler()</code>
+          callbacks.
+        </p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="rel-701-source"></a>2.1.7. Source packages/building from source</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>
+          The output of <code class="code">configure --help</code> now documents all available
+          switches and clarifies when they apply and how they interact with other
+          related switches
+        </p></li><li><p>
+          Improved configure script logic to find available Python interpreters
+          for Squish builds. On Windows, Python Launcher (<code class="code">py.exe</code>)
+          is now used to locate preferred Python installation
+        </p></li><li><p>
+          Fixed building Ruby script support with Ruby &gt;= 3.0
+        </p></li></ul></div></div></div><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" type="text/javascript" src="ScriptingLanguage.js"></script><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format">setScriptingLanguage();</script><div class="navfooter"><hr></hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="relnotes.html">Prev</a> </td><td width="20%" align="center"><a accesskey="u" href="relnotes.html">Up</a></td><td width="40%" align="right"> <a accesskey="n" href="rel-700.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">Chapter 2. Release Notes—for Upgraders </td><td width="20%" align="center"><a accesskey="h" href="index-noframes.html">Home</a></td><td width="40%" align="right" valign="top"> 2.2. Version 7.0</td></tr></table></div></body>
+<!-- Mirrored from rel-701.html by HTTrack Website Copier/3.x [XR&CO'2013], Wed, 06 Jul 2022 13:28:55 GMT -->
+</html>

@@ -1,0 +1,659 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<!-- Mirrored from ug-appbindings.html by HTTrack Website Copier/3.x [XR&CO'2013], Wed, 06 Jul 2022 13:29:00 GMT -->
+<head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><title>5.27. How to Create and Access Application Bindings</title><link rel="stylesheet" href="manual.css" type="text/css"></link><meta name="generator" content="DocBook XSL Stylesheets V1.73.2"></meta><link rel="start" href="index-noframes.html" title="Squish Manual"></link><link rel="up" href="users-guide.html" title="Chapter 5. User Guide"></link><link rel="prev" href="ug-batchtesting.html" title="5.26. How to Do Automated Batch Testing"></link><link rel="next" href="ug.how.to.create.cross.platform.tests.html" title="5.28. How to Create Cross-Platform Tests"></link><style xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" type="text/css" media="screen">
+        div.toc * { margin-left: 6px; margin-right: auto; max-width: 75em; }
+        div.toc span { margin-left: 0px; }
+        * { margin-left: auto; margin-right: auto; max-width: 75em; }
+        body { margin-left: 6px; margin-right: 6px; }
+        table th { padding: .5ex }
+        table td { padding: .5ex }
+    </style><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format">
+        function keyPress() {
+            var e = window.event;
+            if ( e == undefined ) {
+                return;
+            }
+            /* ### does not properly scroll, yet
+            if ( e.keyCode == 32 ) {
+            var l = document.links;
+            for ( var i = 0; i < l.length; i++ ) {
+                if ( l[i].innerText == "Next" ) {
+                location.href = l[i].href;
+                }
+            }
+            } else
+                */
+                if ( e.keyCode == 0x08 ) {
+            var l = document.links;
+            for ( var i = 0; i < l.length; i++ ) {
+                if ( l[i].innerText == "Prev" ) {
+                location.href = l[i].href;
+                }
+            }
+            }
+        }
+        document.onkeypress = keyPress;
+    </script></head><body><div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="ug-appbindings"></a>5.27. How to Create and Access Application Bindings</h2></div></div></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><span class="section"><a href="ug-appbindings.html#tab-instrumenting">5.27.1. Instrumenting and Wrapping</a></span></dt><dt><span class="section"><a href="ug-appbindings.html#tab-using">5.27.2. Creating a Test Using the Wrapper Library</a></span></dt></dl></div><p>
+This section discusses an advanced and very powerful feature offered by
+<span class="emphasis"><em>Squish</em></span>—how to create wrappers that provide application bindings.
+</p><div class="important" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Important: Automatic Dynamic Bindings"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Important]" src="images/important.png"></img></td><th align="left">Automatic Dynamic Bindings</th></tr><tr><td align="left" valign="top"><p>
+From <span class="emphasis"><em>Squish</em></span> 4.0, <span class="emphasis"><em>Squish</em></span>'s bindings support has been greatly
+enhanced. For Java and Qt-based applications, <span class="emphasis"><em>Squish</em></span> now dynamically
+creates wrappers that automatically provide bindings for all the
+standard library objects that the AUT uses, and also for the AUT's own
+custom classes. And in Java's case, even classes that are not
+automatically dynamically bound can often be accessed using Java's
+introspection facilities. This means that in most cases there is no need
+to create custom bindings.
+</p><p>
+For Qt AUT's <span class="emphasis"><em>Squish</em></span> will automatically bind
+<span class="emphasis"><em>slots</em></span>
+and <span class="emphasis"><em>properties</em></span> (even handlers for selected <span class="emphasis"><em>signals</em></span> can
+also be installed). Slots
+are member functions declared in a class's <code class="code">public slots:</code>
+section; properties are declared using Qt's <code class="code">Q_PROPERTY</code>
+macro. If you want to bind ordinary methods it is easiest to simply
+declare them as slots. However, if you don't want to make your methods
+slots, or if you want to bind global functions, then you can create your own
+bindings, as described in this section.
+</p></td></tr></table></div><p>
+<span class="emphasis"><em>Squish</em></span> already comes with complete script bindings for the GUI
+toolkits it supports, such as Qt and Java AWT/Swing and Java SWT. This
+enables test engineers to access all the widgets, functions, and
+properties that these toolkits provide. Using these script bindings it
+is then possible to query and set object properties, and to call object
+methods, for any of the standard objects (such as widgets), used by the
+AUT. This make it possible to implement sophisticated and robust test
+scripts that can verify the application's state and behavior using
+verification points (see also <a class="xref" href="ug-vps.html" title="5.22. How to Create and Use Verification Points">How to Create and Use Verification Points (Section 5.22)</a> in the <a class="xref" href="users-guide.html" title="Chapter 5. User Guide">User Guide (Chapter 5)</a>).
+</p><p>
+In most cases, the script bindings provided with <span class="emphasis"><em>Squish</em></span> are
+sufficient. But in some cases it might be necessary to access objects
+that are defined in the AUT or in a component used by the AUT that isn't
+one of the GUI toolkit's standard classes. This isn't a problem with
+<span class="emphasis"><em>Squish</em></span> 4.0, since from that version bindings for AUT classes are
+automatically created by <span class="emphasis"><em>Squish</em></span>. But for earlier versions this must be
+done manually.
+</p><p>
+Why would we want to access custom AUT components rather than simply
+those components in the GUI toolkit that the AUT is built with? Because
+sometimes we want to access the additional custom properties or to call
+the custom methods that custom components provide. For example, we might
+want to test a CAD application for which its custom Canvas widget is a
+key component. To provide comprehensive tests we would want to be able
+to query the custom Canvas to verify that objects that the test has
+drawn (by interacting with the application's user interface), have been
+drawn correctly.
+</p><p>
+For this purpose <span class="emphasis"><em>Squish</em></span> provides a very powerful mechanism which makes
+it possible to instrument C++ code and create script bindings for it.
+With the bindings in place it then becomes possible to call functions
+and access properties which are declared in the application without
+changing the application itself.
+</p><p>
+In this section we will present an example that shows how to create
+bindings to make your AUT's API accessible to your test scripts. We will
+take you step-by-step through the process, so that you can see exactly
+how to instrument your application.
+</p><p>
+For the example, we will use the <span class="application">canvas</span>
+example that comes with Qt, and which is located in
+<code class="filename">examples/qt3/canvas</code> for Qt 3 and in
+<code class="filename">examples/qt/canvas</code> for Qt 4.
+</p><p>
+This application is a very simple vector drawing application. By
+clicking on the canvas view, a new rectangle is inserted. Rectangles can
+be moved by dragging (clicking, and moving with the left mouse button
+held down).
+</p><p>
+To verify that the canvas inserts and moves the rectangles correctly, we
+need to access its API, so that we can to query their sizes and
+positions.
+</p><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="tab-instrumenting"></a>5.27.1. Instrumenting and Wrapping</h3></div></div></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><span class="section"><a href="ug-appbindings.html#tabi-canvas">5.27.1.1. Instrumenting the Canvas Application</a></span></dt></dl></div><p>
+To create the bindings we must instrument the AUT or additional
+components and produce a bindings library (also called a wrapper
+library).
+</p><p>
+First we will instrument the application. To do this we will use the
+<a class="xref" href="rg-cmdline.html#rgc-squishidl" title="7.4.5. squishidl">squishidl (Section 7.4.5)</a> tool—this parses C++ header files
+and generates binding code that exposes the application's API to the
+script languages. The tool provides a number of command line options
+which are all explained in the <a class="xref" href="rg-cmdline.html#rgc-squishidl" title="7.4.5. squishidl">squishidl (Section 7.4.5)</a> section
+in the <a class="xref" href="ref.man.html" title="Chapter 7. Tools Reference Manual">Tools Reference Manual (Chapter 7)</a>. Instead of running <span class="application">squishidl</span>
+manually for every file, we will use <span class="emphasis"><em>froglogic</em></span>'s build tool (called
+“<span class="quote">build</span>”), which considerably simplifies the task. <span class="application">build</span>
+uses a JavaScript-like language to describe build rules and targets and
+is a portable alternative to <span class="application">make</span>.
+</p><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Note: Building Wrappers"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/note.png"></img></td><th align="left">Building Wrappers</th></tr><tr><td align="left" valign="top"><p>
+Even if you don't use <span class="application">build</span> for your applications, we recommend using
+it for generating bindings libraries.
+</p></td></tr></table></div><p>
+To use <span class="application">build</span> to create the application bindings, create a file
+called <code class="filename">Buildroot</code> in your application's source
+directory. This file must have a single line containing the absolute
+path of the <span class="emphasis"><em>Squish</em></span> installation directory. For example, if <span class="emphasis"><em>Squish</em></span> is
+installed in <code class="filename">/usr/local/squish</code>, the
+<code class="filename">Buildroot</code> file would contain this single line:
+</p><pre class="screen">
+/usr/local/squish
+</pre><p>
+This will ensure that <span class="application">build</span> can locate all the files necessary to
+create a bindings library.
+</p><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Note: Source Build Required"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/note.png"></img></td><th align="left">Source Build Required</th></tr><tr><td align="left" valign="top"><p>
+Even if you use a binary version of <span class="emphasis"><em>Squish</em></span> you will need <span class="emphasis"><em>Squish</em></span> in
+source form to create bindings—in particular the
+<code class="filename">src</code> subdirectory. This is necessary because the
+source code contains files and information that are essential for
+resolving dependencies to internal libraries that are needed during
+compilation.
+</p></td></tr></table></div><p>
+When <span class="application">build</span> is run, in addition to looking for the
+<code class="filename">Buildroot</code> file that tells it where <span class="emphasis"><em>Squish</em></span> is, it
+also looks for a file called <code class="filename">Buildsub</code>. This file is
+the <span class="application">build</span> tool's equivalent to a <code class="filename">Makefile</code> for the
+<code class="filename">make</code> tool—it describes the build targets and
+should be in the same directory as the AUT's source code along with the
+<code class="filename">Buildroot</code> file.
+</p><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="tabi-canvas"></a>5.27.1.1. Instrumenting the Canvas Application</h4></div></div></div><p>
+To generate an application bindings library for the canvas example
+(whether for Qt 3 or Qt 4), we must put the following code in
+the <code class="filename">Buildsub</code> file:
+</p><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">JavaScript</span><pre class="programlisting">
+var canvasWrapperHeaders = ["canvas.h"];
+var canvasWrapperLib = wrapperLib("canvas",
+    canvasWrapperHeaders, stdIncs, ".");
+</pre></div><p>
+First we define an array which lists all the header files that we want
+<span class="application">squishidl</span> to create wrappers for. In this case we want to wrap the API
+defined in the <code class="filename">canvas.h</code> file.
+</p><p>
+To create the wrapper library, the <span class="application">build</span> tool will call the
+<code class="code">wrapperLib</code> function. The first argument to this function
+must be the name which we want to use for the wrapper library. Usually
+this is the application's or component's name without a suffix (i.e. no
+<code class="filename">.exe</code> or <code class="filename">.dll</code> on Windows). The
+second argument is an array that lists the files that we want wrapped:
+We pass the array that we created in the previous line for this purpose.
+The third parameter specifies the include paths which should be used,
+and for this we use the <span class="application">build</span> tool's predefined <code class="code">stdIncs</code>
+array which contains all the standard include paths. The last parameter
+specifies the directory where we want the wrapper library to be built.
+Here we have just said to build it in the current directory.
+</p><p>
+If the files you want to wrap include files from other directories, you
+must add the directories where those files can be found to the include
+paths. For example:
+</p><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">JavaScript</span><pre class="programlisting">
+var all_includes = stdIncs.concat(["/my/include/path"]);
+</pre></div><p>
+And instead of passing the <code class="code">stdIncs</code> array as the third
+parameter, pass your own array (here, <code class="code">all_includes</code>),
+as the third argument to the <code class="code">wrapperLib</code> function.
+</p><p>
+Now that the <code class="filename">Buildsub</code> file has all the information
+it needs, we can run the <span class="application">build</span> tool in the directory that contains the
+<code class="filename">Buildsub</code> file. This will result in the bindings
+library being generated.
+</p><div class="section" lang="en"><div class="titlepage"><div><div><h5 class="title"><a id="tabic-unix"></a>5.27.1.1.1. Symbols on Unix</h5></div></div></div><p>
+There is one potential problem. At runtime the wrapper library will need
+to access the application's symbols (classes, functions, etc.), but they
+will only be accessible if they are exported.
+</p><p>
+How symbols are exported varies depending on the compiler. For example,
+on Solaris and IRIX, the symbols are automatically exported by default.
+But <span class="application">gcc</span> on Linux doesn't do this, and
+requires the addition of the <code class="code">-rdynamic</code> option to be given
+to the linker.
+</p><p>
+How you add the <code class="code">-rdynamic</code> option depends on the build
+system you use. If you are using Qt's
+<span class="application">qmake</span> as your application's build tool, you
+could add the following line to your project file:
+</p><pre class="programlisting">
+linux-g++*:LIBS += -rdynamic
+</pre><p>
+This will add the <code class="code">-rdynamic</code> option to the link line on both
+32- and 64-bit Linux when <span class="application">gcc</span> is used. The
+<code class="filename">.pro</code> file can also be safely used on other platforms
+because on them this line will be ignored.
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h5 class="title"><a id="tabic-windows"></a>5.27.1.1.2. Symbols on Windows</h5></div></div></div><p>
+For Windows, exporting the symbols is a little more involved.
+Essentially we have to do the same to the application as we would do
+when we create a DLL. We must mark each class that we want to be
+exported with the <code class="code">__declspec(dllexport)</code> attribute.
+This will generate an import library with the application's exported
+symbols which we must link into the wrapper library (this last part is
+automatically handled by the <span class="application">build</span> tool).
+</p><p>
+The first part is to modify the application's build system to export the
+symbols and to create the import library.
+</p><p>
+If you are using <span class="application">qmake</span> to build your
+application, these lines must be added to the application's project
+(<code class="filename">.pro</code>) file:
+</p><pre class="programlisting">
+win32:DEFINES += TEST_EXPORT=__declspec(dllexport)
+unix:DEFINES += TEST_EXPORT=
+</pre><p>
+If you don't use <span class="application">qmake</span>, but use
+<span class="application">nmake</span> directly to compile your application,
+add the following to the <code class="filename">NMakefile</code> file's
+<code class="code">CXXFLAGS</code> variable:
+</p><pre class="programlisting">
+/DTEST_EXPORT=__declspec(dllexport)
+</pre><p>
+If you also use <span class="application">make</span> on Unix you can add a
+corresponding line to the Unix <code class="filename">Makefile</code>'s
+<code class="code">CXXFLAGS</code> variable:
+</p><pre class="programlisting">
+-DTEST_EXPORT=
+</pre><p>
+Now the export macro is defined correctly. But one more step is required
+so that the Windows linker will create the desired import library with
+the exported symbols: You must use the export macro in the code which
+should be exported.
+</p><p>
+In our canvas example we have the following class definitions defined in
+<code class="filename">canvas.h</code> which we want to create bindings
+for:</p><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage"></span><pre class="programlisting">
+class CanvasInterface : public Qt
+{
+    //...
+};
+
+class CanvasItem : public CanvasInterface
+{
+    //...
+};
+
+class CanvasRect : public CanvasItem
+{
+    //...
+};
+
+class CanvasModel : public QObject, public CanvasInterface
+{
+    //...
+};
+
+class CanvasView : public QScrollView
+{
+    //...
+};
+</pre></div><p>
+To let the Windows linker know that we want to export the symbols of
+these classes, we must mark them with the export macro we have just
+defined. So we modify the file by adding the <code class="code">TEST_EXPORT</code> to
+the class definitions as shown below:</p><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage"></span><pre class="programlisting">
+class TEST_EXPORT CanvasInterface : public Qt
+{
+    //...
+};
+
+class TEST_EXPORT CanvasItem : public CanvasInterface
+{
+    //...
+};
+
+class TEST_EXPORT CanvasRect : public CanvasItem
+{
+    //...
+};
+
+class TEST_EXPORT CanvasModel : public QObject, public CanvasInterface
+{
+    //...
+};
+
+class TEST_EXPORT CanvasView : public QScrollView
+{
+    //...
+};
+</pre></div><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Note: Qt Designer .ui files"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/note.png"></img></td><th align="left">Qt Designer .ui files</th></tr><tr><td align="left" valign="top"><p>
+If the class is defined in a Qt <code class="filename">.ui</code> XML file, open
+the file in Qt Designer, double click on the <code class="filename">name</code>
+property in the Properties tab of the Object Explorer. Enter the
+<code class="code">TEST_EXPORT</code> macro into the export macro field that will
+appear, and save the <code class="filename">.ui</code> file. From now on the
+<span class="application">uic</span> tool will automatically add the macro to
+the generated C++ classes.
+</p></td></tr></table></div><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Note: Windows-specific"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/note.png"></img></td><th align="left">Windows-specific</th></tr><tr><td align="left" valign="top"><p>
+On Windows, the <span class="application">squishidl</span> tool creates introspection and automation
+code only for classes, global functions, and variables which are
+exported using the <code class="code">TEST_EXPORT</code> macro. This is to avoid
+problems with unresolved symbols in the generated libraries.
+</p></td></tr></table></div><p>
+If you now rebuild your application, an import library with the exported
+symbols called
+<code class="filename"><em class="parameter"><code>&lt;appname&gt;</code></em>.lib</code> will be
+created.
+</p><p>
+The next step is to extend the wrapper library's
+<code class="filename">Buildsub</code> file to import the application's exported
+symbols. To do this we must add the following code to the
+<code class="filename">Buildsub</code> file:
+</p><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">JavaScript</span><pre class="programlisting">
+var importMacro;
+if (windows)
+    importMacro = "TEST_EXPORT=__declspec(dllimport)";
+else
+    importMacro = "TEST_EXPORT=";
+setDefines(canvasWrapperLib, [importMacro]);
+</pre></div><p>
+This defines a macro called <code class="code">TEST_EXPORT</code> to import exported
+symbols. Also, it adds it as a define to the <code class="code">canvasWrapper</code>
+library's complier line.
+</p><p>
+Now when using <span class="application">build</span> to create the wrapper library, the bindings
+library will be correctly generated.
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h5 class="title"><a id="tapic-deps"></a>5.27.1.1.3. Extra Dependencies</h5></div></div></div><p>
+Depending on your application's architecture there might be extra
+libraries involved that the application or that the wrapped library
+depends on. Such dependencies will be inherited by the wrapper library.
+Since some platforms require that all undefined symbols are resolved at
+link time we will sometimes have to explicitly specify the extra
+libraries when linking the wrapper.
+</p><p>
+Such dependencies become apparent if you get "unresolved external
+symbol" (or similar) errors at link time when building the wrapper
+library.
+</p><p>
+Here's a <span class="application">build</span> script snippet—i.e., an extract from a
+<code class="filename">Buildsub</code> file—that demonstrates how to use
+the <code class="filename">extras</code> property that is reserved for the
+purpose of specifying additional link flags. It is based on above
+example with the additional requirement that the MyUtils Windows DLL
+defines some symbols required by the wrapped object:
+</p><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">JavaScript</span><pre class="programlisting">
+// create an array property if it doesn't exist
+if (!canvasWrapperLib.extras)
+    canvasWrapperLib.extras = [];
+// push a new element onto the end of the array
+canvasWrapperLib.extras.push("MyUtils.lib");
+</pre></div><p>
+On a Unix-like system you would pass a switch like
+<code class="code">-lMyUtils</code> and possibly <code class="code">-L</code> flags that tell the
+linker which paths to search when looking for the library.
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h5 class="title"><a id="tapic-simplified-api"></a>5.27.1.1.4. Simplified API for Testing</h5></div></div></div><p>
+
+Sometimes, it's not desirable (or possible) to expose the internal
+API 1:1. The reasons can be manifold:
+
+</p><div class="itemizedlist"><ul type="disc"><li><p>The original API makes use of C++ features that cannot be
+handled because <span class="application">squishidl</span> limitations. Like the C++ STL or nested
+namespaces.</p></li><li><p>The API uses C++ templates which cannot be accessed via
+non-compiled scripting languages.</p></li><li><p>The tester would be confronted with hard or impossible to
+use internals of the application.</p></li><li><p>Testers want to have a stable interface that is decoupled
+from ongoing refactoring done by application developers.</p></li></ul></div><p>
+
+In cases such as these the internal API can be hidden behind an extra
+layer created for testing purposes only. Either fully or only
+partially whenever needed.
+</p><p>
+Here is an example interface that encapsulates usage of a C++ template
+class behind a function inside of a test-specific class:
+</p><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage"></span><pre class="programlisting">
+#ifndef TESTAPI_H
+#define TESTAPI_H
+
+#include "internal.h"
+
+class TEST_EXPORT TestAPI
+{
+public:
+    // simple script access to internal C++ template class
+    static void setNetworkEnabled(bool on) { Component&lt;Network&gt;::self()-&gt;setEnabled(on); }
+};
+
+#endif
+</pre></div><p>
+Once the application has been started and the extra wrapper got loaded
+the function will be available via simple script call:
+</p><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">JavaScript</span><pre class="programlisting">
+TestAPI.setNetworkEnabled(true);
+</pre></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h5 class="title"><a id="tapic-final"></a>5.27.1.1.5. Final Considerations</h5></div></div></div><p>
+We have seen that is it sometimes necessary to change some build
+settings to make the application's API testable. If you want to test
+exactly the same build as you will ship, you can leave these settings on
+all the time since exporting the application's symbols is harmless.
+</p><p>
+If you want to make the API of a dynamic library testable, the library's
+symbols will be exported anyway (otherwise it wouldn't be possible to
+use the library). So for dynamic libraries, no extra work is necessary
+to export symbols.
+</p></div></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="tab-using"></a>5.27.2. Creating a Test Using the Wrapper Library</h3></div></div></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><span class="section"><a href="ug-appbindings.html#tabu-example">5.27.2.1. Example Test Case</a></span></dt></dl></div><p>
+If the wrapper library containing the application bindings follows the
+naming convention
+<code class="filename">lib<span class="emphasis"><em>AUT_NAME</em></span>wrapper.so</code> (Unix),
+<code class="filename">lib<span class="emphasis"><em>AUT_NAME</em></span>wrapper.dylib</code>
+(macOS) or
+<code class="filename"><span class="emphasis"><em>AUT_NAME</em></span>wrapper.dll</code> (Windows),
+and it is located in an AUT path or a path listed in the
+<code class="envar">SQUISH_WRAPPER_PATH</code> environment variable, the wrapper
+library is automatically loaded when starting the AUT. This is
+convenient when just wrapping the AUT's API. But if we also want to wrap
+the APIs of additional components, it is usually more convenient to
+create multiple wrapper libraries (one for each component).
+</p><p>
+For <span class="emphasis"><em>Squish</em></span> to load multiple wrapper libraries, they must all be
+located in an AUT path or a path listed in the
+<code class="envar">SQUISH_WRAPPER_PATH</code> environment variable. To tell
+<span class="emphasis"><em>Squish</em></span> to load specific wrapper libraries, simply specify their names
+in the test suite's <code class="filename">suite.conf</code>, as the value of the
+<code class="code">WRAPPERS</code> key. The name of the wrapper is what you specified
+as first argument to the <code class="code">wrapperLib</code> function in the
+wrapper's <code class="filename">Buildsub</code> file.
+</p><p>
+Alternatively, you can specify which wrapper libraries to load in the
+<span class="application">Squish IDE</span> via the Test Suite's <a class="xref" href="ide.views.html#ide.the-settings.view" title="8.2.16. Test Suite Settings view">Test Suite Settings view (Section 8.2.16)</a>. All
+the available wrappers are listed in the <span class="guilabel">Wrappers</span>
+section—simply check the checkboxes of those you want to be
+loaded.
+</p><div class="screenshot"><div class="mediaobject" align="center"><img src="images/wrappers.png" align="middle"></img><div class="caption"><p>The <span class="application">Squish IDE</span>'s Settings View Showing the Wrappers
+</p></div></div></div><p>
+As the screenshot shows, the default wrappers—i.e., those for the
+relevant GUI toolkit—are not listed since they are always loaded
+automatically anyway.
+</p><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="tabu-example"></a>5.27.2.1. Example Test Case</h4></div></div></div><p>
+Here's an example test script which inserts three rectangles into the
+canvas. To verify that the rectangles were inserted correctly, we use
+the functions, <code class="code">CanvasView::canvasModel</code>,
+<code class="code">CanvasModel::numItems</code>, <code class="code">CanvasModel::item</code>
+(taking an integer index) and <code class="code">CanvasItem::rect</code>. All of these
+functions are available through the bindings library we created.
+</p><p>
+Here is the example script's code. The complete example test suite
+can be found in <code class="filename">examples/qt/suite_canvas</code> for
+Qt 4. (A very similar example for Qt 3, that only has a Python
+test script, is in <code class="filename">examples/qt3/suite_canvas</code>).
+</p><div xmlns="" class="scriptlang"><form><select name="scriptlangcombo" onchange="javascript:changeScriptingLanguage(this)" onclick="javascript:changeScriptingLanguage(this)"><option value="all" selected>Show All</option><option value="JavaScript">Show JavaScript</option><option value="Perl">Show Perl</option><option value="Python">Show Python</option><option value="Ruby">Show Ruby</option><option value="Tcl">Show Tcl</option></select></form></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Python</span><pre class="programlisting">
+import names
+import os
+
+def checkRectangle(item, x, y, width, height):
+    test.compare(item.rect().x, x)
+    test.compare(item.rect().y, y)
+    test.compare(item.rect().width, width)
+    test.compare(item.rect().height, height)
+
+def main():
+    startApplication('"' + os.environ["SQUISH_PREFIX"] + '/examples/qt/canvas/canvas"')
+
+    # insert 3 rectangular items
+    mouseClick(names.canvas_CanvasView_CanvasView, 90, 56, 1, Qt.LeftButton)
+    mouseClick(names.canvas_CanvasView_CanvasView, 170, 173, 1, Qt.LeftButton)
+    mouseClick(names.canvas_CanvasView_CanvasView, 271, 96, 1, Qt.LeftButton)
+    snooze(0.5)
+    
+    # retrieve reference to the canvas model
+    canvas = waitForObject(names.canvas_CanvasView_CanvasView)
+    model = canvas.canvasModel()
+    
+    # check that it contains 3 items
+    test.compare(model.numItems(), 3)
+    
+    # for each item, check that it has the correct geometry
+    checkRectangle(model.item(0), 90, 56, 50, 70)
+    checkRectangle(model.item(1), 170, 173, 50, 70)
+    checkRectangle(model.item(2), 271, 96, 50, 70)
+
+    # close and exit
+    sendEvent("QCloseEvent", names.canvas_QMainWindow)
+
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">JavaScript</span><pre class="programlisting">
+import * as names from 'names.js';
+
+function checkRectangle(item, x, y, width, height)
+{
+    test.compare(item.rect().x, x);
+    test.compare(item.rect().y, y);
+    test.compare(item.rect().width, width);
+    test.compare(item.rect().height, height);
+}
+
+function main()
+{
+    startApplication('"' + OS.getenv("SQUISH_PREFIX") + '/examples/qt/canvas/canvas"');
+
+    // insert 3 rectangular items
+    mouseClick(names.canvasCanvasViewCanvasView, 90, 56, 1, Qt.LeftButton);
+    mouseClick(names.canvasCanvasViewCanvasView, 170, 173, 1, Qt.LeftButton);
+    mouseClick(names.canvasCanvasViewCanvasView, 271, 96, 1, Qt.LeftButton);
+    snooze(0.5);
+    
+    // retrieve reference to the canvas model
+    var canvas = waitForObject(names.canvasCanvasViewCanvasView);
+    var model = canvas.canvasModel();
+    
+    // check that it contains 3 items
+    test.compare(model.numItems(), 3);
+    
+    // for each item, check that it has the correct geometry
+    checkRectangle(model.item(0), 90, 56, 50, 70);
+    checkRectangle(model.item(1), 170, 173, 50, 70);
+    checkRectangle(model.item(2), 271, 96, 50, 70);
+
+    // close and exit
+    sendEvent("QCloseEvent", names.canvasQMainWindow);
+}
+
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Perl</span><pre class="programlisting">
+require 'names.pl';
+
+sub checkRectangle
+{
+    my ($item, $x, $y, $width, $height) = @_;
+    test::compare($item-&gt;rect()-&gt;x, $x);
+    test::compare($item-&gt;rect()-&gt;y, $y);
+    test::compare($item-&gt;rect()-&gt;width, $width);
+    test::compare($item-&gt;rect()-&gt;height, $height);
+}
+
+sub main
+{
+    startApplication("\"$ENV{'SQUISH_PREFIX'}/examples/qt/canvas/canvas\"");
+    # insert 3 rectangular items
+    mouseClick($Names::canvas_canvasview_canvasview, 90, 56, 1, Qt::LeftButton);
+    mouseClick($Names::canvas_canvasview_canvasview, 170, 173, 1, Qt::LeftButton);
+    mouseClick($Names::canvas_canvasview_canvasview, 271, 96, 1, Qt::LeftButton);
+    snooze(0.5);
+
+    # retrieve reference to the canvas model
+    my $canvas = waitForObject($Names::canvas_canvasview_canvasview);
+    my $model = $canvas-&gt;canvasModel();
+
+    # check that it contains 3 items
+    test::compare($model-&gt;numItems(), 3);
+
+    # for each item, check that it has the correct geometry
+    checkRectangle($model-&gt;item(0), 90, 56, 50, 70);
+    checkRectangle($model-&gt;item(1), 170, 173, 50, 70);
+    checkRectangle($model-&gt;item(2), 271, 96, 50, 70);
+
+    # close and exit
+    sendEvent("QCloseEvent", $Names::canvas_qmainwindow);
+}
+
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Ruby</span><pre class="programlisting">
+# encoding: UTF-8
+require 'names'
+
+require 'squish'
+
+include Squish
+
+def checkRectangle(item, x, y, width, height)
+    Test.compare(item.rect().x, x)
+    Test.compare(item.rect().y, y)
+    Test.compare(item.rect().width, width)
+    Test.compare(item.rect().height, height)
+end
+
+def main
+    startApplication("\"#{ENV['SQUISH_PREFIX']}/examples/qt/canvas/canvas\"")
+    # insert 3 rectangular items
+    mouseClick(Names::Canvas_CanvasView_CanvasView, 90, 56, 1, Qt::LEFT_BUTTON)
+    mouseClick(Names::Canvas_CanvasView_CanvasView, 170, 173, 1, Qt::LEFT_BUTTON)
+    mouseClick(Names::Canvas_CanvasView_CanvasView, 271, 96, 1, Qt::LEFT_BUTTON)
+    snooze(0.5)
+
+    # retrieve reference to the canvas model
+    canvas = waitForObject(Names::Canvas_CanvasView_CanvasView)
+    model = canvas.canvasModel
+
+    # check that it contains 3 items
+    Test.compare(model.numItems(), 3)
+
+    # for each item, check that it has the correct geometry
+    checkRectangle(model.item(0), 90, 56, 50, 70)
+    checkRectangle(model.item(1), 170, 173, 50, 70)
+    checkRectangle(model.item(2), 271, 96, 50, 70)
+
+    # close and exit
+    sendEvent("QCloseEvent", Names::Canvas_QMainWindow)
+end
+
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Tcl</span><pre class="programlisting">
+source [findFile "scripts" "names.tcl"]
+
+proc checkRectangle {item x y width height} {
+    test compare [property get [invoke $item rect] x] $x
+    test compare [property get [invoke $item rect] y] $y
+    test compare [property get [invoke $item rect] width] $width
+    test compare [property get [invoke $item rect] height] $height
+}
+
+proc main {} {
+    startApplication "\"$::env(SQUISH_PREFIX)/examples/qt/canvas/canvas\""
+    
+    # insert 3 rectangular items
+    invoke mouseClick $names::Canvas_CanvasView_CanvasView 90 56 1 [enum Qt LeftButton]
+    invoke mouseClick $names::Canvas_CanvasView_CanvasView 170 173 1 [enum Qt LeftButton]
+    invoke mouseClick $names::Canvas_CanvasView_CanvasView 271 96 1 [enum Qt LeftButton]
+    snooze 0.5
+    
+    # retrieve reference to the canvas model
+    set canvas [waitForObject $names::Canvas_CanvasView_CanvasView]
+    set model [invoke $canvas canvasModel]
+    
+    # check that it contains 3 items
+    test compare [invoke $model numItems] 3
+    
+    # for each item, check that it has the correct geometry
+    checkRectangle [invoke $model item 0] 90 56 50 70
+    checkRectangle [invoke $model item 1] 170 173 50 70
+    checkRectangle [invoke $model item 2] 271 96 50 70
+
+    # close and exit
+    sendEvent "QCloseEvent" $names::Canvas_QMainWindow
+}
+
+</pre></div><p>
+This wraps up the coverage of creating application bindings and
+accessing them from test scripts. Using this functionality, it is
+possible to implement very powerful, robust, and sophisticated
+tests.
+</p></div></div></div><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" type="text/javascript" src="ScriptingLanguage.js"></script><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format">setScriptingLanguage();</script><div class="navfooter"><hr></hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="ug-batchtesting.html">Prev</a> </td><td width="20%" align="center"><a accesskey="u" href="users-guide.html">Up</a></td><td width="40%" align="right"> <a accesskey="n" href="ug.how.to.create.cross.platform.tests.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">5.26. How to Do Automated Batch Testing </td><td width="20%" align="center"><a accesskey="h" href="index-noframes.html">Home</a></td><td width="40%" align="right" valign="top"> 5.28. How to Create Cross-Platform Tests</td></tr></table></div></body>
+<!-- Mirrored from ug-appbindings.html by HTTrack Website Copier/3.x [XR&CO'2013], Wed, 06 Jul 2022 13:29:00 GMT -->
+</html>

@@ -1,0 +1,126 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<!-- Mirrored from ins-new-ide.html by HTTrack Website Copier/3.x [XR&CO'2013], Wed, 06 Jul 2022 13:28:58 GMT -->
+<head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><title>3.10. Standalone Installation of the IDE</title><link rel="stylesheet" href="manual.css" type="text/css"></link><meta name="generator" content="DocBook XSL Stylesheets V1.73.2"></meta><link rel="start" href="index-noframes.html" title="Squish Manual"></link><link rel="up" href="install.html" title="Chapter 3. How to Install Squish"></link><link rel="prev" href="install_android.html" title="3.9. Installing Squish for Android"></link><link rel="next" href="ins-tessseract-for-squish.html" title="3.11. OCR and Installing Tesseract for Squish"></link><style xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" type="text/css" media="screen">
+        div.toc * { margin-left: 6px; margin-right: auto; max-width: 75em; }
+        div.toc span { margin-left: 0px; }
+        * { margin-left: auto; margin-right: auto; max-width: 75em; }
+        body { margin-left: 6px; margin-right: 6px; }
+        table th { padding: .5ex }
+        table td { padding: .5ex }
+    </style><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format">
+        function keyPress() {
+            var e = window.event;
+            if ( e == undefined ) {
+                return;
+            }
+            /* ### does not properly scroll, yet
+            if ( e.keyCode == 32 ) {
+            var l = document.links;
+            for ( var i = 0; i < l.length; i++ ) {
+                if ( l[i].innerText == "Next" ) {
+                location.href = l[i].href;
+                }
+            }
+            } else
+                */
+                if ( e.keyCode == 0x08 ) {
+            var l = document.links;
+            for ( var i = 0; i < l.length; i++ ) {
+                if ( l[i].innerText == "Prev" ) {
+                location.href = l[i].href;
+                }
+            }
+            }
+        }
+        document.onkeypress = keyPress;
+    </script></head><body><div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="ins-new-ide"></a>3.10. Standalone Installation of the IDE</h2></div></div></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><span class="section"><a href="ins-new-ide.html#ins-ide-win">3.10.1. Installing the IDE on Windows</a></span></dt><dt><span class="section"><a href="ins-new-ide.html#ins-ide-linux">3.10.2. Installing the IDE on Linux</a></span></dt><dt><span class="section"><a href="ins-new-ide.html#ins-ide-mac">3.10.3. Installing the IDE on macOS</a></span></dt></dl></div><p>
+You only need to download and install the IDE as described in this
+section if you installed the <span class="emphasis"><em>Squish</em></span> Tools from source.
+</p><p>
+If you have downloaded a <span class="emphasis"><em>Squish</em></span>  binary package, the IDE
+is already included. The IDE's executable is
+<code class="filename">SQUISHDIR\squishide.exe</code> on Windows,
+<code class="filename">SQUISHDIR/squishide</code> on Unix, and
+<code class="filename">SQUISHDIR/squishide.app</code> on macOS.
+</p><p>
+The IDE is provided in a ZIP file called
+<code class="code">squishide-<span class="emphasis"><em>version</em></span>.zip</code>. The
+<code class="code"><span class="emphasis"><em>version</em></span></code> may vary, but will include
+text that identifies its target platform (“<span class="quote">win32</span>”,
+“<span class="quote">macosx</span>”, and so on). Download the ZIP file that is
+appropriate for your platform and then follow
+the platform-specific installation instructions given below.
+</p><p>
+The IDE uses the Eclipse libraries, so Eclipse users will find
+themselves at home straight away. If you are unfamiliar with Eclipse, we
+recommend going through one of the <span class="emphasis"><em>Squish</em></span> tutorials, or at least
+reading the <a class="xref" href="tutorials-qt.html#perspectives-and-views-qt" title="Perspectives and Views">Perspectives and Views</a> sidebar.
+(See also, the <a class="xref" href="ide.ref.man.html" title="Chapter 8. IDE Reference Manual">IDE Reference Manual (Chapter 8)</a>.)
+</p><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="ins-ide-win"></a>3.10.1. Installing the IDE on Windows</h3></div></div></div><p>
+Once the IDE package is downloaded, unzip it in any convenient
+folder. You can probably uncompress the package using Window's
+built-in utilities. Start Windows Explorer and navigate to the folder
+that contains the IDE package. Right-click the package, and if you get
+an <span class="guibutton">Extract All...</span> option, click the option and
+use the Windows Extraction Wizard to uncompress the IDE package to the
+folder of your choice. If you don't have this option, you will need
+to obtain a ZIP uncompression tool. Several such tools are available,
+including the commercial <a class="ulink" href="http://www.winzip.com/" target="_blank">WinZip</a> and the open source <a class="ulink" href="http://www.info-zip.org/UnZip.html" target="_blank">UnZip</a> from the InfoZip
+project.
+</p><p>
+The IDE's executable is in the unzipped folder's root
+and is called <span class="application">squishide</span>; it can be run straight
+away from a console window:
+
+</p><pre class="screen">
+C:\&gt; cd squishide
+C:\squishide&gt; squishide.exe
+</pre><p>
+
+For regular use you might prefer to create a shortcut to the executable
+from your <span class="guimenuitem">Start</span> menu or from your desktop.
+</p><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Note: The First Time the IDE Runs"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/note.png"></img></td><th align="left">The First Time the IDE Runs</th></tr><tr><td align="left" valign="top"><p>
+The first time the IDE is run it will ask you to choose the folder
+where the <span class="emphasis"><em>Squish</em></span> tools are located. Choose the <span class="emphasis"><em>Squish</em></span> tools'
+toplevel folder, i.e., the folder that contains the
+<code class="filename">bin</code> and <code class="filename">lib</code> folders.
+</p><p>
+Depending on your security settings, Windows might pop up a dialog
+asking if you want to allow or block the <span class="application">squishserver</span> from running. If
+you get this dialog, you <span class="emphasis"><em>must</em></span> choose
+<span class="guibutton">Unblock</span> for <span class="emphasis"><em>Squish</em></span> to be able to function
+correctly.
+</p></td></tr></table></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="ins-ide-linux"></a>3.10.2. Installing the IDE on Linux</h3></div></div></div><p>
+Once the IDE package is downloaded, unzip it in any convenient
+directory. (If you don't have <span class="application">unzip</span>, install
+it using your system's package management tool.)
+</p><p>
+The IDE's executable is in the unzipped directory's root
+and is called <span class="application">squishide</span>; it can be run straight
+away from an <span class="application">xterm</span>:
+</p><pre class="screen">
+$ cd squishide
+$ ./squishide &amp;
+</pre><p>
+</p><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Note: The First Time the IDE Runs"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/note.png"></img></td><th align="left">The First Time the IDE Runs</th></tr><tr><td align="left" valign="top"><p>
+The first time the IDE is run it will ask you to choose the
+directory where the <span class="emphasis"><em>Squish</em></span> tools are located.
+</p></td></tr></table></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="ins-ide-mac"></a>3.10.3. Installing the IDE on macOS</h3></div></div></div><p>
+Once the IDE package is downloaded, unzip it in any convenient
+directory.
+</p><p>
+The IDE's executable is in the unzipped directory's root
+and is called <span class="application">squishide</span>; it can be run straight
+away from inside a <span class="application">Terminal.app</span>:
+
+</p><pre class="screen">
+$ cd squishide
+$ open squishide.app
+</pre><p>
+</p><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Note: The First Time the IDE Runs"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/note.png"></img></td><th align="left">The First Time the IDE Runs</th></tr><tr><td align="left" valign="top"><p>
+The first time the IDE is run it will ask you to choose the directory
+where the <span class="emphasis"><em>Squish</em></span> tools are located.
+</p></td></tr></table></div></div></div><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" type="text/javascript" src="ScriptingLanguage.js"></script><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format">setScriptingLanguage();</script><div class="navfooter"><hr></hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="install_android.html">Prev</a> </td><td width="20%" align="center"><a accesskey="u" href="install.html">Up</a></td><td width="40%" align="right"> <a accesskey="n" href="ins-tessseract-for-squish.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">3.9. Installing Squish for Android </td><td width="20%" align="center"><a accesskey="h" href="index-noframes.html">Home</a></td><td width="40%" align="right" valign="top"> 3.11. OCR and Installing Tesseract for <span class="emphasis"><em>Squish</em></span></td></tr></table></div></body>
+<!-- Mirrored from ins-new-ide.html by HTTrack Website Copier/3.x [XR&CO'2013], Wed, 06 Jul 2022 13:28:58 GMT -->
+</html>

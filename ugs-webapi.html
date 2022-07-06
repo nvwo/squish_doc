@@ -1,0 +1,1124 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<!-- Mirrored from ugs-webapi.html by HTTrack Website Copier/3.x [XR&CO'2013], Wed, 06 Jul 2022 13:28:59 GMT -->
+<head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><title>5.3. How to Use the Web API</title><link rel="stylesheet" href="manual.css" type="text/css"></link><meta name="generator" content="DocBook XSL Stylesheets V1.73.2"></meta><link rel="start" href="index-noframes.html" title="Squish Manual"></link><link rel="up" href="users-guide.html" title="Chapter 5. User Guide"></link><link rel="prev" href="ugs-qtapi.html" title="5.2. How to Use the Qt API"></link><link rel="next" href="ugs-javaapi.html" title="5.4. How to Use the Java™ API"></link><style xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" type="text/css" media="screen">
+        div.toc * { margin-left: 6px; margin-right: auto; max-width: 75em; }
+        div.toc span { margin-left: 0px; }
+        * { margin-left: auto; margin-right: auto; max-width: 75em; }
+        body { margin-left: 6px; margin-right: 6px; }
+        table th { padding: .5ex }
+        table td { padding: .5ex }
+    </style><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format">
+        function keyPress() {
+            var e = window.event;
+            if ( e == undefined ) {
+                return;
+            }
+            /* ### does not properly scroll, yet
+            if ( e.keyCode == 32 ) {
+            var l = document.links;
+            for ( var i = 0; i < l.length; i++ ) {
+                if ( l[i].innerText == "Next" ) {
+                location.href = l[i].href;
+                }
+            }
+            } else
+                */
+                if ( e.keyCode == 0x08 ) {
+            var l = document.links;
+            for ( var i = 0; i < l.length; i++ ) {
+                if ( l[i].innerText == "Prev" ) {
+                location.href = l[i].href;
+                }
+            }
+            }
+        }
+        document.onkeypress = keyPress;
+    </script></head><body><div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="ugs-webapi"></a>5.3. How to Use the Web API</h2></div></div></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><span class="section"><a href="ugs-webapi.html#ugsweb-objects">5.3.1. How to Find and Query Web Objects</a></span></dt><dt><span class="section"><a href="ugs-webapi.html#ugsweb-xpath">5.3.2. How to Use XPath</a></span></dt><dt><span class="section"><a href="ugs-webapi.html#ugsweb-properties">5.3.3. How to Access Web Object Properties</a></span></dt><dt><span class="section"><a href="ugs-webapi.html#ugsweb-methods">5.3.4. How to Call Web Object Functions</a></span></dt><dt><span class="section"><a href="ugs-webapi.html#ugsweb-evaljs">5.3.5. How to Use evalJS</a></span></dt><dt><span class="section"><a href="ugs-webapi.html#ugsweb-retrieveJSObject">5.3.6. How to Use retrieveJSObject</a></span></dt><dt><span class="section"><a href="ugs-webapi.html#ugsweb-convenience">5.3.7. How to Use the Web Convenience API</a></span></dt><dt><span class="section"><a href="ugs-webapi.html#ugsweb-sync">5.3.8. How to Synchronize Web Page Loading for Testing</a></span></dt><dt><span class="section"><a href="ugs-webapi.html#ugs-webwidgets">5.3.9. How to Test Web Elements</a></span></dt><dt><span class="section"><a href="ugs-webapi.html#ug-load-testing-web">5.3.10. How to Do Web Application Load Testing</a></span></dt></dl></div><p>
+One of <span class="emphasis"><em>Squish</em></span>'s most useful features is the ability to access the
+toolkit's API from test scripts. This gives test engineers a great deal of
+flexibility and allows them to test just about anything in the AUT. With
+<span class="emphasis"><em>Squish</em></span>'s Web-specific API it is possible to find and query objects,
+access properties and methods, and evaluate arbitrary JavaScript code in
+the Web-application's context. In addition, <span class="emphasis"><em>Squish</em></span> provides a
+convenience API (see <a class="xref" href="ugs-webapi.html#ugsweb-convenience" title="5.3.7. How to Use the Web Convenience API">How to Use the Web Convenience API (Section 5.3.7)</a>) that provides
+facilities for executing common actions on Web sites such as clicking a
+button or entering some text.
+</p><p>
+A variety of examples that show how to use the scripting Web API
+to access and test complex Web elements is given in the
+<a class="xref" href="ugs-webapi.html#ugs-webwidgets" title="5.3.9. How to Test Web Elements">How to Test Web Elements (Section 5.3.9)</a> section.
+</p><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Note: Testing with the Web Proxy Mechanism"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/note.png"></img></td><th align="left">Testing with the Web Proxy Mechanism</th></tr><tr><td align="left" valign="top"><p>
+There are two ways to work with web applications—directly, or
+using the web proxy mechanism. For
+testing web applications with <span class="application">Safari</span> on macOS, <span class="application">Microsoft Internet Explorer</span> on Windows, or
+<span class="application">Firefox</span> on Unix it is best <span class="emphasis"><em>not</em></span> to use the proxy
+mechanism since the mechanism imposes a few limitations.
+</p><p>
+For more about how to use the web proxy mechanism see <a class="xref" href="rg-cmdline.html#rg-webproxy" title="7.4.8. Web Proxy">Web Proxy (Section 7.4.8)</a>.
+</p></td></tr></table></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="ugsweb-objects"></a>5.3.1. How to Find and Query Web Objects</h3></div></div></div><p>
+<span class="emphasis"><em>Squish</em></span> provides two functions—<a class="xref" href="rgs-squish.html#findObject-function"><code class="function">findObject</code></a>
+and <a class="xref" href="rgs-squish.html#waitForObject-function"><code class="function">waitForObject</code></a>—that return a reference
+to the object (HTML or DOM element), for a given qualified object name.
+The difference between them is that <a class="xref" href="rgs-squish.html#waitForObject-function"><code class="function">waitForObject</code></a> waits for an object to become
+available (up to its default timeout, or up to a specified timeout), so
+it is usually the most convenient one to use. However, only
+<a class="xref" href="rgs-squish.html#findObject-function"><code class="function">findObject</code></a> can be used on hidden objects.
+</p><p>
+See the <a class="xref" href="rgs-webconvenience.html" title="6.10. Web Object API">Web Object API (Section 6.10)</a> for full details of
+<span class="emphasis"><em>Squish</em></span>'s Web classes and methods.
+</p><p>
+There are several ways to indentify a particular Web object:
+</p><div class="itemizedlist"><ul type="disc"><li><p>
+<span class="emphasis"><em>Multiple-property (real) names</em></span>—These names
+consist of a list of one or more
+property–name/property–value pairs, separated by spaces if
+there is more than one, and the whole name enclosed in curly braces.
+Given a name of this kind, <span class="emphasis"><em>Squish</em></span> will search the document's DOM tree
+until it finds a matching object. An example of such a name is:
+“<span class="quote"><code class="code">{tagName='INPUT' id='r1' name='rg' form='myform'
+type='radio' value='Radio 1'}</code></span>”.
+</p></li><li><p>
+<span class="emphasis"><em>Single property value</em></span>—Given a particular value,
+<span class="emphasis"><em>Squish</em></span> will search the document's DOM tree until it finds an object
+whose <code class="code">id</code>, <code class="code">name</code> or <code class="code">innerText</code>
+property has the specified value.
+</p></li><li><p>
+<span class="emphasis"><em>Path</em></span>—The full path to the element is given.
+An example of such a path is
+“<span class="quote"><code class="code">DOCUMENT.HTML1.BODY1.FORM1.SELECT1</code></span>”.
+</p></li></ul></div><p>
+To find an object's name, you can use the <span class="application">Spy</span> to introspect the
+Web application's document. See the <a class="xref" href="ug-editdebug.html#uged-spy" title="5.21.3. How to Use the Spy">How to Use the Spy (Section 5.21.3)</a> section for
+details.
+</p><p>
+If we want to interact with a particular object—for example, to
+check its properties, or to do something to it, such as click it, we
+must start by getting a reference to the object.
+</p><p>
+If we use the <a class="xref" href="rgs-squish.html#findObject-function"><code class="function">findObject</code></a> function, it will
+either return immediately with the object, or it will throw a catchable
+exception if the object isn't available. (An object might not be
+available because it is an AJAX object that only appears under certain
+conditions, or it might only appear as the result of some JavaScript
+code executing, and so on.) Here's a code snippet that shows how to use
+<a class="xref" href="rgs-squish.html#findObject-function"><code class="function">findObject</code></a> without risking an error being
+thrown, by using the <a class="xref" href="rgs-squish.html#object.exists-function"><code class="function">object.exists</code></a> function:
+</p><div xmlns="" class="scriptlang"><form><select name="scriptlangcombo" onchange="javascript:changeScriptingLanguage(this)" onclick="javascript:changeScriptingLanguage(this)"><option value="all" selected>Show All</option><option value="JavaScript">Show JavaScript</option><option value="Perl">Show Perl</option><option value="Python">Show Python</option><option value="Ruby">Show Ruby</option><option value="Tcl">Show Tcl</option></select></form></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Python</span><pre class="programlisting">
+radioName = ("{tagName='INPUT' id='r1' name='rg' form='myform' " +
+        "type='radio' value='Radio 1'}")
+if object.exists(radioName):
+    radioButton = findObject(radioName)
+    clickButton(radioButton)
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">JavaScript</span><pre class="programlisting">
+var radioName = "{tagName='INPUT' id='r1' name='rg' form='myform' " +
+        "type='radio' value='Radio 1'}";
+if (object.exists(radioName)) {
+    var radioButton = findObject(radioName);
+    clickButton(radioButton);
+}
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Perl</span><pre class="programlisting">
+my $radioName = "{tagName='INPUT' id='r1' name='rg' form='myform' " .
+        "type='radio' value='Radio 1'}"
+if (object::exists($radioName)) {
+    my $radioButton = findObject($radioName);
+    clickButton($radioButton);
+}
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Ruby</span><pre class="programlisting">
+radioName = "{tagName='INPUT' id='r1' name='rg' form='myform' " +
+        "type='radio' value='Radio 1'}"
+if Squish::Object.exists(radioName)
+    radioButton = findObject(radioName)
+    clickButton(radioButton)
+end
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Tcl</span><pre class="programlisting">
+set radioName {{tagName='INPUT' id='r1' name='rg' form='myform' \
+        type='radio' value='Radio 1'}}
+if {[object exists $radioName]} {
+    set radioButton [findObject $radioName]
+    invoke clickButton $radioButton
+}
+</pre></div><p>
+This will only click the radio button if it exists, that is, if it is
+accessible at the time of the <a class="xref" href="rgs-squish.html#object.exists-function"><code class="function">object.exists</code></a>
+call.
+</p><p>
+An alternative approach is to use the <a class="xref" href="rgs-squish.html#waitForObject-function"><code class="function">waitForObject</code></a> function:
+</p><div xmlns="" class="scriptlang"><form><select name="scriptlangcombo" onchange="javascript:changeScriptingLanguage(this)" onclick="javascript:changeScriptingLanguage(this)"><option value="all" selected>Show All</option><option value="JavaScript">Show JavaScript</option><option value="Perl">Show Perl</option><option value="Python">Show Python</option><option value="Ruby">Show Ruby</option><option value="Tcl">Show Tcl</option></select></form></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Python</span><pre class="programlisting">
+radioButton = waitForObject("{tagName='INPUT' id='r1' name='rg' " +
+        "form='myform' type='radio' value='Radio 1'}")
+clickButton(radioButton)
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">JavaScript</span><pre class="programlisting">
+var radioButton = waitForObject("{tagName='INPUT' id='r1' name='rg' " +
+        "form='myform' type='radio' value='Radio 1'}");
+clickButton(radioButton);
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Perl</span><pre class="programlisting">
+my $radioButton = waitForObject("{tagName='INPUT' id='r1' name='rg' " .
+        "form='myform' type='radio' value='Radio 1'}");
+clickButton($radioButton);
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Ruby</span><pre class="programlisting">
+radioButton = waitForObject("{tagName='INPUT' id='r1' name='rg' " +
+        "form='myform' type='radio' value='Radio 1'}")
+clickButton(radioButton)
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Tcl</span><pre class="programlisting">
+set radioButton [waitForObject {{tagName='INPUT' id='r1' name='rg' \
+        form='myform' type='radio' value='Radio 1'}}]
+invoke clickButton $radioButton
+</pre></div><p>
+This will wait up to 20 seconds (or whatever the default timeout has
+been set to), and providing the radio button becomes accessible within
+that time, it is clicked.
+</p><p>
+Using the <a class="xref" href="rgs-squish.html#findObject-function"><code class="function">findObject</code></a> and <a class="xref" href="rgs-squish.html#waitForObject-function"><code class="function">waitForObject</code></a> functions in conjunction with
+appropriate object identifiers means that we can access all the elements
+in a Web document's object tree, and test their properties, and
+generally interact with them.
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="ugsweb-xpath"></a>5.3.2. How to Use XPath</h3></div></div></div><p>
+For every object returned by the <a class="xref" href="rgs-squish.html#findObject-function"><code class="function">findObject</code></a>
+and <a class="xref" href="rgs-squish.html#waitForObject-function"><code class="function">waitForObject</code></a> functions, it is possible
+the evaluate an XPath statement. The object on which the XPath statement
+is evaluated is used as the context node.
+</p><p>
+For example, to retrieve the reference to a link referring to the
+<acronym class="acronym">URL</acronym> <a class="ulink" href="https://www.froglogic.com/" target="_blank">www.froglogic.com</a> which is a
+child of the <code class="code">DIV</code> element with the <code class="code">id</code>
+“<span class="quote">mydiv</span>”, we can use the following code:
+</p><div xmlns="" class="scriptlang"><form><select name="scriptlangcombo" onchange="javascript:changeScriptingLanguage(this)" onclick="javascript:changeScriptingLanguage(this)"><option value="all" selected>Show All</option><option value="JavaScript">Show JavaScript</option><option value="Perl">Show Perl</option><option value="Python">Show Python</option><option value="Ruby">Show Ruby</option><option value="Tcl">Show Tcl</option></select></form></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Python</span><pre class="programlisting">
+div = findObject("{tagName='DIV' id='mydiv'}")
+link = div.evaluateXPath("A[contains(@href," +
+        "'www.froglogic.com')]").snapshotItem(0)
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">JavaScript</span><pre class="programlisting">
+var div = findObject("{tagName='DIV' id='mydiv'}");
+var link = div.evaluateXPath("A[contains(@href," +
+        "'www.froglogic.com')]").snapshotItem(0);
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Perl</span><pre class="programlisting">
+my $div = findObject("{tagName='DIV' id='mydiv'}");
+my $link = $div-&gt;evaluateXPath("A[contains(@href," .
+        "'www.froglogic.com')]")-&gt;snapshotItem(0);
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Ruby</span><pre class="programlisting">
+div = findObject("{tagName='DIV' id='mydiv'}")
+link = div.evaluateXPath("A[contains(@href," +
+        "'www.froglogic.com')]").snapshotItem(0)
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Tcl</span><pre class="programlisting">
+set div [findObject {{tagName='DIV' id='mydiv'}}]
+set link [invoke [invoke $div evaluateXPath \
+        "A[contains(@href, 'www.froglogic.com')]"] snapshotItem 0]
+</pre></div><p>
+The XPath used here says, “<span class="quote">find all <code class="code">A</code> (anchor) tags
+that have an <code class="code">href</code> attribute, and whose value is
+<code class="code">www.froglogic.com</code></span>”. We then call the
+<code class="code">snapshotItem</code> method and ask it to retrieve the first
+match—it uses 0-based indexing—which is returned as an object
+of type <a class="xref" href="rgs-webconvenience.html#web-HTML_Object-class" title="6.10.29. HTML_Object Class">HTML_Object Class (Section 6.10.29)</a>.
+</p><p>
+Each XPath query can produce a boolean (true or false), a number, a
+string, or a group of elements as the result. Consequently, the
+<a class="xref" href="rgs-webconvenience.html#web-HTML_Object.evaluateXPath-function"><code class="function">HTML_Object.evaluateXPath</code></a>
+method returns an object of type
+<a class="xref" href="rgs-webconvenience.html#web-HTML_XPathResult-class" title="6.10.41. HTML_XPathResult Class">HTML_XPathResult Class (Section 6.10.41)</a> on which
+you can query the result of the XPath evaluation.
+</p><p>
+<a class="xref" href="ugs-webapi.html#ug-web-access-table-cell-contents" title="5.3.9.5. How to Access Table Cell Contents">How to Access Table Cell Contents (Section 5.3.9.5)</a> has an example of
+using the <a class="xref" href="rgs-webconvenience.html#web-HTML_Object.evaluateXPath-function"><code class="function">HTML_Object.evaluateXPath</code></a>
+method to extract the contents of an HTML table's cell.
+</p><div class="tip" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Tip: XPath Queries"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Tip]" src="images/tip.png"></img></td><th align="left">XPath Queries</th></tr><tr><td align="left" valign="top"><p>
+For more information about how you can create XPath queries to help
+produce flexible and compact test scripts, refer to documentation that
+specializes in this topic. For example, we recommend the <a class="ulink" href="http://www.w3schools.com/xml/xpath_intro.asp" target="_blank">XPath Tutorial</a>
+from the <a class="ulink" href="http://www.w3schools.com/" target="_blank">W3Schools Online Web
+Tutorials</a> website.
+</p></td></tr></table></div><p>
+See also the <span class="emphasis"><em>Squish</em></span> for Web tutorial <a class="xref" href="tutorials-web.html#tgs-vp-web" title="4.6.1.4. Inserting Additional Verification Points">Inserting Additional Verification Points (Section 4.6.1.4)</a>.
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="ugsweb-properties"></a>5.3.3. How to Access Web Object Properties</h3></div></div></div><p>
+Using the script API it is possible to access most of the DOM properties
+for any HTML or DOM element in a Web application.
+See the <a class="xref" href="rgs-webconvenience.html" title="6.10. Web Object API">Web Object API (Section 6.10)</a> for full details of
+<span class="emphasis"><em>Squish</em></span>'s Web classes and methods.
+</p><p>
+Here is an example where we will change and query the
+<code class="code">value</code> property of a form's text element.
+</p><div xmlns="" class="scriptlang"><form><select name="scriptlangcombo" onchange="javascript:changeScriptingLanguage(this)" onclick="javascript:changeScriptingLanguage(this)"><option value="all" selected>Show All</option><option value="JavaScript">Show JavaScript</option><option value="Perl">Show Perl</option><option value="Python">Show Python</option><option value="Ruby">Show Ruby</option><option value="Tcl">Show Tcl</option></select></form></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Python</span><pre class="programlisting">
+entry = waitForObject(
+        "{tagName='INPUT' id='input' form='myform' type='text'}")
+entry.value = "Some new text"
+test.log(entry.value)
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">JavaScript</span><pre class="programlisting">
+var entry = waitForObject(
+        "{tagName='INPUT' id='input' form='myform' type='text'}");
+entry.value = "Some new text";
+test.log(entry.value);
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Perl</span><pre class="programlisting">
+my $entry = waitForObject(
+        "{tagName='INPUT' id='input' form='myform' type='text'}");
+$entry-&gt;value = "Some new text";
+test::log($entry-&gt;value);
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Ruby</span><pre class="programlisting">
+entry = waitForObject(
+        "{tagName='INPUT' id='input' form='myform' type='text'}")
+entry.value = "Some new text"
+Test.log(entry.value)
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Tcl</span><pre class="programlisting">
+set entry [waitForObject {{tagName='INPUT' id='input' \
+        form='myform' type='text'}}]
+[property set $entry value "Some new text"]
+test log [property get $entry value]
+</pre></div><p>
+<span class="emphasis"><em>Squish</em></span> provides similar script bindings to all of the standard DOM
+elements' standard properties. But it is also possible to access the
+properties of custom objects using the
+<code class="function">property</code> method. For example, to check a
+<code class="code">DIV</code> element's offset width, we can write code like this:
+</p><div xmlns="" class="scriptlang"><form><select name="scriptlangcombo" onchange="javascript:changeScriptingLanguage(this)" onclick="javascript:changeScriptingLanguage(this)"><option value="all" selected>Show All</option><option value="JavaScript">Show JavaScript</option><option value="Perl">Show Perl</option><option value="Python">Show Python</option><option value="Ruby">Show Ruby</option><option value="Tcl">Show Tcl</option></select></form></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Python</span><pre class="programlisting">
+div = findObject("DOCUMENT.HTML1.BODY1......DIV")
+test.compare(div.property("offsetWidth"), 18)
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">JavaScript</span><pre class="programlisting">
+var div = findObject("DOCUMENT.HTML1.BODY1......DIV");
+test.compare(div.property("offsetWidth"), 18);
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Perl</span><pre class="programlisting">
+my $div = findObject("DOCUMENT.HTML1.BODY1......DIV");
+test::compare($div-&gt;property("offsetWidth"), 18);
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Ruby</span><pre class="programlisting">
+div = findObject("DOCUMENT.HTML1.BODY1......DIV")
+Test.compare(div.property("offsetWidth"), 18)
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Tcl</span><pre class="programlisting">
+set div [findObject "DOCUMENT.HTML1.BODY1......DIV"]
+test compare [invoke $div property "offsetWidth"] 18
+</pre></div><p>
+Note that for hidden elements we must always use the <a class="xref" href="rgs-squish.html#findObject-function"><code class="function">findObject</code></a> function rather than the <a class="xref" href="rgs-squish.html#waitForObject-function"><code class="function">waitForObject</code></a> function.
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="ugsweb-methods"></a>5.3.4. How to Call Web Object Functions</h3></div></div></div><p>
+In addition to properties, you can call standard DOM functions on all
+Web objects from test scripts, using the API described in
+the <a class="xref" href="rgs-webconvenience.html" title="6.10. Web Object API">Web Object API (Section 6.10)</a>.
+</p><p>
+For example, to get the first child node of a <code class="code">DIV</code> element,
+you could use the following test script which makes use of the
+<a class="xref" href="rgs-webconvenience.html#web-HTML_Object.firstChild-function"><code class="function">HTML_Object.firstChild</code></a> function:</p><div xmlns="" class="scriptlang"><form><select name="scriptlangcombo" onchange="javascript:changeScriptingLanguage(this)" onclick="javascript:changeScriptingLanguage(this)"><option value="all" selected>Show All</option><option value="JavaScript">Show JavaScript</option><option value="Perl">Show Perl</option><option value="Python">Show Python</option><option value="Ruby">Show Ruby</option><option value="Tcl">Show Tcl</option></select></form></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Python</span><pre class="programlisting">
+div = findObject("DOCUMENT.HTML1.BODY1......DIV")
+child = div.firstChild()
+test.log(child.tagName)
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">JavaScript</span><pre class="programlisting">
+var div = findObject("DOCUMENT.HTML1.BODY1......DIV");
+var child = div.firstChild();
+test.log(child.tagName);
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Perl</span><pre class="programlisting">
+my $div = findObject("DOCUMENT.HTML1.BODY1......DIV");
+my $child = $div-&gt;firstChild();
+test::log($child-&gt;tagName);
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Ruby</span><pre class="programlisting">
+div = findObject("DOCUMENT.HTML1.BODY1......DIV")
+child = div.firstChild()
+Test.log(child.tagName)
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Tcl</span><pre class="programlisting">
+set div [findObject "DOCUMENT.HTML1.BODY1......DIV"]
+set child [invoke $div firstChild]
+test log [property get $child tagName]
+</pre></div><p>
+Or, to get the text of the selected option from a select form
+element, we could use the following code:
+</p><div xmlns="" class="scriptlang"><form><select name="scriptlangcombo" onchange="javascript:changeScriptingLanguage(this)" onclick="javascript:changeScriptingLanguage(this)"><option value="all" selected>Show All</option><option value="JavaScript">Show JavaScript</option><option value="Perl">Show Perl</option><option value="Python">Show Python</option><option value="Ruby">Show Ruby</option><option value="Tcl">Show Tcl</option></select></form></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Python</span><pre class="programlisting">
+element = findObject(
+        ":{tagName='INPUT' id='sel' form='myform' type='select-one'}")
+option = element.optionAt(element.selectedIndex)
+test.log(option.text)
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">JavaScript</span><pre class="programlisting">
+var element = findObject(
+        ":{tagName='INPUT' id='sel' form='myform' type='select-one'}");
+var option = element.optionAt(element.selectedIndex);
+test.log(option.text);
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Perl</span><pre class="programlisting">
+my $element = findObject(
+        ":{tagName='INPUT' id='sel' form='myform' type='select-one'}");
+my $option = $element-&gt;optionAt($element-&gt;selectedIndex);
+test::log($option-&gt;text);
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Ruby</span><pre class="programlisting">
+element = findObject(
+        ":{tagName='INPUT' id='sel' form='myform' type='select-one'}")
+option = element.optionAt(element.selectedIndex)
+Test.log(option.text)
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Tcl</span><pre class="programlisting">
+set element [findObject ":{tagName='INPUT' id='sel' \
+        form='myform' type='select-one'}"]
+set option [invoke $element optionAt [property get element selectedIndex]]
+test log [property get $option text]
+</pre></div><p>
+<span class="emphasis"><em>Squish</em></span> provides script bindings like those shown here to all the
+standard DOM elements' standard functions. And in addition, it is also
+possible to call custom functions via a generic
+<code class="function">invoke</code> function. For example, to call a custom
+<code class="function">customFunction</code> function with string argument
+“<span class="quote">an argument</span>”, on a <code class="code">DIV</code> element, we could
+write code like this:
+</p><div xmlns="" class="scriptlang"><form><select name="scriptlangcombo" onchange="javascript:changeScriptingLanguage(this)" onclick="javascript:changeScriptingLanguage(this)"><option value="all" selected>Show All</option><option value="JavaScript">Show JavaScript</option><option value="Perl">Show Perl</option><option value="Python">Show Python</option><option value="Ruby">Show Ruby</option><option value="Tcl">Show Tcl</option></select></form></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Python</span><pre class="programlisting">
+div = findObject("DOCUMENT.HTML1.BODY1......DIV")
+div.invoke("customFunction", "an argument")
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">JavaScript</span><pre class="programlisting">
+var div = findObject("DOCUMENT.HTML1.BODY1......DIV");
+div.invoke("customFunction", "an argument");
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Perl</span><pre class="programlisting">
+my $div = findObject("DOCUMENT.HTML1.BODY1......DIV");
+$div-&gt;invoke("customFunction", "an argument");
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Ruby</span><pre class="programlisting">
+div = findObject("DOCUMENT.HTML1.BODY1......DIV")
+div.invoke("customFunction", "an argument")
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Tcl</span><pre class="programlisting">
+set div [findObject "DOCUMENT.HTML1.BODY1......DIV"]
+invoke $div "customFunction" "an argument"
+</pre></div><p>
+Beyond the DOM API bindings and the <code class="function">invoke</code>
+function, <span class="emphasis"><em>Squish</em></span> offers a <span class="type">Browser</span> object which can be
+used by test scripts to query which browser is being used, as the
+following Python snippet shows:
+</p><pre class="programlisting">
+# This will print out the name of the browser:
+test.log("We are running in " + Browser.name())
+if Browser.id() == InternetExplorer:
+    ...
+elif Browser.id() == Mozilla:
+    ...
+elif Browser.id() == Firefox:
+    ...
+elif Browser.id() == Safari:
+    ...
+</pre></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="ugsweb-evaljs"></a>5.3.5. How to Use evalJS</h3></div></div></div><p>
+In addition to test scripts being able to access all the properties and
+methods of DOM elements, it is also possible to let <span class="emphasis"><em>Squish</em></span> execute
+arbitrary JavaScript code in the Web browser's JavaScript interpreter
+and to retrieve the results. For this purpose, <span class="emphasis"><em>Squish</em></span> provides the
+<a class="xref" href="rgs-webconvenience.html#web-evalJS-function"><code class="function">evalJS</code></a> function. Here is an example of
+its use:
+</p><div xmlns="" class="scriptlang"><form><select name="scriptlangcombo" onchange="javascript:changeScriptingLanguage(this)" onclick="javascript:changeScriptingLanguage(this)"><option value="all" selected>Show All</option><option value="JavaScript">Show JavaScript</option><option value="Perl">Show Perl</option><option value="Python">Show Python</option><option value="Ruby">Show Ruby</option><option value="Tcl">Show Tcl</option></select></form></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Python</span><pre class="programlisting">
+style_display = evalJS("var d = document.getElementById(" +
+        "'busyDIV'); d ? d.style.display : ''")
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">JavaScript</span><pre class="programlisting">
+var style_display = evalJS("var d = document.getElementById(" +
+        "'busyDIV'); d ? d.style.display : ''");
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Perl</span><pre class="programlisting">
+my $style_display = evalJS("var d = document.getElementById(" .
+        "'busyDIV'); d ? d.style.display : ''");
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Ruby</span><pre class="programlisting">
+style_display = evalJS("var d = document.getElementById(" +
+        "'busyDIV'); d ? d.style.display : ''")
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Tcl</span><pre class="programlisting">
+set style_display [invoke evalJS "var d = document.getElementById(\
+        'busyDIV'); d ? d.style.display : ''"]
+</pre></div><p>
+The <a class="xref" href="rgs-webconvenience.html#web-evalJS-function"><code class="function">evalJS</code></a> function returns the result of
+the last statement executed—in this case the last statement is
+<code class="code">d ? d.style.display : ''</code> so if the document contains an
+element with ID “<span class="quote">busyDIV</span>”, <code class="code">style_display</code> will
+be set to that element's <code class="code">style.display</code> property's
+value—otherwise it will be set to an empty string.
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="ugsweb-retrieveJSObject"></a>5.3.6. How to Use retrieveJSObject</h3></div></div></div><p>
+In addition to test scripts being able to run some JavaScript snippet and
+retrieve the string value of the result, <span class="emphasis"><em>Squish</em></span> also can retrieve
+references to the actual JavaScript objects from the Web browser's
+interpreter. This is useful in cases where a JavaScript function does not
+return a simple value, like a string or number, but instead returns an object
+itself. In such a case, the reference allows retrieving properties from
+that object or calling methods on that object. For this purpose, <span class="emphasis"><em>Squish</em></span> provides the
+<a class="xref" href="rgs-webconvenience.html#web-retrieveJSObject-function">retrieveJSObject</a> function. Here is an example of
+its use:
+</p><div xmlns="" class="scriptlang"><form><select name="scriptlangcombo" onchange="javascript:changeScriptingLanguage(this)" onclick="javascript:changeScriptingLanguage(this)"><option value="all" selected>Show All</option><option value="JavaScript">Show JavaScript</option><option value="Perl">Show Perl</option><option value="Python">Show Python</option><option value="Ruby">Show Ruby</option><option value="Tcl">Show Tcl</option></select></form></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Python</span><pre class="programlisting">
+jsobject = retrieveJSObject("var globalObject = { 'id': 'obj1', 'name': function() { return 'name1'; } };globalObject;")
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">JavaScript</span><pre class="programlisting">
+var jsobject = retrieveJSObject("var globalObject = { 'id': 'obj1', 'name': function() { return 'name1'; } };globalObject;");
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Perl</span><pre class="programlisting">
+my $jsobject = retrieveJSObject("var globalObject = { 'id': 'obj1', 'name': function() { return 'name1'; } };globalObject;");
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Ruby</span><pre class="programlisting">
+jsobject = retrieveJSObject("var globalObject = { 'id': 'obj1', 'name': function() { return 'name1'; } };globalObject;")
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Tcl</span><pre class="programlisting">
+set jsobject [invoke retrieveJSObject {var globalObject = \{ 'id': 'obj1', 'name': function() \{ return 'name1'; \} \};globalObject;\} }]
+</pre></div><p>
+The <a class="xref" href="rgs-webconvenience.html#web-retrieveJSObject-function">retrieveJSObject</a> function returns the result of
+the last statement executed—in this case the last statement is
+<code class="code">globalObject;</code> so a reference to the just created globalObject is returned.
+Now its possible to fetch the <code class="code">id</code> property of that object or call the <code class="code">name</code>
+function. Here is an example of logging both in the test results
+</p><div xmlns="" class="scriptlang"><form><select name="scriptlangcombo" onchange="javascript:changeScriptingLanguage(this)" onclick="javascript:changeScriptingLanguage(this)"><option value="all" selected>Show All</option><option value="JavaScript">Show JavaScript</option><option value="Perl">Show Perl</option><option value="Python">Show Python</option><option value="Ruby">Show Ruby</option><option value="Tcl">Show Tcl</option></select></form></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Python</span><pre class="programlisting">
+test.log("id: " + jsobject.property("id"))
+test.log("name: " + jsobject.call("name"))
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">JavaScript</span><pre class="programlisting">
+test.log("id: " + jsobject.property("id"));
+test.log("name: " + jsobject.call("name"));
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Perl</span><pre class="programlisting">
+test::log("id: " . $jsobject-&gt;property("id"));
+test::log("name: " . $jsobject-&gt;call("name"));
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Ruby</span><pre class="programlisting">
+test.log("id: " + jsobject.property("id"))
+test.log("name: " + jsobject.call("name"))
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Tcl</span><pre class="programlisting">
+test log "id: " [invoke $jsobject property "id"]
+test log "name: " [invoke $jsobject call "name"]
+</pre></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="ugsweb-convenience"></a>5.3.7. How to Use the Web Convenience API</h3></div></div></div><p>
+This section describes the script API <span class="emphasis"><em>Squish</em></span> offers on top of the DOM
+API to make it easy to perform common user actions such as clicking a
+link, entering text, etc. All the functions provided by the API are
+listed in the <a class="xref" href="rgs-webconvenience.html" title="6.10. Web Object API">Web Object API (Section 6.10)</a> section in the <a class="xref" href="ref.man.html" title="Chapter 7. Tools Reference Manual">Tools Reference Manual (Chapter 7)</a>. Here we will show a few examples to
+illustrate how the API is used.
+</p><p>
+In the example below, we click a link, select an option, and enter some
+text.
+</p><div xmlns="" class="scriptlang"><form><select name="scriptlangcombo" onchange="javascript:changeScriptingLanguage(this)" onclick="javascript:changeScriptingLanguage(this)"><option value="all" selected>Show All</option><option value="JavaScript">Show JavaScript</option><option value="Perl">Show Perl</option><option value="Python">Show Python</option><option value="Ruby">Show Ruby</option><option value="Tcl">Show Tcl</option></select></form></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Python</span><pre class="programlisting">
+clickLink(":{tagName='A' innerText='Advanced Search'}")
+selectOption(":{tagName='INPUT' id='sel' form='myform' " +
+        "type='select-one'}", "Banana")
+setText(":{tagName='INPUT' id='input' form='myform' type='text'}",
+        "Some Text")
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">JavaScript</span><pre class="programlisting">
+clickLink(":{tagName='A' innerText='Advanced Search'}");
+selectOption(":{tagName='INPUT' id='sel' form='myform' " +
+        "type='select-one'}", "Banana");
+setText(":{tagName='INPUT' id='input' form='myform' type='text'}",
+        "Some Text");
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Perl</span><pre class="programlisting">
+clickLink(":{tagName='A' innerText='Advanced Search'}");
+selectOption(":{tagName='INPUT' id='sel' form='myform' " .
+        "type='select-one'}", "Banana");
+setText(":{tagName='INPUT' id='input' form='myform' type='text'}",
+        "Some Text");
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Ruby</span><pre class="programlisting">
+clickLink(":{tagName='A' innerText='Advanced Search'}")
+selectOption(":{tagName='INPUT' id='sel' form='myform' " +
+        "type='select-one'}", "Banana")
+setText(":{tagName='INPUT' id='input' form='myform' type='text'}",
+        "Some Text")
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Tcl</span><pre class="programlisting">
+invoke clickLink ":{tagName='A' innerText='Advanced Search'}"
+invoke selectOption ":{tagName='INPUT' id='sel' form='myform' \
+        type='select-one'}" "Banana"
+invoke setText ":{tagName='INPUT' id='input' form='myform' \
+        type='text'}" "Some Text"
+</pre></div><p>
+In these cases we identified the object using real (multi-property)
+names; we could just have easily used symbolic names, or even object
+references, instead. Note also that the full API contains far more
+functions than the three mentioned here (<a class="xref" href="rgs-webconvenience.html#web-clickLink-function"><code class="function">clickLink</code></a>, <a class="xref" href="rgs-webconvenience.html#web-selectOption-function"><code class="function">selectOption</code></a>, and <a class="xref" href="rgs-webconvenience.html#web-setText-function"><code class="function">setText</code></a>), although all of them are just as easy
+to use.
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="ugsweb-sync"></a>5.3.8. How to Synchronize Web Page Loading for Testing</h3></div></div></div><p>
+In many simple cases, just waiting for a particular object to become
+available using the <a class="xref" href="rgs-squish.html#waitForObject-function"><code class="function">waitForObject</code></a> function
+is sufficient.
+</p><p>
+However, in some cases we need to ensure that the page has loaded before
+we attempt to access its objects. The special <a class="xref" href="rgs-webconvenience.html#web-isPageLoaded-function"><code class="function">isPageLoaded</code></a> function makes it possible to
+synchronize a test script with a Web application's page loaded status.
+</p><p>
+We could use this function to wait for a Web page to be fully loaded
+before clicking a particular button on the page. For example, if a page
+has a <span class="guibutton">Login</span> button, we could ensure that the page
+is loaded before attempting to click the button, using the following
+code:
+</p><div xmlns="" class="scriptlang"><form><select name="scriptlangcombo" onchange="javascript:changeScriptingLanguage(this)" onclick="javascript:changeScriptingLanguage(this)"><option value="all" selected>Show All</option><option value="JavaScript">Show JavaScript</option><option value="Perl">Show Perl</option><option value="Python">Show Python</option><option value="Ruby">Show Ruby</option><option value="Tcl">Show Tcl</option></select></form></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Python</span><pre class="programlisting">
+loaded = waitFor("isPageLoaded()", 5000)
+if loaded:
+    clickButton(waitForObject(
+        ":{tagName='INPUT' type='button' value='Login'}"))
+else:
+    test.fatal("Page loading failed")
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">JavaScript</span><pre class="programlisting">
+var loaded = waitFor("isPageLoaded()", 5000);
+if (loaded)
+    clickButton(waitForObject(
+        ":{tagName='INPUT' type='button' value='Login'}"));
+else
+    test.fatal("Page loading failed");
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Perl</span><pre class="programlisting">
+my $loaded = waitFor("isPageLoaded()", 5000);
+if ($loaded) {
+    clickButton(waitForObject(
+        ":{tagName='INPUT' type='button' value='Login'}"));
+}
+else {
+    test::fatal("Page loading failed");
+}
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Ruby</span><pre class="programlisting">
+loaded = waitFor("isPageLoaded", 5000)
+if loaded
+    clickButton(waitForObject(
+        ":{tagName='INPUT' type='button' value='Login'}"))
+else
+    Test.fatal("Page loading failed")
+end
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Tcl</span><pre class="programlisting">
+set loaded [waitFor {invoke isPageLoaded} 5000]
+if {$loaded} {
+    invoke clickButton [invoke waitForObject \
+        ":{tagName='INPUT' type='button' value='Login'}"]
+} else {
+    test fatal "Page loading failed"
+}
+</pre></div><p>
+It is necessary to use the <a class="xref" href="rgs-webconvenience.html#web-isPageLoaded-function"><code class="function">isPageLoaded</code></a>
+function to ensure that the page is loaded and its web objects are
+<span class="emphasis"><em>potentially</em></span> accessible. To access a particular
+object we must still use the <a class="xref" href="rgs-squish.html#waitForObject-function"><code class="function">waitForObject</code></a>
+function—and we may even have to specify a longer timeout than the
+default 20 000 milliseconds to allow for network latency.
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="ugs-webwidgets"></a>5.3.9. How to Test Web Elements</h3></div></div></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><span class="section"><a href="ugs-webapi.html#ugsww-state">5.3.9.1. How to Test the State of Web Elements</a></span></dt><dt><span class="section"><a href="ugs-webapi.html#ugsww-checkboxradio">5.3.9.2. Form Checkboxes and Radiobuttons</a></span></dt><dt><span class="section"><a href="ugs-webapi.html#ugsww-text">5.3.9.3. Form Text fields</a></span></dt><dt><span class="section"><a href="ugs-webapi.html#ugsww-select">5.3.9.4. Form Selection Boxes</a></span></dt><dt><span class="section"><a href="ugs-webapi.html#ug-web-access-table-cell-contents">5.3.9.5. How to Access Table Cell Contents</a></span></dt><dt><span class="section"><a href="ugs-webapi.html#ugsww-otherelem">5.3.9.6. Non-Form Elements and Synchronization</a></span></dt></dl></div><p>
+In this section we will cover how to test specific HTML elements in a
+Web application. This will allow us to verify that elements have
+properties with the values we expect and that form elements have their
+expected contents.
+</p><p>
+One aspect of testing that can be quite challenging is the creation of
+test verifications. As shown in the section <a class="xref" href="tutorials-web.html#tgs-vp-web" title="4.6.1.4. Inserting Additional Verification Points">Inserting Additional Verification Points (Section 4.6.1.4)</a> in
+<a class="xref" href="tutorials-web.html#tutorial-getting-started-web" title="4.6.1. Tutorial: Starting to Test Web Applications">Tutorial: Starting to Test Web Applications (Section 4.6.1)</a>, most of this can be done
+using the <span class="application">Spy</span> and its point &amp; click interface. But in some cases
+it is actually more convenient—and more flexibile—to
+implement verification points directly in code.
+</p><p>
+To test and verify a widget and its properties or contents in code,
+first we need access to the widget in the test script. To obtain a
+reference to the widget, the <a class="xref" href="rgs-squish.html#waitForObject-function"><code class="function">waitForObject</code></a>
+function is used. This function finds the widget with the given name
+and returns a reference to it. For this purpose we need to know the name
+of the widget we want to test, and we can get the name using the <span class="application">Spy</span>
+tool (see <a class="xref" href="ug-editdebug.html#uged-spy" title="5.21.3. How to Use the Spy">How to Use the Spy (Section 5.21.3)</a>) and adding the object to the <a class="xref" href="rg-objectmap.html" title="7.11. Object Map">Object Map (Section 7.11)</a> (so that <span class="emphasis"><em>Squish</em></span> will remember it) and then
+copying the object's name (preferably its symbolic name) to the
+clipboard ready to be pasted into our test. If we need to gather the
+names of lots of widgets it is probably faster and easier to record a
+dummy test during which we make sure that we access every widget we want
+to verify in our manually written test script. This will cause <span class="emphasis"><em>Squish</em></span>
+to add all the relevant names to the <a class="xref" href="rg-objectmap.html" title="7.11. Object Map">Object Map (Section 7.11)</a>,
+which we can then copy and paste into our code.
+</p><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="ugsww-state"></a>5.3.9.1. How to Test the State of Web Elements</h4></div></div></div><p>
+One of the most common test requirements is to verify that a particular
+element is enabled or disabled at some point during the test run. This
+verification is easily made by checking an element's
+<code class="code">disabled</code> property.
+</p><div xmlns="" class="scriptlang"><form><select name="scriptlangcombo" onchange="javascript:changeScriptingLanguage(this)" onclick="javascript:changeScriptingLanguage(this)"><option value="all" selected>Show All</option><option value="JavaScript">Show JavaScript</option><option value="Perl">Show Perl</option><option value="Python">Show Python</option><option value="Ruby">Show Ruby</option><option value="Tcl">Show Tcl</option></select></form></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Python</span><pre class="programlisting">
+entry = waitForObject("{tagName='INPUT' id='input' " +
+        "form='myform' type='text'}")
+test.verify(not entry.disabled)
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">JavaScript</span><pre class="programlisting">
+var entry = waitForObject("{tagName='INPUT' id='input' " +
+        "form='myform' type='text'}");
+test.verify(!entry.disabled);
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Perl</span><pre class="programlisting">
+my $entry = waitForObject("{tagName='INPUT' id='input' " .
+        "form='myform' type='text'}");
+test::verify(!$entry-&gt;disabled);
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Ruby</span><pre class="programlisting">
+entry = waitForObject("{tagName='INPUT' id='input' " +
+        "form='myform' type='text'}")
+Test.verify(!entry.disabled)
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Tcl</span><pre class="programlisting">
+set entry [waitForObject "{tagName='INPUT' id='input' \
+        form='myform' type='text'}"]
+test verify [expr ![property get $entry disabled]]
+</pre></div><p>
+Here we have verified that a text entry element is enabled (i.e., that
+its <code class="code">disabled</code> property is false). To check that the element
+is disabled, we would eliminate the negation (<code class="code">not</code> or
+<code class="code">!</code> depending on language).
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="ugsww-checkboxradio"></a>5.3.9.2. Form Checkboxes and Radiobuttons</h4></div></div></div><p>
+To verify that a radiobutton or checkbox is checked, we just need to
+query its <code class="varname">checked</code> property.
+</p><div xmlns="" class="scriptlang"><form><select name="scriptlangcombo" onchange="javascript:changeScriptingLanguage(this)" onclick="javascript:changeScriptingLanguage(this)"><option value="all" selected>Show All</option><option value="JavaScript">Show JavaScript</option><option value="Perl">Show Perl</option><option value="Python">Show Python</option><option value="Ruby">Show Ruby</option><option value="Tcl">Show Tcl</option></select></form></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Python</span><pre class="programlisting">
+radiobutton = waitForObject(":{tagName='INPUT' id='r1' name='rg' " +
+        "form='myform' type='radio' value='Radio 1'}")
+test.verify(radiobutton.checked)
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">JavaScript</span><pre class="programlisting">
+var radiobutton = waitForObject(":{tagName='INPUT' id='r1' name='rg' " +
+        "form='myform' type='radio' value='Radio 1'}");
+test.verify(radiobutton.checked);
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Perl</span><pre class="programlisting">
+my $radiobutton = waitForObject(":{tagName='INPUT' id='r1' name='rg' " .
+        "form='myform' type='radio' value='Radio 1'}");
+test::verify($radiobutton-&gt;checked);
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Ruby</span><pre class="programlisting">
+radiobutton = waitForObject(":{tagName='INPUT' id='r1' name='rg' " +
+        "form='myform' type='radio' value='Radio 1'}")
+Test.verify(radiobutton.checked)
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Tcl</span><pre class="programlisting">
+set radiobutton [waitForObject ":{tagName='INPUT' id='r1' name='rg' \
+        form='myform' type='radio' value='Radio 1'}"]
+test verify [property get $radiobutton checked]
+</pre></div><p>
+The coding pattern shown here—get a reference to an object, then
+verify the value of one of its properties—is very common and can be
+applied to any element.
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="ugsww-text"></a>5.3.9.3. Form Text fields</h4></div></div></div><p>
+Both the <span class="type">text</span> and <span class="type">textarea</span> form elements have
+a <code class="varname">value</code> property, so it is easy to check what they
+contain.
+</p><div xmlns="" class="scriptlang"><form><select name="scriptlangcombo" onchange="javascript:changeScriptingLanguage(this)" onclick="javascript:changeScriptingLanguage(this)"><option value="all" selected>Show All</option><option value="JavaScript">Show JavaScript</option><option value="Perl">Show Perl</option><option value="Python">Show Python</option><option value="Ruby">Show Ruby</option><option value="Tcl">Show Tcl</option></select></form></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Python</span><pre class="programlisting">
+entry = waitForObject("{tagName='INPUT' id='input' " +
+        "form='myform' type='text'}")
+test.compare(entry.value, "Ternary")
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">JavaScript</span><pre class="programlisting">
+var entry = waitForObject("{tagName='INPUT' id='input' " +
+        "form='myform' type='text'}");
+test.compare(entry.value, "Ternary");
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Perl</span><pre class="programlisting">
+my $entry = waitForObject("{tagName='INPUT' id='input' " .
+        "form='myform' type='text'}");
+test::compare($entry-&gt;value, "Ternary");
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Ruby</span><pre class="programlisting">
+entry = waitForObject("{tagName='INPUT' id='input' " +
+        "form='myform' type='text'}")
+Test.compare(entry.value, "Ternary")
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Tcl</span><pre class="programlisting">
+set entry [waitForObject "{tagName='INPUT' id='input' \
+        form='myform' type='text'}"]
+test compare [property get $entry value] "Ternary"
+</pre></div><p>
+This follows exactly the same pattern as we used for the earlier
+examples.
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="ugsww-select"></a>5.3.9.4. Form Selection Boxes</h4></div></div></div><p>
+Web forms usually present single selection lists (of element type
+<code class="code">select-one</code>) in comboboxes and multiple selection lists (of
+element type <code class="code">select</code>) in listboxes. We can easily check
+which items are selected.
+</p><div xmlns="" class="scriptlang"><form><select name="scriptlangcombo" onchange="javascript:changeScriptingLanguage(this)" onclick="javascript:changeScriptingLanguage(this)"><option value="all" selected>Show All</option><option value="JavaScript">Show JavaScript</option><option value="Perl">Show Perl</option><option value="Python">Show Python</option><option value="Ruby">Show Ruby</option><option value="Tcl">Show Tcl</option></select></form></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Python</span><pre class="programlisting">
+selection = waitForObject(":{tagName='INPUT' id='sel' " +
+        "form='myform' type='select-one'}")
+test.compare(selection.selectedIndex, 2)
+test.compare(selection.selectedOption, "Cavalier")
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">JavaScript</span><pre class="programlisting">
+var selection = waitForObject(":{tagName='INPUT' id='sel' " +
+        "form='myform' type='select-one'}");
+test.compare(selection.selectedIndex, 2);
+test.compare(selection.selectedOption, "Cavalier");
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Perl</span><pre class="programlisting">
+my $selection = waitForObject(":{tagName='INPUT' id='sel' " .
+        "form='myform' type='select-one'}");
+test::compare($selection-&gt;selectedIndex, 2);
+test::compare($selection-&gt;selectedOption, "Cavalier");
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Ruby</span><pre class="programlisting">
+selection = waitForObject(":{tagName='INPUT' id='sel' " +
+        "form='myform' type='select-one'}")
+Test.compare(selection.selectedIndex, 2)
+Test.compare(selection.selectedOption, "Cavalier")
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Tcl</span><pre class="programlisting">
+set selection [waitForObject ":{tagName='INPUT' id='sel' \
+        form='myform' type='select-one'}"]
+test compare [property get $selection selectedIndex] 2
+test compare [property get $selection selectedOption] "Cavalier"
+</pre></div><p>
+Here we retrieve the selected item from a single selection list box and
+verify that the third item (the item at index position 2), is selected,
+and that it has the text “<span class="quote">Cavalier</span>”.
+</p><div xmlns="" class="scriptlang"><form><select name="scriptlangcombo" onchange="javascript:changeScriptingLanguage(this)" onclick="javascript:changeScriptingLanguage(this)"><option value="all" selected>Show All</option><option value="JavaScript">Show JavaScript</option><option value="Perl">Show Perl</option><option value="Python">Show Python</option><option value="Ruby">Show Ruby</option><option value="Tcl">Show Tcl</option></select></form></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Python</span><pre class="programlisting">
+selection = waitForObject(":{tagName='INPUT' id='sel' " +
+        "form='myform' type='select'}")
+test.verify(selection.optionAt(0).selected)
+test.verify(not selection.optionAt(1).selected)
+test.verify(selection.optionAt(2).selected)
+test.compare(selection.optionAt(1).text, "Round Head")
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">JavaScript</span><pre class="programlisting">
+var selection = waitForObject(":{tagName='INPUT' id='sel' " +
+        "form='myform' type='select'}");
+test.verify(selection.optionAt(0).selected);
+test.verify(!selection.optionAt(1).selected);
+test.verify(selection.optionAt(2).selected);
+test.compare(selection.optionAt(1).text, "Round Head");
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Perl</span><pre class="programlisting">
+my $selection = waitForObject(":{tagName='INPUT' id='sel' " .
+        "form='myform' type='select'}");
+test::verify($selection-&gt;optionAt(0)-&gt;selected);
+test::verify(!$selection-&gt;optionAt(1)-&gt;selected);
+test::verify($selection-&gt;optionAt(2)-&gt;selected);
+test::compare($selection-&gt;optionAt(1)-&gt;text, "Round Head");
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Ruby</span><pre class="programlisting">
+selection = waitForObject(":{tagName='INPUT' id='sel' " +
+        "form='myform' type='select'}")
+Test.verify(selection.optionAt(0).selected)
+Test.verify(!selection.optionAt(1).selected)
+Test.verify(selection.optionAt(2).selected)
+Test.compare(selection.optionAt(1).text, "Round Head")
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Tcl</span><pre class="programlisting">
+set selection [waitForObject ":{tagName='INPUT' id='sel' \
+        form='myform' type='select'}"]
+test verify [property get [invoke selection optionAt 0] selected]
+test verify [expr ![property get [invoke selection optionAt 1] selected]]
+test verify [property get [invoke selection optionAt 2] selected]
+test.compare [property get [invoke selection optionAt 1] text] \
+        "Round Head"
+</pre></div><p>
+In this example, we retrieve a reference to a mulitple selection
+list—normally represented by a listbox—and then retrieve its
+option items. We then verify that the first option (at index position 0)
+is selected, that the second option (at index position 1) is not
+selected, and that the third option (at index position 2) is selected.
+We also verify the second option's text is “<span class="quote">Round Head</span>”.
+</p><p>
+See also the <a class="xref" href="rgs-webconvenience.html#web-HTML_Select-class" title="6.10.32. HTML_Select Class">HTML_Select Class (Section 6.10.32)</a> class, its <a class="xref" href="rgs-webconvenience.html#web-HTML_Select.optionAt-function"><code class="function">HTML_Select.optionAt</code></a> function, and its
+<code class="code">text</code> and <code class="code">selected</code> properties.
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="ug-web-access-table-cell-contents"></a>5.3.9.5. How to Access Table Cell Contents</h4></div></div></div><p>
+Another common requirement when testing Web applications is to retrieve
+the text contents of particular cells in HTML tables. This is actually
+very easy to do with <span class="emphasis"><em>Squish</em></span>.
+</p><p>
+All HTML elements retrieved with the <a class="xref" href="rgs-squish.html#findObject-function"><code class="function">findObject</code></a> function and the <a class="xref" href="rgs-squish.html#waitForObject-function"><code class="function">waitForObject</code></a> function have an <a class="xref" href="rgs-webconvenience.html#web-HTML_Object.evaluateXPath-function"><code class="function">HTML_Object.evaluateXPath</code></a> method that can be
+used to query the HTML element, and which returns the results of the
+query. We can make use of this to create a generic custom
+<code class="code">getCellText</code> function that will do the job we want. Here's
+an example implementation:
+</p><div xmlns="" class="scriptlang"><form><select name="scriptlangcombo" onchange="javascript:changeScriptingLanguage(this)" onclick="javascript:changeScriptingLanguage(this)"><option value="all" selected>Show All</option><option value="JavaScript">Show JavaScript</option><option value="Perl">Show Perl</option><option value="Python">Show Python</option><option value="Ruby">Show Ruby</option><option value="Tcl">Show Tcl</option></select></form></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Python</span><pre class="programlisting">
+def getCellText(tableObject, row, column):
+    return tableObject.evaluateXPath("TBODY/TR[%d]/TD[%d]" % (
+        row + 1, column + 1)).stringValue
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">JavaScript</span><pre class="programlisting">
+function getCellText(tableObject, row, column)
+{
+    return tableObject.evaluateXPath("TBODY/TR[" + (row + 1) +
+        "]/TD[" + (column + 1) + "]").stringValue;
+}
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Perl</span><pre class="programlisting">
+sub getCellText
+{
+    my ($tableObject, $row, $column) = @_;
+    ++$row;
+    ++$column;
+    return $tableObject-&gt;evaluateXPath(
+        "TBODY/TR[$row]/TD[$column]")-&gt;stringValue;
+}
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Ruby</span><pre class="programlisting">
+def getCellText(tableObject, row, column)
+    tableObject.evaluateXPath(
+        "TBODY/TR[#{row + 1}]/TD[#{column + 1}]").stringValue
+end
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Tcl</span><pre class="programlisting">
+proc getCellText {tableObject row column} {
+    incr row
+    incr column
+    set argument "TBODY/TR[$row]/TD[$column]"
+    return [property get [invoke $tableObject \
+        evaluateXPath $argument] stringValue]
+}
+</pre></div><p>
+An XPath is kind of like a file path in that each component is separated
+by a <code class="code">/</code>. The XPath used here says, “<span class="quote">find every
+<code class="code">TBODY</code> tag, and inside each one find the <code class="code">row</code>-th
+<code class="code">TR</code> tag, and inside that find the <code class="code">column</code>-th
+<code class="code">TD</code> tag</span>”. The result is always an object of type
+<a class="xref" href="rgs-webconvenience.html#web-HTML_XPathResult-class" title="6.10.41. HTML_XPathResult Class">HTML_XPathResult Class (Section 6.10.41)</a>;
+here we return the result query as a single string value using the
+result's <code class="code">stringValue</code> property. (So if there was more than
+one <code class="code">TBODY</code> tag in the document that had a cell at the row
+and column we wanted, we'd actually get the text of all of them.) We must
+add 1 to the row and to the column because XPath queries use 1-based
+indexing, but we prefer our functions to have 0-based indexing since
+that is the kind used by all the scripting languages that <span class="emphasis"><em>Squish</em></span>
+supports. The function can be used like this:
+</p><div xmlns="" class="scriptlang"><form><select name="scriptlangcombo" onchange="javascript:changeScriptingLanguage(this)" onclick="javascript:changeScriptingLanguage(this)"><option value="all" selected>Show All</option><option value="JavaScript">Show JavaScript</option><option value="Perl">Show Perl</option><option value="Python">Show Python</option><option value="Ruby">Show Ruby</option><option value="Tcl">Show Tcl</option></select></form></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Python</span><pre class="programlisting">
+table = waitForObject(htmlTableName)
+text = getCellText(table, 23, 11)
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">JavaScript</span><pre class="programlisting">
+var table = waitForObject(htmlTableName);
+var text = getCellText(table, 23, 11);
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Perl</span><pre class="programlisting">
+my $table = waitForObject($htmlTableName);
+my $text = getCellText($table, 23, 11);
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Ruby</span><pre class="programlisting">
+table = waitForObject(htmlTableName)
+text = getCellText(table, 23, 11)
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Tcl</span><pre class="programlisting">
+set table [waitForObject $htmlTableName]
+set text [getCellText $table 23 11]
+</pre></div><p>
+This code will return the text from the cell at the 22nd row and 10th
+column of the HTML table whose name is in the <code class="code">htmlTableName</code>
+variable.
+</p><p>
+<span class="emphasis"><em>Squish</em></span>'s XPath functionality is covered in <a class="xref" href="ugs-webapi.html#ugsweb-xpath" title="5.3.2. How to Use XPath">How to Use XPath (Section 5.3.2)</a>.
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="ugsww-otherelem"></a>5.3.9.6. Non-Form Elements and Synchronization</h4></div></div></div><p>
+Of course it is also possible to verify the states and contents
+of any other element in a Web application's DOM tree.
+</p><p>
+For example, we might want to verify that a table
+with the ID
+<code class="varname">result_table</code> contains the text—somewhere in the
+table, we don't care where—“<span class="quote">Total: 387.92</span>”.
+</p><div xmlns="" class="scriptlang"><form><select name="scriptlangcombo" onchange="javascript:changeScriptingLanguage(this)" onclick="javascript:changeScriptingLanguage(this)"><option value="all" selected>Show All</option><option value="JavaScript">Show JavaScript</option><option value="Perl">Show Perl</option><option value="Python">Show Python</option><option value="Ruby">Show Ruby</option><option value="Tcl">Show Tcl</option></select></form></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Python</span><pre class="programlisting">
+table = waitForObject("{tagName='TABLE' id='result_table]'}")
+contents = table.innerText
+test.verify(contents.find("Total: 387.92") != -1)
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">JavaScript</span><pre class="programlisting">
+var table = waitForObject("{tagName='TABLE' id='result_table]'}");
+var contents = table.innerText;
+test.verify(contents.indexOf("Total: 387.92") != -1);
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Perl</span><pre class="programlisting">
+my $table = waitForObject("{tagName='TABLE' id='result_table]'}");
+my $contents = $table-&gt;innerText;
+test::verify(index($contents, "Total: 387.92") != -1);
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Ruby</span><pre class="programlisting">
+table = waitForObject("{tagName='TABLE' id='result_table]'}")
+contents = table.innerText
+Test.verify(contents.find("Total: 387.92") != -1)
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Tcl</span><pre class="programlisting">
+set table [waitForObject "{tagName='TABLE' id='result_table]'}"]
+set contents [property get $table innerText]
+test verify [expr [string first "Total: 387.92" $contents] != -1]
+</pre></div><p>
+The <code class="code">innerText</code> property gives us the entire table's text as
+a string, so we can easily search it.
+</p><p>
+Here's another example, this time checking that a DIV tag with the ID
+<code class="varname">syncDIV</code> is hidden.
+</p><div xmlns="" class="scriptlang"><form><select name="scriptlangcombo" onchange="javascript:changeScriptingLanguage(this)" onclick="javascript:changeScriptingLanguage(this)"><option value="all" selected>Show All</option><option value="JavaScript">Show JavaScript</option><option value="Perl">Show Perl</option><option value="Python">Show Python</option><option value="Ruby">Show Ruby</option><option value="Tcl">Show Tcl</option></select></form></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Python</span><pre class="programlisting">
+div = waitForObject(":{tagName='DIV' id='syncDIV'}")
+test.compare(div.style().value("display"), "hidden")
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">JavaScript</span><pre class="programlisting">
+var div = waitForObject(":{tagName='DIV' id='syncDIV'}");
+test.compare(div.style().value("display"), "hidden");
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Perl</span><pre class="programlisting">
+my $div = waitForObject(":{tagName='DIV' id='syncDIV'}");
+test::compare($div-&gt;style()-&gt;value("display"), "hidden");
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Ruby</span><pre class="programlisting">
+div = waitForObject(":{tagName='DIV' id='syncDIV'}")
+Test.compare(div.style().value("display"), "hidden")
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Tcl</span><pre class="programlisting">
+set div [waitForObject ":{tagName='DIV' id='syncDIV'}"]
+test compare [invoke $div style [invoke value "display"]] "hidden"
+</pre></div><p>
+Notice that we must use the <a class="xref" href="rgs-webconvenience.html#web-HTML_Object.style-function"><code class="function">HTML_Object.style</code></a> function (rather than
+writing, say <code class="code">div.style.display</code>).
+</p><p>
+Often such DIV elements are used for synchronization. For example,
+after a new page is loaded, we might want to wait until a particular DIV
+element exists and is hidden—perhaps some JavaScript code in the
+HTML page hides the DIV, so when the DIV is hidden we know that the
+browser is ready because the JavaScript has been executed.
+</p><div xmlns="" class="scriptlang"><form><select name="scriptlangcombo" onchange="javascript:changeScriptingLanguage(this)" onclick="javascript:changeScriptingLanguage(this)"><option value="all" selected>Show All</option><option value="JavaScript">Show JavaScript</option><option value="Perl">Show Perl</option><option value="Python">Show Python</option><option value="Ruby">Show Ruby</option><option value="Tcl">Show Tcl</option></select></form></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Python</span><pre class="programlisting">
+def isDIVReady(name):
+    if not object.exists(":{tagName='DIV' id='%s'}" % name):
+       return False
+    return waitForObject(":{tagName='DIV' id='syncDIV'}").style().value(
+        "display") == "hidden"
+
+# later on...
+waitFor("isDIVReady('syncDIV')")
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">JavaScript</span><pre class="programlisting">
+function isDIVReady(name)
+{
+    if (!object.exists(":{tagName='DIV' id='" + name + "'}"))
+       return false;
+    return waitForObject(":{tagName='DIV' id='syncDIV'}").style().value(
+        "display") == "hidden";
+}
+
+// later on...
+waitFor("isDIVReady('syncDIV')");
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Perl</span><pre class="programlisting">
+sub isDIVReady
+{
+    my $name = shift @_;
+    if (!object::exists(":{tagName='DIV' id='$name'}")) {
+       return 0;
+    }
+     return waitForObject(":{tagName='DIV' id='syncDIV'}")-&gt;style()-&gt;value(
+        "display") eq "hidden";
+}
+
+# later on...
+waitFor("isDIVReady('syncDIV')");
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Ruby</span><pre class="programlisting">
+def isDIVReady(name)
+    if !Squish::Object.exists(":{tagName='DIV' id='#{name}'}")
+       return false
+    end
+    waitForObject(":{tagName='DIV' id='syncDIV'}").style().value(
+        "display") == "hidden"
+end
+
+# later on...
+waitFor("isDIVReady('syncDIV')")
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Tcl</span><pre class="programlisting">
+proc isDIVReady {name} {
+    if {![object exists ":{tagName='DIV' id='${name}'}"]} {
+       return false
+    }
+    set div [waitForObject ":{tagName='DIV' id='syncDIV'}"]
+    set display [invoke $div style [invoke value "display"]]
+    return [string equal $display "hidden"]
+}
+
+# later on...
+[waitFor {isDIVReady('syncDIV')}]
+</pre></div><p>
+We can easily use the <a class="xref" href="rgs-squish.html#waitFor-function"><code class="function">waitFor</code></a> function to
+make <span class="emphasis"><em>Squish</em></span> wait for the code we give it to execute to complete.
+(Although it is designed for things that won't take too long.)
+</p></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="ug-load-testing-web"></a>5.3.10. How to Do Web Application Load Testing</h3></div></div></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><span class="section"><a href="ugs-webapi.html#tltw-sysinfo">5.3.10.1. Recording system information</a></span></dt><dt><span class="section"><a href="ugs-webapi.html#tltw-loadgeneration">5.3.10.2. Generating the load</a></span></dt><dt><span class="section"><a href="ugs-webapi.html#tltw-postprocessing">5.3.10.3. Postprocessing</a></span></dt></dl></div><p>
+This example demonstrates how to load test a Web server using <span class="emphasis"><em>Squish</em></span>.
+The following set up is assumed: Machine L controls the execution of the
+load testing scripts and has <span class="emphasis"><em>Squish</em></span> installed along with a Python
+interpreter. Machine L also has the test suite to be executed. Machines
+C1 to C<span class="emphasis"><em>n</em></span> are the ones where the Web browsers
+will be running. They all need to the <span class="application">squishserver</span> executable
+installed and running. Machine W is the Web server that will be put
+under load.
+</p><p>
+As machine W (the Web server) and machine L controlling the tests are
+physically different machines we need a way to retrieve system
+information over the network. The Simple Network Management Protocol
+(SNMP) is ideal for this task.
+</p><p>
+The load test is done by a Python script
+(<code class="filename">loadtest.py</code>) which is supplied along with
+<span class="emphasis"><em>Squish</em></span>'s examples:
+<code class="filename">examples/loadtesting/loadtest.py</code>. The script starts
+all the <span class="application">squishrunner</span> processes and makes them connect to the
+<span class="application">squishserver</span> processes and the machines C1 to C<span class="emphasis"><em>n</em></span>.
+All the details about the number of instances, start delays, the target
+host etc., are defined and documented at the top of the script. Simply
+adapt them to your needs.
+</p><p>
+The script will record the start and end times of all <span class="application">squishrunner</span>
+runs. And in a secondary thread the script polls for system information
+from the webserver and records this too. Data about both the loads and
+the runs are written to tab separated values files and can therefore be
+easily evaluated in succeeding steps. (Or you can modify the script to
+produce the output in another format if you prefer.)
+</p><p>
+To make <span class="application">squishrunner</span> be able to connect to remote machines, on each
+remote machine the configuration option <code class="code">ALLOWED_HOSTS</code> in
+the <code class="filename">squishrunnerrc</code> file must be set to the host
+starting the <span class="application">squishrunner</span> processes on all those machines C1 to
+C<span class="emphasis"><em>n</em></span>. (see <a class="xref" href="rg-regressiontesting.html#rgr-disttesting" title="7.1.2. Distributed Tests">Distributed Tests (Section 7.1.2)</a>).
+</p><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="tltw-sysinfo"></a>5.3.10.1. Recording system information</h4></div></div></div><p>
+Machine W (the Web server) needs to run a SNMP daemon. It can be
+installed and set up easily. For configuring, the
+<span class="application">snmpconf</span> command may prove useful. For
+example:
+</p><pre class="screen">snmpconf -g basic_setup</pre><p>
+Sources, binaries, documentation, and tutorials for this tool can be
+found at <a class="ulink" href="http://net-snmp.sourceforge.net/" target="_blank">http://net-snmp.sourceforge.net</a>. In addition the
+load testing script uses the command line SNMP utilities, which are also
+needed on Machine L. It would also be possible to use a Python SNMP
+module from its standard library or a third-party SNMP
+module—that's something you might want to do for yourself if you
+find you use the script a lot.
+</p><p>
+So in parallel with the <span class="application">squishrunner</span>s we will record system
+information using the command line SNMP utilities. At the end of the
+script the information is written to a file. Be aware that you may need
+to adjust the usage of the <span class="application">snmpget</span> program to
+match your SNMP settings. The <code class="function">cutAvg</code> function is a
+helper function for extracting what we need from the
+<span class="application">snmpget</span> program's output.
+</p><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Python</span><pre class="programlisting">
+def cutAvg(snmpString):
+    return snmpString.strip().rsplit("STRING: ", 1)[1]
+
+
+loads = []
+def sysinfo():
+    def loadOne(number):
+        cmd = "snmpget -v 1 -c commro %s laLoad.%d" % (
+            WEBSERVER_HOST, number)
+        tmp = os.popen(cmd, "r")
+        reply = tmp.read()
+        reply = cutAvg(reply)
+        tmp.close()
+        return reply
+
+    while True:
+        l1 = loadOne(1)
+        l5 = loadOne(2)
+        l15 = loadOne(3)
+        loads.append({'ts': time.time(), '1m': l1, '5m': l5, '15m': l15})
+        time.sleep(5)
+</pre></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="tltw-loadgeneration"></a>5.3.10.2. Generating the load</h4></div></div></div><p>
+We will store information (host, start time, and end time), related to
+every <span class="application">squishrunner</span> run in a <code class="code">SquishrunnerRun</code> object.
+Taking a <code class="code">SquishrunnerRun</code> object as parameter the
+<code class="code">runsuite</code> function sets the <code class="code">starttime</code>
+variable, initiates the connection to the <span class="application">squishserver</span> on the given
+host, and stores the <code class="code">endtime</code> after the <span class="application">squishrunner</span> has
+finished.
+</p><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Python</span><pre class="programlisting">
+class SquishrunnerRun:
+    id = 0
+    starttime = 0
+    endtime = 0
+    host = ''
+
+    def __init__(self, id, host):
+        self.id = id
+        self.host = host
+
+    def duration(self):
+        return self.endtime - self.starttime
+
+
+def runSuite(srr):
+    srr.starttime = time.time()
+    srrCmd = " ".join([SQUISHRUNNER_EXEC, "--host", srr.host,
+                       "--testsuite", TEST_SUITE,
+                       "--reportgen xml,%s%d.xml" % (REPORTS_DIR, srr.id)])
+    os.system(srrCmd)
+    srr.endtime = time.time()
+    print "call %d finished; needed %s" % (
+        srr.id, srr.endtime - srr.starttime)
+</pre></div><p>
+Having defined the <code class="code">SquishrunnerRun</code> class and the
+<code class="code">runSuite</code> function we are now able to start the
+testing itself. For each of the <code class="code">RUN_COUNT</code> runs, the next
+host will be associated with a newly created
+<code class="code">SquishrunnerRun</code> object. The next
+<code class="code">runSuite</code> function call will be started within a new
+thread. After waiting a specified amount of time we will continue. In
+addition we store all the <code class="code">SquishrunnerRun</code> objects in a
+list.
+</p><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Python</span><pre class="programlisting">
+runs = []
+for i in range(RUN_COUNT):
+    tmp = SquishrunnerRun(i,
+        SQUISHSERVER_HOSTS[i % len(SQUISHSERVER_HOSTS)])
+    runs.append(tmp)
+    thread.start_new_thread(runSuite, (tmp,))
+    time.sleep(RUN_DELAY)
+</pre></div><p>
+Now having started all the <span class="application">squishrunner</span> processes, the script must
+wait until all of them are finished. If a <span class="application">squishrunner</span> process has
+finished, its <code class="code">endtime</code> is set. So we must wait until none of
+the <code class="code">SquishrunnerRun</code>'s <code class="code">endtime</code>s are set to 0.
+</p><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Python</span><pre class="programlisting">
+def allRunnersFinished():
+    for runner in runs:
+        if runner.endtime != 0:
+            return False
+    return True
+
+while not allRunnersFinished():
+    pass
+</pre></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="tltw-postprocessing"></a>5.3.10.3. Postprocessing</h4></div></div></div><p>
+Once the testing itself has finished we must store the results
+of the test. They will be written to the two files defined as
+<code class="filename">RUNS_FILE</code> and <code class="filename">LOADS_FILE</code>.
+</p><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Python</span><pre class="programlisting">
+fh = None
+try:
+    fh = open(RUNS_FILE, "wt")
+    for e in runs:
+        fh.write("%s\t%s\t%s\n" % (e.id, e.starttime, e.endtime))
+finally:
+    if fh is not None:
+        fh.close()
+
+fh = None
+try:
+    fh = open(LOADS_FILE, "wt")
+    for e in loads:
+        fh.write("%(ts)s\t%(1m)s\t%(5m)s\t%(15m)s\n" % e)
+finally:
+    if fh is not None:
+        fh.close()
+</pre></div><p>
+The <code class="filename">RUNS_FILE</code> contains time stamps marking the
+start and end of each individual <span class="application">squishrunner</span> run. The
+<code class="filename">LOADS_FILE</code> contains server load averages measured
+every 5 seconds. The measurement of other information (traffic, number
+of processes, disk I/O) can easily be configured using suitable SNMP
+commands. Graphical presentation of the data can be produced with
+standard charting software.
+</p><p>
+At some point we hope to provide a ready-made front-end that will make
+it possible to configure, schedule, and execute test runs, as well
+provide visual representations of the results.
+</p></div></div></div><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" type="text/javascript" src="ScriptingLanguage.js"></script><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format">setScriptingLanguage();</script><div class="navfooter"><hr></hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="ugs-qtapi.html">Prev</a> </td><td width="20%" align="center"><a accesskey="u" href="users-guide.html">Up</a></td><td width="40%" align="right"> <a accesskey="n" href="ugs-javaapi.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">5.2. How to Use the Qt API </td><td width="20%" align="center"><a accesskey="h" href="index-noframes.html">Home</a></td><td width="40%" align="right" valign="top"> 5.4. How to Use the <span class="trademark">Java</span>™ API</td></tr></table></div></body>
+<!-- Mirrored from ugs-webapi.html by HTTrack Website Copier/3.x [XR&CO'2013], Wed, 06 Jul 2022 13:28:59 GMT -->
+</html>

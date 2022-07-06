@@ -1,0 +1,124 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<!-- Mirrored from rel-602.html by HTTrack Website Copier/3.x [XR&CO'2013], Wed, 06 Jul 2022 13:28:56 GMT -->
+<head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><title>2.26. Version 6.0.2</title><link rel="stylesheet" href="manual.css" type="text/css"></link><meta name="generator" content="DocBook XSL Stylesheets V1.73.2"></meta><link rel="start" href="index-noframes.html" title="Squish Manual"></link><link rel="up" href="relnotes.html" title="Chapter 2. Release Notes—for Upgraders"></link><link rel="prev" href="rel-603.html" title="2.25. Version 6.0.3"></link><link rel="next" href="rel-601.html" title="2.27. Version 6.0.1"></link><style xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" type="text/css" media="screen">
+        div.toc * { margin-left: 6px; margin-right: auto; max-width: 75em; }
+        div.toc span { margin-left: 0px; }
+        * { margin-left: auto; margin-right: auto; max-width: 75em; }
+        body { margin-left: 6px; margin-right: 6px; }
+        table th { padding: .5ex }
+        table td { padding: .5ex }
+    </style><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format">
+        function keyPress() {
+            var e = window.event;
+            if ( e == undefined ) {
+                return;
+            }
+            /* ### does not properly scroll, yet
+            if ( e.keyCode == 32 ) {
+            var l = document.links;
+            for ( var i = 0; i < l.length; i++ ) {
+                if ( l[i].innerText == "Next" ) {
+                location.href = l[i].href;
+                }
+            }
+            } else
+                */
+                if ( e.keyCode == 0x08 ) {
+            var l = document.links;
+            for ( var i = 0; i < l.length; i++ ) {
+                if ( l[i].innerText == "Prev" ) {
+                location.href = l[i].href;
+                }
+            }
+            }
+        }
+        document.onkeypress = keyPress;
+    </script></head><body><div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="rel-602"></a>2.26. Version 6.0.2</h2></div></div></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><span class="section"><a href="rel-602.html#idp35274488">2.26.1. Squish IDE-specific</a></span></dt><dt><span class="section"><a href="rel-602.html#idp35281816">2.26.2. Scripting</a></span></dt><dt><span class="section"><a href="rel-602.html#idp35287984">2.26.3. Web-specific</a></span></dt><dt><span class="section"><a href="rel-602.html#idp35297000">2.26.4. Flex-specific</a></span></dt><dt><span class="section"><a href="rel-602.html#idp35299368">2.26.5. Qt-specific</a></span></dt><dt><span class="section"><a href="rel-602.html#idp35303152">2.26.6. Windows (native)-specific</a></span></dt><dt><span class="section"><a href="rel-602.html#idp35308624">2.26.7. <span class="trademark">Java</span>™-specific</a></span></dt><dt><span class="section"><a href="rel-602.html#idp35316752">2.26.8. Android-specific</a></span></dt><dt><span class="section"><a href="rel-602.html#idp35319016">2.26.9. Tk-specific</a></span></dt><dt><span class="section"><a href="rel-602.html#idp35320240">2.26.10. Examples</a></span></dt></dl></div><p><span class="emphasis"><em>Squish</em></span> 6.0.2 is a maintenance release containing various bug fixes
+  and small improvements as described below:</p><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="idp35274488"></a>2.26.1. Squish IDE-specific</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Fixed a problem causing an error dialog when adding a
+      global script directory without focusing the <span class="guilabel">Global
+      Scripts</span> view first</p></li><li><p>Improve default sizing of dialogs shown in the
+      <acronym class="acronym">IDE</acronym>, most notable the dialog for adding an attachable
+      <acronym class="acronym">AUT</acronym></p></li><li><p>Fixed a problem in the <span class="guilabel">Application
+      Objects</span> view when returning from picking an
+      object</p></li><li><p>Update the <span class="guilabel">Summary</span> view more often
+      so that stepping through code the changes in the view are
+      visible</p></li><li><p>Fixed a problem causing additional windows (editor
+      windows for example) to disappear when running a test</p></li><li><p>Fixed a problem with picking when using a launcher-like
+      <acronym class="acronym">AUT</acronym></p></li><li><p>Improve <span class="guilabel">Open Symbolic Name</span> to work
+      from globally shared script files</p></li><li><p>Fix a problem that would prevent the object map to not
+      show symbolic names opened from a script file if there was a filter text
+      that did not match the symbolic name.</p></li><li><p>Improve performance of the status label in the Control
+      Bar when the test generates a lot of results in quick
+      succession</p></li><li><p>Improved performance of the Gherkin editor's scenario
+      annotations</p></li><li><p>Fix crash when pressing the <span class="guilabel">Retry</span>
+      button in object not found dialog when using JavaScript as script
+      language</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="idp35281816"></a>2.26.2. Scripting</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Importing the <code class="code">squishtest</code> module without
+      having a license key installed will now cause an exception to be
+      raised.</p></li><li><p>Fixed occasional stability issue when executing
+      <code class="code">import squishtest</code> using a standard Python
+      interpreter.</p></li><li><p><code class="literal">Timeout</code> event handlers installed via
+      the <code class="code">squishtest</code> modules' <code class="code">installEventHandler</code>
+      function now get called correctly.</p></li><li><p><code class="literal">Timeout</code> events no longer cause the
+      test script to be aborted immediately, instead a script exception is
+      raised.</p></li><li><p>Improved stability of the Python variable
+      watcher.</p></li><li><p><a class="xref" href="rgs-squish.html#waitFor-function"><code class="function">waitFor</code></a> in Perl now works
+      correctly with non-ASCII characters inside the script
+      statement</p></li><li><p><a class="xref" href="rgs-squish.html#testData.dataset-function"><code class="function">testData.dataset</code></a> handles an
+      empty file path correctly and will now cause an exception to be
+      raised</p></li><li><p>Fixed a regression related to using the standard Python
+      <code class="code">dir()</code> function on <span class="emphasis"><em>Squish</em></span> objects; the function now yields
+      a list of all members again.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="idp35287984"></a>2.26.3. Web-specific</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Fixed a problem with recording hierarchical names instead
+      of multi property ones after following a link.</p></li><li><p>Fixed a problem leading to a crash when the connection to
+      <span class="application">Microsoft Internet Explorer</span> was lost.</p></li><li><p>Trigger <code class="code">onchange</code> events from <a class="xref" href="rgs-webconvenience.html#web-setText-function"><code class="function">setText</code></a></p></li><li><p>Fix a problem that would generate real names for form
+      fields that fail to find that object again.</p></li><li><p>Fixed a regression for object lookups using just the
+      <code class="code">id</code> of objects as an object name (for example
+      <code class="code">findObject('MyCoolObject')</code>)</p></li><li><p>Fixed a problem that prevented settings changes in Google
+      Chrome from being persisted on Windows.</p></li><li><p>Improved support for using Proxy server on Windows, when
+      the proxy is used for local connections.</p></li><li><p>Fixed a crash when expanding the
+      <code class="literal">BrowserTab_0</code> object after hooking into the browser
+      failed.</p></li><li><p>Fixed a problem with connecting to an already running
+      <span class="application">Microsoft Internet Explorer</span> instance, for example when <span class="application">Microsoft Internet Explorer</span> is embedded into an Eclipse based
+      <acronym class="acronym">AUT</acronym>.</p></li><li><p>Fixed a problem with recording of text input containing a
+      percent character (<code class="literal">%</code>)</p></li><li><p>Fixed a problem with calculating object coordinates
+      (affecting native clicks and screenshots) with <span class="application">Microsoft Internet Explorer</span> 9.</p></li><li><p>Support highlighting of objects</p></li><li><p>Trigger change-notifications when a radio button or checkbox
+      is being clicked or their checked property changes.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="idp35297000"></a>2.26.4. Flex-specific</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Fixed a regression for picking and name-generation of
+      Flex objects that caused the name to lack the <acronym class="acronym">HTML</acronym>
+      container object.</p></li><li><p>Fixed a problem that led to incorrect recording of clicks
+      on List items</p></li><li><p>Avoid excessive logging of <code class="code">undefined</code>
+      properties</p></li><li><p>Support highlighting of objects</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="idp35299368"></a>2.26.5. Qt-specific</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Improved support for testing of statically linked Qt
+      applications</p></li><li><p>Support <code class="code">QVariantList</code> as a property type for
+      dynamically wrapped <code class="code">QObject</code> types</p></li><li><p>Improve <a class="xref" href="rg-cmdline.html#rgc-squishidl" title="7.4.5. squishidl">squishidl (Section 7.4.5)</a> handling of
+      symbol visibility macros for cross-compiling on a Windows
+      host</p></li><li><p>Fix extension loading when <acronym class="acronym">AUT</acronym>
+      modifies the <code class="envar">PATH</code> environment variable</p></li><li><p>Fixed a problem which caused launching the
+      <acronym class="acronym">AUT</acronym> to fail in case there are environment variables
+      set with empty (or otherwise invalid) names.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="idp35303152"></a>2.26.6. Windows (native)-specific</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Fixed a regression for calling <a class="xref" href="rgs-windowsconvenienceapi.html#win-setValue-function"><code class="function">setValue</code></a> on <acronym class="acronym">WPF</acronym> and
+      WindowsForms controls.</p></li><li><p><span class="application">hookwinaut.exe</span> now correctly
+      signals an error when trying to make an <acronym class="acronym">AUT</acronym> attachable
+      via a port which is already in use.</p></li><li><p><span class="emphasis"><em>Squish</em></span> for Windows now honors the <code class="literal">Post mortem
+      timeout</code> setting which can be used to influence the behavior
+      when automating subprocesses.</p></li><li><p>Exposed <code class="code">selected</code> property on tree items
+      accessed via Microsoft UI Automation.</p></li><li><p>Exposed <code class="code">toggleState</code> property on list items
+      accessed via Microsoft UI Automation.</p></li><li><p>Fixed replaying key combinations of Shift and arrow keys
+      to work as expected, no matter whether Numlock is enabled or
+      not.</p></li><li><p>Fixed potential stability issue when replaying user
+      actions on <acronym class="acronym">MFC</acronym> controls.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="idp35308624"></a>2.26.7. <span class="trademark">Java</span>™-specific</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Fix <span class="trademark">Java</span>™ WebStart hookup when using
+      <span class="application">javaws</span> binary or a <acronym class="acronym">JNLP</acronym>
+      <acronym class="acronym">URL</acronym> as <acronym class="acronym">AUT</acronym></p></li><li><p>Fix <span class="application">startjavaaut</span> breakage
+      since 6.0.0 on Windows platform</p></li><li><p>Make <span class="trademark">Java</span>™ Applets hookup much more reliable with web
+      testing and using <span class="application">Microsoft Internet Explorer</span></p></li><li><p>Fix hookup with <acronym class="acronym">JRE8</acronym> on Mac 'El
+      Capitan'</p></li><li><p>Fix hookup applets with a recent <span class="application">Firefox</span> on
+      Mac</p></li><li><p>Fix application interaction slowness when at a
+      breakpoint</p></li><li><p>Compatibility fix, assume hookup sub-processes when
+      <code class="code">HOOK_SUB_PROCESSES</code> option not set in
+      suite.conf</p></li><li><p>Fix Spy its Up button when a Swing <code class="code">JTable</code>
+      item is selected</p></li><li><p>Fix finding JavaFx <code class="code">ComboBox</code> drop-down widget
+      when inside a <code class="code">JFXPanel</code> embedded into Swing</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="idp35316752"></a>2.26.8. Android-specific</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Fix screenshots being rotated on Marshmallow, when screen
+      orientation is not the natural orientation</p></li><li><p>Fix generating <code class="code">NativeObject</code> properties of
+      type <code class="code">void</code> on recent android versions</p></li><li><p>Fix <code class="code">WebView</code> hookup with recent android
+      versions</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="idp35319016"></a>2.26.9. Tk-specific</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Support highlighting of objects</p></li><li><p>Fix a problem with hooking when Tcl is started before Tk
+      is loaded</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="idp35320240"></a>2.26.10. Examples</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Add the support for QtQuick applications to the monkey
+      test</p></li></ul></div></div></div><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" type="text/javascript" src="ScriptingLanguage.js"></script><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format">setScriptingLanguage();</script><div class="navfooter"><hr></hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="rel-603.html">Prev</a> </td><td width="20%" align="center"><a accesskey="u" href="relnotes.html">Up</a></td><td width="40%" align="right"> <a accesskey="n" href="rel-601.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">2.25. Version 6.0.3 </td><td width="20%" align="center"><a accesskey="h" href="index-noframes.html">Home</a></td><td width="40%" align="right" valign="top"> 2.27. Version 6.0.1</td></tr></table></div></body>
+<!-- Mirrored from rel-602.html by HTTrack Website Copier/3.x [XR&CO'2013], Wed, 06 Jul 2022 13:28:56 GMT -->
+</html>

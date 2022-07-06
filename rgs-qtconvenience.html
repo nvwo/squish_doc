@@ -1,0 +1,1214 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<!-- Mirrored from rgs-qtconvenience.html by HTTrack Website Copier/3.x [XR&CO'2013], Wed, 06 Jul 2022 13:29:00 GMT -->
+<head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><title>6.4. Qt Convenience API</title><link rel="stylesheet" href="manual.css" type="text/css"></link><meta name="generator" content="DocBook XSL Stylesheets V1.73.2"></meta><link rel="start" href="index-noframes.html" title="Squish Manual"></link><link rel="up" href="api.man.html" title="Chapter 6. API Reference Manual"></link><link rel="prev" href="rgs-squish.html" title="6.3. Squish API"></link><link rel="next" href="rgs-tkconvenience.html" title="6.5. Tk Convenience API"></link><style xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" type="text/css" media="screen">
+        div.toc * { margin-left: 6px; margin-right: auto; max-width: 75em; }
+        div.toc span { margin-left: 0px; }
+        * { margin-left: auto; margin-right: auto; max-width: 75em; }
+        body { margin-left: 6px; margin-right: 6px; }
+        table th { padding: .5ex }
+        table td { padding: .5ex }
+    </style><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format">
+        function keyPress() {
+            var e = window.event;
+            if ( e == undefined ) {
+                return;
+            }
+            /* ### does not properly scroll, yet
+            if ( e.keyCode == 32 ) {
+            var l = document.links;
+            for ( var i = 0; i < l.length; i++ ) {
+                if ( l[i].innerText == "Next" ) {
+                location.href = l[i].href;
+                }
+            }
+            } else
+                */
+                if ( e.keyCode == 0x08 ) {
+            var l = document.links;
+            for ( var i = 0; i < l.length; i++ ) {
+                if ( l[i].innerText == "Prev" ) {
+                location.href = l[i].href;
+                }
+            }
+            }
+        }
+        document.onkeypress = keyPress;
+    </script></head><body><div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="rgs-qtconvenience"></a>6.4. Qt Convenience API</h2></div></div></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><span class="section"><a href="rgs-qtconvenience.html#qwebview">6.4.1. QWebView Class</a></span></dt><dt><span class="section"><a href="rgs-qtconvenience.html#how.to.use.the.qml.extension.api">6.4.2. QML Extension API</a></span></dt><dt><span class="section"><a href="rgs-qtconvenience.html#qt-GestureBuilder-class">6.4.3. GestureBuilder</a></span></dt></dl></div><div class="important" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Important: Qt-specific"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Important]" src="images/important.png"></img></td><th align="left">Qt-specific</th></tr><tr><td align="left" valign="top"><p>
+The Qt Convenience API is <span class="emphasis"><em>only</em></span> available for
+the Squish for Qt editions.
+</p></td></tr></table></div><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Note: Qt Convenience Function Parameters"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/note.png"></img></td><th align="left"><a id="qt-convenience.function.parameters"></a>Qt Convenience Function Parameters</th></tr><tr><td align="left" valign="top"><p>
+Some of Qt's convenience functions can take a
+<em class="parameter"><code>modifierState</code></em> argument which indicates which
+special keys are pressed at the time of a mouse click. And some of the
+functions can also take a <em class="parameter"><code>button</code></em> argument which
+indicates which mouse button was clicked.
+</p><p>
+The <em class="parameter"><code>modifierState</code></em> can be one or more of the
+following:
+<code class="code">Qt.NoModifier</code>,
+<code class="code">Qt.AltModifier</code>,
+<code class="code">Qt.ControlModifier</code>,
+<code class="code">Qt.KeypadModifier</code>,
+<code class="code">Qt.MetaModifier</code>,
+<code class="code">Qt.ShiftModifier</code>.
+If more than one is used they must be
+<code class="code">OR</code>-d together, for example,
+<code class="code">Qt.AltModifier|Qt.ShiftModifier</code>. The form shown here works
+for Python and JavaScript. For Perl and Ruby replace the period with two
+colons, e.g., <code class="code">Qt::ControlModifier</code>, and for Tcl use the
+<code class="code">enum</code> function, e.g., <code class="code">enum Qt ControlModifier</code>.
+</p><p>
+The <em class="parameter"><code>button</code></em> can be any one of:
+<code class="code">Qt.NoButton</code>,
+<code class="code">Qt.LeftButton</code>,
+<code class="code">Qt.MidButton</code>,
+<code class="code">Qt.RightButton</code>.
+</p><p>
+For Perl use this: <code class="code">Qt::LeftButton</code>, etc.
+</p><p>
+For Ruby use this: <code class="code">Qt::LEFT_BUTTON</code>, etc.
+</p><p>
+For Tcl use this: <code class="code">enum Qt LeftButton</code>, etc.
+</p></td></tr></table></div><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Note: Native Dialogs on KDE"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/note.png"></img></td><th align="left"><a id="qt-native.dialogs.on.kde"></a>Native Dialogs on KDE</th></tr><tr><td align="left" valign="top"><p>
+To ensure the most reliable recording and replaying of tests, <span class="emphasis"><em>Squish</em></span>
+uses Qt's own dialogs (e.g., for choosing colors, files, and fonts),
+rather than the underlying platform's native dialogs. Unfortunately, on
+KDE, Qt uses the KDE dialogs and this can cause problems when developing
+cross-platform test scripts. The solution is to set the
+<code class="envar">QT_PLATFORM_PLUGIN</code> environment variable to an invalid
+value, (e.g., <code class="code">QT_PLATFORM_PLUGIN=nonesuch</code>). This can be
+done, for instance, in the <span class="application">Squish IDE</span>'s <a class="xref" href="ide.views.html#ide.the-settings.view" title="8.2.16. Test Suite Settings view">Test Suite Settings view (Section 8.2.16)</a>'s Environment section.
+</p></td></tr></table></div><p>
+Here are some quick links to the Qt Convenience API's functions:
+</p><div class="informaltable"><table border="0"><colgroup><col></col><col></col><col></col></colgroup><tbody><tr valign="top"><td valign="top">
+<div class="itemizedlist"><ul type="disc" compact><li><p><a class="xref" href="rgs-qtconvenience.html#qt-activateItem-function"><code class="function">activateItem</code></a></p></li><li><p><a class="xref" href="rgs-qtconvenience.html#qt-activateLink-function"><code class="function">activateLink</code></a></p></li><li><p><a class="xref" href="rgs-qtconvenience.html#qt-castToQMenuData-function"><code class="function">castToQMenuData</code></a></p></li><li><p><a class="xref" href="rgs-qtconvenience.html#qt-castToQObject-function"><code class="function">castToQObject</code></a></p></li><li><p><a class="xref" href="rgs-qtconvenience.html#qt-clickButton-function"><code class="function">clickButton</code></a></p></li><li><p><a class="xref" href="rgs-qtconvenience.html#qt-clickItem-function"><code class="function">clickItem</code></a></p></li><li><p><a class="xref" href="rgs-qtconvenience.html#qt-clickTab-function"><code class="function">clickTab</code></a></p></li><li><p><a class="xref" href="rgs-qtconvenience.html#qt-doubleClick-function"><code class="function">doubleClick</code></a></p></li><li><p><a class="xref" href="rgs-qtconvenience.html#qt-doubleClickItem-function"><code class="function">doubleClickItem</code></a></p></li><li><p><a class="xref" href="rgs-qtconvenience.html#qt-doubleTap-function"><code class="function">doubleTap</code></a></p></li><li><p><a class="xref" href="rgs-qtconvenience.html#qt-dragAndDrop-function"><code class="function">dragAndDrop</code></a></p></li><li><p><a class="xref" href="rgs-qtconvenience.html#qt-dragItemBy-function"><code class="function">dragItemBy</code></a></p></li><li><p><a class="xref" href="rgs-qtconvenience.html#qt-dropOn-function"><code class="function">dropOn</code></a></p></li><li><p><a class="xref" href="rgs-qtconvenience.html#qt-flick-function"><code class="function">flick</code></a></p></li><li><p><a class="xref" href="rgs-qtconvenience.html#qt-gesture-function"><code class="function">gesture</code></a></p></li></ul></div>
+</td><td valign="top">
+<div class="itemizedlist"><ul type="disc" compact><li><p><a class="xref" href="rgs-qtconvenience.html#qt-grabWidget-function"><code class="function">grabWidget</code></a></p></li><li><p><a class="xref" href="rgs-qtconvenience.html#qt-installEventHandler-function"><code class="function">installEventHandler</code></a></p></li><li><p><a class="xref" href="rgs-qtconvenience.html#qt-installLazySignalHandler-function"><code class="function">installLazySignalHandler</code></a></p></li><li><p><a class="xref" href="rgs-qtconvenience.html#qt-installSignalHandler-function"><code class="function">installSignalHandler</code></a></p></li><li><p><a class="xref" href="rgs-qtconvenience.html#qt-longMouseClick-function"><code class="function">longMouseClick</code></a></p></li><li><p><a class="xref" href="rgs-qtconvenience.html#qt-longMouseDrag-function"><code class="function">longMouseDrag</code></a></p></li><li><p><a class="xref" href="rgs-qtconvenience.html#qt-mouseClick-function"><code class="function">mouseClick</code></a></p></li><li><p><a class="xref" href="rgs-qtconvenience.html#qt-mouseDrag-function"><code class="function">mouseDrag</code></a></p></li><li><p><a class="xref" href="rgs-qtconvenience.html#qt-mouseWheel-function"><code class="function">mouseWheel</code></a></p></li><li><p><a class="xref" href="rgs-qtconvenience.html#qt-nativeMouseClick-function"><code class="function">nativeMouseClick</code></a></p></li><li><p><a class="xref" href="rgs-qtconvenience.html#qt-openContextMenu-function"><code class="function">openContextMenu</code></a></p></li><li><p><a class="xref" href="rgs-qtconvenience.html#qt-openItemContextMenu-function"><code class="function">openItemContextMenu</code></a></p></li><li><p><a class="xref" href="rgs-qtconvenience.html#qt-pressAndHold-function"><code class="function">pressAndHold</code></a></p></li><li><p><a class="xref" href="rgs-qtconvenience.html#qt-qmlContext-function"><code class="function">qmlContext</code></a></p></li><li><p><a class="xref" href="rgs-qtconvenience.html#qt-qmlEngine-function"><code class="function">qmlEngine</code></a></p></li><li><p><a class="xref" href="rgs-qtconvenience.html#qt-readGesture-function"><code class="function">readGesture</code></a></p></li><li><p><a class="xref" href="rgs-qtconvenience.html#qt-scrollTo-function"><code class="function">scrollTo</code></a></p></li></ul></div>
+</td><td valign="top">
+<div class="itemizedlist"><ul type="disc" compact><li><p><a class="xref" href="rgs-qtconvenience.html#qt-sendEvent-function"><code class="function">sendEvent</code></a></p></li><li><p><a class="xref" href="rgs-qtconvenience.html#qt-setFocus-function"><code class="function">setFocus</code></a></p></li><li><p><a class="xref" href="rgs-qtconvenience.html#qt-setMouseTracking-function"><code class="function">setMouseTracking</code></a></p></li><li><p><a class="xref" href="rgs-qtconvenience.html#qt-setRecordMouseDrag-function"><code class="function">setRecordMouseDrag</code></a></p></li><li><p><a class="xref" href="rgs-qtconvenience.html#qt-setWindowState-function"><code class="function">setWindowState</code></a></p></li><li><p><a class="xref" href="rgs-qtconvenience.html#qt-spinUp-function"><code class="function">spinUp</code></a></p></li><li><p><a class="xref" href="rgs-qtconvenience.html#qt-spinDown-function"><code class="function">spinDown</code></a></p></li><li><p><a class="xref" href="rgs-qtconvenience.html#qt-startDrag-function"><code class="function">startDrag</code></a></p></li><li><p><a class="xref" href="rgs-qtconvenience.html#qt-tapObject-function"><code class="function">tapObject</code></a></p></li><li><p><a class="xref" href="rgs-qtconvenience.html#qt-touchAndDrag-function"><code class="function">touchAndDrag</code></a></p></li><li><p><a class="xref" href="rgs-qtconvenience.html#qt-touchPress-function"><code class="function">touchPress</code></a></p></li><li><p><a class="xref" href="rgs-qtconvenience.html#qt-touchRelease-function"><code class="function">touchRelease</code></a></p></li><li><p><a class="xref" href="rgs-qtconvenience.html#qt-type-function"><code class="function">type</code></a></p></li><li><p><a class="xref" href="rgs-qtconvenience.html#qt-uninstallEventHandler-function"><code class="function">uninstallEventHandler</code></a></p></li><li><p><a class="xref" href="rgs-qtconvenience.html#qt-uninstallLazySignalHandler-function"><code class="function">uninstallLazySignalHandler</code></a></p></li><li><p><a class="xref" href="rgs-qtconvenience.html#qt-uninstallSignalHandler-function"><code class="function">uninstallSignalHandler</code></a></p></li><li><p><a class="xref" href="rgs-qtconvenience.html#qt-waitForSignal-function"><code class="function">waitForSignal</code></a></p></li></ul></div>
+</td></tr></tbody></table></div><div class="funcsynopsis"><a id="qt-activateItem-function"></a><p><code class="funcdef"><b class="fsfunc">activateItem</b>(</code><var class="pdparam">itemObject</var><code>)</code>;</p></div><div class="funcsynopsis"><p><code class="funcdef"><b class="fsfunc">activateItem</b>(</code><var class="pdparam">objectOrName</var>, <var class="pdparam">itemText</var><code>)</code>;</p></div><p>
+This function activates the specified <em class="parameter"><code>itemObject</code></em>,
+or the item specified by <em class="parameter"><code>itemText</code></em> in the
+popup menu, context menu, or menu bar denoted by
+<em class="parameter"><code>objectOrName</code></em>.
+</p><p>
+Note that &amp;'s should not be included in the item text, so if
+the item's text is “<span class="quote"><span class="underline">A</span>dd</span>”
+(meaning that the text inside the program is really “<span class="quote">&amp;Add</span>”),
+we just write plain “<span class="quote">Add</span>”.
+</p><div class="funcsynopsis"><a id="qt-activateLink-function"></a><p><code class="funcdef"><b class="fsfunc">activateLink</b>(</code><var class="pdparam">objectOrName</var>, <var class="pdparam">Url</var><code>)</code>;</p></div><p>
+This function activates the link with the URL address specified
+<em class="parameter"><code>Url</code></em> inside the
+<em class="parameter"><code>objectOrName</code></em> widget. The function works for
+QTextBrowser and QLabel and its subclasses.
+</p><div class="funcsynopsis"><a id="qt-castToQMenuData-function"></a><p><code class="funcdef">QMenuData <b class="fsfunc">castToQMenuData</b>(</code><var class="pdparam">object</var><code>)</code>;</p></div><p>
+This function casts the <em class="parameter"><code>object</code></em> of type
+QMenuBar, QPopupMenu, or one of their subclasses, to an object of type
+QMenuData. The reason the function is needed at all is that test scripts
+for Qt 2 and Qt 3 AUTs often need to access a QPopupMenu
+or QMenuBar's QMenuData, but due to <span class="application">squishidl</span>'s limitation of single
+inheritance this is not possible. Nor can <span class="emphasis"><em>Squish</em></span>'s <a class="xref" href="rgs-squish.html#cast-function"><code class="function">cast</code></a> function be used in this case because it
+only supports casting up or down in the inheritance chain. Qt 4
+uses a different menu inheritance structure that only uses
+single-inheritance, so Qt 4 menus can be handled directly.
+</p><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Note: Qt 2 and Qt 3-specific"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/note.png"></img></td><th align="left">Qt 2 and Qt 3-specific</th></tr><tr><td align="left" valign="top"><p>
+The <code class="code">castToQMenuData</code> function is for testing Qt 2 and
+Qt 3 applications; it is not needed (or available) for Qt 4
+applications.
+</p></td></tr></table></div><div class="funcsynopsis"><a id="qt-castToQObject-function"></a><p><code class="funcdef">QObject <b class="fsfunc">castToQObject</b>(</code><var class="pdparam">object</var><code>)</code>;</p></div><p>
+This function casts the <em class="parameter"><code>object</code></em> to a QObject. The
+<em class="parameter"><code>object</code></em> must be a subclass of QObject and
+QGraphicsItem—or a class derived from QGraphicsItem—and
+where QObject is inherited first. It is not necessary to use this
+function for QGraphicsObjects and QGraphicsWidgets since <span class="emphasis"><em>Squish</em></span>
+already knows that these are both QObjects and QGraphicsItems at the
+same time.
+</p><div class="warning" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Warning: Non-QGraphicsItem Objects"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Warning]" src="images/warning.png"></img></td><th align="left">Non-QGraphicsItem Objects</th></tr><tr><td align="left" valign="top"><p>
+If this function is called on an object that is <span class="emphasis"><em>not</em></span>
+derived from QObject and QGraphicsItem—or a class derived from
+QGraphicsItem—with QObject inherited first, <span class="emphasis"><em>Squish</em></span> will
+<span class="bold"><strong>crash</strong></span>!
+</p></td></tr></table></div><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Note: Qt 4-specific"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/note.png"></img></td><th align="left">Qt 4-specific</th></tr><tr><td align="left" valign="top"><p>
+The <code class="code">castToQObject</code> function is only available for
+applications using Qt 4.2 or later since the graphics/view APIs
+were only introduced in that version of Qt.
+</p></td></tr></table></div><p>
+Unfortunately QGraphicsItem does not provide support for introspection.
+This means that although <span class="emphasis"><em>Squish</em></span> provides full access to all the
+built-in QGraphicsItem classes and their properties and
+methods—including their QObject properties and methods if they
+inherit QObject and the <code class="code">castToQObject</code> function is
+used—none of the properties or methods you add to your own
+QGraphicsItem subclasses can be accessed by <span class="emphasis"><em>Squish</em></span>.
+</p><p>
+For examples of testing Qt's graphics/view classes see <a class="xref" href="ugs-qtapi.html#ugsqtw-gfxview" title="5.2.6.6. How to Test Graphics Views, Graphics Scenes and Graphics Items">How to Test Graphics Views, Graphics Scenes and Graphics Items (Section 5.2.6.6)</a>.
+</p><div class="funcsynopsis"><a id="qt-clickButton-function"></a><p><code class="funcdef"><b class="fsfunc">clickButton</b>(</code><var class="pdparam">objectOrName</var><code>)</code>;</p></div><p>
+This function clicks the specified <em class="parameter"><code>objectOrName</code></em>
+button.
+</p><div class="funcsynopsis"><a id="qt-clickItem-function"></a><p><code class="funcdef"><b class="fsfunc">clickItem</b>(</code><var class="pdparam">objectOrName</var>, <var class="pdparam">itemOrIndex</var>, <var class="pdparam">x</var>, <var class="pdparam">y</var>, <var class="pdparam">modifierState</var>, <var class="pdparam">button</var><code>)</code>;</p></div><p>
+This function clicks the mouse on the item with the specified
+<em class="parameter"><code>itemOrIndex</code></em> inside the given
+<em class="parameter"><code>objectOrName</code></em> view widget. This function is
+typically used to access items inside views such as lists, tables,
+and trees.</p><p>
+For tables the <em class="parameter"><code>itemOrIndex</code></em>
+is a string with the format <span class="emphasis"><em>row/column</em></span>, e.g.,
+<code class="code">"4/21"</code>. For the tree views the  <em class="parameter"><code>itemOrIndex
+</code></em> is a list of segments separated by the <span class="emphasis"><em>"."
+</em></span> character. Each segment may optionally contain a
+<span class="emphasis"><em>_X</em></span> suffix where <span class="emphasis"><em>X</em></span> is
+interpreted as 1-base occurrence index. If any of the involved tree
+items contains the <code class="code">"."</code>,<code class="code">"_"</code> or <code class="code">"\"
+</code> characters in its text, these characters need to be escaped in
+the <em class="parameter"><code>itemOrIndex </code></em> as <code class="code">"\."</code>,<code class="code">
+"\_"</code> and <code class="code">"\\"</code> respectively in order to avoid being
+iterpreted as special characters. (Note that the script interpreter
+may require additional escaping for the <code class="code">"\"</code> character.)
+The sequence of the segments corresponds to the tree path of the
+returned item. For example the <code class="code">"Item1.Sub\.ItemX_3.Leaf"</code>
+finds an item with text <code class="code">"Leaf" </code> that is a direct child of
+the third item with the text <code class="code">"Sub.ItemX"</code> among the
+children of the root node with text <code class="code">"Item1"</code>. For other
+views it is the relevant item's text.
+</p><p>
+The click is made at position <em class="parameter"><code>x</code></em> and
+<em class="parameter"><code>y</code></em> (in the <em class="parameter"><code>itemOrIndex</code></em>
+item's coordinates) using the specified <em class="parameter"><code>button</code></em>
+and with the <em class="parameter"><code>modifierState</code></em> modifier state. It is
+safe to pass 0 for the coordinates and for the state; and normally we
+would pass <code class="code">Qt.LeftButton</code> for the button.
+</p><p>
+<span class="emphasis"><em>Squish</em></span> supports this function for view widgets
+of type <a class="ulink" href="https://doc.qt.io/qt-5/qabstractitemview.html" target="_blank">QAbstractItemView</a>,
+and its subclasses, including <a class="ulink" href="https://doc.qt.io/qt-5/qlistview.html" target="_blank">QListView</a>, <a class="ulink" href="https://doc.qt.io/qt-5/qtableview.html" target="_blank">QTableView</a>, and
+<a class="ulink" href="https://doc.qt.io/qt-5/qtreeview.html" target="_blank">QTreeView</a>,
+and also older Qt 3 classes such as <a class="ulink" href="https://doc.qt.io/qt-4.8/q3iconview.html" target="_blank">Q3IconView</a>,
+<a class="ulink" href="https://doc.qt.io/qt-4.8/q3listbox.html" target="_blank">Q3ListBox</a>,
+<a class="ulink" href="https://doc.qt.io/qt-4.8/q3table.html" target="_blank">Q3Table</a>, and
+also classes derived from these types.
+</p><p>
+See <a class="xref" href="rgs-qtconvenience.html#qt-convenience.function.parameters" title="Qt Convenience Function Parameters">Qt Convenience Function Parameters</a> for which
+values are valid for the <em class="parameter"><code>modifierState</code></em> and for
+the <em class="parameter"><code>button</code></em> arguments.
+</p><div class="funcsynopsis"><a id="qt-clickTab-function"></a><p><code class="funcdef"><b class="fsfunc">clickTab</b>(</code><var class="pdparam">objectOrName</var>, <var class="pdparam">tabText</var><code>)</code>;</p></div><p>
+This function clicks on the tab that has the specified
+<em class="parameter"><code>tabText</code></em> on the
+<em class="parameter"><code>objectOrName</code></em> tab widget. (Note that &amp;'s
+should not be included in the <em class="parameter"><code>tabText</code></em>, so if the
+tab's text is, say, “<span class="quote"><span class="underline">A</span>dvanced</span>”—meaning that the text
+inside the program is really “<span class="quote">&amp;Advanced</span>”—we just
+write plain “<span class="quote">Advanced</span>”.)
+</p><div class="funcsynopsis"><a id="qt-doubleClick-function"></a><p><code class="funcdef"><b class="fsfunc">doubleClick</b>(</code><var class="pdparam">objectOrName</var>, <var class="pdparam">x</var>, <var class="pdparam">y</var>, <var class="pdparam">modifierState</var>, <var class="pdparam">button</var><code>)</code>;</p></div><p>
+This function double-clicks the mouse on the
+<em class="parameter"><code>objectOrName</code></em> widget at position
+<em class="parameter"><code>x</code></em> and <em class="parameter"><code>y</code></em> (in the
+<em class="parameter"><code>objectOrName</code></em> widget's coordinates) using the
+specified <em class="parameter"><code>button</code></em> and the
+<em class="parameter"><code>modifierState</code></em> modifier.
+</p><p>
+See <a class="xref" href="rgs-qtconvenience.html#qt-convenience.function.parameters" title="Qt Convenience Function Parameters">Qt Convenience Function Parameters</a> for which
+values are valid for the <em class="parameter"><code>modifierState</code></em> and for
+the <em class="parameter"><code>button</code></em> arguments.
+</p><div class="funcsynopsis"><a id="qt-doubleClickItem-function"></a><p><code class="funcdef"><b class="fsfunc">doubleClickItem</b>(</code><var class="pdparam">objectOrName</var>, <var class="pdparam">itemText</var>, <var class="pdparam">x</var>, <var class="pdparam">y</var>, <var class="pdparam">modifierState</var>, <var class="pdparam">button</var><code>)</code>;</p></div><p>
+This function double-clicks the mouse on the item with the specified
+<em class="parameter"><code>itemText</code></em> inside the given
+<em class="parameter"><code>objectOrName</code></em> view widget. The click is made at
+position <em class="parameter"><code>x</code></em> and <em class="parameter"><code>y</code></em> (in the
+<em class="parameter"><code>itemText</code></em> item's coordinates) using the specified
+<em class="parameter"><code>button</code></em> and with the
+<em class="parameter"><code>modifierState</code></em> modifier state.
+</p><p>
+<span class="emphasis"><em>Squish</em></span> supports this function for view widgets of
+type
+<a class="ulink" href="https://doc.qt.io/qt-4.8/qabstractitemview.html" target="_blank">QAbstractItemView</a>,
+and its subclasses, including
+<a class="ulink" href="https://doc.qt.io/qt-4.8/qlistview.html" target="_blank">QListView</a>,
+<a class="ulink" href="https://doc.qt.io/qt-4.8/qtableview.html" target="_blank">QTableView</a>,
+and
+<a class="ulink" href="https://doc.qt.io/qt-4.8/qtreeview.html" target="_blank">QTreeView</a>,
+and also older Qt 3 classes such as
+<a class="ulink" href="https://doc.qt.io/qt-4.8/q3iconview.html" target="_blank">Q3IconView</a>,
+<a class="ulink" href="https://doc.qt.io/qt-4.8/q3listbox.html" target="_blank">Q3ListBox</a>,
+<a class="ulink" href="https://doc.qt.io/qt-4.8/q3table.html" target="_blank">Q3Table</a>, and
+also classes derived from these types.
+</p><p>
+See <a class="xref" href="rgs-qtconvenience.html#qt-convenience.function.parameters" title="Qt Convenience Function Parameters">Qt Convenience Function Parameters</a> for which
+values are valid for the <em class="parameter"><code>modifierState</code></em> and for
+the <em class="parameter"><code>button</code></em> arguments.
+</p><div class="funcsynopsis"><a id="qt-doubleTap-function"></a><p><code class="funcdef"><b class="fsfunc">doubleTap</b>(</code><var class="pdparam">objectOrName</var><code>)</code>;</p></div><div class="funcsynopsis"><p><code class="funcdef"><b class="fsfunc">doubleTap</b>(</code><var class="pdparam">objectOrName</var>, <var class="pdparam">x</var>, <var class="pdparam">y</var><code>)</code>;</p></div><div class="funcsynopsis"><p><code class="funcdef"><b class="fsfunc">doubleTap</b>(</code><var class="pdparam">objectOrName</var>, <var class="pdparam">x</var>, <var class="pdparam">y</var>, <var class="pdparam">modifiers</var><code>)</code>;</p></div><p>
+This function double-taps on the <em class="parameter"><code>objectOrName</code></em> widget.
+</p><p>
+If <em class="parameter"><code>x</code></em> and <em class="parameter"><code>y</code></em> arguments (in the
+<em class="parameter"><code>objectOrName</code></em> widget's coordinates) have been provided,
+the taps will happen there, otherwise replay will happen at the center of the
+widget.
+</p><p>
+If the <em class="parameter"><code>modifiers</code></em> argument has been provided, the taps
+will happen with keyboard modifiers pressed, otherwise replay will happen
+without any keyboard modifiers being pressed.
+</p><p>
+Tapping is supported on objects of type
+<a class="ulink" href="https://doc.qt.io/qt-5/qquickitem.html" target="_blank">QQuickItem</a> and
+<a class="ulink" href="https://doc.qt.io/qt-5/qwindow.html" target="_blank">QWindow</a>.
+</p><div class="funcsynopsis"><a id="qt-dragAndDrop-function"></a><p><code class="funcdef"><b class="fsfunc">dragAndDrop</b>(</code><var class="pdparam">source_­object­Or­Name</var>, <var class="pdparam">sx</var>, <var class="pdparam">sy</var>, <var class="pdparam">target_­object­Or­Name</var>, <var class="pdparam">tx</var>, <var class="pdparam">ty</var>, <var class="pdparam">action</var><code>)</code>;</p></div><p>
+This function performs a drag and drop operation. It begins by
+initiating a drag on the <em class="parameter"><code>source_objectOrName</code></em>
+widget starting at position <em class="parameter"><code>sx</code></em> and
+<em class="parameter"><code>sy</code></em> (in the
+<em class="parameter"><code>source_objectOrName</code></em> widget's coordinates), and
+then it does the drop on the <em class="parameter"><code>target_objectOrName</code></em>
+widget at position <em class="parameter"><code>tx</code></em> and
+<em class="parameter"><code>ty</code></em> (in the
+<em class="parameter"><code>target_objectOrName</code></em> widget's coordinates).
+The <em class="parameter"><code>action</code></em> is an integer (enum)—for
+Qt 4 it can be <code class="code">Qt::CopyAction</code> or
+<code class="code">Qt::LinkAction</code>, and for Qt 3 it can be
+<code class="code">QDropEvent::Copy</code> or <code class="code">QDropEvent::Link</code>.
+</p><div class="funcsynopsis"><a id="qt-dragItemBy-function"></a><p><code class="funcdef"><b class="fsfunc">dragItemBy</b>(</code><var class="pdparam">objectOrName</var>, <var class="pdparam">x</var>, <var class="pdparam">y</var>, <var class="pdparam">dx</var>, <var class="pdparam">dy</var>, <var class="pdparam">modifierState</var>, <var class="pdparam">button</var><code>)</code>;</p></div><p>
+This function performs a drag operation. It initiates a drag of the
+specified <em class="parameter"><code>objectOrName</code></em> widget starting at
+position <em class="parameter"><code>x</code></em> and <em class="parameter"><code>y</code></em> (in the
+<em class="parameter"><code>objectOrName</code></em> widget's coordinates), using the
+specified <em class="parameter"><code>button</code></em> and with the
+<em class="parameter"><code>modifierState</code></em> modifier state. The
+<em class="parameter"><code>objectOrName</code></em> widget is dragged by
+<em class="parameter"><code>dx</code></em> pixels horizontally and by
+<em class="parameter"><code>dy</code></em> pixels vertically.
+</p><div class="funcsynopsis"><a id="qt-dropOn-function"></a><p><code class="funcdef"><b class="fsfunc">dropOn</b>(</code><var class="pdparam">target_objectOrName</var>, <var class="pdparam">tx</var>, <var class="pdparam">ty</var>, <var class="pdparam">action</var><code>)</code>;</p></div><p>
+This function performs a drop that was initiated by a call to the <a class="xref" href="rgs-qtconvenience.html#qt-startDrag-function"><code class="function">startDrag</code></a> function. It does the drop on the
+<em class="parameter"><code>target_objectOrName</code></em> widget at position
+<em class="parameter"><code>tx</code></em> and <em class="parameter"><code>ty</code></em> (in the
+<em class="parameter"><code>target_objectOrName</code></em> widget's coordinates).
+See <a class="xref" href="rgs-qtconvenience.html#qt-dragAndDrop-function"><code class="function">dragAndDrop</code></a> for possible values of
+the <em class="parameter"><code>action</code></em> parameter.
+</p><p>
+Normally the <a class="xref" href="rgs-qtconvenience.html#qt-dragAndDrop-function"><code class="function">dragAndDrop</code></a> function is
+used to perform a drag and drop in a single action. However, in some
+situations it may be necessary to move the mouse over a different object
+before the drop can take place. In such cases the test code would look
+something like this:
+</p><pre class="programlisting">
+startDrag(<span class="emphasis"><em>sourceObject</em></span>, <span class="emphasis"><em>sx</em></span>, <span class="emphasis"><em>sy</em></span>)
+mouseMove(<span class="emphasis"><em>otherObject</em></span>, <span class="emphasis"><em>x</em></span>, <span class="emphasis"><em>y</em></span>)
+dropOn(<span class="emphasis"><em>targetObject</em></span>, <span class="emphasis"><em>tx</em></span>, <span class="emphasis"><em>ty</em></span>, <span class="emphasis"><em>action</em></span>)
+</pre><div class="funcsynopsis"><a id="qt-flick-function"></a><p><code class="funcdef"><b class="fsfunc">flick</b>(</code><var class="pdparam">objectOrName</var>, <var class="pdparam">x</var>, <var class="pdparam">y</var>, <var class="pdparam">dx</var>, <var class="pdparam">dy</var>, <var class="pdparam">cdx</var>, <var class="pdparam">cdy</var><code>)</code>;</p></div><p>
+This function performs a “<span class="quote">flick</span>” operation (a
+move or scroll on a QML <code class="code">Flickable</code>). It initiates a flick
+of the specified <em class="parameter"><code>objectOrName</code></em> item—which
+<span class="emphasis"><em>must</em></span> be a QML <code class="code">Flickable</code>—starting
+with the mouse at position <em class="parameter"><code>x</code></em> and
+<em class="parameter"><code>y</code></em> (in the <em class="parameter"><code>objectOrName</code></em>
+item's coordinates) and moving the mouse by <em class="parameter"><code>dx</code></em>
+pixels horizontally and by <em class="parameter"><code>dy</code></em> pixels vertically.
+At the same time the position of the <em class="parameter"><code>objectOrName</code></em>
+item's contents is moved relative to its previous position by
+<em class="parameter"><code>cdx</code></em> pixels horizontally and by
+<em class="parameter"><code>cdy</code></em> pixels vertically.
+</p><div class="funcsynopsis"><a id="qt-gesture-function"></a><p><code class="funcdef"><b class="fsfunc">gesture</b>(</code><var class="pdparam">objectOrName</var>, <var class="pdparam">touches</var><code>)</code>;</p></div><p>
+This function plays a gesture. The specified
+<em class="parameter"><code>objectOrName</code></em> can refer to any object that is
+visible and serves for synchronization only.
+The specified <em class="parameter"><code>touches</code></em> refers to a
+<a class="xref" href="rgs-qtconvenience.html#qt-GestureBuilder-class" title="6.4.3. GestureBuilder">GestureBuilder</a> object, which can be
+retrieved using <a class="xref" href="rgs-qtconvenience.html#qt-readGesture-function"><code class="function">readGesture</code></a>.
+</p><p>
+Gesture replay is supported on objects of type
+<a class="ulink" href="https://doc.qt.io/qt-5/qwindow.html" target="_blank">QWindow</a> and
+<a class="ulink" href="https://doc.qt.io/qt-5/qwidget.html" target="_blank">QWidget</a>.
+</p><div class="funcsynopsis"><a id="qt-grabWidget-function"></a><p><code class="funcdef">QImage <b class="fsfunc">grabWidget</b>(</code><var class="pdparam">object</var><code>)</code>;</p></div><a id="idp49286696" class="indexterm"></a><p>
+This function takes a screenshot of the
+<em class="parameter"><code>object</code></em> window (or widget) and returns the
+image as an AUT-side <a class="xref" href="rgs-squish.html#rgss-image-object" title="6.3.13. QImage Object"><code class="code">QImage</code> Object (Section 6.3.13)</a>
+</p><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Note: The Newer Way to Grab a Widget "><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/note.png"></img></td><th align="left">The Newer Way to Grab a Widget </th></tr><tr><td align="left" valign="top"><p> Instead of using <code class="function">grabWidget</code> to get an
+AUT-side QImage, it is easier to capture an <a class="xref" href="rgs-squish.html#script-image-object" title="6.3.14. Image Object">Image Object (Section 6.3.14)</a>
+using <a class="xref" href="rgs-squish.html#object.grabScreenshot-function"><code class="function">object.grabScreenshot</code></a>.
+The <a class="xref" href="rgs-squish.html#Image.save-function"><code class="function">Image.save</code></a> function allows you to save
+directly to a location on the <span class="application">squishrunner</span> host.
+</p></td></tr></table></div><p> The screenshot can easily be saved to a location relative to the AUT's
+current working directory. For example:
+</p><div xmlns="" class="scriptlang"><form><select name="scriptlangcombo" onchange="javascript:changeScriptingLanguage(this)" onclick="javascript:changeScriptingLanguage(this)"><option value="all" selected>Show All</option><option value="JavaScript">Show JavaScript</option><option value="Perl">Show Perl</option><option value="Python">Show Python</option><option value="Ruby">Show Ruby</option><option value="Tcl">Show Tcl</option></select></form></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Python</span><pre class="programlisting">
+widget = waitForObject(objectName)
+pixmap = grabWidget(widget)
+pixmap.save("screenshot.png")
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">JavaScript</span><pre class="programlisting">
+var widget = waitForObject(objectName);
+var pixmap = grabWidget(widget);
+pixmap.save("screenshot.png");
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Perl</span><pre class="programlisting">
+my $widget = waitForObject($objectName);
+my $pixmap = grabWidget($widget);
+$pixmap-&gt;save("screenshot.png");
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Ruby</span><pre class="programlisting">
+widget = waitForObject(objectName)
+pixmap = grabWidget(widget)
+pixmap.save("screenshot.png")
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Tcl</span><pre class="programlisting">
+set widget [waitForObject $objectName]
+set pixmap [invoke grabWidget $widget]
+invoke $pixmap save "screenshot.png"
+</pre></div><p>
+See the <a class="xref" href="rgs-squish.html#waitForObject-function"><code class="function">waitForObject</code></a> and <a class="xref" href="rgs-squish.html#findObject-function"><code class="function">findObject</code></a> functions for how to get an object
+reference to a window or widget.
+</p><div class="funcsynopsis"><a id="qt-installEventHandler-function"></a><p><code class="funcdef"><b class="fsfunc">installEventHandler</b>(</code><var class="pdparam">eventName</var>, <var class="pdparam">handlerFunctionName</var><code>)</code>;</p></div><div class="funcsynopsis"><p><code class="funcdef"><b class="fsfunc">installEventHandler</b>(</code><var class="pdparam">className</var>, <var class="pdparam">eventName</var>, <var class="pdparam">handlerFunctionName</var><code>)</code>;</p></div><div class="funcsynopsis"><p><code class="funcdef"><b class="fsfunc">installEventHandler</b>(</code><var class="pdparam">object</var>, <var class="pdparam">eventName</var>, <var class="pdparam">handlerFunctionName</var><code>)</code>;</p></div><p>
+This function installs an event handler that is applied to all objects
+of the <em class="parameter"><code>className</code></em> class or to the specified
+<em class="parameter"><code>object</code></em> or globally (if no
+<em class="parameter"><code>className</code></em> or <em class="parameter"><code>object</code></em> is
+specified). The script function named in
+<em class="parameter"><code>handlerFunctionName</code></em> (which can be passed
+as a string or as a function reference), will be called when an event of
+the <em class="parameter"><code>eventName</code></em> type occurs on an object of the
+<em class="parameter"><code>className</code></em> class, or to the specified
+<em class="parameter"><code>object</code></em>, or globally.
+</p><p>
+The <em class="parameter"><code>eventName</code></em> can be the name any standard Qt
+event type such as <span class="type">QKeyEvent</span> event or
+<span class="type">QMouseEvent</span>, or one of the <span class="emphasis"><em>Squish</em></span> convenience event
+types listed below:
+</p><div class="variablelist"><dl><dt><span class="term"><code class="literal">Crash</code></span></dt><dd><p>This event occurs if the AUT crashes.</p></dd><dt><span class="term"><code class="literal">DialogOpened</code></span></dt><dd><p>This event occurs when a top-level QDialog is shown.</p></dd><dt><span class="term"><code class="literal">MainWindowOpened</code></span></dt><dd><p>This event occurs when a top-level QMainWindow is shown.</p></dd><dt><span class="term"><code class="literal">MessageBoxOpened</code></span></dt><dd><p>This event occurs when a top-level QMessageBox is shown.</p></dd><dt><span class="term"><code class="literal">Timeout</code></span></dt><dd><p>This event occurs when the <span class="emphasis"><em>Squish</em></span> response timeout is
+  reached.</p></dd><dt><span class="term"><code class="literal">ToplevelWidgetOpened</code></span></dt><dd><p>This event occurs when any other kind of top-level widget is
+  shown.</p></dd></dl></div><p>
+The function named in <em class="parameter"><code>handlerFunctionName</code></em> is called
+with a single argument—the object on which the event occurred.
+</p><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Note: Python-specific"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/note.png"></img></td><th align="left">Python-specific</th></tr><tr><td align="left" valign="top"><p>
+In Python scripts, you can specify the callback function to invoke by
+passing an actual function or a lambda function.
+</p></td></tr></table></div><p>
+For examples see <a class="xref" href="ugs-eventhandlers.html" title="5.10. How to Use Event Handlers">How to Use Event Handlers (Section 5.10)</a>.
+</p><div class="important" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Important: The AUT Must be Running"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Important]" src="images/important.png"></img></td><th align="left">The AUT Must be Running</th></tr><tr><td align="left" valign="top"><p>
+The <code class="code">installEventHandler</code> function will only work if it is
+called <span class="emphasis"><em>after</em></span> the AUT has been started (e.g., using
+the <a class="xref" href="rgs-squish.html#startApplication-function"><code class="function">startApplication</code></a> function).
+</p></td></tr></table></div><div class="funcsynopsis"><a id="qt-installLazySignalHandler-function"></a><p><code class="funcdef"><b class="fsfunc">installLazySignalHandler</b>(</code><var class="pdparam">name</var>, <var class="pdparam">signalSignature</var>, <var class="pdparam">handlerFunctionName</var><code>)</code>;</p></div><p>
+This function installs a Qt (not Unix!) signal handler that eavesdrops
+on the object identified by the given symbolic or real
+<em class="parameter"><code>name</code></em>. The <em class="parameter"><code>signalSignature</code></em>
+must be the exact signature used in C++ with no parameter
+names—for example, <code class="code">"activated(int)"</code> or
+<code class="code">"triggered(QAction*)"</code>. The
+<em class="parameter"><code>handlerFunctionName</code></em> (which must be passed as a
+string, not as a function reference), will be called whenever the
+specified widget emits the specified signal and will be passed a
+reference to the object that emitted the signal, followed by all the
+signal's arguments (if there are any).
+</p><p>
+This function is very flexible in that the object identified by the
+<em class="parameter"><code>name</code></em> does <span class="emphasis"><em>not</em></span> have to exist
+at the time the function is called, since the object will be looked for
+whenever the signal is emitted. The price to be paid for this
+flexibility is that the use of this function can significantly slow down
+playback if the signal is emitted a lot. If possible it is better to use
+the less flexible <a class="xref" href="rgs-qtconvenience.html#qt-installSignalHandler-function"><code class="function">installSignalHandler</code></a>
+function instead.
+</p><p>
+Where possible the signal's arguments are passed as types that can be
+handled normally such as numbers, strings, or their actual Qt types such
+as <code class="code">QAction</code> or <code class="code">QTableWidgetItem</code>. However, some
+types are sent as plain <span class="emphasis"><em>Squish</em></span> <code class="code">Object</code>s; custom types
+and other unrecognized types are passed as strings.
+</p><div class="funcsynopsis"><a id="qt-installSignalHandler-function"></a><p><code class="funcdef"><b class="fsfunc">installSignalHandler</b>(</code><var class="pdparam">objectOrName</var>, <var class="pdparam">signalSignature</var>, <var class="pdparam">handlerFunctionName</var><code>)</code>;</p></div><p>
+This function installs a Qt (not Unix!) signal handler that eavesdrops
+on the specified <em class="parameter"><code>objectOrName</code></em> widget.
+The <em class="parameter"><code>signalSignature</code></em> must be the exact signature
+used in C++ with no parameter names—for example,
+<code class="code">"activated(int)"</code> or <code class="code">"triggered(QAction*)"</code>. The
+<em class="parameter"><code>handlerFunctionName</code></em> (which must be passed as a
+string, not as a function reference), will be called whenever the
+specified widget emits the specified signal and will be passed a
+reference to the object that emitted the signal, followed by all the
+signal's arguments (if there are any).
+</p><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Note:  QML Signal handlers "><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/note.png"></img></td><th align="left"> QML Signal handlers </th></tr><tr><td align="left" valign="top"><p> When defining signal handlers of QML signals, the argument types
+still must be the C++ types. In particular, this means that for a
+<span class="type">real</span> QML argument, one must use the C++ <span class="type">double</span> type,
+and for a <span class="type">string</span> QML type, one must use
+<code class="classname">QString</code>. </p></td></tr></table></div><p>
+As is usual with <span class="emphasis"><em>Squish</em></span> functions, the
+<em class="parameter"><code>objectOrName</code></em> widget <span class="emphasis"><em>must</em></span>
+exist at the time this function is called. This requirement is relaxed
+by the <a class="xref" href="rgs-qtconvenience.html#qt-installLazySignalHandler-function"><code class="function">installLazySignalHandler</code></a> function
+which can only accept a symbolic or real name, but of an object that
+need not exist when the function is called. Nonetheless, it is best to
+use this <code class="code">installSignalHandler</code> function whenever possible
+since it is potentially a lot faster than the <a class="xref" href="rgs-qtconvenience.html#qt-installLazySignalHandler-function"><code class="function">installLazySignalHandler</code></a> function.
+</p><p>
+Where possible the signal's arguments are passed as types that can be
+handled normally such as numbers, strings, or their actual Qt types such
+as <code class="code">QAction</code> or <code class="code">QTableWidgetItem</code>. However, some
+types are sent as plain <span class="emphasis"><em>Squish</em></span> <code class="code">Object</code>s; custom types
+and other unrecognized types are passed as strings.
+</p><p>
+For an example, see <a class="xref" href="ugs-qtapi.html#ugs-qt-signal-handlers" title="5.2.5. How to Use Qt Signal Handlers">How to Use Qt Signal Handlers (Section 5.2.5)</a>.
+</p><div class="funcsynopsis"><a id="qt-longMouseClick-function"></a><p><code class="funcdef"><b class="fsfunc">longMouseClick</b>(</code><var class="pdparam">objectOrName</var>, <var class="pdparam">x</var>, <var class="pdparam">y</var>, <var class="pdparam">modifierState</var>, <var class="pdparam">button</var><code>)</code>;</p></div><div class="funcsynopsis"><p><code class="funcdef"><b class="fsfunc">longMouseClick</b>(</code><var class="pdparam">objectOrName</var>, <var class="pdparam">x</var>, <var class="pdparam">y</var>, <var class="pdparam">button</var><code>)</code>;</p></div><div class="funcsynopsis"><p><code class="funcdef"><b class="fsfunc">longMouseClick</b>(</code><var class="pdparam">objectOrName</var>, <var class="pdparam">modifierState</var>, <var class="pdparam">button</var><code>)</code>;</p></div><div class="funcsynopsis"><p><code class="funcdef"><b class="fsfunc">longMouseClick</b>(</code><var class="pdparam">objectOrName</var>, <var class="pdparam">button</var><code>)</code>;</p></div><div class="funcsynopsis"><p><code class="funcdef"><b class="fsfunc">longMouseClick</b>(</code><var class="pdparam">objectOrName</var><code>)</code>;</p></div><p>
+This function clicks the mouse on the specified
+<em class="parameter"><code>objectOrName</code></em> widget with a fixed delay of about one
+second between pressing and releasing the mouse button. Apart from the delay
+this function behaves identical to mouseClick, see <a class="xref" href="rgs-qtconvenience.html#qt-mouseClick-function"><code class="function">mouseClick</code></a> for more details.
+</p><p>
+The <code class="function">longMouseClick</code> function is supported on objects of
+type
+<a class="ulink" href="https://doc.qt.io/qt-5/qquickitem.html" target="_blank">QQuickItem</a> and
+<a class="ulink" href="https://doc.qt.io/qt-5/qwindow.html" target="_blank">QWindow</a>.
+</p><div class="funcsynopsis"><a id="qt-longMouseDrag-function"></a><p><code class="funcdef"><b class="fsfunc">longMouseDrag</b>(</code><var class="pdparam">objectOrName</var>, <var class="pdparam">x</var>, <var class="pdparam">y</var>, <var class="pdparam">dx</var>, <var class="pdparam">dy</var>, <var class="pdparam">modifierState</var>, <var class="pdparam">button</var><code>)</code>;</p></div><p>
+This function performs a mouse drag operation with a fixed delay of about one
+second between pressing the mouse button and starting to move the mouse cursor.
+Apart from the delay this function behaves identical to
+<code class="function">mouseDrag</code>, see <a class="xref" href="rgs-qtconvenience.html#qt-mouseDrag-function"><code class="function">mouseDrag</code></a> for
+more details.
+</p><p>
+The <code class="function">longMouseDrag</code> function is supported on objects of type
+<a class="ulink" href="https://doc.qt.io/qt-5/qquickitem.html" target="_blank">QQuickItem</a> and
+<a class="ulink" href="https://doc.qt.io/qt-5/qwindow.html" target="_blank">QWindow</a>.
+</p><div class="funcsynopsis"><a id="qt-mouseClick-function"></a><p><code class="funcdef"><b class="fsfunc">mouseClick</b>(</code><var class="pdparam">objectOrName</var>, <var class="pdparam">x</var>, <var class="pdparam">y</var>, <var class="pdparam">modifierState</var>, <var class="pdparam">button</var><code>)</code>;</p></div><div class="funcsynopsis"><p><code class="funcdef"><b class="fsfunc">mouseClick</b>(</code><var class="pdparam">objectOrName</var><code>)</code>;</p></div><p>
+This function clicks the mouse on the specified
+<em class="parameter"><code>objectOrName</code></em> widget. The click is made at
+position <em class="parameter"><code>x</code></em> and <em class="parameter"><code>y</code></em> (in the
+<em class="parameter"><code>objectOrName</code></em> widget's coordinates) using the
+specified <em class="parameter"><code>button</code></em> and with the
+<em class="parameter"><code>modifierState</code></em> modifier state.
+</p><p>
+If only the <em class="parameter"><code>objectOrName</code></em> is specified, then the object
+is clicked in the middle by the <code class="code">Qt::LeftButton</code> button and with no
+keyboard modifiers pressed.
+</p><p>
+Note that if this function is used to click <code class="code">Q3ListView</code>
+objects, <code class="code">Q3TableItem</code> objects, or web objects inside
+<code class="code">QtWebKit</code> objects, the <em class="parameter"><code>modifierState</code></em>
+and <em class="parameter"><code>button</code></em> parameters are optional.
+</p><p>
+See <a class="xref" href="rgs-qtconvenience.html#qt-convenience.function.parameters" title="Qt Convenience Function Parameters">Qt Convenience Function Parameters</a> for which
+values are valid for the <em class="parameter"><code>modifierState</code></em> and for
+the <em class="parameter"><code>button</code></em> arguments.
+</p><div class="funcsynopsis"><a id="qt-mouseDrag-function"></a><p><code class="funcdef"><b class="fsfunc">mouseDrag</b>(</code><var class="pdparam">objectOrName</var>, <var class="pdparam">x</var>, <var class="pdparam">y</var>, <var class="pdparam">dx</var>, <var class="pdparam">dy</var>, <var class="pdparam">modifierState</var>, <var class="pdparam">button</var><code>)</code>;</p></div><p>
+This function performs a mouse drag operation. It initiates a mouse drag
+of the specified <em class="parameter"><code>objectOrName</code></em> widget starting at
+position <em class="parameter"><code>x</code></em> and <em class="parameter"><code>y</code></em> (in the
+<em class="parameter"><code>objectOrName</code></em> widget's coordinates), using the
+specified <em class="parameter"><code>button</code></em> and with the
+<em class="parameter"><code>modifierState</code></em> modifier state. The
+<em class="parameter"><code>objectOrName</code></em> widget is dragged by
+<em class="parameter"><code>dx</code></em> pixels horizontally and by
+<em class="parameter"><code>dy</code></em> pixels vertically.
+</p><p>
+See <a class="xref" href="rgs-qtconvenience.html#qt-longMouseDrag-function"><code class="function">longMouseDrag</code></a> when the mouse drag
+needs to be executed "more slowly", with more delay in between the
+individual steps of the drag.
+</p><p>
+See <a class="xref" href="rgs-qtconvenience.html#qt-convenience.function.parameters" title="Qt Convenience Function Parameters">Qt Convenience Function Parameters</a> for which
+values are valid for the <em class="parameter"><code>modifierState</code></em> and for
+the <em class="parameter"><code>button</code></em> arguments.
+</p><div class="funcsynopsis"><a id="qt-mouseWheel-function"></a><p><code class="funcdef"><b class="fsfunc">mouseWheel</b>(</code><var class="pdparam">objectOrName</var>, <var class="pdparam">x</var>, <var class="pdparam">y</var>, <var class="pdparam">xdegrees</var>, <var class="pdparam">ydegrees</var><code>)</code>;</p></div><p>
+This function performs a mouse wheel operation, emulating rotation of the
+horizontal and/or vertical wheel of a mouse.  Replay happens on the specified
+<em class="parameter"><code>objectOrName</code></em> object at position <em class="parameter"><code>x</code></em>
+and <em class="parameter"><code>y</code></em> (in the <em class="parameter"><code>objectOrName</code></em>
+objects's coordinates), using the specified <em class="parameter"><code>xdegrees</code></em> and
+<em class="parameter"><code>ydegrees</code></em> values for the amount of wheel rotation.
+</p><p>
+The <code class="function">mouseWheel</code> function is supported on objects of type
+<a class="ulink" href="https://doc.qt.io/qt-5/qquickitem.html" target="_blank">QQuickItem</a> and
+<a class="ulink" href="https://doc.qt.io/qt-5/qwindow.html" target="_blank">QWindow</a>.
+</p><div class="funcsynopsis"><a id="qt-nativeMouseClick-function"></a><p><code class="funcdef"><b class="fsfunc">nativeMouseClick</b>(</code><var class="pdparam">objectOrName</var>, <var class="pdparam">x</var>, <var class="pdparam">y</var>, <var class="pdparam">modifierState</var>, <var class="pdparam">button</var><code>)</code>;</p></div><p>
+This function simulates a native mouse click on the specified
+<em class="parameter"><code>objectOrName</code></em> widget at position
+<em class="parameter"><code>x</code></em> and <em class="parameter"><code>y</code></em> (in the
+<em class="parameter"><code>objectOrName</code></em> widget's coordinates), using the
+specified <em class="parameter"><code>button</code></em> and with the
+<em class="parameter"><code>modifierState</code></em> modifier state.
+</p><p>
+See <a class="xref" href="rgs-qtconvenience.html#qt-convenience.function.parameters" title="Qt Convenience Function Parameters">Qt Convenience Function Parameters</a> for which
+values are valid for the <em class="parameter"><code>modifierState</code></em> and for
+the <em class="parameter"><code>button</code></em> arguments.
+</p><div class="funcsynopsis"><a id="qt-openContextMenu-function"></a><p><code class="funcdef"><b class="fsfunc">openContextMenu</b>(</code><var class="pdparam">objectOrName</var>, <var class="pdparam">x</var>, <var class="pdparam">y</var>, <var class="pdparam">modifierState</var><code>)</code>;</p></div><p>
+This function simulates the user opening a context menu by clicking the
+specified <em class="parameter"><code>objectOrName</code></em> widget at position
+<em class="parameter"><code>x</code></em> and <em class="parameter"><code>y</code></em> (in the
+<em class="parameter"><code>objectOrName</code></em> widget's coordinates), and with the
+<em class="parameter"><code>modifierState</code></em> modifier state.
+</p><p>
+See <a class="xref" href="rgs-qtconvenience.html#qt-convenience.function.parameters" title="Qt Convenience Function Parameters">Qt Convenience Function Parameters</a> for which
+values are valid for the <em class="parameter"><code>modifierState</code></em> argument.
+</p><div class="funcsynopsis"><a id="qt-openItemContextMenu-function"></a><p><code class="funcdef"><b class="fsfunc">openItemContextMenu</b>(</code><var class="pdparam">objectOrName</var>, <var class="pdparam">itemText</var>, <var class="pdparam">x</var>, <var class="pdparam">y</var>, <var class="pdparam">modifierState</var><code>)</code>;</p></div><p>
+This function simulates the user opening a context menu by clicking the
+menu option with the specified <em class="parameter"><code>itemText</code></em> inside the
+<em class="parameter"><code>objectOrName</code></em> view widget at position
+<em class="parameter"><code>x</code></em> and <em class="parameter"><code>y</code></em> (in the
+<em class="parameter"><code>itemText</code></em> item's coordinates), and with the
+<em class="parameter"><code>modifierState</code></em> modifier state.
+</p><p>
+<span class="emphasis"><em>Squish</em></span> supports this function for view widgets of type <a class="ulink" href="https://doc.qt.io/qt-4.8/qabstractitemview.html" target="_blank">QAbstractItemView</a>,
+and its subclasses, including <a class="ulink" href="https://doc.qt.io/qt-4.8/qlistview.html" target="_blank">QListView</a>, <a class="ulink" href="https://doc.qt.io/qt-4.8/qtableview.html" target="_blank">QTableView</a>, and
+<a class="ulink" href="https://doc.qt.io/qt-4.8/qtreeview.html" target="_blank">QTreeView</a>,
+and also older Qt 3 classes such as <a class="ulink" href="https://doc.qt.io/qt-4.8/q3iconview.html" target="_blank">Q3IconView</a>,
+<a class="ulink" href="https://doc.qt.io/qt-4.8/q3listbox.html" target="_blank">Q3ListBox</a>,
+<a class="ulink" href="https://doc.qt.io/qt-4.8/q3table.html" target="_blank">Q3Table</a>, and
+also classes derived from these types.
+</p><p>
+See <a class="xref" href="rgs-qtconvenience.html#qt-convenience.function.parameters" title="Qt Convenience Function Parameters">Qt Convenience Function Parameters</a> for which
+values are valid for the <em class="parameter"><code>modifierState</code></em> argument.
+</p><div class="funcsynopsis"><a id="qt-pressAndHold-function"></a><p><code class="funcdef"><b class="fsfunc">pressAndHold</b>(</code><var class="pdparam">objectOrName</var>, <var class="pdparam">x</var>, <var class="pdparam">y</var><code>)</code>;</p></div><div class="funcsynopsis"><p><code class="funcdef"><b class="fsfunc">pressAndHold</b>(</code><var class="pdparam">objectOrName</var>, <var class="pdparam">x</var>, <var class="pdparam">y</var>, <var class="pdparam">dx</var>, <var class="pdparam">dy</var><code>)</code>;</p></div><p>
+This function performs a press and hold operation on the specified
+<em class="parameter"><code>objectOrName</code></em> item—starting with the mouse
+at position <em class="parameter"><code>x</code></em> and <em class="parameter"><code>y</code></em> (in
+the <em class="parameter"><code>objectOrName</code></em> item's coordinates) and
+optionally moving the mouse by <em class="parameter"><code>dx</code></em> pixels
+horizontally and by <em class="parameter"><code>dy</code></em> pixels vertically if these
+offsets are specified. (Note that <em class="parameter"><code>dx</code></em> and
+<em class="parameter"><code>dy</code></em> are relative to the starting mouse position in
+QML scene coordinates, not in <em class="parameter"><code>objectOrName</code></em> item
+coordinates which is normally the case.)
+</p><p>
+The <code class="function">pressAndHold</code> function is supported on objects of type
+<a class="ulink" href="https://doc.qt.io/archives/qt-4.8/qdeclarativeitem.html" target="_blank">QDeclarativeItem</a>.
+</p><div class="important" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Important: pressAndHold() for other object types"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Important]" src="images/important.png"></img></td><th align="left">pressAndHold() for other object types</th></tr><tr><td align="left" valign="top"><p>
+For objects of type <a class="ulink" href="https://doc.qt.io/qt-5/qquickitem.html" target="_blank">QQuickItem</a>
+either <a class="xref" href="rgs-qtconvenience.html#qt-longMouseClick-function"><code class="function">longMouseClick</code></a> or <a class="xref" href="rgs-qtconvenience.html#qt-longMouseDrag-function"><code class="function">longMouseDrag</code></a>
+can be used.
+</p><p>
+For other objects it should be possible to emulate the effect of <code class="code">pressAndHold()</code>
+by using a combination of the following functions:
+</p><div class="itemizedlist"><ul type="disc" compact><li><p><a class="xref" href="rgs-squish.html#snooze-function"><code class="function">snooze</code></a></p></li><li><p><a class="xref" href="rgs-squish.html#mouseMove-function"><code class="function">mouseMove</code></a></p></li><li><p><a class="xref" href="rgs-squish.html#mousePress-function"><code class="function">mousePress</code></a></p></li><li><p><a class="xref" href="rgs-squish.html#mouseRelease-function"><code class="function">mouseRelease</code></a></p></li></ul></div><p>For example:</p><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage"></span><pre class="programlisting">
+function main()
+{
+    //...
+
+    mouseMove(waitForObject(":target_object_name"), 5, 5);
+    mousePress(waitForObject(":target_object_name"));
+    snooze(3);
+    mouseRelease(waitForObject(":target_object_name"));
+
+    //...
+}
+</pre></div></td></tr></table></div><p>
+The press and hold operation performed by this function is similar to
+what the <a class="xref" href="rgs-qtconvenience.html#qt-dragItemBy-function"><code class="function">dragItemBy</code></a> function does, except
+for the “<span class="quote">hold</span>” (the initial pause when the mouse is first
+pressed down). QML scenes support press and hold by using an invisible
+<code class="code">MouseArea</code> item that is overlaid on top of one or more of
+the scene's QML items. <span class="emphasis"><em>Squish</em></span> doesn't record actions for invisible
+items so for a press and hold it records the item at the mouse (or
+finger for touch screens) position that is actually under the
+<code class="code">MouseArea</code>.
+</p><div class="funcsynopsis"><a id="qt-qmlContext-function"></a><p><code class="funcdef"><b class="fsfunc">qmlContext</b>(</code><var class="pdparam">object</var><code>)</code>;</p></div><p> This function returns the <code class="classname">QQmlContext</code> for the
+object, or 0 if no context has been set. This is equivalent to calling the
+C++ function <code class="code">QQmlEngine::contextForObject</code>.
+A QML Context is a container for properties and allows
+data to be exposed to QML from C++. For an example of its use,
+see <a class="ulink" href="https://www.froglogic.com/blog/tip-of-the-week/accessing-qqmlcontext-properties-in-squish-test-scripts/" target="_blank">
+this blog post</a>.
+</p><div class="funcsynopsis"><a id="qt-qmlEngine-function"></a><p><code class="funcdef"><b class="fsfunc">qmlEngine</b>(</code><var class="pdparam">object</var><code>)</code>;</p></div><p> Returns the <code class="classname">QQmlEngine</code> associated with object, if
+any. This is equivalent to
+<code class="code">QQmlEngine::contextForObject(object)-&gt;engine()</code>, but more
+efficient. The <code class="classname">QQmlEngine</code> class provides an environment
+for instantiating QML components.
+</p><div class="funcsynopsis"><a id="qt-readGesture-function"></a><p><code class="funcdef"><b class="fsfunc">readGesture</b>(</code><var class="pdparam">gesture-file</var><code>)</code>;</p></div><p>
+This function opens a gesture file from a test suite directory and returns
+a <a class="xref" href="rgs-qtconvenience.html#qt-GestureBuilder-class" title="6.4.3. GestureBuilder">GestureBuilder</a> object.
+This can then be passed to <a class="xref" href="rgs-qtconvenience.html#qt-gesture-function"><code class="function">gesture</code></a>.
+The specified <em class="parameter"><code>gesture-file</code></em> refers to the filename.
+</p><div class="funcsynopsis"><a id="qt-scrollTo-function"></a><p><code class="funcdef"><b class="fsfunc">scrollTo</b>(</code><var class="pdparam">objectOrName</var>, <var class="pdparam">position</var><code>)</code>;</p></div><p>
+This function scrolls the <em class="parameter"><code>objectOrName</code></em> widget to
+the given <em class="parameter"><code>position</code></em>. The
+<em class="parameter"><code>position</code></em> is an absolute value (i.e., a pixel
+offset).
+</p><div class="funcsynopsis"><a id="qt-sendEvent-function"></a><p><code class="funcdef"><b class="fsfunc">sendEvent</b>(</code><var class="pdparam">eventName</var>, <var class="pdparam">objectOrName</var>, <var class="pdparam">...</var><code>)</code>;</p></div><p>
+This function sends an event of type <em class="parameter"><code>eventName</code></em> to
+the <em class="parameter"><code>objectOrName</code></em> widget. All the other arguments
+(<em class="parameter"><code>...</code></em>) are passed on to the event
+constructor—they are typically coordinates, button states, and
+similar. The <em class="parameter"><code>eventName</code></em> is any of the Qt events
+supported by <span class="emphasis"><em>Squish</em></span>—this includes all the most commonly used
+ones, such as,
+<code class="code">"QCloseEvent"</code>,
+
+
+
+
+
+
+
+
+<code class="code">"QHideEvent"</code>,
+
+
+<code class="code">"QKeyEvent"</code>,
+<code class="code">"QMouseEvent"</code>,
+<code class="code">"QMoveEvent"</code>,
+
+<code class="code">"QShowEvent"</code>,
+<code class="code">"QTabletEvent"</code>,
+and
+<code class="code">"QWheelEvent"</code>.
+</p><div class="funcsynopsis"><a id="qt-setFocus-function"></a><p><code class="funcdef"><b class="fsfunc">setFocus</b>(</code><var class="pdparam">objectOrName</var><code>)</code>;</p></div><p>
+This method changes the keyboard input focus to the object specified by
+<em class="parameter"><code>objectOrName</code></em>.
+</p><p>
+Changing the keyboard input focus is currently supported on objects of type
+<a class="ulink" href="https://doc.qt.io/qt-5/qquickitem.html" target="_blank">QQuickItem</a>,
+<a class="ulink" href="https://doc.qt.io/qt-5/qwidget.html" target="_blank">QWidget</a> and
+<a class="ulink" href="https://doc.qt.io/qt-5/qwindow.html" target="_blank">QWindow</a>.
+</p><div class="funcsynopsis"><a id="qt-setMouseTracking-function"></a><p><code class="funcdef"><b class="fsfunc">setMouseTracking</b>(</code><var class="pdparam">className</var>, <var class="pdparam">onOrOff</var><code>)</code>;</p></div><p>
+This function can be used in <code class="filename">init</code> files to disable
+or enable the recording of <code class="code">MouseMove</code> events for certain
+widget classes. The class to disable or enable mouse tracking for is
+specified by the <em class="parameter"><code>className</code></em> parameter. Pass an
+<em class="parameter"><code>onOrOff</code></em> parameter value of <code class="code">true</code> to
+enable mouse tracking or of <code class="code">false</code> to disable mouse
+tracking. (By default mouse tracking is off.)
+</p><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Note: Wrapper-Specific Initialization"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/note.png"></img></td><th align="left">Wrapper-Specific Initialization</th></tr><tr><td align="left" valign="top"><p>
+The <code class="filename">init</code> files are Tcl scripts that are registered
+with the <span class="application">squishrunner</span> and then read before starting any tests. The
+registration process is explained in <a class="xref" href="rg-cmdline.html#rg-squishrunner-cli--config" title="7.4.3.27. Configuring squishrunner">Configuring <span class="application">squishrunner</span> (Section 7.4.3.27)</a>.
+(Although <code class="filename">init</code> files must be written in Tcl, this
+does not affect the scripting language used for test suites, which may
+be in any of the scripting languages that <span class="emphasis"><em>Squish</em></span> supports.)
+</p><p>
+We can have as many <code class="code">init</code> scripts as we like for each
+GUI toolkit; or we can put all the initialization statements in a single
+Tcl script per toolkit. However many <code class="code">init</code> scripts we use,
+they must all be registered with the <span class="application">squishrunner</span>.
+</p></td></tr></table></div><p>Example:</p><pre class="programlisting">
+setMouseTracking ScribbleArea true
+</pre><p>
+This sets mouse tracking on for an AUT's custom
+<code class="code">ScribbleArea</code> class.
+</p><p>
+To make this work we must tell Squish to execute a file that contains
+this Tcl script at startup when it is used to test a Qt-based AUT:
+</p><pre class="screen">
+squishrunner --config addInitScript Qt /home/harri/qt_init1.tcl
+</pre><p>
+Note that an absolute path must be used.
+</p><div class="funcsynopsis"><a id="qt-setRecordMouseDrag-function"></a><p><code class="funcdef"><b class="fsfunc">setRecordMouseDrag</b>(</code><var class="pdparam">className</var>, <var class="pdparam">onOrOff</var><code>)</code>;</p></div><p>
+This function can be used in <code class="filename">init</code> files to disable
+or enable the recording of <code class="code">mouseDrag</code> statements for certain
+widget classes. The class to disable mouse dragging for is specified by
+the <em class="parameter"><code>className</code></em> parameter. Pass an
+<em class="parameter"><code>onOrOff</code></em> parameter value of <code class="code">true</code> to
+enable mouse drag recording or of <code class="code">false</code> to disable mouse
+drag recording. (By default mouse drag recording is on.)
+</p><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Note: Wrapper-Specific Initialization"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/note.png"></img></td><th align="left">Wrapper-Specific Initialization</th></tr><tr><td align="left" valign="top"><p>
+The <code class="filename">init</code> files are Tcl scripts that are registered
+with the <span class="application">squishrunner</span> and then read before starting any tests. The
+registration process is explained in <a class="xref" href="rg-cmdline.html#rg-squishrunner-cli--config" title="7.4.3.27. Configuring squishrunner">Configuring <span class="application">squishrunner</span> (Section 7.4.3.27)</a>.
+(Although <code class="filename">init</code> files must be written in Tcl, this
+does not affect the scripting language used for test suites, which may
+be in any of the scripting languages that <span class="emphasis"><em>Squish</em></span> supports.)
+</p><p>
+We can have as many <code class="code">init</code> scripts as we like for each
+GUI toolkit; or we can put all the initialization statements in a single
+Tcl script per toolkit. However many <code class="code">init</code> scripts we use,
+they must all be registered with the <span class="application">squishrunner</span>.
+</p></td></tr></table></div><p>
+The <code class="filename">init</code> files are Tcl scripts that are registered
+with the server and then read before starting any tests. The
+registration process is explained in <a class="xref" href="rg-cmdline.html#rg-squishrunner-cli--config" title="7.4.3.27. Configuring squishrunner">Configuring <span class="application">squishrunner</span> (Section 7.4.3.27)</a>.
+</p><p>Example:</p><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Tcl</span><pre class="programlisting">
+setRecordMouseDrag ScribbleArea false
+</pre></div><p>
+This switches off mouse drag recording for an AUT's custom
+<code class="code">ScribbleArea</code> class.
+</p><p>
+To make this work we must tell Squish to execute a file that contains
+this Tcl script at startup when it is used to test a Qt-based AUT:
+</p><pre class="screen">
+squishrunner --config addInitScript Qt /home/harri/qt_init2.tcl
+</pre><p>
+Note that an absolute path must be used.
+</p><div class="funcsynopsis"><a id="qt-setWindowState-function"></a><p><code class="funcdef"><b class="fsfunc">setWindowState</b>(</code><var class="pdparam">objectOrName</var>, <var class="pdparam">windowState</var><code>)</code>;</p></div><p>
+This function sets the state of the given
+<em class="parameter"><code>objectOrName</code></em> window to that specified by the
+<em class="parameter"><code>windowState</code></em> enumeration.
+</p><p>
+Note that using this function only makes sense for
+top-level windows.
+</p><p>
+Valid window state values are:
+<code class="code">WindowState.Fullscreen</code>,
+<code class="code">WindowState.Maximize</code>,
+<code class="code">WindowState.Minimize</code>, and
+<code class="code">WindowState.Normal</code>.
+</p><p>
+The form shown above works for Python and JavaScript.
+</p><p>
+For Perl use this: <code class="code">WindowState::Maximize</code>, etc.
+</p><p>
+For Ruby use this: <code class="code">WindowState::MAXIMIZE</code>, etc.
+</p><p>
+For Tcl use this: <code class="code">enum WindowState Maximize</code>, etc.
+</p><div class="funcsynopsis"><a id="qt-spinUp-function"></a><p><code class="funcdef"><b class="fsfunc">spinUp</b>(</code><var class="pdparam">objectOrName</var><code>)</code>;</p></div><p>
+This function clicks the “<span class="quote">up</span>” button on the
+<em class="parameter"><code>objectOrName</code></em> spinbox. The function works for
+<a class="ulink" href="https://doc.qt.io/qt-4.8/qabstractspinbox.html" target="_blank">QAbstractSpinBox</a>
+and its subclasses, such as <a class="ulink" href="https://doc.qt.io/qt-4.8/qspinbox.html" target="_blank">QSpinBox</a> and <a class="ulink" href="https://doc.qt.io/qt-4.8/qdoublespinbox.html" target="_blank">QDoubleSpinBox</a>.
+</p><div class="funcsynopsis"><a id="qt-spinDown-function"></a><p><code class="funcdef"><b class="fsfunc">spinDown</b>(</code><var class="pdparam">objectOrName</var><code>)</code>;</p></div><p>
+This function clicks the “<span class="quote">down</span>” button on the
+<em class="parameter"><code>objectOrName</code></em> spinbox. The function works for
+<a class="ulink" href="https://doc.qt.io/qt-4.8/qabstractspinbox.html" target="_blank">QAbstractSpinBox</a>
+and its subclasses, such as <a class="ulink" href="https://doc.qt.io/qt-4.8/qspinbox.html" target="_blank">QSpinBox</a> and <a class="ulink" href="https://doc.qt.io/qt-4.8/qdoublespinbox.html" target="_blank">QDoubleSpinBox</a>.
+</p><div class="funcsynopsis"><a id="qt-startDrag-function"></a><p><code class="funcdef"><b class="fsfunc">startDrag</b>(</code><var class="pdparam">source_objectOrName</var>, <var class="pdparam">sx</var>, <var class="pdparam">sy</var><code>)</code>;</p></div><p>
+This function initiates a drag on the
+<em class="parameter"><code>source_objectOrName</code></em> widget starting at position
+<em class="parameter"><code>sx</code></em> and <em class="parameter"><code>sy</code></em> (in the
+<em class="parameter"><code>source_objectOrName</code></em> widget's coordinates).
+The drop can be done using the <a class="xref" href="rgs-qtconvenience.html#qt-dropOn-function"><code class="function">dropOn</code></a>
+function.
+</p><div class="funcsynopsis"><a id="qt-tapObject-function"></a><p><code class="funcdef"><b class="fsfunc">tapObject</b>(</code><var class="pdparam">objectOrName</var><code>)</code>;</p></div><div class="funcsynopsis"><p><code class="funcdef"><b class="fsfunc">tapObject</b>(</code><var class="pdparam">objectOrName</var>, <var class="pdparam">x</var>, <var class="pdparam">y</var><code>)</code>;</p></div><div class="funcsynopsis"><p><code class="funcdef"><b class="fsfunc">tapObject</b>(</code><var class="pdparam">objectOrName</var>, <var class="pdparam">x</var>, <var class="pdparam">y</var>, <var class="pdparam">modifiers</var><code>)</code>;</p></div><p>
+This function taps on the specified <em class="parameter"><code>objectOrName</code></em> widget.
+The <em class="parameter"><code>x</code></em> and <em class="parameter"><code>y</code></em> coordinates as well
+as the <em class="parameter"><code>modifiers</code></em> keyboard modifiers are optional.  If
+they are not specified, the tap is made in the center of the widget using no
+keyboard modifiers.  On the other hand, if the additional coordinate parameters
+are given, the tap is made at position <em class="parameter"><code>x</code></em> and
+<em class="parameter"><code>y</code></em> (in the <em class="parameter"><code>objectOrName</code></em> widget's
+coordinates).
+</p><p>
+Tapping is supported on objects of type
+<a class="ulink" href="https://doc.qt.io/qt-5/qquickitem.html" target="_blank">QQuickItem</a>,
+<a class="ulink" href="https://doc.qt.io/qt-5/qwindow.html" target="_blank">QWindow</a> and
+<a class="ulink" href="https://doc.qt.io/qt-5/qwidget.html" target="_blank">QWidget</a>.
+</p><div class="funcsynopsis"><a id="qt-touchAndDrag-function"></a><p><code class="funcdef"><b class="fsfunc">touchAndDrag</b>(</code><var class="pdparam">objectOrName</var>, <var class="pdparam">x</var>, <var class="pdparam">y</var>, <var class="pdparam">dx</var>, <var class="pdparam">dy</var><code>)</code>;</p></div><div class="funcsynopsis"><p><code class="funcdef"><b class="fsfunc">touchAndDrag</b>(</code><var class="pdparam">objectOrName</var>, <var class="pdparam">x</var>, <var class="pdparam">y</var>, <var class="pdparam">dx</var>, <var class="pdparam">dy</var>, <var class="pdparam">modifiers</var><code>)</code>;</p></div><div class="funcsynopsis"><p><code class="funcdef"><b class="fsfunc">touchAndDrag</b>(</code><var class="pdparam">objectOrName</var>, <var class="pdparam">x</var>, <var class="pdparam">y</var>, <var class="pdparam">dx</var>, <var class="pdparam">dy</var>, <var class="pdparam">modifiers</var>, <var class="pdparam">delayAfterPress</var><code>)</code>;</p></div><p>
+This function performs a touch-based drag operation. It initiates a touch drag
+of the specified <em class="parameter"><code>objectOrName</code></em> widget starting at
+position <em class="parameter"><code>x</code></em> and <em class="parameter"><code>y</code></em> (in the
+<em class="parameter"><code>objectOrName</code></em> widget's coordinates).  The
+<em class="parameter"><code>objectOrName</code></em> widget is dragged by
+<em class="parameter"><code>dx</code></em> pixels horizontally and by <em class="parameter"><code>dy</code></em>
+pixels vertically.
+</p><p>
+If specified, the keyboard modifiers provided in
+<em class="parameter"><code>modifiers</code></em> are set while performing the drag.
+</p><p>
+If specified, the number of milliseconds provided in
+<em class="parameter"><code>delayAfterPress</code></em> is waited before the drag
+starts.
+</p><p>
+Touch-based dragging is supported on objects of type
+<a class="ulink" href="https://doc.qt.io/qt-5/qquickitem.html" target="_blank">QQuickItem</a> and
+<a class="ulink" href="https://doc.qt.io/qt-5/qwindow.html" target="_blank">QWindow</a>.
+</p><div class="funcsynopsis"><a id="qt-touchPress-function"></a><p><code class="funcdef"><b class="fsfunc">touchPress</b>(</code><var class="pdparam">objectOrName</var>, <var class="pdparam">x</var>, <var class="pdparam">y</var><code>)</code>;</p></div><div class="funcsynopsis"><p><code class="funcdef"><b class="fsfunc">touchPress</b>(</code><var class="pdparam">objectOrName</var>, <var class="pdparam">x</var>, <var class="pdparam">y</var>, <var class="pdparam">modifiers</var><code>)</code>;</p></div><p>
+This function performs a touch-based press operation. It replays a touch press
+on the specified <em class="parameter"><code>objectOrName</code></em> widget at position
+<em class="parameter"><code>x</code></em> and <em class="parameter"><code>y</code></em> (in the
+<em class="parameter"><code>objectOrName</code></em> widget's coordinates).
+</p><p>
+If specified, the keyboard modifiers provided in
+<em class="parameter"><code>modifiers</code></em> are set while performing the operation.
+</p><p>
+Since the object and Qt itself rely on press and release operations to always
+happen in pairs a call to <code class="function">touchPress</code> should always be
+paired with a call to <code class="function">touchRelease</code> to ensure a consistent
+state. For most cases using just <code class="function">tapObject</code> is sufficient.
+</p><p>
+A single touch press can be performed on objects of type
+<a class="ulink" href="https://doc.qt.io/qt-5/qquickitem.html" target="_blank">QQuickItem</a> and
+<a class="ulink" href="https://doc.qt.io/qt-5/qwindow.html" target="_blank">QWindow</a>.
+</p><div class="funcsynopsis"><a id="qt-touchRelease-function"></a><p><code class="funcdef"><b class="fsfunc">touchRelease</b>(</code><var class="pdparam">objectOrName</var>, <var class="pdparam">x</var>, <var class="pdparam">y</var><code>)</code>;</p></div><div class="funcsynopsis"><p><code class="funcdef"><b class="fsfunc">touchRelease</b>(</code><var class="pdparam">objectOrName</var>, <var class="pdparam">x</var>, <var class="pdparam">y</var>, <var class="pdparam">modifiers</var><code>)</code>;</p></div><p>
+This function performs a touch-based release operation. It replays a touch
+release on the specified <em class="parameter"><code>objectOrName</code></em> widget at position
+<em class="parameter"><code>x</code></em> and <em class="parameter"><code>y</code></em> (in the
+<em class="parameter"><code>objectOrName</code></em> widget's coordinates).
+</p><p>
+If specified, the keyboard modifiers provided in
+<em class="parameter"><code>modifiers</code></em> are set while performing the operation.
+</p><p>
+Since the object and Qt itself rely on press and release operations to always
+happen in pairs a call to <code class="function">touchRelease</code> should always be
+preceded by a call to <code class="function">touchPress</code> to ensure a consistent
+state. For most cases using just <code class="function">tapObject</code> is sufficient.
+</p><p>
+A single touch release can be performed on objects of type
+<a class="ulink" href="https://doc.qt.io/qt-5/qquickitem.html" target="_blank">QQuickItem</a> and
+<a class="ulink" href="https://doc.qt.io/qt-5/qwindow.html" target="_blank">QWindow</a>.
+</p><div class="funcsynopsis"><a id="qt-type-function"></a><p><code class="funcdef"><b class="fsfunc">type</b>(</code><var class="pdparam">objectOrName</var>, <var class="pdparam">text</var><code>)</code>;</p></div><p>
+This function types the specified <em class="parameter"><code>text</code></em> (as if the
+user had used the keyboard) into the <em class="parameter"><code>objectOrName</code></em>
+editable widget. If the text is surrounded by angle brackets (&lt;&gt;),
+it is interpreted as a key combination, e.g
+<code class="code">"&lt;Ctrl+Return&gt;"</code>. The input is case-sensitive, so
+<code class="code">type(<span class="emphasis"><em>object</em></span>, "R")</code> is different from
+<code class="code">type(<span class="emphasis"><em>object</em></span>, "r")</code>. (For a list of the
+supported special keys see the <a class="xref" href="rgs-squish.html#nativeType-function"><code class="function">nativeType</code></a>
+function's documentation.)
+</p><p>
+Unlike <a class="xref" href="rgs-squish.html#nativeType-function"><code class="function">nativeType</code></a>, <code class="code">type()</code> treats
+<code class="code">Ctrl</code> and <code class="code">Command</code> as the same key
+on all platforms. This means that you can write <code class="code">type("&lt;Ctrl+c&gt;")</code>
+in a test script and it will result in <code class="code">Ctrl+r</code> on Linux and
+Windows and in <code class="code">Command+r</code> on macOS. In turn, to make Squish press
+the actual <code class="code">Ctrl</code> key on macOS, you need to use Qt terminology:
+<code class="code">type("&lt;Meta+r&gt;")</code>.
+</p><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Note: Qt 3-specific"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/note.png"></img></td><th align="left">Qt 3-specific</th></tr><tr><td align="left" valign="top"><p>
+If the key combination is surrounded by an additional pair of angle
+brackets, an accelerator event is sent instead of a key event—for
+example, <code class="code">"&lt;&lt;Alt+A&gt;&gt;"</code>.
+</p></td></tr></table></div><div class="funcsynopsis"><a id="qt-uninstallEventHandler-function"></a><p><code class="funcdef"><b class="fsfunc">uninstallEventHandler</b>(</code><var class="pdparam">eventName</var>, <var class="pdparam">handlerFunctionName</var><code>)</code>;</p></div><div class="funcsynopsis"><p><code class="funcdef"><b class="fsfunc">uninstallEventHandler</b>(</code><var class="pdparam">className</var>, <var class="pdparam">eventName</var>, <var class="pdparam">handlerFunctionName</var><code>)</code>;</p></div><div class="funcsynopsis"><p><code class="funcdef"><b class="fsfunc">uninstallEventHandler</b>(</code><var class="pdparam">object</var>, <var class="pdparam">eventName</var>, <var class="pdparam">handlerFunctionName</var><code>)</code>;</p></div><p>
+This function uninstalls an event handler that has been previously
+installed using <a class="xref" href="rgs-qtconvenience.html#qt-installEventHandler-function"><code class="function">installEventHandler</code></a>.
+</p><div class="funcsynopsis"><a id="qt-uninstallSignalHandler-function"></a><p><code class="funcdef"><b class="fsfunc">uninstallSignalHandler</b>(</code><var class="pdparam">objectOrName</var>, <var class="pdparam">signalSignature</var>, <var class="pdparam">handlerFunctionName</var><code>)</code>;</p></div><p>
+This function uninstalls a signal handler that has been previously
+installed using <a class="xref" href="rgs-qtconvenience.html#qt-installSignalHandler-function"><code class="function">installSignalHandler</code></a>.
+</p><div class="funcsynopsis"><a id="qt-uninstallLazySignalHandler-function"></a><p><code class="funcdef"><b class="fsfunc">uninstallLazySignalHandler</b>(</code><var class="pdparam">name</var>, <var class="pdparam">signalSignature</var>, <var class="pdparam">handlerFunctionName</var><code>)</code>;</p></div><p>
+This function uninstalls a signal handler that has been previously
+installed using <a class="xref" href="rgs-qtconvenience.html#qt-installLazySignalHandler-function"><code class="function">installLazySignalHandler</code></a>.
+</p><div class="funcsynopsis"><a id="qt-waitForSignal-function"></a><p><code class="funcdef"><b class="fsfunc">waitForSignal</b>(</code><var class="pdparam">object</var>, <var class="pdparam">signalSignature</var><code>)</code>;</p></div><div class="funcsynopsis"><p><code class="funcdef"><b class="fsfunc">waitForSignal</b>(</code><var class="pdparam">object</var>, <var class="pdparam">signalSignature</var>, <var class="pdparam">timeoutMSec</var><code>)</code>;</p></div><p>
+This function waits for Qt (not Unix!) signal to be emitted by
+the given object. The <em class="parameter"><code>object</code></em> is a reference
+to object and can be obtained from one of the functions returning
+object references (e.g. <a class="xref" href="rgs-squish.html#waitForObject-function"><code class="function">waitForObject</code></a>
+or <a class="xref" href="rgs-squish.html#findObject-function"><code class="function">findObject</code></a>. The <em class="parameter"><code>signalSignature</code></em>
+must be a string, and contain the exact signature used in C++ with no parameter
+names (see <a class="xref" href="rgs-qtconvenience.html#qt-installSignalHandler-function"><code class="function">installSignalHandler</code></a> for examples
+of valid signatures). The duration of the waiting loop is defined by the <a class="xref" href="rgs-squish.html#testSettings.waitForObjectTimeout-property">testSettings.waitForObjectTimeout</a> property or if the
+optional <em class="parameter"><code>timeoutMSec</code></em> parameter is used, that many
+milliseconds. If the signal doesn't arrive within the given timeout, (catchable)
+<code class="code">RuntimeError</code> exception is raised.
+</p><div xmlns="" class="scriptlang"><form><select name="scriptlangcombo" onchange="javascript:changeScriptingLanguage(this)" onclick="javascript:changeScriptingLanguage(this)"><option value="all" selected>Show All</option><option value="JavaScript">Show JavaScript</option><option value="Perl">Show Perl</option><option value="Python">Show Python</option><option value="Ruby">Show Ruby</option><option value="Tcl">Show Tcl</option></select></form></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Python</span><pre class="programlisting">
+waitForSignal(waitForObject(names.window_Window), "titleChanged()")
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">JavaScript</span><pre class="programlisting">
+waitForSignal(waitForObject(names.windowWindow), "titleChanged()")
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Perl</span><pre class="programlisting">
+waitForSignal(waitForObject($Names::window_window), "titleChanged()");
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Ruby</span><pre class="programlisting">
+waitForSignal(waitForObject(Names::Window_Window), "titleChanged()")
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Tcl</span><pre class="programlisting">
+invoke waitForSignal [waitForObject $names::window_Window] "titleChanged()"
+</pre></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="qwebview"></a>6.4.1. QWebView Class</h3></div></div></div><p>
+<span class="emphasis"><em>Squish</em></span> provides additional support for the <code class="code">QWebView</code>
+class in the form of three additional methods.
+</p><div class="funcsynopsis"><a id="qt-QWebView.clearObjectCache-function"></a><p><code class="funcdef">Object <b class="fsfunc">QWebView.clearObjectCache</b>(</code><var class="pdparam"></var><code>)</code>;</p></div><p>
+This function clears the cache of objects that are being looked up using
+hierarchical names like DOCUMENT.HTML1.BODY1.DIV2 . (See also <a class="xref" href="rgs-webconvenience.html#web-clearObjectCache-function"><code class="function">clearObjectCache</code></a>.)
+</p><div class="funcsynopsis"><a id="qt-QWebView.evalJS-function"></a><p><code class="funcdef">Object <b class="fsfunc">QWebView.evalJS</b>(</code><var class="pdparam">code</var><code>)</code>;</p></div><p>
+This function evaluates the JavaScript <em class="parameter"><code>code</code></em>
+string in the <code class="code">QWebView</code>'s context (i.e., in the context of
+the active <code class="code">QWebView</code> page). The result of the last statement
+in the <em class="parameter"><code>code</code></em> is returned as a string. (See also <a class="xref" href="ugs-webapi.html#ugsweb-evaljs" title="5.3.5. How to Use evalJS">How to Use evalJS (Section 5.3.5)</a>.)
+</p><div class="funcsynopsis"><a id="qt-QWebView.retrieveJSObject-function"></a><p><code class="funcdef">Object <b class="fsfunc">QWebView.retrieveJSObject</b>(</code><var class="pdparam">code</var><code>)</code>;</p></div><p>
+This function evaluates the JavaScript <em class="parameter"><code>code</code></em>
+string in the <code class="code">QWebView</code>'s context (i.e., in the context of
+the active <code class="code">QWebView</code> page). The result of the last statement
+in the <em class="parameter"><code>code</code></em> is returned as a primitive value, like
+a string or number, or a reference to a
+<a class="xref" href="rgs-webconvenience.html#web-JsObject-class" title="6.10.42. JsObject Class">JsObject</a> in the page.
+(See also <a class="xref" href="ugs-webapi.html#ugsweb-retrieveJSObject" title="5.3.6. How to Use retrieveJSObject">How to Use retrieveJSObject (Section 5.3.6)</a> and
+<a class="xref" href="rgs-webconvenience.html#web-retrieveJSObject-function">retrieveJSObject</a>.)
+</p><div class="funcsynopsis"><a id="qt-QWebView.isPageLoaded-function"></a><p><code class="funcdef">Boolean <b class="fsfunc">QWebView.isPageLoaded</b>(</code><var class="pdparam"></var><code>)</code>;</p></div><p>
+This function returns <code class="code">true</code> if the page has been completely
+loaded; otherwise it returns <code class="code">false</code>. A complete and successful
+load implies that all of the page's objects can
+<span class="emphasis"><em>potentially</em></span> be accessed. This function can be used
+with the <a class="xref" href="rgs-squish.html#waitFor-function"><code class="function">waitFor</code></a> function to wait for a
+page to be loaded before accessing it from a test script.
+</p><p>
+Since page loading, HTTP requests, and so on, are asynchronous, even
+after a call to the <code class="code">isPageLoaded</code> function returns
+<code class="code">true</code> it is <span class="emphasis"><em>essential</em></span> that the <a class="xref" href="rgs-squish.html#waitForObject-function"><code class="function">waitForObject</code></a> function (or another wait function)
+is used to ensure that the specific object or objects of interest are
+ready to be accessed. Also, it may be necessary to pass a longer timeout
+to the <a class="xref" href="rgs-squish.html#waitForObject-function"><code class="function">waitForObject</code></a> function than the
+default 20 seconds (20 000 milliseconds). (See also <a class="xref" href="ugs-webapi.html#ugsweb-sync" title="5.3.8. How to Synchronize Web Page Loading for Testing">How to Synchronize Web Page Loading for Testing (Section 5.3.8)</a>.)
+</p><div class="funcsynopsis"><a id="qt-QWebView.loadUrl-function"></a><p><code class="funcdef"><b class="fsfunc">QWebView.loadUrl</b>(</code><var class="pdparam">url</var><code>)</code>;</p></div><p>
+This function changes the <code class="code">QWebView</code>'s current page to the
+new <em class="parameter"><code>url</code></em>.
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="how.to.use.the.qml.extension.api"></a>6.4.2. QML Extension API</h3></div></div></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><span class="section"><a href="rgs-qtconvenience.html#the.format.of.a.qml.extension">6.4.2.1. The Format of a QML Extension</a></span></dt><dt><span class="section"><a href="rgs-qtconvenience.html#installing.qml.extensions">6.4.2.2. Installing QML Extensions</a></span></dt><dt><span class="section"><a href="rgs-qtconvenience.html#qml.extension.api.documentation">6.4.2.3. QML Extension API Documentation</a></span></dt></dl></div><p>
+Qt applications that utilize QtQuick can dynamically load QML code, including
+custom QML objects, so it is quite possible that AUTs that use QML will have
+QML objects that are unknown to <span class="emphasis"><em>Squish</em></span>. This isn't a problem since <span class="emphasis"><em>Squish</em></span>
+can still record and playback interactions with such objects, but will do so in
+terms of the primitives they are built from (e.g. Rectangle or Text items),
+rather than with the actual (logical) item types (e.g., CustomButton).
+</p><p>
+The QML Extension API introduced with <span class="emphasis"><em>Squish</em></span> 4.1 makes it
+possible to make <span class="emphasis"><em>Squish</em></span> aware of custom QML object types so that
+recording and playback can work at a high level (i.e., in terms of the
+custom objects themselves rather than with the primitives that they are
+built from). <span class="emphasis"><em>Squish</em></span> comes with a small example that makes use of some
+of the QML Extension APIs and that shows how to implement a
+<code class="code">SquishHook</code> for a custom Calculator <code class="classname">Button</code> type:
+<code class="filename">SQUISHDIR/examples/qt5/calqlatr/extension/Calqlatr.qml</code>.
+</p><p>
+<span class="emphasis"><em>Squish</em></span>  also includes a more substantial QML Extension for support of
+QtQuick Controls, located in
+<code class="filename">SQUISHDIR/lib/extensions/qt/qtquick/ControlsExt.qml</code>.
+</p><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="the.format.of.a.qml.extension"></a>6.4.2.1. The Format of a QML Extension</h4></div></div></div><p>
+QML Extensions are standard QML scripts in <code class="filename">.qml</code>
+files (using the UTF-8 encoding), and using some additional
+functionality provided by <span class="emphasis"><em>Squish</em></span>.
+For QtQuick 1.x the structure of a <span class="emphasis"><em>Squish</em></span> QML extension looks like this:
+</p><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">JavaScript</span><pre class="programlisting">
+import Qt 4.7
+import com.froglogic.squish.qml 0.1
+
+SquishHook {
+    // extension code...
+}
+</pre></div><p>
+For QtQuick 2.x the basic structure of a   QML extension is:
+</p><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">JavaScript</span><pre class="programlisting">
+import QtQuick 2.0
+import com.froglogic.squish.qtquick 0.1
+
+SquishHook {
+    // extension code...
+}
+</pre></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="installing.qml.extensions"></a>6.4.2.2. Installing QML Extensions</h4></div></div></div><p>
+<span class="emphasis"><em>Squish</em></span> automatically looks in the
+<code class="filename">SQUISHDIR/lib/extensions/qt/qml</code> directory for extension
+files targeting QtQuick 1.x and into the
+<code class="filename">SQUISHDIR/lib/extensions/qt/qtquick</code> directory for
+QtQuick 2.x extension files. All that is needed to “<span class="quote">install</span>”
+a new QML extension is to move or copy it into one of these directories.  It is
+also possible add an additional directory for <span class="emphasis"><em>Squish</em></span> to search for QML
+extensions: Set the <code class="envar">SQUISH_QML_EXTENSION_PATH</code> environment
+variable (which you may need to create) to the directory where you want to keep
+your QtQuick 1.x QML extensions.  For QtQuick 2.x rather set the
+<code class="envar">SQUISH_QTQUICK_EXTENSION_PATH</code> environment variable to the
+directory where you keep your QML extensions.
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="qml.extension.api.documentation"></a>6.4.2.3. QML Extension API Documentation</h4></div></div></div><p>
+<span class="emphasis"><em>Squish</em></span>'s QML Extension API consists of a single item of type
+<code class="code">SquishHook</code>. This item provides various properties and
+functions which are listed below. A custom QML extension can make use of
+these properties and functions—and in some cases override them.
+In addition, <span class="emphasis"><em>Squish</em></span> provides some helper functions to make writing QML
+extensions easier.
+</p><p>
+The QtQuick 1.x API uses the QML types and elements specified in the
+Qt 4.8 Reference Documentation: <a class="ulink" href="https://doc.qt.io/qt-4.8/qdeclarativebasictypes.html" target="_blank">
+doc.qt.io/qt-4.8/qdeclarativebasictypes.html</a> and <a class="ulink" href="https://doc.qt.io/qt-4.8/qdeclarativeelements.html" target="_blank">
+doc.qt.io/qt-4.8/qdeclarativeelements.html</a>.
+</p><p>
+The QtQuick 2.x API uses the QML types and elements specified in the
+Qt 5.x Reference Documentation: <a class="ulink" href="https://doc.qt.io/qt-5/qml-qtquick-item.html" target="_blank">
+doc.qt.io/qt-5/qml-qtquick-item.html</a> and <a class="ulink" href="https://doc.qt.io/qt-5/qtqml-typesystem-basictypes.html" target="_blank">
+doc.qt.io/qt-5/qtqml-typesystem-basictypes.html</a>.
+</p><div class="funcsynopsis"><a id="qml-isCustomQmlType-function"></a><p><code class="funcdef">bool <b class="fsfunc">isCustomQmlType</b>(</code><var class="pdparam">item</var><code>)</code>;</p></div><p>
+This function returns whether the given <em class="parameter"><code>item</code></em> of
+type <code class="code">Item</code> is a custom type. (Every QML item that introduces
+new properties is considered to be a custom QML type by Qt—and by
+this function.)
+</p><div class="funcsynopsis"><a id="qml-isQmlType-function"></a><p><code class="funcdef">bool <b class="fsfunc">isQmlType</b>(</code><var class="pdparam">item</var>, <var class="pdparam">className</var><code>)</code>;</p></div><p>
+This function returns whether the given <em class="parameter"><code>item</code></em> of
+type <code class="code">Item</code> inherits the class specified by the
+<em class="parameter"><code>className</code></em> string.
+</p><div class="funcsynopsis"><a id="qml-itemHasContents-function"></a><p><code class="funcdef">bool <b class="fsfunc">itemHasContents</b>(</code><var class="pdparam">item</var><code>)</code>;</p></div><div class="important" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Important: QtQuick 2.x specific"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Important]" src="images/important.png"></img></td><th align="left">QtQuick 2.x specific</th></tr><tr><td align="left" valign="top"><p>
+This function is <span class="emphasis"><em>only</em></span> available in QtQuick 2.x QML
+Extensions.
+</p></td></tr></table></div><p>
+This function returns whether the given <em class="parameter"><code>item</code></em> of type
+<code class="code">Item</code> has the <code class="code">QQuickItem::ItemHasContents</code> flag set.
+This is a helper function to access this particular flag from within QML. It
+can serve as a hint whether an item should be ignored by default.  See also
+<a class="ulink" href="https://doc.qt.io/qt-5/qquickitem.html#Flag-enum" target="_blank">
+doc.qt.io/qt-5/qquickitem.html#Flag-enum</a>.
+</p><div class="funcsynopsis"><a id="qml-qmlId-function"></a><p><code class="funcdef">String <b class="fsfunc">qmlId</b>(</code><var class="pdparam">item</var><code>)</code>;</p></div><p>
+This function returns the id for the given <em class="parameter"><code>item</code></em> or an
+empty string if <em class="parameter"><code>item</code></em> has no id set.
+</p><div class="funcsynopsis"><a id="qml-qmlType-function"></a><p><code class="funcdef">String <b class="fsfunc">qmlType</b>(</code><var class="pdparam">item</var><code>)</code>;</p></div><p>
+This function returns the given <em class="parameter"><code>item</code></em> of type
+<code class="code">Item</code>'s class name if it is a declarative type; otherwise
+it returns an empty string.
+</p><div class="funcsynopsis"><a id="qml-source-function"></a><p><code class="funcdef">String <b class="fsfunc">source</b>(</code><var class="pdparam">item</var><code>)</code>;</p></div><p>
+This function returns the given <em class="parameter"><code>item</code></em> of type
+<code class="code">Item</code>'s URL if the item was loaded from a local file or
+remotely; otherwise it returns the <em class="parameter"><code>item</code></em>'s containing
+component's URL (which might be an empty string).
+</p><div class="funcsynopsis"><a id="qml-SquishHook.containerFor-function"></a><p><code class="funcdef">Item <b class="fsfunc">SquishHook.containerFor</b>(</code><var class="pdparam">item</var><code>)</code>;</p></div><p>
+This function returns the container the given
+<em class="parameter"><code>item</code></em> of type <code class="code">Item</code> is in (itself of
+type <code class="code">Item</code>, e.g., a <code class="code">ListView</code> or a
+<code class="code">GridView</code>) which is normally also the
+<em class="parameter"><code>item</code></em>'s parent; otherwise it returns
+<code class="code">null</code> if the <em class="parameter"><code>item</code></em> isn't in a
+container.
+</p><p>
+You can implement your own version of this function in your QML
+extension, in which case for any given <em class="parameter"><code>item</code></em> you
+<span class="emphasis"><em>must</em></span> return one of the following three values: An
+<code class="code">Item</code> (possibly of your own custom type) which contains the
+given <em class="parameter"><code>item</code></em>. Or <code class="code">null</code>, if you
+don't want the given <em class="parameter"><code>item</code></em> to have a container (in
+which case the view will be considered to be the
+<em class="parameter"><code>item</code></em>'s container). Or, the special value,
+<code class="code">unhandled</code>, if you don't want to handle the given
+<em class="parameter"><code>item</code></em> (e.g., because it is a standard
+<code class="code">Item</code> type that you want <span class="emphasis"><em>Squish</em></span> to handle), since
+<code class="code">unhandled</code> tells <span class="emphasis"><em>Squish</em></span> to handle the
+<em class="parameter"><code>item</code></em> itself.
+</p><div class="funcsynopsis"><a id="qml-SquishHook.extraPropertiesFor-function"></a><p><code class="funcdef">StringList <b class="fsfunc">SquishHook.extraPropertiesFor</b>(</code><var class="pdparam">item</var><code>)</code>;</p></div><p>
+This function returns a list of the property <span class="emphasis"><em>names</em></span>
+for the given <em class="parameter"><code>item</code></em> of type <code class="code">Item</code> that
+should be taken into account when generating a <span class="emphasis"><em>Squish</em></span> object name for
+the <em class="parameter"><code>item</code></em>. (This function can be used to achieve
+the same kind of control over <span class="emphasis"><em>Squish</em></span>'s naming as editing the Qt
+wrapper descriptor file—for which see, <a class="xref" href="rg-namingconfig.html" title="7.12. Object Name Generation">Object Name Generation (Section 7.12)</a>—but with finer control possible since
+property names can be considered on a per-item basis, not just on a
+per-type basis.)
+</p><p>
+You can implement your own version of this function in your QML
+extension, in which case for any given <em class="parameter"><code>item</code></em> you
+<span class="emphasis"><em>must</em></span> return either: A list
+of property names (as an array of strings) whose values should be used
+to create the <span class="emphasis"><em>Squish</em></span> object name for the given
+<em class="parameter"><code>item</code></em>. Or, the special value,
+<code class="code">unhandled</code>, if you don't want to handle the given
+<em class="parameter"><code>item</code></em> (e.g., because it is a standard
+<code class="code">Item</code> type that you want <span class="emphasis"><em>Squish</em></span> to handle), since
+<code class="code">unhandled</code> tells <span class="emphasis"><em>Squish</em></span> to handle the
+<em class="parameter"><code>item</code></em> itself.
+</p><div class="funcsynopsis"><a id="qml-SquishHook.isIgnored-function"></a><p><code class="funcdef">bool <b class="fsfunc">SquishHook.isIgnored</b>(</code><var class="pdparam">item</var><code>)</code>;</p></div><p>
+This function returns <code class="code">false</code> if the given
+<em class="parameter"><code>item</code></em> of type <code class="code">Item</code> should be taken
+notice of by <span class="emphasis"><em>Squish</em></span>—for example, visible and available for
+picking in the <span class="application">Spy</span> and recorded.
+</p><p>
+You can implement your own version of this function in your QML
+extension, in which case for any given <em class="parameter"><code>item</code></em> you
+<span class="emphasis"><em>must</em></span> return one of the following three values: The
+value <code class="code">false</code> if you want <span class="emphasis"><em>Squish</em></span> to take notice of the
+given <em class="parameter"><code>item</code></em>, or <code class="code">true</code> if you want
+<span class="emphasis"><em>Squish</em></span> to ignore the <em class="parameter"><code>item</code></em>, or the special
+value, <code class="code">unhandled</code>, if you don't want to handle the given
+<em class="parameter"><code>item</code></em> (e.g., because it is a standard
+<code class="code">Item</code> type that you want <span class="emphasis"><em>Squish</em></span> to handle), since
+<code class="code">unhandled</code> tells <span class="emphasis"><em>Squish</em></span> to handle the
+<em class="parameter"><code>item</code></em> itself.
+</p><div class="funcsynopsis"><a id="qml-SquishHook.isItemReady-function"></a><p><code class="funcdef">bool <b class="fsfunc">SquishHook.isItemReady</b>(</code><var class="pdparam">item</var><code>)</code>;</p></div><p>
+This function returns <code class="code">true</code> if the given
+<em class="parameter"><code>item</code></em> of type <code class="code">Item</code> is ready to be
+interacted with, that is, is visible, enabled, and is in a stable state
+(e.g., it is not being or about to be animated).
+</p><p>
+You can implement your own version of this function in your QML
+extension, in which case for any given <em class="parameter"><code>item</code></em> you
+<span class="emphasis"><em>must</em></span> return one of the following three values: The
+value <code class="code">true</code> if the given <em class="parameter"><code>item</code></em> is
+ready for interaction, or <code class="code">false</code> the
+<em class="parameter"><code>item</code></em> isn't ready, or the special value,
+<code class="code">unhandled</code>, if you don't want to handle the given
+<em class="parameter"><code>item</code></em> (e.g., because it is a standard
+<code class="code">Item</code> type that you want <span class="emphasis"><em>Squish</em></span> to handle), since
+<code class="code">unhandled</code> tells <span class="emphasis"><em>Squish</em></span> to handle the
+<em class="parameter"><code>item</code></em> itself.
+</p><a id="qml-SquishHook.priority-property"></a>int
+<span class="property">SquishHook.priority</span><p>
+This property holds a priority value for the QML extension and has a
+default value of 0. <span class="emphasis"><em>Squish</em></span> accesses QML extensions in priority order
+from highest to lowest.
+</p><p>
+You can implement your own version of this property in your QML
+extension to give your extension a priority value higher than 0, e.g.,
+to increase its priority.
+</p><div class="funcsynopsis"><a id="qml-SquishHook.propertyFor-function"></a><p><code class="funcdef">String <b class="fsfunc">SquishHook.propertyFor</b>(</code><var class="pdparam">item</var>, <var class="pdparam">property</var><code>)</code>;</p></div><div class="important" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Important: QtQuick 1.x specific"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Important]" src="images/important.png"></img></td><th align="left">QtQuick 1.x specific</th></tr><tr><td align="left" valign="top"><p>
+This function is <span class="emphasis"><em>only</em></span> available in QtQuick 1.x QML
+Extensions.
+</p></td></tr></table></div><p>
+This function returns a property value (as a string) for the given
+<em class="parameter"><code>item</code></em> of type <code class="code">Item</code>'s
+<em class="parameter"><code>property</code></em> (specified as a string).
+</p><p>
+You can implement your own version of this function in your QML
+extension, in which case for any given <em class="parameter"><code>item</code></em> and
+<em class="parameter"><code>property</code></em> you <span class="emphasis"><em>must</em></span> return
+either: A string property value, or the special value,
+<code class="code">unhandled</code>, if you don't want to handle the given
+<em class="parameter"><code>item</code></em> (e.g., because it is a standard
+<code class="code">Item</code> type that you want <span class="emphasis"><em>Squish</em></span> to handle), since
+<code class="code">unhandled</code> tells <span class="emphasis"><em>Squish</em></span> to handle the
+<em class="parameter"><code>item</code></em> itself.
+</p><p>
+Note that this function is <span class="emphasis"><em>not</em></span> called when the
+<code class="code"><span class="emphasis"><em>object</em></span>.property("<span class="emphasis"><em>propertyName</em></span>")</code>
+function is used inside a test script.
+</p></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="qt-GestureBuilder-class"></a>6.4.3. GestureBuilder</h3></div></div></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><span class="section"><a href="rgs-qtconvenience.html#qt-GestureBuilder-create-functions">6.4.3.1. Gesture creation</a></span></dt><dt><span class="section"><a href="rgs-qtconvenience.html#qt-GestureBuilder-manipulate-functions">6.4.3.2. Gesture manipulation</a></span></dt></dl></div><p>
+Objects of this type hold the touch strokes information needed to
+replay <a class="xref" href="rgs-qtconvenience.html#qt-gesture-function"><code class="function">gesture</code></a>.
+An instance of this class is returned by
+<a class="xref" href="rgs-qtconvenience.html#qt-readGesture-function"><code class="function">readGesture</code></a>.
+Strokes are defined by screen coordinates points, pressure and
+touch size.
+</p><a id="qt-GestureBuilder-areaWidth-property"></a>int
+<span class="property">GestureBuilder.areaWidth</span><p>
+The width of the area in which this gesture is defined. This will be
+the device or emulator screen width.
+</p><a id="qt-GestureBuilder-areaHeight-property"></a>int
+<span class="property">GestureBuilder.areaHeight</span><p>
+The height of the area in which this gesture is defined. This will be
+the device or emulator screen height.
+</p><p>
+All <a class="xref" href="rgs-qtconvenience.html#qt-GestureBuilder-class" title="6.4.3. GestureBuilder">GestureBuilder</a> methods listed in the
+<a class="xref" href="rgs-qtconvenience.html#qt-GestureBuilder-create-functions" title="6.4.3.1. Gesture creation">Gesture creation (Section 6.4.3.1)</a> and
+<a class="xref" href="rgs-qtconvenience.html#qt-GestureBuilder-manipulate-functions" title="6.4.3.2. Gesture manipulation">Gesture manipulation (Section 6.4.3.2)</a> section,
+return the <a class="xref" href="rgs-qtconvenience.html#qt-GestureBuilder-class" title="6.4.3. GestureBuilder">GestureBuilder</a> object
+itself, unless specified differently.
+</p><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="qt-GestureBuilder-create-functions"></a>6.4.3.1. Gesture creation</h4></div></div></div><p>
+This section lists the methods for manually creating a
+<a class="xref" href="rgs-qtconvenience.html#qt-GestureBuilder-class" title="6.4.3. GestureBuilder">GestureBuilder</a> object.
+</p><div class="funcsynopsis"><p><code class="funcdef"><b class="fsfunc">GestureBuilder</b>(</code><var class="pdparam">width</var>, <var class="pdparam">height</var>, <var class="pdparam">unit</var><code>)</code>;</p></div><div class="funcsynopsis"><p><code class="funcdef"><b class="fsfunc">GestureBuilder</b>(</code><var class="pdparam">xml</var><code>)</code>;</p></div><p>
+Two constructor functions for creating a
+<a class="xref" href="rgs-qtconvenience.html#qt-GestureBuilder-class" title="6.4.3. GestureBuilder">GestureBuilder</a> object. The
+<em class="parameter"><code>width</code></em> and <em class="parameter"><code>height</code></em> are
+the target screen size. The <em class="parameter"><code>unit</code></em> can be either
+0 or 1, meaning respectively in pixels or millimeters. The constants
+<code class="constant">GestureBuilder.Pixel</code> and
+<code class="constant">GestureBuilder.MilliMeter</code> can be used as well.
+</p><p>
+The second constructor function constructs a
+<a class="xref" href="rgs-qtconvenience.html#qt-GestureBuilder-class" title="6.4.3. GestureBuilder">GestureBuilder</a> object by passing a
+string containing <acronym class="acronym">XML</acronym>, which should be in the same
+format as the recorded gesture files.
+</p><div class="funcsynopsis"><p><code class="funcdef">Object <b class="fsfunc">GestureBuilder.addStroke</b>(</code><var class="pdparam">x</var>, <var class="pdparam">y</var><code>)</code>;</p></div><div class="funcsynopsis"><p><code class="funcdef">Object <b class="fsfunc">GestureBuilder.addStroke</b>(</code><var class="pdparam">startTime</var>, <var class="pdparam">x</var>, <var class="pdparam">y</var><code>)</code>;</p></div><div class="funcsynopsis"><p><code class="funcdef">Object <b class="fsfunc">GestureBuilder.addStroke</b>(</code><var class="pdparam">startTime</var>, <var class="pdparam">x</var>, <var class="pdparam">y</var>, <var class="pdparam">pressure</var><code>)</code>;</p></div><div class="funcsynopsis"><p><code class="funcdef">Object <b class="fsfunc">GestureBuilder.addStroke</b>(</code><var class="pdparam">startTime</var>, <var class="pdparam">x</var>, <var class="pdparam">y</var>, <var class="pdparam">pressure</var>, <var class="pdparam">size</var><code>)</code>;</p></div><p>
+Starts a new stroke. The whole movement of one finger or pen from
+touch down to releasing the screen is called a stroke. The touch down
+coordinate is (<em class="parameter"><code>x</code></em>, <em class="parameter"><code>y</code></em>).
+For the non-first stroke, a time offset can be specified in milliseconds using
+the <em class="parameter"><code>startTime</code></em> argument. Strokes cannot be disjointed
+in time, at least one finger or pen has to be down during the whole gesture.
+The maximum simultaneous touches is device dependent
+(See <code class="code">QTouchDevice::maximumTouchPoints()</code>).
+</p><p>
+Finally, the <em class="parameter"><code>pressure</code></em> and
+<em class="parameter"><code>size</code></em> are relative messure values for
+respectively pen or finger pressure and size. These should be between
+0.0 and 1.0 and when omitted defaults to 0.25.
+</p><div class="funcsynopsis"><p><code class="funcdef">Object <b class="fsfunc">GestureBuilder.curveTo</b>(</code><var class="pdparam">duration</var>, <var class="pdparam">controlX</var>, <var class="pdparam">controlY</var>, <var class="pdparam">endX</var>, <var class="pdparam">endy</var><code>)</code>;</p></div><div class="funcsynopsis"><p><code class="funcdef">Object <b class="fsfunc">GestureBuilder.curveTo</b>(</code><var class="pdparam">duration</var>, <var class="pdparam">control1X</var>, <var class="pdparam">control1Y</var>, <var class="pdparam">control2X</var>, <var class="pdparam">control2Y</var>, <var class="pdparam">endX</var>, <var class="pdparam">endy</var><code>)</code>;</p></div><p>
+Adds a bézier curve movement to the latest added stroke in
+<em class="parameter"><code>duration</code></em> milliseconds.
+The curve starts with the end coordinate of the last added movement or, if
+none added to the stroke, the stroke touch down coordinate. The end coordinate
+is specified with <em class="parameter"><code>endX</code></em> and <em class="parameter"><code>endY</code></em>.
+One or two so called control points can be used.
+</p><div class="funcsynopsis"><p><code class="funcdef">Object <b class="fsfunc">GestureBuilder.lineTo</b>(</code><var class="pdparam">duration</var>, <var class="pdparam">endX</var>, <var class="pdparam">endy</var><code>)</code>;</p></div><p>
+Adds a line movement to the latest added stroke in
+<em class="parameter"><code>duration</code></em> milliseconds.
+The line starts with the end coordinate of the last added movement or, if none
+added to the stroke, the stroke touch down coordinate. The end coordinate is
+specified with <em class="parameter"><code>endX</code></em> and <em class="parameter"><code>endY</code></em>.
+</p><div class="funcsynopsis"><p><code class="funcdef">Object <b class="fsfunc">GestureBuilder.build</b>(</code><code>)</code>;</p></div><p>
+Creates the gesture from the added strokes and movements. After calling this
+method, no strokes or movements can be added.
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="qt-GestureBuilder-manipulate-functions"></a>6.4.3.2. Gesture manipulation</h4></div></div></div><div class="funcsynopsis"><p><code class="funcdef">Object <b class="fsfunc">GestureBuilder.accelerate</b>(</code><var class="pdparam">factor</var><code>)</code>;</p></div><p>
+Changes stroke speed given a factor. A factor between 0.0 and 1.0
+slows down the gesture, above 1.0 will speed it up.
+</p><div class="funcsynopsis"><p><code class="funcdef">Object <b class="fsfunc">GestureBuilder.rotate</b>(</code><var class="pdparam">degrees</var><code>)</code>;</p></div><div class="funcsynopsis"><p><code class="funcdef">Object <b class="fsfunc">GestureBuilder.rotate</b>(</code><var class="pdparam">degrees</var>, <var class="pdparam">originX</var>, <var class="pdparam">originY</var><code>)</code>;</p></div><p>
+Rotates the strokes. The <em class="parameter"><code>degrees</code></em>
+is the agle in degrees in a counter clockwise direction.
+The <em class="parameter"><code>originX</code></em> and <em class="parameter"><code>originY</code></em> define
+the origin of the rotate operation. If omitted, the area center is
+taken as origin.
+</p><div class="funcsynopsis"><p><code class="funcdef">Object <b class="fsfunc">GestureBuilder.scale</b>(</code><var class="pdparam">scale</var><code>)</code>;</p></div><div class="funcsynopsis"><p><code class="funcdef">Object <b class="fsfunc">GestureBuilder.scale</b>(</code><var class="pdparam">scaleX</var>, <var class="pdparam">scaleY</var><code>)</code>;</p></div><div class="funcsynopsis"><a id="qt-GestureBuilder.scale-function"></a><p><code class="funcdef">Object <b class="fsfunc">GestureBuilder.scale</b>(</code><var class="pdparam">scaleX</var>, <var class="pdparam">scaleY</var>, <var class="pdparam">originX</var>, <var class="pdparam">originY</var><code>)</code>;</p></div><p>
+Changes the size of the strokes. The <em class="parameter"><code>scaleX</code></em>
+is the scale factor in the horizontal direction and
+<em class="parameter"><code>scaleY</code></em> in the vertical direction.
+The <em class="parameter"><code>originX</code></em> and <em class="parameter"><code>originY</code></em> define
+the origin of the scale operation. If omitted, the area center is
+taken as origin. When also <em class="parameter"><code>scaleY</code></em> is omitted, then
+the scaling is homogeneous in both directions.
+</p><div class="funcsynopsis"><a id="qt-GestureBuilder.translate-function"></a><p><code class="funcdef">Object <b class="fsfunc">GestureBuilder.translate</b>(</code><var class="pdparam">x</var>, <var class="pdparam">y</var><code>)</code>;</p></div><p>
+Moves the strokes. The <em class="parameter"><code>x</code></em> and
+<em class="parameter"><code>y</code></em> specifies the movement. A positive value for
+<em class="parameter"><code>x</code></em> moves the strokes to the right and a positive
+value for <em class="parameter"><code>y</code></em> moves the strokes downwards.
+</p></div></div></div><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" type="text/javascript" src="ScriptingLanguage.js"></script><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format">setScriptingLanguage();</script><div class="navfooter"><hr></hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="rgs-squish.html">Prev</a> </td><td width="20%" align="center"><a accesskey="u" href="api.man.html">Up</a></td><td width="40%" align="right"> <a accesskey="n" href="rgs-tkconvenience.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">6.3. Squish API </td><td width="20%" align="center"><a accesskey="h" href="index-noframes.html">Home</a></td><td width="40%" align="right" valign="top"> 6.5. Tk Convenience API</td></tr></table></div></body>
+<!-- Mirrored from rgs-qtconvenience.html by HTTrack Website Copier/3.x [XR&CO'2013], Wed, 06 Jul 2022 13:29:00 GMT -->
+</html>

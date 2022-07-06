@@ -1,0 +1,311 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<!-- Mirrored from ugs-tkapi.html by HTTrack Website Copier/3.x [XR&CO'2013], Wed, 06 Jul 2022 13:28:59 GMT -->
+<head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><title>5.6. How to Use the Tk API</title><link rel="stylesheet" href="manual.css" type="text/css"></link><meta name="generator" content="DocBook XSL Stylesheets V1.73.2"></meta><link rel="start" href="index-noframes.html" title="Squish Manual"></link><link rel="up" href="users-guide.html" title="Chapter 5. User Guide"></link><link rel="prev" href="ug-how.to.use.the.windows.nativeobject.html" title="5.5. How to Use the Windows nativeObject API"></link><link rel="next" href="ug-how.to.use.the.android.api.html" title="5.7. How to Use the Android API"></link><style xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" type="text/css" media="screen">
+        div.toc * { margin-left: 6px; margin-right: auto; max-width: 75em; }
+        div.toc span { margin-left: 0px; }
+        * { margin-left: auto; margin-right: auto; max-width: 75em; }
+        body { margin-left: 6px; margin-right: 6px; }
+        table th { padding: .5ex }
+        table td { padding: .5ex }
+    </style><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format">
+        function keyPress() {
+            var e = window.event;
+            if ( e == undefined ) {
+                return;
+            }
+            /* ### does not properly scroll, yet
+            if ( e.keyCode == 32 ) {
+            var l = document.links;
+            for ( var i = 0; i < l.length; i++ ) {
+                if ( l[i].innerText == "Next" ) {
+                location.href = l[i].href;
+                }
+            }
+            } else
+                */
+                if ( e.keyCode == 0x08 ) {
+            var l = document.links;
+            for ( var i = 0; i < l.length; i++ ) {
+                if ( l[i].innerText == "Prev" ) {
+                location.href = l[i].href;
+                }
+            }
+            }
+        }
+        document.onkeypress = keyPress;
+    </script></head><body><div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="ugs-tkapi"></a>5.6. How to Use the Tk API</h2></div></div></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><span class="section"><a href="ugs-tkapi.html#ugstk-objects">5.6.1. How to Find and Query Tk Objects</a></span></dt><dt><span class="section"><a href="ugs-tkapi.html#ugstk-properties">5.6.2. How to Access Tk Object Properties</a></span></dt><dt><span class="section"><a href="ugs-tkapi.html#ugstk-tcleval">5.6.3. How to Use tcleval</a></span></dt><dt><span class="section"><a href="ugs-tkapi.html#ugstk-convenience">5.6.4. How to Use the Tk Convenience API</a></span></dt><dt><span class="section"><a href="ugs-tkapi.html#ugs-tkwidgets">5.6.5. How to Test Tk Widgets</a></span></dt></dl></div><p>
+One of <span class="emphasis"><em>Squish</em></span>'s most useful features is the ability to access the
+toolkit's API from test scripts. This gives test engineers sufficient
+flexibility to allow them to test just about any aspect of the AUT.
+</p><p>
+With <span class="emphasis"><em>Squish</em></span>'s Tk-specific API it is possible to find and query
+objects, access properties, and evaluate arbitrary Tcl code in the AUT's
+interpreter.
+</p><p>
+In addition, <span class="emphasis"><em>Squish</em></span> provides a convenience API (see <a class="xref" href="ugs-tkapi.html#ugstk-convenience" title="5.6.4. How to Use the Tk Convenience API">How to Use the Tk Convenience API (Section 5.6.4)</a>) to execute common GUI actions such as
+clicking a button or selecting a menu item.
+</p><p>
+The <a class="xref" href="ugs-tkapi.html#ugs-tkwidgets" title="5.6.5. How to Test Tk Widgets">How to Test Tk Widgets (Section 5.6.5)</a> section later in this manual
+presents various examples that show how to use the scripting Tk API to
+access and test complex Tk widgets.
+</p><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Note: Tk Object Names (Qualified Names)"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/note.png"></img></td><th align="left"><a id="tk.object.names"></a>Tk Object Names (Qualified Names)</th></tr><tr><td align="left" valign="top"><p>
+<span class="emphasis"><em>Squish</em></span> uses a completely different object naming scheme for Tk
+applications than for other toolkits. Tk identifies objects using
+<span class="emphasis"><em>qualified names</em></span>, e.g.,
+“<span class="quote">myapp.myframe.mylabel</span>”. <span class="emphasis"><em>Squish</em></span> takes advantage of Tk's
+existing naming scheme and uses it for identifying objects in Tk tests.
+</p><p>
+A qualified object name is a name like
+<code class="code">myapp.frame1.okbutton</code>. The period notation is used as a
+separator (rather like <code class="code">/</code> or <code class="code">\</code> in file paths),
+that is used to identify a particular object by its position in the
+object hierarchy. The application's main window is the root of the
+hierarchy, and contains all the application's top-level widgets, some of
+which contain child widgets, and so on. In the example above, the
+<code class="code">okbutton</code> is a child of <code class="code">frame1</code>, which in turn is
+a child of <code class="code">myapp</code> (the applicaton's main window).
+</p></td></tr></table></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="ugstk-objects"></a>5.6.1. How to Find and Query Tk Objects</h3></div></div></div><p>
+Squish provides the <a class="xref" href="rgs-squish.html#waitForObject-function"><code class="function">waitForObject</code></a> function
+which returns a reference to the object with the given qualified object
+name.
+</p><p>
+To find out the name of an object, you can use the <span class="application">Spy</span> tool to
+introspect the application. See the <a class="xref" href="ug-editdebug.html#uged-spy" title="5.21.3. How to Use the Spy">How to Use the Spy (Section 5.21.3)</a>
+section for details. Alternatively, record a quick throw-away test in
+which you interact with all the AUT objects you are interested in: this
+will populate the <a class="xref" href="rg-objectmap.html" title="7.11. Object Map">Object Map (Section 7.11)</a> with the objects'
+names.
+</p><p>
+To get a reference to an object—which can then be queried to check
+the object's properties, or which can be used to interact with the
+object—use the <a class="xref" href="rgs-squish.html#waitForObject-function"><code class="function">waitForObject</code></a>
+function. For example, in Tcl you would use code like this:
+</p><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Tcl</span><pre class="programlisting">
+set button [waitForObject "myapp.frame1.okbutton"]
+</pre></div><p>
+If <a class="xref" href="rgs-squish.html#waitForObject-function"><code class="function">waitForObject</code></a> can't find the specified
+object—or if the object is not available before the timeout, for
+example if it is hidden—a script error is thrown which stops the
+script execution. In some situations it might be desirable to check to
+see if the object exists and only interact with the object if it is
+found. This can be done by using the <a class="xref" href="rgs-squish.html#object.exists-function"><code class="function">object.exists</code></a> function.
+</p><p>
+For example, suppose we want to find the <code class="code">okbutton</code> as we did
+before, and click it—but only if it exists. In Tcl we can achieve
+this with the following code:
+</p><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Tcl</span><pre class="programlisting">
+if {[object exists "myapp.frame1.okbutton"]} {
+    set button [waitForObject "myapp.frame1.okbutton"]
+    invoke clickButton $button
+}
+</pre></div><p>
+Using qualified object names with the <a class="xref" href="rgs-squish.html#waitForObject-function"><code class="function">waitForObject</code></a> function, means that test engineers
+can query and interact with all the objects in the AUT's object
+hierarchy.
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="ugstk-properties"></a>5.6.2. How to Access Tk Object Properties</h3></div></div></div><p>
+Using the Tk script API it is possible to access almost all of Tk's
+widget properties.
+</p><p>
+For example, if we want to change the text in an <code class="code">entry</code>
+widget, we can do so using the following Tcl code, and of course,
+substituting the qualified object name and the new text appropriately:
+</p><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Tcl</span><pre class="programlisting">
+set entry [waitForObject "myapp.frame1.e1"]
+property set $entry text "New text"
+set text [property get $entry text]
+test log [toString $text]
+</pre></div><p>
+The first two lines set the new text; the third line creates a new
+variable, <code class="code">text</code>, and the last line prints the
+<code class="code">text</code> to the Test Results (<a class="xref" href="ide.views.html#ide.the-test-results.view" title="8.2.18. Test Results view">Test Results view (Section 8.2.18)</a>).
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="ugstk-tcleval"></a>5.6.3. How to Use tcleval</h3></div></div></div><p>
+Although <span class="emphasis"><em>Squish</em></span> test scripts can access the Tk widget properties, this
+is not sufficient for testing purposes, because not all the information
+we want to query is available through these properties. Fortunately,
+<span class="emphasis"><em>Squish</em></span> provides a solution for this: the <a class="xref" href="rgs-tkconvenience.html#tk-tcleval-function"><code class="function">tcleval</code></a> function. This function can execute
+arbitrary Tcl code which is interpreted within the scope of the AUT.
+</p><div class="important" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Important: Only available with Tcl/Tk"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Important]" src="images/important.png"></img></td><th align="left">Only available with Tcl/Tk</th></tr><tr><td align="left" valign="top"><p>
+This function is only available with Tcl/Tk applications, but not with
+Perl/Tk.
+</p></td></tr></table></div><p>
+For example, if we want to retrieve the contents of a Tk
+<code class="code">text</code> widget, we cannot do so through the widget's
+properties since the text is not available as a property. What we can do
+instead is to call the <code class="code">text</code> widget's <code class="code">get</code>
+function, since this returns the <code class="code">text</code> widget's text between
+given indices. So to get the entire text we use indices 1.0 and
+<code class="code">end</code>. Here's how we can use the <code class="code">tcleval</code>
+function to call <code class="code">get</code> on a <code class="code">text</code> widget:
+</p><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Tcl</span><pre class="programlisting">
+set text [invoke tcleval ".textfield get 1.0 end"]
+</pre></div><p>
+Notice that the entire argument to <code class="code">tceval</code> is passed as a
+string. The “<span class="quote">.textfield</span>” is the name of the
+<code class="code">text</code> widget (recall that <code class="code">.</code> is the root of the
+widget hierarcy in pure Tcl/Tk).
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="ugstk-convenience"></a>5.6.4. How to Use the Tk Convenience API</h3></div></div></div><p>
+This section provides a glimpse of the script API <span class="emphasis"><em>Squish</em></span> offers on top
+of Tk to make it easy to perform common user actions such as clicking a
+button. Details of the full API are given in the <a class="xref" href="rgs-tkconvenience.html" title="6.5. Tk Convenience API">Tk Convenience API (Section 6.5)</a> section of the <a class="xref" href="ref.man.html" title="Chapter 7. Tools Reference Manual">Tools Reference Manual (Chapter 7)</a>. Here we will just show a few examples to
+give a taste of what the API offers and how to use it.
+</p><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Tcl</span><pre class="programlisting">
+invoke clickButton [waitForObject \
+    ":addressbook\\.tcl.dialog.buttonarea.ok"]
+invoke type [waitForObject ":addressbook\\.tcl.dialog.email"] "com"
+waitForObjectItem ":addressbook\\.tcl.#menuBar" "File"
+invoke activateItem ":addressbook\\.tcl.#menuBar" "File"
+waitForObjectItem ":addressbook\\.tcl.#menuBar.#file" "Open..."
+invoke activateItem ":addressbook\\.tcl.#menuBar.#file" "Open..."
+
+</pre></div><p>
+Here, we click a button, type some text into an entry widget, and invoke
+the File|Open menu option. These are the most commonly used Tk
+convenience functions, although there are additional ones in the API.
+For more examples of testing a variety of Tk widgets in AUTs see <a class="xref" href="ugs-tkapi.html#ugs-tkwidgets" title="5.6.5. How to Test Tk Widgets">How to Test Tk Widgets (Section 5.6.5)</a>.
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="ugs-tkwidgets"></a>5.6.5. How to Test Tk Widgets</h3></div></div></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><span class="section"><a href="ugs-tkapi.html#ugstkw-state">5.6.5.1. How to Test Widget States</a></span></dt><dt><span class="section"><a href="ugs-tkapi.html#ugstkw-checkboxradio">5.6.5.2. Checkbuttons and Radiobuttons</a></span></dt><dt><span class="section"><a href="ugs-tkapi.html#ugstkw-text">5.6.5.3. Text fields</a></span></dt><dt><span class="section"><a href="ugs-tkapi.html#ugstkw-listbox">5.6.5.4. Listbox</a></span></dt><dt><span class="section"><a href="ugs-tkapi.html#ugstkw-radiobox">5.6.5.5. iwidget Radiobox</a></span></dt></dl></div><p>
+This section illustrates how to test Tk applications using Tcl—and
+in particular, how to test some of the standard Tk widgets. Although
+only a few widgets are shown, the same principles and practices apply to
+all Tk widgets, so by the end of this section you should be able to test
+any of your AUT's widgets.
+</p><p>
+The most challenging aspect of implementing test scripts is usually when
+we want to create test verifications. As shown in the chapter <a class="xref" href="tutorials-qt.html#tgs-vp" title="4.1.1.4. Inserting Additional Verification Points">Inserting Additional Verification Points (Section 4.1.1.4)</a> in the <a class="xref" href="tutorials-tk.html#tutorial-getting-started-tk" title="4.10.1. Tutorial: Starting to Test Tk Applications">Tutorial: Starting to Test Tk Applications (Section 4.10.1)</a>, this can be done using the
+<span class="application">Spy</span> and its point &amp; click interface. But in some cases it is
+actually more convenient—and more flexibile—to implement
+verification points directly in code.
+</p><p>
+To test and verify a widget and its properties or contents in code,
+first we need access to the widget in the test script. To obtain a
+reference to the widget, the <a class="xref" href="rgs-squish.html#waitForObject-function"><code class="function">waitForObject</code></a>
+function is used. This function finds the widget with the given name
+and returns a reference to it. For this purpose we need to know the name
+of the widget we want to test, and we can get the name using the <span class="application">Spy</span>
+tool (see <a class="xref" href="ug-editdebug.html#uged-spy" title="5.21.3. How to Use the Spy">How to Use the Spy (Section 5.21.3)</a>) and adding the object to the <a class="xref" href="rg-objectmap.html" title="7.11. Object Map">Object Map (Section 7.11)</a> (so that <span class="emphasis"><em>Squish</em></span> will remember it) and then
+copying the object's name (preferably its symbolic name) to the
+clipboard ready to be pasted into our test. If we need to gather the
+names of lots of widgets it is probably faster and easier to record a
+dummy test during which we make sure that we access every widget we want
+to verify in our manually written test script. This will cause <span class="emphasis"><em>Squish</em></span>
+to add all the relevant names to the <a class="xref" href="rg-objectmap.html" title="7.11. Object Map">Object Map (Section 7.11)</a>,
+which we can then copy and paste into our code.
+</p><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="ugstkw-state"></a>5.6.5.1. How to Test Widget States</h4></div></div></div><p>
+One common requirement is to test the state of a widget, in particular
+whether it is enable or disabled. The widget's <code class="code">state</code>
+property holds the information we want—here are a couple of
+examples that show it in use:
+</p><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Tcl</span><pre class="programlisting">
+set entry1 [waitForObject ":myapp.entry1"]
+test compare [property get $entry1 state] "normal"
+
+set entry2 [waitForObject ":myapp.entry2"]
+test compare [property get $entry2 state] "disabled"
+</pre></div><p>
+This code verifies that the <code class="code">entry1</code> widget is enabled and
+that the <code class="code">entry2</code> widget is disabled.
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="ugstkw-checkboxradio"></a>5.6.5.2. Checkbuttons and Radiobuttons</h4></div></div></div><p>
+Although the need to verify whether a standard Tk radiobutton or
+checkbutton is checked is a common requirement, neither of these widgets
+has a convenient property that we can use, so we must write a little bit
+more code than might have been expected.
+</p><p>
+We will start by verifying that a particular radiobutton is checked.
+First we must retrieve the radiobutton's <code class="code">variable</code> and
+<code class="code">value</code> properties, and then we must evaluate the variable to
+see if it is equal to the value—if it is, then the radiobutton is
+checked.
+</p><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Tcl</span><pre class="programlisting">
+set radiobutton [waitForObject ":myapp.radiobutton"]
+set variable [property get $radiobutton "variable"]
+set value [property get $radiobutton "value"]
+set actual_value [invoke tcleval "return \$$variable"]
+test compare $actual_value $value
+</pre></div><p>
+First we retrieve a reference to the radiobutton, then we retrieve the
+two properties we are interested in. Next we evaluate the variable to
+get its actual value using the <a class="xref" href="rgs-tkconvenience.html#tk-tcleval-function"><code class="function">tcleval</code></a>
+function, and finally we compare the actual value with the property
+value to see if they're the same.
+</p><p>
+We must use a similar approach for checkbuttons, except that their
+relevant properties are <code class="code">onvalue</code> and <code class="code">offvalue</code>.
+</p><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Tcl</span><pre class="programlisting">
+set checkbutton [waitForObject ":myapp.checkbutton"]
+set variable [property get $checkbutton "variable"]
+set onvalue [property get $checkbutton "onvalue"]
+set actual_value [invoke tcleval "return \$$variable"]
+test compare $actual_value $onvalue
+</pre></div><p>
+Here, we retrieve a reference to the checkbutton, and then to the
+checkbutton's <code class="code">variable</code> and <code class="code">onvalue</code> properties.
+And just like we did for the radiobutton, we evaluate the variable to
+get its actual value, and compare this with the <code class="code">onvalue</code> to
+see if they are the same.
+</p><p>
+If we wanted to verify that a checkbutton was <span class="emphasis"><em>not</em></span>
+checked, we would simply retrieve the <code class="code">offvalue</code> property and
+compare that with the actual value—if they are the same, then the
+checkbutton is not checked.
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="ugstkw-text"></a>5.6.5.3. Text fields</h4></div></div></div><p>
+A standard Tk entry widget's contents can be queried using the
+<code class="code">getvalue</code> property.
+</p><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Tcl</span><pre class="programlisting">
+set entry [waitForObject ":myapp.entry"]
+test compare [property get $entry getvalue] "Houston"
+</pre></div><p>
+Here we check that an entry contains the text “<span class="quote">Houston</span>”.
+</p><p>
+Querying the contents of Tk's multiline text widget is a bit
+more involved. For that we must call the widget's <code class="code">get</code>
+method, giving it the start and end indexes for the text we want to
+check.
+</p><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Tcl</span><pre class="programlisting">
+set text [invoke tcleval ".textfield get 1.0 end"]
+test compare $text "line 1\nline 2"
+</pre></div><p>
+Rather than retrieve a reference to the multiline text widget, instead
+we have used the <a class="xref" href="rgs-tkconvenience.html#tk-tcleval-function"><code class="function">tcleval</code></a> function to
+execute the widget's <code class="code">get</code> method with indexes that span the
+entire contents—this will result in all of the widget's text being
+returned. We then check that the text contains exactly two lines (with
+texts, “<span class="quote">line 1</span>” and “<span class="quote">line 2</span>”).
+</p><p>
+<span class="emphasis"><em>Squish</em></span> isn't limited to Tk's standard widgets—for example, we
+can test a BWidget Entry widget.
+</p><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Tcl</span><pre class="programlisting">
+set bentry [waitForObject ":myapp.bentry"]
+test compare [property get $entry text] "Apollo"
+</pre></div><p>
+Here we retrieve the BWidget's text using its <code class="code">text</code>
+property, and compare it to the text “<span class="quote">Apollo</span>”.
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="ugstkw-listbox"></a>5.6.5.4. Listbox</h4></div></div></div><p>
+One common requirement is to check the text of a Tk listbox's active
+item. This is easily done using the listbox's <code class="code">get</code> method.
+</p><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Tcl</span><pre class="programlisting">
+set active [invoke tcleval ".listbox get active"]
+test compare $active "Gemini"
+</pre></div><p>
+Similarly to what we did for the multiline text widget, rather than
+retrieve a reference to the listbox, instead we have used the <a class="xref" href="rgs-tkconvenience.html#tk-tcleval-function"><code class="function">tcleval</code></a> function to execute the listbox's
+<code class="code">get</code> method with an argument of
+<code class="code">active</code>—this will result in the listbox's active
+item's text being returned. We then compare the text as usual, in this
+case with the literal text “<span class="quote">Gemini</span>”.
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="ugstkw-radiobox"></a>5.6.5.5. iwidget Radiobox</h4></div></div></div><p>
+The iwidget Radiobox is different from the standard Tk radiobutton, in
+that it has a <code class="code">getvalue</code> property that holds the text of its
+currently checked radiobutton.
+</p><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Tcl</span><pre class="programlisting">
+set radiobox [waitForObject ":myapp.rbox"]
+test compare [property get $radiobox getvalue] "Mercury"
+</pre></div><p>
+If the Radiobox has radiobuttons, “<span class="quote">Mercury</span>”,
+“<span class="quote">Venus</span>”, and “<span class="quote">Mars</span>”, we can verify that the
+“<span class="quote">Mercury</span>” radiobutton is checked by retrieving a reference
+to the Radiobox, and then comparing the value of its
+<code class="code">getvalue</code> property to see if it matches the text of the
+radiobutton that should be checked.
+</p></div></div></div><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" type="text/javascript" src="ScriptingLanguage.js"></script><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format">setScriptingLanguage();</script><div class="navfooter"><hr></hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="ug-how.to.use.the.windows.nativeobject.html">Prev</a> </td><td width="20%" align="center"><a accesskey="u" href="users-guide.html">Up</a></td><td width="40%" align="right"> <a accesskey="n" href="ug-how.to.use.the.android.api.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">5.5. How to Use the Windows <code class="code">nativeObject</code> API </td><td width="20%" align="center"><a accesskey="h" href="index-noframes.html">Home</a></td><td width="40%" align="right" valign="top"> 5.7. How to Use the Android API</td></tr></table></div></body>
+<!-- Mirrored from ugs-tkapi.html by HTTrack Website Copier/3.x [XR&CO'2013], Wed, 06 Jul 2022 13:28:59 GMT -->
+</html>

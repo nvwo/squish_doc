@@ -1,0 +1,98 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<!-- Mirrored from rel-641.html by HTTrack Website Copier/3.x [XR&CO'2013], Wed, 06 Jul 2022 13:28:55 GMT -->
+<head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><title>2.15. Version 6.4.1</title><link rel="stylesheet" href="manual.css" type="text/css"></link><meta name="generator" content="DocBook XSL Stylesheets V1.73.2"></meta><link rel="start" href="index-noframes.html" title="Squish Manual"></link><link rel="up" href="relnotes.html" title="Chapter 2. Release Notes—for Upgraders"></link><link rel="prev" href="rel-642.html" title="2.14. Version 6.4.2"></link><link rel="next" href="rel-640.html" title="2.16. Version 6.4"></link><style xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" type="text/css" media="screen">
+        div.toc * { margin-left: 6px; margin-right: auto; max-width: 75em; }
+        div.toc span { margin-left: 0px; }
+        * { margin-left: auto; margin-right: auto; max-width: 75em; }
+        body { margin-left: 6px; margin-right: 6px; }
+        table th { padding: .5ex }
+        table td { padding: .5ex }
+    </style><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format">
+        function keyPress() {
+            var e = window.event;
+            if ( e == undefined ) {
+                return;
+            }
+            /* ### does not properly scroll, yet
+            if ( e.keyCode == 32 ) {
+            var l = document.links;
+            for ( var i = 0; i < l.length; i++ ) {
+                if ( l[i].innerText == "Next" ) {
+                location.href = l[i].href;
+                }
+            }
+            } else
+                */
+                if ( e.keyCode == 0x08 ) {
+            var l = document.links;
+            for ( var i = 0; i < l.length; i++ ) {
+                if ( l[i].innerText == "Prev" ) {
+                location.href = l[i].href;
+                }
+            }
+            }
+        }
+        document.onkeypress = keyPress;
+    </script></head><body><div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="rel-641"></a>2.15. Version 6.4.1</h2></div></div></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><span class="section"><a href="rel-641.html#rel-641-general">2.15.1. General</a></span></dt><dt><span class="section"><a href="rel-641.html#rel-641-ide">2.15.2. Squish IDE-specific</a></span></dt><dt><span class="section"><a href="rel-641.html#rel-641-android">2.15.3. Android-specific</a></span></dt><dt><span class="section"><a href="rel-641.html#rel-641-web">2.15.4. Web-specific</a></span></dt><dt><span class="section"><a href="rel-641.html#rel-641-qt">2.15.5. Qt-specific</a></span></dt><dt><span class="section"><a href="rel-641.html#rel-641-java">2.15.6. <span class="trademark">Java</span>™-specific</a></span></dt><dt><span class="section"><a href="rel-641.html#rel-641-source">2.15.7. Source Packages</a></span></dt></dl></div><p><span class="emphasis"><em>Squish</em></span> 6.4.1 is a maintenance release containing mostly bug fixes for
+  the <span class="application">Squish IDE</span> as well as for features related to <a class="link" href="rg-objectmap.html#rgo-squish-scriptbased" title="7.11.4. Script-Based Object Map">Script-Based Object Maps</a>.  See the
+  following sections for a detailed list of all changes.</p><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="rel-641-general"></a>2.15.1. General</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Improved support for accessing Microsoft Excel 2007
+      (<code class="filename">xlsx</code>) files via the <a class="xref" href="rgs-squish.html#rgss-testdata" title="6.3.10. Test Data Functions">Test Data Functions (Section 6.3.10)</a> script
+      <acronym class="acronym">API</acronym>.</p></li><li><p>Improved refactoring, conversion and object map editor
+      performance for large script-based object maps.</p></li><li><p>Fixed an issue causing an error message to be shown when
+      processing verification point files while converting text-based object
+      maps to script-based object maps.</p></li><li><p>Resolved an issue causing the IDE to freeze when when
+      converting text-based object maps to script-based object
+      maps.</p></li><li><p>Added back the possibility to specify the path to a
+      text-based object map in the test suite settings.</p></li><li><p>Added option to conversion utility to keep text based
+      object map in order to make it easier to use text and script based object
+      maps side by side.</p></li><li><p><span class="guilabel">Convert to Real Name</span> and
+      <span class="guilabel">Open Symbolic Name</span> now work on unsaved documents for
+      script based references.</p></li><li><p>Fixed an issue when refactoring Perl test scripts causing
+      object names to be inserted at incorrect positions.</p></li><li><p>Property values starting with "0" are now rendered as
+      strings in script-based object maps (previously rendered as numbers which
+      caused issues).</p></li><li><p>Fixed a crash when calling a Qt signal handler
+      function installed via <a class="xref" href="rgs-qtconvenience.html#qt-installSignalHandler-function"><code class="function">installSignalHandler</code></a>,
+      for example in case the signal handler doesn't accept the correct number
+      of arguments.</p></li><li><p>Fixed incorrect script locations in Perl when calling a
+      <code class="code">sub</code> inside a <span class="emphasis"><em>Squish</em></span> test function call.</p></li><li><p>Fixed search order when importing a script module into
+      the test script. Global script directories are no longer preferred over
+      local test suite resources.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="rel-641-ide"></a>2.15.2. Squish IDE-specific</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Add a separate tree item to access failed screenshots and
+      object dumps in the <span class="guilabel">Results View</span>.</p></li><li><p>Provide the testcase/testsuite summary and test step
+      descriptions in a tooltip from the <span class="guilabel">Results
+      View</span>.</p></li><li><p>Masked regions in screenshot verifications are being
+      drawn with a semi-transparent black overlay instead of non-transparent
+      black, making the result look less like a rendering-issue
+      occurred.</p></li><li><p>Allow to configure filename filters for the
+      <span class="guilabel">Steps</span> view.</p></li><li><p>Allow to restore the default set of filename filters in
+      all views showing files.</p></li><li><p>Fixed a problem with incomplete application of changed
+      foreground/background colors for the results view.</p></li><li><p>Fixed a problem causing deletion of files that where
+      dragged inside the global scripts view and dropped onto their immediate
+      parent folder.</p></li><li><p>Fix a hang when accessing the <span class="guimenu">Edit</span>
+      menu when <span class="application">squishserver</span> is not reachable</p></li><li><p>Drop submenu items from <span class="guimenu">Server
+      Settings</span> menu in favor of a single menu entry opening the
+      dialog directly.</p></li><li><p>Make the template used for newly created
+      <acronym class="acronym">BDD</acronym> tests configurable by editing the
+      <code class="filename">scriptmodules/test_template.feature</code>
+      file.</p></li><li><p>Fixed an error occurring when changing logging
+      preferences in the Squish/Logging page and applying the
+      changes.</p></li><li><p>Fix a problem with initializing the <span class="application">Squish IDE</span>'s setting for the
+      crash dump dialog when the <span class="application">Squish IDE</span> is started in an environment that disables
+      the crash dump dialog.</p></li><li><p>Added identifier syntax highlighting for variables and
+      property expressions for Python and JavaScript. This is accessible via
+      <span class="guimenuitem">Preferences</span>+<span class="guilabel">PyDev</span>+<span class="guilabel">Editor</span>+<span class="guilabel">Variable</span>+<span class="guilabel">Properties</span>)
+      resp.
+      <span class="guimenuitem">Preferences</span>+<span class="guilabel">JavaScript</span>+<span class="guilabel">Editor</span>+<span class="guilabel">Syntax
+      Coloring</span>+<span class="guilabel">Identifiers</span>.
+      </p></li><li><p>Fixed <span class="guilabel">Object Not Found</span> dialog for
+      unknown symbolic names.</p></li><li><p>Always show the toolkit page when creating a new
+      testsuite to avoid confusion of new users since the documentation shows
+      screenshots with that page.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="rel-641-android"></a>2.15.3. Android-specific</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Fix screenshots for latest Android
+      versions.</p></li><li><p>Fix exception on app shutdown that may cause a follow-up
+      <a class="xref" href="rgs-squish.html#startApplication-function"><code class="function">startApplication</code></a> failure.</p></li><li><p>Fix support for app package names with Unicode
+      characters.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="rel-641-web"></a>2.15.4. Web-specific</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Fixed a crash that could occur when executing the <a class="xref" href="rgs-webconvenience.html#web-typeText-function"><code class="function">typeText</code></a> function.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="rel-641-qt"></a>2.15.5. Qt-specific</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Fix missing constructors for certain Qt types on Qt 5.11.</p></li><li><p>Fix screenshot VPs showing parts of the desktop if the
+      verified widget is larger than the application window.</p></li><li><p>Activate surrounding toplevel window when executing the
+      <a class="xref" href="rgs-qtconvenience.html#qt-type-function"><code class="function">type</code></a> function.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="rel-641-java"></a>2.15.6. <span class="trademark">Java</span>™-specific</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Request input focus before replaying a <a class="xref" href="rgs-javaconvenience.html#java-type-function"><code class="function">type</code></a> command on JavaFx
+      controls.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="rel-641-source"></a>2.15.7. Source Packages</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Add support for building against Python 3.7.</p></li></ul></div></div></div><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" type="text/javascript" src="ScriptingLanguage.js"></script><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format">setScriptingLanguage();</script><div class="navfooter"><hr></hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="rel-642.html">Prev</a> </td><td width="20%" align="center"><a accesskey="u" href="relnotes.html">Up</a></td><td width="40%" align="right"> <a accesskey="n" href="rel-640.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">2.14. Version 6.4.2 </td><td width="20%" align="center"><a accesskey="h" href="index-noframes.html">Home</a></td><td width="40%" align="right" valign="top"> 2.16. Version 6.4</td></tr></table></div></body>
+<!-- Mirrored from rel-641.html by HTTrack Website Copier/3.x [XR&CO'2013], Wed, 06 Jul 2022 13:28:55 GMT -->
+</html>

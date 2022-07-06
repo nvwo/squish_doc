@@ -1,0 +1,248 @@
+body {
+    font-family: verdana,sans-serif;
+    margin: 0px;
+    font-size: .85em;
+    line-height:1.5em;
+}
+
+table {
+    border-collapse: collapse;
+    margin-left: 0;
+    margin-left: initial;
+}
+
+#toc-div > ol.toc {
+    list-style-type: none;
+    padding-left: 10px;
+    margin-top: 0px;
+    font-size: .85em;
+    line-height:1.5em;
+}
+
+#toc-td {
+    padding: 10px 10px 10px 10px;
+    margin-top: 0px;
+    font-size: .85em;
+    line-height:1.5em;
+    border-right: solid 1px black;
+}
+
+.toc-par {
+    margin-top: 0.25em;
+    margin-bottom: 0;
+}
+
+#toc-breadcrumbs {
+    font-size: .85em;
+    line-height:1.5em;
+    padding-left: 10px;
+    padding-bottom: 10px;
+}
+
+ol.toc {
+    list-style-type: none;
+    padding-left: 20px;
+}
+
+#toc-and-search-div {
+    position: fixed;
+    left: 20%;
+    top: 0px;
+    background: white;
+    line-height: 17pt;
+    text-align: left;
+    box-shadow: 0 0 1em #777777;
+    overflow: auto;
+    border: 1px solid;
+    border-top: 1px hidden;
+    padding: 20px;
+    padding-top: 10px;
+    padding-bottom: 15px;
+}
+
+#toc-and-search-headings {
+    text-align: left;
+}
+
+#collapse-expand-div {
+    position: absolute;
+    right: 20px;
+    text-align: right;
+}
+
+.show-when-toc-and-search-visible {
+    display: none;
+}
+
+a:link, a:visited {
+    text-decoration: none;
+    color: #126a00;
+}
+
+a:hover {
+    text-decoration: underline;
+    color: #126a00;
+}
+
+a.toc:link, a.toc:visited {
+    text-decoration: none;
+    color: black;
+}
+
+a.toc-ref:link, a.toc-ref:visited {
+    text-decoration: none;
+    color: gray;
+}
+
+a.toc:hover {
+    text-decoration: underline;
+}
+
+a.footer:visited, a.footer, .footer
+{
+    background-color: #dcdcdc;
+    color: #a0a0a0;
+    font-family: monospace;
+    font-size: small;
+    text-align: center;
+}
+
+.screen {
+        font-family: monospace;
+        font-size: 1.2em;
+        font-size: initial;
+        line-height:1.1em;
+        line-height: initial;
+        display: block;
+        padding: 10px;
+        border: 0px;
+        background-color: #d0e4fa;
+        color: #000;   
+        overflow: auto;
+        border-radius: 2.5px;
+        -moz-border-radius: 2.5px;
+        margin: 0.5em 2em;
+ 
+}
+
+span.underline {text-decoration: underline;}
+span.strikethrough {text-decoration: line-through;}
+span.smallcaps { font-variant: small-caps; }
+
+.programlistingcontainer {
+        margin: 0.5em 2em;
+}
+
+.programlistinglanguage { font-variant: small-caps; }
+
+.programlisting {
+        font-family: monospace;
+        font-size: 1.2em;
+        font-size: initial;
+        line-height:1.1em;
+        line-height: initial;
+        display: block;
+        padding: 10px;
+        border: 0px;
+        background-color: #fafad2;
+        color: #000;   
+        overflow: auto;
+        border-radius: 2.5px;
+        -moz-border-radius: 2.5px;
+        margin: 0.5em 2em;
+}
+
+code {
+        font-size: 1.2em;
+        font-size: initial;
+        line-height:1.1em;
+        line-height: initial;
+}
+
+.caution, .warning {
+        border: 2.5px solid;
+	border-color: #f00;
+        border-radius: 2.5px;
+        -moz-border-radius: 2.5px;
+        margin: 0.5em 2em;
+        padding: 0px 10px 0px 10px;
+	background-color: #fff0f5;
+}
+
+.caution {
+      font-size: 1.2em;
+}
+
+.note {
+        border: 2.5px solid;
+        border-radius: 2.5px;
+	border-color: #6b8e23;
+        -moz-border-radius: 2.5px;
+        margin: 0.5em 2em;
+        padding: 0px 10px 0px 10px;
+	background-color: #f0fff0;
+}
+
+.important {
+        border: 2.5px solid;
+        border-radius: 2.5px;
+	border-color: #eeee00;
+        -moz-border-radius: 2.5px;
+        margin: 0.5em 2em;
+        padding: 0px 10px 0px 10px;
+	background-color: #ffffaa;
+}
+
+.tip {
+        border: 2.5px solid;
+        border-radius: 2.5px;
+	border-color: #551a8b;
+        -moz-border-radius: 2.5px;
+        margin: 0.5em 2em;
+        padding: 0px 10px 0px 10px;
+	background-color: #ffedff;
+}
+
+.sidebar {
+        border: 2.5px solid;
+        border-radius: 2.5px;
+	border-color: #c1cdcd;
+        -moz-border-radius: 2.5px;
+        margin: 0.5em 2em;
+        padding: 0px 10px 0px 10px;
+	background-color: #f0ffff ;
+}
+
+span.guilabel, span.guimenu, span.guisubmenu, span.guimenuitem, span.guibutton {
+    background-color: #e0e0e0;
+}
+
+.application, .filename {
+    color: #0a0a60;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    color: #003300;
+    font-size: 1.2em;
+    font-size: initial;
+    line-height: 1.5em;
+    line-height: initial;
+    margin-left: 0;
+}
+
+.funcdef, .fieldsynopsis, .property {
+    color: #473175;
+    background-color: #f0faff;
+}
+
+.tocContentEntry {
+    font-family: monospace;
+}
+
+ol.toc li {
+    white-space: nowrap;
+}
+
+.scriptlang {
+    float: right;
+}

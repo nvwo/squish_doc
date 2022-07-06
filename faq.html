@@ -1,0 +1,290 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<!-- Mirrored from faq.html by HTTrack Website Copier/3.x [XR&CO'2013], Wed, 06 Jul 2022 13:29:01 GMT -->
+<head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><title>Chapter 10. Frequently Asked Questions</title><link rel="stylesheet" href="manual.css" type="text/css"></link><meta name="generator" content="DocBook XSL Stylesheets V1.73.2"></meta><link rel="start" href="https://index-noframes.html" title="Squish Manual"></link><link rel="up" href="https://index-noframes.html" title="Squish Manual"></link><link rel="prev" href="https://ao-ant.html" title="9.14. Ant integration"></link><link rel="next" href="https://book-glossary.html" title="Glossary"></link><style xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" type="text/css" media="screen">
+        div.toc * { margin-left: 6px; margin-right: auto; max-width: 75em; }
+        div.toc span { margin-left: 0px; }
+        * { margin-left: auto; margin-right: auto; max-width: 75em; }
+        body { margin-left: 6px; margin-right: 6px; }
+        table th { padding: .5ex }
+        table td { padding: .5ex }
+    </style><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format">
+        function keyPress() {
+            var e = window.event;
+            if ( e == undefined ) {
+                return;
+            }
+            /* ### does not properly scroll, yet
+            if ( e.keyCode == 32 ) {
+            var l = document.links;
+            for ( var i = 0; i < l.length; i++ ) {
+                if ( l[i].innerText == "Next" ) {
+                location.href = l[i].href;
+                }
+            }
+            } else
+                */
+                if ( e.keyCode == 0x08 ) {
+            var l = document.links;
+            for ( var i = 0; i < l.length; i++ ) {
+                if ( l[i].innerText == "Prev" ) {
+                location.href = l[i].href;
+                }
+            }
+            }
+        }
+        document.onkeypress = keyPress;
+    </script></head><body><div class="chapter" lang="en"><div class="titlepage"><div><div><h2 class="title"><a id="faq"></a>Chapter 10. Frequently Asked Questions</h2></div></div></div><div class="qandaset"><dl><dt></dt><dd><dl><dt>10.1.1. <a href="https://faq.html#idp59127880">
+How can I change the default timeout used by the waitForObject function (and for similar
+functions, like waitForObjectItem)?
+</a></dt><dt>10.1.2. <a href="https://faq.html#idp59130384">
+How good is Squish's support for custom Qt classes?
+</a></dt><dt>10.1.3. <a href="https://faq.html#idp59136248">
+Why does text entered with the type
+function end up garbled in a Qt application? And why does a clickButton call have no effect?
+</a></dt><dt>10.1.4. <a href="https://faq.html#idp59138688">
+How do I Build Squish and Qt on IRIX with
+gcc?
+</a></dt><dt>10.1.5. <a href="https://faq.html#idp59146680">
+How do I Build Squish with Python Support on
+MinGW?
+</a></dt><dt>10.1.6. <a href="https://faq.html#idp59154016">
+Why doesn't Squish record mouse move events?
+</a></dt><dt>10.1.7. <a href="https://faq.html#idp59160920">
+Why do my widgets always get names like MyWidget34 rather
+than more descriptive names?
+</a></dt><dt>10.1.8. <a href="https://faq.html#idp59171688">
+Why does Squish fail to hook into my AUT on AIX?
+</a></dt><dt>10.1.9. <a href="https://faq.html#idp59171272">
+Why does squishrunner fail to start with the error
+cannot restore segment prot after reloc: Permission
+denied?
+</a></dt><dt>10.1.10. <a href="https://faq.html#idp59181896">
+Why doesn't Squish replay paintings properly in my painting
+application?
+</a></dt><dt>10.1.11. <a href="https://faq.html#idp59186688">
+Why doesn't Squish work correctly on Ubuntu 11.
+</a></dt></dl></dd></dl><table border="0" summary="Q and A Set"><col align="left" width="1%"></col><tbody><tr class="question"><td align="left" valign="top"><a id="idp59127880"></a><a id="waitforobject-defaulttime"></a><p><b>10.1.1.</b></p></td><td align="left" valign="top"><p>
+How can I change the default timeout used by the <a class="xref" href="https://rgs-squish.html#waitForObject-function"><code class="function">waitForObject</code></a> function (and for similar
+functions, like <a class="xref" href="https://rgs-squish.html#waitForObjectItem-function"><code class="function">waitForObjectItem</code></a>)?
+</p></td></tr><tr class="answer"><td align="left" valign="top"></td><td align="left" valign="top"><p> See <a class="ulink" href="https://www.froglogic.com/all/squish-tip-of-the-week-how-to-modify-the-waitforobject-timeout/" target="_blank">This tip of the week</a> for
+an answer.
+</p></td></tr><tr class="question"><td align="left" valign="top"><a id="idp59130384"></a><a id="idp59130632"></a><p><b>10.1.2.</b></p></td><td align="left" valign="top"><p>
+How good is <span class="emphasis"><em>Squish</em></span>'s support for custom Qt classes?
+</p></td></tr><tr class="answer"><td align="left" valign="top"></td><td align="left" valign="top"><p>
+Quite often, the subclassing of Qt classes is done to change the look
+and behavior of standard widgets. Or to store some extra internal
+information. <span class="emphasis"><em>Squish</em></span> will recognize those classes at least up to the
+level it would support the underlying standard classes. So if an
+application's developers subclass e.g. <code class="code">QPushButton</code> to
+create a round button or to make the button change shape if pressed,
+this will no pose a problem as <span class="emphasis"><em>Squish</em></span>'s emulation is purely concerned
+with user input in terms of keyboard and mouse input independent of the
+behavior of the underlying C++ functions that are called.
+</p><p>
+In many test scenarios test engineers are only concerned with standard
+visible properties, like <code class="code">text</code> or <code class="code">color</code>, and
+these work out of the box for custom <code class="code">QObject</code> subclasses
+that inherit such properties. In addition, as of <span class="emphasis"><em>Squish</em></span> 4,
+custom <code class="code">QObject</code> subclasses' properties and slots (marked via
+the <code class="code">Q_PROPERTY</code> and <code class="code">slots</code> macros) are
+<span class="emphasis"><em>automatically</em></span> detected. This means that their
+properties will show up in the <span class="application">Spy</span> and their custom slots (provided
+the signatures use standard Qt types) are callable.
+</p><p>
+So in almost all cases <span class="emphasis"><em>Squish</em></span>'s automatic detection is sufficient.
+</p></td></tr><tr class="question"><td align="left" valign="top"><a id="idp59136248"></a><a id="faq-qt43events"></a><p><b>10.1.3.</b></p></td><td align="left" valign="top"><p>
+Why does text entered with the <a class="xref" href="https://rgs-qtconvenience.html#qt-type-function"><code class="function">type</code></a>
+function end up garbled in a Qt application? And why does a <a class="xref" href="https://rgs-qtconvenience.html#qt-clickButton-function"><code class="function">clickButton</code></a> call have no effect?
+</p></td></tr><tr class="answer"><td align="left" valign="top"></td><td align="left" valign="top"><p>
+The Qt 4.3 series has a bug that mixes up the order of posted events in
+the internal queue. In some rare cases this breaks text input or mouse
+click sequences. This problem was scheduled to be solved in Qt 4.4 and
+possibly also in Qt 4.3.4. A source code patch is available on
+request.
+</p></td></tr><tr class="question"><td align="left" valign="top"><a id="idp59138688"></a><a id="faq-irixgcc"></a><p><b>10.1.4.</b></p></td><td align="left" valign="top"><p>
+How do I Build <span class="emphasis"><em>Squish</em></span> and Qt on IRIX with
+<span class="application">gcc</span>?
+</p></td></tr><tr class="answer"><td align="left" valign="top"></td><td align="left" valign="top"><p>
+To build <span class="emphasis"><em>Squish</em></span>, Qt must be linked as a shared library. When compiling
+Qt with <span class="application">gcc</span> in IRIX, it is built as a static
+library by default. To build Qt as a shared library, specify the
+<code class="option">-shared</code> option when running Qt's
+<span class="application">configure</span> script.
+</p><p>
+The reason, why static is the default build is because Qt doesn't link
+as a shared library on IRIX when being built with
+<span class="application">gcc</span>. To fix this problem, edit the file
+<code class="filename">src/Makefile</code> after you have run
+<span class="application">configure</span>. Add the switch
+<code class="option">-Wl,-LD_LAYOUT:lgot_buffer=100</code> to the Makefile's
+<code class="envar">LFLAGS</code> variable. The line should then look similar to
+this one:
+</p><pre class="screen">
+LFLAGS = -Wl,-LD_LAYOUT:lgot_buffer=100 -shared -Wl,-soname,libqt-mt.so.3 -Wl,-rpath,/usr/people/reggie/qt32-gcc/lib
+</pre><p>
+After doing this just compile Qt as usual (i.e., by running
+<span class="application">make</span>). Then compile <span class="emphasis"><em>Squish</em></span> as documented
+elsewhere in this manual (<a class="xref" href="https://ins-commandline-tools-server-ide.html#ins-source" title="3.1.2. Installing Squish for Qt from Desktop Source Packages">Installing Squish for Qt from Desktop Source Packages (Section 3.1.2)</a>).
+</p><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Note"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/note.png"></img></td><th align="left">Note</th></tr><tr><td align="left" valign="top"><p>
+This fix was been submitted to Trolltech support and was incorporated
+into Qt in version 3.3.0.
+</p></td></tr></table></div></td></tr><tr class="question"><td align="left" valign="top"><a id="idp59146680"></a><a id="faq-winmingw"></a><p><b>10.1.5.</b></p></td><td align="left" valign="top"><p>
+How do I Build <span class="emphasis"><em>Squish</em></span> with Python Support on
+<span class="application">MinGW</span>?
+</p></td></tr><tr class="answer"><td align="left" valign="top"></td><td align="left" valign="top"><p>
+Some Python binary distributions already contain an import library for
+Python that can be used with <span class="application">MinGW</span>. In such
+cases you don't have to do anything.
+</p><p>
+On the other hand, if you don't have the import library you must
+generate it yourself. For this you need
+<span class="application">MinGW</span>'s <span class="application">pexports</span>
+and <span class="application">dlltool</span> tools.
+</p><p>
+In the following example we assume that Python is installed in
+<code class="filename">C:\Python27</code> and that the Python DLL is
+<code class="filename">C:\WINNT\system32\python27.dll</code>. To generate the
+import library, do the following:
+</p><pre class="screen">
+cd C:\Python27\libs
+pexports C:\WINNT\system32\python27.dll &gt; python27.def
+dlltool --dllname python27.dll --def python27.def --output-lib libpython27.a
+</pre><p>
+For more information see the <span class="application">MinGW</span> Wiki on
+<a class="ulink" href="http://www.mingw.org/MinGWiki/index.php/Python extensions" target="_blank">Python
+extensions</a> (just the Basic Setup section).
+</p></td></tr><tr class="question"><td align="left" valign="top"><a id="idp59154016"></a><a id="faq-mouseevents"></a><p><b>10.1.6.</b></p></td><td align="left" valign="top"><p>
+Why doesn't <span class="emphasis"><em>Squish</em></span> record mouse move events?
+</p></td></tr><tr class="answer"><td align="left" valign="top"></td><td align="left" valign="top"><p>
+<span class="emphasis"><em>Squish</em></span> only records mouse move events when a mouse button is
+pressed—even if Qt's mouse tracking is enabled. This is because in
+most cases mouse move events that take place when no mouse button is
+pressed can be ignored since they don't need to be replayed for the
+widgets to function properly. Furthermore, recording these events would
+produce a lot of script code which would not affect the application, but
+would make the script harder to read and maintain.
+</p><p>
+For those rare cases where it is necessary to record all the mouse move
+events because they are essential for the widget to work correctly, you
+can change <span class="emphasis"><em>Squish</em></span>'s behavior. For example, let's assume that we have a
+custom widget of type <code class="code">CanvasView</code> for which we want
+to record all mouse move events. We can tell <span class="emphasis"><em>Squish</em></span> to switch on mouse
+tracking for widgets of this type by creating and registering a suitable
+init file. For example, we could create a file called
+<code class="filename">myinit.tcl</code> that contained this line:
+</p><pre class="programlisting">
+setMouseTracking CanvasView true
+</pre><p>
+Then we can tell <span class="emphasis"><em>Squish</em></span> to execute this file at startup:
+</p><pre class="screen">
+squishrunner --config addInitScript Qt &lt;absolute_path&gt;/myinit.tcl
+</pre><p>
+After this, when recording a test case, mouse move events on
+<code class="code">CanvasView</code> widgets will be recorded even if no mouse button
+is pressed. (See also, <a class="xref" href="https://rg-cmdline.html#rg-squishrunner-cli--config" title="7.4.3.27. Configuring squishrunner">Configuring <span class="application">squishrunner</span> (Section 7.4.3.27)</a>.)
+</p></td></tr><tr class="question"><td align="left" valign="top"><a id="idp59160920"></a><a id="faq-objectnames"></a><p><b>10.1.7.</b></p></td><td align="left" valign="top"><p>
+Why do my widgets always get names like <code class="code">MyWidget34</code> rather
+than more descriptive names?
+</p></td></tr><tr class="answer"><td align="left" valign="top"></td><td align="left" valign="top"><p>
+<span class="emphasis"><em>Squish</em></span> tries to create the most descriptive names for GUI objects. By
+default is uses the <code class="code">QObject</code> name. If this property isn't
+unique (or is empty), other possibly unique properties are examined
+(window caption, button text, etc.) before falling back to
+&lt;ObjectType&gt;&lt;num&gt;.
+</p><p>
+One solution (and probably the best!) to get better names in
+generated scripts is to give all the widgets descriptive, short and
+unique <code class="code">QObject</code> names in the AUT's source code.
+</p><p>
+If the custom widgets have other possibly unique properties,
+like a label, etc., <span class="emphasis"><em>Squish</em></span> can be told to try using these
+properties. For example, suppose that we have a custom widget called
+<code class="code">CanvasView</code> which has a unique <code class="code">label</code> property.
+To tell <span class="emphasis"><em>Squish</em></span> about this, create a file called, for example,
+<code class="filename">myinit.tcl</code> that contains the following line:
+</p><pre class="programlisting">
+setUniqueProperty CanvasView label
+</pre><p>
+Then tell <span class="emphasis"><em>Squish</em></span> to interpret this file at startup:
+</p><pre class="screen">
+squishrunner --config addInitScript Qt &lt;absolute_path&gt;/myinit.tcl
+</pre><p>
+After doing this, <span class="emphasis"><em>Squish</em></span> will attempt to use the
+<code class="code">CanvasView</code>'s <code class="code">label</code> property for
+identification, if its value is unique. (See also, <a class="xref" href="https://rg-cmdline.html#rg-squishrunner-cli--config" title="7.4.3.27. Configuring squishrunner">Configuring <span class="application">squishrunner</span> (Section 7.4.3.27)</a>.)
+</p></td></tr><tr class="question"><td align="left" valign="top"><a id="idp59171688"></a><a id="faq-hookaix"></a><p><b>10.1.8.</b></p></td><td align="left" valign="top"><p>
+Why does <span class="emphasis"><em>Squish</em></span> fail to hook into my AUT on AIX?
+</p></td></tr><tr class="answer"><td align="left" valign="top"></td><td align="left" valign="top"><p>
+Usually, <span class="emphasis"><em>Squish</em></span> hooks into the AUT without requiring any special
+preparations. However, in some cases—such as on AIX—this is
+not possible due to technical limitations of the operating system. See
+the chapter <a class="xref" href="https://rg-cppapi.html#rgcpp-qtbuiltin" title="7.13.2. Using the Built-in Hook">Using the Built-in Hook (Section 7.13.2)</a> in the <a class="xref" href="https://ref.man.html" title="Chapter 7. Tools Reference Manual">Tools Reference Manual (Chapter 7)</a> for a solution.
+</p></td></tr><tr class="question"><td align="left" valign="top"><a id="idp59171272"></a><a id="fail-to-start-restore-segment-prot"></a><p><b>10.1.9.</b></p></td><td align="left" valign="top"><p>
+Why does <span class="application">squishrunner</span> fail to start with the error
+<code class="computeroutput">cannot restore segment prot after reloc: Permission
+denied</code>?
+</p></td></tr><tr class="answer"><td align="left" valign="top"></td><td align="left" valign="top"><p>
+Due to the usage of third-party code and imperfect compilers, <span class="emphasis"><em>Squish</em></span>
+contains libraries with so called "text relocations". By themselves
+these are harmless but a "hardened" Linux distribution with SELinux
+(Security Enhanced Linux) installed may nevertheless disallow such a
+property.
+</p><p>
+We are still investigating this problem, but meanwhile one workaround is
+to change the SELinux policy from enforcing to permissive—on most
+modern systems this can be done via a GUI configuration tool, or it can
+be done by manually editing the <code class="filename">/etc/selinux/config</code>
+file, and changing the <em class="parameter"><code>SELINUX=enforcing</code></em> entry to
+<em class="parameter"><code>SELINUX=permissive</code></em>. Whichever way the change is
+made, the system must be rebooted for the change to take effect.
+</p><p>
+A more fine-grained solution is also possible using the
+<span class="application">chcon</span> tool. This allows for the setting of the
+security context for individuals files. Here is a command that a
+customer gave us that should make things work:
+</p><pre class="programlisting">
+find /path/to/squish -type f -name "*.so" | xargs chcon -t textrel_shlib_t
+</pre></td></tr><tr class="question"><td align="left" valign="top"><a id="idp59181896"></a><a id="faq-mouseDrag"></a><p><b>10.1.10.</b></p></td><td align="left" valign="top"><p>
+Why doesn't <span class="emphasis"><em>Squish</em></span> replay paintings properly in my painting
+application?
+</p></td></tr><tr class="answer"><td align="left" valign="top"></td><td align="left" valign="top"><p>
+When a mouse press event is followed by mouse move events (while the
+button is still pressed), <span class="emphasis"><em>Squish</em></span> compresses all these events into a
+single <a class="xref" href="https://rgs-qtconvenience.html#qt-mouseDrag-function"><code class="function">mouseDrag</code></a>.
+</p><p>
+Using a <a class="xref" href="https://rgs-qtconvenience.html#qt-mouseDrag-function"><code class="function">mouseDrag</code></a> is much more robust in
+the face of changes in the AUT then recording the individual mouse
+events. However, during the replay of the <a class="xref" href="https://rgs-qtconvenience.html#qt-mouseDrag-function"><code class="function">mouseDrag</code></a>, there is only one mouse move event
+synthesized, starting from the point where the mouse button was pressed
+to the point where the mouse button was released.
+</p><p>
+To enable recording to work properly for applications that depend on all
+of the individual mouse move events being recorded individually, there's
+a way to disable the creation of the <a class="xref" href="https://rgs-qtconvenience.html#qt-mouseDrag-function"><code class="function">mouseDrag</code></a> calls for a specific widget type.
+See <a class="xref" href="https://rgs-qtconvenience.html#qt-setRecordMouseDrag-function"><code class="function">setRecordMouseDrag</code></a> for further details.
+</p></td></tr><tr class="question"><td align="left" valign="top"><a id="idp59186688"></a><a id="faq-ubuntu-unity"></a><p><b>10.1.11.</b></p></td><td align="left" valign="top"><p>
+Why doesn't <span class="emphasis"><em>Squish</em></span> work correctly on Ubuntu 11.
+</p></td></tr><tr class="answer"><td align="left" valign="top"></td><td align="left" valign="top"><p>
+Ubuntu 11 ships with the Unity desktop by default. This desktop system
+takes a macOS-like approach with a single menubar at the top of the
+screen rather than associated with each application. One of the things
+the Ubuntu developers have done to achieve this is to patch all the GUI
+libraries shipped with Ubuntu. Unfortunately, many many
+applications—including the <span class="application">Squish IDE</span>—are broken by these
+patches, with the result that no menubar is shown at all.
+See for example,
+<a class="ulink" href="https://bugs.launchpad.net/ubuntu/ source/libdbusmenu/ bug/618587" target="_blank">Ubuntu
+bug 618587</a> and
+<a class="ulink" href="https://bugs.eclipse.org/bugs/show_bug.cgi?id=330563" target="_blank">Eclipse
+bug 330563</a>.
+</p><p>
+A workaround is to set the following environment variable:
+<code class="envar">UBUNTU_MENUPROXY=0</code>. (This workaround is used by the
+<code class="filename">SQUISHDIR/squishide</code> script which runs the
+<code class="filename">SQUISHDIR/bin/ide/squishide</code> application, but
+obviously if you run the application directly you must set the
+environment variable yourself.)
+</p></td></tr></tbody></table></div></div><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" type="text/javascript" src="ScriptingLanguage.js"></script><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format">setScriptingLanguage();</script><div class="navfooter"><hr></hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="https://ao-ant.html">Prev</a> </td><td width="20%" align="center"> </td><td width="40%" align="right"> <a accesskey="n" href="https://book-glossary.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">9.14. Ant integration </td><td width="20%" align="center"><a accesskey="h" href="https://index-noframes.html">Home</a></td><td width="40%" align="right" valign="top"> Glossary</td></tr></table></div></body>
+<!-- Mirrored from faq.html by HTTrack Website Copier/3.x [XR&CO'2013], Wed, 06 Jul 2022 13:29:01 GMT -->
+</html>

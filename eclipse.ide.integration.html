@@ -1,0 +1,135 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<!-- Mirrored from eclipse.ide.integration.html by HTTrack Website Copier/3.x [XR&CO'2013], Wed, 06 Jul 2022 13:29:01 GMT -->
+<head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><title>9.10. Eclipse IDE Integration</title><link rel="stylesheet" href="manual.css" type="text/css"></link><meta name="generator" content="DocBook XSL Stylesheets V1.73.2"></meta><link rel="start" href="https://index-noframes.html" title="Squish Manual"></link><link rel="up" href="https://addons.html" title="Chapter 9. Add-Ons Reference Manual"></link><link rel="prev" href="https://ao-devops.html" title="9.9. Microsoft Azure DevOps integration"></link><link rel="next" href="https://ao-helixalm.html" title="9.11. Helix ALM integration"></link><style xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" type="text/css" media="screen">
+        div.toc * { margin-left: 6px; margin-right: auto; max-width: 75em; }
+        div.toc span { margin-left: 0px; }
+        * { margin-left: auto; margin-right: auto; max-width: 75em; }
+        body { margin-left: 6px; margin-right: 6px; }
+        table th { padding: .5ex }
+        table td { padding: .5ex }
+    </style><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format">
+        function keyPress() {
+            var e = window.event;
+            if ( e == undefined ) {
+                return;
+            }
+            /* ### does not properly scroll, yet
+            if ( e.keyCode == 32 ) {
+            var l = document.links;
+            for ( var i = 0; i < l.length; i++ ) {
+                if ( l[i].innerText == "Next" ) {
+                location.href = l[i].href;
+                }
+            }
+            } else
+                */
+                if ( e.keyCode == 0x08 ) {
+            var l = document.links;
+            for ( var i = 0; i < l.length; i++ ) {
+                if ( l[i].innerText == "Prev" ) {
+                location.href = l[i].href;
+                }
+            }
+            }
+        }
+        document.onkeypress = keyPress;
+    </script></head><body><div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="eclipse.ide.integration"></a>9.10. Eclipse IDE Integration</h2></div></div></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><span class="section"><a href="https://eclipse.ide.integration.html#download.and.install.the.squish.plugins">9.10.1. Download and Install the <span class="emphasis"><em>Squish</em></span> Integration</a></span></dt></dl></div><p>
+The <span class="application">Squish IDE</span> is a stand-alone IDE based on Eclipse. If you prefer to
+use your existing Eclipse it is possible to integrate <span class="emphasis"><em>Squish</em></span>'s Eclipse
+integration so that you can seamlessly use <span class="emphasis"><em>Squish</em></span> from inside your normal
+Eclipse. The Eclipse integration works with Eclipse 3.7 or
+later and requires that at least one scripting language editor is
+installed.
+</p><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="download.and.install.the.squish.plugins"></a>9.10.1. Download and Install the <span class="emphasis"><em>Squish</em></span> Integration</h3></div></div></div><p>
+The <span class="emphasis"><em>Squish</em></span> Eclipse integration is available in a file in your <span class="emphasis"><em>froglogic</em></span>
+download area. The file's name is <code class="filename">Squish Eclipse
+Integration-<span class="emphasis"><em>version</em></span>.zip</code> where
+<code class="filename"><span class="emphasis"><em>version</em></span></code> will be 5.1.0 or
+higher. Simply download the file to your local disk—there is no
+need to unpack it.
+</p><h4><a id="idp58764728"></a> Installing the Plugin </h4><p>
+Start up Eclipse and click the
+<span class="guimenu">Help</span>|<span class="guimenuitem">Install New
+Software</span> menu option. This will pop up the
+Install dialog. Now click the Install dialog's top-right
+<span class="guibutton">Add...</span> button; this will pop up the Add
+Repository dialog. In the Add Repository dialog enter a name in the
+<span class="guilabel">Name</span> line edit (e.g., “<span class="quote">Squish Eclipse
+Integration</span>”), and then click the
+<span class="guibutton">Archive...</span> button. This will pop up a file chooser
+dialog that you can use to locate the <span class="emphasis"><em>Squish</em></span> Eclipse integration
+<code class="filename">.zip</code> file you downloaded. Once you have found it
+click the <span class="guibutton">OK</span> button (or the
+<span class="guibutton">Open</span> button, etc., depending on platform) in the
+file chooser, then click the Add Repository dialog's
+<span class="guibutton">OK</span> button.
+</p><h4><a id="idp58770312"></a> Enabling Features of <span class="emphasis"><em>Squish</em></span> </h4><p>
+In the Install dialog, expand the entry for the <span class="emphasis"><em>Squish</em></span> Eclipse
+Integration to show all the features that are available. The most
+fundamental feature is the "Squish UI" feature. This
+contains basic <span class="emphasis"><em>Squish</em></span> support and must be checked to use <span class="emphasis"><em>Squish</em></span>
+within Eclipse. Also included is support for script editors. Check at
+least one of the editor support items.
+</p><p>
+Once you have selected the features you want, click the
+<span class="guibutton">Next</span> button and follow the dialog's instructions.
+(For example, you may have to accept license agreements or acknowledge
+security warnings.) Keep going until you can finally click the
+<span class="guibutton">Finish</span> button. During the process you may be
+prompted with a dialog which says that the <span class="emphasis"><em>Squish</em></span> integration is not
+signed. So long as you got the <code class="filename">.zip</code> file from
+<span class="emphasis"><em>froglogic</em></span> it is safe to install the features. (<span class="emphasis"><em>froglogic</em></span> is
+currently working on getting the <span class="emphasis"><em>Squish</em></span> Eclipse integration signed.)
+</p><p>
+Once the features have been added Eclipse will prompt you to restart. Doing the
+restart is not necessary as you need to quit Eclipse completely now anyway.
+</p><h4><a id="idp58775120"></a> Enabling the video playback feature in Eclipse </h4><p>
+After installation of the features and terminating Eclipse you need to modify
+the <span class="emphasis"><em><code class="filename">eclipse.ini</code></em></span> file. It can be found
+next to the Eclipse executable (on macOS it is located inside
+<code class="filename">Eclipse.app/Contents/Eclipse</code>) and is a plain text file
+that can be edited with a text editor. The <code class="filename">eclipse.ini</code> file
+needs to be extended with the following line:
+</p><pre class="screen">
+-Dosgi.framework.extensions=org.eclipse.fx.osgi
+</pre><p>
+The line can be placed anywhere after the <code class="option">-vmargs</code> line, but
+has to be kept on a line of its own. Usually it is best and easiest to just
+append the line to the end of the file.
+</p><p>
+The modified <code class="filename">eclipse.ini</code> ensures that the Video Player
+of <span class="emphasis"><em>Squish</em></span> is working properly. This is for replaying videos that may be
+captured during the test execution. You can now start Eclipse again and finish
+setup.
+</p><h4><a id="idp58779200"></a> Setting the location of the <span class="emphasis"><em>Squish</em></span> command line tools </h4><p>
+The last step is to choose the <span class="emphasis"><em>Squish</em></span> tools package that you want to
+use. This is the package that contains <span class="emphasis"><em>Squish</em></span>'s supporting command
+line tools such as <span class="application">squishrunner</span> and <span class="application">squishserver</span>. These tools must
+be downloaded separately from your customer area on the <span class="emphasis"><em>froglogic</em></span> web
+site. Once you have downloaded and unzipped them you can tell Eclipse
+where they are by clicking the
+<span class="guimenuitem">Preferences</span>|<span class="guimenuitem">Squish</span>
+menu option and choosing the directory where the <span class="emphasis"><em>Squish</em></span> tools are
+located. (For how to install the <span class="emphasis"><em>Squish</em></span> tools see <a class="xref" href="https://install.html" title="Chapter 3. How to Install Squish">How to Install Squish (Chapter 3)</a>.)
+</p><p>
+Once Eclipse knows where the <span class="emphasis"><em>Squish</em></span> tools are you are ready to use
+Eclipse as your test editing and running environment. The best way to
+start is to switch to the <a class="xref" href="https://ide.main.window.html#ide.squish.test.management.perspective" title="8.1.2.2. Squish Test Management Perspective">Squish Test Management Perspective (Section 8.1.2.2)</a>—this is done in
+the standard Eclipse way, e.g., by clicking
+<span class="guimenu">Window</span>|<span class="guimenuitem">Show
+Perspective</span>|<span class="guimenuitem">Squish Test
+Management</span>. This will make Eclipse look and
+work in a very similar way to the standalone <span class="application">Squish IDE</span> and provides access
+to all the <span class="emphasis"><em>Squish</em></span>-specific perspectives and views that are used for
+recording, editing, and running <span class="emphasis"><em>Squish</em></span> tests. Naturally, you can adapt
+the <span class="emphasis"><em>Squish</em></span> perspectives within Eclipse to suit your own preferences by
+adding or removing views—or you can add <span class="emphasis"><em>Squish</em></span> views to your
+other perspectives if you prefer.
+</p><p>
+The <span class="emphasis"><em>Squish</em></span> perspectives and views inside Eclipse look and behave the
+same as those in the <span class="application">Squish IDE</span>. The Squish IDE is described more fully in the
+<a class="xref" href="https://ide.ref.man.html" title="Chapter 8. IDE Reference Manual">IDE Reference Manual (Chapter 8)</a>.
+</p></div></div><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" type="text/javascript" src="ScriptingLanguage.js"></script><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format">setScriptingLanguage();</script><div class="navfooter"><hr></hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="https://ao-devops.html">Prev</a> </td><td width="20%" align="center"><a accesskey="u" href="https://addons.html">Up</a></td><td width="40%" align="right"> <a accesskey="n" href="https://ao-helixalm.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">9.9. Microsoft Azure DevOps integration </td><td width="20%" align="center"><a accesskey="h" href="https://index-noframes.html">Home</a></td><td width="40%" align="right" valign="top"> 9.11. Helix ALM integration</td></tr></table></div></body>
+<!-- Mirrored from eclipse.ide.integration.html by HTTrack Website Copier/3.x [XR&CO'2013], Wed, 06 Jul 2022 13:29:01 GMT -->
+</html>

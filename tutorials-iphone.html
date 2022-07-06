@@ -1,0 +1,2206 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<!-- Mirrored from tutorials-iphone.html by HTTrack Website Copier/3.x [XR&CO'2013], Wed, 06 Jul 2022 13:28:59 GMT -->
+<head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><title>4.9. Squish for iOS Tutorials</title><link rel="stylesheet" href="manual.css" type="text/css"></link><meta name="generator" content="DocBook XSL Stylesheets V1.73.2"></meta><link rel="start" href="index-noframes.html" title="Squish Manual"></link><link rel="up" href="tutorials.html" title="Chapter 4. Tutorials"></link><link rel="prev" href="tutorials-mac.html" title="4.8. Squish for macOS Tutorials"></link><link rel="next" href="tutorials-tk.html" title="4.10. Squish for Tk Tutorials"></link><style xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" type="text/css" media="screen">
+        div.toc * { margin-left: 6px; margin-right: auto; max-width: 75em; }
+        div.toc span { margin-left: 0px; }
+        * { margin-left: auto; margin-right: auto; max-width: 75em; }
+        body { margin-left: 6px; margin-right: 6px; }
+        table th { padding: .5ex }
+        table td { padding: .5ex }
+    </style><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format">
+        function keyPress() {
+            var e = window.event;
+            if ( e == undefined ) {
+                return;
+            }
+            /* ### does not properly scroll, yet
+            if ( e.keyCode == 32 ) {
+            var l = document.links;
+            for ( var i = 0; i < l.length; i++ ) {
+                if ( l[i].innerText == "Next" ) {
+                location.href = l[i].href;
+                }
+            }
+            } else
+                */
+                if ( e.keyCode == 0x08 ) {
+            var l = document.links;
+            for ( var i = 0; i < l.length; i++ ) {
+                if ( l[i].innerText == "Prev" ) {
+                location.href = l[i].href;
+                }
+            }
+            }
+        }
+        document.onkeypress = keyPress;
+    </script></head><body><div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="tutorials-iphone"></a>4.9. Squish for iOS Tutorials</h2></div></div></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><span class="section"><a href="tutorials-iphone.html#tutorial-getting-started-iphone">4.9.1. Tutorial: Starting to Test iOS Applications</a></span></dt><dt><span class="section"><a href="tutorials-iphone.html#tutorial-bdd-iphone">4.9.2. Tutorial: Designing Behavior Driven Development (BDD) Tests</a></span></dt><dt><span class="section"><a href="tutorials-iphone.html#tutorial-migration-bdd-iphone">4.9.3. Tutorial: Migration of existing tests to BDD</a></span></dt></dl></div><p>
+	Learn how to test iOS applications.
+	</p><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="tutorial-getting-started-iphone"></a>4.9.1. Tutorial: Starting to Test iOS Applications</h3></div></div></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><span class="section"><a href="tutorials-iphone.html#tgs-concepts-ios">4.9.1.1. Squish Concepts</a></span></dt><dt><span class="section"><a href="tutorials-iphone.html#tut-ios-creating-a-test-suite">4.9.1.2. Creating a Test Suite</a></span></dt><dt><span class="section"><a href="tutorials-iphone.html#tut-ios-recording-tests">4.9.1.3. Recording Tests and Verification Points</a></span></dt><dt><span class="section"><a href="tutorials-iphone.html#tut-ios-inserting.additional.verification.points">4.9.1.4. Inserting Additional Verification Points</a></span></dt><dt><span class="section"><a href="tutorials-iphone.html#ios-tut-learning-more">4.9.1.5. Learning More</a></span></dt><dt><span class="section"><a href="tutorials-iphone.html#testing.ios.apps.in.the..iphone..simulator">4.9.1.6. Notes on Testing iOS Apps in the iOS Simulator</a></span></dt><dt><span class="section"><a href="tutorials-iphone.html#testing..iphone..apps.on.an.iphone">4.9.1.7. Notes on Testing iOS Apps in an iPhone or iPad</a></span></dt></dl></div><div class="warning" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Warning: iOS Application Testing"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Warning]" src="images/warning.png"></img></td><th align="left">iOS Application Testing</th></tr><tr><td align="left" valign="top"><p>
+Note that iOS apps can only be tested on Apple
+hardware—either on the devices themselves or inside the
+iOS Simulator that runs on macOS.
+</p></td></tr></table></div><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Note: Web Testing"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/note.png"></img></td><th align="left">Web Testing</th></tr><tr><td align="left" valign="top"><p>
+If you want to test web applications on iOS (e.g., Safari applications),
+you will need to use the <span class="emphasis"><em>Squish</em></span> for Web edition and do some additional
+setup. After installing <span class="emphasis"><em>Squish</em></span> for Web, see the iOS web-specific
+installation instructions. Testing web applications on iOS is the same as
+for any other web platform.
+</p><p>
+Please see <a class="xref" href="installation.for.web.testing.html#installation.for.web.testing.on.mobile.devices" title="3.7.9. Browsers on mobile devices">Browsers on mobile devices (Section 3.7.9)</a>
+for details on web testing on mobile devices and see <a class="xref" href="tutorials-web.html#tutorial-getting-started-web" title="4.6.1. Tutorial: Starting to Test Web Applications">Tutorial: Starting to Test Web Applications (Section 4.6.1)</a> for the tutorial on <span class="emphasis"><em>Squish</em></span> for
+Web.
+</p></td></tr></table></div><p>
+This tutorial will show you how to create, run, and modify tests for an
+example iOS application. In the process you will learn about
+<span class="emphasis"><em>Squish</em></span>'s most frequently used features so that by the end of the
+tutorial you will be able to start writing your own tests for your own
+applications.
+</p><p>
+This chapter presents many of the major concepts behind <span class="emphasis"><em>Squish</em></span> and
+provides the information you need to get started using <span class="emphasis"><em>Squish</em></span> for
+testing your own applications. This tutorial does not discuss all
+of <span class="emphasis"><em>Squish</em></span>'s features, and those that it does cover are not covered in
+full detail. After reading this tutorial we recommend reading the
+<a class="xref" href="users-guide.html" title="Chapter 5. User Guide">User Guide (Chapter 5)</a>, and at least skimming the
+<a class="xref" href="api.man.html" title="Chapter 6. API Reference Manual">API Reference Manual (Chapter 6)</a> and the
+<a class="xref" href="ref.man.html" title="Chapter 7. Tools Reference Manual">Tools Reference Manual (Chapter 7)</a>, so that you are familiar with all the
+features that <span class="emphasis"><em>Squish</em></span> has to offer, even if you don't need to use them
+all straight away.
+</p><p>
+This tutorial is divided into several sections. If you are new to
+<span class="emphasis"><em>Squish</em></span> it is best
+to read all of them. If you are already using <span class="emphasis"><em>Squish</em></span> you might want to
+just skim the tutorial, stopping only to read those sections that cover
+any new features that you haven't used before—or you could just
+skip straight to the <a class="xref" href="users-guide.html" title="Chapter 5. User Guide">User Guide (Chapter 5)</a>.
+</p><p>
+Often, after we show how to achieve something using the IDE we will
+follow with an explanation of how to do the same thing using the command
+line tools. Using an IDE is the easiest and best way to start, but once
+you build up lots of tests you will want to automate them, (e.g., doing
+nightly runs of your regression test suite), so it is worth knowing how
+to use the command line tools since they can be run from batch files or
+shell scripts.
+</p><p>
+For this chapter we will use a simple <code class="literal">Elements</code> application as
+our AUT. The application is shipped with <span class="emphasis"><em>Squish</em></span> in
+<code class="filename">SQUISHDIR/examples/ios/elements</code>. This is a very basic
+application that shows information about the elements (Hydrogen, Helium,
+etc.), and that allows users to scroll through the elements by name or
+by category or to search for an element by typing in some search text.
+Despite the application's simplicity, it has many of the key features
+that most standard iOS applications have: buttons to click, a list to
+scroll, and an edit box for entering text. All the ideas and practices
+that you learn to test this application can easily be adapted to your
+own applications. And naturally, the <a class="xref" href="users-guide.html" title="Chapter 5. User Guide">User Guide (Chapter 5)</a> has
+many more examples.
+</p><p>
+The screenshot shows the application in action; the left hand image
+shows an element being displayed and the right hand image shows the
+application's main window.
+</p><div class="screenshot"><div class="mediaobject" align="center"><img src="images/ios-elements.png" align="middle"></img><div class="caption"><p>The iOS <code class="code">Elements.app</code> example in the simulator.
+</p></div></div></div><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Note: Using the Examples"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/note.png"></img></td><th align="left">Using the Examples</th></tr><tr><td align="left" valign="top"><p>
+The first time you try running a test for one of the example AUTs
+you might get a fatal error that begins “<span class="quote">Squish couldn't find
+the AUT to start...</span>”. If this occurs, click the <span class="guibutton">Test
+Suite Settings</span> toolbar button, and in the
+<span class="guilabel">Application Under Test (AUT)</span> section choose the AUT
+from the combobox if it is available, or click the
+<span class="guibutton">Browse...</span> button and navigate to the AUT's executable
+via the finder dialog that pops up. (Some versions of <span class="emphasis"><em>Squish</em></span> will
+automatically pop up this dialog if no AUT is specified.) This only
+needs to be done once per example AUT. (This doesn't arise when testing
+your own AUTs.)
+</p></td></tr></table></div><p>
+In the following sections we will create a test suite and then create
+some tests, but first we will very briefly review some key <span class="emphasis"><em>Squish</em></span>
+concepts.
+</p><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="tgs-concepts-ios"></a>4.9.1.1. Squish Concepts</h4></div></div></div><p>
+To perform testing, two things are required:
+</p><div class="orderedlist"><ol type="1"><li><p>
+an application to test—known as the Application
+Under Test (AUT), and
+</p></li><li><p>
+a test script that exercises the AUT.
+</p></li></ol></div><p>
+One fundamental aspect of <span class="emphasis"><em>Squish</em></span>'s approach is that the AUT and the
+test script that exercises it are always executed in two separate
+processes. This ensures that even if the AUT crashes, it should not
+crash <span class="emphasis"><em>Squish</em></span>. (In such cases the test script will fail gracefully and
+log an error message.) In addition to insulating <span class="emphasis"><em>Squish</em></span> and test
+scripts from AUT crashes, running the AUT and the test script in
+separate processes brings other benefits. For example, it makes it
+easier to store the test scripts in a central location, and it also
+makes it possible to perform remote testing on different machines and
+platforms. The ability to do remote testing is particularly useful for
+testing AUTs that run on multiple platforms, and also when testing AUTs
+that run on embedded devices.
+</p><p>
+<span class="emphasis"><em>Squish</em></span> runs a small server (<span class="application">squishserver</span>) that handles the
+communication between the AUT and the test script. The test script is
+executed by the <span class="application">squishrunner</span> tool, which in turn connects to the
+<span class="application">squishserver</span>. The <span class="application">squishserver</span> starts the AUT and injects the
+<span class="emphasis"><em>Squish</em></span> hook into it. The hook is a small library that makes the AUT's
+live running objects accessible and that can communicate with the
+<span class="application">squishserver</span>. With the hook in place, the <span class="application">squishserver</span> can query AUT
+objects regarding their state and can execute commands—all on
+behalf of the <span class="application">squishrunner</span>. And the <span class="application">squishrunner</span> itself requests
+that the AUT performs whatever actions the test script specifies. All
+the communication takes place using network sockets which means that
+everything can be done on a single machine, or the test script can be
+executed on one machine and the AUT can be tested over the network on
+another machine.
+</p><p>
+The following diagram illustrates how the individual <span class="emphasis"><em>Squish</em></span> tools work
+together.
+</p><div class="mediaobject" align="center"><img src="images/design_network.png" align="middle"></img></div><p>
+From the test engineer's perspective this separation is not noticeable,
+since all the communication is handled transparently behind the scenes.
+</p><p>
+Tests can be written and executed using the <span class="application">Squish IDE</span>, in which case the
+<span class="application">squishserver</span> is started and stopped automatically, and the test
+results are displayed in the <span class="application">Squish IDE</span>'s <a class="xref" href="ide.views.html#ide.the-test-results.view" title="8.2.18. Test Results view">Test Results view (Section 8.2.18)</a>. The following diagram illustrates
+what happens behind the scenes when the <span class="application">Squish IDE</span> is used.
+</p><div class="mediaobject" align="center"><img src="images/design_ide.png" align="middle"></img></div><p>
+The <span class="emphasis"><em>Squish</em></span> tools can also be used from the command line without the
+<span class="application">Squish IDE</span>—this is useful for those testers who prefer to use their own
+tools (for example, their favorite editor), and also for performing
+automatic batch testing (for example, when running regression tests
+overnight). In these cases, the <span class="application">squishserver</span> must be started manually,
+and stopped when all the testing is complete (or, if preferred, started
+and stopped for each test).
+</p><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Note: Terminology"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/note.png"></img></td><th align="left">Terminology</th></tr><tr><td align="left" valign="top"><p>
+The <span class="emphasis"><em>Squish</em></span> documentation mostly uses the term
+<span class="emphasis"><em>widget</em></span> when referring to GUI objects (i.e.,
+buttons, menus, menu items, labels, table controls, etc). Windows users
+might be more familiar with the terms <span class="emphasis"><em>control</em></span> and
+<span class="emphasis"><em>container</em></span>, but here we use the term widget for
+both. Similarly, macOS users may be used to the term
+<span class="emphasis"><em>view</em></span>; again, we use the term widget for this
+concept.
+</p></td></tr></table></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="tut-ios-creating-a-test-suite"></a>4.9.1.2. Creating a Test Suite</h4></div></div></div><p>
+A test suite is a collection of one or more test cases
+(<span class="emphasis"><em>tests</em></span>).
+Using a test suite is convenient since it makes it easy to share tests
+scripts and test data between tests.
+</p><p>
+Start up the <span class="application">Squish IDE</span>, either by clicking or double-clicking
+the <span class="application">squishide</span> icon, or by launching <span class="application">squishide</span> from the taskbar menu
+or by executing <code class="code">open squishide.app</code> on the command
+line—whichever you prefer. Once
+<span class="emphasis"><em>Squish</em></span> starts up, you might be greeted with a <span class="emphasis"><em>Welcome Page</em></span>
+in case you're starting the <span class="application">squishide</span> for the first time. Click the
+<span class="emphasis"><em>Workbench</em></span> button in the upper right to dismiss it. Then, the
+<span class="application">squishide</span> will look <span class="emphasis"><em>similar</em></span> to the screenshot—but probably
+slightly different depending on the macOS version, colors, fonts, and
+theme that you use, and so on.
+</p><div class="screenshot"><div class="mediaobject" align="center"><img src="images/tut-ios-squish1.png" align="middle"></img><div class="caption">The Squish IDE with no Test Suites
+</div></div></div><p>
+Once <span class="emphasis"><em>Squish</em></span> has started click
+<span class="guimenu">File</span>|<span class="guimenuitem">New Test
+Suite...</span> to pop-up the New Test Suite wizard shown
+below.
+</p><div class="screenshot"><div class="mediaobject" align="center"><img src="images/tut-squish-newtestsuite1-ios.png" align="middle"></img><div class="caption">The New Test Suite wizard's Name and Directory page
+</div></div></div><p>
+Enter a name for your test suite and choose the folder where you want
+the test suite to be stored. In the screenshot we have called the test
+suite <code class="filename">suite_py</code> and put it in a
+<code class="filename">squish-ios-test</code> folder; the actual example code is
+in <span class="emphasis"><em>Squish</em></span>'s <code class="filename">examples/ios/elements</code> folder. (For
+your own tests you might use a more meaningful name such as
+"suite_elements"; we chose "suite_py" because for the sake of the
+tutorial we will create several suites, one for each scripting language
+that <span class="emphasis"><em>Squish</em></span> supports.) Naturally, you can choose whatever name and
+folder you prefer. Once the details are complete, click
+<span class="guibutton">Next</span> to go on to the Toolkit (or Scripting
+Language) page.
+</p><div class="screenshot"><div class="mediaobject" align="center"><img src="images/tut-squish-newtestsuite2-ios.png" align="middle"></img><div class="caption">The New Test Suite wizard's Toolkit page
+</div></div></div><p>
+If you get this wizard page, click the toolkit your AUT uses. For this
+example, you must click iOS since we are testing a iOS
+application. Then click
+<span class="guibutton">Next</span> to go to the Scripting Language page.
+</p><div class="screenshot"><div class="mediaobject" align="center"><img src="images/tut-squish-newtestsuite3-ios.png" align="middle"></img><div class="caption">The New Test Suite wizard's Scripting Language page
+</div></div></div><p>
+Choose whichever scripting language you want—the only constraint
+is that you can only use one scripting language per test suite. (So if
+you want to use multiple scripting languages, just create multiple test
+suites, one for each scripting language you want to use.) The
+functionality offered by <span class="emphasis"><em>Squish</em></span> is the same for all languages. Having
+chosen a scripting language, click <span class="guibutton">Next</span> once more
+to get to the wizard's last page.
+</p><div class="screenshot"><div class="mediaobject" align="center"><img src="images/ios-tut-squishgui4.png" align="middle"></img><div class="caption">The New Test Suite wizard's AUT page
+</div></div></div><p>
+If you are creating a new test suite for an AUT that <span class="emphasis"><em>Squish</em></span> already
+knows about, simply click the combobox to drop-down the list of AUTs and
+choose the one you want. If the combobox is empty or your AUT isn't
+listed, click the <span class="guibutton">Browse</span> button to the right
+of the combobox—this will pop-up a file open dialog from which you
+can choose your AUT. In the case of iOS programs, the AUT is the
+application's executable (e.g., <code class="filename">Elements</code> on
+iOS). Once you have chosen the AUT, click
+<span class="guibutton">Finish</span> and <span class="emphasis"><em>Squish</em></span> will create a sub-folder with
+the same name as the test suite, and will create a file inside that
+folder called <code class="filename">suite.conf</code> that contains the test
+suite's configuration details. <span class="emphasis"><em>Squish</em></span> will also register the AUT with
+the <span class="application">squishserver</span>. The wizard will then close and <span class="emphasis"><em>Squish</em></span>'s IDE will
+look similar to the screenshot below.
+</p><div class="screenshot"><div class="mediaobject" align="center"><img src="images/tut-ios-squish2.png" align="middle"></img><div class="caption">The Squish IDE with the suite_py test suite
+</div></div></div><p>
+We are now ready to start creating tests. Read on to learn how to create
+test suites without using the IDE, or skip ahead to <a class="xref" href="tutorials-iphone.html#tut-ios-recording-tests" title="4.9.1.3. Recording Tests and Verification Points">Recording Tests and Verification Points (Section 4.9.1.3)</a> if you prefer.
+</p><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Note: For command-line users"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/note.png"></img></td><th align="left"><span class="emphasis"><em>For command-line users</em></span></th></tr><tr><td align="left" valign="top"><p>
+To create a new test suite from the command line, two steps are
+necessary: first, register the AUT with <span class="application">squishserver</span>, and
+second, create a directory and configuration file for the test suite.
+</p><div class="orderedlist"><ol type="1"><li><p>
+Create a new directory to hold the test suite—the directory's name
+should begin with <code class="code">suite</code>. In this example we have created
+the <code class="filename">SQUISHDIR/examples/ios/elements/suite_py</code>
+directory for Python tests. (We also have similar subdirectories for
+other languages but this is purely for the sake of example, since
+normally we only use one language for all our tests.)
+</p></li><li><p>
+Register the AUT with the <span class="application">squishserver</span>.
+<sup>[<a id="idp42208104" href="#ftn.idp42208104" class="footnote">14</a>]</sup>
+This is done by executing the <span class="application">squishserver</span> on the command line with
+the <code class="code">--config</code> option and the <code class="code">addAUT</code>
+command. For example, assuming we are in the <code class="filename">SQUISHDIR</code>
+directory on macOS:
+</p><pre class="screen">
+squishserver --config addAUT Elements \
+SQUISHDIR/examples/ios/elements
+</pre><p>
+We must give the <code class="code">addAUT</code> command the name of the AUT's
+executable and—separately—the AUT's path. In this case
+the path is to the executable that was added as the AUT in the test
+suite configuration file. (For more information about application paths,
+see <a class="xref" href="rg-autsettings.html" title="7.3. AUTs and Settings">AUTs and Settings (Section 7.3)</a> in the <a class="xref" href="users-guide.html" title="Chapter 5. User Guide">User Guide (Chapter 5)</a>, and for more about the <span class="application">squishserver</span>'s command
+line options see <a class="xref" href="rg-cmdline.html#rgc-squishserver" title="7.4.4. squishserver">squishserver (Section 7.4.4)</a> in the <a class="xref" href="ref.man.html" title="Chapter 7. Tools Reference Manual">Tools Reference Manual (Chapter 7)</a>.)
+</p></li><li><p>
+Create a plain text file (ASCII or UTF-8 encoding) called
+<code class="filename">suite.conf</code> in the suite subdirectory. This is the
+test suite's configuration file, and at the minimum it must identify the
+AUT, the scripting language used for the tests, and the wrappers (i.e.,
+the GUI toolkit or library) that the AUT uses. The format of the file is
+<span class="emphasis"><em><code class="code">key</code></em></span> <code class="code">=</code>
+<span class="emphasis"><em><code class="code">value</code></em></span>, with one
+<span class="emphasis"><em>key–value</em></span> pair per line. For example:
+</p><pre class="screen">
+AUT            = Elements
+LANGUAGE       = Python
+LAUNCHER       = iphonelauncher
+WRAPPERS       = iOS
+OBJECTMAPSTYLE = script
+</pre><p>
+The <span class="property">AUT</span> is the iOS executable. The
+<span class="property">LANGUAGE</span> can be set to whichever one
+you prefer—currently <span class="emphasis"><em>Squish</em></span> is capable of supporting
+JavaScript, Python, Perl, Ruby, and Tcl, but the precise
+availability may vary depending on how <span class="emphasis"><em>Squish</em></span> was installed. The
+<span class="property">WRAPPERS</span> should be set to <code class="code">iOS</code>.
+Make sure you set the <span class="property">LAUNCHER</span> to
+<code class="code">iphonelauncher</code>.
+</p></li></ol></div></td></tr></table></div><p>
+We are now ready to record our first test.
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="tut-ios-recording-tests"></a>4.9.1.3. Recording Tests and Verification Points</h4></div></div></div><p>
+<span class="emphasis"><em>Squish</em></span> records tests using the scripting language that was specified
+for the test suite. Once a
+test has been recorded, we can <span class="emphasis"><em>run</em></span> the test and
+<span class="emphasis"><em>Squish</em></span> will faithfully repeat all the actions that we performed when
+recording the test, but without the pauses that humans are prone to
+but which computers don't need. It is also possible—and very
+common—to edit recorded tests, or to copy parts of recorded tests
+into manually created tests, as we will see later on in the tutorial.
+</p><p>
+Recordings are made into existing test cases. We begin by
+creating a <span class="guilabel">New Script Test Case</span>.
+There are two ways we can do this. One way
+is to click <span class="guimenu">File</span>|<span class="guimenuitem">New Test
+Case...</span>. This will pop up the <a class="xref" href="ide.dialogs.html#ide.new.squish.test.case.wizard" title="8.3.10. New Squish Test Case wizard">New Squish Test Case wizard (Section 8.3.10)</a>—simply enter the name
+for the test case and then click <span class="guibutton">Finish</span>. Another
+way is to click <span class="guibutton">New Script Test Case</span> (<span class="guiicon"><img src="images/ide/new_test_case.png"></img></span>) (to the right of the <span class="guilabel">Test
+Cases</span> in the <span class="guilabel">Test Suites</span> view); this will
+create a new test case with a default name (which you can easily change).
+Give the new test case the name “<span class="quote">tst_general</span>”.
+<span class="emphasis"><em>Squish</em></span> automatically creates a sub-folder inside the test suite's
+folder with this name and also a test file, for example
+<code class="filename">test.py</code>. (If we had chosen JavaScript as our
+scripting language the file would be called
+<code class="filename">test.js</code>, and correspondingly for Perl, Ruby, or Tcl.)
+</p><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Note"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/note.png"></img></td><th align="left">Note</th></tr><tr><td align="left" valign="top"><div class="mediaobject" align="right"><img src="images/tut-squish-testcase-type.png" align="right"></img></div><p>
+If you get a sample <code class="filename">.feature</code> file instead of a "Hello
+World" script, then click on the arrow left of the <span class="guibutton">Run Test Suite</span> (<span class="guiicon"><img src="images/ide/run_test_suite.png"></img></span>)
+and select <span class="guibutton">New Script Test Case</span> (<span class="guiicon"><img src="images/ide/new_test_case.png"></img></span>).
+</p></td></tr></table></div><p>
+To make the test script file (e.g., <code class="filename">test.js</code>) appear
+in an <a class="xref" href="ide.views.html#ide.the-editor.view" title="8.2.6. Editor view">Editor view (Section 8.2.6)</a>, click—or double-click
+depending on the <span class="guimenuitem">Preferences</span>|<span class="guimenuitem">General</span>|<span class="guimenuitem">Open mode</span>
+setting—the test case. This selects the Script as the active one
+and makes visible its corresponding <span class="guibutton">Record</span> (<span class="guiicon"><img src="images/ide/record.png"></img></span>) and <span class="guibutton">Run Test</span> (<span class="guiicon"><img src="images/ide/run.png"></img></span>) buttons.
+</p><p>
+The checkboxes are used to control which test cases are
+run when the <span class="guibutton">Run Test Suite</span> (<span class="guiicon"><img src="images/ide/run_test_suite.png"></img></span>) toolbar button is clicked; we can also run
+a single test case by clicking its <span class="guibutton">Run Test</span> (<span class="guiicon"><img src="images/ide/run.png"></img></span>) button. If the test case is not
+currently active, the button may be invisible until the mouse is hovered over
+it.
+</p><p> Initially, the
+script's <code class="function">main()</code> logs "Hello World" to the test results. If
+we were to create a test manually (as we will do later on in the tutorial), we
+<span class="emphasis"><em>must</em></span> create a <code class="function">main</code> function, and we
+should import the same imports at the top.
+The name "main" is special to <span class="emphasis"><em>Squish</em></span>. Tests may contain as many functions
+and other code as we like (providing it is legal for the scripting language), but when the
+test is executed (i.e., run), <span class="emphasis"><em>Squish</em></span> always executes the
+<code class="function">main</code> function. It is also possible to share commonly used code
+between test scripts—this is covered in the <a class="xref" href="users-guide.html" title="Chapter 5. User Guide">User Guide (Chapter 5)</a>. (In fact, two other function names are special
+to <span class="emphasis"><em>Squish</em></span>, <code class="function">cleanup</code> and <code class="function">init</code>; see <a class="xref" href="api.special.functions.html" title="6.1. Tester-Created Special Functions">Tester-Created Special Functions (Section 6.1)</a> for details.)
+</p><p>
+Once the new test case has been created, we are free to write
+test code manually, or to record a test. Clicking on the test case's
+<span class="guibutton">Record</span> (<span class="guiicon"><img src="images/ide/record.png"></img></span>) replaces the test's code with a new recording.
+It is also possible to record snippets and insert them into existing test
+cases, covered in Users Guide and not in this tutorial.
+</p><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Note: For command-line users"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/note.png"></img></td><th align="left"><span class="emphasis"><em>For command-line users</em></span></th></tr><tr><td align="left" valign="top"><p>
+Creating a new test case from the command line is an easy two-step
+process: first, create a test case directory; and second, create a
+test case script with the same elements (imports, main() function)
+that the IDE does when it creates a hello-world script in that language.
+</p><div class="orderedlist"><ol type="1"><li><p>
+Create a new subdirectory inside the test suite directory. For example,
+inside the
+<code class="filename">SQUISHDIR/examples/ios/addressbook/suite_py</code>
+directory, create the <code class="filename">tst_general</code> directory.
+</p></li><li><p>
+Inside the test case's directory create an empty file called
+<code class="filename">test.py</code> (or <code class="filename">test.js</code> if you are
+using the JavaScript scripting language, and similarly for the other
+languages).
+</p></li></ol></div></td></tr></table></div><p>
+Before we dive into recording let's briefly review our very simple test scenario:
+</p><div class="orderedlist"><ol type="1"><li><p>
+Click the Elements by name option.
+</p></li><li><p>
+Click the Argon element.
+</p></li><li><p>
+Verify that the Category is “<span class="quote">Noble Gases</span>”
+</p></li><li><p>
+Return to the main window.
+</p></li><li><p>
+Click Search.
+</p></li><li><p>
+Enter a search term of “<span class="quote">pluto</span>” and click the Search button.
+</p></li><li><p>
+Verify that element 94, Plutonium is found.
+</p></li><li><p>
+Finish.
+</p></li></ol></div><p>
+We are now ready to record our first test. Click the <span class="guibutton">Record</span> (<span class="guiicon"><img src="images/ide/record.png"></img></span>)
+to the right of the <code class="code">tst_general</code> test case shown in the <a class="xref" href="ide.views.html#ide.the-test-suites.view" title="8.2.19. Test Suites view">Test Suites view (Section 8.2.19)</a>'s Test Cases list. This will cause
+<span class="emphasis"><em>Squish</em></span> to run the AUT so that you can interact with it. Once the
+simulator has started and the Elements AUT is
+running, perform the following actions—and don't worry about how
+long it takes since <span class="emphasis"><em>Squish</em></span> doesn't record idle time:
+</p><div class="orderedlist"><ol type="1"><li><p>
+Click the <span class="guibutton">Elements by name</span> item. Once the list of
+elements appears, click the <span class="guibutton">Argon (Ar)</span> item.
+</p></li><li><p>
+When the Argon screen appears you want to verify that it has the correct
+Category. For this verification you will take a slightly long-winded
+approach. First, click the <span class="guibutton">Verify</span> toolbar button in
+the <span class="emphasis"><em>Squish</em></span> <a class="xref" href="ide.main.window.html#ide-the-controlbar-window" title="8.1.3. Control Bar Window">Control Bar Window (Section 8.1.3)</a> (the second
+button from the left) and select <span class="guibutton">Properties</span>.</p><div class="screenshot"><div class="mediaobject" align="center"><img src="images/controlbar-mac.png" align="middle"></img></div></div><p>This makes the <span class="application">Squish IDE</span> reappear. In the Application
+Objects view, expand the <code class="code">Elements</code> item (by clicking its
+gray triangle), then the <code class="code">UI_Window_0</code> item, then the
+<code class="code">UILayoutContainerView_0</code> item, then the
+<code class="code">UINavigationTransitionView_0</code> item, then the
+<code class="code">UIViewControllerWrapperView_0</code> item, and then the
+<code class="code">UITableView_0</code> item. Now the table's items should be
+visible. Now expand the <code class="code">Category_UITableViewCell_8</code> item and
+then the <code class="code">UITableViewCellContentView_0</code> item. Now click the <code class="code">Noble
+Gases_UITableViewLabel_0</code> item. At last we've found the item we want.
+(Don't worry, when you do the next verification you'll make <span class="emphasis"><em>Squish</em></span> find
+the item for you!)
+</p></li><li><p>
+In the Properties view expand the label's <span class="property">text</span> property.
+Now click the checkbox beside the <span class="property">stringValue</span> subproperty.
+<span class="emphasis"><em>Squish</em></span> should now look similar to the screenshot.
+</p><div class="screenshot"><div class="mediaobject" align="center"><img src="images/ios-tut-squishgui16.png" align="middle"></img><div class="caption">The Squish IDE showing a verification point about to be inserted
+</div></div></div><p>
+Now click the <span class="guibutton">Save and Insert Verifications</span> button.
+This will insert the Category verification into the recorded script. The
+<span class="application">Squish IDE</span> will disappear and you can continue to record interactions with the
+AUT.
+</p></li><li><p>
+Back in the Elements AUT, click <span class="guibutton">Name</span> to return to
+the list of elements by name, then click <span class="guibutton">Main</span> to
+return to the main window.
+</p></li><li><p>
+Click the <span class="guibutton">Search</span> item and in the Search window
+enter the text “<span class="quote">pluto</span>” in the Name Contains line edit. Then
+click the <span class="guibutton">Search</span> button.
+</p></li><li><p>
+When the Search Results appears you want to verify that element 94,
+Plutonium was found. This time, you will make <span class="emphasis"><em>Squish</em></span> find the relevant
+object for you. Once again click the <span class="guibutton">Insert
+Verifications</span> toolbar button in the <span class="emphasis"><em>Squish</em></span> Control Bar and
+choose <span class="guimenuitem">Properties</span>. As before, this will make the
+<span class="application">Squish IDE</span> appear.
+</p></li><li><p>
+In the <span class="guilabel">Application Objects</span> view click the <a class="xref" href="ide.views.html#object-picker">Object Picker</a> (<span class="guiicon"><img src="images/ide/pick-application-object.png"></img></span>). This will make the <span class="application">Squish IDE</span>
+disappear. Hover the mouse over the “<span class="quote">94: Plutonium (Pu)</span>”
+text in the Search Results window and click this text. The <span class="application">Squish IDE</span> will now
+reappear and <span class="emphasis"><em>Squish</em></span> will have found and highlighted the relevant
+widget.
+</p></li><li><p>
+In the <span class="guilabel">Properties</span> view, expand the widget's
+<span class="property">text</span> property. Now click the checkbox beside the
+<span class="property">stringValue</span> subproperty.
+<span class="emphasis"><em>Squish</em></span> should now look similar to the screenshot.
+</p><div class="screenshot"><div class="mediaobject" align="center"><img src="images/ios-tut-squishgui16b.png" align="middle"></img><div class="caption">The Squish IDE showing a verification point about to be inserted
+</div></div></div><p>
+Now click the <span class="guibutton">Save and Insert Verifications</span> button.
+This will insert the verification into the recorded script. The <span class="application">Squish IDE</span>
+will disappear and you can continue to record interactions with the AUT.
+</p></li><li><p>
+We have now finished our test and inserted the verifications. Click
+the <span class="guibutton">Stop Recording</span> toolbar button in the <span class="emphasis"><em>Squish</em></span>
+Control Bar. The Elements AUT and the simulator will stop and the <span class="application">Squish IDE</span>
+will reappear.
+</p></li></ol></div><p>
+Once you stop recording, the recorded test will appear in <span class="emphasis"><em>Squish</em></span>'s IDE as
+the screenshot illustrates. (Note that the exact code that is recorded
+will vary depending on how you interact with the AUT and which scripting
+language you have chosen.)
+</p><p>
+After recording is finished, you can play it back to see
+that it works as expected by clicking the <code class="code">tst_general</code>'s
+<span class="guibutton">Play</span> button in the Test Cases view.
+</p><div class="screenshot"><div class="mediaobject" align="center"><img src="images/ios-tut-squishgui16c.png" align="middle"></img><div class="caption">The Squish IDE showing the results of playback with two
+verification points</div></div></div><p>
+If the recorded test doesn't appear, click (or double-click depending on
+your platform and settings) the <code class="filename">tst_general</code> test
+case—or click the <code class="filename">test.py</code> file in the Test Case
+Resources list—this will make <span class="emphasis"><em>Squish</em></span> show the test's
+<code class="filename">test.py</code> file in an editor window as shown in the
+screenshot.
+</p><p>
+Now that we've recorded the test, we are able to play it back, i.e.,
+run it. This in itself is useful in that if the play back failed it
+might mean that the application has been broken. Furthermore, the two
+verifications we put in will be checked on play back as the screenshot
+shows.
+</p><p>
+Inserting verification points during test recording is very convenient.
+Here we inserted two separately, but we can insert as many as we like as
+often as we like during the test recording process. However, sometimes
+we might forget to insert a verification, or later on we might want to
+insert a new verification. We can easily insert additional verifications
+into a recorded test script as we will see in the next section, <a class="xref" href="tutorials-iphone.html#tut-ios-inserting.additional.verification.points" title="4.9.1.4. Inserting Additional Verification Points">Inserting Additional Verification Points (Section 4.9.1.4)</a>.
+</p><p>
+Before going further, we will look at how to record a test from the
+command line. Then we will see how to run a test, and we will also
+look at some of the code that <span class="emphasis"><em>Squish</em></span> generated to record the test and
+discuss some of its features.
+</p><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Note: For command-line users"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/note.png"></img></td><th align="left"><span class="emphasis"><em>For command-line users</em></span></th></tr><tr><td align="left" valign="top"><p>
+First and foremost, the <span class="application">squishserver</span> must always be running when
+recording or running a test. This is handled automatically by the <span class="application">Squish IDE</span>,
+but for command line users the <span class="application">squishserver</span> must be started manually.
+(See <a class="xref" href="rg-cmdline.html#rgc-squishserver" title="7.4.4. squishserver">squishserver (Section 7.4.4)</a> for further details.)
+</p><p>
+To record a test from the command line we execute the <span class="application">squishrunner</span>
+program and specify the test suite we want to record inside and the name
+we want to give to the test case. For example (assuming we are in the
+directory that contains the test suite's directory):
+</p><pre class="screen">
+squishrunner --testsuite suite_py --record tst_general --useWaitFor
+</pre><p>
+It is always best to record using the <code class="option">--useWaitFor</code>
+option since this records calls to the <a class="xref" href="rgs-squish.html#waitForObject-function"><code class="function">waitForObject</code></a> function which is more reliable
+than using the <a class="xref" href="rgs-squish.html#snooze-function"><code class="function">snooze</code></a> function which for
+historical reasons is the default. (Note that the <span class="application">Squish IDE</span> automatically
+uses the <a class="xref" href="rgs-squish.html#waitForObject-function"><code class="function">waitForObject</code></a> function.)
+</p></td></tr></table></div><h5><a id="idp42297640"></a> Running the Test </h5><p>
+To run a test case in the IDE just click the <span class="guibutton">Run Test</span> (<span class="guiicon"><img src="images/ide/run.png"></img></span>) that appears
+when the test case is hovered or selected in the <a class="xref" href="ide.views.html#ide.the-test-suites.view" title="8.2.19. Test Suites view">Test Suites view (Section 8.2.19)</a>.
+When we have two or more test cases, we can run them all, one after another,
+(or only those that are checked) by clicking <span class="guibutton">Run Test Suite</span> (<span class="guiicon"><img src="images/ide/run_test_suite.png"></img></span>).
+</p><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Note: For command-line users"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/note.png"></img></td><th align="left"><span class="emphasis"><em>For command-line users</em></span></th></tr><tr><td align="left" valign="top"><p>
+As noted earlier, the <span class="application">squishserver</span> must always be running when
+recording or running a test, or the <code class="code">--local</code> option
+be provided to <span class="application">squishrunner</span>. (See <a class="xref" href="rg-cmdline.html#rgc-squishserver" title="7.4.4. squishserver">squishserver (Section 7.4.4)</a>
+for further details.)
+</p><p>
+To play back a recorded test from the command line we, execute the
+<span class="application">squishrunner</span> program and specify the path to the test suite we want to play,
+and optionally the test case. For example (assuming we are in the directory that
+contains the test suite's directory):
+</p><pre class="screen">
+squishrunner --testsuite suite_py --testcase tst_general --local
+</pre></td></tr></table></div><p>
+If you look at the code in the screenshot (or the code snippet shown
+below) you will see that it consists of lots of <a class="xref" href="rgs-squish.html#waitForObject-function"><code class="function">waitForObject</code></a> calls as parameters to various
+other calls such as <a class="xref" href="rgs-iphoneconvenience.html#iphone-tapObject-function"><code class="function">tapObject</code></a> and
+<a class="xref" href="rgs-iphoneconvenience.html#iphone-type-function"><code class="function">type</code></a>. The <a class="xref" href="rgs-squish.html#waitForObject-function"><code class="function">waitForObject</code></a> function waits until a GUI object
+is ready to be interacted with (i.e., becomes visible and enabled), and
+is then followed by some function that interacts with the object. The
+typical interactions are click
+a button, or type in some text. (For a complete overview of
+<span class="emphasis"><em>Squish</em></span>'s script commands see the <a class="xref" href="users-guide.html" title="Chapter 5. User Guide">User Guide (Chapter 5)</a>, the
+<a class="xref" href="api.man.html" title="Chapter 6. API Reference Manual">API Reference Manual (Chapter 6)</a>, and the <a class="xref" href="ref.man.html" title="Chapter 7. Tools Reference Manual">Tools Reference Manual (Chapter 7)</a>. Objects are
+identified by names that <span class="emphasis"><em>Squish</em></span> generates. (See <a class="xref" href="ug-accessing-objects.html" title="5.1. How to Identify and Access Objects">How to Identify and Access Objects (Section 5.1)</a> for full details.)
+</p><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Note: Scripting Language Support"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/note.png"></img></td><th align="left">Scripting Language Support</th></tr><tr><td align="left" valign="top"><p>
+Although the screenshots only show the Python test suite in action, for
+the code snippets quoted here and throughout the tutorial, we show the
+code for all the scripting languages that <span class="emphasis"><em>Squish</em></span> supports. In practice
+you would normally only use one of them of course, so feel free to just
+look at the snippets in the language you are interested in and skip the
+others. (In the HTML version of this manual you can use the combobox at
+the top of the page to select the language you use—this will hide
+the code snippets in other languages.)
+</p></td></tr></table></div><div xmlns="" class="scriptlang"><form><select name="scriptlangcombo" onchange="javascript:changeScriptingLanguage(this)" onclick="javascript:changeScriptingLanguage(this)"><option value="all" selected>Show All</option><option value="JavaScript">Show JavaScript</option><option value="Perl">Show Perl</option><option value="Python">Show Python</option><option value="Ruby">Show Ruby</option><option value="Tcl">Show Tcl</option></select></form></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Python</span><pre class="programlisting">
+import names
+
+
+def main():
+    startApplication("Elements")
+    tapObject(waitForObject(names.elements_by_name_UITableViewCell))
+    tapObject(waitForObject(names.argon_Ar_UITableViewCell))
+    test.compare(waitForObjectExists(names.noble_Gases_UILabel).text.stringValue, "Noble Gases")
+    tapObject(waitForObject(names.name_UINavigationItemButtonView))
+    snooze(1)
+    tapObject(waitForObject(names.main_UINavigationItemButtonView))
+    tapObject(waitForObject(names.search_UITableViewCell))
+    tapObject(waitForObject(names.name_Contains_UITextField), 113, 14)
+    type(waitForObject(names.name_Contains_UITextField), "pluto")
+    tapObject(waitForObject(names.search_UINavigationButton))
+    test.compare(waitForObjectExists(names.o94_Plutonium_Pu_UITableViewCell).text.stringValue, "94: Plutonium (Pu)")
+
+
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">JavaScript</span><pre class="programlisting">
+import * as names from 'names.js';
+
+function main()
+{
+    startApplication("Elements");
+    tapObject(waitForObject(names.elementsByNameUITableViewCell));
+    tapObject(waitForObject(names.argonArUITableViewCell));
+    test.compare(waitForObjectExists(names.nobleGasesUILabel).text.stringValue,
+            "Noble Gases");
+    tapObject(waitForObject(names.nameUINavigationItemButtonView));
+    snooze(1);
+    tapObject(waitForObject(names.mainUINavigationItemButtonView));
+    tapObject(waitForObject(names.searchUITableViewCell));
+    tapObject(waitForObject(names.nameContainsUITextField), 113, 14);
+    type(waitForObject(names.nameContainsUITextField), "pluto");
+    tapObject(waitForObject(names.searchUINavigationButton));
+    test.compare(waitForObjectExists(names.o94PlutoniumPuUITableViewCell).text.stringValue,
+            "94: Plutonium (Pu)");
+}
+
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Perl</span><pre class="programlisting">
+require 'names.pl';
+
+sub main {
+    startApplication("Elements");
+    tapObject(waitForObject($Names::elements_by_name_uitableviewcell));
+    tapObject(waitForObject($Names::argon_ar_uitableviewcell));
+    test::compare(waitForObjectExists($Names::noble_gases_uilabel)-&gt;text-&gt;stringValue,
+        "Noble Gases");
+    tapObject(waitForObject($Names::name_uinavigationitembuttonview));
+    snooze(1);
+    tapObject(waitForObject($Names::main_uinavigationitembuttonview));
+    tapObject(waitForObject($Names::search_uitableviewcell));
+    tapObject(waitForObject($Names::name_contains_uitextfield), 113, 14);
+    type(waitForObject($Names::name_contains_uitextfield), "pluto");
+    tapObject(waitForObject($Names::search_uinavigationbutton));
+    test::compare(waitForObjectExists($Names::o94_plutonium_pu_uitableviewcell)-&gt;text-&gt;stringValue,
+        "94: Plutonium (Pu)");
+}
+
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Ruby</span><pre class="programlisting">
+require 'names';
+
+# encoding: UTF-8
+require 'squish'
+include Squish
+
+def main
+    startApplication("Elements")
+    tapObject(waitForObject(Names::Elements_by_name_UITableViewCell))
+    tapObject(waitForObject(Names::Argon_Ar_UITableViewCell))
+    Test.compare(waitForObjectExists(Names::Noble_Gases_UILabel).text.stringValue,
+                 "Noble Gases")
+    tapObject(waitForObject(Names::Name_UINavigationItemButtonView))
+    snooze(1)
+    tapObject(waitForObject(Names::Main_UINavigationItemButtonView))
+    tapObject(waitForObject(Names::Search_UITableViewCell))
+    tapObject(waitForObject(Names::Name_Contains_UITextField), 113, 14)
+    type(waitForObject(Names::Name_Contains_UITextField), "pluto")
+    tapObject(waitForObject(Names::Search_UINavigationButton))
+    Test.compare(waitForObjectExists(Names::O94_Plutonium_Pu_UITableViewCell).text.stringValue,
+                 "94: Plutonium (Pu)")
+end
+
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Tcl</span><pre class="programlisting">
+source [findFile "scripts" "names.tcl"]
+
+proc main {} {
+    startApplication "Elements"
+    invoke tapObject [waitForObject $names::Elements_by_name_UITableViewCell]
+    invoke tapObject [waitForObject $names::Argon_Ar_UITableViewCell]
+    test compare [property get [property get \
+        [waitForObjectExists $names::Noble_Gases_UILabel] text] stringValue] "Noble Gases"
+    invoke tapObject [waitForObject $names::Name_UINavigationItemButtonView]
+    snooze 1
+    invoke tapObject [waitForObject $names::Main_UINavigationItemButtonView]
+    invoke tapObject [waitForObject $names::Search_UITableViewCell]
+    invoke tapObject [waitForObject $names::Name_Contains_UITextField] 113 14
+    invoke type [waitForObject $names::Name_Contains_UITextField] "pluto"
+    invoke tapObject [waitForObject $names::Search_UINavigationButton]
+    test compare [property get [property get \
+        [waitForObjectExists $names::94_Plutonium_Pu_UITableViewCell] text] stringValue] \
+        "94: Plutonium (Pu)"
+}
+
+</pre></div><p>
+We have quoted the entire test script here since it is so short. Every
+<span class="emphasis"><em>Squish</em></span> test must have a <code class="code">main</code> function which is what
+<span class="emphasis"><em>Squish</em></span> calls to begin the test. Here the recorded test script begins
+in the standard way by calling the <a class="xref" href="rgs-squish.html#startApplication-function"><code class="function">startApplication</code></a> function.
+</p><p>
+The rest of the function calls are concerned with replaying the
+interactions that were recorded, in this case, clicking widgets and
+typing in text using the <a class="xref" href="rgs-iphoneconvenience.html#iphone-tapObject-function"><code class="function">tapObject</code></a>
+and <a class="xref" href="rgs-iphoneconvenience.html#iphone-type-function"><code class="function">type</code></a> functions.
+</p><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Note:  Object Names "><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/note.png"></img></td><th align="left"> Object Names </th></tr><tr><td align="left" valign="top"><p>
+Squish recordings refer to objects using variables that begin with a
+<code class="code">names.</code> prefix.
+This identifies them as <em class="firstterm">Symbolic Names</em>.
+Each variable contains, as a value, the corresponding
+<em class="firstterm">Real Name</em>, which can be string-based, or
+implemented as a key-value mapping of properties to values. <span class="emphasis"><em>Squish</em></span> supports
+several naming schemes, all of which can be used—and mixed—in
+scripts. The advantage of using Symbolic Names is that if the application
+changes in a way that results in different names being needed, we can simply
+update <span class="emphasis"><em>Squish</em></span>'s Object Map (which relates symbolic names to real
+names), and thereby avoid the need to change our test scripts. (See the
+<a class="xref" href="rg-objectmap.html" title="7.11. Object Map">Object Map (Section 7.11)</a> and the <a class="xref" href="ide.views.html#ide.the-object-map.view" title="8.2.10. Object Map view">Object Map view (Section 8.2.10)</a> for more about the Object Map.)
+</p></td></tr></table></div><div class="tip" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Tip:  Editor Context Menu "><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Tip]" src="images/tip.png"></img></td><th align="left"> Editor Context Menu </th></tr><tr><td align="left" valign="top"><p> When a Symbolic Name is under the cursor, the editor's context menu
+allows you to <span class="guimenuitem">Open Symbolic Name</span>, showing its
+entry in the <span class="guilabel">Object Map</span>, or <span class="guimenuitem">Convert to Real
+Name</span>, which places its inline key-value representation in your
+desired script language at the cursor, allowing you to hand-edit the values and
+properties in your script.
+</p></td></tr></table></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="tut-ios-inserting.additional.verification.points"></a>4.9.1.4. Inserting Additional Verification Points</h4></div></div></div><p>
+In the previous section we saw how easy it is to insert verification
+points during the recording of test scripts. Verification points can
+also be inserted into existing test scripts, either by setting a
+breakpoint and using the <span class="application">Squish IDE</span>, or simply by editing a test script and
+putting in calls to <span class="emphasis"><em>Squish</em></span>'s test functions such as <a class="xref" href="rgs-squish.html#test.compare-function"><code class="function">test.compare</code></a> and <a class="xref" href="rgs-squish.html#test.verify-function"><code class="function">test.verify</code></a>.
+</p><p>
+<span class="emphasis"><em>Squish</em></span> supports many kinds of verification points: those that verify
+that object properties have particular values—known as "Object Property
+Verifications"; those that verify that an entire table has the contents
+we expect—known as "Table Verifications"; those that verify
+that two images match—known as "Screenshot Verifications"; and
+a hybrid verification type that includes properties and screenshots
+from multiple objects, known as "Visual Verifications".
+In addition, it is possible to verify that a search image exists somewhere
+on the screen, or that certain text is found by OCR.
+The most commonly used kind is object property verifications, and it is
+these that we will cover in the tutorial. For further reading, see <a class="xref" href="ug-vps.html" title="5.22. How to Create and Use Verification Points">How to Create and Use Verification Points (Section 5.22)</a>).
+</p><p>
+<span class="emphasis"><em>Regular</em></span> (non-scriptified) property
+verification points are stored as XML files in the test case or test suite
+resources, and contain the value(s) that need to be passed to
+<code class="function">test.compare()</code>. These verification points can be reused across test
+cases, and can verify many values in a single line of script code. </p><p> <span class="emphasis"><em>Scriptified</em></span> property verification points are direct
+calls to the <a class="xref" href="rgs-squish.html#test.compare-function"><code class="function">test.compare</code></a> function, with two
+arguments—the value of a particular property for a particular
+object, and an expected value. We can manually insert calls to the <a class="xref" href="rgs-squish.html#test.compare-function"><code class="function">test.compare</code></a> function in a recorded or hand
+written script, or we can get <span class="emphasis"><em>Squish</em></span> to insert them for us using scriptified
+verification points. In the previous section we showed how to use the <span class="application">Squish IDE</span> to insert
+verifications during recording. Here we will first show how to use the
+<span class="application">Squish IDE</span> to insert verifications into an existing test script, and then we
+will show how to insert a verification by hand.
+</p><p>
+Before asking <span class="emphasis"><em>Squish</em></span> to insert verification points, it is best to make
+sure that we have a list of what we want to verify and when. There are many
+potential verifications we could add to the <code class="code">tst_general</code>
+test case, but since our concern here is simply to show how to do it, we
+will only do two—we will verify that the Argon element's <span class="property">Symbol</span> is
+“<span class="quote">Ar</span>” and that its <span class="property">Number</span> is 18. We will put these
+verifications immediately after the one we inserted during recording
+that verified its Category.
+</p><p>
+To insert a verification point using the IDE we start by putting a break
+point in the script (whether recorded or manually written—it
+does not matter to <span class="emphasis"><em>Squish</em></span>), at the point where we want to verify.
+</p><p>
+For clarity we have created a new test called <code class="code">tst_argon</code>.
+First we clicked the <span class="application">Squish IDE</span>'s <span class="guibutton">New Script Test Case</span> (<span class="guiicon"><img src="images/ide/new_test_case.png"></img></span>) button, then we renamed the test, and
+finally we copied and pasted the entire <code class="code">tst_general</code>'s code into the
+new test. So, at this point both tests have the same code, but we will modify the
+<code class="code">tst_argon</code> test by adding new verifications to it. (In
+practice you would just add the verifications to an existing test.)
+</p><div class="screenshot"><div class="mediaobject" align="center"><img src="images/ios-tut-squishgui8.png" align="middle"></img><div class="caption"><p>The <span class="application">Squish IDE</span> showing the tst_argon test case with a breakpoint
+</p></div></div></div><p>
+As the above screenshot shows, we have set a breakpoint at line 9. This
+is done simply by
+<span class="keycap"><strong>Ctrl</strong></span>+<span class="keycap"><strong>Click</strong></span>ing the
+line number and then clicking the <span class="guimenuitem">Add
+Breakpoint</span> menu item in the context menu. We chose this
+line because it follows the first verification point we added during
+recording, so at this point the details of Argon will be visible on the
+screen. (Note that your line number may be different if you recorded the
+test in a different way.)
+</p><p>
+Having set the breakpoint, we now run the test as usual by clicking the
+<span class="guibutton">Run Test</span> button, or by clicking the
+<span class="guimenu">Run</span>|<span class="guimenuitem">Run Test Case
+</span> menu option. Unlike a normal test run the
+test will stop when the breakpoint is reached (i.e., at line 9, or at
+whatever line you set), and <span class="emphasis"><em>Squish</em></span>'s main window will reappear (which
+will probably obscure the AUT). At this point the <span class="application">Squish IDE</span> will
+automatically switch to the <a class="xref" href="ide.main.window.html#ide.squish.test.debugging.perspective" title="8.1.2.3. Squish Test Debugging Perspective">Squish Test Debugging Perspective (Section 8.1.2.3)</a>.
+</p><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Note: Perspectives and Views"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/note.png"></img></td><th align="left">Perspectives and Views</th></tr><tr><td align="left" valign="top"><p>
+The <span class="application">Squish IDE</span> works just like the <a class="ulink" href="https://en.wikipedia.org/wiki/Eclipse_(software)" target="_blank">
+Eclipse IDE</a>. If you aren't used to
+Eclipse it is crucial to understand these key concepts:
+<span class="emphasis"><em>Views</em></span> and <span class="emphasis"><em>Perspectives</em></span>. In
+Eclipse (and therefore in the <span class="application">Squish IDE</span>), a
+<span class="emphasis"><em>View</em></span> is essentially a child window (perhaps a dock
+window, or a tab in an existing window). And a
+<span class="emphasis"><em>Perspective</em></span> is a collection of Views arranged
+together. Both are accessible through the
+<span class="guimenuitem">Window</span> menu.
+</p><p>
+The <span class="application">Squish IDE</span> is supplied with three Perspectives—the <a class="xref" href="ide.main.window.html#ide.squish.test.management.perspective" title="8.1.2.2. Squish Test Management Perspective">Squish Test Management Perspective (Section 8.1.2.2)</a> (which is the
+Perspective that the <span class="application">Squish IDE</span> starts with, and the one we have seen in all
+previous screenshots), <a class="xref" href="ide.main.window.html#ide.squish.test.debugging.perspective" title="8.1.2.3. Squish Test Debugging Perspective">Squish Test Debugging Perspective (Section 8.1.2.3)</a>, and <a class="xref" href="ide.main.window.html#ide.squish.spy.perspective" title="8.1.2.1. Squish Spy Perspective">Squish Spy Perspective (Section 8.1.2.1)</a>. You can change these
+Perspectives to include additional Views (or to get rid of any Views
+that you don't want), and you can create your own Perspectives with
+exactly the Views you want. So if your windows change dramatically it
+just means that the Perspective changed; you can always use the
+<span class="guimenuitem">Window</span> menu to change back to the Perspective
+you want. In practice, <span class="emphasis"><em>Squish</em></span> will automatically change perspective to
+reflect the current situation, so it isn't really necessary to change
+perspective manually.
+</p></td></tr></table></div><p>
+As the screenshot below shows, when <span class="emphasis"><em>Squish</em></span> stops at a breakpoint
+the <span class="application">Squish IDE</span> automatically changes to the <a class="xref" href="ide.main.window.html#ide.squish.test.debugging.perspective" title="8.1.2.3. Squish Test Debugging Perspective">Squish Test Debugging Perspective (Section 8.1.2.3)</a>. The perspective shows
+the <a class="xref" href="ide.views.html#ide.the-variables.view" title="8.2.21. Variables view">Variables view (Section 8.2.21)</a>, the <a class="xref" href="ide.views.html#ide.the-editor.view" title="8.2.6. Editor view">Editor view (Section 8.2.6)</a>, the <a class="xref" href="ide.views.html#ide.the-debug.view" title="8.2.5. Debug view">Debug view (Section 8.2.5)</a>, the <a class="xref" href="ide.views.html#ide.the-application-objects.view" title="8.2.1. Application Objects view">Application Objects view (Section 8.2.1)</a>, and the <a class="xref" href="ide.views.html#ide.the-properties.view" title="8.2.12. Properties view">Properties view (Section 8.2.12)</a>, <a class="xref" href="ide.views.html#ide.the-methods.view" title="8.2.9. Methods view">Methods view (Section 8.2.9)</a>, and <a class="xref" href="ide.views.html#ide.the-test-results.view" title="8.2.18. Test Results view">Test Results view (Section 8.2.18)</a>.
+</p><p>
+To insert a verification point, we can use the <a class="xref" href="ide.views.html#object-picker">Object Picker</a> (<span class="guiicon"><img src="images/ide/pick-application-object.png"></img></span>) or expand tree nodes in
+the <span class="guilabel">Application Objects</span> view until we find the object we
+want to verify. In this example we want to verify the Symbol's
+<code class="code">UILabel</code>'s text, so we expand items all the way to the
+<code class="code">UITableView</code>, and then the Symbol's <code class="code">UITableViewCell</code>.
+Once we have selected the appropriate <code class="code">UILabel</code> we expand its
+<span class="property">text</span> in the <a class="xref" href="ide.views.html#ide.the-properties.view" title="8.2.12. Properties view">Properties view (Section 8.2.12)</a> view
+and check the <span class="property">stringValue</span> subproperty.
+</p><div class="screenshot"><div class="mediaobject" align="center"><img src="images/ios-tut-squishgui9.png" align="middle"></img><div class="caption">Finding an object to verify in the Application Objects view
+</div></div></div><p>
+To add the verification point we <span class="emphasis"><em>must</em></span> click the
+verification point editor's <span class="guibutton">Save and Insert Verifications</span> button. After
+the insertion the test replay remains stopped: we can either continue by
+clicking the <span class="guibutton">Resume</span> toolbar button in the Debug
+view (or press <span class="keycap"><strong>F8</strong></span>), or we can stop by clicking the
+<span class="guibutton">Terminate</span> toolbar button. This is to allow us to
+enter more verifications. In this example we have finished for now, so
+either resume or terminate the test.
+</p><p>
+Incidentally, the normal <a class="xref" href="ide.main.window.html#ide.squish.test.management.perspective" title="8.1.2.2. Squish Test Management Perspective">Squish Test Management Perspective (Section 8.1.2.2)</a> can be returned to at
+any time by choosing it from the <span class="guimenuitem">Window</span> menu
+(or by clicking its toolbar button), although the <span class="application">Squish IDE</span> will
+automatically return to it if you stop the script or run it to
+completion.
+</p><p>
+Once we have finished inserting verifications we should now disable the break
+point. Just <span class="keycap"><strong>Ctrl</strong></span>+<span class="keycap"><strong>Click</strong></span>
+the break point and click the <span class="guimenuitem">Disable
+Breakpoint</span> menu option in the context menu. We are now
+ready to run the test without any breakpoints but with the verification
+points in place. Click the <span class="guibutton">Run Test</span> button. This
+time we will get some test results—as the screenshot
+shows—all of which we have expanded to show their details. (We have
+also selected the lines of code that <span class="emphasis"><em>Squish</em></span> inserted to perform the
+verification—notice that the code is structurally identical to
+the code inserted during recording.)
+</p><div class="screenshot"><div class="mediaobject" align="center"><img src="images/tut-ios-squish6.png" align="middle"></img><div class="caption">The newly inserted verification point in action
+</div></div></div><p>
+Another way to insert verification points is to insert them in code
+form. In theory we can just add our own calls to <span class="emphasis"><em>Squish</em></span>'s test
+functions such as <a class="xref" href="rgs-squish.html#test.compare-function"><code class="function">test.compare</code></a> and <a class="xref" href="rgs-squish.html#test.verify-function"><code class="function">test.verify</code></a> anywhere we like in an existing
+script. In practice, it is best to make sure that <span class="emphasis"><em>Squish</em></span> knows about
+the objects we want to verify first so that it can find them when the
+test is run. This involves a very similar procedure as using the <span class="application">Squish IDE</span>.
+First we set a breakpoint where we intend adding our verifications. Then
+we run the test script until it stops. Next, we navigate in the
+<a class="xref" href="ide.views.html#ide.the-application-objects.view" title="8.2.1. Application Objects view">Application Objects view (Section 8.2.1)</a> until we find the
+object we want to verify. At this point it is wise to
+<span class="keycap"><strong>Ctrl</strong></span>+<span class="keycap"><strong>Click</strong></span> the
+object we are interested in and click the <span class="guimenuitem">Add to Object
+Map</span> context menu option. This will ensure that <span class="emphasis"><em>Squish</em></span>
+can access the object. Then
+<span class="keycap"><strong>Ctrl</strong></span>+<span class="keycap"><strong>Click</strong></span> again
+and click the <span class="guimenuitem">Copy Symbolic Name</span>
+context menu option—this gives us the name of
+the object that <span class="emphasis"><em>Squish</em></span> will use to identify it. Now we can edit the
+test script to add in our own verification and finish or stop the
+execution. (Don't forget to disable the break point once it isn't needed
+any more.)
+</p><p>
+Although we can write our test script code to be exactly the same style
+as the automatically generated code, it is usually clearer and easier to
+do things in a slightly different style, as we will explain in a moment.
+</p><p>
+For our manually added verification we want to check that Argon's number
+is “<span class="quote">18</span>” in the relevant <code class="code">UILabel</code>. The
+screenshot shows the two lines of code we entered to get this new
+verification, plus the results of running the test script.
+</p><div class="screenshot"><div class="mediaobject" align="center"><img src="images/tut-squish7-ios.png" align="middle"></img><div class="caption">Manually entered verification point in action
+</div></div></div><p>
+When writing scripts by hand, we use <span class="emphasis"><em>Squish</em></span>'s <code class="code">test</code>
+module's functions to verify conditions at certain points during our
+test script's execution. As the screenshot (and the code snippets below)
+show, we begin by retrieving a reference to the object we are interested
+in. Using the <a class="xref" href="rgs-squish.html#waitForObject-function"><code class="function">waitForObject</code></a> function is
+standard practice for manually written test scripts. This function waits
+for the object to be available (i.e., visible and enabled), and then
+returns a reference to it. (Otherwise it times out and raises a
+catchable exception.) We then use this reference to access the item's
+properties and methods—in this case the <code class="code">UILabel</code>'s
+<span class="property">stringValue</span> subproperty—and verify that the value is
+what we expect it to be using the <a class="xref" href="rgs-squish.html#test.compare-function"><code class="function">test.compare</code></a>
+function.
+</p><p>
+Here is the code for all the Argon verifications for all the scripting
+languages that <span class="emphasis"><em>Squish</em></span> supports. Naturally, you only need to look at
+the code for the language that you will be using for your own tests.
+</p><div xmlns="" class="scriptlang"><form><select name="scriptlangcombo" onchange="javascript:changeScriptingLanguage(this)" onclick="javascript:changeScriptingLanguage(this)"><option value="all" selected>Show All</option><option value="JavaScript">Show JavaScript</option><option value="Perl">Show Perl</option><option value="Python">Show Python</option><option value="Ruby">Show Ruby</option><option value="Tcl">Show Tcl</option></select></form></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Python</span><pre class="programlisting">
+
+    test.compare(waitForObjectExists(names.noble_Gases_UILabel).text.stringValue, "Noble Gases")
+    test.compare(waitForObjectExists(names.ar_UILabel).text.stringValue, "Ar")
+    label = waitForObject(names.o18_UILabel)
+    test.compare(label.text.stringValue, "18")
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">JavaScript</span><pre class="programlisting">
+
+    test.compare(waitForObjectExists(names.nobleGasesUILabel).text.stringValue,
+            "Noble Gases");
+    test.compare(waitForObjectExists(names.arUILabel).text.stringValue, "Ar");
+    var label = waitForObject(names.o18UILabel);
+    test.compare(label.text.stringValue, "18")
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Perl</span><pre class="programlisting">
+
+    test::compare(waitForObjectExists($Names::noble_gases_uilabel)-&gt;text-&gt;stringValue,
+        "Noble Gases");
+    test::compare(waitForObjectExists($Names::ar_uilabel)-&gt;text-&gt;stringValue, "Ar");
+    my $label = waitForObject($Names::o18_uilabel);
+    test::compare($label-&gt;text-&gt;stringValue, "18");
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Ruby</span><pre class="programlisting">
+
+    Test.compare(waitForObjectExists(Names::Noble_Gases_UILabel).text.stringValue,
+                 "Noble Gases")
+    Test.compare(waitForObjectExists(Names::Ar_UILabel).text.stringValue, "Ar")
+    label = waitForObject(Names::O18_UILabel)
+    Test.compare(label.text.stringValue, "18")
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Tcl</span><pre class="programlisting">
+
+    test compare [property get [property get \
+        [waitForObjectExists $names::Noble_Gases_UILabel] text] stringValue] "Noble Gases"
+    test compare [property get [property get \
+        [waitForObjectExists $names::Ar_UILabel] text] stringValue] "Ar"
+    set label [waitForObject $names::18_UILabel]
+    test compare [property get [property get $label text] stringValue] "18"
+</pre></div><p>
+The coding pattern is very simple: we retrieve a reference to the object
+we are interested in and then verify its properties using one of
+<span class="emphasis"><em>Squish</em></span>'s verification functions. (Recall that we got the
+<code class="code">UILabel</code>'s symbolic name from the clipboard where we'd
+pasted it earlier.) And we can, of course, call methods on the object to
+interact with it if we wish.
+</p><p>
+For complete coverage of verification points, see <a class="xref" href="ug-vps.html" title="5.22. How to Create and Use Verification Points">How to Create and Use Verification Points (Section 5.22)</a> in the <a class="xref" href="users-guide.html" title="Chapter 5. User Guide">User Guide (Chapter 5)</a>.
+</p><div class="section" lang="en"><div class="titlepage"><div><div><h5 class="title"><a id="test-results-ios.1"></a>4.9.1.4.1. Test Results</h5></div></div></div><p>
+After each test run finishes, the test results—including those
+for the verification points—are shown in the Test Results view at
+the bottom of the <span class="application">Squish IDE</span>.
+</p><p>
+This is a detailed report of the test run and would also contain details
+of any failures or errors, etc. If you click on a Test Results item, the
+<span class="application">Squish IDE</span> highlights the script line which generated the test result. And if
+you expand a Test Results item, you can see additional details of the
+test.
+</p><div class="sidebar"><p class="title"><b>Processing Test Results</b></p><p>
+<span class="emphasis"><em>Squish</em></span>'s interface for test results is very flexible. By implementing
+custom report generators it is possible to process test results in many
+different ways, for example to store them in a database, or to output
+them as HTML files. The default report generator simply prints the
+results to <code class="filename">stdout</code> when <span class="emphasis"><em>Squish</em></span> is run from the
+command line, or to the Test Results view when <span class="emphasis"><em>Squish</em></span>'s IDE is being
+used. You can save the test results from the <span class="emphasis"><em>Squish</em></span> IDE as XML by
+<span class="keycap"><strong>Ctrl</strong></span>+<span class="keycap"><strong>Click</strong></span>ing
+on the Test Results and choosing the <span class="guimenuitem">Export
+Results...</span> menu option. For a list of report generators,
+see <a class="xref" href="rg-cmdline.html#rg-squishrunner-report-generators" title="7.4.3.6.  squishrunner --reportgen: Generating Reports"> <code class="option">squishrunner --reportgen</code>: Generating Reports (Section 7.4.3.6)</a>. It is also possible to
+log test results directly to a database; see <a class="xref" href="how.to.access.databases.from.squish.test.scripts.html" title="5.18. How to Access Databases from Squish Test Scripts">How to Access Databases from Squish Test Scripts (Section 5.18)</a>.
+</p><p>
+If you run tests on the command line using <span class="application">squishrunner</span>, you can also
+export the results in different formats and save them to files. See the
+sections <a class="xref" href="rg-regressiontesting.html#rgr-processresults" title="7.1.3. Processing Test Results">Processing Test Results (Section 7.1.3)</a> and <a class="xref" href="ugs-teststatements.html" title="5.9. How to Use Test Statements">How to Use Test Statements (Section 5.9)</a> in the <a class="xref" href="users-guide.html" title="Chapter 5. User Guide">User Guide (Chapter 5)</a> for
+more information.
+</p></div></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="ios-tut-learning-more"></a>4.9.1.5. Learning More</h4></div></div></div><p>
+We have now completed the tutorial! <span class="emphasis"><em>Squish</em></span> can of course do
+<span class="emphasis"><em>much</em></span> more than we have shown here, but the aim has
+been to get you started with basic testing as quickly and easily as
+possible. The <a class="xref" href="users-guide.html" title="Chapter 5. User Guide">User Guide (Chapter 5)</a> provides many more examples,
+including those that show how tests can interact with particular
+widgets, as well as how to do data-driven and keyword-driven testing.
+</p><p>
+The <a class="xref" href="api.man.html" title="Chapter 6. API Reference Manual">API Reference Manual (Chapter 6)</a> and <a class="xref" href="ref.man.html" title="Chapter 7. Tools Reference Manual">Tools Reference Manual (Chapter 7)</a> give full
+details of <span class="emphasis"><em>Squish</em></span>'s testing API and the numerous functions it offers
+to make testing as easy and efficient as possible. It is well worth
+reading the <a class="xref" href="users-guide.html" title="Chapter 5. User Guide">User Guide (Chapter 5)</a> and at least skimming the
+<a class="xref" href="api.man.html" title="Chapter 6. API Reference Manual">API Reference Manual (Chapter 6)</a> and <a class="xref" href="ref.man.html" title="Chapter 7. Tools Reference Manual">Tools Reference Manual (Chapter 7)</a>—especially
+since the time invested will be repaid because you'll know what
+functionality <span class="emphasis"><em>Squish</em></span> provides out of the box and can avoid reinventing
+things that are already available.
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="testing.ios.apps.in.the..iphone..simulator"></a>4.9.1.6. Notes on Testing iOS Apps in the iOS Simulator</h4></div></div></div><p>
+<span class="emphasis"><em>Squish</em></span> for iOS allows you to test your iOS apps in the iOS Simulator
+that is included in Xcode installations. This makes it much easier and more
+convenient to test iOS AUTs without having to use an actual iOS device.
+</p><div class="important" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Important"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Important]" src="images/important.png"></img></td><th align="left">Important</th></tr><tr><td align="left" valign="top"><div class="itemizedlist"><ul type="disc"><li><p>
+The iOS Simulator is part of Xcode. So you need an Xcode installation
+in order to run <span class="emphasis"><em>Squish</em></span> tests in the simulator.
+</p></li><li><p>
+In the iOS Simulator you can only run applications that were
+built for the simulator, not applications that were built for running on a
+device. So please make sure that you choose the correct build of the iOS
+app as the AUT in the test suite wizard.
+</p></li><li><p>
+You have to use the application (i.e. the file with the
+<code class="filename">.app</code> extension) in <span class="emphasis"><em>Squish</em></span> as the AUT. The
+<code class="filename">.xcodeproj</code> is the Xcode project that contains the
+information to build the application. The <code class="filename">.xcodeproj</code>
+<span class="emphasis"><em>can't</em></span> be used as the AUT.
+</p><p>
+So use Xcode to open the <code class="filename">.xcodeproj</code>, choose the
+desired simulator target under <span class="guimenuitem">Product - Destination</span>,
+and <span class="guimenuitem">Product - Build For - Running</span> to build the
+application.
+Depending on the Xcode version, it might be different,
+but Xcode 8.3 places the .app in a folder
+under <code class="filename">~/Library/Developer/Xcode/DerivedData</code> (in your home directory).
+</p></li></ul></div></td></tr></table></div><p>
+There are further options in the test suite that allow you to control how
+the iOS Simulator is started. In order to use these, open the test
+suite settings in the <span class="application">Squish IDE</span> and enter one or more of the following options
+into the <span class="guilabel">Launcher Arguments:</span> line edit:
+</p><div class="itemizedlist"><ul type="disc"><li><p><code class="code">--device-id=&lt;uuid&gt;</code>
+If you are using Xcode 6 or later, you can specify the device ID of the
+simulated device to be used.
+</p><p>
+Use
+<span class="guimenu">Window</span>|<span class="guimenuitem">Devices</span>
+in Xcode to see the device IDs for the simulated devices available. Or run
+Squish's <code class="code">iphonelauncher</code> command with the option
+<code class="code">--list-devices</code> in the terminal to determine the device ID.
+</p><p>
+You can't use the <code class="code">--device</code> or <code class="code">--sdk</code> in
+conjunction with this option since the device ID already defines the
+simulated hardware and SDK and these value can't be overriden.
+</p></li><li><p><code class="code">--device=&lt;device-family&gt;</code>
+If your application is a universal application (i.e. runs on both, the
+iPhone and the iPad), you can use this option to specify if Squish start
+the application in a simulated iPhone or iPad. For
+<code class="code">&lt;device-family&gt;</code> you can use either
+<code class="code">iPhone</code> or <code class="code">iPad</code>.
+</p><p>If you are using Xcode 5.0 or newer, you have more fine grained
+control over the exact device type and you can also specify
+<code class="code">iPhone-retina-3.5-inch</code>, <code class="code">iPhone-retina-4-inch</code> and
+<code class="code">iPad-retina</code> as the
+<code class="code">&lt;device-family&gt;</code>.
+</p></li><li><p><code class="code">--sdk=&lt;version&gt;</code>
+<span class="emphasis"><em>Squish</em></span> tries to automatically determine the iOS SDK version that was
+used to when compiling the app. If this fails or if you want to start the
+simulator with a different SDK, use this option to overwrite the
+automatically determined version.</p><p>
+For example, if your want to enforce the app to start with SDK 4.2, specify
+the option <code class="code">--sdk=4.2</code>.
+</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="testing..iphone..apps.on.an.iphone"></a>4.9.1.7. Notes on Testing iOS Apps in an iPhone or iPad</h4></div></div></div><p>
+It is perfectly possible—albeit slightly less convenient—to
+test iOS Apps on an actual iPhone or iPad device. To do this you must add
+a <span class="emphasis"><em>Squish</em></span>-specific wrapper library to Xcode, make a small modification
+to your application's <code class="code">main</code> function, and make sure that
+your Mac is set up correctly.
+</p><div class="important" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Important"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Important]" src="images/important.png"></img></td><th align="left">Important</th></tr><tr><td align="left" valign="top"><p>Your desktop computer and the iOS device communicate through a TCP/IP
+network connection. So the device has to be reachable from the desktop
+computer and the other way round. Especially the iOS device connects to the
+<span class="application">squishserver</span> running on the desktop computer. So if you have any
+active firewall, you have to disable it or at least allow
+connections from the iOS device to the <span class="application">squishserver</span>.</p></td></tr></table></div><div class="section" lang="en"><div class="titlepage"><div><div><h5 class="title"><a id="xcode1"></a>4.9.1.7.1. Modify the AUT's main Function</h5></div></div></div><p>First you must modify your application's <code class="function">main</code> function
+that it calls <span class="emphasis"><em>Squish</em></span>'s <code class="function">squish_allowAttaching</code> function when
+running for testing. Here is a typical <code class="function">main</code> function for iOS
+applications with the necessary modifications (the modifications are shown
+in <span class="bold"><strong>bold</strong></span>). Please note that depending on
+your concrete source code, the <code class="function">main</code> function might vary and
+you should not simply copy the below code; rather modify your existing
+source code to add the highlighted lines at the appropriate places.</p><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage"></span><pre class="programlisting">
+#import &lt;UIKit/UIKit.h&gt;
+#import "AppDelegate.h"
+
+<span xmlns="http://www.w3.org/1999/xhtml" class="bold"><strong>#if defined(SQUISH_TESTING) &amp;&amp; !TARGET_IPHONE_SIMULATOR</strong></span><a xmlns="http://www.w3.org/1999/xhtml" id="ios-tut-mainfunction1"></a><img src="callouts/1.png" border="0">
+<span xmlns="http://www.w3.org/1999/xhtml" class="emphasis"><em>extern bool squish_allowAttaching(unsigned short port);</em></span><a xmlns="http://www.w3.org/1999/xhtml" id="ios-tut-mainfunction2"></a><img src="callouts/2.png" border="0">
+<span xmlns="http://www.w3.org/1999/xhtml" class="emphasis"><em>#endif</em></span>
+
+int main(int argc, char *argv[])
+{
+    NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
+
+<span xmlns="http://www.w3.org/1999/xhtml" class="bold"><strong>#if defined(SQUISH_TESTING) &amp;&amp; !TARGET_IPHONE_SIMULATOR
+    squish_allowAttaching(11233);</strong></span><a xmlns="http://www.w3.org/1999/xhtml" id="ios-tut-mainfunction3"></a><img src="callouts/3.png" border="0">
+<span xmlns="http://www.w3.org/1999/xhtml" class="emphasis"><em>#endif</em></span>
+
+    int retVal = UIApplicationMain(argc, argv, nil, NSStringFromClass([AppDelegate class]));
+    [pool release];
+    return retVal;
+}
+</pre></div><div class="calloutlist"><table border="0" summary="Callout list"><tr><td width="5%" valign="top" align="left"><p><a href="#ios-tut-mainfunction1"><img xmlns="" src="callouts/1.png" border="0"></a> </p></td><td valign="top" align="left"><p>The <code class="code">defined(SQUISH_TESTING)</code> means that we compile the
+<span class="emphasis"><em>Squish</em></span> specific modifications only if <span class="property">SQUISH_TESTING</span> is
+defined. We will later set up the Xcode project that we have a special
+build configuration that sets this compiler define. So you can easily
+switch between building a version of the app for <span class="emphasis"><em>Squish</em></span> testing and one
+normal version that you can also submit to the app store.</p><p>And the <code class="code">!TARGET_IPHONE_SIMULATOR</code> means that we only
+compile the <span class="emphasis"><em>Squish</em></span> specific modifications into the iOS app only if we are
+building for the device (and not for simulator builds).</p></td></tr><tr><td width="5%" valign="top" align="left"><p><a href="#ios-tut-mainfunction2"><img xmlns="" src="callouts/2.png" border="0"></a> </p></td><td valign="top" align="left"><p>We need to call the <code class="function">squish_allowAttaching</code> function later
+on in the main function. This function is implemented in a static library
+provided by <span class="emphasis"><em>Squish</em></span>. So here we need to declare the function so that the
+compiler knows about this function when we later try call it. You have to
+add this before the <code class="function">main</code> function where you actually call this
+function.</p></td></tr><tr><td width="5%" valign="top" align="left"><p><a href="#ios-tut-mainfunction3"><img xmlns="" src="callouts/3.png" border="0"></a> </p></td><td valign="top" align="left"><p>Add a call to <code class="function">squish_allowAttaching(11233)</code>
+<span class="emphasis"><em>after</em></span> creating the autorelease pool and
+<span class="emphasis"><em>before</em></span> entering the event loop. The argument
+<code class="code">11233</code> is a TCP/IP port number that <span class="emphasis"><em>Squish</em></span> will use to connect
+to the applicaiton running on the device.</p></td></tr></table></div><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Note: Swift-only projects"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/note.png"></img></td><th align="left">Swift-only projects</th></tr><tr><td align="left" valign="top"><p>
+If you have a Swift-only project, you lack the <code class="function">main</code> function.
+In this case, simply add a new source file,
+<code class="filename">squish_loading.c</code> to you app target with the following
+content:
+</p><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage"></span><pre class="programlisting">
+
+#if defined(SQUISH_TESTING) &amp;&amp; !TARGET_IPHONE_SIMULATOR
+
+#include &lt;stdbool.h&gt;
+
+extern bool squish_allowAttaching(unsigned short port);
+
+__attribute__((constructor)) static void initializer()
+{
+    squish_allowAttaching(11233);
+}
+
+#endif
+
+</pre></div></td></tr></table></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h5 class="title"><a id="xcode2"></a>4.9.1.7.2. Add the Wrapper to Xcode</h5></div></div></div><p>After the modifications to the application's <code class="function">main</code>
+function, we also have to link the app against the static library
+<code class="filename">libsquishioswrapper.a</code> that is shipped with the
+<span class="emphasis"><em>Squish</em></span> package and can be found in the package's <code class="filename">lib/arm</code>
+directory.</p><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Note"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/note.png"></img></td><th align="left">Note</th></tr><tr><td align="left" valign="top"><p>The following steps use Xcode 7.3. Different Xcode versions might
+vary slightly in the exact user interface steps (especially with respect to
+the screenshots), but the overall process is the same for all Xcode
+versions.</p></td></tr></table></div><p>First we create a new build configuration in the Xcode project. This
+allows us to easily switch between <span class="emphasis"><em>Squish</em></span> builds of your application and
+normal builds of your application (without the modifications required by
+<span class="emphasis"><em>Squish</em></span>): click on the project to open the project settings. In the
+<span class="guilabel">Info</span> tab of the project's settings, you can choose to
+duplicate an existing build configuration. You can base your builds on any
+of existing build configurations; in our example we choose to duplicate the
+"Release" build configuration (i.e. we base the Squish specific
+configuration on release builds).</p><div class="screenshot"><div class="mediaobject" align="center"><img src="images/ios-device-setup-in-xcode01.png" align="middle"></img><div class="caption">Duplicate the "Release" build configuration</div></div></div><p>Give the new build configuration a name, for our example we simply
+choose "Squish".</p><div class="screenshot"><div class="mediaobject" align="center"><img src="images/ios-device-setup-in-xcode02.png" align="middle"></img><div class="caption">Name the new build configuration "Squish"</div></div></div><p>Next, we have to make sure that the compiler defines
+<span class="property">SQUISH_TESTING</span> when we build the project with the "Squish"
+build configuration (this is the define we are checking for in our modified
+<code class="code">main</code> function):</p><div class="orderedlist"><ol type="1"><li><p>Choose the target app you want to test with Squish (in the
+example the <span class="guilabel">Elements</span> target).</p></li><li><p>Switch to the <span class="guilabel">Build Settings</span> tab in
+the project settings.</p></li><li><p>Ensure that <span class="guilabel">All</span> build settings are
+displayed (and not only the <span class="guilabel">Basic</span>
+ones).</p></li><li><p>Search for the "Other C Flags" build
+settings.</p></li><li><p>Make sure to expand the <span class="guilabel">Other C Flags</span>
+entry</p></li><li><p>Select the <span class="guilabel">Squish</span> build
+configuration.</p></li><li><p>Double click on the <span class="guilabel">Other C Flags</span>
+entry of the <span class="guilabel">Squish</span> build configuration in the column
+for your target (in the example the <span class="guilabel">Elements</span>
+column).</p></li><li><p>Click the <span class="guibutton">+</span> button in the popup to
+add a new flag.</p></li><li><p>Enter the flag <code class="code">-DSQUISH_TESTING</code> and click
+outside the popup to accept the new setting.</p></li></ol></div><div class="screenshot"><div class="mediaobject" align="center"><img src="images/ios-device-setup-in-xcode03.png" align="middle"></img><div class="caption">Extend the compiler flags for the "Squish" configuration</div></div></div><p>Then, we also have to add the <span class="emphasis"><em>Squish</em></span> static library to the linker
+flags:</p><div class="orderedlist"><ol type="1"><li><p>Search for the "Other Linker Flags" build
+settings.</p></li><li><p>Make sure to expand the <span class="guilabel">Other Linker
+Flags</span>.</p></li><li><p>Select the <span class="guilabel">Squish</span> build
+configuration.</p></li><li><p>Double click on the <span class="guilabel">Other Linker Flags</span>
+entry of the <span class="guilabel">Squish</span> build configuration in the column
+for your target (in the example the <span class="guilabel">Elements</span>
+column).</p></li><li><p>Click the <span class="guibutton">+</span> button in the popup to
+add the new flags.</p></li><li><p>Enter the following flags (the order is important):
+</p><div class="itemizedlist"><ul type="disc"><li><p><code class="code">-lc++</code></p></li><li><p><code class="code">-liconv</code></p></li><li><p><code class="code">-lz</code></p></li><li><p><code class="code">-force_load</code></p></li><li><p><code class="code">&lt;squishdir&gt;/lib/arm/libsquishioswrapper.a</code></p></li></ul></div><p>
+and click outside the popup to accept the changes. Make sure that you
+replace &lt;squishdir&gt; by the full path (or relative
+path) to the directory of your <span class="emphasis"><em>Squish</em></span> installation. Alterantively, you
+can also copy the library into the project directory of your application
+and specify the <code class="filename">libsquishioswrapper.a</code> without any
+path.</p></li></ol></div><div class="important" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Important"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Important]" src="images/important.png"></img></td><th align="left">Important</th></tr><tr><td align="left" valign="top"><p>When you are updating your <span class="emphasis"><em>Squish</em></span> installation to a new version,
+you have to make sure that you are using the
+<code class="filename">libsquishioswrapper.a</code> library of the new package, and
+that you rebuild your application with the new version of the library.</p></td></tr></table></div><div class="screenshot"><div class="mediaobject" align="center"><img src="images/ios-device-setup-in-xcode04.png" align="middle"></img><div class="caption">Extend the linker flags for the "Squish" configuration</div></div></div><p>Then, you have to disable bitcode support for the "Squish"
+configuration:</p><div class="orderedlist"><ol type="1"><li><p>Search for the "Bitcode" build
+settings.</p></li><li><p>Make sure to expand the <span class="guilabel">Enable
+Bitcode</span>.</p></li><li><p>Select the <span class="guilabel">Squish</span> build
+configuration.</p></li><li><p>Change the setting to <span class="guilabel">No</span> for the
+<span class="guilabel">Squish</span> build configuration in the column for your
+target (in the example the <span class="guilabel">Elements</span>
+column).</p></li></ol></div><div class="screenshot"><div class="mediaobject" align="center"><img src="images/ios-device-setup-in-xcode05.png" align="middle"></img><div class="caption">Disable bitcode support for the "Squish" configuration</div></div></div><p>The last step is to really build the iOS app with the newly created
+"Squish" configuration. For this, we create a separate scheme in Xcode.
+This allows us to quickly change between building for <span class="emphasis"><em>Squish</em></span> testing and
+for other purposes of the application.</p><p>Choose <span class="guilabel">New Scheme...</span> from the scheme popup in
+Xcode.</p><div class="screenshot"><div class="mediaobject" align="center"><img src="images/ios-device-setup-in-xcode06.png" align="middle"></img><div class="caption">Create a new scheme for "Squish" builds</div></div></div><p>Give the newly created scheme a good name, in the example we use
+"Elements (Squish)", stressing that this builds the Elements app for
+<span class="emphasis"><em>Squish</em></span> testing.</p><div class="screenshot"><div class="mediaobject" align="center"><img src="images/ios-device-setup-in-xcode07.png" align="middle"></img><div class="caption">Name the new scheme</div></div></div><p>The newly created scheme has default settings. So we now need to edit
+the scheme and change the build configuration to be used. So make sure that
+the new scheme is the active one and choose <span class="guilabel">Edit
+Scheme...</span> from the popup.</p><div class="screenshot"><div class="mediaobject" align="center"><img src="images/ios-device-setup-in-xcode08.png" align="middle"></img><div class="caption">Edit the new scheme</div></div></div><p>In the dialog to edit the schemes, make sure that you selected the
+<span class="guilabel">Run</span> action. Then change the <span class="guilabel">Build
+Configuration:</span> setting to <span class="guilabel">Squish</span>. You
+should do the same thing for the other actions that take a build
+configuration as well (i.e. for <span class="guilabel">Test</span>,
+<span class="guilabel">Profile</span>, <span class="guilabel">Analyze</span>, and
+<span class="guilabel">Archive</span>). So all builds done with the "Elements
+(Squish)" scheme build the app in a way that it is suitable for testing
+with <span class="emphasis"><em>Squish</em></span>.</p><div class="screenshot"><div class="mediaobject" align="center"><img src="images/ios-device-setup-in-xcode09.png" align="middle"></img><div class="caption">Let the new scheme build the "Squish" configuration</div></div></div><p>Now you only have to build the app for your device and install it
+there and you can start testing it on a physical device (after you follow
+the last steps of setting up a testsuite in <span class="emphasis"><em>Squish</em></span> on the your desktop
+computer).</p><p>As a quick test to see if all the above modifications are correct,
+execute the app on the device through Xcode's debugger. Take a closer look
+at the debugger console in Xcode: if you see the message
+<code class="computeroutput">Listening on port 11233 for incoming
+connections</code> on startup of the app, then the modifications
+were correct. If you don't see this message, you missed one of the above
+steps.</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h5 class="title"><a id="xcode3"></a>4.9.1.7.3. Setting Up a Computer for iOS Device Testing</h5></div></div></div><p>
+Although the iOS application you want to test will run on the
+iOS device, <span class="emphasis"><em>Squish</em></span> itself runs on a computer. Here is how to set
+up the computer to support iOS testing.
+</p><div class="itemizedlist"><ul type="disc"><li><p>
+You have to turn off the firewall on the computer. Naturally it is
+<span class="emphasis"><em>very important</em></span> that you turn the firewall back on
+after the testing is finished!
+</p></li><li><p>
+Register the host and port number of the iOS device as an
+attachable AUT. This is done inside the <span class="application">Squish IDE</span>; click the
+<span class="guimenu">Edit</span>|<span class="guisubmenu">Server Settings</span>|<span class="guimenuitem">Manage AUTs...</span> menu item, then
+click the Attachable AUTs item. Now click the
+<span class="guibutton">Add...</span> button. Give the configuration a name, for
+example, “<span class="quote">iPhoneDevice</span>”. Enter the iOS device's IP
+address as the host and for the port give the number used when calling
+the <code class="code">squish_allowAttaching</code> function (e.g., 11233).
+</p></li></ul></div><p>
+Now that the computer is set up you can play back or create tests for your
+iOS applications.
+</p><p>
+If you want to play back tests you created with the simulator, you have to
+change the <code class="code">startApplication("iPhoneApp")</code> in your test script
+to <code class="code">attachToApplication("iPhoneDevice")</code> (or using whatever
+configuration name you chose if different).
+</p><p>
+Now you can start the application on the device and then replay the test
+script you recorded on the iOS Simulator.
+</p><p>
+You can also record the test directly on the device. In this case, please
+open the test suite settings of your iOS test suite and make sure that the
+selection for the AUT is <span class="guilabel">&lt;No Application&gt;</span>. Then
+start the application on the device and if you choose to record a test case
+in the Squish IDE, you are asked the application. Choose
+<span class="guilabel">iPhoneDevice (attachable)</span> (or whatever name you used
+when registering the attachable AUT). Now all user interactions you do on
+the device are recorded until you end the recording in the <span class="application">Squish IDE</span>'s control
+bar.
+</p><div class="important" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Important"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Important]" src="images/important.png"></img></td><th align="left">Important</th></tr><tr><td align="left" valign="top"><p>The iOS devices are pretty much locked down so it is not possible for
+Squish to start (or end) the AUT. So the application has to be started
+manually and when you execute a test script make sure that the application
+is running in the foreground and that the device is not locked or sleeping.
+</p><p>If you keep the application running, you can execute multiple test
+cases after each other and each test case then connects to the same
+application. This means that you have to ensure in your test cases that the
+application is left in a state that the next test case can run successfully
+(or you have to write your test cases in a way that on start, they bring
+the application into a well-known state).
+</p></td></tr></table></div></div></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="tutorial-bdd-iphone"></a>4.9.2. Tutorial: Designing Behavior Driven Development (BDD) Tests</h3></div></div></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><span class="section"><a href="tutorials-iphone.html#tut-bdd-iphone-intro">4.9.2.1. Introduction to Behavior Driven Development</a></span></dt><dt><span class="section"><a href="tutorials-iphone.html#tut-bdd-iphone-gherkin">4.9.2.2. Gherkin syntax</a></span></dt><dt><span class="section"><a href="tutorials-iphone.html#tut-bdd-iphone-test-impl">4.9.2.3. Test implementation</a></span></dt><dt><span class="section"><a href="tutorials-iphone.html#tut-bdd-iphone-test-exec">4.9.2.4. Test execution</a></span></dt><dt><span class="section"><a href="tutorials-iphone.html#tut-bdd-iphone-test-debug">4.9.2.5. Test debugging</a></span></dt><dt><span class="section"><a href="tutorials-iphone.html#tut-bdd-iphone-step-reuse">4.9.2.6. Re-using Step definitions</a></span></dt></dl></div><p>
+This tutorial will show you how to create, run, and modify Behavior Driven Development (BDD)
+tests for an example application. You will learn about Squish's most frequently used features.
+By the end of the tutorial you will be able to write your own tests for your own applications.
+</p><p>
+For this chapter we will use the Elements app as our Application Under
+Test (AUT). This app searches and displays information on chemical elements. You
+find it in <span class="emphasis"><em>Squish</em></span>'s <code class="filename">examples/ios</code> directory. The
+screenshot shows the application in action.
+</p><div class="screenshot"><div class="mediaobject" align="center"><img src="images/ios-elements.png" align="middle"></img><div class="caption"><p>The iOS <code class="code">Elements</code> example.
+</p></div></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="tut-bdd-iphone-intro"></a>4.9.2.1. Introduction to Behavior Driven Development</h4></div></div></div><p>
+Behavior-Driven Development (BDD) is an extension of the Test-Driven Development approach
+which puts the definition of acceptance criteria at the beginning of the development
+process as opposed to writing tests after the software has been developed. With possible
+cycles of code changes done after testing.
+</p><div class="screenshot"><div class="mediaobject" align="center"><img src="images/bdd-tutorial-process.png" align="middle"></img><div class="caption">BDD process</div></div></div><p>
+Behavior Driven Tests are built out of a set of <code class="literal">Feature</code> files, which
+describe product features through the expected application behavior in one or many
+<code class="literal">Scenarios</code>. Each <code class="literal">Scenario</code> is built out of a sequence
+of steps which represent actions or verifications that need to be
+tested for that <code class="literal">Scenario</code>.
+</p><p>
+BDD focuses on expected application behavior, not on implementation details. Therefore
+BDD tests are described in a human-readable Domain Specific Language (DSL). As this
+language is not technical, such tests can be created not only by programmers, but also by
+product owners, testers or business analysts. Additionally, during the product
+development, such tests serve as living product documentation. For <span class="emphasis"><em>Squish</em></span> usage, BDD
+tests shall be created using Gherkin syntax. The previously written product specification
+(BDD tests) can be turned into executable tests. This step by step tutorial presents
+automating BDD tests with <span class="application">Squish IDE</span> support.
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="tut-bdd-iphone-gherkin"></a>4.9.2.2. Gherkin syntax</h4></div></div></div><p>
+Gherkin files describe product features through the expected application
+behavior in one or many Scenarios. An example showing the searching feature
+of the elements example application.
+</p><pre class="screen">
+
+Feature: Searching for elements
+    As a user I want to search for elements and get correct results.
+
+    Scenario: Initial state of the search view
+        Given elements application is running
+        When I switch to the search view
+        Then the search field is empty
+
+</pre><p>
+Most of the above is free form text (does not have to be English). It's just the
+<code class="literal">Feature</code>/<code class="literal">Scenario</code> structure and the leading keywords
+like <code class="literal">Given</code>, <code class="literal">And</code>, <code class="literal">When</code>
+and <code class="literal">Then</code> that are fixed. Each of those keywords marks a
+step, defining preconditions, user actions or expected results. The application
+behavior description above can be passed to software developers to implement
+these features and at the same time the same description can be passed to
+software testers to implement automated tests.
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="tut-bdd-iphone-test-impl"></a>4.9.2.3. Test implementation</h4></div></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h5 class="title"><a id="tut-bdd-iphone-create-testsuite"></a>4.9.2.3.1. Creating Test Suite</h5></div></div></div><p>
+First, we need to create a Test Suite, which is a container for all Test Cases. Start the
+<span class="application">Squish IDE</span> and select <span class="guimenu">File</span>|<span class="guimenuitem">New Test
+Suite...</span>. Please follow the New Test Suite wizard, provide a Test
+Suite name, choose the iOS Toolkit and scripting language of your choice and finally
+register Elements app  as AUT. Please refer to <a class="xref" href="tutorials-iphone.html#tut-ios-creating-a-test-suite" title="4.9.1.2. Creating a Test Suite">Creating a Test Suite (Section 4.9.1.2)</a> for more details about creating new Test Suites.
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h5 class="title"><a id="tut-bdd-iphone-create-testcase"></a>4.9.2.3.2. Creating Test Case</h5></div></div></div><p>
+<span class="emphasis"><em>Squish</em></span> offers two types of Test Cases: "Script Test Case" and "BDD Test Case". As
+"Script Test Case" is the default one, in order to create new "BDD Test Case" we need to
+use the context menu by clicking on the expander next to
+<span class="guibutton">New Test Case</span> button and choosing the option <span class="guimenuitem">New BDD Test Case</span>.
+The <span class="application">Squish IDE</span> will remember your choice and the "BDD Test Case" will become the default when
+clicking on the button in the future.
+</p><div class="screenshot"><div class="mediaobject" align="center"><img src="images/bdd-tutorial-new-testcase.png" align="middle"></img><div class="caption">Creating new BDD Test Case</div></div></div><p>
+The newly created BDD Test Case consists of a <code class="filename">test.feature</code> file
+(filled with a Gherkin template while creating a new BDD test case), a file named
+<code class="filename">test.(py|js|pl|rb|tcl)</code> which will drive the execution (there is no need
+to edit this file), and a Test Suite Resources file named <code class="filename">steps/steps.(py|js|pl|rb|tcl)</code>
+where step implementation code will be placed.
+</p><p>We need to replace the Gherkin template with a <code class="literal">Feature</code> for the addressbook example application. To do this, copy the <code class="literal">Feature</code>
+description below and paste it into the <code class="literal">Feature</code> file.
+</p><pre class="screen">
+
+Feature: Searching for elements
+    As a user I want to search for elements and get correct results.
+
+    Scenario: Initial state of the search view
+        Given elements application is running
+        When I switch to the search view
+        Then the search field is empty
+
+</pre><p>
+When editing the <code class="filename">test.feature</code> file, a
+warning <span class="errortext">No implementation found</span> is displayed for each
+undefined step. The implementations are in the
+<code class="filename">steps</code> subdirectory, in <span class="guilabel">Test Case Resources</span>,
+or in <span class="guilabel">Test Suite Resources</span>. Running our
+<code class="literal">Feature</code> test now will currently fail at the first step with a
+<span class="errortext">No Matching Step Definition</span> and the following
+steps will be skipped.
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h5 class="title"><a id="tut-bdd-iphone-record-step"></a>4.9.2.3.3. Recording Step implementation</h5></div></div></div><p>
+In order to record the <code class="literal">Scenario</code>, press the
+<span class="guibutton">Record</span> (<span class="guiicon"><img src="images/ide/record.png"></img></span>) next to the respective <code class="literal">Scenario</code> that
+is listed in the <span class="guilabel">Scenarios</span> tab in <span class="guilabel">Test Case Resources</span> view.
+</p><div class="screenshot"><div class="mediaobject" align="center"><img src="images/bdd-tutorial-iphone-record-scenario.png" align="middle"></img><div class="caption">Record Scenario</div></div></div><p>
+This will cause <span class="emphasis"><em>Squish</em></span> to run the AUT so that we can interact with it. Additionally,
+the Control Bar is displayed with a list of all steps that need to be
+recorded. Now all interaction with the AUT or any verification points added to
+the script will be recorded under the first step <code class="code">Given elements application is
+running</code> (which is bolded in the step list on the Control Bar). Since <span class="emphasis"><em>Squish</em></span> automatically
+records the start of the application, we are already done with our first step.
+</p><p>
+When we are done with each step, we can move to the next
+undefined step (playing back the ones that were previously defined)
+by clicking on the <span class="guibutton">Finish Recording Step...</span> (<span class="guiicon"><img src="images/bdd-tutorial-next-step-button.png"></img></span>) arrow button
+in the Control Bar that is located to the left of the current step.
+</p><div class="screenshot"><div class="mediaobject" align="center"><img src="images/bdd-tutorial-iphone-control-bar.png" align="middle"></img><div class="caption">Control Bar</div></div></div><p>
+Now the step <code class="literal">When I switch to the search view</code> is active.
+Record the necessary action by clicking the <span class="guilabel">Search</span> menu item
+in the AUT. Clicking on the arrow button in front of the current step in the Control Bar
+(<span class="guibutton">Finish Recording Step...</span> (<span class="guiicon"><img src="images/bdd-tutorial-next-step-button.png"></img></span>))
+again proceeds to the recording of the last step, <code class="literal">the search field is
+empty</code>. To record this verification, click on <span class="guibutton">Verify</span> while
+recording, and select <span class="guimenuitem">Properties</span>. In the
+<span class="guilabel">Application Objects</span> view, navigate or use the <a class="xref" href="ide.views.html#object-picker">Object Picker</a> (<span class="guiicon"><img src="images/ide/pick-application-object.png"></img></span>)
+to select (not check) the text field for the search. In the
+<span class="guilabel">Properties</span> view expand the widget's
+<span class="property">text</span> property. Now click the checkbox beside the
+<span class="property">stringValue</span> subproperty and insert the verification
+point. Finally, click on the last <span class="guibutton">Finish Recording Step...</span> (<span class="guiicon"><img src="images/bdd-tutorial-next-step-button.png"></img></span>) arrow button in the
+Control Bar.
+</p><div class="screenshot"><div class="mediaobject" align="center"><img src="images/bdd-tutorial-iphone-squish-spy.png" align="middle"></img><div class="caption">Inserting Verification Point</div></div></div><p>
+As a result, <span class="emphasis"><em>Squish</em></span> will generate the following step
+definitions in the <code class="filename">steps.*</code> file (at
+<span class="guilabel">Test Suites</span>+<span class="guilabel">Test Suite
+Resources</span>):
+</p><div xmlns="" class="scriptlang"><form><select name="scriptlangcombo" onchange="javascript:changeScriptingLanguage(this)" onclick="javascript:changeScriptingLanguage(this)"><option value="all" selected>Show All</option><option value="JavaScript">Show JavaScript</option><option value="Perl">Show Perl</option><option value="Python">Show Python</option><option value="Ruby">Show Ruby</option><option value="Tcl">Show Tcl</option></select></form></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Python</span><pre class="programlisting">
+@Given("elements application is running")
+def step(context):
+    startApplication("Elements")
+
+@When("I switch to the search view")
+def step(context):
+    tapObject(waitForObject(names.search_UILabel), 179, 9)
+
+@Then("the search field is empty")
+def step(context):
+    test.compare(waitForObjectExists(names.name_Contains_UITextField).text, "")
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">JavaScript</span><pre class="programlisting">
+Given("elements application is running", function(context) {
+    startApplication("Elements");
+});
+
+When("I switch to the search view", function(context) {
+    tapObject(waitForObject(names.searchUILabel), 179, 9);
+});
+
+Then("the search field is empty", function(context) {
+    test.compare(waitForObjectExists(names.nameContainsUITextField).text, "");
+});
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Perl</span><pre class="programlisting">
+Given("elements application is running", sub {
+    my $context = shift;
+    startApplication("Elements");
+});
+
+When("I switch to the search view", sub {
+    my $context = shift;
+    tapObject(waitForObject($Names::search_uilabel), 179, 9);
+});
+
+Then("the search field is empty", sub {
+    my $context = shift;
+    test::compare(waitForObjectExists($Names::name_contains_uitextfield)-&gt;text, "");
+});
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Ruby</span><pre class="programlisting">
+Given("elements application is running") do |context|
+    startApplication("Elements")
+end
+
+When("I switch to the search view") do |context|
+    tapObject(waitForObject(Names::Search_UILabel), 179, 9)
+end
+
+Then("the search field is empty") do |context|
+    Test.compare(waitForObjectExists(Names::Name_Contains_UITextField).text, "")
+end
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Tcl</span><pre class="programlisting">
+Given "elements application is running" {context} {
+    startApplication "Elements"
+}
+
+When "I switch to the search view" {context} {
+    invoke tapObject [waitForObject $names::Search_UILabel] 179 9
+}
+
+Then "the search field is empty" {context} {
+    test compare [property get [waitForObjectExists $names::Name_Contains_UITextField] text] ""
+}
+</pre></div><p>
+The application is automatically started at the beginning of the first step due
+to the recorded <code class="function">startApplication()</code> call. At the end of each
+Scenario, the <code class="function">onScenarioEnd</code> hook is called, causing
+<code class="function">detach()</code> to be called on the application context.
+Because the AUT was started with <code class="function">startApplication()</code>,
+this causes it to terminate.
+This hook function is found in the file <code class="filename">bdd_hooks.(py|js|pl|rb|tcl)</code>,
+which is located in the <span class="guilabel">Scripts</span> tab of the <span class="guilabel">Test
+Suite Resources</span> view. You can define additional hook functions here.
+For a list of all available hooks, please refer to <a class="xref" href="api.bdt.functions.html#api.bdt.functions.hooks" title="6.19.10. Performing Actions During Test Execution Via Hooks">Performing Actions During Test Execution Via Hooks (Section 6.19.10)</a>.
+</p><div xmlns="" class="scriptlang"><form><select name="scriptlangcombo" onchange="javascript:changeScriptingLanguage(this)" onclick="javascript:changeScriptingLanguage(this)"><option value="all" selected>Show All</option><option value="JavaScript">Show JavaScript</option><option value="Perl">Show Perl</option><option value="Python">Show Python</option><option value="Ruby">Show Ruby</option><option value="Tcl">Show Tcl</option></select></form></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Python</span><pre class="programlisting">
+@OnScenarioEnd
+def OnScenarioEnd():
+    for ctx in applicationContextList():
+        ctx.detach()
+
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">JavaScript</span><pre class="programlisting">
+OnScenarioEnd(function(context) {
+    applicationContextList().forEach(function(ctx) { ctx.detach(); });
+});
+
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Perl</span><pre class="programlisting">
+OnScenarioEnd(sub {
+    foreach (applicationContextList()) {
+        $_-&gt;detach();
+    }
+});
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Ruby</span><pre class="programlisting">
+OnScenarioEnd do |context|
+    applicationContextList().each { |ctx| ctx.detach() }
+end
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Tcl</span><pre class="programlisting">
+OnScenarioEnd {context} {
+    foreach ctx [applicationContextList] {
+        applicationContext $ctx detach
+    }
+}
+</pre></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h5 class="title"><a id="tut-bdd-iphone-step-parametrization"></a>4.9.2.3.4. Step parametrization</h5></div></div></div><p>
+So far, our steps did not use any parameters, and all values were
+hardcoded. <span class="emphasis"><em>Squish</em></span> has different types of parameters like
+<code class="code">any</code>, <code class="code">integer</code> or <code class="code">word</code>, allowing our
+step definitions to be more reusable. Let us add a
+new <code class="literal">Scenario</code> to our <code class="literal">Feature</code> file which
+will provide step parameters for both the Test Data and the expected results.
+Copy the below section into your Feature file.
+
+</p><pre class="screen">
+Scenario: State after searching with exact match
+    Given elements application is running
+    When I switch to the search view
+    And I enter 'helium' into the search field and tap Search
+    Then '1' entries should be present
+</pre><p>
+
+After auto-saving
+the <code class="literal">Feature</code> file, the <span class="application">Squish IDE</span> provides a hint that only 2
+steps need to be implemented: <code class="code">And I enter 'helium' into the
+search field and tap Search</code> and <code class="code">Then '1' entries should be present</code>.
+The remaining steps already have a matching step implementation.
+</p><p>
+To record the missing steps, hit the <span class="guibutton">Record</span> (<span class="guiicon"><img src="images/ide/record.png"></img></span>) next to the
+test case name in the Test Suites view. The script will play until it gets to
+the missing step and then prompt you to implement it. Click on
+<span class="guibutton">Finish Recording Step...</span> (<span class="guiicon"><img src="images/bdd-tutorial-next-step-button.png"></img></span>) to move to the next step. For the second missing step, we
+can record an object property verification like we did with the step
+<code class="code">the search field is empty</code>.
+</p><p>
+Now we parametrize the generated step implementation by replacing the values
+with parameter types.
+Since we want to be able to add different names, replace
+<code class="literal">'helium'</code> with <code class="literal">'|word|'</code>.
+Note that each parameter will be passed to the step implementation function in
+the order of appearance in the descriptive name of the step. Finish
+parametrizing by editing to look like this example step:
+</p><div xmlns="" class="scriptlang"><form><select name="scriptlangcombo" onchange="javascript:changeScriptingLanguage(this)" onclick="javascript:changeScriptingLanguage(this)"><option value="all" selected>Show All</option><option value="JavaScript">Show JavaScript</option><option value="Perl">Show Perl</option><option value="Python">Show Python</option><option value="Ruby">Show Ruby</option><option value="Tcl">Show Tcl</option></select></form></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Python</span><pre class="programlisting">
+
+@When("I enter '|word|' into the search field and tap Search")
+def step(context, search):
+    tapObject(waitForObject(names.name_Contains_UITextField), 25, 13)
+    type(waitForObject(names.name_Contains_UITextField), search)
+    tapObject(waitForObject(names.search_UINavigationButton))
+
+    # synchronization: wait until search result view is visible
+    waitFor("not object.exists(names.name_Contains_UITextField)", 10000)
+
+    context.userData["search"] = search
+
+@Then("'|integer|' entries should be present")
+def step(context, numOfEntries):
+    test.compare(waitForObjectExists(names.o_UITableView).numberOfRowsInSection_(0), numOfEntries)
+
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">JavaScript</span><pre class="programlisting">
+
+When("I enter '|word|' into the search field and tap Search", function(context, search) {
+    tapObject(waitForObject(names.nameContainsUITextField), 25, 13);
+    type(waitForObject(names.nameContainsUITextField), search);
+    tapObject(waitForObject(names.searchUINavigationButton));
+
+    // synchronization: wait until search result view is visible
+    waitFor("!object.exists(names.nameContainsUITextField)", 10000);
+
+    context.userData["search"] = search;
+});
+
+Then("'|integer|' entries should be present", function(context, numOfEntries) {
+    test.compare(waitForObjectExists(names.uITableView).numberOfRowsInSection_(0), numOfEntries);
+});
+
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Perl</span><pre class="programlisting">
+
+When("I enter '|word|' into the search field and tap Search", sub {
+    my $context = shift;
+    my $search = shift;
+    tapObject(waitForObject($Names::name_contains_uitextfield), 25, 13);
+    type(waitForObject($Names::name_contains_uitextfield), $search);
+    tapObject(waitForObject($Names::search_uinavigationbutton));
+
+    # synchronization: wait until search result view is visible
+    waitFor("!object::exists(\$Names::name_contains_uitextfield)", 10000);
+
+    $context-&gt;{userData}{"search"} = $search;
+});
+
+Then("'|integer|' entries should be present", sub {
+    my $context = shift;
+    my $numOfEntries = shift;
+    test::compare(waitForObjectExists($Names::o_uitableview)-&gt;numberOfRowsInSection_(0), $numOfEntries);
+});
+
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Ruby</span><pre class="programlisting">
+
+When("I enter '|word|' into the search field and tap Search") do |context, search|
+    tapObject(waitForObject(Names::Name_Contains_UITextField), 25, 13)
+    type(waitForObject(Names::Name_Contains_UITextField), search)
+    tapObject(waitForObject(Names::Search_UINavigationButton))
+
+    # synchronization: wait until search result view is visible
+    waitFor("!Squish::Object.exists(Names::Name_Contains_UITextField)", 10000);
+
+    context.userData[:search] = search
+end
+
+Then("'|integer|' entries should be present") do |context, numOfEntries|
+    Test.compare(waitForObjectExists(Names::O_UITableView).numberOfRowsInSection_(0), numOfEntries)
+end
+
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Tcl</span><pre class="programlisting">
+
+When "I enter '|word|' into the search field and tap Search" {context search} {
+    invoke tapObject [waitForObject $names::Name_Contains_UITextField] 25 13
+    invoke type [waitForObject $names::Name_Contains_UITextField] $search
+    invoke tapObject [waitForObject $names::Search_UINavigationButton]
+
+    # synchronization: wait until search result view is visible
+    waitFor { ![object exists $names::Name_Contains_UITextField] } 10000
+
+    set userData [$context userData]
+    dict set userData "search" $search
+    $context userData $userData
+}
+
+Then "'|integer|' entries should be present" {context numOfEntries} {
+    test compare [invoke [waitForObjectExists $names::UITableView] numberOfRowsInSection_ 0] $numOfEntries
+}
+
+</pre></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h5 class="title"><a id="tut-bdd-iphone-provide-parameters"></a>4.9.2.3.5. Providing parameters for Steps in a table</h5></div></div></div><p>
+The next <code class="literal">Scenario</code> will test a search result with multiple elements
+found. Instead of using multiple steps for verifying this, we use a single step and pass a
+table as an argument to the step.
+</p><pre class="screen">
+Scenario: State after searching with multiple matches
+    Given elements application is running
+    When I switch to the search view
+    And I enter 'he' into the search field and tap Search
+    Then the following entries should be present
+        | Number | Symbol | Name          |
+        | 2      | He     | Helium        |
+        | 44     | Ru     | Ruthenium     |
+        | 75     | Re     | Rhenium       |
+        | 104    | Rf     | Rutherfordium |
+        | 116    | Uuh    | Ununhexium    |
+</pre><p>
+The step implementation to handle such tables looks like this:
+</p><div xmlns="" class="scriptlang"><form><select name="scriptlangcombo" onchange="javascript:changeScriptingLanguage(this)" onclick="javascript:changeScriptingLanguage(this)"><option value="all" selected>Show All</option><option value="JavaScript">Show JavaScript</option><option value="Perl">Show Perl</option><option value="Python">Show Python</option><option value="Ruby">Show Ruby</option><option value="Tcl">Show Tcl</option></select></form></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Python</span><pre class="programlisting">
+
+@Then("the following entries should be present")
+def step(context):
+    table = context.table
+    table.pop(0) # Drop initial row with column headers
+
+    tableView = waitForObject(names.o_UITableView)
+    dataSource = tableView.dataSource
+    numberOfRows = tableView.numberOfRowsInSection_(0)
+
+    test.compare(numberOfRows, len(table))
+    for i in range(numberOfRows):
+        number = table[i][0]
+        symbol = table[i][1]
+        name = table[i][2]
+        expectedText = number + ": " + name + " (" + symbol + ")"
+
+        indexPath = NSIndexPath.indexPathForRow_inSection_(i, 0)
+        cell = dataSource.tableView_cellForRowAtIndexPath_(tableView, indexPath)
+        test.compare(cell.text, expectedText)
+
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">JavaScript</span><pre class="programlisting">
+
+Then("the following entries should be present", function(context) {
+    var table = context.table;
+    table.shift(); // Drop initial row with column headers
+
+    var tableView = waitForObject(names.uITableView);
+    var dataSource = tableView.dataSource;
+    var numberOfRows = tableView.numberOfRowsInSection_(0);
+
+    test.compare(numberOfRows, table.length);
+    for (var i = 0; i &lt; table.length; ++i) {
+        var number = table[i][0];
+        var symbol = table[i][1];
+        var name = table[i][2];
+        var expectedText = number + ": " + name + " (" + symbol + ")";
+
+        var indexPath = NSIndexPath.indexPathForRow_inSection_(i, 0);
+        var cell = dataSource.tableView_cellForRowAtIndexPath_(tableView, indexPath);
+        test.compare(cell.text, expectedText);
+    }
+});
+
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Perl</span><pre class="programlisting">
+
+Then("the following entries should be present", sub {
+    my $context = shift;
+    my $table = $context-&gt;{'table'};
+    shift(@{$table}); # Drop initial row with column headers
+
+    my $tableView = waitForObject($Names::o_uitableview);
+    my $dataSource = $tableView-&gt;dataSource;
+    my $numberOfRows = $tableView-&gt;numberOfRowsInSection_(0);
+
+    test::compare($numberOfRows, scalar @{$table});
+    for (my $i = 0; $i &lt; @{$table}; $i++) {
+        my $number = @{@{$table}[$i]}[0];
+        my $symbol = @{@{$table}[$i]}[1];
+        my $name = @{@{$table}[$i]}[2];
+        my $expectedText = $number . ": " . $name . " (" . $symbol . ")";
+
+        my $indexPath = NSIndexPath::indexPathForRow_inSection_($i, 0);
+        my $cell = $dataSource-&gt;tableView_cellForRowAtIndexPath_($tableView, $indexPath);
+        test::compare($cell-&gt;text, $expectedText);
+    }
+});
+
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Ruby</span><pre class="programlisting">
+
+Then("the following entries should be present") do |context|
+    table = context.table
+    table.shift # Drop initial row with column headers
+
+    tableView = waitForObject(Names::O_UITableView)
+    dataSource = tableView.dataSource
+    numberOfRows = tableView.numberOfRowsInSection_(0)
+
+    Test.compare(numberOfRows, table.length)
+    for i in 0...numberOfRows do
+        number = table[i][0]
+        symbol = table[i][1]
+        name = table[i][2]
+        expectedText = number + ": " + name + " (" + symbol + ")"
+
+        indexPath = NSIndexPath.indexPathForRow_inSection_(i, 0)
+        cell = dataSource.tableView_cellForRowAtIndexPath_(tableView, indexPath)
+        Test.compare(cell.text, expectedText)
+    end
+end
+
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Tcl</span><pre class="programlisting">
+
+Then "the following entries should be present" {context} {
+    # Drop initial row with column headers
+    set table [$context table]
+    set table [lrange $table 1 end]
+
+    set tableView [waitForObject $names::UITableView]
+    set dataSource [property get $tableView dataSource]
+    set numberOfRows [invoke $tableView numberOfRowsInSection_ 0]
+
+    test compare $numberOfRows [llength $table]
+    for {set i 0} {$i &lt; $numberOfRows} {incr i} {
+        set number [lindex $table $i 0]
+        set symbol [lindex $table $i 1]
+        set name [lindex $table $i 2]
+        set expectedText "$number: $name ($symbol)"
+
+        set indexPath [invoke NSIndexPath indexPathForRow_inSection_ $i 0]
+        set cell [invoke $dataSource tableView_cellForRowAtIndexPath_ $tableView $indexPath]
+        test compare [property get $cell text] $expectedText
+    }
+}
+
+</pre></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h5 class="title"><a id="tut-bdd-iphone-sharing"></a>4.9.2.3.6. Sharing data between Steps and Scenarios</h5></div></div></div><p>
+Lets add a new <code class="literal">Scenario</code> to the
+<code class="literal">Feature</code> file. This time we would like to check that in
+the detailed search results, the title of the detail view is the same as
+our search term. Because we enter data into the search field in one Step
+and verify them in another, we must share information about entered data
+among those Steps in order to perform a verification.
+</p><pre class="screen">
+Scenario: State of the details when searching
+    Given elements application is running
+    When I switch to the search view
+    And I enter 'Carbon' into the search field and tap Search
+    And I tap on the first search result
+    Then the previously entered search term is the title of the view
+</pre><p>
+To share this data, the <span class="property">context.userData</span> property
+can be used.
+</p><div xmlns="" class="scriptlang"><form><select name="scriptlangcombo" onchange="javascript:changeScriptingLanguage(this)" onclick="javascript:changeScriptingLanguage(this)"><option value="all" selected>Show All</option><option value="JavaScript">Show JavaScript</option><option value="Perl">Show Perl</option><option value="Python">Show Python</option><option value="Ruby">Show Ruby</option><option value="Tcl">Show Tcl</option></select></form></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Python</span><pre class="programlisting">
+
+@When("I enter '|word|' into the search field and tap Search")
+def step(context, search):
+    tapObject(waitForObject(names.name_Contains_UITextField), 25, 13)
+    type(waitForObject(names.name_Contains_UITextField), search)
+    tapObject(waitForObject(names.search_UINavigationButton))
+
+    # synchronization: wait until search result view is visible
+    waitFor("not object.exists(names.name_Contains_UITextField)", 10000)
+
+    context.userData["search"] = search
+
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">JavaScript</span><pre class="programlisting">
+
+When("I enter '|word|' into the search field and tap Search", function(context, search) {
+    tapObject(waitForObject(names.nameContainsUITextField), 25, 13);
+    type(waitForObject(names.nameContainsUITextField), search);
+    tapObject(waitForObject(names.searchUINavigationButton));
+
+    // synchronization: wait until search result view is visible
+    waitFor("!object.exists(names.nameContainsUITextField)", 10000);
+
+    context.userData["search"] = search;
+});
+
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Perl</span><pre class="programlisting">
+
+When("I enter '|word|' into the search field and tap Search", sub {
+    my $context = shift;
+    my $search = shift;
+    tapObject(waitForObject($Names::name_contains_uitextfield), 25, 13);
+    type(waitForObject($Names::name_contains_uitextfield), $search);
+    tapObject(waitForObject($Names::search_uinavigationbutton));
+
+    # synchronization: wait until search result view is visible
+    waitFor("!object::exists(\$Names::name_contains_uitextfield)", 10000);
+
+    $context-&gt;{userData}{"search"} = $search;
+});
+
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Ruby</span><pre class="programlisting">
+
+When("I enter '|word|' into the search field and tap Search") do |context, search|
+    tapObject(waitForObject(Names::Name_Contains_UITextField), 25, 13)
+    type(waitForObject(Names::Name_Contains_UITextField), search)
+    tapObject(waitForObject(Names::Search_UINavigationButton))
+
+    # synchronization: wait until search result view is visible
+    waitFor("!Squish::Object.exists(Names::Name_Contains_UITextField)", 10000);
+
+    context.userData[:search] = search
+end
+
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Tcl</span><pre class="programlisting">
+
+When "I enter '|word|' into the search field and tap Search" {context search} {
+    invoke tapObject [waitForObject $names::Name_Contains_UITextField] 25 13
+    invoke type [waitForObject $names::Name_Contains_UITextField] $search
+    invoke tapObject [waitForObject $names::Search_UINavigationButton]
+
+    # synchronization: wait until search result view is visible
+    waitFor { ![object exists $names::Name_Contains_UITextField] } 10000
+
+    set userData [$context userData]
+    dict set userData "search" $search
+    $context userData $userData
+}
+
+</pre></div><p>
+All data stored in <span class="property">context.userData</span> can be accessed in all
+steps and <code class="literal">Hooks</code> in all <code class="literal">Scenarios</code>
+of the given <code class="literal">Feature</code>. Finally, we need to implement
+the step <code class="code">Then the previously entered search term is the title of
+the view</code>.
+</p><div xmlns="" class="scriptlang"><form><select name="scriptlangcombo" onchange="javascript:changeScriptingLanguage(this)" onclick="javascript:changeScriptingLanguage(this)"><option value="all" selected>Show All</option><option value="JavaScript">Show JavaScript</option><option value="Perl">Show Perl</option><option value="Python">Show Python</option><option value="Ruby">Show Ruby</option><option value="Tcl">Show Tcl</option></select></form></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Python</span><pre class="programlisting">
+
+@Then("the previously entered search term is the title of the view")
+def step(context):
+    # synchronization: wait until the search result view is not visible
+    waitFor('waitForObjectExists(names.o_UINavigationItemView).title != "Search Results"', 10000)
+
+    test.compare(waitForObjectExists(names.o_UINavigationItemView).title, context.userData["search"])
+
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">JavaScript</span><pre class="programlisting">
+
+Then("the previously entered search term is the title of the view", function(context) {
+    // synchronization: wait until the search result view is not visible
+    waitFor('waitForObjectExists(names.uINavigationItemView).title != "Search Results"', 10000);
+
+    test.compare(waitForObjectExists(names.uINavigationItemView).title, context.userData["search"]);
+});
+
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Perl</span><pre class="programlisting">
+
+Then("the previously entered search term is the title of the view", sub {
+    my $context = shift;
+
+    # synchronization: wait until the search result view is not visible
+    waitFor("waitForObjectExists(\$Names::o_uinavigationitemview).title ne \"Search Results\"", 10000);
+
+    test::compare(waitForObjectExists($Names::o_uinavigationitemview)-&gt;title, $context-&gt;{userData}{"search"});
+});
+
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Ruby</span><pre class="programlisting">
+
+Then("the previously entered search term is the title of the view") do |context|
+    # synchronization: wait until the search result view is not visible
+    waitFor('waitForObjectExists(Names::O_UINavigationItemView).title != "Search Results"', 10000)
+
+    Test.compare(waitForObjectExists(Names::O_UINavigationItemView).title, context.userData[:search])
+end
+
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Tcl</span><pre class="programlisting">
+
+Then "the previously entered search term is the title of the view" {context} {
+    # synchronization: wait until the search result view is not visible
+    waitFor { [property get [waitForObjectExists $names::UINavigationItemView] title] != "Search Results" } 10000
+
+    test compare [property get [waitForObjectExists $names::UINavigationItemView] title] [dict get [$context userData] "search"]
+}
+
+</pre></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h5 class="title"><a id="tut-bdd-iphone-scenario-outline"></a>4.9.2.3.7. Scenario Outline</h5></div></div></div><p>
+Assume our <code class="literal">Feature</code> contains the following two <code class="literal">Scenarios</code>:
+</p><pre class="screen">
+Scenario: State after searching with exact match
+    Given elements application is running
+    When I switch to the search view
+    And I enter 'Hydrogen' into the search field and tap Search
+    Then the entry '1: Hydrogen (H)' should be present
+
+Scenario: State after searching with exact match
+    Given elements application is running
+    When I switch to the search view
+    And I enter 'Helium' into the search field and tap Search
+    Then the entry '2: Helium (He)' should be present
+</pre><p>
+As we can see, those <code class="literal">Scenarios</code> perform the same actions using different
+test data. The same can be achieved by using a <code class="literal">Scenario Outline</code> (a
+<code class="literal">Scenario</code> template with placeholders) and Examples (a table with
+parameters).
+</p><pre class="screen">
+
+Scenario Outline: Doing a search with exact match multiple times
+  Given elements application is running
+  When I switch to the search view
+  And I enter '&lt;Name&gt;' into the search field and tap Search
+  Then the entry '&lt;Number&gt;: &lt;Name&gt; (&lt;Symbol&gt;)' should be present
+  Examples:
+     | Name     | Number | Symbol |
+     | Hydrogen | 1      | H      |
+     | Helium   | 2      | He     |
+     | Carbon   | 6      | C      |
+
+</pre><p>
+Please note that the <code class="code">OnScenarioEnd</code> hook will be executed at the end of
+each loop iteration in a <code class="literal">Scenario Outline</code>.
+</p></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="tut-bdd-iphone-test-exec"></a>4.9.2.4. Test execution</h4></div></div></div><p>
+In the <span class="application">Squish IDE</span>, users can execute all <code class="literal">Scenarios</code> in a
+<code class="literal">Feature</code>, or execute only one selected <code class="literal">Scenario</code>. In
+order to execute all <code class="literal">Scenarios</code>, the proper Test Case has to be
+executed by clicking on the <span class="guibutton">Play</span> button in the Test Suites view.
+</p><div class="screenshot"><div class="mediaobject" align="center"><img src="images/bdd-tutorial-execute-all.png" align="middle"></img><div class="caption">Execute all Scenarios from Feature</div></div></div><p>
+In order to execute only one <code class="literal">Scenario</code>, you need to open the
+<code class="literal">Feature</code> file, right-click on the given <code class="literal">Scenario</code> and
+choose <span class="guibutton">Run Scenario</span>. An alternative approach is to click on the
+<span class="guibutton">Play</span> button next to the respective <code class="literal">Scenario</code> in
+the <span class="guilabel">Scenarios</span> tab in <span class="guilabel">Test Case Resources</span>.
+</p><div class="screenshot"><div class="mediaobject" align="center"><img src="images/bdd-tutorial-iphone-execute-one.png" align="middle"></img><div class="caption">Execute one Scenario from Feature</div></div></div><p>
+After a <code class="literal">Scenario</code> is executed, the <code class="literal">Feature</code> file is
+colored according to the execution results. More detailed information (like logs) can
+be found in the Test Results View.
+</p><div class="screenshot"><div class="mediaobject" align="center"><img src="images/bdd-tutorial-iphone-results.png" align="middle"></img><div class="caption">Execution results in Feature file</div></div></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="tut-bdd-iphone-test-debug"></a>4.9.2.5. Test debugging</h4></div></div></div><p>
+<span class="emphasis"><em>Squish</em></span> offers the possibility to pause an execution of a Test Case at any point in
+order to check script variables, spy application objects or run custom
+code in the <span class="emphasis"><em>Squish</em></span> script console. To do this, a breakpoint has to be placed before
+starting the execution, either in the <code class="literal">Feature</code> file at any line
+containing a step or at any line of executed code (i.e. in middle of
+step definition code).
+</p><div class="screenshot"><div class="mediaobject" align="center"><img src="images/bdd-tutorial-iphone-breakpoint.png" align="middle"></img><div class="caption">Breakpoint in Feature file</div></div></div><p>
+After the breakpoint is reached, you can inspect all application objects and their
+properties. If a breakpoint is placed at a step definition or a hook
+is reached, then you can additionally add Verification Points or record code snippets.
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="tut-bdd-iphone-step-reuse"></a>4.9.2.6. Re-using Step definitions</h4></div></div></div><p>
+BDD test maintainability can be increased by reusing step definitions
+in test cases located in another directory. For more information, see
+<a class="xref" href="api.bdt.functions.html#api.bdt.functions.collectstepdefinitions">collectStepDefinitions()</a>.
+</p></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="tutorial-migration-bdd-iphone"></a>4.9.3. Tutorial: Migration of existing tests to BDD</h3></div></div></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><span class="section"><a href="tutorials-iphone.html#bdd-migration-iphone-extend">4.9.3.1. Extend existing tests to BDD</a></span></dt><dt><span class="section"><a href="tutorials-iphone.html#bdd-migration-iphone-convert">4.9.3.2. Convert existing tests to BDD</a></span></dt></dl></div><p>
+This chapter is aimed at users that have existing <span class="emphasis"><em>Squish</em></span> script-based tests and who would
+like to introduce Behavior Driven Testing. The first section describes how to keep the
+existing tests and add new tests with the BDD approach. The second section
+describes how to convert existing tests to BDD.
+</p><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="bdd-migration-iphone-extend"></a>4.9.3.1. Extend existing tests to BDD</h4></div></div></div><p>
+The first option is to keep any existing <span class="emphasis"><em>Squish</em></span> tests and extend them by
+adding new BDD tests. It's possible to have a <code class="literal">Test Suite</code> containing
+script-based Test Cases and also BDD Test Cases. Simply open an existing
+<code class="literal">Test Suite</code> with Test Cases and choose <span class="guilabel">New BDD Test
+Case</span> option from drop down list.
+</p><div class="screenshot"><div class="mediaobject" align="center"><img src="images/bdd-tutorial-new-testcase.png" align="middle"></img><div class="caption">Creating new BDD Test Case</div></div></div><p>
+Assuming your existing Test Cases make use of a library and you are calling
+shared functions to interact with the AUT, those functions can also be used
+from step implementations. In the example below, a function is used
+from multiple script-based Test Cases:
+</p><div xmlns="" class="scriptlang"><form><select name="scriptlangcombo" onchange="javascript:changeScriptingLanguage(this)" onclick="javascript:changeScriptingLanguage(this)"><option value="all" selected>Show All</option><option value="JavaScript">Show JavaScript</option><option value="Perl">Show Perl</option><option value="Python">Show Python</option><option value="Ruby">Show Ruby</option><option value="Tcl">Show Tcl</option></select></form></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Python</span><pre class="programlisting">
+def switchToSearchView():
+    tapObject(waitForObject(":Search_UITableViewLabel"), 179, 9)
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">JavaScript</span><pre class="programlisting">
+function switchToSearchView(){
+    tapObject(waitForObject(":Search_UITableViewLabel"), 179, 9);
+}
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Perl</span><pre class="programlisting">
+sub switchToSearchView{
+    tapObject(waitForObject(":Search_UITableViewLabel"), 179, 9);
+}
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Ruby</span><pre class="programlisting">
+def switchToSearchView
+  tapObject(waitForObject(":Search_UITableViewLabel"), 179, 9)
+end
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Tcl</span><pre class="programlisting">
+proc switchToSearchView {} {
+    invoke tapObject [waitForObject ":Search_UITableViewLabel"] 179 9
+}
+</pre></div><p>
+New BDD Test Cases can easily use the same function:
+</p><div xmlns="" class="scriptlang"><form><select name="scriptlangcombo" onchange="javascript:changeScriptingLanguage(this)" onclick="javascript:changeScriptingLanguage(this)"><option value="all" selected>Show All</option><option value="JavaScript">Show JavaScript</option><option value="Perl">Show Perl</option><option value="Python">Show Python</option><option value="Ruby">Show Ruby</option><option value="Tcl">Show Tcl</option></select></form></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Python</span><pre class="programlisting">
+@When("I switch to the search view")
+def step(context):
+    switchToSearchView()
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">JavaScript</span><pre class="programlisting">
+When("I switch to the search view", function(context) {
+    switchToSearchView();
+});
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Perl</span><pre class="programlisting">
+When("I switch to the search view", sub {
+    my $context = shift;
+    switchToSearchView();
+});
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Ruby</span><pre class="programlisting">
+When("I switch to the search view") do |context|
+    switchToSearchView()
+end
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Tcl</span><pre class="programlisting">
+When "I switch to the search view" {context} {
+    switchToSearchView
+}
+</pre></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="bdd-migration-iphone-convert"></a>4.9.3.2. Convert existing tests to BDD</h4></div></div></div><p>
+The second option is to convert an existing <code class="literal">Test Suite</code> that contains
+script-based Tests into behavior driven tests. Since a <code class="literal">Test Suite</code>
+can contain script-based Test Cases and BDD Tests, migration can be done
+gradually. A <code class="literal">Test Suite</code> containing a mix of both test case
+types can be executed and results analyzed without any extra effort required.
+</p><p>
+The first step is to review all Test Cases of the existing <code class="literal">Test Suite</code>
+and group them by the <code class="literal">Feature</code> they test. Each script-based Test Case will
+be transformed into a <code class="literal">Scenario</code>, which is a part of a
+<code class="literal">Feature</code>. For example, assume we have 5 script-based tests. After
+review, we realize that they examine two <code class="literal">Features</code>.
+Therefore, when migration is completed, our Test Suite will contain two BDD Test Cases,
+each of them containing one <code class="literal">Feature</code>. Each <code class="literal">Feature</code>
+will contain multiple <code class="literal">Scenarios</code>. In our example the first
+<code class="literal">Feature</code> contains three <code class="literal">Scenarios</code> and the second
+<code class="literal">Feature</code> contains two <code class="literal">Scenarios</code>.
+</p><div class="screenshot"><div class="mediaobject" align="center"><img src="images/bdd-tutorial-migration.png" align="middle"></img><div class="caption">Conversion Chart</div></div></div><p>
+At the beginning, open a <code class="literal">Test Suite</code> in the <span class="application">Squish IDE</span> that contains
+script-based <span class="emphasis"><em>Squish</em></span> tests that are planned to be migrated to BDD. Next, create a
+new Test Case by choosing <span class="guibutton">New BDD Test Case</span> option from the
+context menu. Each BDD Test Case contains a <code class="filename">test.feature</code> file
+that can be filled with maximum one <code class="literal">Feature</code>. Next, open the
+<code class="filename">test.feature</code> file to describe the <code class="literal">Features</code>
+using the Gherkin language. Following the syntax from the template, edit the
+<code class="literal">Feature</code> name and optionally provide a short description. Next,
+analyze which actions and verifications are performed in the script-based Test Case that
+need to be migrated. This is how an example test case for the
+<code class="literal">Elements</code> application might look:
+</p><div xmlns="" class="scriptlang"><form><select name="scriptlangcombo" onchange="javascript:changeScriptingLanguage(this)" onclick="javascript:changeScriptingLanguage(this)"><option value="all" selected>Show All</option><option value="JavaScript">Show JavaScript</option><option value="Perl">Show Perl</option><option value="Python">Show Python</option><option value="Ruby">Show Ruby</option><option value="Tcl">Show Tcl</option></select></form></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Python</span><pre class="programlisting">
+def main():
+    startApplication("Elements")
+    tapObject(waitForObject(names.search_UILabel), 179, 9)
+    test.compare(waitForObjectExists(names.name_Contains_UITextField).text, "")
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">JavaScript</span><pre class="programlisting">
+function main() {
+    startApplication("Elements");
+    tapObject(waitForObject(names.searchUILabel), 179, 9);
+    test.compare(waitForObjectExists(names.nameContainsUITextField).text, "");
+}
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Perl</span><pre class="programlisting">
+sub main {
+    startApplication("Elements");
+    tapObject(waitForObject($Names::search_uilabel), 179, 9);
+    test::compare(waitForObjectExists($Names::name_contains_uitextfield)-&gt;text, "");
+}
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Ruby</span><pre class="programlisting">
+def main
+    startApplication("Elements")
+    tapObject(waitForObject(Names::Search_UILabel), 179, 9)
+    test.compare(waitForObjectExists(Names::Name_Contains_UITextField).text, "")
+end
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Tcl</span><pre class="programlisting">
+proc main {} {
+    startApplication "Elements"
+    invoke tapObject [waitForObject $names::Search_UILabel] 179 9
+    test compare [property get [waitForObjectExists $names::Name_Contains_UITextField] text] ""
+}
+</pre></div><p>
+After analyzing the above Test Case we can create
+the following  <code class="literal">Scenario</code> and add it to
+<code class="filename">test.feature</code>:
+</p><pre class="screen">
+Scenario: Initial state of the search view
+    Given elements application is running
+    When  I switch to the search view
+    Then  the search field is empty
+</pre><p>
+Next, right-click on the <code class="literal">Scenario</code> and choose the option
+<span class="guibutton">Create Missing Step Implementations</span> from the context menu. This
+will create a skeleton of step definitions:
+</p><div xmlns="" class="scriptlang"><form><select name="scriptlangcombo" onchange="javascript:changeScriptingLanguage(this)" onclick="javascript:changeScriptingLanguage(this)"><option value="all" selected>Show All</option><option value="JavaScript">Show JavaScript</option><option value="Perl">Show Perl</option><option value="Python">Show Python</option><option value="Ruby">Show Ruby</option><option value="Tcl">Show Tcl</option></select></form></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Python</span><pre class="programlisting">
+@Given("elements application is running")
+def step(context):
+    test.warning("TODO implement elements application is running")
+
+@When("I switch to the search view")
+def step(context):
+    test.warning("TODO implement I switch to the search view")
+
+@Then("the search field is empty")
+def step(context):
+    test.warning("TODO implement the search field is empty")
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">JavaScript</span><pre class="programlisting">
+Given("elements application is running", function(context) {
+    test.warning("TODO implement elements application is running");
+});
+
+When("I switch to the search view", function(context) {
+    test.warning("TODO implement I switch to the search view");
+});
+
+Then("the search field is empty", function(context) {
+    test.warning("TODO implement the search field is empty");
+});
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Perl</span><pre class="programlisting">
+Given("elements application is running", sub {
+    my $context = shift;
+    test::warning("TODO implement elements application is running");
+});
+
+When("I switch to the search view", sub {
+    my $context = shift;
+    test::warning("TODO implement I switch to the search view");
+});
+
+Then("the search field is empty", sub {
+    my $context = shift;
+    test::warning("TODO implement the search field is empty");
+});
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Ruby</span><pre class="programlisting">
+Given("elements application is running") do |context|
+    Test.warning "TODO implement elements application is running"
+end
+
+When("I switch to the search view") do |context|
+    Test.warning "TODO implement I switch to the search view"
+end
+
+Then("the search field is empty") do |context|
+    Test.warning "TODO implement the search field is empty"
+end
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Tcl</span><pre class="programlisting">
+Given "elements application is running" {context} {
+    test warning "TODO implement elements application is running"
+}
+
+When "I switch to the search view" {context} {
+    test warning "TODO implement I switch to the search view"
+}
+
+Then "the search field is empty" {context} {
+    test warning "TODO implement the search field is empty"
+}
+</pre></div><p>
+Now we put code snippets from the script-based Test Case into respective
+step definitions and remove the lines containing
+<code class="code">test.warning</code>. If your script-based Tests make use of shared scripts, you
+can call those functions from the step definitions as well. For
+example, the final result could look like this:
+</p><div xmlns="" class="scriptlang"><form><select name="scriptlangcombo" onchange="javascript:changeScriptingLanguage(this)" onclick="javascript:changeScriptingLanguage(this)"><option value="all" selected>Show All</option><option value="JavaScript">Show JavaScript</option><option value="Perl">Show Perl</option><option value="Python">Show Python</option><option value="Ruby">Show Ruby</option><option value="Tcl">Show Tcl</option></select></form></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Python</span><pre class="programlisting">
+@Given("elements application is running")
+def step(context):
+    startApplication("Elements")
+
+@When("I switch to the search view")
+def step(context):
+    tapObject(waitForObject(names.search_UILabel), 179, 9)
+
+@Then("the search field is empty")
+def step(context):
+    test.compare(waitForObjectExists(names.name_Contains_UITextField).text, "")
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">JavaScript</span><pre class="programlisting">
+Given("elements application is running", function(context) {
+    startApplication("Elements");
+});
+
+When("I switch to the search view", function(context) {
+    tapObject(waitForObject(names.searchUILabel), 179, 9);
+});
+
+Then("the search field is empty", function(context) {
+    test.compare(waitForObjectExists(names.nameContainsUITextField).text, "");
+});
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Perl</span><pre class="programlisting">
+Given("elements application is running", sub {
+    my $context = shift;
+    startApplication("Elements");
+});
+
+When("I switch to the search view", sub {
+    my $context = shift;
+    tapObject(waitForObject($Names::search_uilabel), 179, 9);
+});
+
+Then("the search field is empty", sub {
+    my $context = shift;
+    test::compare(waitForObjectExists($Names::name_contains_uitextfield)-&gt;text, "");
+});
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Ruby</span><pre class="programlisting">
+Given("elements application is running") do |context|
+    startApplication("Elements")
+end
+
+When("I switch to the search view") do |context|
+    tapObject(waitForObject(Names::Search_UILabel), 179, 9)
+end
+
+Then("the search field is empty") do |context|
+    Test.compare(waitForObjectExists(Names::Name_Contains_UITextField).text, "")
+end
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Tcl</span><pre class="programlisting">
+Given "elements application is running" {context} {
+    startApplication "Elements"
+}
+
+When "I switch to the search view" {context} {
+    invoke tapObject [waitForObject $names::Search_UILabel] 179 9
+}
+
+Then "the search field is empty" {context} {
+    test compare [property get [waitForObjectExists $names::Name_Contains_UITextField] text] ""
+}
+</pre></div><p>
+The above example was simplified for this tutorial. In order to take full advantage of
+Behavior Driven Testing in <span class="emphasis"><em>Squish</em></span>, please familiarize yourself with the section
+<a class="xref" href="api.bdt.functions.html" title="6.19. Behavior Driven Testing">Behavior Driven Testing (Section 6.19)</a> in <a class="xref" href="api.man.html" title="Chapter 6. API Reference Manual">API Reference Manual (Chapter 6)</a>.
+</p></div></div><div class="footnotes"><br></br><hr width="100" align="left"></hr><div class="footnote"><p><sup>[<a id="ftn.idp42208104" href="#idp42208104" class="para">14</a>] </sup>
+Each AUT must be registered with the <span class="application">squishserver</span> so that test scripts
+do not need to include the AUT's path, thus making the tests
+platform-independent. Another benefit of registering is that AUTs can be
+tested without the <span class="application">Squish IDE</span>—for example, when doing regression
+testing.
+</p></div></div></div><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" type="text/javascript" src="ScriptingLanguage.js"></script><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format">setScriptingLanguage();</script><div class="navfooter"><hr></hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="tutorials-mac.html">Prev</a> </td><td width="20%" align="center"><a accesskey="u" href="tutorials.html">Up</a></td><td width="40%" align="right"> <a accesskey="n" href="tutorials-tk.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">4.8. Squish for macOS Tutorials </td><td width="20%" align="center"><a accesskey="h" href="index-noframes.html">Home</a></td><td width="40%" align="right" valign="top"> 4.10. Squish for Tk Tutorials</td></tr></table></div></body>
+<!-- Mirrored from tutorials-iphone.html by HTTrack Website Copier/3.x [XR&CO'2013], Wed, 06 Jul 2022 13:28:59 GMT -->
+</html>

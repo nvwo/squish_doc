@@ -1,0 +1,135 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<!-- Mirrored from rel-601.html by HTTrack Website Copier/3.x [XR&CO'2013], Wed, 06 Jul 2022 13:28:56 GMT -->
+<head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><title>2.27. Version 6.0.1</title><link rel="stylesheet" href="manual.css" type="text/css"></link><meta name="generator" content="DocBook XSL Stylesheets V1.73.2"></meta><link rel="start" href="index-noframes.html" title="Squish Manual"></link><link rel="up" href="relnotes.html" title="Chapter 2. Release Notes—for Upgraders"></link><link rel="prev" href="rel-602.html" title="2.26. Version 6.0.2"></link><link rel="next" href="rel-600.html" title="2.28. Version 6.0"></link><style xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" type="text/css" media="screen">
+        div.toc * { margin-left: 6px; margin-right: auto; max-width: 75em; }
+        div.toc span { margin-left: 0px; }
+        * { margin-left: auto; margin-right: auto; max-width: 75em; }
+        body { margin-left: 6px; margin-right: 6px; }
+        table th { padding: .5ex }
+        table td { padding: .5ex }
+    </style><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format">
+        function keyPress() {
+            var e = window.event;
+            if ( e == undefined ) {
+                return;
+            }
+            /* ### does not properly scroll, yet
+            if ( e.keyCode == 32 ) {
+            var l = document.links;
+            for ( var i = 0; i < l.length; i++ ) {
+                if ( l[i].innerText == "Next" ) {
+                location.href = l[i].href;
+                }
+            }
+            } else
+                */
+                if ( e.keyCode == 0x08 ) {
+            var l = document.links;
+            for ( var i = 0; i < l.length; i++ ) {
+                if ( l[i].innerText == "Prev" ) {
+                location.href = l[i].href;
+                }
+            }
+            }
+        }
+        document.onkeypress = keyPress;
+    </script></head><body><div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="rel-601"></a>2.27. Version 6.0.1</h2></div></div></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><span class="section"><a href="rel-601.html#idp35322256">2.27.1. General</a></span></dt><dt><span class="section"><a href="rel-601.html#idp35327272">2.27.2. Squish IDE-specific</a></span></dt><dt><span class="section"><a href="rel-601.html#idp35338048">2.27.3. Scripting</a></span></dt><dt><span class="section"><a href="rel-601.html#idp35345664">2.27.4. Web-specific</a></span></dt><dt><span class="section"><a href="rel-601.html#idp35356240">2.27.5. Qt-specific</a></span></dt><dt><span class="section"><a href="rel-601.html#idp35361704">2.27.6. Windows (native)-specific</a></span></dt><dt><span class="section"><a href="rel-601.html#idp35364112">2.27.7. Mac-specific (Cocoa/Carbon edition)</a></span></dt><dt><span class="section"><a href="rel-601.html#idp35365720">2.27.8. <span class="trademark">Java</span>™-specific</a></span></dt><dt><span class="section"><a href="rel-601.html#idp35368536">2.27.9. iOS-specific (iPhone/iPad edition)</a></span></dt><dt><span class="section"><a href="rel-601.html#idp35371544">2.27.10. Android-specific</a></span></dt><dt><span class="section"><a href="rel-601.html#idp35373680">2.27.11. Documentation</a></span></dt><dt><span class="section"><a href="rel-601.html#idp35375512">2.27.12. Source Packages</a></span></dt></dl></div><p><span class="emphasis"><em>Squish</em></span> 6.0.1 is a maintenance release containing various bug fixes
+  and small improvements as described below:</p><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="idp35322256"></a>2.27.1. General</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Fixed a bug in the <code class="filename">setup</code> program
+      which caused reading/writing the license key to fail if it's stored in
+      paths involving non-English characters.</p></li><li><p><span class="emphasis"><em>Squish</em></span> failed to reproduce non-english characters in
+      <acronym class="acronym">XML</acronym> 3 reports in some cases - this has been
+      fixed.</p></li><li><p>A problem was fixed which caused <span class="application">squishrunner</span> to not
+      handle commandline arguments involving non-english characters correctly.
+      </p></li><li><p>Fixed a problem that prevented errors during the loading
+      of the script languages from being included in the <span class="application">squishrunner</span>
+      output.</p></li><li><p>Fixed a problem in the <span class="application">setup</span>
+      program which caused it to terminate abnormally if Google Chrome was not
+      installed.</p></li><li><p>Fix a problem in the XML3 generator when adding XML content
+      to the test results.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="idp35327272"></a>2.27.2. Squish IDE-specific</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Fixed a problem that broke various features in the
+      <code class="filename">.feature</code> file editor when the
+      feature file is in a path that contains non-english
+      characters.</p></li><li><p>Fixed a problem that caused sluggish behavior in the
+      user interface when pressing
+      the <span class="keycap"><strong>Ctrl</strong></span> key (for example as part of a <span class="keycap"><strong>Ctrl</strong></span>+<span class="keycap"><strong>C</strong></span>
+      to copy text).</p></li><li><p>Included the <code class="code">openmode</code> argument in the
+      completion of the <a class="xref" href="rgs-js.html#js-File.open-function"><code class="function">File.open</code></a> function in the
+      JavaScript editor.</p></li><li><p>Added <span class="guilabel">Open</span>/<span class="guilabel">Open
+      With</span> entries to the context menu of files in the
+      <span class="guilabel">Test Suites</span> and <span class="guilabel">Global Scripts</span>
+      views to allow easier opening of these with external
+      editors.</p></li><li><p>Fixed a problem that caused an error when trying to
+      record multiple snippets when having launched an <acronym class="acronym">AUT</acronym>
+      using the <span class="guilabel">Launch AUT</span> button.</p></li><li><p>Fixed a problem when an application unexpectedly exits
+      while picking an object.</p></li><li><p>Fixed a problem that prevented installing the <span class="emphasis"><em>Squish</em></span>
+      Eclipse Integration into Eclipse 3.7.</p></li><li><p>Fixed a problem with context menu entries in the Test
+      Suites view on CentOS</p></li><li><p>Fixed a problem that caused the editor to scroll to
+      the top of the file after doing a snippet recording.</p></li><li><p>The <span class="guilabel">Application Objects</span> view no
+      longer shows application contexts of terminated
+      applications.</p></li><li><p>Fix a problem with finding step implementations for BDD
+      steps when the step text contains non-ascii characters and JavaScript is
+      being used as scripting language</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="idp35338048"></a>2.27.3. Scripting</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p> Fixed various issues related to non-English characters
+      in <code class="filename">.feature</code> files of
+      <acronym class="acronym">BDD</acronym> tests using using Perl, JavaScript or
+      Ruby.</p></li><li><p>Respect the <a class="xref" href="rgs-squish.html#testSettings.throwOnFailure-property">testSettings.throwOnFailure</a> setting when executing
+      <a class="xref" href="rgs-squish.html#test.exception-function"><code class="function">test.exception</code></a> in Python.</p></li><li><p>Fixed logging verification results when <a class="xref" href="rgs-squish.html#testSettings.throwOnFailure-property">testSettings.throwOnFailure</a> is
+      enabled.</p></li><li><p>Fixed JavaScript execution of <code class="code">finally</code> clause when a
+      runtime error occurred in <code class="code">catch()</code>.</p></li><li><p>Fixed JavaScript garbage collection of "bound functions"
+      created with <code class="code">Function.prototype.bind()</code>.</p></li><li><p>Fixed a problem with disabling/removing breakpoints when the
+      test execution is paused.</p></li><li><p>Fixed Python DLL mixup with system installed Python
+      on Windows, resulting in import errors for some
+      modules.</p></li><li><p>Fixed the line number reported for the <code class="code">main</code>
+      function in the backtrace reported by the JavaScript <a class="xref" href="rgs-squish.html#test.stackTrace-function"><code class="function">test.stackTrace</code></a> function.</p></li><li><p>Syntax errors reported for JavaScript-based <acronym class="acronym">BDD</acronym>
+      tests are now reported at the correct location.</p></li><li><p>Fixed display of Perl magic variables during debugging.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="idp35345664"></a>2.27.4. Web-specific</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Introduced a signed Squish extension for Firefox so that
+      <span class="emphasis"><em>Squish</em></span> will work with Firefox 41 and newer versions.</p></li><li><p>Improved setup documentation for testing browsers
+      supported through the proxy approach.</p></li><li><p>Improved usability of <span class="guilabel">Browser</span> page
+      in the <code class="filename">setup</code> program.</p></li><li><p>Improved recording of Web Applications using touch events
+      in browsers on mobile devices.</p></li><li><p>Avoid recording unecessary <a class="xref" href="rgs-webconvenience.html#web-activateBrowserTab-function"><code class="function">activateBrowserTab</code></a> calls when recording on
+      <span class="application">Microsoft Internet Explorer</span>.</p></li><li><p>Fixed a problem that caused no <code class="code">DOCUMENT</code>
+      object to appear in the <span class="guilabel">Application Objects</span> view
+      when using browsers on mobile devices or otherwise supported through the
+      proxy approach</p></li><li><p>Fixed a problem that caused <a class="xref" href="rgs-webconvenience.html#web-raiseWindow-function"><code class="function">raiseWindow</code></a> to fail when hooking an already
+      running instance of <span class="application">Microsoft Internet Explorer</span>.</p></li><li><p>Fixed a problem that prevented the browser on mobile
+      devices to return to the startsquish page after finishing a test case
+      execution.</p></li><li><p>Removed the unsupported <span class="guilabel">Mozilla</span>
+      entry from the list of browsers shown in the <span class="application">Squish IDE</span>.</p></li><li><p>Fixed a problem with the lookup of objects that referred
+      a form but where not children of that form.</p></li><li><p>Fixed problems with automating IE instances when disabling the
+      Browser Tab support</p></li><li><p>Introduced a close function for the BrowserTab object so tabs
+      can be closed from the test scripts</p></li><li><p>Disallow using startApplication with a URL to start webhook as
+      this was never intended to work this way and just worked by accident</p></li><li><p>Disallow combining the Browser Tab support with the older method for
+      hooking additional browser windows as this combination makes no sense</p></li><li><p>Fixed a problem where hooking into a page that redirects
+      the original URL to some other place failed with Chrome and Firefox during the initial
+      startup.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="idp35356240"></a>2.27.5. Qt-specific</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Added <code class="code">clickTab()</code> recording for tabs inside a
+      <code class="code">QTabWidget</code>.</p></li><li><p>Added support for Qt invokable methods returning a custom
+      enum type.</p></li><li><p>Improved support for custom Qt enum types inside a
+      namespace.</p></li><li><p>Fixed a problem that broke running the example
+      applications in <span class="emphasis"><em>Squish</em></span> for Qt packages for Qt 5.5.</p></li><li><p>Fixed a problem that prevented the Squish support for QML WebView
+      to be packaged on MacOSX</p></li><li><p>Fixed triggering of global shortcuts using
+      <code class="code">type()</code> on Qt 5.5 or newer.</p></li><li><p>Added logging of Qt version when hooking into an
+      <acronym class="acronym">AUT</acronym></p></li><li><p>Fixed picking and recording on QtQuick 2.x items
+      when a parent item is fully translucent.</p></li><li><p>Fixed recording of text input inside
+      <code class="code">QQuickWidget</code> on Qt 5.4.1 or newer.</p></li><li><p>Fixed snippet recording on Qt web
+      views.</p></li><li><p>Preliminary support for building with Qt 5.6.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="idp35361704"></a>2.27.6. Windows (native)-specific</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Executing two <a class="xref" href="rgs-windowsconvenienceapi.html#win-mouseClick-function"><code class="function">mouseClick</code></a>
+      statements in a row will no longer trigger a double click.</p></li><li><p>Fix a problem with hooking into browser controls embedded
+      into native Windows applications causing the <code class="code">webhook</code> context
+      to disappear from the <span class="guilabel">Application Objects</span>
+      view.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="idp35364112"></a>2.27.7. Mac-specific (Cocoa/Carbon edition)</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Fixed typing text in a web view where the
+      <acronym class="acronym">HTML</acronym> object uses an <code class="code">onchange</code> or
+      <code class="code">oninput</code> handler.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="idp35365720"></a>2.27.8. <span class="trademark">Java</span>™-specific</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Fix a problem with hooking into browser controls embedded
+      into <acronym class="acronym">SWT</acronym> applications causing the <code class="code">webhook</code>
+      context to disappear from the <span class="guilabel">Application Objects</span>
+      view.</p></li><li><p>Fixed a problem which caused native dialogs not to be
+      shown when running the <acronym class="acronym">AUT</acronym> in the Spy or Debug
+      mode.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="idp35368536"></a>2.27.9. iOS-specific (iPhone/iPad edition)</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Fixed typing text in a web view where the
+      <acronym class="acronym">HTML</acronym> object uses an <code class="code">onchange</code> or
+      <code class="code">oninput</code> handler.</p></li><li><p>Improved the automatic detection of a suitable iOS
+      <acronym class="acronym">SDK</acronym> when starting the <acronym class="acronym">AUT</acronym> in the
+      simulator.</p></li><li><p>Fixed playback of clicks in iOS 9 on certain objects
+      (like the buttons in an <code class="code">alert</code>).</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="idp35371544"></a>2.27.10. Android-specific</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>It is now possible to call the <a class="xref" href="rgs-androidconvenience.html#android-hideKeyboard-function"><code class="function">hideKeyboard</code></a> function with an
+      <acronym class="acronym">HTML</acronym> object.</p></li><li><p>Fix recording <code class="code">openMenu</code> on Android-6.0
+      final.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="idp35373680"></a>2.27.11. Documentation</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Fixed the table of contents link to the “<span class="quote"><span class="emphasis"><em>Squish</em></span>
+      Concepts</span>” section for the tutorials.</p></li><li><p>Updated documentation for integrating the Qt builtin-hook
+      in <acronym class="acronym">AUT</acronym> code.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="idp35375512"></a>2.27.12. Source Packages</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Fixed compiler detection for GNU C++ and compatible
+      toolchains on locales other than English.</p></li></ul></div></div></div><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" type="text/javascript" src="ScriptingLanguage.js"></script><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format">setScriptingLanguage();</script><div class="navfooter"><hr></hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="rel-602.html">Prev</a> </td><td width="20%" align="center"><a accesskey="u" href="relnotes.html">Up</a></td><td width="40%" align="right"> <a accesskey="n" href="rel-600.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">2.26. Version 6.0.2 </td><td width="20%" align="center"><a accesskey="h" href="index-noframes.html">Home</a></td><td width="40%" align="right" valign="top"> 2.28. Version 6.0</td></tr></table></div></body>
+<!-- Mirrored from rel-601.html by HTTrack Website Copier/3.x [XR&CO'2013], Wed, 06 Jul 2022 13:28:56 GMT -->
+</html>

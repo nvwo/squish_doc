@@ -1,0 +1,90 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<!-- Mirrored from rel-642.html by HTTrack Website Copier/3.x [XR&CO'2013], Wed, 06 Jul 2022 13:28:55 GMT -->
+<head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><title>2.14. Version 6.4.2</title><link rel="stylesheet" href="manual.css" type="text/css"></link><meta name="generator" content="DocBook XSL Stylesheets V1.73.2"></meta><link rel="start" href="index-noframes.html" title="Squish Manual"></link><link rel="up" href="relnotes.html" title="Chapter 2. Release Notes—for Upgraders"></link><link rel="prev" href="rel-6421.html" title="2.13. Version 6.4.2.1"></link><link rel="next" href="rel-641.html" title="2.15. Version 6.4.1"></link><style xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" type="text/css" media="screen">
+        div.toc * { margin-left: 6px; margin-right: auto; max-width: 75em; }
+        div.toc span { margin-left: 0px; }
+        * { margin-left: auto; margin-right: auto; max-width: 75em; }
+        body { margin-left: 6px; margin-right: 6px; }
+        table th { padding: .5ex }
+        table td { padding: .5ex }
+    </style><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format">
+        function keyPress() {
+            var e = window.event;
+            if ( e == undefined ) {
+                return;
+            }
+            /* ### does not properly scroll, yet
+            if ( e.keyCode == 32 ) {
+            var l = document.links;
+            for ( var i = 0; i < l.length; i++ ) {
+                if ( l[i].innerText == "Next" ) {
+                location.href = l[i].href;
+                }
+            }
+            } else
+                */
+                if ( e.keyCode == 0x08 ) {
+            var l = document.links;
+            for ( var i = 0; i < l.length; i++ ) {
+                if ( l[i].innerText == "Prev" ) {
+                location.href = l[i].href;
+                }
+            }
+            }
+        }
+        document.onkeypress = keyPress;
+    </script></head><body><div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="rel-642"></a>2.14. Version 6.4.2</h2></div></div></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><span class="section"><a href="rel-642.html#rel-642-general">2.14.1. General</a></span></dt><dt><span class="section"><a href="rel-642.html#rel-642-scripting">2.14.2. Scripting</a></span></dt><dt><span class="section"><a href="rel-642.html#rel-642-android">2.14.3. Android-specific</a></span></dt><dt><span class="section"><a href="rel-642.html#rel-642-web">2.14.4. Web-specific</a></span></dt><dt><span class="section"><a href="rel-642.html#rel-642-qt">2.14.5. Qt-specific</a></span></dt><dt><span class="section"><a href="rel-642.html#rel-642-java">2.14.6. <span class="trademark">Java</span>™-specific</a></span></dt><dt><span class="section"><a href="rel-642.html#rel-642-mac">2.14.7. macOS-specific (Cocoa/Carbon edition)</a></span></dt><dt><span class="section"><a href="rel-642.html#idp34779520">2.14.8. Windows (native)-specific</a></span></dt><dt><span class="section"><a href="rel-642.html#rel-642-source">2.14.9. Source Packages</a></span></dt></dl></div><p><span class="emphasis"><em>Squish</em></span> 6.4.2 is a maintenance release containing bug fixes for all
+  editions of the product. See the following sections for a detailed list of
+  all changes.</p><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="rel-642-general"></a>2.14.1. General</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Fixed an issue due to which calling <a class="xref" href="rgs-squish.html#attachToApplication-function"><code class="function">attachToApplication</code></a> would sometimes fail on Windows
+      systems.</p></li><li><p>Stability improvements for
+      <span class="application">squishserver</span>.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="rel-642-scripting"></a>2.14.2. Scripting</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Scripts using the <code class="code">squishtest</code> Python module
+      can now use the XML3 report format.</p></li><li><p>Python scripts using the <code class="code">squishtest</code> module
+      will no longer print warning messages to the console when calling the
+      <a class="xref" href="rgs-squish.html#waitForObject-function"><code class="function">waitForObject</code></a> function.</p></li><li><p>Fixed an issue in the <code class="code">squishtest</code> Python
+      module which caused screenshots taken in response to test failures not to
+      get saved to disk.</p></li><li><p>Fixed memory leak when editing <acronym class="acronym">BDD</acronym>
+      features for JavaScript scripts.</p></li><li><p>The JavaScript <code class="code">source()</code> function -
+      when invoked inside an imported script module - will evaluate
+      code within that module's scope. As a result, functions and
+      variables will no longer leak to the global scope. We advise to
+      port all <a class="xref" href="rgs-squish.html#source-function"><code class="function">source</code></a> calls to <code class="code">import</code>
+      statements.</p></li><li><p>The <a class="xref" href="rgs-squish.html#nativeType-function"><code class="function">nativeType</code></a> function now
+      permits typing just modifier keys when executing tests on macOS, as in
+      <code class="code">nativeType("&lt;Alt&gt;")</code>.</p></li><li><p>Fixed IDE crash when using circular imports in Python.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="rel-642-android"></a>2.14.3. Android-specific</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Support added for Android-9.0.</p></li><li><p>The <span class="guilabel">Object Snapshot</span> functionality
+      now works as expected when dealing with applications embedding WebView
+      controls.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="rel-642-web"></a>2.14.4. Web-specific</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Fixed a problem shutting down Chrome and <span class="application">Firefox</span>
+      processes leading to error messages shown in the server log about
+      <code class="computeroutput">QProcess deleted while process is still
+      running</code>.</p></li><li><p>Fixed a problem causing the
+      <span class="application">webhook</span> process to terminate unexpectedly when
+      typing text into an input field.</p></li><li><p>Fixed a problem accessing the text of items in some SmartGWT
+      trees</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="rel-642-qt"></a>2.14.5. Qt-specific</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Fixed geometry and readiness calculation for items that
+      have a non-zero height and width but return an empty bounding rectangle,
+      most notably <code class="code">Text</code> and <code class="code">TextInput</code> items without any text
+      set.</p></li><li><p>Fixed <a class="xref" href="rgs-qtconvenience.html#qt-type-function"><code class="function">type</code></a> not throwing an
+      error on invalid special key sequences such as
+      <code class="literal">&lt;Contrl&gt;</code>.</p></li><li><p>The <a class="xref" href="rgs-qtconvenience.html#qt-type-function"><code class="function">type</code></a> now accepts the
+      modifier <code class="code">Ctrl</code> as documented; the old term
+      <code class="code">Control</code> is still accepted for backwards
+      compatibility.</p></li><li><p>Fixed an issue causing the <acronym class="acronym">AUT</acronym> to abort
+      unexpectedly when enabling <code class="code">qWarning()</code> messages to be fatal
+      errors.</p></li><li><p>Added <code class="code">QImage</code>/<code class="code">QPixmap</code> <acronym class="acronym">API</acronym>
+      in testscripts for Qt 5.11 and later.</p></li><li><p>Fixed an issue causing interactions with partially
+      off-screen <code class="code">QGraphicsItem</code> objects not to fail.</p></li><li><p>Squish now shows the Qt version and configuration when
+      hooking.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="rel-642-java"></a>2.14.6. <span class="trademark">Java</span>™-specific</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Resolved an issue causing the <a class="xref" href="rgs-javaconvenience.html#java-chooseDirectory-function"><code class="function">chooseDirectory</code></a> and
+      <a class="xref" href="rgs-javaconvenience.html#java-chooseFile-function"><code class="function">chooseFile</code></a> functions to get stuck when interacting with JavaFx controls
+      embedded into <acronym class="acronym">SWT</acronym>.</p></li><li><p>Fixed Squish accessing JavaFx-web module for Java 9 and later.</p></li><li><p>Fixed object snapshot when having a WebView in JavaFx or
+      Browser in SWT</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="rel-642-mac"></a>2.14.7. macOS-specific (Cocoa/Carbon edition)</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Added support for custom views in the title bar of a
+      window.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="idp34779520"></a>2.14.8. Windows (native)-specific</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Fixed tests ending prematurely in some cases when
+      interacting with plain Win32 (e.g. <acronym class="acronym">MFC</acronym>) toolbar
+      items.</p></li><li><p>Improved reliability of recording user interactions,
+      especially interactions done right after starting the
+      application.</p></li><li><p>Fixed a problem causing Squish not to recognize any HTML
+      elements in IE controls embedded into native Windows
+      applications.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="rel-642-source"></a>2.14.9. Source Packages</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Running <span class="command"><strong>build install</strong></span> will now also install
+      <code class="filename">.pdb</code> files when doing debug builds on
+      Windows.</p></li><li><p>Added support for building with Qt 5.12 (except for Qt on
+      Android).</p></li></ul></div></div></div><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" type="text/javascript" src="ScriptingLanguage.js"></script><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format">setScriptingLanguage();</script><div class="navfooter"><hr></hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="rel-6421.html">Prev</a> </td><td width="20%" align="center"><a accesskey="u" href="relnotes.html">Up</a></td><td width="40%" align="right"> <a accesskey="n" href="rel-641.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">2.13. Version 6.4.2.1 </td><td width="20%" align="center"><a accesskey="h" href="index-noframes.html">Home</a></td><td width="40%" align="right" valign="top"> 2.15. Version 6.4.1</td></tr></table></div></body>
+<!-- Mirrored from rel-642.html by HTTrack Website Copier/3.x [XR&CO'2013], Wed, 06 Jul 2022 13:28:55 GMT -->
+</html>

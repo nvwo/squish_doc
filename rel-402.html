@@ -1,0 +1,176 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<!-- Mirrored from rel-402.html by HTTrack Website Copier/3.x [XR&CO'2013], Wed, 06 Jul 2022 13:28:56 GMT -->
+<head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><title>2.49. Version 4.0.2</title><link rel="stylesheet" href="manual.css" type="text/css"></link><meta name="generator" content="DocBook XSL Stylesheets V1.73.2"></meta><link rel="start" href="index-noframes.html" title="Squish Manual"></link><link rel="up" href="relnotes.html" title="Chapter 2. Release Notes—for Upgraders"></link><link rel="prev" href="rel-410beta1.html" title="2.48. Version 4.1.0 Beta 1"></link><link rel="next" href="rel-4011.html" title="2.50. Version 4.0.1.1"></link><style xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" type="text/css" media="screen">
+        div.toc * { margin-left: 6px; margin-right: auto; max-width: 75em; }
+        div.toc span { margin-left: 0px; }
+        * { margin-left: auto; margin-right: auto; max-width: 75em; }
+        body { margin-left: 6px; margin-right: 6px; }
+        table th { padding: .5ex }
+        table td { padding: .5ex }
+    </style><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format">
+        function keyPress() {
+            var e = window.event;
+            if ( e == undefined ) {
+                return;
+            }
+            /* ### does not properly scroll, yet
+            if ( e.keyCode == 32 ) {
+            var l = document.links;
+            for ( var i = 0; i < l.length; i++ ) {
+                if ( l[i].innerText == "Next" ) {
+                location.href = l[i].href;
+                }
+            }
+            } else
+                */
+                if ( e.keyCode == 0x08 ) {
+            var l = document.links;
+            for ( var i = 0; i < l.length; i++ ) {
+                if ( l[i].innerText == "Prev" ) {
+                location.href = l[i].href;
+                }
+            }
+            }
+        }
+        document.onkeypress = keyPress;
+    </script></head><body><div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="rel-402"></a>2.49. Version 4.0.2</h2></div></div></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><span class="section"><a href="rel-402.html#idp36317992">2.49.1. General</a></span></dt><dt><span class="section"><a href="rel-402.html#idp36328400">2.49.2. Classic IDE</a></span></dt><dt><span class="section"><a href="rel-402.html#idp36329728">2.49.3. New IDE</a></span></dt><dt><span class="section"><a href="rel-402.html#idp36344992">2.49.4. All toolkits</a></span></dt><dt><span class="section"><a href="rel-402.html#idp36346200">2.49.5. Qt-specific</a></span></dt><dt><span class="section"><a href="rel-402.html#idp36356064">2.49.6. <span class="trademark">Java</span>™-specific</a></span></dt><dt><span class="section"><a href="rel-402.html#idp36360448">2.49.7. Web-specific</a></span></dt><dt><span class="section"><a href="rel-402.html#idp36370968">2.49.8. Native Windows (new edition)</a></span></dt><dt><span class="section"><a href="rel-402.html#idp36378000">2.49.9. Mac-specific (Cocoa/Carbon edition)</a></span></dt><dt><span class="section"><a href="rel-402.html#idp36379920">2.49.10. iPhone/iPad-specific</a></span></dt><dt><span class="section"><a href="rel-402.html#idp36381288">2.49.11. Tk-specific</a></span></dt><dt><span class="section"><a href="rel-402.html#idp36383912">2.49.12. Source Builds</a></span></dt><dt><span class="section"><a href="rel-402.html#idp36385968">2.49.13. Documentation</a></span></dt></dl></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="idp36317992"></a>2.49.1. General</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Fixed a bug in the Tcl support which caused the lookup of
+object names with non-ASCII characters to fail.</p></li><li><p>Fixed a rare crash in the <span class="application">squishserver</span>
+program that affected Solaris systems.</p></li><li><p>Fixed a regression so that now if you define a <a class="xref" href="api.special.functions.html#squish-cleanup-function"><code class="function">cleanup</code></a> function it will be correctly
+called after the test's <code class="code">main</code> function finishes—even
+if the application under test crashes during a test.</p></li><li><p>Corrected the timestamps output by <span class="application">squishrunner</span> for
+<span class="emphasis"><em>Squish</em></span> <acronym class="acronym">XML</acronym> 2.1 format test results.</p></li><li><p>If the optional message that can be passed to
+verification functions such as <a class="xref" href="rgs-squish.html#test.verify-function"><code class="function">test.verify</code></a>
+and <a class="xref" href="rgs-squish.html#test.compare-function"><code class="function">test.compare</code></a> is given, <span class="application">squishrunner</span>
+will now correctly include the message when it outputs <span class="emphasis"><em>Squish</em></span> <acronym class="acronym">XML</acronym> 2.1
+format test results.</p></li><li><p>Fixed calling the <span class="application">vpdiff</span> utility with
+arguments which contain non-ASCII characters.</p></li><li><p>Corrected error messages shown when replaying Python or Tcl test
+scripts so that non-ASCII characters are displayed correctly.</p></li><li><p>Fixed various problems that occurred when executing
+external programs in test scripts on Windows.</p></li><li><p> Once the <a class="xref" href="rgs-squish.html#testSettings.logScreenshotOnError-property">testSettings.logScreenshotOnError</a> property is set
+to <code class="code">true</code>, any screenshots taken subsequnetly will now show the
+contents of <span class="emphasis"><em>all</em></span> the screens on Windows instead of
+showing only the primary screen.</p></li><li><p>Fixed a crash which occurred when generating a symbolic name
+for an object whose real name has a row property but no column
+property.</p></li><li><p>Errors which occur during a call to the <a class="xref" href="rgs-squish.html#startApplication-function"><code class="function">startApplication</code></a> function now result in a catchable
+exception being raised.</p></li><li><p>Fixed a problem which caused break points to be stopped
+at more often than intended when executing some Perl test
+scripts.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="idp36328400"></a>2.49.2. Classic IDE</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>There is no longer excessive CPU usage when recording
+test script snippets.</p></li><li><p>The naming scheme set in the test suite settings is now
+correctly honored when starting to record actions after a breakpoint is
+reached.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="idp36329728"></a>2.49.3. New IDE</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>The Variable view now correctly shows Python variables
+whose value is <code class="code">None</code>.</p></li><li><p>Fixed the subtract and grey diff modes in the comparison view
+that shows failed image comparisons.</p></li><li><p>Attempts to create test suites with invalid names are
+now handled more gracefully.</p></li><li><p>If no test suite is selected then no shared resources
+are shown.</p></li><li><p>Fixed a rarely occurring error message when selecting
+<span class="guimenuitem">Copy Real Name</span> from the Object Map view's context
+menu.</p></li><li><p>Correctly handle <code class="filename">objects.map</code> files
+even when they are not stored within the test suite
+directory.</p></li><li><p>Only allow executable files to be chosen as the AUT.
+</p></li><li><p>Fixed specifying alternative directories for storing test case
+templates.</p></li><li><p>Don't start inline editing all the time (to rename a
+test case) when double-clicking test case items. Only initiate editing
+when doing a “<span class="quote">slow</span>” double-click. A normal double-click
+simply opens the test case.</p></li><li><p>Image verification points are now stored using the
+<acronym class="acronym">PNG</acronym> format to ensure that alpha values are correctly
+handled.</p></li><li><p>Added a <span class="guimenuitem">Run Test Suite</span> menu entry
+to the <span class="guimenu">Squish</span> menu for convenience.</p></li><li><p>Fixed a bug which caused test cases to disappear when removing
+files (or directories) with the same name from a different
+location.</p></li><li><p>Fixed scriptifying verification points when the property value
+contains newlines.</p></li><li><p>Mark the test data editor as dirty when modifying the
+column headers.</p></li><li><p>Respect configured indentation width and tabs vs. spaces
+settings when recording test scripts.</p></li><li><p>Fixed a few erroneous cases where verification points
+were opened in a text editor instead of being opened in the verification
+point editor.</p></li><li><p>Made sure that script files always have a proper
+extension.</p></li><li><p>Fixed the spy so that it behaves correctly in tests which
+call the <a class="xref" href="rgs-squish.html#startApplication-function"><code class="function">startApplication</code></a> function.</p></li><li><p>Support opening test suites by dragging a
+<code class="filename">suite.conf</code> file
+from the Windows explorer onto the <span class="application">Squish IDE</span>.</p></li><li><p>Added a pause button to the control bar which can be used
+to suspend the test execution.</p></li><li><p>No longer show binary Python files (e.g.
+<code class="filename">*.py[co]</code>) in the test suite resources list.
+</p></li><li><p>No longer show test suites that have been deleted
+outside the <span class="application">Squish IDE</span> (i.e., deleted from the file system) in the test
+suite's view.</p></li><li><p>Only enable the <span class="guilabel">Run Test Suite</span> button if
+at least one test case is checked.</p></li><li><p>Make sure that the buttons for adding new test suite resources
+are always enabled when appropriate.</p></li><li><p>Added a <span class="guimenuitem">Copy to clipboard (Property
+Value)</span> menu item for the <span class="application">Spy</span>'s context menu to make it
+easy to copy property values to the clipboard.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="idp36344992"></a>2.49.4. All toolkits</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Made passing &lt;CapsLock&gt; to the <code class="code">nativeType</code>
+function correctly simulate a press of the caps lock key.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="idp36346200"></a>2.49.5. Qt-specific</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Added support for Qt 4.7.</p></li><li><p>Clicks on <code class="code">QModelIndex</code> objects succeed even if relative
+coordinates are given which are beyond the object's bounding
+rectangle.</p></li><li><p>Fixed a few cases where taking screenshots of objects would
+not work correctly on Windows Vista and later Windows versions.</p></li><li><p>Fixed invoking script event handlers in case an application
+constructs (and destroys) multiple <code class="code">QApplication</code>
+objects.</p></li><li><p>Fixed issues when creating screenshots on <code class="code">QGLWidget</code>
+objects.</p></li><li><p>Make it possible to not recognize items in a
+<code class="code">QGraphicsView</code> widget as distinct items.</p></li><li><p>Added a configuration switch to enforce that no native
+dialogs are shown when running a test. This improves the portability of
+test scripts across different operating systems.</p></li><li><p>Fixed interacting with native windows dialogs opened by
+applications built with Qt 4.5 and earlier Qt versions.</p></li><li><p>Fixed the list of unmatched properties that is shown when looking up
+an object has failed.</p></li><li><p>Added a new <code class="code">collapsed</code> property to <code class="code">QModelIndex</code>
+objects.</p></li><li><p>Fixed a problem with calling the <code class="code">mouseClick</code>
+function  to
+click on a <code class="code">Q3ListBoxItem</code> inside a <code class="code">Q3ComboBox</code>.</p></li><li><p>Fixed recording tests on Maemo devices.</p></li><li><p>Fixed clicking on any column other than the first when
+clicking on <code class="code">QComboBox</code> items.</p></li><li><p>Correctly record any modifier keys that are pressed when recording mouse wheel
+movements.</p></li><li><p>Fixed various stability problems when executing the
+<code class="code">type</code> function.</p></li><li><p>Fixed replaying actions on Qt/Cocoa menus on
+macOS.</p></li><li><p>Improved accuracy when dragging <code class="code">QGraphicsItem</code>
+objects.</p></li><li><p>It's now possible to use a shell script as the AUT in Qt
+tests on macOS (i.e., a shell script that starts the real Qt-based AUT).</p></li><li><p>Fixed excessive CPU usage when creating a verification
+point while recording a test script.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="idp36356064"></a>2.49.6. <span class="trademark">Java</span>™-specific</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Fixed replaying mouse drags using the right mouse button on
+<acronym class="acronym">AWT</acronym> applications.</p></li><li><p>Fixed excessive <acronym class="acronym">CPU</acronym> usage in some situations
+after the recording of a test script finishes.</p></li><li><p>Made replaying drag and drop actions more
+reliable.</p></li><li><p>Improved the error message when attempting to start a <span class="trademark">Java</span>™
+application which is not registered with the
+<span class="application">squishserver</span>.</p></li><li><p>Added support for instantiating <span class="trademark">Java</span>™ arrays from within test
+scripts.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="idp36360448"></a>2.49.7. Web-specific</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Improved the portability of newly recorded test scripts between
+<span class="application">Microsoft Internet Explorer</span> and <span class="application">Firefox</span>.</p></li><li><p>Fixed executing the <code class="code">type</code> function when passing an
+object name (instead of an object) as the first argument.</p></li><li><p>Fixed the recording of tests on web pages that have spaces in their
+file names.</p></li><li><p>Improved the error message when performing an out-of-bounds
+access on an HTML array.</p></li><li><p>Improved the general robustness of test scripts to cope with
+timing differences when replaying tests.</p></li><li><p>Fixed a problem with recording tests when some user interaction
+causes the browser to load a new page.</p></li><li><p>Record an action when pressing <span class="keycap"><strong>Return</strong></span> in a form.</p></li><li><p>Improved the reliability of replaying mouse clicks when executing
+tests with Firefox 3.6</p></li><li><p>Greatly improved the execution speed of calling the
+<code class="code">setText</code> function with Firefox.</p></li><li><p>Improved the recogition of frames and iframes when recording or
+replaying tests with <span class="application">Safari</span>.</p></li><li><p>Stopped bogus errors from appearing in the test results when accessing
+certain properties of web objects.</p></li><li><p>Made replaying test scripts which contain non-ASCII characters work with
+<span class="application">Safari</span>.</p></li><li><p>Resolved some issues when iterating over a long list of
+child objects or retrieving a property which has a very long
+value (e.g., a long string).</p></li><li><p>Made calling <a class="xref" href="rgs-webconvenience.html#web-loadUrl-function"><code class="function">loadUrl</code></a>
+... <a class="xref" href="rgs-webconvenience.html#web-closeWindow-function"><code class="function">closeWindow</code></a> in a loop work with
+<span class="application">Firefox</span> and <span class="application">Microsoft Internet Explorer</span>.</p></li><li><p>Stopped bogus errors appearing in the test results when certain
+kinds of object lookups failed.</p></li><li><p>Fixed recording clicks on the Submit button in forms.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="idp36370968"></a>2.49.8. Native Windows (new edition)</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>No longer record calls to the <code class="code">doubleClick</code>
+function on MFC spin box objects. Instead, two calls of the
+<code class="code">setValue</code> function are recorded.</p></li><li><p>Fixed the replaying of calls to the
+<code class="code">mouseClick</code>, <code class="code">doubleClick</code>, and
+<code class="code">mouseDrag</code> functions on MFC menu bars.</p></li><li><p>Fixed a runtime error that occurred when replaying a
+call to the <code class="code">setValue</code> function
+on an MFC scroll bar with a zero value.</p></li><li><p>Fixed the replaying of calls to the
+<code class="code">dragAndDrop</code> function on
+MFC combo box items, list box items, and tree items.</p></li><li><p>Made clicking tab items correctly emit notifications so that
+the rest of the GUI can respond to the tab change.</p></li><li><p>Fixed the replaying of the <code class="code">dragAndDrop</code>
+function on
+Windows Forms controls.</p></li><li><p>No longer acquire ever increasing amounts of memory
+during long running tests.</p></li><li><p>Fixed a crash when attaching to native Windows applications
+using the <a class="xref" href="rgs-squish.html#attachToApplication-function"><code class="function">attachToApplication</code></a> function.</p></li><li><p>Fixed the replaying of actions on MFC menus on multi-screen
+desktops.</p></li><li><p>Speeded up the lookup of items in MFC listview
+controls.</p></li><li><p>Now recognize embedded <span class="application">Microsoft Internet Explorer</span> controls in all top-level
+windows, even in dialogs.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="idp36378000"></a>2.49.9. Mac-specific (Cocoa/Carbon edition)</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Simplified changing the Python version used. Xcode (and
+the <code class="filename">install_name_tool</code> program) are no longer
+needed. Instead, only the <code class="filename">SQUISH_DIR/etc/paths.ini</code>
+file needs to be adjusted.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="idp36379920"></a>2.49.10. iPhone/iPad-specific</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Fixed a problem with generating touch events when replaying
+tests on iPhone OS 3.</p></li><li><p>Only record clicks on views that respond to user
+interaction.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="idp36381288"></a>2.49.11. Tk-specific</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Improved the error message when a call to the
+<code class="code">clickItem</code> function fails.</p></li><li><p>Improved the reliability of clicking items.</p></li><li><p>Rewrote the Tk address book example program to improve
+usability and visual appearance. (This example is now covered in the Tk
+testing tutorial.)</p></li><li><p>Fixed names generated for top-level windows in
+Hyperworks 11 applications on Windows.</p></li><li><p>Fixed a runtime error that occurred when clicking items
+which have no text.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="idp36383912"></a>2.49.12. Source Builds</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Stopped building the Qt WebKit extension if the web wrapper is
+disabled.</p></li><li><p>Made compiling Squish for Qt packages work for Maemo5.</p></li><li><p>Improved the <span class="application">configure</span>
+program so that it can find dblatex on Windows systems (if dblatex is
+installed).</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="idp36385968"></a>2.49.13. Documentation</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Fixed the documentation of the
+<code class="code">installEventHandler</code> function to reflect the actual
+behavior.</p></li><li><p>Improved and updated the Qt, <span class="trademark">Java</span>™ AWT/Swing, Java SWT,
+and macOS tutorials.</p></li><li><p>Added a new tutorial for testing Tk
+applications.</p></li><li><p>Added small improvements and updates to the User Guide.</p></li><li><p>Improved and updated the Tools Reference Manual.</p></li><li><p>Added a new IDE Reference Manual which documents the new
+Eclipse-based IDE.</p></li></ul></div></div></div><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" type="text/javascript" src="ScriptingLanguage.js"></script><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format">setScriptingLanguage();</script><div class="navfooter"><hr></hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="rel-410beta1.html">Prev</a> </td><td width="20%" align="center"><a accesskey="u" href="relnotes.html">Up</a></td><td width="40%" align="right"> <a accesskey="n" href="rel-4011.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">2.48. Version 4.1.0 Beta 1 </td><td width="20%" align="center"><a accesskey="h" href="index-noframes.html">Home</a></td><td width="40%" align="right" valign="top"> 2.50. Version 4.0.1.1</td></tr></table></div></body>
+<!-- Mirrored from rel-402.html by HTTrack Website Copier/3.x [XR&CO'2013], Wed, 06 Jul 2022 13:28:56 GMT -->
+</html>

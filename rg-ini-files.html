@@ -1,0 +1,172 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<!-- Mirrored from rg-ini-files.html by HTTrack Website Copier/3.x [XR&CO'2013], Wed, 06 Jul 2022 13:29:00 GMT -->
+<head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><title>7.6. Squish Initialization Files</title><link rel="stylesheet" href="manual.css" type="text/css"></link><meta name="generator" content="DocBook XSL Stylesheets V1.73.2"></meta><link rel="start" href="index-noframes.html" title="Squish Manual"></link><link rel="up" href="ref.man.html" title="Chapter 7. Tools Reference Manual"></link><link rel="prev" href="rg-envvars.html" title="7.5. Environment Variables"></link><link rel="next" href="rghsa-sub.html" title="7.7. Record / Replay on Sub-Processes started by the AUT"></link><style xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" type="text/css" media="screen">
+        div.toc * { margin-left: 6px; margin-right: auto; max-width: 75em; }
+        div.toc span { margin-left: 0px; }
+        * { margin-left: auto; margin-right: auto; max-width: 75em; }
+        body { margin-left: 6px; margin-right: 6px; }
+        table th { padding: .5ex }
+        table td { padding: .5ex }
+    </style><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format">
+        function keyPress() {
+            var e = window.event;
+            if ( e == undefined ) {
+                return;
+            }
+            /* ### does not properly scroll, yet
+            if ( e.keyCode == 32 ) {
+            var l = document.links;
+            for ( var i = 0; i < l.length; i++ ) {
+                if ( l[i].innerText == "Next" ) {
+                location.href = l[i].href;
+                }
+            }
+            } else
+                */
+                if ( e.keyCode == 0x08 ) {
+            var l = document.links;
+            for ( var i = 0; i < l.length; i++ ) {
+                if ( l[i].innerText == "Prev" ) {
+                location.href = l[i].href;
+                }
+            }
+            }
+        }
+        document.onkeypress = keyPress;
+    </script></head><body><div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="rg-ini-files"></a>7.6. <span class="emphasis"><em>Squish</em></span> Initialization Files</h2></div></div></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><span class="section"><a href="rg-ini-files.html#idp55908128">7.6.1. <code class="filename">.ini</code> Files</a></span></dt><dt><span class="section"><a href="rg-ini-files.html#ignoredauts.txt">7.6.2. <code class="filename">ignoredauts.txt</code></a></span></dt></dl></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="idp55908128"></a>7.6.1. <code class="filename">.ini</code> Files</h3></div></div></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><span class="section"><a href="rg-ini-files.html#rg-paths.ini-file">7.6.1.1. paths.ini</a></span></dt><dt><span class="section"><a href="rg-ini-files.html#rg-ocr.ini-file">7.6.1.2. ocr.ini</a></span></dt><dt><span class="section"><a href="rg-ini-files.html#rg-squish.ini-file">7.6.1.3. squish.ini</a></span></dt></dl></div><p>
+<span class="emphasis"><em>Squish</em></span> uses some <code class="filename">.ini</code> files to control some
+aspects of the command line tools and the IDE's behavior. In general
+these files should <span class="bold"><strong>not</strong></span> be edited;
+instead use the <span class="application">Squish IDE</span> and <a class="xref" href="rg-envvars.html" title="7.5. Environment Variables">Environment Variables (Section 7.5)</a> to change any
+settings.
+</p><p>
+The <code class="filename">.ini</code> files include <code class="filename">ide.ini</code>,
+<code class="filename">ocr.ini</code>, <code class="filename">paths.ini</code>, and
+<code class="filename">server.ini</code>. These files are stored in the
+<code class="filename">%APPDATA%\froglogic\Squish\ver1</code> folder on Windows
+and the <code class="filename">$HOME/.squish/ver1</code> directory on Unix-like
+systems such as Linux. In addition, for <span class="emphasis"><em>Squish</em></span> for Qt editions there
+is a file called <code class="filename">qtwrapper.ini</code> which is stored in
+the <code class="filename">SQUISHDIR/etc</code> directory.
+</p><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Note: Squish for Qt for Windows-specific"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/note.png"></img></td><th align="left"><span class="emphasis"><em>Squish</em></span> for Qt for Windows-specific</th></tr><tr><td align="left" valign="top"><p>
+If you are testing Qt applications on Windows that are not deployed or
+tested on other platforms you can force <span class="emphasis"><em>Squish</em></span> to use native Windows
+dialogs rather than Qt dialogs (e.g., for opening files and for
+printing). To do this edit the <code class="filename">qtwrapper.ini</code> file
+(which may have to be created and put in the <code class="filename">SQUISHDIR/etc</code>
+directory mentioned above) using a plain text editor and add a new line
+to the General group's entry (creating a General group if necessary) so
+that you have:
+</p><pre class="programlisting">
+[General]
+UseNativeDialogs = 1
+</pre><p>
+With this in place, <span class="emphasis"><em>Squish</em></span> will use native dialogs when running Qt
+applications on Windows. Note that this should <span class="emphasis"><em>not</em></span>
+be done for applications that are to be tested cross-platform with the
+same <span class="emphasis"><em>Squish</em></span> tests.
+</p></td></tr></table></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="rg-paths.ini-file"></a>7.6.1.1. paths.ini</h4></div></div></div><p>
+The <code class="filename">paths.ini</code> file is used to store various
+paths—for example, where global scripts are stored. In the case of
+global scripts (which are stored under key
+“<span class="quote">GlobalScriptDirs</span>”), when using the <a class="xref" href="rgs-squish.html#findFile-function"><code class="function">findFile</code></a> function to find a script file to pass to
+the <a class="xref" href="rgs-squish.html#source-function"><code class="function">source</code></a> function, <a class="xref" href="rgs-squish.html#findFile-function"><code class="function">findFile</code></a> first looks in the test case's scripts
+directory, then in the test suite's shared scripts directory, then in
+the paths listed in the <code class="filename">paths.ini</code> file, and finally
+in the directories listed in the <code class="envar">SQUISH_SCRIPT_DIR</code>
+environment variable. (The search stops as soon as the file is found.)
+The <code class="filename">paths.ini</code> file shouldn't need to be hand edited
+(see the <a class="xref" href="ide.views.html#ide.the-global-scripts.view" title="8.2.7. Global Scripts view">Global Scripts view (Section 8.2.7)</a>), but if you move
+your <span class="emphasis"><em>Squish</em></span> setup to another system you will want to copy this
+file—assuming that you use the same paths of course.
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="rg-ocr.ini-file"></a>7.6.1.2. ocr.ini</h4></div></div></div><p>
+The <code class="filename">ocr.ini</code> file is used to store parameters relevant
+to the OCR functions like <a class="xref" href="rgs-squish.html#waitForOcrText-function"><code class="function">waitForOcrText</code></a> or
+<a class="xref" href="rgs-squish.html#test.ocrTextPresent-function"><code class="function">test.ocrTextPresent</code></a>. The settings in the <code class="filename">
+ocr.ini</code> can be edited easily using the
+<a class="xref" href="ide.dialogs.html#ide.preferences.squish.ocr.pane">OCR Preferences</a>
+pane. The currently available options are
+</p><pre class="programlisting">
+[General]
+DefaultEngine = "Tesseract"
+
+[Tesseract]
+InstallPath/40 = "/path/to/tesseract-for-squish-4.0.0"
+
+[OCRSpace]
+ApiKey = "XXXXXXXXXXXXXXX"
+ApiEndpoint = "https://api.ocr.space/parse/image"
+
+[Rekognition]
+ApiKeyId = "XXXXXXXXXXXXXXXXXXXX"
+ApiKey = "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
+Region = "eu-west-1"
+</pre><p>
+<code class="code">DefaultEngine</code> in the <code class="code">General</code> section is the default
+OCR engine used by Squish. Currently supported values are <code class="code">Tesseract</code>,
+<code class="code">OCRSpace</code> and <code class="code">Rekognition</code> which correspond to the
+<a class="ulink" href="https://github.com/tesseract-ocr/tesseract" target="_blank">Tesseract OCR</a>,
+<a class="ulink" href="https://ocr.space/" target="_blank">OCR.Space</a> and
+<a class="ulink" href="https://docs.aws.amazon.com/rekognition/latest/dg/text-detection.html" target="_blank">
+Amazon Rekognition Text</a> respectively.
+</p><p>
+<code class="code">InstallPath/40</code> in the <code class="code">Tesseract</code> section is the
+installation path of the Tesseract for Squish package.
+</p><p>
+<code class="code">ApiKey</code> in the <code class="code">OCRSpace</code> section is the secret key
+used to authenticate the user with the OCR.Space service. You can request an
+API key for the OCR.Space service <a class="ulink" href="https://ocr.space/ocrapi" target="_blank">
+here</a>.
+</p><p>
+<code class="code">ApiKeyId</code> and <code class="code">ApiKey</code> in the <code class="code">Rekognition</code>
+section are the secret key ID and the secret access key used to authenticate
+the user with the Amazon Rekognition service. Instructions to create an API
+key set for the Amazon Rekognition service are available
+<a class="ulink" href="https://docs.aws.amazon.com/IAM/latest/UserGuide/id_credentials_access-keys.html" target="_blank">
+here</a>.
+</p><p>
+<code class="code">Region</code> in the <code class="code">Rekognition</code> section is the name of the
+regional server used with the Amazon Rekognition service. The current list of
+servers that support Rekognition is available
+<a class="ulink" href="https://docs.aws.amazon.com/general/latest/gr/rande.html#rekognition_region" target="_blank">
+here</a>.
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="rg-squish.ini-file"></a>7.6.1.3. squish.ini</h4></div></div></div><p>
+The <code class="filename">squish.ini</code> file is used to store some important
+<span class="emphasis"><em>Squish</em></span> settings, so it should be edited with care.
+</p><p>
+One of the file's <code class="code">General</code> section entry's keys is
+<code class="code">Wrappers/Qt/InitScripts</code>, and its value is a comma-separated
+list of Tcl files used to initialize <span class="emphasis"><em>Squish</em></span> for Qt (no matter what
+scripting language is used for Qt tests). If you would like to enable or
+disable event compression (e.g., enable to combine lots of small mouse
+moves into a single mouse move) you can do so by adding a new Tcl file
+to this entry's list called <code class="filename">eventcompression.tcl</code>.
+This file should contain one or more lines such as this:
+</p><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Tcl</span><pre class="programlisting">
+enableEventCompression GLWidget false
+</pre></div><p>
+Here, event compression for GLWidgets has been switched off. You can
+have as many lines of this form as you like so long as each one has the
+same format with the second word being the name of the relevant class
+and the third word being <code class="code">true</code> or <code class="code">false</code>.
+</p></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="ignoredauts.txt"></a>7.6.2. <code class="filename">ignoredauts.txt</code></h3></div></div></div><p>
+<span class="emphasis"><em>Squish</em></span> for macOS, and Unix versions of
+<span class="emphasis"><em>Squish</em></span> for Qt,
+<span class="emphasis"><em>Squish</em></span> for Tk, and
+<span class="emphasis"><em>Squish</em></span> for Xview, read a file at startup,
+<code class="filename">SQUISHDIR/etc/ignoredauts.txt</code>, if it exists.
+The file is a list of process names, one per line. On Linux each process
+name is the same name as the executable binary file; on other systems it
+is the name used by the <span class="application">ps</span> or
+<span class="application">top</span> programs.
+<span class="emphasis"><em>Squish</em></span> will <span class="emphasis"><em>not</em></span> hook into any process listed in
+this file. This blacklist exists to provide a last resort means of stopping
+<span class="emphasis"><em>Squish</em></span> from hooking into a sub-processes launched by an AUT that would
+be adversely affected by an attempt to hook into it—for example,
+it might terminate prematurely. If you have a problem with hooking
+into a sub-process it is best to contact <span class="emphasis"><em>froglogic</em></span>'s technical support
+for advice before editing this file.
+</p></div></div><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" type="text/javascript" src="ScriptingLanguage.js"></script><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format">setScriptingLanguage();</script><div class="navfooter"><hr></hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="rg-envvars.html">Prev</a> </td><td width="20%" align="center"><a accesskey="u" href="ref.man.html">Up</a></td><td width="40%" align="right"> <a accesskey="n" href="rghsa-sub.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">7.5. Environment Variables </td><td width="20%" align="center"><a accesskey="h" href="index-noframes.html">Home</a></td><td width="40%" align="right" valign="top"> 7.7. Record / Replay on Sub-Processes started by the AUT</td></tr></table></div></body>
+<!-- Mirrored from rg-ini-files.html by HTTrack Website Copier/3.x [XR&CO'2013], Wed, 06 Jul 2022 13:29:00 GMT -->
+</html>

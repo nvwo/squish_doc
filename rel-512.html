@@ -1,0 +1,88 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<!-- Mirrored from rel-512.html by HTTrack Website Copier/3.x [XR&CO'2013], Wed, 06 Jul 2022 13:28:56 GMT -->
+<head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><title>2.33. Version 5.1.2</title><link rel="stylesheet" href="manual.css" type="text/css"></link><meta name="generator" content="DocBook XSL Stylesheets V1.73.2"></meta><link rel="start" href="index-noframes.html" title="Squish Manual"></link><link rel="up" href="relnotes.html" title="Chapter 2. Release Notes—for Upgraders"></link><link rel="prev" href="rel-513.html" title="2.32. Version 5.1.3"></link><link rel="next" href="rel-511.html" title="2.34. Version 5.1.1"></link><style xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" type="text/css" media="screen">
+        div.toc * { margin-left: 6px; margin-right: auto; max-width: 75em; }
+        div.toc span { margin-left: 0px; }
+        * { margin-left: auto; margin-right: auto; max-width: 75em; }
+        body { margin-left: 6px; margin-right: 6px; }
+        table th { padding: .5ex }
+        table td { padding: .5ex }
+    </style><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format">
+        function keyPress() {
+            var e = window.event;
+            if ( e == undefined ) {
+                return;
+            }
+            /* ### does not properly scroll, yet
+            if ( e.keyCode == 32 ) {
+            var l = document.links;
+            for ( var i = 0; i < l.length; i++ ) {
+                if ( l[i].innerText == "Next" ) {
+                location.href = l[i].href;
+                }
+            }
+            } else
+                */
+                if ( e.keyCode == 0x08 ) {
+            var l = document.links;
+            for ( var i = 0; i < l.length; i++ ) {
+                if ( l[i].innerText == "Prev" ) {
+                location.href = l[i].href;
+                }
+            }
+            }
+        }
+        document.onkeypress = keyPress;
+    </script></head><body><div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="rel-512"></a>2.33. Version 5.1.2</h2></div></div></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><span class="section"><a href="rel-512.html#idp35536992">2.33.1. <span class="trademark">Java</span>™-specific</a></span></dt><dt><span class="section"><a href="rel-512.html#idp35542144">2.33.2. Web-specific</a></span></dt><dt><span class="section"><a href="rel-512.html#idp35544424">2.33.3. Windows (native)-specific</a></span></dt><dt><span class="section"><a href="rel-512.html#idp35547328">2.33.4. iOS-specific</a></span></dt><dt><span class="section"><a href="rel-512.html#idp35549440">2.33.5. Android-specific</a></span></dt><dt><span class="section"><a href="rel-512.html#idp35552088">2.33.6. General</a></span></dt><dt><span class="section"><a href="rel-512.html#idp35553424">2.33.7. IDE</a></span></dt><dt><span class="section"><a href="rel-512.html#idp35557480">2.33.8. Scripting</a></span></dt></dl></div><p><span class="emphasis"><em>Squish</em></span> 5.1.2 is a maintenance release that provides
+enhancements for the Java, Web, Windows, Android and iOS
+editions. Updates for the other editions will follow.</p><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="idp35536992"></a>2.33.1. <span class="trademark">Java</span>™-specific</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Added support for Java Platform 8u20 or
+later.</p></li><li><p>Fixed 100% CPU usage with JavaFX applications using
+WebView and recent Java 8 versions.</p></li><li><p>Fixed document object mixup when having multiple
+WebView widgets.</p></li><li><p>Added support for 'visible' property in
+JavaFX.</p></li><li><p>Fixed crash
+with <span class="application">startjavaaut</span> and JavaFX based
+application having a WebView widget.</p></li><li><p>Allow Java properties to be excluded from wrapping
+using a configuration file.</p></li><li><p>Fixed replaying mouse clicks in multi toolkit
+applications (e.g. Swing embedded in SWT) when keeping the target
+object as variable and accessing the other toolkit before invoking the
+script click command.</p></li><li><p>Fixed breakage of Java Web Start and Java applets with
+recent Java 7 and Java 8 versions on Windows.</p></li><li><p>To increase performance Object Map name reuse can now
+be turned off by setting environment variable
+<code class="envar">SQUISH_JAVA_NAME_REUSE=0</code>.</p></li><li><p>Fixed picking of objects with Eclipse 4.4 (Gtk 3)
+applications.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="idp35542144"></a>2.33.2. Web-specific</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Added support for https sites with Chrome 38 and
+later.</p></li><li><p>Restore Internet Explorer's Protected Mode Setting
+after a test run to avoid conflict with other tools like HP
+ALM.</p></li><li><p>Fixed occasional crash during browser shutdown on
+Windows.</p></li><li><p>Fixed race condition in startup of tests with Internet
+Explorer.</p></li><li><p>Improved replaying of file dialog interaction in
+Chrome and other browsers.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="idp35544424"></a>2.33.3. Windows (native)-specific</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Fixed clicking Windows Forms ComboBox (and ListView)
+items without .NET 4.5 installed.</p></li><li><p>Allow <acronym class="acronym">WPF</acronym> ListViewItem inside
+TreeView</p></li><li><p>Fixed row values of WindowsForms TableRow objects. They were offset by the number of column objects previously.</p></li><li><p>Fixed non-working cases of 'AutomationId' property of
+<acronym class="acronym">WPF</acronym> objects.</p></li><li><p>Fixed crash in <acronym class="acronym">MFC</acronym> ToolBar support
+in case allocating remote memory fails.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="idp35547328"></a>2.33.4. iOS-specific</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Support for Xcode 6 and iOS 8 (testing in the iOS simulator)</p></li><li><p>Support screenshots for GLKView objects (OpenGL content)</p></li><li><p>Added new launcher
+argument <code class="option">--device-id</code> for selection of simulated
+device.</p></li><li><p>Added support for device testing on ARMv7s
+architecture.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="idp35549440"></a>2.33.5. Android-specific</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Expose non-static public class fields in addition to
+static ones.</p></li><li><p>Workaround for replaying touch events when
+<code class="option">View.SYSTEM_UI_FLAG_HIDE_NAVIGATION</code> is
+enabled.</p></li><li><p>Fixed object look-up after traversal of objects via
+<code class="code">nativeObject</code>.</p></li><li><p>Fixed document object mixup when having multiple
+WebView widgets.</p></li><li><p>More robust recording on WebViews.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="idp35552088"></a>2.33.6. General</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Fixed replaying of <span class="keysym">Backspace</span> key with
+<code class="code">nativeType()</code> on X11 platforms.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="idp35553424"></a>2.33.7. IDE</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Provide a <span class="guilabel">Show Toolbar</span> option
+when the toolbar is hidden to allow accessing it
+again.</p></li><li><p>Support opening of object map files from global script
+folders and elsewhere.</p></li><li><p>Fixed removal of spaces at the end of symbolic names
+when copying them from the object map editor.</p></li><li><p>Fixed startup of the Eclipse 4 based version of the
+IDE when using commandline arguments to open
+testsuites.</p></li><li><p>Prevent the <span class="guilabel">Debug Console</span> window
+from stealing the focus from the Test Results view after executing a
+test from the IDE.</p></li><li><p>Fixed potential crash when entering <span class="application">Spy</span> mode and
+lots of new GUI toolkit classes are getting
+registered.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="idp35557480"></a>2.33.8. Scripting</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Fixed crash occurring when mixing Python functions
+from different wrappers (e.g. Java and Web) in hybrid
+applications.</p></li><li><p>Fixed (and optimized) <code class="code">objectMap</code> API when
+no AUT is running.</p></li><li><p>Fixed parsing of JavaScript floating point numbers
+ when the system has a non-English locale set.</p></li></ul></div></div></div><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" type="text/javascript" src="ScriptingLanguage.js"></script><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format">setScriptingLanguage();</script><div class="navfooter"><hr></hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="rel-513.html">Prev</a> </td><td width="20%" align="center"><a accesskey="u" href="relnotes.html">Up</a></td><td width="40%" align="right"> <a accesskey="n" href="rel-511.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">2.32. Version 5.1.3 </td><td width="20%" align="center"><a accesskey="h" href="index-noframes.html">Home</a></td><td width="40%" align="right" valign="top"> 2.34. Version 5.1.1</td></tr></table></div></body>
+<!-- Mirrored from rel-512.html by HTTrack Website Copier/3.x [XR&CO'2013], Wed, 06 Jul 2022 13:28:56 GMT -->
+</html>

@@ -1,0 +1,268 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<!-- Mirrored from rgs-macconvenience.html by HTTrack Website Copier/3.x [XR&CO'2013], Wed, 06 Jul 2022 13:29:00 GMT -->
+<head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><title>6.8. macOS Convenience API</title><link rel="stylesheet" href="manual.css" type="text/css"></link><meta name="generator" content="DocBook XSL Stylesheets V1.73.2"></meta><link rel="start" href="index-noframes.html" title="Squish Manual"></link><link rel="up" href="api.man.html" title="Chapter 6. API Reference Manual"></link><link rel="prev" href="class-com.froglogic.squish.extension.ViewportExtension.html" title="Interface ViewportExtension"></link><link rel="next" href="rgs-iphoneconvenience.html" title="6.9. iOS Convenience API"></link><style xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" type="text/css" media="screen">
+        div.toc * { margin-left: 6px; margin-right: auto; max-width: 75em; }
+        div.toc span { margin-left: 0px; }
+        * { margin-left: auto; margin-right: auto; max-width: 75em; }
+        body { margin-left: 6px; margin-right: 6px; }
+        table th { padding: .5ex }
+        table td { padding: .5ex }
+    </style><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format">
+        function keyPress() {
+            var e = window.event;
+            if ( e == undefined ) {
+                return;
+            }
+            /* ### does not properly scroll, yet
+            if ( e.keyCode == 32 ) {
+            var l = document.links;
+            for ( var i = 0; i < l.length; i++ ) {
+                if ( l[i].innerText == "Next" ) {
+                location.href = l[i].href;
+                }
+            }
+            } else
+                */
+                if ( e.keyCode == 0x08 ) {
+            var l = document.links;
+            for ( var i = 0; i < l.length; i++ ) {
+                if ( l[i].innerText == "Prev" ) {
+                location.href = l[i].href;
+                }
+            }
+            }
+        }
+        document.onkeypress = keyPress;
+    </script></head><body><div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="rgs-macconvenience"></a>6.8. macOS Convenience API</h2></div></div></div><div class="important" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Important: macOS-specific"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Important]" src="images/important.png"></img></td><th align="left">macOS-specific</th></tr><tr><td align="left" valign="top"><p>
+The macOS Convenience API is <span class="emphasis"><em>only</em></span> available for
+the Squish for macOS editions.
+</p></td></tr></table></div><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Note: Terminology"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/note.png"></img></td><th align="left">Terminology</th></tr><tr><td align="left" valign="top"><p>
+The <span class="emphasis"><em>Squish</em></span> documentation uses the term <span class="emphasis"><em>widget</em></span>
+when referring to GUI objects. macOS developers may be more
+familiar with the term <span class="emphasis"><em>view</em></span> for this concept.
+</p></td></tr></table></div><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Note: Mac Convenience Function Parameters"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/note.png"></img></td><th align="left"><a id="mac-convenience.function.parameters"></a>Mac Convenience Function Parameters</th></tr><tr><td align="left" valign="top"><p>
+Some of the macOS convenience functions can take a
+<em class="parameter"><code>modifierState</code></em> argument which indicates which
+special keys are pressed at the time of a mouse click. And some of the
+functions can also take a <em class="parameter"><code>button</code></em> argument which
+indicates which mouse button was clicked.
+</p><p>
+The <em class="parameter"><code>modifierState</code></em> is an integer used as a
+bit-flag. Its value can be <code class="code">0</code> (no modifiers) or one or more
+of: <code class="code">1</code> (Shift), <code class="code">2</code> (Control), <code class="code">4</code>
+(Command), <code class="code">8</code> (Option), with multiple modifiers or-ed
+together (e.g., <code class="code">1|2</code> for Shift+Control).
+</p><p>
+The <em class="parameter"><code>button</code></em> is an integer: <code class="code">0</code>
+signifies the “<span class="quote">primary</span>” mouse button (most commonly the
+left button), and <code class="code">1</code> signifies the right button.
+</p></td></tr></table></div><p>
+Here are some quick links to the macOS Convenience API's functions:
+</p><div class="informaltable"><table border="0"><colgroup><col></col><col></col><col></col></colgroup><tbody><tr valign="top"><td valign="top">
+<div class="itemizedlist"><ul type="disc" compact><li><p><a class="xref" href="rgs-macconvenience.html#mac-activateItem-function"><code class="function">activateItem</code></a></p></li><li><p><a class="xref" href="rgs-macconvenience.html#mac-clearWebObjectCache-function"><code class="function">clearWebObjectCache</code></a></p></li><li><p><a class="xref" href="rgs-macconvenience.html#mac-clickButton-function"><code class="function"><span class="emphasis"><em>—deprecated—</em></span> clickButton</code></a></p></li><li><p><a class="xref" href="rgs-macconvenience.html#mac-clickTab-function"><code class="function"><span class="emphasis"><em>—deprecated—</em></span> clickTab</code></a></p></li></ul></div>
+</td><td valign="top">
+<div class="itemizedlist"><ul type="disc" compact><li><p><a class="xref" href="rgs-macconvenience.html#mac-doubleClick-function"><code class="function">doubleClick</code></a></p></li><li><p><a class="xref" href="rgs-macconvenience.html#mac-grabWidget-function"><code class="function">grabWidget</code></a></p></li><li><p><a class="xref" href="rgs-macconvenience.html#mac-installEventHandler-function"><code class="function">installEventHandler</code></a></p></li><li><p><a class="xref" href="rgs-macconvenience.html#mac-mouseClick-function"><code class="function">mouseClick</code></a></p></li></ul></div>
+</td><td valign="top">
+<div class="itemizedlist"><ul type="disc" compact><li><p><a class="xref" href="rgs-macconvenience.html#mac-mouseDrag-function"><code class="function">mouseDrag</code></a></p></li><li><p><a class="xref" href="rgs-macconvenience.html#mac-scrollToObject-function"><code class="function">scrollToObject</code></a></p></li><li><p><a class="xref" href="rgs-macconvenience.html#mac-type-function"><code class="function">type</code></a></p></li><li><p><a class="xref" href="rgs-macconvenience.html#mac-uninstallEventHandler-function"><code class="function">uninstallEventHandler</code></a></p></li></ul></div>
+</td></tr></tbody></table></div><div class="funcsynopsis"><a id="mac-activateItem-function"></a><p><code class="funcdef"><b class="fsfunc">activateItem</b>(</code><var class="pdparam">objectOrName</var><code>)</code>;</p></div><p>
+This function activates the <em class="parameter"><code>objectOrName</code></em> menu
+item. This menu item must be a reference to (or a name that identifies)
+an <code class="classname">NSMenuItem</code> or a Carbon menu item. The menu item
+can be part of the application menu or a menu item inside an
+<code class="classname">NSPopUpButton</code>.
+</p><div class="tip" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Tip: macOS Universal Access"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Tip]" src="images/tip.png"></img></td><th align="left"><a id="macosx.universal.access"></a>macOS Universal Access</th></tr><tr><td align="left" valign="top"><p>
+In order to replay menu activations on macOS as well as use the <a class="xref" href="rgs-squish.html#nativeType-function"><code class="function">nativeType</code></a>
+and <a class="xref" href="rgs-squish.html#nativeMouseClick-function"><code class="function">nativeMouseClick</code></a> functions you have to enable accessibility support in the
+System Preferences for certain processes. The system will open up a popup
+dialog when starting the Squish IDE the first time that allows you to directly go the
+preferences dialog to enable accessibility support for the Squish IDE.
+</p><p>
+The dialog can also be opened manually:
+Open the <span class="guilabel">System Preferences</span> and choose <span class="guilabel">Security
+&amp; Privacy</span>.  Then choose the <span class="guilabel">Privacy</span> tab and
+select <span class="guilabel">Accessibility</span> on the left side.
+</p><p>
+In order to make changes, click the <span class="guibutton">lock</span> symbol in the
+lower left and enter the credentials of an administrative user. Then
+check the <span class="application">Squishide</span> or
+<span class="application">Terminal</span> app which needs permissions, from the list.
+</p><div class="screenshot"><div class="mediaobject" align="center"><img src="images/mac-preferences.png" align="middle"></img></div></div><div class="screenshot"><div class="mediaobject" align="center"><img src="images/mac-universal-access.png" align="middle"></img></div></div><p>
+Note that at any given time there will be only one Squish IDE instance that has
+access to the accessibility API and hence can run scripts that automate menus,
+use the <a class="xref" href="rgs-squish.html#nativeType-function"><code class="function">nativeType</code></a> or the <a class="xref" href="rgs-squish.html#nativeMouseClick-function"><code class="function">nativeMouseClick</code></a> function. In order to use another Squish
+IDE - for example from another Squish installation on the same system - you
+need to remove the existing entry completely from the list and then start the
+other instance of the Squish IDE. Then enable accessibility support again when
+the dialog pops up.
+</p><p>
+Finally it may sometimes happen that macOS always asks for enabling the
+accessibility support during the startup of the Squish IDE. In such cases it
+helps to completely reset the database for Accessibility-enablement and clear
+out the whole list. This can be done using the
+<span class="application">tccutil</span> from macOS:
+</p><pre class="screen">
+tccutil reset Accessibility
+</pre><p>
+After executing the command restart the Squish IDE to trigger the
+Accessibility-enablement popup again.
+</p></td></tr></table></div><div class="funcsynopsis"><a id="mac-clearWebObjectCache-function"></a><p><code class="funcdef"><b class="fsfunc">clearWebObjectCache</b>(</code><var class="pdparam"></var><code>)</code>;</p></div><p>
+This function clears the cache for hierarchical names for objects in a WebView.
+This can be useful in cases where a web application removes some elements of
+a web page after interacting with it and then the same hierarchical name used
+before should find a different object. Without clearing the cache in this situation
+the old object will be retrieved from the cache when searching for the hierarchical
+name after the website has changed its content. The cache however is necessary to keep
+lookup for hierarchical performant and scalable for deeper hierarchies.
+</p><div class="funcsynopsis"><a id="mac-clickButton-function"></a><p><code class="funcdef">
+  <b class="fsfunc">—deprecated— clickButton</b>(</code><var class="pdparam">objectOrName</var><code>)</code>;</p></div><p>
+This function is identical to <a class="xref" href="rgs-macconvenience.html#mac-mouseClick-function"><code class="function">mouseClick</code></a>.
+It is included only for compatibility with old scripts. It should not be
+used in new scripts since it may eventually be removed from <span class="emphasis"><em>Squish</em></span>.
+</p><div class="funcsynopsis"><a id="mac-clickTab-function"></a><p><code class="funcdef"><b class="fsfunc">—deprecated— clickTab</b>(</code><var class="pdparam">objectOrName</var><code>)</code>;</p></div><p>
+This function is identical to <a class="xref" href="rgs-macconvenience.html#mac-mouseClick-function"><code class="function">mouseClick</code></a>.
+It is included only for compatibility with old scripts. It should not be
+used in new scripts since it may eventually be removed from <span class="emphasis"><em>Squish</em></span>.
+</p><div class="funcsynopsis"><a id="mac-doubleClick-function"></a><p><code class="funcdef"><b class="fsfunc">doubleClick</b>(</code><var class="pdparam">objectOrName</var><code>)</code>;</p></div><div class="funcsynopsis"><p><code class="funcdef"><b class="fsfunc">doubleClick</b>(</code><var class="pdparam">objectOrName</var>, <var class="pdparam">x</var>, <var class="pdparam">y</var><code>)</code>;</p></div><div class="funcsynopsis"><p><code class="funcdef"><b class="fsfunc">doubleClick</b>(</code><var class="pdparam">objectOrName</var>, <var class="pdparam">x</var>, <var class="pdparam">y</var>, <var class="pdparam">modifierState</var>, <var class="pdparam">button</var><code>)</code>;</p></div><p>
+This function double-clicks the mouse on the specified
+<em class="parameter"><code>objectOrName</code></em> widget.
+</p><p>
+By default the object is clicked in the middle, but this can be changed
+by passing object-relative coordinates, <em class="parameter"><code>x</code></em> and
+<em class="parameter"><code>y</code></em>. By default button 0 (the primary button)
+is used, but this can be changed by specifying the optional
+<em class="parameter"><code>button</code></em> argument. Similarly a default
+modifier state of 0 (no modifiers) is used, but this can be
+changed by specifying the <em class="parameter"><code>modifierState</code></em> argument.
+Note that to specify the modifier, the button must also be specified,
+and to specify the modifier, the position must be specified.
+See <a class="xref" href="rgs-macconvenience.html#mac-convenience.function.parameters" title="Mac Convenience Function Parameters">Mac Convenience Function Parameters</a> for which
+values are valid for the <em class="parameter"><code>modifierState</code></em> and for
+the <em class="parameter"><code>button</code></em> arguments.
+</p><div class="funcsynopsis"><a id="mac-grabWidget-function"></a><p><code class="funcdef">QImage <b class="fsfunc">grabWidget</b>(</code><var class="pdparam">object</var><code>)</code>;</p></div><a id="idp51092720" class="indexterm"></a><p>
+This function takes a screenshot of the <em class="parameter"><code>object</code></em>
+window (or widget) and returns it as an <a class="xref" href="rgs-squish.html#rgss-image-object" title="6.3.13. QImage Object"><code class="code">QImage</code> Object (Section 6.3.13)</a>.
+</p><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Note: The Newer Way to Grab a Widget "><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/note.png"></img></td><th align="left">The Newer Way to Grab a Widget </th></tr><tr><td align="left" valign="top"><p> Instead of using <code class="function">grabWidget</code> to get an
+AUT-side QImage, it is easier to capture an <a class="xref" href="rgs-squish.html#script-image-object" title="6.3.14. Image Object">Image Object (Section 6.3.14)</a>
+using <a class="xref" href="rgs-squish.html#object.grabScreenshot-function"><code class="function">object.grabScreenshot</code></a>.
+The <a class="xref" href="rgs-squish.html#Image.save-function"><code class="function">Image.save</code></a> function allows you to save
+directly to a location on the <span class="application">squishrunner</span> host.
+</p></td></tr></table></div><p>
+See the <a class="xref" href="rgs-squish.html#waitForObject-function"><code class="function">waitForObject</code></a> and <a class="xref" href="rgs-squish.html#findObject-function"><code class="function">findObject</code></a> functions for how to get an object
+reference to a window or widget.
+</p><div class="funcsynopsis"><a id="mac-installEventHandler-function"></a><p><code class="funcdef"><b class="fsfunc">installEventHandler</b>(</code><var class="pdparam">eventName</var>, <var class="pdparam">handlerFunctionName</var><code>)</code>;</p></div><p>
+This function installs a global event handler. The script function
+named in <em class="parameter"><code>handlerFunctionName</code></em> (which must be passed
+as a string, not as a function reference, except for Python, which
+supports passing a function reference, too), will be called when an event
+of the <em class="parameter"><code>eventName</code></em> type occurs.
+</p><p>
+The <em class="parameter"><code>eventName</code></em> can be the name of any of the
+following event types:
+</p><div class="itemizedlist"><ul type="disc" compact><li><p>"Crash" – occurs if the AUT
+crashes</p></li><li><p>"SheetOpened" – occurs when a
+macOS sheet is shown (note that this only applies to Cocoa
+applications)</p></li><li><p>"WindowOpened" – occurs when a
+macOS toplevel window is shown (note that this only applies to Cocoa
+applications)</p></li><li><p>"Timeout" –
+occurs when the <span class="emphasis"><em>Squish</em></span> response timeout is reached</p></li></ul></div><p>
+When the <em class="parameter"><code>SheetOpened</code></em> event occurs, the function
+named in <em class="parameter"><code>handlerFunctionName</code></em> is called. The
+function is passed one argument—the window object that opened the
+sheet. If you want to access the sheet itself, call the
+<code class="function">attachedSheet</code> function on the
+<span class="type">NSWindow</span> object.
+</p><p>
+When the <em class="parameter"><code>WindowOpened</code></em> event occurs, the function
+named in <em class="parameter"><code>handlerFunctionName</code></em> is called. The
+function is passed one argument—the window object that was opened.
+The event occurs only for toplevel windows (<span class="type">NSWindow</span> and
+<span class="type">NSPanel</span> objects), but it does not occur for windows that
+are shown as sheets. Use the <em class="parameter"><code>SheetOpened</code></em> event if
+you are interested in sheets.
+</p><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Note: Python-specific"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/note.png"></img></td><th align="left">Python-specific</th></tr><tr><td align="left" valign="top"><p>
+In Python scripts, you can specify the callback function to invoke by
+passing an actual function or a lambda function.
+</p></td></tr></table></div><p>
+For examples see <a class="xref" href="ugs-eventhandlers.html" title="5.10. How to Use Event Handlers">How to Use Event Handlers (Section 5.10)</a>.
+</p><div class="important" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Important: The AUT Must be Running"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Important]" src="images/important.png"></img></td><th align="left">The AUT Must be Running</th></tr><tr><td align="left" valign="top"><p>
+The <code class="code">installEventHandler</code> function will only work if it is
+called <span class="emphasis"><em>after</em></span> the AUT has been started (e.g., using
+the <a class="xref" href="rgs-squish.html#startApplication-function"><code class="function">startApplication</code></a> function).
+</p></td></tr></table></div><div class="funcsynopsis"><a id="mac-mouseClick-function"></a><p><code class="funcdef"><b class="fsfunc">mouseClick</b>(</code><var class="pdparam">objectOrName</var><code>)</code>;</p></div><div class="funcsynopsis"><p><code class="funcdef"><b class="fsfunc">mouseClick</b>(</code><var class="pdparam">objectOrName</var>, <var class="pdparam">x</var>, <var class="pdparam">y</var><code>)</code>;</p></div><div class="funcsynopsis"><p><code class="funcdef"><b class="fsfunc">mouseClick</b>(</code><var class="pdparam">objectOrName</var>, <var class="pdparam">x</var>, <var class="pdparam">y</var>, <var class="pdparam">modifierState</var>, <var class="pdparam">button</var><code>)</code>;</p></div><p>
+This function clicks the mouse on the specified
+<em class="parameter"><code>objectOrName</code></em> widget.
+</p><p>
+By default the object is clicked in the middle, but this can be changed
+by passing object-relative coordinates, <em class="parameter"><code>x</code></em> and
+<em class="parameter"><code>y</code></em>. By default button 0 (the primary button)
+is used, but this can be changed by specifying the optional
+<em class="parameter"><code>button</code></em> argument. Similarly a default
+modifier state of 0 (no modifiers) is used, but this can be
+changed by specifying the <em class="parameter"><code>modifierState</code></em> argument.
+Note that to specify the modifier, the button must also be specified,
+and to specify the modifier, the position must be specified.
+See <a class="xref" href="rgs-macconvenience.html#mac-convenience.function.parameters" title="Mac Convenience Function Parameters">Mac Convenience Function Parameters</a> for which
+values are valid for the <em class="parameter"><code>modifierState</code></em> and for
+the <em class="parameter"><code>button</code></em> arguments.
+</p><div class="funcsynopsis"><a id="mac-mouseDrag-function"></a><p><code class="funcdef"><b class="fsfunc">mouseDrag</b>(</code><var class="pdparam">objectOrName</var>, <var class="pdparam">x</var>, <var class="pdparam">y</var>, <var class="pdparam">dx</var>, <var class="pdparam">dy</var><code>)</code>;</p></div><div class="funcsynopsis"><p><code class="funcdef"><b class="fsfunc">mouseDrag</b>(</code><var class="pdparam">objectOrName</var>, <var class="pdparam">x</var>, <var class="pdparam">y</var>, <var class="pdparam">dx</var>, <var class="pdparam">dy</var>, <var class="pdparam">modifierState</var>, <var class="pdparam">button</var><code>)</code>;</p></div><p>
+This function performs a mouse drag from the
+<em class="parameter"><code>objectOrName</code></em> widget to a position that is
+horizontally offset by <em class="parameter"><code>dx</code></em> pixels and vertically
+offset by <em class="parameter"><code>dy</code></em> pixels from position
+<em class="parameter"><code>x</code></em>, <em class="parameter"><code>y</code></em> in the
+<em class="parameter"><code>objectOrName</code></em> widget's coordinates.
+</p><p>
+By default button 0 (the primary button) is used, but this can be changed
+by specifying the optional <em class="parameter"><code>button</code></em> argument.
+Similarly a default modifier state of 0 (no modifiers) is used, but this
+can be changed by specifying the <em class="parameter"><code>modifierState</code></em>
+argument. Note that to specify the modifier, the button must also be
+specified, and to specify the modifier, the position must be specified. See
+<a class="xref" href="rgs-macconvenience.html#mac-convenience.function.parameters" title="Mac Convenience Function Parameters">Mac Convenience Function Parameters</a> for which values are
+valid for the <em class="parameter"><code>modifierState</code></em> and for the
+<em class="parameter"><code>button</code></em> arguments.
+</p><div class="funcsynopsis"><a id="mac-scrollToObject-function"></a><p><code class="funcdef"><b class="fsfunc">scrollToObject</b>(</code><var class="pdparam">objectOrName</var><code>)</code>;</p></div><p>
+This function ensures that the <em class="parameter"><code>objectOrName</code></em>
+widget is visible in the scroll widget that contains it, by scrolling if
+necessary.
+</p><p>
+If there are nested scroll widgets, the innermost one that contains the
+<em class="parameter"><code>objectOrName</code></em> widget is the one that will be
+scrolled.
+</p><p>
+Currently this function only works for <code class="classname">NSView</code>
+subclasses and for items in a <code class="classname">NSTableView</code> and
+<code class="classname">NSOutlineView</code>. If you need support for other
+classes, contact froglogic support.
+</p><div class="funcsynopsis"><a id="mac-type-function"></a><p><code class="funcdef"><b class="fsfunc">type</b>(</code><var class="pdparam">objectOrName</var>, <var class="pdparam">text</var><code>)</code>;</p></div><p>
+This function types the specified <em class="parameter"><code>text</code></em> (as if the
+user had used the keyboard) into the <em class="parameter"><code>objectOrName</code></em>
+editable widget. If the text is surrounded by angle brackets (&lt;&gt;),
+it is interpreted as a key combination, e.g
+<code class="code">"&lt;Ctrl+Return&gt;"</code>. The input is case-sensitive, so
+<code class="code">type(<span class="emphasis"><em>object</em></span>, "R")</code> is different from
+<code class="code">type(<span class="emphasis"><em>object</em></span>, "r")</code>.
+</p><p>
+The following non-printable keys are supported in key combinations:
+<code class="code">&lt;Ctrl&gt;</code>,
+<code class="code">&lt;Command&gt;</code>,
+<code class="code">&lt;Shift&gt;</code>,
+<code class="code">&lt;Option&gt;</code>,
+<code class="code">&lt;Up&gt;</code>,
+<code class="code">&lt;Down&gt;</code>,
+<code class="code">&lt;Left&gt;</code>,
+<code class="code">&lt;Right&gt;</code>,
+<code class="code">&lt;Del&gt;</code>,
+<code class="code">&lt;Return&gt;</code>,
+<code class="code">&lt;Tab&gt;</code>,
+<code class="code">&lt;Backtab&gt;</code>,
+<code class="code">&lt;Esc&gt;</code>,
+and
+<code class="code">&lt;Backspace&gt;</code>.
+</p><div class="funcsynopsis"><a id="mac-uninstallEventHandler-function"></a><p><code class="funcdef"><b class="fsfunc">uninstallEventHandler</b>(</code><var class="pdparam">eventName</var>, <var class="pdparam">handlerFunctionName</var><code>)</code>;</p></div><p>
+This function uninstalls an event handler that has been previously
+installed using <a class="xref" href="rgs-macconvenience.html#mac-installEventHandler-function"><code class="function">installEventHandler</code></a>.
+</p></div><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" type="text/javascript" src="ScriptingLanguage.js"></script><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format">setScriptingLanguage();</script><div class="navfooter"><hr></hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="class-com.froglogic.squish.extension.ViewportExtension.html">Prev</a> </td><td width="20%" align="center"><a accesskey="u" href="api.man.html">Up</a></td><td width="40%" align="right"> <a accesskey="n" href="rgs-iphoneconvenience.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">Interface ViewportExtension </td><td width="20%" align="center"><a accesskey="h" href="index-noframes.html">Home</a></td><td width="40%" align="right" valign="top"> 6.9. iOS Convenience API</td></tr></table></div></body>
+<!-- Mirrored from rgs-macconvenience.html by HTTrack Website Copier/3.x [XR&CO'2013], Wed, 06 Jul 2022 13:29:00 GMT -->
+</html>

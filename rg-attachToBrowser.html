@@ -1,0 +1,207 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<!-- Mirrored from rg-attachToBrowser.html by HTTrack Website Copier/3.x [XR&CO'2013], Wed, 06 Jul 2022 13:29:00 GMT -->
+<head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><title>7.9. Attaching to a running Web Browser</title><link rel="stylesheet" href="manual.css" type="text/css"></link><meta name="generator" content="DocBook XSL Stylesheets V1.73.2"></meta><link rel="start" href="index-noframes.html" title="Squish Manual"></link><link rel="up" href="ref.man.html" title="Chapter 7. Tools Reference Manual"></link><link rel="prev" href="rghsa-attach.html" title="7.8. Attaching to Running Applications"></link><link rel="next" href="rg-namelookup.html" title="7.10. Improving Object Identification"></link><style xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" type="text/css" media="screen">
+        div.toc * { margin-left: 6px; margin-right: auto; max-width: 75em; }
+        div.toc span { margin-left: 0px; }
+        * { margin-left: auto; margin-right: auto; max-width: 75em; }
+        body { margin-left: 6px; margin-right: 6px; }
+        table th { padding: .5ex }
+        table td { padding: .5ex }
+    </style><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format">
+        function keyPress() {
+            var e = window.event;
+            if ( e == undefined ) {
+                return;
+            }
+            /* ### does not properly scroll, yet
+            if ( e.keyCode == 32 ) {
+            var l = document.links;
+            for ( var i = 0; i < l.length; i++ ) {
+                if ( l[i].innerText == "Next" ) {
+                location.href = l[i].href;
+                }
+            }
+            } else
+                */
+                if ( e.keyCode == 0x08 ) {
+            var l = document.links;
+            for ( var i = 0; i < l.length; i++ ) {
+                if ( l[i].innerText == "Prev" ) {
+                location.href = l[i].href;
+                }
+            }
+            }
+        }
+        document.onkeypress = keyPress;
+    </script></head><body><div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="rg-attachToBrowser"></a>7.9. Attaching to a running Web Browser</h2></div></div></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><span class="section"><a href="rg-attachToBrowser.html#rg-attachToBrowser-Overview">7.9.1. Overview and Motivation</a></span></dt><dt><span class="section"><a href="rg-attachToBrowser.html#rg-attachToBrowser-preparation">7.9.2. Making the Browser attachable</a></span></dt><dt><span class="section"><a href="rg-attachToBrowser.html#rg-attachToBrowser-script">7.9.3. Attaching to the Browser from the Script</a></span></dt></dl></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="rg-attachToBrowser-Overview"></a>7.9.1. Overview and Motivation</h3></div></div></div><p>
+<span class="emphasis"><em>Squish</em></span> for Web's default behavior is to automatically start the Web browser
+you want to test with, and to terminate the Web browser once the test case is
+finished. But it is also possible to test an already running Web browser
+by attaching to it. One important difference when attaching is that at
+the end of the test case <span class="emphasis"><em>Squish</em></span> does <span class="emphasis"><em>not</em></span>
+terminate the Web browser it attached to.
+</p><p>
+A common usage scenario for this functionality is to automate the Web browser
+when it is being started by an application that is also automated. Consider
+a desktop application that allows creation of websites from building blocks and
+provides a view of the result by starting a browser. This workflow can be automated
+by <span class="emphasis"><em>Squish</em></span> through automating the desktop application, and once it started,
+<span class="emphasis"><em>Squish</em></span> for Web can attach to the browser and verify that the displayed
+web content is correct as well as whether links etc. work.
+</p><p>
+Another use case that is often found are devices that need a user interface to
+allow for configurations. Some manufacturers choose to use a Web browser running
+in a special kiosk-mode that shows a web page providing the necessary configuration
+elements. In such cases the Web browser is often started as part of the system itself
+and shouldn't be shut down, or it automatically restarts when it is terminated for some
+reason. Here <span class="emphasis"><em>Squish</em></span> for Web can automate the browser running on the device to
+ensure the user interface provided works correctly and can be handled properly by the
+Web browser.
+</p><p>
+At the moment this feature is supported only for the following browsers:
+</p><div class="itemizedlist"><ul type="disc" compact><li><p>Internet Explorer on Windows</p></li><li><p>Mozilla Firefox on Windows, Linux and macOS</p></li><li><p>Google Chrome on Windows, Linux and macOS</p></li><li><p>Safari on macOS</p></li></ul></div><p>
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="rg-attachToBrowser-preparation"></a>7.9.2. Making the Browser attachable</h3></div></div></div><p>
+Depending on the Web browser you want to automate there are some installation
+steps to take before being able to attach to it. For
+<a class="link" href="installation.for.web.testing.html#installation.for.web.testing.configure.firefox.for.attaching" title="3.7.2.1. Setup for attaching to running instances">Firefox</a>
+and <a class="link" href="installation.for.web.testing.html#installation.for.web.testing.configure.chrome.for.attaching" title="3.7.3.1. Setup for attaching to running instances">Google Chrome</a>
+the Squish extension needs to be installed and a communication port needs to be configured. <a class="link" href="installation.for.web.testing.html#installation.for.web.testing.configure.ie.for.attaching" title="3.7.4.1. Setup to attach to running instances">Internet Explorer</a> requires changing a registry setting in Windows. Safari does not need any special setup.
+Detailed steps how to configure Internet Explorer, Firefox and Chrome can be found in the
+<a class="link" href="installation.for.web.testing.html" title="3.7. Installing Squish for Web">How to Install <span class="emphasis"><em>Squish</em></span> section</a>.
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="rg-attachToBrowser-script"></a>7.9.3. Attaching to the Browser from the Script</h3></div></div></div><p>
+In contrast to the <code class="function">attachToApplication</code>,
+there is currently no support for recording a complete
+testcase against an attachable Web browser. In order to inspect the web site or record interactions its necessary to
+prepare a short script snippet that attaches to the browser and contains a breakpoint at which the recording can be
+started. A small <code class="function">main</code> function with
+<a class="xref" href="rgs-webconvenience.html#web-attachToBrowser-function"><code class="function">attachToBrowser</code></a> and
+<a class="xref" href="rgs-squish.html#test.breakpoint-function"><code class="function">test.breakpoint</code></a> is sufficient as
+shown in this example:
+</p><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Note"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/note.png"></img></td><th align="left">Note</th></tr><tr><td align="left" valign="top"><p>
+In the example script Internet Explorer is being used as Web browser, for Firefox and Chrome you need to specify the
+communication port and for Safari the parameter needs to be removed. See the example code in the section about the
+<a class="link" href="rgs-webconvenience.html#web-attachToBrowser-function">attachToBrowser function</a> for example code for the other browsers.
+</p></td></tr></table></div><div xmlns="" class="scriptlang"><form><select name="scriptlangcombo" onchange="javascript:changeScriptingLanguage(this)" onclick="javascript:changeScriptingLanguage(this)"><option value="all" selected>Show All</option><option value="JavaScript">Show JavaScript</option><option value="Perl">Show Perl</option><option value="Python">Show Python</option><option value="Ruby">Show Ruby</option><option value="Tcl">Show Tcl</option></select></form></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">JavaScript</span><pre class="programlisting">
+function main() {
+    // Internet Explorer
+    attachToBrowser( "*Automated Cross-Platform GUI Testing" );
+    test.breakpoint();
+}
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Perl</span><pre class="programlisting">
+sub main {
+    # Internet Explorer
+    attachToBrowser( "*Automated Cross-Platform GUI Testing" );
+    test::breakpoint();
+}
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Python</span><pre class="programlisting">
+def main():
+    # Internet Explorer
+    attachToBrowser( "*Automated Cross-Platform GUI Testing" )
+    test.breakpoint()
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Ruby</span><pre class="programlisting">
+def main()
+    # Internet Explorer
+    attachToBrowser( "*Automated Cross-Platform GUI Testing" )
+    Test.breakpoint()
+end
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Tcl</span><pre class="programlisting">
+proc main {} {
+    # Internet Explorer
+    invoke attachToBrowser "*Automated Cross-Platform GUI Testing"
+    test breakpoint
+}
+</pre></div><p>
+You can execute this test case from the IDE and it will
+stop at that breakpoint. You can look at the objects of the web site in the
+<a class="xref" href="ide.views.html#ide.the-application-objects.view" title="8.2.1. Application Objects view">Application Objects view (Section 8.2.1)</a>, <a class="link" href="ug-vps.html" title="5.22. How to Create and Use Verification Points">create verifications</a> and <a class="link" href="ide.main.window.html#ide.record.snippet.action" title="8.1.1.46. Re­cord Snip­pet action">record interactions in the web site</a>.
+</p><p>
+Once the interaction with the browser is finished you can call the <a class="xref" href="rgs-webconvenience.html#web-closeWindow-function"><code class="function">closeWindow</code></a> function
+to disconnect from the browser, however this is also done automatically once the test script finishes. You can later
+attach to the browser again by calling <a class="xref" href="rgs-webconvenience.html#web-attachToBrowser-function"><code class="function">attachToBrowser</code></a>.
+</p><p>
+If you intend to attach to the Web browser from a <span class="emphasis"><em>Squish</em></span> test suite that has been created for another edition, like
+Qt or Windows, there is an additional setup step necessary. The <a class="xref" href="rgs-webconvenience.html#web-attachToBrowser-function"><code class="function">attachToBrowser</code></a>
+function is currently only available when <span class="emphasis"><em>Squish</em></span>'s helper tool <span class="application">webhook</span> is running and
+connected to. In <span class="emphasis"><em>Squish</em></span> test suites for automating Web applications this tool is automatically started, but for other
+types of test suites it has to be started as part of the script. The tool is being used just like any other AUT, so it
+has an <a class="link" href="rgs-squish.html#rgss-appcontext" title="6.3.12. Application Context">application context</a> which needs to be active before attaching to the browser
+and any time you want to interact with objects inside the browser. See our user guide on <a class="link" href="ugs-appcontext.html" title="5.12. How to Test Multiple AUTs from a Single Test Script, Using ApplicationContext">
+testing multiple applications</a> to better understand how to use this functionality.
+</p><p>
+The following script code examples show how a test would look like that starts a normal application as AUT to interact
+with that and then also launches the <span class="application">webhook</span> as an AUT to attach to a browser and interact
+with that. Since the <span class="application">webhook</span> is an AUT bundled with Squish it does not need to be registered
+as an AUT, instead its available through a  special name (__squish__webhook) all the time.
+</p><div xmlns="" class="scriptlang"><form><select name="scriptlangcombo" onchange="javascript:changeScriptingLanguage(this)" onclick="javascript:changeScriptingLanguage(this)"><option value="all" selected>Show All</option><option value="JavaScript">Show JavaScript</option><option value="Perl">Show Perl</option><option value="Python">Show Python</option><option value="Ruby">Show Ruby</option><option value="Tcl">Show Tcl</option></select></form></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">JavaScript</span><pre class="programlisting">
+function main() {
+    var autContext = startApplication("addressbook");
+    // Interact with the AUT
+    testSettings.setWrappersForApplication("__squish__webhook", ["Web"]);
+    var webContext = startApplication("__squish__webhook");
+    attachToBrowser("*froglogic*");
+    // Interact with the Website
+    setApplicationContext(autContext);
+    // Interact with the addressbook AUT again
+    setApplicationContext(webContext);
+    // Interact with the Website again and detach from the browser
+    closeWindow(":[Window]");
+}
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Perl</span><pre class="programlisting">
+sub main {
+    my $autContext = startApplication("addressbook");
+    # Interact with the AUT
+    testSettings-&gt;setWrappersForApplication("__squish__webhook", ("Web"));
+    my $webContext = startApplication("__squish__webhook");
+    attachToBrowser("*froglogic*");
+    # Interact with the Website
+    setApplicationContext($autContext);
+    # Interact with the addressbook AUT again
+    setApplicationContext($webContext);
+    # Interact with the Website again and detach from the browser
+    closeWindow(":[Window]");
+}
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Python</span><pre class="programlisting">
+def main():
+    autContext = startApplication("addressbook")
+    # Interact with the AUT
+    testSettings.setWrappersForApplication("__squish__webhook", ["Web"])
+    webContext = startApplication("__squish__webhook")
+    attachToBrowser("*froglogic*")
+    # Interact with the Website
+    setApplicationContext(autContext)
+    # Interact with the addressbook AUT again
+    setApplicationContext(webContext)
+    # Interact with the Website again and detach from the browser
+    closeWindow(":[Window]")
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Ruby</span><pre class="programlisting">
+def main()
+    autContext = startApplication("addressbook")
+    # Interact with the AUT
+    testSettings.setWrappersForApplication("__squish__webhook", ["Web"])
+    webContext = startApplication("__squish__webhook")
+    attachToBrowser("*froglogic*")
+    # Interact with the Website
+    setApplicationContext(autContext)
+    # Interact with the addressbook AUT again
+    setApplicationContext(webContext)
+    # Interact with the Website again and detach from the browser
+    closeWindow(":[Window]")
+end
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Tcl</span><pre class="programlisting">
+proc main {} {
+    set autContext [startApplication "addressbook"]
+    # Interact with the AUT
+    testSettings setWrappersForApplication __squish__webhook {Web}
+    set webContext [startApplication "__squish__webhook"]
+    invoek attachToBrowser "*froglogic*"
+    # Interact with the Website
+    setApplicationContext $autContext
+    # Interact with the addressbook AUT again
+    setApplicationContext $webContext
+    # Interact with the Website again and detach from the browser
+    invoke closeWindow ":\[Window\]"
+}
+</pre></div></div></div><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" type="text/javascript" src="ScriptingLanguage.js"></script><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format">setScriptingLanguage();</script><div class="navfooter"><hr></hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="rghsa-attach.html">Prev</a> </td><td width="20%" align="center"><a accesskey="u" href="ref.man.html">Up</a></td><td width="40%" align="right"> <a accesskey="n" href="rg-namelookup.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">7.8. Attaching to Running Applications </td><td width="20%" align="center"><a accesskey="h" href="index-noframes.html">Home</a></td><td width="40%" align="right" valign="top"> 7.10. Improving Object Identification</td></tr></table></div></body>
+<!-- Mirrored from rg-attachToBrowser.html by HTTrack Website Copier/3.x [XR&CO'2013], Wed, 06 Jul 2022 13:29:00 GMT -->
+</html>

@@ -1,0 +1,80 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<!-- Mirrored from rel-500.html by HTTrack Website Copier/3.x [XR&CO'2013], Wed, 06 Jul 2022 13:28:56 GMT -->
+<head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><title>2.40. Version 5.0.0</title><link rel="stylesheet" href="manual.css" type="text/css"></link><meta name="generator" content="DocBook XSL Stylesheets V1.73.2"></meta><link rel="start" href="index-noframes.html" title="Squish Manual"></link><link rel="up" href="relnotes.html" title="Chapter 2. Release Notes—for Upgraders"></link><link rel="prev" href="rel-501.html" title="2.39. Version 5.0.1"></link><link rel="next" href="rel-423.html" title="2.41. Version 4.2.3"></link><style xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" type="text/css" media="screen">
+        div.toc * { margin-left: 6px; margin-right: auto; max-width: 75em; }
+        div.toc span { margin-left: 0px; }
+        * { margin-left: auto; margin-right: auto; max-width: 75em; }
+        body { margin-left: 6px; margin-right: 6px; }
+        table th { padding: .5ex }
+        table td { padding: .5ex }
+    </style><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format">
+        function keyPress() {
+            var e = window.event;
+            if ( e == undefined ) {
+                return;
+            }
+            /* ### does not properly scroll, yet
+            if ( e.keyCode == 32 ) {
+            var l = document.links;
+            for ( var i = 0; i < l.length; i++ ) {
+                if ( l[i].innerText == "Next" ) {
+                location.href = l[i].href;
+                }
+            }
+            } else
+                */
+                if ( e.keyCode == 0x08 ) {
+            var l = document.links;
+            for ( var i = 0; i < l.length; i++ ) {
+                if ( l[i].innerText == "Prev" ) {
+                location.href = l[i].href;
+                }
+            }
+            }
+        }
+        document.onkeypress = keyPress;
+    </script></head><body><div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="rel-500"></a>2.40. Version 5.0.0</h2></div></div></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><span class="section"><a href="rel-500.html#idp35749112">2.40.1. New Editions</a></span></dt><dt><span class="section"><a href="rel-500.html#idp35750448">2.40.2. General</a></span></dt><dt><span class="section"><a href="rel-500.html#idp35753136">2.40.3. IDE</a></span></dt><dt><span class="section"><a href="rel-500.html#idp35757088">2.40.4. Qt-specific</a></span></dt><dt><span class="section"><a href="rel-500.html#idp35759064">2.40.5. <span class="trademark">Java</span>™-specific</a></span></dt><dt><span class="section"><a href="rel-500.html#idp35760392">2.40.6. Web-specific</a></span></dt><dt><span class="section"><a href="rel-500.html#idp35762888">2.40.7. Windows (native)-specific</a></span></dt><dt><span class="section"><a href="rel-500.html#idp35764832">2.40.8. macOS-specific (Cocoa/Carbon edition)</a></span></dt><dt><span class="section"><a href="rel-500.html#idp35765800">2.40.9. iOS-specific (iPhone/iPad edition)</a></span></dt><dt><span class="section"><a href="rel-500.html#idp35766760">2.40.10. Tk-specific</a></span></dt><dt><span class="section"><a href="rel-500.html#idp35767648">2.40.11. Add-Ons</a></span></dt><dt><span class="section"><a href="rel-500.html#idp35768568">2.40.12. Documentation</a></span></dt></dl></div><p><span class="emphasis"><em>Squish</em></span> 5.0 is a major new release with many new features and
+bug fixes. Here is a selected summary of the release's
+highlights.</p><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="idp35749112"></a>2.40.1. New Editions</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>A newly added edition supports testing of Android
+applications running on a device or inside of
+emulators.</p></li><li><p>The new Squish for Flex edition provides support for
+testing of applications developed with this
+framework.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="idp35750448"></a>2.40.2. General</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Functions for the development of interactive test
+scripts.</p></li><li><p>New highlighting mode for comparing visual differences
+in Image Verification Points.</p></li><li><p>Enhanced image embedding of XML-to-HTML result
+conversion script.</p></li><li><p>Enhanced 64-bit integer support in test
+scripts.</p></li><li><p>Experimental: standalone Python module that provides
+<span class="application">squishrunner</span> functionality.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="idp35753136"></a>2.40.3. IDE</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Added a <span class="guibutton">Highlight</span> button to the
+Spy that will mark the selected object inside of the Application Under
+Test.</p></li><li><p>Introduced <span class="guibutton">Up</span> button for
+traversal to the parent object in the Spy object
+tree.</p></li><li><p>Added a <span class="guilabel">Control Bar</span> button that
+allows insertion of script comments during
+recording.</p></li><li><p>Updated script editors for better completion
+support.</p></li><li><p>For more productive test development the IDE provides
+highlighting of objects and navigation upwards in the object hierarchy
+of the Application Under Test.</p></li><li><p>Warn against accidental script
+overwriting.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="idp35757088"></a>2.40.4. Qt-specific</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Squish for Qt now comes with support for Qt 5. This
+applies to both traditional QWidget-based applications as well as
+those using the QtQuick 2 (QML 2) framework.</p></li><li><p>Pre-build binary packages for Visual Studio 2012
+users.</p></li><li><p>Packages for WinCE available upon
+request.</p></li><li><p>Made a proof-of-concept port to VxWorks. Packages
+available upon request.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="idp35759064"></a>2.40.5. <span class="trademark">Java</span>™-specific</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>In addition to SWT and AWT/Swing controls Squish for
+Java has been "taught" about the new JavaFX toolkit.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="idp35760392"></a>2.40.6. Web-specific</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Support for Flash plugins executing Flex-based
+applications (see new edition above).</p></li><li><p>Added support for recent versions of
+Firefox.</p></li><li><p>Added support for Internet Explorer
+10.</p></li><li><p>Rewrote example application.</p></li><li><p>Trimmed text content for HTML elements (for greater
+cross-browser portability).</p></li><li><p>Hide useless NODE elements.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="idp35762888"></a>2.40.7. Windows (native)-specific</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Introduced use of MSAA (Microsoft Active
+Accessibility) interface to test yet unsupported toolkits like
+Delphi.</p></li><li><p>Added support for Microsoft WPF Ribbon
+Control.</p></li><li><p>Added support for various Telerik
+controls.</p></li><li><p>Various improvements for the naming and picking of
+WindowsForms and WPF controls.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="idp35764832"></a>2.40.8. macOS-specific (Cocoa/Carbon edition)</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Support for embedded WebKit HTML controls through
+combination with Squish for Web.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="idp35765800"></a>2.40.9. iOS-specific (iPhone/iPad edition)</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Support for embedded WebKit HTML controls through
+combination with Squish for Web.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="idp35766760"></a>2.40.10. Tk-specific</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Added dragAndDrop() functions.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="idp35767648"></a>2.40.11. Add-Ons</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Add-On for Visual Studio, TFS and Microsoft Test
+Manager (MTM).</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="idp35768568"></a>2.40.12. Documentation</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Added lots of new tips and problem resolutions to the
+<a class="ulink" href="https://kb.froglogic.com/" target="_blank">Knowledge
+Base</a>.</p></li></ul></div></div></div><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" type="text/javascript" src="ScriptingLanguage.js"></script><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format">setScriptingLanguage();</script><div class="navfooter"><hr></hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="rel-501.html">Prev</a> </td><td width="20%" align="center"><a accesskey="u" href="relnotes.html">Up</a></td><td width="40%" align="right"> <a accesskey="n" href="rel-423.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">2.39. Version 5.0.1 </td><td width="20%" align="center"><a accesskey="h" href="index-noframes.html">Home</a></td><td width="40%" align="right" valign="top"> 2.41. Version 4.2.3</td></tr></table></div></body>
+<!-- Mirrored from rel-500.html by HTTrack Website Copier/3.x [XR&CO'2013], Wed, 06 Jul 2022 13:28:56 GMT -->
+</html>

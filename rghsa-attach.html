@@ -1,0 +1,138 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<!-- Mirrored from rghsa-attach.html by HTTrack Website Copier/3.x [XR&CO'2013], Wed, 06 Jul 2022 13:29:00 GMT -->
+<head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><title>7.8. Attaching to Running Applications</title><link rel="stylesheet" href="manual.css" type="text/css"></link><meta name="generator" content="DocBook XSL Stylesheets V1.73.2"></meta><link rel="start" href="index-noframes.html" title="Squish Manual"></link><link rel="up" href="ref.man.html" title="Chapter 7. Tools Reference Manual"></link><link rel="prev" href="rghsa-sub.html" title="7.7. Record / Replay on Sub-Processes started by the AUT"></link><link rel="next" href="rg-attachToBrowser.html" title="7.9. Attaching to a running Web Browser"></link><style xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" type="text/css" media="screen">
+        div.toc * { margin-left: 6px; margin-right: auto; max-width: 75em; }
+        div.toc span { margin-left: 0px; }
+        * { margin-left: auto; margin-right: auto; max-width: 75em; }
+        body { margin-left: 6px; margin-right: 6px; }
+        table th { padding: .5ex }
+        table td { padding: .5ex }
+    </style><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format">
+        function keyPress() {
+            var e = window.event;
+            if ( e == undefined ) {
+                return;
+            }
+            /* ### does not properly scroll, yet
+            if ( e.keyCode == 32 ) {
+            var l = document.links;
+            for ( var i = 0; i < l.length; i++ ) {
+                if ( l[i].innerText == "Next" ) {
+                location.href = l[i].href;
+                }
+            }
+            } else
+                */
+                if ( e.keyCode == 0x08 ) {
+            var l = document.links;
+            for ( var i = 0; i < l.length; i++ ) {
+                if ( l[i].innerText == "Prev" ) {
+                location.href = l[i].href;
+                }
+            }
+            }
+        }
+        document.onkeypress = keyPress;
+    </script></head><body><div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="rghsa-attach"></a>7.8. Attaching to Running Applications</h2></div></div></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><span class="section"><a href="rghsa-attach.html#overview">7.8.1. Overview</a></span></dt><dt><span class="section"><a href="rghsa-attach.html#start-the-aut">7.8.2. Start the <acronym class="acronym">AUT</acronym></a></span></dt><dt><span class="section"><a href="rghsa-attach.html#rghsa-attach-registeraut">7.8.3. Register the Attachable <acronym class="acronym">AUT</acronym></a></span></dt><dt><span class="section"><a href="rghsa-attach.html#rghsa-attach-scripting">7.8.4. Attaching from a Script</a></span></dt></dl></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="overview"></a>7.8.1. Overview</h3></div></div></div><p>
+<span class="emphasis"><em>Squish</em></span>'s default behavior is to automatically start the application
+you want to test, and to terminate the application once the test case is
+finished. But it is also possible to test an already running application
+by attaching to it. One important difference when attaching is that at
+the end of the test case <span class="emphasis"><em>Squish</em></span> does <span class="emphasis"><em>not</em></span>
+terminate the application it attached to.
+</p><p>
+One benefit of attaching is that it allows you to test your application
+with the <span class="application">squishserver</span> running on another machine. However, the
+attaching approach also suffers from an important limitation: you can
+have only one <span class="application">squishserver</span> attached to your application at a time.
+</p><p>
+Using the attaching approach is a three step process: first start the
+AUT; second, register the AUT; and finally, attach to the AUT from a
+script. We'll now discuss each of these steps in turn.
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="start-the-aut"></a>7.8.2. Start the <acronym class="acronym">AUT</acronym></h3></div></div></div><p>
+In order for <span class="emphasis"><em>Squish</em></span> to be able to connect to the
+<acronym class="acronym">AUT</acronym>, you must start the AUT using <span class="emphasis"><em>Squish</em></span>'s
+<a class="xref" href="rg-cmdline.html#rgc-startaut-cli" title="7.4.7. start*aut">start*aut (Section 7.4.7)</a> command line tool.
+</p><p>
+Usage:
+</p><p>
+<code class="code">startaut --port=<span class="emphasis"><em>port</em></span> <span class="emphasis"><em>aut</em></span>
+[<span class="emphasis"><em>aut-command-line-options</em></span>]</code>
+</p><p>
+You must specify a network port number as the argument to the
+<code class="option">--port</code> option. The <acronym class="acronym">AUT</acronym> listens on
+this port number for a connection from the <span class="application">squishserver</span>.
+</p><p>
+It is important that the <code class="option">--port</code> option is given
+<span class="emphasis"><em>before</em></span> the <acronym class="acronym">AUT</acronym> because any
+<span class="emphasis"><em>aut-command-line-options</em></span> options specified after
+the <acronym class="acronym">AUT</acronym> are passed as options to the
+<acronym class="acronym">AUT</acronym> and are not used by
+<a class="xref" href="rg-cmdline.html#rgc-startaut-cli" title="7.4.7. start*aut">start*aut (Section 7.4.7)</a>.
+</p><p>
+Example:
+</p><pre class="screen">
+startaut --port=9999 addressbook
+</pre><p>
+Once the <acronym class="acronym">AUT</acronym> is running we are ready to connect to
+it. But first we must register the attachable <acronym class="acronym">AUT</acronym> in
+order to be able to access it from test scripts.
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="rghsa-attach-registeraut"></a>7.8.3. Register the Attachable <acronym class="acronym">AUT</acronym></h3></div></div></div><p>
+AUTs that are attached to must be registered in the <span class="application">squishserver</span> settings.
+In the <span class="application">Squish IDE</span>, from <span class="guimenuitem">Server Settings</span>, select
+<span class="guimenuitem">Manage AUTs...</span> to pop up the
+<a class="xref" href="ide.dialogs.html#manage.auts.panel" title="8.3.22.1. Manage AUTs panel">Manage AUTs panel (Section 8.3.22.1)</a>. Select the
+<span class="guilabel">Attachable AUTs</span> list entry, and press the
+<span class="guibutton">Add...</span> button.
+This will pop up the <span class="guilabel">Add Attachable AUT</span>
+dialog. The <span class="guilabel">Name:</span> must match the first argument
+passed to <a class="xref" href="rgs-squish.html#attachToApplication-function"><code class="function">attachToApplication</code></a>, and
+the <span class="guilabel">Port:</span> must match the port number used when starting
+the AUT with <a class="xref" href="rg-cmdline.html#rgc-startaut-cli" title="7.4.7. start*aut">start*aut (Section 7.4.7)</a>.
+In the case where the attachable AUT
+is running on a different host from <span class="application">squishserver</span>,
+you would specify the <span class="guilabel">Host:</span> here as well.
+</p><div class="sidebar"><p class="title"><b><span class="emphasis"><em>For command-line users</em></span></b></p><p>
+It is also possible to register an attachable application
+on the command line, without using the <span class="application">Squish IDE</span> at all. For example:
+</p><pre class="screen">
+<code class="prompt">$ </code><span class="application">squishserver</span> --config addAttachableAUT addressbook localhost:9999
+</pre><p>
+See <a class="xref" href="rg-cmdline.html#rgc-squishserver" title="7.4.4. squishserver">squishserver (Section 7.4.4)</a>, and in particular the <a class="xref" href="rg-cmdline.html#rg-squishserver--config" title="7.4.4.3. Configuring squishserver">Configuring <span class="application">squishserver</span> (Section 7.4.4.3)</a> section for more details.
+</p></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="rghsa-attach-scripting"></a>7.8.4. Attaching from a Script</h3></div></div></div><p>
+First you must tell <span class="emphasis"><em>Squish</em></span> not to automatically start the AUT you wish
+to attach to when a test case is run. Click the
+<span class="guilabel">Suite Settings</span> item in the project tree, and in the
+<span class="guilabel">Application Under Test (AUT)</span> section, change
+the <span class="guilabel">Application</span> combobox's item to the
+<span class="guilabel">&lt;No Application&gt;</span> item.
+</p><p>
+Now <span class="emphasis"><em>Squish</em></span> will not start up the AUT for test cases in this test
+suite. We have already seen earlier how to start the AUT using the
+<a class="xref" href="rg-cmdline.html#rgc-startaut-cli" title="7.4.7. start*aut">start*aut (Section 7.4.7)</a> application. But to be able to
+connect to the application and interact with it our test script must
+attach to it. This is done by putting a call to the <a class="xref" href="rgs-squish.html#attachToApplication-function"><code class="function">attachToApplication</code></a> function in the test script,
+and passing it the arguments it needs to attach to the AUT. If you are using
+a local <span class="application">squishserver</span> only the first argument (the attachable AUT name)
+needs to be provided.
+</p><p>
+Like the <a class="xref" href="rgs-squish.html#startApplication-function"><code class="function">startApplication</code></a>,
+the <a class="xref" href="rgs-squish.html#attachToApplication-function"><code class="function">attachToApplication</code></a> returns an application context
+object (see <a class="xref" href="rgs-squish.html#rgss-appcontext" title="6.3.12. Application Context">Application Context (Section 6.3.12)</a>).
+</p><p>
+It is possible to record a test script if we are attched to an <acronym class="acronym">AUT</acronym>.
+To do so, we can simply click <span class="guibutton">Record</span> (<span class="guiicon"><img src="images/ide/record.png"></img></span>). A list of all
+registered <acronym class="acronym">AUT</acronym> will be displayed, which allows selecting the application
+to record on.
+</p><p>
+When we are finished, simply press the <span class="guilabel">Stop Recording</span>
+toolbar button in <span class="emphasis"><em>Squish</em></span>'s control bar and the new test script will
+become visible in <span class="emphasis"><em>Squish</em></span>'s editor. (see <a class="xref" href="ug-editdebug.html#uged-recordbp" title="5.21.2. How to Record After a Breakpoint">How to Record After a Breakpoint (Section 5.21.2)</a>).
+</p><p>
+By default <span class="emphasis"><em>Squish</em></span> allows the AUT up to 20 seconds from <span class="emphasis"><em>Squish</em></span>'s
+initial connection to the AUT's first response. This can be changed; see
+<a class="xref" href="ide.dialogs.html#ide.squish.server.settings.dialog" title="8.3.22. Squish Server Settings dialog">Squish Server Settings dialog (Section 8.3.22)</a>.
+</p></div></div><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" type="text/javascript" src="ScriptingLanguage.js"></script><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format">setScriptingLanguage();</script><div class="navfooter"><hr></hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="rghsa-sub.html">Prev</a> </td><td width="20%" align="center"><a accesskey="u" href="ref.man.html">Up</a></td><td width="40%" align="right"> <a accesskey="n" href="rg-attachToBrowser.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">7.7. Record / Replay on Sub-Processes started by the AUT </td><td width="20%" align="center"><a accesskey="h" href="index-noframes.html">Home</a></td><td width="40%" align="right" valign="top"> 7.9. Attaching to a running Web Browser</td></tr></table></div></body>
+<!-- Mirrored from rghsa-attach.html by HTTrack Website Copier/3.x [XR&CO'2013], Wed, 06 Jul 2022 13:29:00 GMT -->
+</html>

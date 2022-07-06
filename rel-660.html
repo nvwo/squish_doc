@@ -1,0 +1,205 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<!-- Mirrored from rel-660.html by HTTrack Website Copier/3.x [XR&CO'2013], Wed, 06 Jul 2022 13:28:55 GMT -->
+<head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><title>2.8. Version 6.6</title><link rel="stylesheet" href="manual.css" type="text/css"></link><meta name="generator" content="DocBook XSL Stylesheets V1.73.2"></meta><link rel="start" href="index-noframes.html" title="Squish Manual"></link><link rel="up" href="relnotes.html" title="Chapter 2. Release Notes—for Upgraders"></link><link rel="prev" href="rel-661.html" title="2.7. Version 6.6.1"></link><link rel="next" href="rel-652.html" title="2.9. Version 6.5.2"></link><style xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" type="text/css" media="screen">
+        div.toc * { margin-left: 6px; margin-right: auto; max-width: 75em; }
+        div.toc span { margin-left: 0px; }
+        * { margin-left: auto; margin-right: auto; max-width: 75em; }
+        body { margin-left: 6px; margin-right: 6px; }
+        table th { padding: .5ex }
+        table td { padding: .5ex }
+    </style><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format">
+        function keyPress() {
+            var e = window.event;
+            if ( e == undefined ) {
+                return;
+            }
+            /* ### does not properly scroll, yet
+            if ( e.keyCode == 32 ) {
+            var l = document.links;
+            for ( var i = 0; i < l.length; i++ ) {
+                if ( l[i].innerText == "Next" ) {
+                location.href = l[i].href;
+                }
+            }
+            } else
+                */
+                if ( e.keyCode == 0x08 ) {
+            var l = document.links;
+            for ( var i = 0; i < l.length; i++ ) {
+                if ( l[i].innerText == "Prev" ) {
+                location.href = l[i].href;
+                }
+            }
+            }
+        }
+        document.onkeypress = keyPress;
+    </script></head><body><div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="rel-660"></a>2.8. Version 6.6</h2></div></div></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><span class="section"><a href="rel-660.html#rel-660-remotecontrol">2.8.1. Integrated Remote Control Solution</a></span></dt><dt><span class="section"><a href="rel-660.html#rel-660-python3">2.8.2. Python 2 and Python 3 Included</a></span></dt><dt><span class="section"><a href="rel-660.html#rel-660-javascript">2.8.3. Enhancements to JavaScript Engine</a></span></dt><dt><span class="section"><a href="rel-660.html#rel-660-testcenter-bundled">2.8.4. Bundled Test Result Analysis &amp; Management Platform, 'Test Center'</a></span></dt><dt><span class="section"><a href="rel-660.html#rel-660-general">2.8.5. General</a></span></dt><dt><span class="section"><a href="rel-660.html#rel-660-ide">2.8.6. Squish IDE-specific</a></span></dt><dt><span class="section"><a href="rel-660.html#rel-660-scripting">2.8.7. Scripting</a></span></dt><dt><span class="section"><a href="rel-660.html#rel-660-qt">2.8.8. Qt-specific</a></span></dt><dt><span class="section"><a href="rel-660.html#rel-660-java">2.8.9. <span class="trademark">Java</span>™-specific</a></span></dt><dt><span class="section"><a href="rel-660.html#rel-660-web">2.8.10. Web-specific</a></span></dt><dt><span class="section"><a href="rel-660.html#rel-660-android">2.8.11. Android-specific</a></span></dt><dt><span class="section"><a href="rel-660.html#rel-660-windows">2.8.12. Windows (native)-specific</a></span></dt><dt><span class="section"><a href="rel-660.html#rel-660-mac">2.8.13. macOS-specific (Cocoa/Carbon edition)</a></span></dt><dt><span class="section"><a href="rel-660.html#rel-660-source">2.8.14. Source Packages</a></span></dt><dt><span class="section"><a href="rel-660.html#rel-660-known-issues">2.8.15. Known Issues</a></span></dt></dl></div><p><span class="emphasis"><em>Squish</em></span> 6.6 is a feature release which delivers new features, bug fixes
+  and usability improvements to all editions of the product.</p><p>See the following sections for a detailed list of all changes.</p><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="rel-660-remotecontrol"></a>2.8.1. Integrated Remote Control Solution</h3></div></div></div><p>This <span class="emphasis"><em>Squish</em></span> release brings with it a complete, fully-integrated
+    remote control solution which greatly improves working with remote systems.
+    <span class="emphasis"><em>Squish</em></span> can now display the screen of the remote device as a test is
+    executed and permits recording new tests (and picking objects for inspection),
+    even if the application under test is running on a computer in a remote
+    location.</p><p>This functionality removes the need for any additional remote desktop
+    solution (e.g., <acronym class="acronym">VNC</acronym>) and is fully supported, even on
+    embedded systems.</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="rel-660-python3"></a>2.8.2. Python 2 and Python 3 Included</h3></div></div></div><p>All <span class="emphasis"><em>Squish</em></span> packages now include Python 2 and Python 3. This ensures
+    full backwards compatibility with all previous <span class="emphasis"><em>Squish</em></span> releases, while enabling
+    the use of the latest Python 3 features.</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="rel-660-javascript"></a>2.8.3. Enhancements to JavaScript Engine</h3></div></div></div><p>This <span class="emphasis"><em>Squish</em></span> release provides a number of enhancements to JavaScript
+    support, including improved scripting flexibility, better error checking,
+    additional features for convenient and concise scripting, and several bug
+    fixes to existing support.</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="rel-660-testcenter-bundled"></a>2.8.4. Bundled Test Result Analysis &amp; Management Platform, 'Test Center'</h3></div></div></div><p><span class="emphasis"><em>Squish</em></span> packages now bundle with the Test Center platform, a tool for
+    comprehensive test report management and analysis. With a natural coupling
+    between Squish and Test Center, users can push their automated test results
+    right from the Squish IDE to Test Center to gain insights into an evolving
+    project's health.</p><p>Built to be lightweight with a convenient web-based user interface,
+    all project stakeholders can easily access the platform right from a web browser
+    on their computer, tablet or smartphone.</p><p>To get started with Test Center, an activation code unique to the tool
+    is required. Get in touch with us at <code class="email">&lt;<a class="email" href="mailto:sales@froglogic.com">sales@froglogic.com</a>&gt;</code> to
+    begin a free, fully-supported and fully-functional evaluation of Test Center
+    today.</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="rel-660-general"></a>2.8.5. General</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p><span class="application">squishserver</span> now yields more useful output when
+      attaching to a running application.</p></li><li><p><span class="application">squishserver</span> now accepts a new
+      <code class="option">--configfile</code> option which can be used to load configuration
+      files from different locations. See <a class="xref" href="rg-cmdline.html#rg-squishserver--config" title="7.4.4.3. Configuring squishserver">Configuring <span class="application">squishserver</span> (Section 7.4.4.3)</a>
+      for details. </p></li><li><p>The <span class="emphasis"><em>Squish</em></span> installer now permits omitting the <span class="application">Squish IDE</span>
+      during installation, a useful option when setting up machines meant for
+      Continuous Integration.</p></li><li><p>Fixed an issue in which <acronym class="acronym">HTML</acronym>
+      reports generated by <span class="emphasis"><em>Squish</em></span> would sometimes not open correctly, but
+      display an error message about a corrupt data file.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="rel-660-ide"></a>2.8.6. Squish IDE-specific</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Both the <span class="application">Squish IDE</span> and the Squish Eclipse integration plugin
+      now require Squish Tools version 6.5 or later.</p></li><li><p>Fixed importing test report ZIP archives containing
+      only files but no directories.</p></li><li><p>Resolved an issue causing incorrect paths to be generated
+      in a test report when running a complete test suite with more than 10 test
+      cases.</p></li><li><p>The Python editor in the <span class="application">Squish IDE</span> is now based on PyDev
+      7.3.0. This improves syntax highlighting and enables better support for
+      type hints and other Python 3 features.</p></li><li><p>Settings from the <span class="guilabel">Squish</span> tab on
+      the
+      <span class="guilabel">PyDev</span>+<span class="guilabel">Editor</span>+<span class="guilabel">Code
+      Analysis</span> page have moved to the
+      <span class="guilabel">Squish</span>+<span class="guilabel">Code
+      Analysis</span> page, and apply now to all script
+      editors, not only Python.</p></li><li><p>The <span class="guilabel">Accept All</span> button shown when
+      editing Visual Verification Points will now add additional default checks
+      on identification and content for newly found UI objects. In previous
+      versions, the list of properties for new objects would be left empty, and
+      would update the Visual VP only for changed, already existing objects. Squish
+      follows settings for parent containers of these new objects for deciding
+      if screenshot and geometry tests should be added.</p></li><li><p>A new button was added to the Visual Verification Point
+      editor which allows viewing the differences between the actual and the
+      expected verification point.</p></li><li><p>Improved usability of the <span class="guilabel">Structure</span> and
+      <span class="guilabel">Failures</span> views in the Visual Verification Point
+      editor. Dedicated icons are now shown which visualize if and which check
+      failed.</p></li><li><p>Relaxing checks in the Visual Verification Point editor
+      will now cause a short overview to be presented, showing the
+      changes which were applied.</p></li><li><p>A new popup menu in the Visual Verification Point editor
+      now allows toggling content, geometry or screenshot checks for
+      entire trees of elements.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="rel-660-scripting"></a>2.8.7. Scripting</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p><span class="emphasis"><em>Squish</em></span> now supports creating Python test scripts with
+      either Python 2 or Python 3.</p></li><li><p>A new script function <a class="xref" href="rgs-squish.html#testData.datasetExcel-function"><code class="function">testData.datasetExcel</code></a> was introduced which enables
+      accessing test data stored across multiple sheets in an <span class="trademark">Excel</span>™
+      spreadsheet.</p></li><li><p>Added new <a class="xref" href="rgs-squish.html#applicationContext.osName-property">ApplicationContext.osName</a> property to get the name
+      of the <acronym class="acronym">OS</acronym> the <acronym class="acronym">AUT</acronym> is running
+      on.</p></li><li><p>A new <a class="xref" href="rgs-squish.html#script-image-object" title="6.3.14. Image Object">Image Object (Section 6.3.14)</a> was added to the
+        script <acronym class="acronym">API</acronym>, providing speed enhancements and new
+        functionality for screen-grabbing and manipulating image files. Various
+        functions were extended to support working with images:</p><div class="itemizedlist"><ul type="circle"><li><p>Image objects can be obtained by loading an image
+          file (using <a class="xref" href="rgs-squish.html#Image.load-function"><code class="function">Image.load</code></a>) or by taking a screenshot of
+          the desktop (via <a class="xref" href="rgs-squish.html#grabDesktopScreenshot-function"><code class="function">grabDesktopScreenshot</code></a>) or a
+          particular object (<a class="xref" href="rgs-squish.html#object.grabScreenshot-function"><code class="function">object.grabScreenshot</code></a>).</p></li><li><p>The RGB(A) values of individual pixels in
+          image objects can be extracted and
+          modified.</p></li><li><p>Image objects can be attached to test reports using <a class="xref" href="rgs-squish.html#test.attachImage-function"><code class="function">test.attachImage</code></a>.</p></li><li><p>The <a class="xref" href="rgs-squish.html#findImage-function"><code class="function">findImage</code></a> and <a class="xref" href="rgs-squish.html#getOcrText-function"><code class="function">getOcrText</code></a> functions can be used on image
+          objects.</p></li></ul></div></li><li><p>Fixed the <code class="code">test</code> method on JavaScript
+      <code class="code">RegExp</code> objects such that calls update the value of the
+      <code class="code">lastIndex</code> field if the global flag is
+      specified.</p></li><li><p>The JavaScript engine used in <span class="emphasis"><em>Squish</em></span> received a major overhaul,
+        including various bug fixes and new feature additions, such as:</p><div class="itemizedlist"><ul type="circle"><li><p><code class="code">class</code>, <code class="code">extends</code>,
+          <code class="code">static</code> and <code class="code">super</code> keywords</p></li><li><p>Arrow functions (e.g., <code class="code">x =&gt; x * x</code>)</p></li><li><p><code class="code">let</code> declarations</p></li><li><p>Template literals via <code class="code">....</code> including
+          tagging functions</p></li><li><p>...and several others.</p></li></ul></div><p>For a comprehensive list of all improvements including code
+        examples, please see our Knowledge Base article <a class="ulink" href="https://kb.froglogic.com/squish/howto/new-javascript-squish-6-6/" target="_blank">JavaScript
+        Extensions in Squish 6.6</a>.</p></li><li><p>A new function <a class="xref" href="rgs-squish.html#RemoteSystem.getOSName-function"><code class="function">RemoteSystem.getOSName</code></a> was added which allows
+      determining the name of the operating system used by the computer on
+      which <span class="application">squishserver</span> is running.</p></li><li><p>Dialogs shown by the <a class="link" href="rgs-squish.html#rgs-testinteraction" title="6.3.18. testInteraction Functions"><code class="code">testInteraction</code></a>
+      <acronym class="acronym">API</acronym> are now shown above all other
+      windows.</p></li><li><p>An issue was fixed which caused the error location logged
+      for Python syntax errors to be incorrect in some cases.</p></li><li><p>A new <code class="code">message</code> parameter has been added to
+      <a class="xref" href="rgs-squish.html#test.imagePresent-function"><code class="function">test.imagePresent</code></a> and <a class="xref" href="rgs-squish.html#test.ocrTextPresent-function"><code class="function">test.ocrTextPresent</code></a>. It serves the same purpose as
+      the <code class="code">message</code> argument supported by <a class="xref" href="rgs-squish.html#test.compare-function"><code class="function">test.compare</code></a>, i.e., including a text with detailed
+      information to be included in the test report.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="rel-660-qt"></a>2.8.8. Qt-specific</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Added support for testing Qt 5.15
+      applications.</p></li><li><p>This <span class="emphasis"><em>Squish</em></span> release no longer includes binary packages
+      for Qt 4.6 and Qt 4.7 applications. Please contact us at
+      <code class="email">&lt;<a class="email" href="mailto:squish@froglogic.com">squish@froglogic.com</a>&gt;</code> if you are interested in such a
+      package.</p></li><li><p><span class="emphasis"><em>Squish</em></span> is now able to test applications built using
+      <a class="ulink" href="https://doc.qt.io/qt-5/wasm.html" target="_blank">Qt for
+      WebAssembly</a>. This currently requires a special <span class="emphasis"><em>Squish</em></span> package
+      (ending in <code class="filename">-wasm.zip</code>) which holders of an active
+      <span class="emphasis"><em>Squish</em></span> for Qt license can find in their download
+      area.</p></li><li><p>Error reporting of the <a class="xref" href="rgs-qtconvenience.html#qt-installSignalHandler-function"><code class="function">installSignalHandler</code></a> and <a class="xref" href="rgs-qtconvenience.html#qt-uninstallSignalHandler-function"><code class="function">uninstallSignalHandler</code></a> functions was improved. In
+      case the given object does not support the specified Qt signal (e.g., due
+      to a typo or incorrect signal signature), a list of similar signals with
+      the same name is included in the error message.</p></li><li><p>New API method, <a class="xref" href="rgs-qtconvenience.html#qt-waitForSignal-function"><code class="function">waitForSignal</code></a>,
+      tells script to wait for a given Qt signal. </p></li><li><p><span class="emphasis"><em>Squish</em></span> now supports automation of Qt applications which
+      were built using the <code class="option">/CLR</code> switch of Visual
+      Studio.</p></li><li><p>Fixed an intermittent crash when picking objects in Qt 5
+      applications which react to touch events.</p></li><li><p>Resolved an issue which sometimes caused <code class="literal">Could
+      not convert argument</code> warning messages to appear in the
+      <span class="guilabel">Runner/Server Log</span> view of the <span class="application">Squish IDE</span> when interacting
+      with <acronym class="acronym">QML</acronym> objects.</p></li><li><p>Improved reliability of tests working with Qt WebKit
+      controls. In some cases, a <code class="literal">Timeout while waiting for result of
+      JavaScript</code> error may have been reported. This is now
+      fixed.</p></li><li><p>Improved reliability of hooking into Qt applications
+      running on macOS in those cases where the application under test loads the Qt
+      library with a different path than what was specified in the
+      installer.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="rel-660-java"></a>2.8.9. <span class="trademark">Java</span>™-specific</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>The <a class="xref" href="rgs-javaconvenience.html#java-chooseFiles-function"><code class="function">chooseFile</code></a> function
+      for selecting multiple files now also works when testing JavaFX
+      applications.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="rel-660-web"></a>2.8.10. Web-specific</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>The <a class="xref" href="rgs-webconvenience.html#web-clickLink-function"><code class="function">clickLink</code></a> function has
+      been deprecated. Instead, the <a class="xref" href="rgs-webconvenience.html#web-mouseClick-function"><code class="function">mouseClick</code></a>
+      function can be used anywhere <a class="xref" href="rgs-webconvenience.html#web-clickLink-function"><code class="function">clickLink</code></a> is
+      currently being used.</p></li><li><p>The <acronym class="acronym">AUT</acronym> timeout configured in
+      <span class="application">squishserver</span> is now respected when deciding how long <span class="emphasis"><em>Squish</em></span> should
+      wait for a web page to load in Chrome or <span class="application">Firefox</span>.</p></li><li><p>Proxy-related configuration settings can now be found
+      in the <code class="filename">etc/webwrapper.ini</code> configuration
+      file.</p></li><li><p>Fixed a problem with <a class="xref" href="rgs-webconvenience.html#web-attachToBrowser-function"><code class="function">attachToBrowser</code></a> failing to attach to the browser
+      after updating the Chrome extension to version 2.1.0.</p></li><li><p>Fixed a crash that would occur when Squish attempted to
+      log the reason it was not able to hook into <span class="application">Microsoft Internet Explorer</span>, in particular, when automating
+      <span class="application">Microsoft Internet Explorer</span> embedded into a Windows AUT.</p></li><li><p>Resolved an issue which led to a JavaScript error when
+      setting the <code class="code">url</code> property on a <a class="xref" href="rgs-webconvenience.html#web-BrowserTab-class" title="6.10.2. BrowserTab Class">BrowserTab Class (Section 6.10.2)</a> object in <span class="application">Microsoft Internet Explorer</span>.</p></li><li><p>Improved the behavior of <a class="xref" href="rgs-webconvenience.html#web-typeText-function"><code class="function">typeText</code></a> to ensure that the browser window is
+      being brought into the foreground, and existing selections in the field to
+      type are not lost.</p></li><li><p>Clicks into text fields are now recorded as a
+      <a class="xref" href="rgs-webconvenience.html#web-nativeMouseClick-function"><code class="function">nativeMouseClick</code></a> instead of a <a class="xref" href="rgs-webconvenience.html#web-setFocus-function"><code class="function">setFocus</code></a> call. This better reflects the actual
+      user input and allows replaying tests which intentionally click
+      into a certain position in the text field.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="rel-660-android"></a>2.8.11. Android-specific</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p><span class="emphasis"><em>Squish</em></span> for Android can now access all controls exposed
+      via the accessibility <acronym class="acronym">API</acronym>. This improves record and
+      replay in many cases, for example, when testing Flutter
+      applications.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="rel-660-windows"></a>2.8.12. Windows (native)-specific</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Overhauled sub-process detection logic in <span class="emphasis"><em>Squish</em></span> to
+      improve detection of (and hooking into) sub-processes of
+      <acronym class="acronym">AUT</acronym>s.</p></li><li><p>Added support for Windows Forms and
+      <acronym class="acronym">WPF</acronym> .NET Core applications.</p></li><li><p>Added property <code class="code">name</code> to the properties of
+      <code class="code">WindowsForms</code> controls. The new property can be used for
+      object identification and recording.</p></li><li><p>Added support for performing clicks with the fourth and
+      fifth mouse buttons (the <code class="literal">x buttons</code>).</p></li><li><p>Fixed the global bounds calculation for rotated
+      <acronym class="acronym">WPF</acronym> elements.</p></li><li><p>Improved support for <acronym class="acronym">WPF</acronym>
+      <code class="code">ToolTip</code> objects. These now have their own type and can be the
+      container objects of their children.</p></li><li><p>Added a new optional fallback for <acronym class="acronym">WPF</acronym>
+      text properties. When an object does not have a good string
+      representation, its TextBlock children can be used for the generation of
+      text property values. This can be enabled by specifying the setting
+      <code class="code">WpfTextPropertyFallback</code> configuration key.</p></li><li><p><span class="application">startwinaut</span>  learned a new
+      <code class="option">--aut-timeout</code> command line switch for specifying the
+      time to wait for an application to show any user
+      interface.</p></li><li><p>Various issues with interacting with
+      <acronym class="acronym">WPF</acronym> popups have been resolved.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="rel-660-mac"></a>2.8.13. macOS-specific (Cocoa/Carbon edition)</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>The <code class="code">Console.KeyPress</code> function no longer
+causes the test case to abort when running tests on macOS 10.15.</p></li><li><p>Fixed an issue which caused the
+      <acronym class="acronym">AUT</acronym> to abort unexpectedly when requesting access to
+      the camera or microphone on macOS 10.15.</p></li><li><p>Fixed a problem which caused tests to abort in some
+      cases when calling the <a class="xref" href="rgs-squish.html#nativeType-function"><code class="function">nativeType</code></a> function on
+      macOS 10.15.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="rel-660-source"></a>2.8.14. Source Packages</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Perl, Python and Tcl interpreters are not located via the Windows
+        Registry anymore when building <span class="emphasis"><em>Squish</em></span>.</p><p>Customers building their own <span class="application">squishrunner</span> should either add
+        their script interpreter to the <code class="envar">PATH</code> environment
+        variable, or use one of <code class="option">--with-perl</code>,
+        <code class="option">--with-python</code> or <code class="option">--with-tclconfig</code> to
+        tell <span class="emphasis"><em>Squish</em></span> which interpreter to use.</p></li><li><p>Building the Perl 5 language support now requires Perl
+      5.18 or later.</p></li><li><p>Building the Python 2 language support now requires
+      Python 2.6 or later.</p></li><li><p>Fixed an issue which caused running Qt tools (e.g.
+      <span class="application">moc</span> or <span class="application">uic</span>) to fail
+      when cross-compiling <span class="emphasis"><em>Squish</em></span>.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="rel-660-known-issues"></a>2.8.15. Known Issues</h3></div></div></div><p>For a list of noteworthy issues which were found after the release of
+    <span class="emphasis"><em>Squish</em></span> 6.6, please see the <a class="ulink" href="https://kb.froglogic.com/squish/known-issues/6-6-0/" target="_blank">Known
+    Issues page</a> in the froglogic Knowledge Base.</p></div></div><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" type="text/javascript" src="ScriptingLanguage.js"></script><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format">setScriptingLanguage();</script><div class="navfooter"><hr></hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="rel-661.html">Prev</a> </td><td width="20%" align="center"><a accesskey="u" href="relnotes.html">Up</a></td><td width="40%" align="right"> <a accesskey="n" href="rel-652.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">2.7. Version 6.6.1 </td><td width="20%" align="center"><a accesskey="h" href="index-noframes.html">Home</a></td><td width="40%" align="right" valign="top"> 2.9. Version 6.5.2</td></tr></table></div></body>
+<!-- Mirrored from rel-660.html by HTTrack Website Copier/3.x [XR&CO'2013], Wed, 06 Jul 2022 13:28:55 GMT -->
+</html>

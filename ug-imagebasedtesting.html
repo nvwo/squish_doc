@@ -1,0 +1,268 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<!-- Mirrored from ug-imagebasedtesting.html by HTTrack Website Copier/3.x [XR&CO'2013], Wed, 06 Jul 2022 13:29:02 GMT -->
+<head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><title>5.24. How to Do Image-Based Testing</title><link rel="stylesheet" href="manual.css" type="text/css"></link><meta name="generator" content="DocBook XSL Stylesheets V1.73.2"></meta><link rel="start" href="index-noframes.html" title="Squish Manual"></link><link rel="up" href="users-guide.html" title="Chapter 5. User Guide"></link><link rel="prev" href="ug-shareddata.html" title="5.23. How to Create and Use Shared Data and Shared Scripts"></link><link rel="next" href="ug-canbus-access.html" title="5.25. How to Communicate With CANbus Devices"></link><style xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" type="text/css" media="screen">
+        div.toc * { margin-left: 6px; margin-right: auto; max-width: 75em; }
+        div.toc span { margin-left: 0px; }
+        * { margin-left: auto; margin-right: auto; max-width: 75em; }
+        body { margin-left: 6px; margin-right: 6px; }
+        table th { padding: .5ex }
+        table td { padding: .5ex }
+    </style><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format">
+        function keyPress() {
+            var e = window.event;
+            if ( e == undefined ) {
+                return;
+            }
+            /* ### does not properly scroll, yet
+            if ( e.keyCode == 32 ) {
+            var l = document.links;
+            for ( var i = 0; i < l.length; i++ ) {
+                if ( l[i].innerText == "Next" ) {
+                location.href = l[i].href;
+                }
+            }
+            } else
+                */
+                if ( e.keyCode == 0x08 ) {
+            var l = document.links;
+            for ( var i = 0; i < l.length; i++ ) {
+                if ( l[i].innerText == "Prev" ) {
+                location.href = l[i].href;
+                }
+            }
+            }
+        }
+        document.onkeypress = keyPress;
+    </script></head><body><div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="ug-imagebasedtesting"></a>5.24. How to Do Image-Based Testing</h2></div></div></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><span class="section"><a href="ug-imagebasedtesting.html#ug-ocr-engine-setup">5.24.1. OCR setup</a></span></dt><dt><span class="section"><a href="ug-imagebasedtesting.html#idp46918904">5.24.2. Start a New Game</a></span></dt><dt><span class="section"><a href="ug-imagebasedtesting.html#idp46927832">5.24.3. Move the Pawn</a></span></dt><dt><span class="section"><a href="ug-imagebasedtesting.html#idp46948896">5.24.4. The Recorded Script</a></span></dt><dt><span class="section"><a href="ug-imagebasedtesting.html#idp46952056">5.24.5. Tolerant image search</a></span></dt><dt><span class="section"><a href="ug-imagebasedtesting.html#idp46963072">5.24.6. Verifications by Image-Search</a></span></dt></dl></div><p>
+This section explains the steps necessary to create test scripts using
+Image-based lookups. Retrieval of objects based on their screen
+appearance is a complementary approach to the property-based
+identification described in <a class="xref" href="ug-accessing-objects.html" title="5.1. How to Identify and Access Objects">How to Identify and Access Objects (Section 5.1)</a>.
+</p><p>
+As a sample AUT, we will use <span class="application">Chess 2012</span>, a
+game developed by Filip Höfer. The application employs several
+classic controls like push buttons and menus as shown in the
+screenshot below. Normally, it is recommended to access these controls
+through multi-property names like <code class="code">{type='Button' text='Start new
+game'}</code>. For the sake of this how-to, we will restrict ourselves
+to Image-based object searches for a short test case.
+</p><div class="screenshot"><div class="mediaobject" align="center"><img src="images/ug-chess_welcome.png" align="middle"></img><div class="caption">Sample Application - Chess Game
+</div></div></div><p>
+We will automate a minimal sequence of steps:
+</p><div class="orderedlist"><ol type="1"><li><p>
+    Start a new game
+  </p></li><li><p>
+    Move the white pawn from square C2 to square C4.
+  </p></li></ol></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="ug-ocr-engine-setup"></a>5.24.1. OCR setup</h3></div></div></div><p>
+By default, Squish supports the Tesseract OCR engine. In order to use
+the Tesseract engine, you need to install the Tesseract for Squish
+package for your operating system:</p><div class="table"><a id="idp46910536"></a><p class="title"><b>Table 5.1. Tesseract OCR for Squish packages</b></p><div class="table-contents"><table summary="Tesseract OCR for Squish packages" border="1"><colgroup><col></col><col></col></colgroup><thead><tr><th align="left">Operating system</th><th align="left">Package name</th></tr></thead><tbody><tr><td align="left">Microsoft Windows</td><td align="left">tesseract-4.0.0-for-squish.exe</td></tr><tr><td align="left">Linux</td><td align="left">tesseract-4.0.0-for-squish.x64.run</td></tr><tr><td align="left">OS X</td><td align="left">tesseract-4.0.0-for-squish.x64.dmg</td></tr></tbody></table></div></div><br class="table-break"></br><p>The packages are available in
+<a class="ulink" href="https://www.froglogic.com/squish/download/" target="_blank"> our download
+center</a>.
+The Tesseract package installer can register the chosen path with Squish.
+If that step was omitted during installation, the path to the engine
+can be specified on the
+<a class="xref" href="ide.dialogs.html#ide.preferences.squish.ocr.pane">OCR Preferences pane</a>,
+or in the <a class="xref" href="rg-ini-files.html#rg-ocr.ini-file" title="7.6.1.2. ocr.ini">ocr.ini (Section 7.6.1.2)</a> file.
+</p><p>
+Squish supports multiple OCR engines, but each require a few
+steps before they can be used.
+</p><p>
+Both the OCR.Space and Amazon Rekognition engines require the authentication
+keys that indentify a particular user of the service. The instruction for
+obtaining the keys for these engines can be found
+<a class="ulink" href="https://ocr.space/ocrapi" target="_blank">here</a> and
+<a class="ulink" href="https://docs.aws.amazon.com/IAM/latest/UserGuide/id_credentials_access-keys.html" target="_blank">
+here</a>. The authentication data needs to be specified in the
+<a class="xref" href="ide.dialogs.html#ide.preferences.squish.ocr.pane">OCR Preferences pane</a>,
+or in the <a class="xref" href="rg-ini-files.html#rg-ocr.ini-file" title="7.6.1.2. ocr.ini">ocr.ini (Section 7.6.1.2)</a> file.
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="idp46918904"></a>5.24.2. Start a New Game</h3></div></div></div><p>
+While we would normally automate the push of the <span class="guibutton">Start new
+game</span> button through a property-based object access
+(<code class="code">mouseClick(waitForObject(":Start_Button"))</code>) we will now use
+Optical Character Recognition (OCR) to interact with that button.
+</p><div class="orderedlist"><ol type="1"><li><p>
+    <span class="guibutton">Record</span> (<span class="guiicon"><img src="images/ide/record.png"></img></span>) the Test Case.
+  </p></li><li><p>
+    Invoke the <a class="xref" href="ide.main.window.html#ide.insert.mouseclick.ocr.action" title="8.1.3.11. Insert &gt; mouseClick(&lt;OCR&gt;) action"><span class="guiicon">Insert &gt; mouseClick(&lt;OCR&gt;)</span> action (Section 8.1.3.11)</a>
+    (<span class="guiicon"><img src="images/ide/ocr_click.png"></img></span>)
+  </p></li><li><p>
+    Wait for the IDE to grab the screen content and use click-and-drag to draw
+    a selection around the <span class="guibutton">Start new game</span> button label.
+  </p></li><li><p>
+    Make sure that the <span class="guilabel">Search text</span> field contains the
+    'Start new game' text.
+  </p></li><li><p>
+    Press the <span class="guibutton">Insert mouseClick</span> button. This
+    will a) perform the click on the button and b) queue the script
+    statement <code class="code">mouseClick(waitForOcrText("Start new game"))</code>
+    for insertion at the end of recording.
+  </p></li></ol></div><div class="screenshot"><div class="mediaobject" align="center"><img src="images/ide-ref-ocr-selection-dialog.png" align="middle"></img><div class="caption">Start New Game
+</div></div></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="idp46927832"></a>5.24.3. Move the Pawn</h3></div></div></div><p>
+The chess figures are not controls recognized by Squish, so we are forced to
+use their pixel representation. The first image cut out from the chessboard will
+be the white pawn on square C2:
+</p><div class="mediaobject" align="center"><img src="images/ug-chess_white_pawn.png" align="middle"></img><div class="caption"><p><code class="filename">white_pawn.png</code>
+</p></div></div><div class="orderedlist"><ol type="1"><li><p>
+    Invoke the <a class="xref" href="ide.main.window.html#ide.insert.mouseclick.action" title="8.1.3.8. Insert &gt; mouseClick(&lt;Image&gt;) action"><span class="guiicon">Insert &gt; mouseClick(&lt;Image&gt;)</span> action (Section 8.1.3.8)</a>
+    (<span class="guiicon"><img src="images/ide/insert_action.gif"></img></span>)
+  </p></li><li><p>
+    Wait for the IDE to grab the screen content and move the red
+    selection rectangle around the pawn at the C2 square.
+  </p></li><li><p>
+    Enter a meaningful file name like <code class="filename">white_pawn</code>.
+  </p></li><li><p>
+    Press the <span class="guibutton">Insert mouseClick</span> button. This
+    will a) perform the click on the pawn and b) queue the script
+    statement <code class="code">mouseClick(waitForImage("white_pawn"))</code>
+    for insertion at the end of recording.
+  </p></li></ol></div><p>At this point there are still eight such pawns on the
+board, with four of them placed on the same white background that
+we have captured. Upon accepting the selection <span class="emphasis"><em>Squish</em></span> will search
+the desktop screenshot, find all positions matching the selection and
+compute the occurrence index. That index will be recorded as a part of
+the <a class="xref" href="rgs-squish.html#waitForImage-function"><code class="function">waitForImage</code></a> call. Therefore, it is
+important to select the specific image of interest, even if there are
+other identical occurences of it on the screen.
+</p><div class="screenshot"><div class="mediaobject" align="center"><img src="images/ug-chess_start.png" align="middle"></img><div class="caption">White pawn image selection
+</div></div></div><p>
+A click on square C4 will perform the move. Once we activate the
+<a class="xref" href="ide.main.window.html#ide.insert.mouseclick.action" title="8.1.3.8. Insert &gt; mouseClick(&lt;Image&gt;) action"><span class="guiicon">Insert &gt; mouseClick(&lt;Image&gt;)</span> action (Section 8.1.3.8)</a>
+(<span class="guiicon"><img src="images/ide/insert_action.gif"></img></span>)
+we get to choose previously recorded images:
+</p><div class="screenshot"><div class="mediaobject" align="center"><img src="images/ug-chess_new_image.png" align="middle"></img><div class="caption">Image Reuse or Creation
+</div></div></div><p>The image of the pawn is not applicable for reuse at this point.
+We will use the <span class="guibutton">New Image...</span> button to record an image
+for the empty square at C4 using the same steps as above.
+</p><p>
+Recording search images that consist only of a flat background is not
+recommended. In order to avoid that, the selected image should include
+the margins of neighboring squares.
+</p><div class="mediaobject" align="center"><img src="images/ug-chess_square.png" align="middle"></img><div class="caption"><p><code class="filename">white_square.png</code>
+</p></div></div><p>
+As before, other empty white squares will be considered, including the
+occurrence index recorded as the <em class="parameter"><code>occurrence</code></em>
+parameter to the <a class="xref" href="rgs-squish.html#waitForImage-function"><code class="function">waitForImage</code></a> function.
+</p><p>
+The next recorded move is a pawn going from E2 to E4. We activate
+the <a class="xref" href="ide.main.window.html#ide.insert.mouseclick.action" title="8.1.3.8. Insert &gt; mouseClick(&lt;Image&gt;) action"><span class="guiicon">Insert &gt; mouseClick(&lt;Image&gt;)</span> action (Section 8.1.3.8)</a>
+(<span class="guiicon"><img src="images/ide/insert_action.gif"></img></span>)
+, and select the previously created <span class="guibutton">white_pawn</span>
+file. Because there are multiple pawns still visible on the board,
+<span class="emphasis"><em>Squish</em></span> will open the <a class="xref" href="ide.dialogs.html#ide.image.search.preview.dialog" title="8.3.6. Image Search Preview dialog">Image Search Preview dialog (Section 8.3.6)</a>
+with several matches marked with a red frame.
+</p><div class="screenshot"><div class="mediaobject" align="center"><img src="images/ug-chess_occurrences.png" align="middle"></img><div class="caption">Selection of Image Occurrence
+</div></div></div><p>
+This time the occurrence index recorded in the test script will be
+based on the selected image.
+</p><p>
+The same steps can be repeated to use the <span class="guibutton">chess_square.png</span>
+file to click on the square E4.
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="idp46948896"></a>5.24.4. The Recorded Script</h3></div></div></div><p>
+Once the Image-based action insertions are done, we press the
+<span class="guiicon">Stop Recording</span> action
+(<span class="guiicon"><img src="images/ide/stop-recording.png"></img></span>)
+in the Control Bar. The generated script will look like
+this (or equivalent in your chosen scripting language):
+</p><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">JavaScript</span><pre class="programlisting">
+function main() {
+    startApplication("chess2012");
+    mouseClick(waitForOcrText("Start new game"));
+    mouseClick(waitForImage("white_pawn", { occurrence: 2 }));
+    mouseClick(waitForImage("chess_square", { occurrence: 7 }));
+    mouseClick(waitForImage("white_pawn", { occurrence: 3 }));
+    mouseClick(waitForImage("chess_square", { occurrence: 4 }));
+}
+</pre></div><p>
+At this point we have automated a test without having access to
+internals of the chess application. The drawback of this low barrier
+is the reliance on a particular visual appearance of the
+application.
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="idp46952056"></a>5.24.5. Tolerant image search</h3></div></div></div><p>
+In situations where small changes in the appearance of the application occur,
+<span class="emphasis"><em>Squish</em></span> can introduce a tolerance to the image search in order to find
+matches against previously captured images.
+</p><p>
+The <span class="application">Chess 2012</span> application that we
+used to record the test script scales its contents according to the
+amount of available space. By maximizing the application window we
+can resize the entire chessboard.
+</p><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">JavaScript</span><pre class="programlisting">
+function main() {
+    startApplication("chess2012");
+    mouseClick(waitForImage("start_game"));
+    mouseClick(waitForImage("white_pawn"));
+}
+</pre></div><p>
+If the above test case is executed with the <span class="application">Chess 2012
+</span> application's window maximized, the image search
+will fail, and the IDE will show the <a class="xref" href="ide.dialogs.html#ide.image.not.found.dialog" title="8.3.4. Image Not Found dialog">Image Not Found dialog (Section 8.3.4)</a>.
+</p><div class="screenshot"><div class="mediaobject" align="center"><img src="images/ug-chess_inf.png" align="middle"></img><div class="caption">Image Not Found Dialog
+</div></div></div><p>
+We could try to select the <span class="guibutton">Attempt to fix image search
+errors automatically.</span> checkbox and allow <span class="emphasis"><em>Squish</em></span> to
+enable the tolerant image search mode and adjust its parameters. The
+automatic fix procedure is not perfect and risks relaxing the image
+search to include incorrect matches. Instead, we will click the <span class="guibutton">
+Adjust Search Parameters</span> button that opens the <a class="xref" href="ide.dialogs.html#ide.image.search.preview.dialog" title="8.3.6. Image Search Preview dialog">Image Search Preview dialog (Section 8.3.6)</a>.
+The dialog will attempt to lower the threshold until any matches are found. It displays the
+image search parameters and allows manipulating it to observe the
+search preview according to currently set values.
+</p><div class="screenshot"><div class="mediaobject" align="center"><img src="images/ug-chess_preview.png" align="middle"></img><div class="caption">Image Search Preview
+</div></div></div><p>
+For now, the automatically computed values should be correct, and we
+can confirm them by clicking the <span class="guibutton">Set as Defaults</span> button.
+This will set the default image search parameters to the values
+displayed above and continue the test script execution.
+</p><p>
+The default values of the image search parameters can be edited on the
+<a class="xref" href="ide.views.html#ide.the-settings.view.imagesearch" title="8.2.16.5. Image Search">Image Search (Section 8.2.16.5)</a> tab of the <a class="xref" href="ide.views.html#ide.the-settings.view" title="8.2.16. Test Suite Settings view">Test Suite Settings view (Section 8.2.16)</a>.
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="idp46963072"></a>5.24.6. Verifications by Image-Search</h3></div></div></div><p>
+So far the sole purpose of image searches was a later
+interaction, like a
+<a class="xref" href="ide.main.window.html#ide.insert.mouseclick.action" title="8.1.3.8. Insert &gt; mouseClick(&lt;Image&gt;) action"><span class="guiicon">Insert &gt; mouseClick(&lt;Image&gt;)</span> action (Section 8.1.3.8)</a>. The mere existence (or
+absence) of an image can also be be used for the purpose of testing
+the GUI state, to answer questions like: Does a warning sign
+appear? Is a status icon red or green? Or (in the case of a test for
+our chess application): which player's turn is it?
+</p><p>
+To verify that it is the white player's turn we will first cut out an
+image encompassing the text label <span class="guilabel">It is white's
+turn.</span> by recording, for example, a <code class="code">mouseClick</code> on the
+label:
+</p><div class="screenshot"><div class="mediaobject" align="center"><img src="images/ug-chess_turn_white.png" align="middle"></img><div class="caption"><p>Selection of the <code class="filename">whites_turn.png</code> image</p></div></div></div><p>
+The recorded script statement will be:
+</p><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">JavaScript</span><pre class="programlisting">
+mouseClick(waitForImage("whites_turn.png"));
+</pre></div><p>To turn this into a check we'll drop the <code class="code">mouseClick</code>
+call and reduce ourselves to verifying that the image search by itself
+succeeds:
+</p><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">JavaScript</span><pre class="programlisting">
+try {
+   waitForImage("whites_turn.png", {timeout: 1000})
+   test.pass("It is white's turn");
+} catch (e) {
+   test.fail("It is not white's turn. Must be black's.")
+}
+</pre></div><p>
+Note how we reduced the maximum time we were willing to wait from 20
+seconds to 1 second. This is to speed up the verification in case of a
+negative result. When we do not need to wait for an update of the
+UI before performing the test, we can simply use
+<a class="xref" href="rgs-squish.html#findImage-function"><code class="function">findImage</code></a>. It will error out right away on
+failure to find the specified image.
+</p><p>
+Also note that a failure to find a specific image does not rule out with
+100% safety that the information is not displayed with a differing
+visual appearance. The absence of one image does not always mean
+that another state of pixels is present for sure. It is therefore
+prudent to have the failing check for one image to be followed by the
+check for its expected alternative. In other words, a failed check
+for the display reading that it is white's turn is not sufficient
+for when we expect a visual representation of the text
+<span class="guilabel"> It is black's turn</span>. We would need the expected
+alternative.
+</p></div></div><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" type="text/javascript" src="ScriptingLanguage.js"></script><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format">setScriptingLanguage();</script><div class="navfooter"><hr></hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="ug-shareddata.html">Prev</a> </td><td width="20%" align="center"><a accesskey="u" href="users-guide.html">Up</a></td><td width="40%" align="right"> <a accesskey="n" href="ug-canbus-access.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">5.23. How to Create and Use Shared Data and Shared Scripts </td><td width="20%" align="center"><a accesskey="h" href="index-noframes.html">Home</a></td><td width="40%" align="right" valign="top"> 5.25. How to Communicate With CANbus Devices</td></tr></table></div></body>
+<!-- Mirrored from ug-imagebasedtesting.html by HTTrack Website Copier/3.x [XR&CO'2013], Wed, 06 Jul 2022 13:29:02 GMT -->
+</html>

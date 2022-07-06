@@ -1,0 +1,97 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<!-- Mirrored from rel-344.html by HTTrack Website Copier/3.x [XR&CO'2013], Wed, 06 Jul 2022 13:28:57 GMT -->
+<head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><title>2.57. Version 3.4.4</title><link rel="stylesheet" href="manual.css" type="text/css"></link><meta name="generator" content="DocBook XSL Stylesheets V1.73.2"></meta><link rel="start" href="index-noframes.html" title="Squish Manual"></link><link rel="up" href="relnotes.html" title="Chapter 2. Release Notes—for Upgraders"></link><link rel="prev" href="rel-345.html" title="2.56. Version 3.4.5"></link><link rel="next" href="rel-343.html" title="2.58. Version 3.4.3"></link><style xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" type="text/css" media="screen">
+        div.toc * { margin-left: 6px; margin-right: auto; max-width: 75em; }
+        div.toc span { margin-left: 0px; }
+        * { margin-left: auto; margin-right: auto; max-width: 75em; }
+        body { margin-left: 6px; margin-right: 6px; }
+        table th { padding: .5ex }
+        table td { padding: .5ex }
+    </style><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format">
+        function keyPress() {
+            var e = window.event;
+            if ( e == undefined ) {
+                return;
+            }
+            /* ### does not properly scroll, yet
+            if ( e.keyCode == 32 ) {
+            var l = document.links;
+            for ( var i = 0; i < l.length; i++ ) {
+                if ( l[i].innerText == "Next" ) {
+                location.href = l[i].href;
+                }
+            }
+            } else
+                */
+                if ( e.keyCode == 0x08 ) {
+            var l = document.links;
+            for ( var i = 0; i < l.length; i++ ) {
+                if ( l[i].innerText == "Prev" ) {
+                location.href = l[i].href;
+                }
+            }
+            }
+        }
+        document.onkeypress = keyPress;
+    </script></head><body><div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="rel-344"></a>2.57. Version 3.4.4</h2></div></div></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><span class="section"><a href="rel-344.html#general">2.57.1. General</a></span></dt><dt><span class="section"><a href="rel-344.html#ide">2.57.2. IDE</a></span></dt><dt><span class="section"><a href="rel-344.html#qt-specific">2.57.3. Qt-specific</a></span></dt><dt><span class="section"><a href="rel-344.html#java-specific">2.57.4. Java-specific</a></span></dt><dt><span class="section"><a href="rel-344.html#web-specific">2.57.5. Web-specific</a></span></dt><dt><span class="section"><a href="rel-344.html#tk-specific">2.57.6. Tk-specific</a></span></dt><dt><span class="section"><a href="rel-344.html#source-builds">2.57.7. Source Builds</a></span></dt></dl></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="general"></a>2.57.1. General</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Added the <a class="xref" href="rgs-squish.html#objectMap.load-function"><code class="function">objectMap.load</code></a>
+function.</p></li><li><p>Stopped a crash from occurring when accessing global AUT
+properties (like Qt's <code class="code">qApp</code>), after the AUT has been shut
+down.</p></li><li><p>Perl: Fixed return values in the face of recursive calls
+caused by an event handler.</p></li><li><p>Respect the 'Response Timeout' setting in all cases,
+so that script commands do not get aborted after 5 minutes if the
+Response Timout is set to be more than 5 minutes.
+</p></li><li><p>Improved the handling of breakpoints in shared script
+files.</p></li><li><p>Added the <code class="code">--updatevp</code> option to the
+<code class="filename">convertvp</code>
+utility to update the image in the verification point.</p></li><li><p>Tcl: Properly escape object names and support Unicode
+characters in Verification and Synchronization Points in Tcl test
+scripts.</p></li><li><p>JavaScript and Python: Fixed a memory leak in the <a class="xref" href="rgs-squish.html#testData.dataset-function"><code class="function">testData.dataset</code></a> function that affected scripts
+written in JavaScript and Python.</p></li><li><p>Qt 3 with Perl: Fixed the
+<code class="code">test::warning()</code> and <code class="code">test::fatal()</code> functions,
+which were broken in some cases.</p></li><li><p>Perl: Support string-wise and numerical comparison
+operators (<code class="code">cmp</code>, <code class="code">&lt;</code>, <code class="code">&gt;=</code>, etc.)
+on wrapped objects wherever the objects allow a meaningful comparison.
+Also improved the string representations of non-string
+objects.</p></li><li><p>Fixed the side effects of the 3.4.3 protection against
+access to "dead" objects where repeated AUT starts led to object class
+descriptions getting mixed up.</p></li><li><p>Unix: <span class="emphasis"><em>Squish</em></span>'s startup code no longer gets confused if
+the name of the last directory in a <code class="code">PATH</code> variable is the
+same as a tool that <span class="emphasis"><em>Squish</em></span> is looking for—so <span class="emphasis"><em>Squish</em></span> can now
+cope with a path that ends with say <code class="filename">.../squish/</code> when
+it is looking for the <span class="emphasis"><em>Squish</em></span> executable. </p></li><li><p>Filter out multiple recorded
+<code class="code">waitForApplicationLaunch()</code> statements since only one is
+needed each time.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="ide"></a>2.57.2. IDE</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Opening a Test Script via a Test Result message (e.g.,
+by clicking in <span class="emphasis"><em>Squish</em></span>'s Test Log window), now works correctly even for
+Test Scripts that are stored on networked drives (Windows Shares).
+</p></li><li><p>Fixed the line selection when clicking on a Test Log item
+with colons in the message.</p></li><li><p>Improved the stability of the Squish IDE when running
+tests which print a lot of information to the standard output
+channel.</p></li><li><p>Improved the handling of test case templates which are
+stored in non-standard locations.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="qt-specific"></a>2.57.3. Qt-specific</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Added support for Qt 4.5.</p></li><li><p>Improved the algorithm used for object name generation
+and hence greatly improved the speed of name lookups.</p></li><li><p>Enabled the wrapping of constructors defined for
+<code class="code">QWidget</code> sub-classes.</p></li><li><p>Fixed replaying recorded scripts that used Qt 3
+tearoff menus.</p></li><li><p>Fixed a crash on Mac OS X that occurred when certain
+Qt 3 applications were terminated.
+</p></li><li><p>Fixed the replay of menu tests when clicking on menu
+items that have a submenu.</p></li><li><p>Preserve non-ASCII characters in existing scripts when
+a newly recorded script snippet is inserted.</p></li><li><p>Improved support for translated strings.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="java-specific"></a>2.57.4. Java-specific</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Added support for the tab list buttons for the
+CTabFolder.</p></li><li><p>Fixed the truncatation of the return value from a Java
+function that is of type float or double.</p></li><li><p>Fixed a security exception when loading the Java
+wrapper library with webstart in some cases.</p></li><li><p>Show AWT/Swing dialogs as top-level objects in the
+Spy.</p></li><li><p>Added a new property, 'basetype'.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="web-specific"></a>2.57.5. Web-specific</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Support lazy hooking for IE when the body of the
+document that is to be hooked doesn't yet exist.</p></li><li><p>Fixed choosing entries in &lt;SELECT&gt; elements in
+cases where the entry contains a single apostrophe or the backslash
+character.</p></li><li><p>Fixed the runtime dependency for testing Web applications
+with Firefox 3 on Windows.</p></li><li><p>Fixed the retrieval of Web properties which contain a
+'%' in cases where the property value is longer than 150
+characters.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="tk-specific"></a>2.57.6. Tk-specific</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Improved double-click emulation by sending a
+release event for both clicks.</p></li><li><p>Improved menubar replay support by moving the mouse to
+the correct top-level menu.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="source-builds"></a>2.57.7. Source Builds</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Added support for compilation against Tcl
+8.6.</p></li><li><p>Fixed compilation with Qt 4.5 on Windows and Mac OS
+10.5 (Leopard).</p></li><li><p>Don't wrap <code class="code">QStyle</code> sub-classes. This is to
+make the wrapper more portable since they are not really required for
+testing purposes.</p></li><li><p>Fixed the compilation problem with Qt 4 and gcc
+3.2.</p></li></ul></div></div></div><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" type="text/javascript" src="ScriptingLanguage.js"></script><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format">setScriptingLanguage();</script><div class="navfooter"><hr></hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="rel-345.html">Prev</a> </td><td width="20%" align="center"><a accesskey="u" href="relnotes.html">Up</a></td><td width="40%" align="right"> <a accesskey="n" href="rel-343.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">2.56. Version 3.4.5 </td><td width="20%" align="center"><a accesskey="h" href="index-noframes.html">Home</a></td><td width="40%" align="right" valign="top"> 2.58. Version 3.4.3</td></tr></table></div></body>
+<!-- Mirrored from rel-344.html by HTTrack Website Copier/3.x [XR&CO'2013], Wed, 06 Jul 2022 13:28:57 GMT -->
+</html>

@@ -1,0 +1,1079 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<!-- Mirrored from rgs-js.html by HTTrack Website Copier/3.x [XR&CO'2013], Wed, 06 Jul 2022 13:29:00 GMT -->
+<head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><title>6.16. JavaScript Notes and Extension APIs</title><link rel="stylesheet" href="manual.css" type="text/css"></link><meta name="generator" content="DocBook XSL Stylesheets V1.73.2"></meta><link rel="start" href="index-noframes.html" title="Squish Manual"></link><link rel="up" href="api.man.html" title="Chapter 6. API Reference Manual"></link><link rel="prev" href="rgs-tcl.html" title="6.15. Tcl Notes"></link><link rel="next" href="rgs-pl.html" title="6.17. Perl Notes"></link><style xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" type="text/css" media="screen">
+        div.toc * { margin-left: 6px; margin-right: auto; max-width: 75em; }
+        div.toc span { margin-left: 0px; }
+        * { margin-left: auto; margin-right: auto; max-width: 75em; }
+        body { margin-left: 6px; margin-right: 6px; }
+        table th { padding: .5ex }
+        table td { padding: .5ex }
+    </style><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format">
+        function keyPress() {
+            var e = window.event;
+            if ( e == undefined ) {
+                return;
+            }
+            /* ### does not properly scroll, yet
+            if ( e.keyCode == 32 ) {
+            var l = document.links;
+            for ( var i = 0; i < l.length; i++ ) {
+                if ( l[i].innerText == "Next" ) {
+                location.href = l[i].href;
+                }
+            }
+            } else
+                */
+                if ( e.keyCode == 0x08 ) {
+            var l = document.links;
+            for ( var i = 0; i < l.length; i++ ) {
+                if ( l[i].innerText == "Prev" ) {
+                location.href = l[i].href;
+                }
+            }
+            }
+        }
+        document.onkeypress = keyPress;
+    </script></head><body><div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="rgs-js"></a>6.16. JavaScript Notes and Extension APIs</h2></div></div></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><span class="section"><a href="rgs-js.html#rgs-js-documentation">6.16.1. JavaScript Language Documentation</a></span></dt><dt><span class="section"><a href="rgs-js.html#language-core">6.16.2. Language Core</a></span></dt><dt><span class="section"><a href="rgs-js.html#book-ecmascript-support">6.16.3. Squish ECMAScript Support</a></span></dt><dt><span class="section"><a href="rgs-js.html#file-object">6.16.4. File Object</a></span></dt><dt><span class="section"><a href="rgs-js.html#console-object">6.16.5. console Object</a></span></dt><dt><span class="section"><a href="rgs-js.html#os-object">6.16.6. OS Object</a></span></dt><dt><span class="section"><a href="rgs-js.html#xml-object">6.16.7. XML Object</a></span></dt><dt><span class="section"><a href="rgs-js.html#sql">6.16.8. SQL</a></span></dt><dt><span class="section"><a href="rgs-js.html#socket-object">6.16.9. Socket Object</a></span></dt><dt><span class="section"><a href="rgs-js.html#ws-object">6.16.10. WebSocket Object</a></span></dt><dt><span class="section"><a href="rgs-js.html#js-XMLHttpRequest-object">6.16.11. XMLHttpRequest Object</a></span></dt><dt><span class="section"><a href="rgs-js.html#formdata-object">6.16.12. FormData Object</a></span></dt></dl></div><p>
+<span class="emphasis"><em>Squish</em></span> assumes that all <code class="filename">test.js</code> files use
+the UTF-8 encoding. If you expect to edit such files outside of the
+<span class="application">Squish IDE</span>, make sure that the editor loads and saves the files using UTF-8.
+</p><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="rgs-js-documentation"></a>6.16.1. JavaScript Language Documentation</h3></div></div></div><p>
+In theory, <span class="emphasis"><em>any</em></span> JavaScript book or online resource
+is suitable for learning about the language or for looking up functions.
+Unfortunately most authors don't make a clear distinction between
+features that are part of the JavaScript language itself and
+browser-specific extensions. When reading such texts beware of any
+example code that makes use of the <code class="varname">window</code> or
+<code class="varname">document</code> objects since these are provided by browsers
+and are not part of the language.
+</p><p>
+By keeping in mind the distinction between the pure language (which is
+what <span class="emphasis"><em>Squish</em></span> supports) and browser-specific extensions, you'll be able
+to find the information you need from a variety of books and online
+resources while avoiding confusion. Here are some useful online
+JavaScript language resources:
+</p><div class="itemizedlist"><ul type="disc" compact><li><p>Mozilla's <a class="ulink" href="http://developer.mozilla.org/en/docs/Core_JavaScript_1.5_Reference" target="_blank">Core
+JavaScript Reference</a></p></li><li><p><span class="trademark">Microsoft</span>®'s <a class="ulink" href="http://msdn.microsoft.com/en-us/library/4yyeyb0a(VS.85).aspx" target="_blank">JScript
+Language Reference</a> at msdn.microsoft.com</p></li><li><p><a class="ulink" href="http://www.devguru.com/content/technologies/javascript/home.html" target="_blank">DevGuru JavaScript Quick Reference</a> at
+www.devguru.com</p></li></ul></div><p>
+If you prefer books, a good JavaScript book is
+<a class="ulink" href="http://www.davidflanagan.com/" target="_blank">JavaScript: The Definitive
+Guide</a> by David Flanagan.
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="language-core"></a>6.16.2. Language Core</h3></div></div></div><p>
+The JavaScript engine shipped with Squish is based on the
+ECMAScript language specification (ECMA 262 Edition 3, plus parts of
+later editions). The language core that is defined in this standard
+encompasses operators, control structures, objects, and other features
+commonly found in a scripting language. The subset of supported built-in
+classes and members can be found in <a class="xref" href="rgs-js.html#book-ecmascript-support" title="6.16.3. Squish ECMAScript Support">Squish ECMAScript Support (Section 6.16.3)</a>.
+</p><p>
+The pure JavaScript (i.e., ECMAScript) language has no built-in support
+for file handling or networking, unlike other scripting languages such
+as Python and Tcl. This is because JavaScript has been designed to be a
+small language that can be safely embedded into applications. However,
+JavaScript is also designed to be extened by custom APIs specific to the
+embedding application. In the case of web browsers there are hundreds of
+functions and properties that allow for the manipulation of HTML
+documents via the DOM API, for example. In the case of <span class="emphasis"><em>Squish</em></span> we have
+added numerous functions specific to testing. And we have also added
+some general purposes classes described below. And if the features we
+have added are not sufficient for your needs contact support and request
+an enhancement.
+</p><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Note: Backslashes in Strings"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/note.png"></img></td><th align="left">Backslashes in Strings</th></tr><tr><td align="left" valign="top"><p>
+Some JavaScript functions take a path parameter. This can be a directory
+or a filename (and can include the full path), such as <code class="filename">C:\My
+Documents\test-plan.odt</code> or
+<code class="filename">/home/user/test-plan.odt</code>. In most scripting
+languages, including JavaScript, the backslash character
+(<code class="code">\</code>) is used to start an escape sequence inside strings and
+so cannot be written by itself. For this reason, when writing Windows
+paths in JavaScript strings we must escape the backslash—for
+example, <code class="code">"C:\\My Documents\\test-plan.odt"</code>.
+</p></td></tr></table></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="book-ecmascript-support"></a>6.16.3. Squish ECMAScript Support</h3></div></div></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><span class="section"><a href="rgs-js.html#ecmascript-global-object">6.16.3.1.  The Global Object </a></span></dt><dt><span class="section"><a href="rgs-js.html#ecmascript-array-object">6.16.3.2.  Array </a></span></dt><dt><span class="section"><a href="rgs-js.html#ecmascript-boolean-object">6.16.3.3.  Boolean </a></span></dt><dt><span class="section"><a href="rgs-js.html#ecmascript-date-object">6.16.3.4.  Date </a></span></dt><dt><span class="section"><a href="rgs-js.html#ecmascript-error-object">6.16.3.5.  Error </a></span></dt><dt><span class="section"><a href="rgs-js.html#ecmascript-function-object">6.16.3.6.  Function </a></span></dt><dt><span class="section"><a href="rgs-js.html#ecmascript-json-object">6.16.3.7.  The JSON Object</a></span></dt><dt><span class="section"><a href="rgs-js.html#ecmascript-map-object">6.16.3.8.  Map </a></span></dt><dt><span class="section"><a href="rgs-js.html#ecmascript-math-object">6.16.3.9.  The Math Object </a></span></dt><dt><span class="section"><a href="rgs-js.html#ecmascript-number-object">6.16.3.10.  Number </a></span></dt><dt><span class="section"><a href="rgs-js.html#ecmascript-object-object">6.16.3.11.  Object </a></span></dt><dt><span class="section"><a href="rgs-js.html#ecmascript-regexp-object">6.16.3.12.  RegExp </a></span></dt><dt><span class="section"><a href="rgs-js.html#ecmascript-set-object">6.16.3.13. Set </a></span></dt><dt><span class="section"><a href="rgs-js.html#ecmascript-string-object">6.16.3.14. String</a></span></dt></dl></div><p>
+This section is about the ECMAScript API subset that is supported in <span class="emphasis"><em>Squish</em></span>.
+<span class="emphasis"><em>Squish</em></span> also adds non-standard objects like File, XML and SQL, and a
+testing-specific API which are described in other sections of <a class="xref" href="rgs-js.html" title="6.16. JavaScript Notes and Extension APIs">JavaScript Notes and Extension APIs (Section 6.16)</a>.</p><h4><a id="idp53693128"></a>Keywords</h4><p>
+<code class="code">as</code>,
+<code class="code">break</code>,
+<code class="code">case</code>,
+<code class="code">catch</code>,
+<code class="code">const</code>,
+<code class="code">continue</code>,
+<code class="code">default</code>,
+<code class="code">delete</code>,
+<code class="code">do</code>,
+<code class="code">else</code>,
+<code class="code">export</code>,
+<code class="code">extends</code>,
+<code class="code">false</code>,
+<code class="code">finally</code>,
+<code class="code">for</code>,
+<code class="code">from</code>,
+<code class="code">function</code>,
+<code class="code">if</code>,
+<code class="code">in</code>,
+<code class="code">instanceof</code>,
+<code class="code">import</code>,
+<code class="code">let</code>,
+<code class="code">new</code>,
+<code class="code">null</code>,
+<code class="code">of</code>,
+<code class="code">return</code>,
+<code class="code">static</code>,
+<code class="code">super</code>,
+<code class="code">switch</code>,
+<code class="code">this</code>,
+<code class="code">throw</code>,
+<code class="code">true</code>,
+<code class="code">try</code>,
+<code class="code">typeof</code>,
+<code class="code">var</code>,
+<code class="code">void</code>,
+<code class="code">while</code>,
+<code class="code">with</code>
+</p><h4><a id="idp53701376"></a>Punctuators</h4><p>
+<code class="code">{</code>, <code class="code">}</code>,
+<code class="code">(</code>, <code class="code">)</code>,
+<code class="code">[</code>, <code class="code">]</code>,
+<code class="code">.</code>, <code class="code">,</code>, <code class="code">;</code>
+<code class="code">&lt;</code>, <code class="code">&gt;</code>,
+<code class="code">&lt;=</code>, <code class="code">&gt;=</code>,
+<code class="code">==</code>, <code class="code">!=</code>,
+<code class="code">===</code>, <code class="code">!==</code>,
+<code class="code">+</code>, <code class="code">-</code>,
+<code class="code">*</code>, <code class="code">/</code>, <code class="code">%</code>,<code class="code">**</code>,
+<code class="code">++</code>, <code class="code">--</code>,
+<code class="code">&lt;&lt;</code>, <code class="code">&gt;&gt;</code>, <code class="code">&gt;&gt;&gt;</code>,
+<code class="code">&amp;</code>, <code class="code">|</code>, <code class="code">^</code>,
+<code class="code">!</code>, <code class="code">~</code>,
+<code class="code">&amp;&amp;</code>, <code class="code">||</code>,
+<code class="code">??</code>, <code class="code">...</code>
+<code class="code">?</code>, <code class="code">:</code>, <code class="code">=</code>,
+<code class="code">+=</code>, <code class="code">-=</code>,
+<code class="code">*=</code>, <code class="code">/=</code>,
+<code class="code">%=</code>, <code class="code">**=</code>,
+<code class="code">&lt;&lt;=</code>, <code class="code">&gt;&gt;=</code>,<code class="code">&gt;&gt;&gt;=</code>,
+<code class="code">&amp;=</code>, <code class="code">|=</code>,<code class="code">^=</code>,
+<code class="code">&amp;&amp;=</code>, <code class="code">||=</code>,
+<code class="code">??=</code> and <code class="code">=&gt;</code>.
+</p><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="ecmascript-global-object"></a>6.16.3.1.  The Global Object </h4></div></div></div><h5><a id="idp53713720"></a>Value Properties</h5><div class="itemizedlist"><ul type="disc"><li><p><code class="code">NaN</code></p></li><li><p><code class="code">Infinity</code></p></li><li><p><code class="code">undefined</code></p></li></ul></div><h5><a id="idp53715120"></a>Function Properties</h5><div class="itemizedlist"><ul type="disc"><li><p><code class="function">decodeURI()</code></p></li><li><p><code class="function">decodeURIComponent()</code></p></li><li><p><code class="function">encodeURI()</code></p></li><li><p><code class="function">encodeURIComponent()</code></p></li><li><p><code class="function">escape()</code></p></li><li><p><code class="function">eval()</code></p></li><li><p><code class="function">isFinite()</code></p></li><li><p><code class="function">parseFloat()</code></p></li><li><p><code class="function">parseInt()</code></p></li><li><p><code class="function">unescape()</code></p></li></ul></div><h5><a id="idp53721136"></a>Constructor Properties</h5><div class="itemizedlist"><ul type="disc"><li><p><code class="classname">Array</code></p></li><li><p><code class="classname">Boolean</code></p></li><li><p><code class="classname">Date</code></p></li><li><p><code class="classname">Error</code></p></li><li><p><code class="classname">Function</code></p></li><li><p><code class="classname">Map</code></p></li><li><p><code class="classname">Number</code></p></li><li><p><code class="classname">Object</code></p></li><li><p><code class="classname">RegExp</code></p></li><li><p><code class="classname">Set</code></p></li><li><p><code class="classname">String</code></p></li><li><p><code class="classname">EvalError</code></p></li><li><p><code class="classname">RangeError</code></p></li><li><p><code class="classname">ReferenceError</code></p></li><li><p><code class="classname">SyntaxError</code></p></li><li><p><code class="classname">TypeError</code></p></li><li><p><code class="classname">URIError</code></p></li></ul></div><h5><a id="idp53727264"></a>Other Properties</h5><div class="itemizedlist"><ul type="disc"><li><p><code class="classname">JSON</code></p></li><li><p><code class="classname">Math</code></p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="ecmascript-array-object"></a>6.16.3.2.  Array </h4></div></div></div><h5><a id="idp53729016"></a>Prototype Function Properties</h5><div class="itemizedlist"><ul type="disc"><li><p><code class="function">concat()</code></p></li><li><p><code class="function">every()</code></p></li><li><p><code class="function">filter()</code></p></li><li><p><code class="function">forEach()</code></p></li><li><p><code class="function">indexOf()</code></p></li><li><p><code class="function">join()</code></p></li><li><p><code class="function">lastIndexOf()</code></p></li><li><p><code class="function">map()</code></p></li><li><p><code class="function">pop()</code></p></li><li><p><code class="function">push()</code></p></li><li><p><code class="function">reduce()</code></p></li><li><p><code class="function">reduceRight()</code></p></li><li><p><code class="function">reverse()</code></p></li><li><p><code class="function">shift()</code></p></li><li><p><code class="function">slice()</code></p></li><li><p><code class="function">some()</code></p></li><li><p><code class="function">sort()</code></p></li><li><p><code class="function">splice()</code></p></li><li><p><code class="function">toLocaleString()</code></p></li><li><p><code class="function">toString()</code></p></li><li><p><code class="function">unshift()</code></p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="ecmascript-boolean-object"></a>6.16.3.3.  Boolean </h4></div></div></div><h5><a id="idp53741896"></a> Prototype Function Properties </h5><div class="itemizedlist"><ul type="disc"><li><p><code class="function">toString()</code></p></li><li><p><code class="function">valueOf()</code></p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="ecmascript-date-object"></a>6.16.3.4.  Date </h4></div></div></div><h5><a id="idp53744056"></a>Prototype Function Properties</h5><div class="itemizedlist"><ul type="disc"><li><p><code class="function">getDate()</code></p></li><li><p><code class="function">getDay()</code></p></li><li><p><code class="function">getFullYear()</code></p></li><li><p><code class="function">getHours()</code></p></li><li><p><code class="function">getMilliseconds()</code></p></li><li><p><code class="function">getMinutes()</code></p></li><li><p><code class="function">getMonth()</code></p></li><li><p><code class="function">getSeconds()</code></p></li><li><p><code class="function">getTime()</code></p></li><li><p><code class="function">getTimezoneOffset()</code></p></li><li><p><code class="function">getUTCDate()</code></p></li><li><p><code class="function">getUTCDay()</code></p></li><li><p><code class="function">getUTCFullYear()</code></p></li><li><p><code class="function">getUTCHours()</code></p></li><li><p><code class="function">getUTCMilliseconds()</code></p></li><li><p><code class="function">getUTCMinutes()</code></p></li><li><p><code class="function">getUTCMonth()</code></p></li><li><p><code class="function">getUTCSeconds()</code></p></li><li><p><code class="function">getYear()</code></p></li><li><p><code class="function">setDate()</code></p></li><li><p><code class="function">setFullYear()</code></p></li><li><p><code class="function">setHours()</code></p></li><li><p><code class="function">setMilliseconds()</code></p></li><li><p><code class="function">setMinutes()</code></p></li><li><p><code class="function">setMonth()</code></p></li><li><p><code class="function">setSeconds()</code></p></li><li><p><code class="function">setTime()</code></p></li><li><p><code class="function">setUTCDate()</code></p></li><li><p><code class="function">setUTCFullYear()</code></p></li><li><p><code class="function">setUTCHours()</code></p></li><li><p><code class="function">setUTCMilliseconds()</code></p></li><li><p><code class="function">setUTCMinutes()</code></p></li><li><p><code class="function">setUTCMonth()</code></p></li><li><p><code class="function">setUTCSeconds()</code></p></li><li><p><code class="function">setYear()</code></p></li><li><p><code class="function">toDateString()</code></p></li><li><p><code class="function">toGMTString()</code></p></li><li><p><code class="function">toISOString()</code></p></li><li><p><code class="function">toJSON()</code></p></li><li><p><code class="function">toLocaleDateString()</code></p></li><li><p><code class="function">toLocaleString()</code></p></li><li><p><code class="function">toLocaleTimeString()</code></p></li><li><p><code class="function">toString()</code></p></li><li><p><code class="function">toTimeString()</code></p></li><li><p><code class="function">toUTCString()</code></p></li><li><p><code class="function">valueOf()</code></p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="ecmascript-error-object"></a>6.16.3.5.  Error </h4></div></div></div><h5><a id="idp53771160"></a> Prototype Value Properties</h5><div class="itemizedlist"><ul type="disc"><li><p><span class="property">message</span></p></li><li><p><span class="property">name</span></p></li></ul></div><h5><a id="idp53772664"></a>Function Properties</h5><div class="itemizedlist"><ul type="disc"><li><p><code class="function">toString()</code></p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="ecmascript-function-object"></a>6.16.3.6.  Function </h4></div></div></div><h5><a id="idp53774312"></a>Prototype Value Properties</h5><div class="itemizedlist"><ul type="disc"><li><p><span class="property">length</span></p></li><li><p><span class="property">name</span></p></li></ul></div><h5><a id="idp53775816"></a> Prototype Function Properties </h5><div class="itemizedlist"><ul type="disc"><li><p><code class="function">apply()</code></p></li><li><p><code class="function">bind()</code></p></li><li><p><code class="function">call()</code></p></li><li><p><code class="function">toString()</code></p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="ecmascript-json-object"></a>6.16.3.7.  The JSON Object</h4></div></div></div><h5><a id="idp53779192"></a> Function Properties </h5><div class="itemizedlist"><ul type="disc"><li><p><code class="function">parse()</code></p></li><li><p><code class="function">stringify()</code></p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="ecmascript-map-object"></a>6.16.3.8.  Map </h4></div></div></div><h5><a id="idp53781400"></a> Prototype Function Properties </h5><div class="itemizedlist"><ul type="disc"><li><p><code class="function">clear()</code></p></li><li><p><code class="function">delete()</code></p></li><li><p><code class="function">forEach()</code></p></li><li><p><code class="function">get()</code></p></li><li><p><code class="function">has()</code></p></li><li><p><code class="function">keys()</code></p></li><li><p><code class="function">set()</code></p></li><li><p><code class="function">values()</code></p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="ecmascript-math-object"></a>6.16.3.9.  The Math Object </h4></div></div></div><h5><a id="idp53786952"></a> Value Properties </h5><div class="itemizedlist"><ul type="disc"><li><p><span class="property">E</span></p></li><li><p><span class="property">LN10</span></p></li><li><p><span class="property">LN2</span></p></li><li><p><span class="property">LOG10E</span></p></li><li><p><span class="property">LOG2E</span></p></li><li><p><span class="property">PI</span></p></li><li><p><span class="property">SQRT1_2</span></p></li><li><p><span class="property">SQRT2</span></p></li></ul></div><h5><a id="idp53791808"></a> Function Properties </h5><div class="itemizedlist"><ul type="disc"><li><p><code class="function">abs()</code></p></li><li><p><code class="function">acos()</code></p></li><li><p><code class="function">asin()</code></p></li><li><p><code class="function">atan()</code></p></li><li><p><code class="function">atan2()</code></p></li><li><p><code class="function">ceil()</code></p></li><li><p><code class="function">cos()</code></p></li><li><p><code class="function">exp()</code></p></li><li><p><code class="function">floor()</code></p></li><li><p><code class="function">log()</code></p></li><li><p><code class="function">max()</code></p></li><li><p><code class="function">min()</code></p></li><li><p><code class="function">pow()</code></p></li><li><p><code class="function">random()</code></p></li><li><p><code class="function">round()</code></p></li><li><p><code class="function">sin()</code></p></li><li><p><code class="function">sqrt()</code></p></li><li><p><code class="function">tan()</code></p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="ecmascript-number-object"></a>6.16.3.10.  Number </h4></div></div></div><h5><a id="idp53802984"></a> Prototype Function Properties </h5><div class="itemizedlist"><ul type="disc"><li><p><code class="function">toExponential()</code></p></li><li><p><code class="function">toFixed()</code></p></li><li><p><code class="function">toLocaleString()</code></p></li><li><p><code class="function">toPrecision()</code></p></li><li><p><code class="function">toString()</code></p></li><li><p><code class="function">valueOf()</code></p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="ecmascript-object-object"></a>6.16.3.11.  Object </h4></div></div></div><h5><a id="idp53807464"></a> Function Properties </h5><div class="itemizedlist"><ul type="disc"><li><p><code class="function">create()</code></p></li><li><p><code class="function">defineProperties()</code></p></li><li><p><code class="function">defineProperty()</code></p></li><li><p><code class="function">freeze()</code></p></li><li><p><code class="function">getOwnPropertyDescriptor()</code></p></li><li><p><code class="function">getOwnPropertyNames()</code></p></li><li><p><code class="function">getPrototypeOf()</code></p></li><li><p><code class="function">is()</code></p></li><li><p><code class="function">isExtensible()</code></p></li><li><p><code class="function">isFrozen()</code></p></li><li><p><code class="function">isSealed()</code></p></li><li><p><code class="function">keys()</code></p></li><li><p><code class="function">preventExtensions()</code></p></li><li><p><code class="function">seal()</code></p></li><li><p><code class="function">setPrototypeOf()</code></p></li></ul></div><h5><a id="idp53816328"></a> Prototype Function Properties </h5><div class="itemizedlist"><ul type="disc"><li><p><code class="function">eval()</code></p></li><li><p><code class="function">hasOwnProperty()</code></p></li><li><p><code class="function">isPrototypeOf()</code></p></li><li><p><code class="function">propertyIsEnumerable()</code></p></li><li><p><code class="function">toLocaleString()</code></p></li><li><p><code class="function">toString()</code></p></li><li><p><code class="function">valueOf()</code></p></li><li><p><code class="function">__defineGetter__()</code></p></li><li><p><code class="function">__defineSetter__()</code></p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="ecmascript-regexp-object"></a>6.16.3.12.  RegExp </h4></div></div></div><h5><a id="idp53822552"></a> Value Properties </h5><div class="itemizedlist"><ul type="disc"><li><p><span class="property">$1...$9</span></p></li></ul></div><h5><a id="idp53823488"></a> Prototype Value Properties </h5><div class="itemizedlist"><ul type="disc"><li><p><span class="property">global</span></p></li><li><p><span class="property">ignoreCase</span></p></li><li><p><span class="property">lastIndex</span></p></li><li><p><span class="property">multiline</span></p></li><li><p><span class="property">source</span></p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="ecmascript-set-object"></a>6.16.3.13. Set </h4></div></div></div><h5><a id="idp53827384"></a>Prototype  Function Properties </h5><div class="itemizedlist"><ul type="disc"><li><p><code class="function">add()</code></p></li><li><p><code class="function">clear()</code></p></li><li><p><code class="function">delete()</code></p></li><li><p><code class="function">entries()</code></p></li><li><p><code class="function">forEach()</code></p></li><li><p><code class="function">has()</code></p></li><li><p><code class="function">keys()</code></p></li><li><p><code class="function">values()</code></p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="ecmascript-string-object"></a>6.16.3.14. String</h4></div></div></div><h5><a id="idp53832928"></a>Constructor Function Properties </h5><div class="itemizedlist"><ul type="disc"><li><p><code class="function">fromCharCodeAt()</code></p></li></ul></div><h5><a id="idp53833888"></a>Prototype Function Properties </h5><div class="itemizedlist"><ul type="disc"><li><p><code class="function">anchor()</code></p></li><li><p><code class="function">big()</code></p></li><li><p><code class="function">blink()</code></p></li><li><p><code class="function">bold()</code></p></li><li><p><code class="function">charAt()</code></p></li><li><p><code class="function">charCodeAt()</code></p></li><li><p><code class="function">concat()</code></p></li><li><p><code class="function">endsWith()</code></p></li><li><p><code class="function">fixed()</code></p></li><li><p><code class="function">fontcolor()</code></p></li><li><p><code class="function">fontsize()</code></p></li><li><p><code class="function">includes()</code></p></li><li><p><code class="function">indexOf()</code></p></li><li><p><code class="function">italics()</code></p></li><li><p><code class="function">lastIndexOf()</code></p></li><li><p><code class="function">link()</code></p></li><li><p><code class="function">match()</code></p></li><li><p><code class="function">repeat()</code></p></li><li><p><code class="function">replace()</code></p></li><li><p><code class="function">search()</code></p></li><li><p><code class="function">slice()</code></p></li><li><p><code class="function">small()</code></p></li><li><p><code class="function">split()</code></p></li><li><p><code class="function">startsWith()</code></p></li><li><p><code class="function">strike()</code></p></li><li><p><code class="function">sub()</code></p></li><li><p><code class="function">substr()</code></p></li><li><p><code class="function">substring()</code></p></li><li><p><code class="function">sup()</code></p></li><li><p><code class="function">toLowerCase()</code></p></li><li><p><code class="function">toString()</code></p></li><li><p><code class="function">toUpperCase()</code></p></li><li><p><code class="function">trim()</code></p></li><li><p><code class="function">trimLeft()</code></p></li><li><p><code class="function">trimRight()</code></p></li><li><p><code class="function">valueOf()</code></p></li></ul></div></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="file-object"></a>6.16.4. File Object</h3></div></div></div><p>
+The <code class="code">File</code> object provides basic file handling functions such
+as checking for a file's existence, opening a file for reading or
+writing, and removing a file. In general paths that include directories
+can be separated using <code class="code">/</code> (which doesn't need escaping),
+even on Windows.
+</p><p>
+Example:
+</p><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">JavaScript</span><pre class="programlisting">
+var file = File.open("C:\\testdata\\input.txt", "r");
+file.encoding = "system"; // Should only be needed for some Windows AUTs
+var text = file.read();
+inputField.setText(text);
+</pre></div><p>
+The default file encoding is <code class="code">"utf-8"</code> which is the best
+encoding to use for text files.
+</p><p>
+Here are some quick links to the <code class="code">File</code> object's properties
+and methods.
+</p><div class="informaltable"><table border="0"><colgroup><col></col><col></col><col></col></colgroup><tbody><tr valign="top"><td valign="top">
+<div class="itemizedlist"><ul type="disc" compact><li><p><a class="xref" href="rgs-js.html#js-file.close-function"><code class="function"><span class="emphasis"><em>file</em></span>.close</code></a></p></li><li><p><a class="xref" href="rgs-js.html#js-File.copy-function"><code class="function">File.copy</code></a></p></li><li><p><a class="xref" href="rgs-js.html#js-file.encoding-property">file.encoding</a></p></li><li><p><a class="xref" href="rgs-js.html#js-File.exists-function"><code class="function">File.exists</code></a></p></li></ul></div>
+</td><td valign="top">
+<div class="itemizedlist"><ul type="disc" compact><li><p><a class="xref" href="rgs-js.html#js-File.open-function"><code class="function">File.open</code></a></p></li><li><p><a class="xref" href="rgs-js.html#js-File.glob-function"><code class="function">File.glob</code></a></p></li><li><p><a class="xref" href="rgs-js.html#js-file.read-function"><code class="function"><span class="emphasis"><em>file</em></span>.read</code></a></p></li><li><p><a class="xref" href="rgs-js.html#js-file.readln-function"><code class="function"><span class="emphasis"><em>file</em></span>.readln</code></a></p></li></ul></div>
+</td><td valign="top">
+<div class="itemizedlist"><ul type="disc" compact><li><p><a class="xref" href="rgs-js.html#js-File.remove-function"><code class="function">File.remove</code></a></p></li><li><p><a class="xref" href="rgs-js.html#js-File.separator-property">File.separator</a></p></li><li><p><a class="xref" href="rgs-js.html#js-File.size-function"><code class="function">File.size</code></a></p></li><li><p><a class="xref" href="rgs-js.html#js-file.write-function"><code class="function"><span class="emphasis"><em>file</em></span>.write</code></a></p></li></ul></div>
+</td></tr></tbody></table></div><div class="funcsynopsis"><a id="js-file.close-function"></a><p><code class="funcdef"><b class="fsfunc">file.close</b>(</code><code>)</code>;</p></div><p>
+This method closes the file object it is called on. Once closed a file
+object cannot be read from or written to.
+</p><div class="funcsynopsis"><a id="js-File.copy-function"></a><p><code class="funcdef"><b class="fsfunc">File.copy</b>(</code><var class="pdparam">source</var>, <var class="pdparam">target</var><code>)</code>;</p></div><p>
+This function copies the file <em class="parameter"><code>source</code></em>
+to <em class="parameter"><code>target</code></em>. If this fails an exception is
+thrown.
+</p><p>
+The copy fails if <em class="parameter"><code>target</code></em> already exists.  If
+desired, <a class="xref" href="rgs-js.html#js-File.remove-function"><code class="function">File.remove</code></a> can be used
+beforehand to make room for the copy.
+</p><a id="js-file.encoding-property"></a>String
+<span class="property">file.encoding</span><p>
+This property defines the encoding to use when reading or writing files. The
+default encoding is <code class="code">"utf-8"</code>. For AUTs that don't support UTF-8
+(such as some Windows applications), setting the encoding to
+<code class="code">"system"</code> may prove helpful since this makes <span class="emphasis"><em>Squish</em></span> use the
+current system locale. Other possible values are <code class="code">"ucs-2"</code> (2 byte
+Unicode, for reading UTF-16 on Windows) and <code class="code">"latin1"</code> (also known as
+ISO 8859-1) which includes the US-ASCII range.
+</p><p>
+This property should be set <span class="emphasis"><em>before</em></span> doing any reading
+or writing.
+</p><div class="funcsynopsis"><a id="js-File.exists-function"></a><p><code class="funcdef">Boolean <b class="fsfunc">File.exists</b>(</code><var class="pdparam">fileOrDirectory</var><code>)</code>;</p></div><p>
+This function returns <code class="code">true</code> if the specfied
+<em class="parameter"><code>fileOrDirectory</code></em> exists; otherwise it returns
+<code class="code">false</code>. The <em class="parameter"><code>fileOrDirectory</code></em> may
+include an absolute or relative path, or no path, in which case the
+current working directory is used.
+</p><div class="funcsynopsis"><a id="js-File.open-function"></a><p><code class="funcdef">File <b class="fsfunc">File.open</b>(</code><var class="pdparam">fileName</var><code>)</code>;</p></div><div class="funcsynopsis"><p><code class="funcdef">File <b class="fsfunc">File.open</b>(</code><var class="pdparam">fileName</var>, <var class="pdparam">mode</var><code>)</code>;</p></div><p>
+This function tries to open the specified
+<em class="parameter"><code>fileName</code></em> (which may include an absolute or
+relative path, or no path, in which case the current working directory
+is used). The optional <em class="parameter"><code>mode</code></em> parameter defaults to
+<code class="code">"r"</code> (open for reading). If the
+<em class="parameter"><code>mode</code></em> is specified it must be:
+<code class="code">"a"</code> (open for append), or
+<code class="code">"r"</code> (open for reading), or
+<code class="code">"w"</code> (open for writing).
+If the <em class="parameter"><code>fileName</code></em> cannot be opened a catchable
+exception is thrown.
+</p><p>
+Once a file has been successfully opened its methods can be called. For
+files opened in append or write mode the <a class="xref" href="rgs-js.html#js-file.write-function"><code class="function"><span class="emphasis"><em>file</em></span>.write</code></a> method can be called, and for files
+opened in read mode the <a class="xref" href="rgs-js.html#js-file.read-function"><code class="function"><span class="emphasis"><em>file</em></span>.read</code></a> and
+<a class="xref" href="rgs-js.html#js-file.readln-function"><code class="function"><span class="emphasis"><em>file</em></span>.readln</code></a> methods can be called. And for
+any opened file, the <a class="xref" href="rgs-js.html#js-file.close-function"><code class="function"><span class="emphasis"><em>file</em></span>.close</code></a> method can be
+called.
+</p><div class="funcsynopsis"><a id="js-File.glob-function"></a><p><code class="funcdef">StringList <b class="fsfunc">File.glob</b>(</code><var class="pdparam">pattern</var>, <var class="pdparam">[pattern...]</var><code>)</code>;</p></div><p>This function returns the list of paths matching any of the
+given patterns.</p><div class="funcsynopsis"><a id="js-file.read-function"></a><p><code class="funcdef">String <b class="fsfunc">file.read</b>(</code><code>)</code>;</p></div><p>
+This method reads in the entire contents of the file object returned
+by the <a class="xref" href="rgs-js.html#js-File.open-function"><code class="function">File.open</code></a>
+function—providing the file was opened in read mode. The file's
+content is assumed to be plain text using the UTF-8 encoding (unless the
+<a class="xref" href="rgs-js.html#js-file.encoding-property">file.encoding</a> property is changed).
+</p><div class="funcsynopsis"><a id="js-file.readln-function"></a><p><code class="funcdef">String <b class="fsfunc">file.readln</b>(</code><code>)</code>;</p></div><p>
+This method reads in the next line from the file object returned
+by the <a class="xref" href="rgs-js.html#js-File.open-function"><code class="function">File.open</code></a>
+function—providing the file was opened in read mode. The file's
+content is assumed to be plain text using the UTF-8 encoding (unless the
+<a class="xref" href="rgs-js.html#js-file.encoding-property">file.encoding</a> property is changed). Each line
+is returned without any end of line characters, and if an attempt to
+read beyond the last line is made, <span class="type">null</span> is returned.
+</p><div class="funcsynopsis"><a id="js-File.remove-function"></a><p><code class="funcdef">Boolean <b class="fsfunc">File.remove</b>(</code><var class="pdparam">fileName</var><code>)</code>;</p></div><p>
+This function tries to remove the specified
+<em class="parameter"><code>fileName</code></em> (which may include an absolute or
+relative path, or no path, in which case the current working directory
+is used). If the file was successfully removed the function returns
+<code class="code">true</code>; otherwise it returns <code class="code">false</code>.
+</p><a id="js-File.separator-property"></a>String
+<span class="property">File.separator</span><p>
+The global <code class="code">File</code> object's read-only <code class="code">separator</code> property
+holds the file separator used by the operating system. For example, on
+Windows it holds, <code class="code">"\"</code>, and on Unix-like systems,
+<code class="code">"/"</code>.
+</p><div class="funcsynopsis"><a id="js-File.size-function"></a><p><code class="funcdef">Number <b class="fsfunc">File.size</b>(</code><var class="pdparam">fileName</var><code>)</code>;</p></div><p>
+This function returns the size of the specified
+<em class="parameter"><code>fileName</code></em> (which may include an absolute or
+relative path, or no path, in which case the current working directory
+is used).
+</p><div class="funcsynopsis"><a id="js-file.write-function"></a><p><code class="funcdef"><b class="fsfunc">file.write</b>(</code><var class="pdparam">string</var><code>)</code>;</p></div><p>
+This method writes the given <em class="parameter"><code>string</code></em> to the file
+object returned by the <a class="xref" href="rgs-js.html#js-File.open-function"><code class="function">File.open</code></a>
+function—providing the file was opened in append or write mode.
+The <em class="parameter"><code>string</code></em> is written using the UTF-8 encoding
+(unless the <a class="xref" href="rgs-js.html#js-file.encoding-property">file.encoding</a> property is
+changed).
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="console-object"></a>6.16.5. console Object</h3></div></div></div><p>
+The <code class="code">console</code> object provides functions for basic interaction
+with script execution. The <code class="code">console</code> object is not a standard
+JavaScript object, but is well known from web browsers.
+</p><p>
+Here are some quick links to the console Object's methods:
+</p><div class="informaltable"><table border="0"><colgroup><col></col></colgroup><tbody><tr valign="top"><td valign="top">
+<div class="itemizedlist"><ul type="disc" compact><li><p><a class="xref" href="rgs-js.html#js-console.assert-function"><code class="function">console.assert</code></a></p></li></ul></div>
+</td></tr></tbody></table></div><div class="funcsynopsis"><a id="js-console.assert-function"></a><p><code class="funcdef"><b class="fsfunc">console.assert</b>(</code><var class="pdparam">bool</var>, <var class="pdparam">string [optional]</var><code>)</code>;</p></div><p>
+If the first parameter is evaluated to false the script execution will be stopped
+and an error message is written to the test results, otherwise nothing will happen.
+The second parameter is optional and allows writing user specified message to the test result.
+</p><p>
+Here is an example that shows the usage of this function:
+</p><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">JavaScript</span><pre class="programlisting">
+var index = findIndexOfSomething( "something" );
+Console.assert( index &gt;= 0, "Something not found, execution aborted!" );
+something[ index ].doSomething();
+</pre></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="os-object"></a>6.16.6. OS Object</h3></div></div></div><p>
+The <code class="code">OS</code> object provides functions for basic interaction with
+the operating system. It includes functions for executing commands
+(i.e., for running programs), for getting and setting the current
+directory, and for getting and setting environment variables.
+</p><p>
+Here are some quick links to the OS Object's properties and methods:
+</p><div class="informaltable"><table border="0"><colgroup><col></col><col></col><col></col></colgroup><tbody><tr valign="top"><td valign="top">
+<div class="itemizedlist"><ul type="disc" compact><li><p><a class="xref" href="rgs-js.html#js-OS.argv-property">OS.argv</a></p></li><li><p><a class="xref" href="rgs-js.html#js-OS.capture-function"><code class="function">OS.capture</code></a></p></li><li><p><a class="xref" href="rgs-js.html#js-OS.chdir-function"><code class="function">OS.chdir</code></a></p></li><li><p><a class="xref" href="rgs-js.html#js-OS.cwd-function"><code class="function">OS.cwd</code></a></p></li></ul></div>
+</td><td valign="top">
+<div class="itemizedlist"><ul type="disc" compact><li><p><a class="xref" href="rgs-js.html#js-OS.getenv-function"><code class="function">OS.getenv</code></a></p></li><li><p><a class="xref" href="rgs-js.html#js-OS.listDir-function"><code class="function">OS.listDir</code></a></p></li><li><p><a class="xref" href="rgs-js.html#js-OS.machine-property">OS.machine</a></p></li><li><p><a class="xref" href="rgs-js.html#js-OS.name-property">OS.name</a></p></li></ul></div>
+</td><td valign="top">
+<div class="itemizedlist"><ul type="disc" compact><li><p><a class="xref" href="rgs-js.html#js-OS.pause-function"><code class="function">OS.pause</code></a></p></li><li><p><a class="xref" href="rgs-js.html#js-OS.removeRecursively-function"><code class="function">OS.removeRecursively</code></a></p></li><li><p><a class="xref" href="rgs-js.html#js-OS.rmdir-function"><code class="function">OS.rmdir</code></a></p></li><li><p><a class="xref" href="rgs-js.html#js-OS.mkpath-function"><code class="function">OS.mkpath</code></a></p></li></ul></div>
+</td><td valign="top">
+<div class="itemizedlist"><ul type="disc" compact><li><p><a class="xref" href="rgs-js.html#js-OS.setenv-function"><code class="function">OS.setenv</code></a></p></li><li><p><a class="xref" href="rgs-js.html#js-OS.system-function"><code class="function">OS.system</code></a></p></li><li><p><a class="xref" href="rgs-js.html#js-OS.version-property">OS.version</a></p></li></ul></div>
+</td></tr></tbody></table></div><a id="js-OS.argv-property"></a>
+Array
+<span class="property">OS.argv</span>
+<p>
+The <code class="code">OS</code> object's read-only <code class="code">argv</code> property holds the
+absolute filename to the current test script followed by the list of script
+arguments passed to <span class="application">squishrunner</span> (see also
+<a class="xref" href="rg-cmdline.html#rg-squishrunner-cli" title="7.4.3. squishrunner">squishrunner (Section 7.4.3)</a>).
+</p><p>
+Here is an example that shows how to read an optional script argument:
+</p><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">JavaScript</span><pre class="programlisting">
+var filename = "defaultfile.txt";
+if (OS.argv.length &gt; 1) {
+    filename = OS.argv[1];
+}
+</pre></div><div class="funcsynopsis"><a id="js-OS.capture-function"></a><p><code class="funcdef">String <b class="fsfunc">OS.capture</b>(</code><var class="pdparam">command</var><code>)</code>;</p></div><p>
+This function executes the given <em class="parameter"><code>command</code></em> in a
+shell (console) just like the <a class="xref" href="rgs-js.html#js-OS.system-function"><code class="function">OS.system</code></a>
+function. The <em class="parameter"><code>command</code></em> string must hold the name of
+the command to be executed, and may optionally include command line
+arguments and shell redirection characters.
+What makes this function different from the <a class="xref" href="rgs-js.html#js-OS.system-function"><code class="function">OS.system</code></a> function is that it captures the
+command's output, that is, any text that would normally go to the
+console (the <code class="code">stdout</code> stream), and returns it as a string.
+</p><p>
+Here is an example that shows the execution of a command on Windows, and
+the capturing of its output:
+</p><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">JavaScript</span><pre class="programlisting">
+var files = OS.capture("dir C:\\temp\\*.dat").split('\n');
+for (var i in files) {
+    var file = files[i];
+    // ...
+}
+</pre></div><p>
+Note that in this particular case it is easier and better to use the
+cross-platform <a class="xref" href="rgs-js.html#js-OS.listDir-function"><code class="function">OS.listDir</code></a> function to
+get a list of files in a directory.
+</p><div class="funcsynopsis"><a id="js-OS.chdir-function"></a><p><code class="funcdef"><b class="fsfunc">OS.chdir</b>(</code><var class="pdparam">path</var><code>)</code>;</p></div><p>
+This function changes the test script's current working directory to the
+specified <em class="parameter"><code>path</code></em>.
+</p><p>
+Example:
+</p><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">JavaScript</span><pre class="programlisting">
+var path = OS.cwd() + "/results";
+OS.chdir(path);
+</pre></div><div class="funcsynopsis"><a id="js-OS.cwd-function"></a><p><code class="funcdef">String <b class="fsfunc">OS.cwd</b>(</code><code>)</code>;</p></div><p>
+This function returns the current working directory as a string.
+</p><p>
+Example:
+</p><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">JavaScript</span><pre class="programlisting">
+var path = OS.cwd();
+test.log("Current working directory: " + path);
+</pre></div><div class="funcsynopsis"><a id="js-OS.getenv-function"></a><p><code class="funcdef">String <b class="fsfunc">OS.getenv</b>(</code><var class="pdparam">name</var><code>)</code>;</p></div><p>
+This function returns the value of the environment variable with the
+given <em class="parameter"><code>name</code></em>, or an empty string if no such
+environment variable exists. (See also, <a class="xref" href="rgs-js.html#js-OS.setenv-function"><code class="function">OS.setenv</code></a>.)
+</p><p>
+Example:
+</p><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">JavaScript</span><pre class="programlisting">
+var homeDir = OS.getenv("HOME");
+test.log("Current user's home directory: " + homeDir);
+</pre></div><div class="funcsynopsis"><a id="js-OS.listDir-function"></a><p><code class="funcdef">Array <b class="fsfunc">OS.listDir</b>(</code><var class="pdparam">path</var><code>)</code>;</p></div><p>
+This function returns a list of all the files and directories in the
+directory specified by <em class="parameter"><code>path</code></em>, but excluding the
+special directories <code class="filename">.</code> (current) and
+<code class="filename">..</code> (parent). This function does not recurse into
+subdirectories.
+</p><p>
+Here is an example that logs all the files that were generated in an
+output directory on Windows:
+</p><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">JavaScript</span><pre class="programlisting">
+var files = OS.listDir("C:\\temp\\output");
+for (var i in files)
+    test.log("Found generated file: " + files[i]);
+</pre></div><a id="js-OS.machine-property"></a>String
+<span class="property">OS.machine</span><p>
+The <code class="code">OS</code> object's read-only <code class="code">machine</code> property
+holds the name of the machine's hardware that <span class="application">squishrunner</span> is
+running on. On <span class="trademark">Microsoft</span>® Windows systems the value is either "x86",
+"amd64", "arm64" or "ia64". On Unix-like systems the value is the same as the
+output of <code class="code">uname -m</code>, e.g. "i686", "x86_64", etc.
+</p><a id="js-OS.name-property"></a>String
+<span class="property">OS.name</span><p>
+The <code class="code">OS</code> object's read-only <code class="code">name</code> property holds
+the name of the operating system that <span class="application">squishrunner</span> is running on. On
+<span class="trademark">Microsoft</span>® Windows systems the value is "Windows". On Unix-like systems
+the value is the same as the output of <code class="code">uname -s</code>, e.g.
+"Linux", "Solaris", "Darwin", etc.
+</p><div class="funcsynopsis"><a id="js-OS.pause-function"></a><p><code class="funcdef"><b class="fsfunc">OS.pause</b>(</code><var class="pdparam">msecs</var><code>)</code>;</p></div><p>
+This function pauses the script for the specified number of
+milliseconds. Unlike the <a class="xref" href="rgs-squish.html#snooze-function"><code class="function">snooze</code></a> function,
+the delay is fixed and not influenced by the current
+snooze factor setting.
+</p><div class="funcsynopsis"><a id="js-OS.removeRecursively-function"></a><p><code class="funcdef">Boolean <b class="fsfunc">OS.removeRecursively</b>(</code><var class="pdparam">path</var><code>)</code>;</p></div><p>
+This function deletes the directory found at <em class="parameter"><code>path</code></em>
+<span class="emphasis"><em>including all of its contents</em></span>. The function returns
+<em class="parameter"><code>true</code></em> on success and in case the directory did not
+exist in the first place. (The desired result was still achieved.)
+</p><p>
+Example:
+</p><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">JavaScript</span><pre class="programlisting">
+OS.system("mkdir exampleDir");
+var file = File.open("exampleDir/data", "w");
+file.write("some data");
+file.close();
+var result = OS.removeRecursively("exampleDir");
+test.log("Deletion result: " + result);
+</pre></div><div class="funcsynopsis"><a id="js-OS.rmdir-function"></a><p><code class="funcdef">Boolean <b class="fsfunc">OS.rmdir</b>(</code><var class="pdparam">path</var><code>)</code>;</p></div><p>
+This function deletes the directory found at <em class="parameter"><code>path</code></em>. It
+must be empty at the time of deletion. On success, the function returns
+<em class="parameter"><code>true</code></em>.
+</p><p>
+Example:
+</p><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">JavaScript</span><pre class="programlisting">
+var oldDir = "C:\\build_old";
+var result = OS.rmdir(oldDir);
+test.log("Deletion result: " + result);
+</pre></div><div class="funcsynopsis"><a id="js-OS.mkpath-function"></a><p><code class="funcdef">Boolean <b class="fsfunc">OS.mkpath</b>(</code><var class="pdparam">path</var><code>)</code>;</p></div><p>
+This function creates the directory with the path <em class="parameter"><code>path</code></em>,
+if the path is absolute and with the path <em class="parameter"><code>current_directory/path</code></em>,
+if the path is relative.
+IMPORTANT: all necessary directories mentioned in <em class="parameter"><code>path</code></em> will be created, if they don't already exist.
+The function throws an error in case:
+</p><p>
+(a) call arguments are wrong; or
+</p><p>
+(b) directory already exists; or
+</p><p>
+(c) creating directory failed for any other reason like I/O error.
+</p><p>
+If successful, function returns <em class="parameter"><code>true</code></em>.
+</p><p>
+Example:
+</p><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">JavaScript</span><pre class="programlisting">
+var Dir = "C:\\some_new_directory";
+var result = OS.mkpath(Dir);
+test.log("Directory created: " + result);
+</pre></div><div class="funcsynopsis"><a id="js-OS.setenv-function"></a><p><code class="funcdef"><b class="fsfunc">OS.setenv</b>(</code><var class="pdparam">name</var>, <var class="pdparam">value</var><code>)</code>;</p></div><p>
+This function sets the environment variable called
+<em class="parameter"><code>name</code></em> to have the given
+<em class="parameter"><code>value</code></em>. The <em class="parameter"><code>name</code></em>
+environment variable is created (and then set to the given
+<em class="parameter"><code>value</code></em>) if it doesn't already exist.
+(See also, <a class="xref" href="rgs-js.html#js-OS.getenv-function"><code class="function">OS.getenv</code></a>.)
+</p><p>
+Example:
+</p><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">JavaScript</span><pre class="programlisting">
+var preferredEditor = "vim";
+OS.setenv("EDITOR", preferredEditor);
+</pre></div><div class="funcsynopsis"><a id="js-OS.system-function"></a><p><code class="funcdef">int <b class="fsfunc">OS.system</b>(</code><var class="pdparam">command</var><code>)</code>;</p></div><p>
+This function executes the given <em class="parameter"><code>command</code></em> in a
+shell (console). If the execution is successful the return status is
+returned; otherwise -1 is returned to signify that an error occurred.
+The <em class="parameter"><code>command</code></em> string must hold the name of the
+command to be executed, and may optionally include command line
+arguments and shell redirection characters.
+</p><p>
+Here is an example that executes a custom application on Windows and
+redirects its <code class="code">stdout</code> stream to a file:
+</p><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">JavaScript</span><pre class="programlisting">
+var result = OS.system("C:\\testprograms\\readresult.exe &gt; output.txt");
+if (result == -1)
+    test.fatal("readresult error occurred");
+else if (result != 0)
+   test.warning("readresult failed");
+</pre></div><p>
+Here is another example: this sends an email on a Unix system:
+</p><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">JavaScript</span><pre class="programlisting">
+var msg = "This is a mail from Squish";
+OS.system("echo '" + msg + "' | mail -s Subject bugs@example.com");
+</pre></div><p>
+See also the <a class="xref" href="rgs-js.html#js-OS.capture-function"><code class="function">OS.capture</code></a> function.
+</p><a id="js-OS.version-property"></a>Array
+<span class="property">OS.version</span><p>
+The <code class="code">OS</code> object's read-only <code class="code">version</code> property
+holds an array with information about the operating system that
+<span class="application">squishrunner</span> is running on. The array's elements are named "major",
+"minor" and "name" and denote the version number and human-readable
+representation.
+</p><p>
+Here is an example making use of this information to ensure test
+execution on supported operating systems:
+</p><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">JavaScript</span><pre class="programlisting">
+var major = OS.version.major;
+if (major &lt; 7)
+    test.warning("Unsupported OS version " + OS.version.name);
+</pre></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="xml-object"></a>6.16.7. XML Object</h3></div></div></div><p>
+The <code class="code">XML</code> object provides a parsing function that operates on
+a string of XML-marked-up text, and that returns an <code class="code">XMLNode</code>
+object that provides methods which allow the XML to be traversed and
+queried.
+</p><div class="funcsynopsis"><a id="js-XML.parse-function"></a><p><code class="funcdef">XMLNode <b class="fsfunc">XML.parse</b>(</code><var class="pdparam">markup</var><code>)</code>;</p></div><p>
+This function parses the given string of <acronym class="acronym">XML</acronym> markup
+and returns a document node object that represents the root of the
+document tree. If the parse fails a catchable exception is thrown.
+</p><p>
+Note that the XML is assumed to use the UTF-8 encoding (which is the
+default for XML files that don't specify an encoding), even if an
+encoding is specified that isn't UTF-8.
+</p><a id="js-XMLNode.firstChild-property"></a>XMLNode
+<span class="property">xmlNode.firstChild</span><p>
+This read-only node property holds this node's first child—or a
+null node if this node has no children.
+</p><div class="funcsynopsis"><a id="js-XMLNode.getAttribute-function"></a><p><code class="funcdef">String <b class="fsfunc">xmlNode.getAttribute</b>(</code><var class="pdparam">attributeName</var><code>)</code>;</p></div><p>
+This node method returns a string containing the value of the node's
+<em class="parameter"><code>attributeName</code></em> attribute. If the node doesn't have
+an attribute called <em class="parameter"><code>attributeName</code></em>, the method's
+behavior is undefined. If the <em class="parameter"><code>attributeName</code></em> is an
+empty string, a catchable exception is thrown. All of a node's attribute
+names can be retrieved using the <a class="xref" href="rgs-js.html#js-XMLNode.getAttributeNames-function"><code class="function">xmlNode.getAttributeNames</code></a> function.
+</p><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Note: Element Nodes Only"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/note.png"></img></td><th align="left">Element Nodes Only</th></tr><tr><td align="left" valign="top"><p>
+This function must only be called on element nodes—those nodes
+whose <code class="code">nodeType</code> attribute's value is
+<code class="code">XML.ElementNode</code>. Calling the function on non-element nodes
+will cause a catchable exception to be thrown.
+</p></td></tr></table></div><div class="funcsynopsis"><a id="js-XMLNode.getAttributeNames-function"></a><p><code class="funcdef">ListOfString <b class="fsfunc">xmlNode.getAttributeNames</b>(</code><var class="pdparam"></var><code>)</code>;</p></div><p>
+This node method returns a list of strings containing the names of all
+the node's attributes. Any of these names can be used as the argument to
+the <a class="xref" href="rgs-js.html#js-XMLNode.getAttribute-function"><code class="function">xmlNode.getAttribute</code></a> function to get
+the corresponding attribute's value.
+</p><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Note: Element Nodes Only"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/note.png"></img></td><th align="left">Element Nodes Only</th></tr><tr><td align="left" valign="top"><p>
+This function must only be called on element nodes—those nodes
+whose <code class="code">nodeType</code> attribute's value is
+<code class="code">XML.ElementNode</code>. Calling the function on non-element nodes
+will cause a catchable exception to be thrown.
+</p></td></tr></table></div><div class="funcsynopsis"><a id="js-XMLNode.hasAttribute-function"></a><p><code class="funcdef">Boolean <b class="fsfunc">xmlNode.hasAttribute</b>(</code><var class="pdparam">attributeName</var><code>)</code>;</p></div><p>
+This function returns <code class="code">true</code> if the node has an attribute
+called <em class="parameter"><code>attributeName</code></em>; otherwise
+it returns <code class="code">false</code>.
+</p><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Note: Element Nodes Only"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/note.png"></img></td><th align="left">Element Nodes Only</th></tr><tr><td align="left" valign="top"><p>
+This function must only be called on element nodes—those nodes
+whose <code class="code">nodeType</code> property's value is
+<code class="code">XML.ElementNode</code>. Calling the function on non-element nodes
+will cause a catchable exception to be thrown.
+</p></td></tr></table></div><div class="funcsynopsis"><a id="js-XMLNode.getElementsByTagName-function"></a><p><code class="funcdef">ListOfXMLNode <b class="fsfunc">xmlNode.getElementsByTagName</b>(</code><var class="pdparam">tagName</var><code>)</code>;</p></div><p>
+This function returns a list of <code class="code">XMLNode</code> objects for the given
+<em class="parameter"><code>tagName</code></em>.
+</p><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Note: Document or Element Node Only"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/note.png"></img></td><th align="left">Document or Element Node Only</th></tr><tr><td align="left" valign="top"><p>
+This function must only be called on document or element nodes—a node
+whose <code class="code">nodeType</code> property's value is
+<code class="code">XML.DocumentNode</code> or <code class="code">XML.ElementNode</code> respectively. Calling the function on a non-element node
+will cause a catchable exception to be thrown.
+</p></td></tr></table></div><div class="funcsynopsis"><a id="js-XMLNode.selectSingleNode-function"></a><p><code class="funcdef">XMLNode <b class="fsfunc">XMLNode.selectSingleNode</b>(</code><var class="pdparam">XPathExpression</var><code>)</code>;</p></div><p>
+This function evaluates a given <em class="parameter"><code>XPath.Expression</code></em> on an <code class="code">XMLNode</code> object's parent
+document and retrieves the first <code class="code">XMLNode</code> object the evaluation returns, or (if given XPath exptession doesn't
+evaluate anything) <code class="code">null</code> will be beturned.
+</p><div class="funcsynopsis"><a id="js-XMLNode.selectNodes-function"></a><p><code class="funcdef">jsTupelOfValues <b class="fsfunc">xmlNode.selectNodes</b>(</code><var class="pdparam">XPath.Expression</var><code>)</code>;</p></div><p>
+This function evaluates an <em class="parameter"><code>XPath.Expression</code></em> on an <code class="code">XMLNode</code> object's parent document
+and returns a list of <code class="code">XMLNode</code> objects.
+</p><div class="funcsynopsis"><a id="js-XMLNode.getSingleValueByXPath-function"></a><p><code class="funcdef">jsValue <b class="fsfunc">XMLNode.getSingleValueByXPath</b>(</code><var class="pdparam">XPathExpression</var><code>)</code>;</p></div><p>
+This function evaluates a given <em class="parameter"><code>XPath.Expression</code></em> on an <code class="code">XMLNode</code> object's parent
+document and retrieves the content of the first <code class="code">XMLNode</code> object the evaluation returns. So return type
+varies, depending on the type of content the returned <code class="code">XMLNode</code> object contains. If the evaluation won't
+return any nodes, it will return null.
+</p><div class="funcsynopsis"><a id="js-XMLNode.getValuesByXPath-function"></a><p><code class="funcdef">jsTupelOfValues <b class="fsfunc">XMLNode.getValuesByXPath</b>(</code><var class="pdparam">XPath.Expression</var><code>)</code>;</p></div><p>
+This function evaluates an <em class="parameter"><code>XPath.Expression</code></em> on an <code class="code">XMLNode</code> object's parent document
+and returns a JavaScript tuple, which elements are either: directly that contents which are contained in the returned
+<code class="code">XMLNode</code> objects, or, if evaluation may return <code class="code">XMLNode</code> objects which contain just a subtree
+of even more <code class="code">XMLNode</code> objects as children, these nodes then are contained in the tuple 'as are'.
+</p><a id="js-XMLNode.isNull-property"></a>Boolean
+<span class="property">xmlNode.isNull</span><p>
+This read-only node property is <code class="code">true</code> if the node is a null
+node; otherwise it is <code class="code">false</code>.
+</p><a id="js-XMLNode.nextSibling-property"></a>XMLNode
+<span class="property">xmlNode.nextSibling</span><p>
+This read-only node property holds this node's next sibling node (which
+will be a null node if this node has no next sibling).
+</p><a id="js-XMLNode.nodeName-property"></a>String
+<span class="property">xmlNode.nodeName</span><p>
+This node property holds the node's name, which is the tag name for
+element nodes. For the document node the node name is always
+“<span class="quote">&lt;anonymous xml document&gt;</span>”.
+</p><a id="js-XMLNode.nodeType-property"></a>Integer
+<span class="property">xmlNode.nodeType</span><p>
+This node property holds the node's type as enum value. The possible type values
+are:
+</p><div class="itemizedlist"><ul type="disc" compact><li><p> 0 : <code class="varname">XML.DocumentNode</code></p></li><li><p> 1 : <code class="varname">XML.ElementNode</code></p></li><li><p> 2 : <code class="varname">XML.CommentNode</code></p></li><li><p> 3 : <code class="varname">XML.UnknownType</code></p></li><li><p> 4 : <code class="varname">XML.TextNode</code></p></li><li><p> 5 : <code class="varname">XML.DeclarationNode</code></p></li></ul></div><a id="js-XMLNode.nodeValue-property"></a>String
+<span class="property">xmlNode.nodeValue</span><p>
+This node property holds the node's value.  The meaning depends on the
+type of the node as follows:
+</p><div class="itemizedlist"><ul type="disc" compact><li><p><code class="varname">XML.CommentNode</code> provides the comment text</p></li><li><p><code class="varname">XML.DeclarationNode</code> provides an empty text</p></li><li><p><code class="varname">XML.DocumentNode</code> provides the fixed text “<span class="quote">&lt;anonymous xml document&gt;</span>”</p></li><li><p><code class="varname">XML.TextNode</code> provides the text string</p></li><li><p><code class="varname">XML.UnknownType</code> provides the content of the tag</p></li></ul></div><a id="js-XMLNode.parentNode-property"></a>XMLNode
+<span class="property">xmlNode.parentNode</span><p>
+This node property holds the node's parent node or a null node if this
+node has no parent. (For example, the document node has no parent.)
+</p><a id="js-XMLNode.textContent-property"></a>String
+<span class="property">xmlNode.textContent</span><p>
+This node property holds the text contained within this node (which
+could be an empty string).
+</p><p>
+Note that this node property does <span class="emphasis"><em>not</em></span> traverse its
+child nodes to produce a concatenation of all their texts. For example:
+</p><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">JavaScript</span><pre class="programlisting">
+var documentNode = XML.parse("&lt;a&gt;Hello&lt;/a&gt;");
+var anchorNode = documentNode.firstChild;
+test.verify(anchorNode.textContent == "Hello");
+
+documentNode = XML.parse("&lt;a&gt;&lt;b&gt;Hello&lt;/b&gt;&lt;/a&gt;");
+anchorNode = documentNode.firstChild;
+test.verify(anchorNode.textContent == "");
+var boldNode = anchorNode.firstChild;
+test.verify(boldNode.textContent == "Hello");
+</pre></div><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Note: Element Nodes Only"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/note.png"></img></td><th align="left">Element Nodes Only</th></tr><tr><td align="left" valign="top"><p>
+This function must only be called on element nodes—those nodes
+whose <code class="code">nodeType</code> property's value is
+<code class="code">XML.ElementNode</code>. Calling the function on non-element nodes
+will cause a catchable exception to be thrown.
+</p></td></tr></table></div><div class="funcsynopsis"><a id="js-XMLNode.toXMLString-function"></a><p><code class="funcdef">String <b class="fsfunc">xmlNode.toXMLString</b>(</code><var class="pdparam"></var><code>)</code>;</p></div><p>
+This function returns an XML-formatted string representation
+of the <code class="code">XMLNode</code> object including tags, attributes and child
+elements.
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="sql"></a>6.16.8. SQL</h3></div></div></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><span class="section"><a href="rgs-js.html#sql-object">6.16.8.1. SQL Object</a></span></dt><dt><span class="section"><a href="rgs-js.html#sqlconnection-object">6.16.8.2. SQLConnection Object</a></span></dt><dt><span class="section"><a href="rgs-js.html#sqlresult-object">6.16.8.3. SQLResult Object</a></span></dt></dl></div><p>
+<span class="emphasis"><em>Squish</em></span> provides its own APIs for accessing SQL databases since the
+JavaScript specification does not include them. To see the
+SQL APIs in action, see the JavaScript examples in <a class="xref" href="how.to.access.databases.from.squish.test.scripts.html" title="5.18. How to Access Databases from Squish Test Scripts">How to Access Databases from Squish Test Scripts (Section 5.18)</a>.
+</p><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="sql-object"></a>6.16.8.1. SQL Object</h4></div></div></div><p>
+The <code class="code">SQL</code> object provides a means of connecting to a
+database, executing queries on the database, and traversing and
+inspecting results. This functionality might be useful for retrieving
+test data or for providing data to the AUT.
+</p><div class="funcsynopsis"><a id="js-SQL.connect-function"></a><p><code class="funcdef">SQLConnection <b class="fsfunc">SQL.connect</b>(</code><var class="pdparam">informationObject</var><code>)</code>;</p></div><p>
+This function tries to connect to a <acronym class="acronym">SQL</acronym> database.
+If it succeeds a <a class="xref" href="rgs-js.html#sqlconnection-object" title="6.16.8.2. SQLConnection Object">SQLConnection Object (Section 6.16.8.2)</a> is
+returned—this can be used to execute SQL statements on the
+database. If the connection fails a catchable exception is thrown.
+The information required to establish the connection must be passed as
+an object whose properties are then interpreted.
+</p><p>
+Here is an example invocation showing how to connect to a MySQL server
+on a host called “<span class="quote">dulsberg</span>”, with the given username and
+password:
+</p><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">JavaScript</span><pre class="programlisting">
+var conn = SQL.connect( { Driver: "MySQL",
+                          Host: "dulsberg",
+                          Port: 1342,
+                          Database: "mydatabase",
+                          UserName: "test",
+                          Password: "secretPhrase" } );
+</pre></div><p>
+The object's attributes have the following meanings:
+</p><div class="variablelist"><dl><dt><span class="term">Driver</span></dt><dd><p>
+The driver is used to specify what kind of database we are connecting
+to. Possible values are:
+</p><div class="informaltable"><table border="1"><colgroup><col></col><col></col></colgroup><tbody><tr><td>DB2<sup>*</sup></td><td>IBM DB2, v7.1
+and higher</td></tr><tr><td>IBase<sup>*</sup></td><td>Borland
+Interbase Driver</td></tr><tr><td>MySQL</td><td>MySQL Driver</td></tr><tr><td>ODBC</td><td>ODBC Driver (includes <span class="trademark">Microsoft</span>® SQL
+Server)</td></tr><tr><td>Oracle<sup>*</sup></td><td>Oracle Call
+Interface Driver</td></tr><tr><td>PostgreSQL</td><td>PostgreSQL v8.x Driver</td></tr><tr><td>SQLite</td><td>SQLite 3 Driver</td></tr><tr><td>Sybase<sup>*</sup></td><td>Sybase
+Adaptive Server</td></tr></tbody></table></div><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Note: Commercial Database Drivers"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/note.png"></img></td><th align="left">Commercial Database Drivers</th></tr><tr><td align="left" valign="top"><p>
+The drivers marked with an asterisk (<sup>*</sup>) are
+<span class="emphasis"><em>not</em></span> supported in <span class="emphasis"><em>Squish</em></span> binary packages. This is
+usually because the database vendor's license does not permit
+redistributing their client libraries without owning a license for their
+product. The solution is to either try the ODBC driver, or to build
+<span class="emphasis"><em>Squish</em></span> yourself against a Qt library which includes support for your
+particular SQL database.
+</p></td></tr></table></div></dd><dt><span class="term">Host</span></dt><dd><p>
+This is used to specify the host name (or the IP address) of the
+computer on which the SQL database is installed.
+</p></dd><dt><span class="term">Port</span></dt><dd><p>
+This is used to specify the port on the remote computer to which the
+connection should be established. If this is omitted, the default port
+for the specified driver is used.
+</p></dd><dt><span class="term">Database</span></dt><dd><p>
+This is used to specify the name of the database to which the connection
+should be made.</p></dd><dt><span class="term">DataSource</span></dt><dd><p>
+This is used to specify the Data Source Name (<acronym class="acronym">DSN</acronym>) to
+use. Note that specifying this attribute is only necessary when using
+the <acronym class="acronym">ODBC</acronym> driver.
+</p></dd><dt><span class="term">UserName</span></dt><dd><p>
+This is used to specify the user name to use when logging into the
+database.
+</p></dd><dt><span class="term">Password</span></dt><dd><p>
+This is used to specify the password to use when logging into the
+database. If omitted, an empty password is assumed.</p></dd></dl></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="sqlconnection-object"></a>6.16.8.2. SQLConnection Object</h4></div></div></div><p>
+<code class="code">SQLConnection</code> objects are returned by the <a class="xref" href="rgs-js.html#js-SQL.connect-function"><code class="function">SQL.connect</code></a> function described above; the
+object provides the methods listed below.
+</p><div class="funcsynopsis"><a id="js-SQLConnection.close-function"></a><p><code class="funcdef"><b class="fsfunc">sqlConnection.close</b>(</code><var class="pdparam"></var><code>)</code>;</p></div><p>
+This method closes the SQL connection.
+</p><div class="funcsynopsis"><a id="js-SQLConnection.execute-function"></a><p><code class="funcdef">Number
+  <b class="fsfunc">sqlConnection.execute</b>(</code><var class="pdparam">sql</var><code>)</code>;</p></div><p>
+This method executes the given <em class="parameter"><code>sql</code></em> statement
+(such as <code class="code">DELETE</code>, <code class="code">INSERT</code>, or
+<code class="code">UPDATE</code>) on the <code class="code">SQLConnection</code> object. If the
+statement succeeds the number of rows affected is returned; or -1 if the
+number cannot be determined. If an error occurs, a catchable exception
+is thrown.
+</p><p>
+If the result returned by the statement needs to be read
+(e.g. for <code class="code">CALL</code>) use
+<a class="xref" href="rgs-js.html#js-SQLConnection.query-function"><code class="function"><span class="emphasis"><em>sqlConnection</em></span>.query</code></a>.
+</p><div class="funcsynopsis"><a id="js-SQLConnection.query-function"></a><p><code class="funcdef">SQLResult <b class="fsfunc">sqlConnection.query</b>(</code><var class="pdparam">sql</var><code>)</code>;</p></div><p>
+This method executes the given <em class="parameter"><code>sql</code></em> statement
+(e.g., a <code class="code">SELECT</code> statement) on the
+<code class="code">SQLConnection</code> object. If the statement succeeds a <a class="xref" href="rgs-js.html#sqlresult-object" title="6.16.8.3. SQLResult Object">SQLResult Object (Section 6.16.8.3)</a> is returned. If an error occurs, a
+catchable exception is thrown.
+</p><p>
+Here is an example that shows how to execute a <acronym class="acronym">SQL</acronym>
+query on a connection object:
+</p><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">JavaScript</span><pre class="programlisting">
+var result = connection.query("SELECT last_name, first_name " +
+        "FROM people WHERE country LIKE 'A%';");
+</pre></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="sqlresult-object"></a>6.16.8.3. SQLResult Object</h4></div></div></div><p>
+<code class="code">SQLResult</code> objects are returned by the <a class="xref" href="rgs-js.html#js-SQLConnection.execute-function"><code class="function"><span class="emphasis"><em>sqlConnection</em></span>.execute</code></a> and <a class="xref" href="rgs-js.html#js-SQLConnection.query-function"><code class="function"><span class="emphasis"><em>sqlConnection</em></span>.query</code></a> methods. A
+<code class="code">SQLResult</code> object provides the functions and properties
+listed below. Note that in the case of <code class="code">SELECT</code> statements,
+the <code class="code">SQLResult</code> object is automatically set to the first row
+(if any were retrieved).
+</p><a id="js-SQLResult.isValid-property"></a>Boolean
+<span class="property">sqlResult.isValid</span><p>
+This property is <code class="code">true</code> if the <code class="code">SQLResult</code> object
+is in a valid state; otherwise it is <code class="code">false</code>. Some functions
+return invalid result objects to indicate errors or other special
+conditions (see below).
+</p><a id="js-SQLResult.size-property"></a>int
+<span class="property">sqlResult.size</span><p>
+This property holds the number of rows affected by the query (for
+example, the number of rows deleted, inserted, or updated)—or -1
+if the number could not be determined. And for <code class="code">SELECT</code>
+queries this property holds the number of rows which this result
+contains.
+</p><div class="funcsynopsis"><a id="js-SQLResult.toFirst-function"></a><p><code class="funcdef"><b class="fsfunc">sqlResult.toFirst</b>(</code><var class="pdparam"></var><code>)</code>;</p></div><p>
+This function navigates to the first row in this result. This is
+useful if you want to iterate over the rows multiple times: after
+processing the rows using the <a class="xref" href="rgs-js.html#js-SQLResult.toNext-function"><code class="function"><span class="emphasis"><em>sqlResult</em></span>.toNext</code></a> function, call this function
+to return to the first row so that you can use the <a class="xref" href="rgs-js.html#js-SQLResult.toNext-function"><code class="function"><span class="emphasis"><em>sqlResult</em></span>.toNext</code></a> function once again.
+</p><div class="funcsynopsis"><a id="js-SQLResult.toNext-function"></a><p><code class="funcdef"><b class="fsfunc">sqlResult.toNext</b>(</code><var class="pdparam"></var><code>)</code>;</p></div><p>
+This function navigates to the next row in this <acronym class="acronym">SQL</acronym>
+result. If there is no next row (because there are no rows at all or
+because we have already navigated to the last row), this
+<code class="code">SQLResult</code> object is marked as invalid. This function
+and the <code class="code">isValid</code> property make it easy to iterate over the
+results of a <code class="code">SELECT</code> query. For example:
+</p><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">JavaScript</span><pre class="programlisting">
+var result = connection.query("SELECT last_name, first_name " +
+        "FROM people WHERE country LIKE 'A%';");
+// result is automatically set the first row
+while (result.isValid) {
+    // do something with the result
+    result.toNext();
+}
+</pre></div><div class="funcsynopsis"><a id="js-SQLResult.value-function"></a><p><code class="funcdef">String <b class="fsfunc">sqlResult.value</b>(</code><var class="pdparam">fieldNumber|fieldName</var><code>)</code>;</p></div><p>
+This function can be used to get the data in the given column
+(field) for the current row (record). The column can be identified by
+its position (counting from zero), or by using the (case-insensitive)
+field name. The data in the given column is implicitly converted into a
+string. Note that you can also use the bracket-syntax (shown in the
+example below) as a shortcut.
+</p><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">JavaScript</span><pre class="programlisting">
+var result = connection.query("SELECT first_name, last_name " +
+        "FROM people WHERE country LIKE 'A%';");
+// result is automatically set the first row
+while (result.isValid) {
+    var name1 = result.value(0) + " " + result.value(1);
+    var name2 = result.value("first_name") + " " + result.value("last_name");
+    var name3 = result["first_name"] + " " + result["last_name"];
+    test.verify(name1 == name2 &amp;&amp; name2 == name3);
+    result.toNext();
+}
+</pre></div><p>
+This example shows three different ways of indexing fields, all of which
+are equivalent.
+</p></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="socket-object"></a>6.16.9. Socket Object</h3></div></div></div><p>
+The <code class="code">Socket</code> object can be used as TCP client socket to connect to a server socket to read and write strings.
+</p><p>
+Example:
+</p><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">JavaScript</span><pre class="programlisting">
+var socket = Socket.connect("192.168.1.42", 4711);
+socket.encoding = "latin1";
+socket.writeString("hello");
+var line = socket.readLine();
+socket.close();
+</pre></div><p>
+Here are some quick links to the <code class="code">Socket</code> object's properties and methods.
+</p><div class="informaltable"><table border="0"><colgroup><col></col><col></col><col></col></colgroup><tbody><tr valign="top"><td valign="top">
+<div class="itemizedlist"><ul type="disc" compact><li><p><a class="xref" href="rgs-js.html#js-socket.close-function"><code class="function">socket.close</code></a></p></li><li><p><a class="xref" href="rgs-js.html#js-socket.connect-function"><code class="function">Socket.connect</code></a></p></li><li><p><a class="xref" href="rgs-js.html#js-socket.encoding-property">socket.encoding</a></p></li><li><p><a class="xref" href="rgs-js.html#js-socket.localAddress-property">socket.localAddress</a></p></li></ul></div>
+</td><td valign="top">
+<div class="itemizedlist"><ul type="disc" compact><li><p><a class="xref" href="rgs-js.html#js-socket.localPort-property">socket.localPort</a></p></li><li><p><a class="xref" href="rgs-js.html#js-socket.readInt8-function"><code class="function">socket.readInt8</code></a></p></li><li><p><a class="xref" href="rgs-js.html#js-socket.readInt32-function"><code class="function">socket.readInt32</code></a></p></li><li><p><a class="xref" href="rgs-js.html#js-socket.readLine-function"><code class="function">socket.readLine</code></a></p></li></ul></div>
+</td><td valign="top">
+<div class="itemizedlist"><ul type="disc" compact><li><p><a class="xref" href="rgs-js.html#js-socket.remoteAddress-property">socket.remoteAddress</a></p></li><li><p><a class="xref" href="rgs-js.html#js-socket.remotePort-property">socket.remotePort</a></p></li><li><p><a class="xref" href="rgs-js.html#js-socket.timeout-property">socket.timeout</a></p></li><li><p><a class="xref" href="rgs-js.html#js-socket.writeString-function"><code class="function">Socket.writeString</code></a></p></li></ul></div>
+</td></tr></tbody></table></div><div class="funcsynopsis"><a id="js-socket.close-function"></a><p><code class="funcdef"><b class="fsfunc">socket.close</b>(</code><code>)</code>;</p></div><p>
+This method closes the socket connection. Once closed a socket object cannot be read from or written to.
+</p><div class="funcsynopsis"><a id="js-socket.connect-function"></a><p><code class="funcdef">socket <b class="fsfunc">Socket.connect</b>(</code><var class="pdparam">host</var>, <var class="pdparam">port</var><code>)</code>;</p></div><p>
+This function tries to connect to the specified host name (or the IP address) and port and returns a socket object on success. If the connection failed a catchable exception is thrown.
+</p><a id="js-socket.encoding-property"></a>
+String <span class="property">socket.encoding</span>
+<p>
+The <code class="code">socket</code> object's <code class="code">encoding</code> property holds the encoding to read and write strings. The default encoding is <code class="code">"utf-8"</code>. Other possible values are <code class="code">"ucs-2"</code> (2 byte Unicode) and <code class="code">"latin1"</code> (also known as ISO 8859-1) which includes the US-ASCII range.
+</p><p>
+This property should be set <span class="emphasis"><em>before</em></span> doing any reading or writing of strings.
+</p><a id="js-socket.localAddress-property"></a>
+String <span class="property">socket.localAddress</span>
+<p>
+The <code class="code">socket</code> object's <code class="code">localAddress</code> property holds the address used on the local machine for the socket.
+</p><a id="js-socket.localPort-property"></a>
+Number <span class="property">socket.localPort</span>
+<p>
+The <code class="code">socket</code> object's <code class="code">localPort</code> property holds the port used on the local machine for the socket.
+</p><div class="funcsynopsis"><a id="js-socket.readInt8-function"></a><p><code class="funcdef">Number <b class="fsfunc">socket.readInt8</b>(</code><code>)</code>;</p></div><p>
+This method reads a signed 8-bit integer from the socket. On success the integer value is returned otherwise a catchable exception is thrown.
+</p><div class="funcsynopsis"><a id="js-socket.readInt32-function"></a><p><code class="funcdef">Number <b class="fsfunc">socket.readInt32</b>(</code><code>)</code>;</p></div><p>
+This method reads a signed 32-bit integer from the socket. On success the integer value is returned otherwise a catchable exception is thrown.
+</p><div class="funcsynopsis"><a id="js-socket.readLine-function"></a><p><code class="funcdef">String <b class="fsfunc">socket.readLine</b>(</code><code>)</code>;</p></div><p>
+This method reads until one of the line endings <code class="code">"\n"</code> or <code class="code">"\r\n"</code> are read from the socket returned by the <a class="xref" href="rgs-js.html#js-socket.connect-function"><code class="function">Socket.connect</code></a> function. The content is assumed to be text using the UTF-8 encoding (unless the <a class="xref" href="rgs-js.html#js-socket.encoding-property">socket.encoding</a> property is changed). On success the string is returned without line ending. If no line ending is received a catchable exception is thrown.
+</p><a id="js-socket.remoteAddress-property"></a>
+String <span class="property">socket.remoteAddress</span>
+<p>
+The <code class="code">socket</code> object's <code class="code">remoteAddress</code> property holds the address used on the remote machine for the socket.
+</p><a id="js-socket.remotePort-property"></a>
+Number <span class="property">socket.remotePort</span>
+<p>
+The <code class="code">socket</code> object's <code class="code">remotePort</code> property holds the port used on the remote machine for the socket.
+</p><a id="js-socket.timeout-property"></a>
+Number <span class="property">socket.timeout</span>
+<p>
+The <code class="code">socket</code> object's <code class="code">timeout</code> property holds the timeout used for read and write operations on the socket. It's an integer number of seconds which defaults to 20 seconds.
+</p><p>
+This property should be set <span class="emphasis"><em>before</em></span> doing any reading or writing.
+</p><div class="funcsynopsis"><a id="js-socket.writeString-function"></a><p><code class="funcdef"><b class="fsfunc">Socket.writeString</b>(</code><var class="pdparam">string</var><code>)</code>;</p></div><p>
+This method writes the given <em class="parameter"><code>string</code></em> to the socket object returned by the <a class="xref" href="rgs-js.html#js-socket.connect-function"><code class="function">Socket.connect</code></a> function. The <em class="parameter"><code>string</code></em> is written using the UTF-8 encoding (unless the <a class="xref" href="rgs-js.html#js-socket.encoding-property">socket.encoding</a> property is changed). If the writing fails a catchable exception is thrown.
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="ws-object"></a>6.16.10. WebSocket Object</h3></div></div></div><p>
+The <code class="code">WebSocket</code> object implements text-based communication with a server via the WebSocket protocol. Its functions block until completion for convenient use within a test script.
+</p><pre class="programlisting">
+var socket;
+try {
+    socket = WebSocket.connect("websocket-server", 80);
+} catch (e) {
+    test.log("Could not connect: " + e);
+    return;
+}
+
+socket.timeout = 500;
+socket.sendTextMessage( "'Quack!' said the frog." );
+test.log("received: " + socket.receiveTextMessage());
+socket.close();
+</pre><div class="funcsynopsis"><a id="js-websocket.connect-function"></a><p><code class="funcdef">WebSocket <b class="fsfunc">WebSocket.connect</b>(</code>
+    <var class="pdparam">hostname</var>
+    <var class="pdparam">port</var>
+  <code>)</code>;</p></div><p>
+Connects to <code class="code">hostname:port</code> and returns a WebSocket object on success. On failure, an exception is thrown.
+</p><div class="funcsynopsis"><a id="js-websocket.close-function"></a><p><code class="funcdef"><b class="fsfunc">websocket.close</b>(</code><code>)</code>;</p></div><p>
+Closes a WebSocket connection.
+</p><div class="funcsynopsis"><a id="js-websocket.sendTextMessage-function"></a><p><code class="funcdef"><b class="fsfunc">websocket.sendTextMessage</b>(</code>
+    <var class="pdparam">message</var>
+  <code>)</code>;</p></div><p>
+Sends a text message through the WebSocket. Throws an exception on failure.
+</p><div class="funcsynopsis"><a id="js-websocket.receiveTextMessage-function"></a><p><code class="funcdef">String <b class="fsfunc">websocket.receiveTextMessage</b>(</code><code>)</code>;</p></div><p>
+Receives a message from the WebSocket. Throws an exception if there is nothing to receive.
+</p><a id="js-websocket.host-property"></a>
+String <span class="property">websocket.host</span>
+<p>
+A readonly property that holds the host this socket is connected to.
+</p><a id="js-websocket.open-property"></a>
+Boolean <span class="property">websocket.open</span>
+<p>
+A readonly property that tells if this socket is currently open.
+</p><a id="js-websocket.port-property"></a>
+Number <span class="property">websocket.port</span>
+<p>
+A readonly property that holds the port this socket is connected to.
+</p><a id="js-websocket.timeout-property"></a>
+Number <span class="property">websocket.timeout</span>
+<p>
+Holds the timeout (default: 3000 ms) used when sending and receiving data through the WebSocket. This property can be changed at any time and expects a millisecond value.
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="js-XMLHttpRequest-object"></a>6.16.11. XMLHttpRequest Object</h3></div></div></div><p>
+The <code class="code">XMLHttpRequest</code> object can be used as a HTTP client
+that can make <code class="code">GET</code>, <code class="code">HEAD</code>, <code class="code">POST</code>,
+<code class="code">PUT</code> or <code class="code">DELETE</code> requests. Possible usage
+ranges from querying the content of Web pages up to so called REST
+calls with data transmitted as plain text, XML or JSON.</p><div class="funcsynopsis"><a id="js-XMLHttpRequest-function"></a><p><code class="funcdef">XMLHttpRequest <b class="fsfunc">XMLHttpRequest</b>(</code><code>)</code>;</p></div><p>
+The constructor for the <code class="code">XMLHttpRequest</code> type.
+</p><div class="funcsynopsis"><a id="js-XMLHttpRequest.abort-function"></a><p><code class="funcdef"><b class="fsfunc">XMLHttpRequest.abort</b>(</code><code>)</code>;</p></div><p>
+This function will reset the client object and change the readyState
+property back to <code class="constant">UNSENT</code>.
+</p><div class="funcsynopsis"><a id="js-XMLHttpRequest.getResponseHeader-function"></a><p><code class="funcdef">String <b class="fsfunc">XMLHttpRequest.getResponseHeader</b>(</code><var class="pdparam">header</var><code>)</code>;</p></div><p>
+This function returns the header field value from the response of
+which the field name matches header. A call like
+</p><pre class="programlisting">
+var client = new XMLHttpRequest();
+client.open("GET", "http://www.example.com/result.txt", false);
+client.send();
+test.log(client.getResponseHeader("Content-Type"));
+</pre><p>
+might log a result like "text/plain".
+</p><div class="funcsynopsis"><a id="js-XMLHttpRequest.getAllResponseHeaders-function"></a><p><code class="funcdef">String <b class="fsfunc">XMLHttpRequest.getAllResponseHeaders</b>(</code><code>)</code>;</p></div><p>
+This function returns all headers from the response. Whereas each
+name/value pair is separated by a CR/LF sequence.
+</p><div class="funcsynopsis"><a id="js-XMLHttpRequest.open-function"></a><p><code class="funcdef"><b class="fsfunc">XMLHttpRequest.open</b>(</code><var class="pdparam">method</var>, <var class="pdparam">url</var>, <var class="pdparam">async</var>, <var class="pdparam">[username]</var>, <var class="pdparam">[password]</var><code>)</code>;</p></div><p>
+This function opens the client for a <em class="parameter"><code>method</code></em>
+request to the
+specified <em class="parameter"><code>url</code></em>. The <em class="parameter"><code>method</code></em>
+can be any of <code class="code">GET</code>, <code class="code">HEAD</code>, <code class="code">POST</code>,
+<code class="code">PUT</code> or <code class="code">DELETE</code>.
+The <em class="parameter"><code>async</code></em> parameter has to
+be <code class="code">false</code>.
+</p><p>The optional <em class="parameter"><code>username</code></em>
+and <em class="parameter"><code>password</code></em> parameters can be used for
+authentication against the server.</p><p>
+Unlike in a Web browser the requests initiated through the
+XMLHttpRequest object will run in the foreground only. Installation of
+a handler receiving the data asynchronously is not
+required. With <em class="parameter"><code>async</code></em> set to <code class="code">false</code>
+calls to send() will wait for the response to fully have arrived before
+returning.
+</p><a id="js-XMLHttpRequest.readyState-property"></a>
+Number <span class="property">XMLHttpRequest.readyState</span>
+<p>
+This property holds the current state of the client. Possible values are
+<code class="constant">XMLHttpRequest.UNSENT</code>, <code class="constant">OPENED</code>, <code class="constant">HEADERS_RECEIVED</code>, <code class="constant">LOADING</code>
+and <code class="constant">DONE</code>. Given the synchronous send() mode the
+intermediate states <code class="constant">HEADERS_RECEIVED</code>
+and <code class="constant">LOADING</code> will not be visible to the test
+script.
+</p><a id="js-XMLHttpRequest.responseText-property"></a>
+String <span class="property">XMLHttpRequest.responseText</span>
+<p>
+In case of a successful request this property holds the server's
+response. The response text is expected to have been UTF-8 encoded.
+Here is an example that makes use of this property to check the
+content of a Web page:
+</p><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">JavaScript</span><pre class="programlisting">
+var client = new XMLHttpRequest();
+client.open('GET', 'https://www.froglogic.com', false);
+client.send();
+test.compare(client.status, 200);
+test.verify(client.response.indexOf("Testing") &gt;= 0);
+</pre></div><div class="funcsynopsis"><a id="js-XMLHttpRequest.send-function"></a><p><code class="funcdef"><b class="fsfunc">XMLHttpRequest.send</b>(</code><var class="pdparam">[data]</var>, <var class="pdparam">[boundary]</var><code>)</code>;</p></div><p>
+This function initiates the request as specified by
+<a class="xref" href="rgs-js.html#js-XMLHttpRequest.open-function"><code class="function">XMLHttpRequest.open</code></a>. The <em class="parameter"><code>data</code></em>
+argument is ignored if the request method is <code class="code">GET</code>
+or <code class="code">HEAD</code>. The optional <em class="parameter"><code>boundary</code></em> is only
+used when sending form data and sets the dividing boundary between key-value
+pairs.
+</p><p>
+An fictional example demonstrating the addition of a customer to a database
+via a REST API call:
+</p><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">JavaScript</span><pre class="programlisting">
+var client = new XMLHttpRequest();
+client.open("POST", "http://www.example.com/rest/CUSTOMER/", false);
+client.send("&lt;CUSTOMER&gt;&lt;ID&gt;60&lt;/ID&gt;&lt;FIRSTNAME&gt;Laura&lt;/FIRSTNAME&gt;&lt;LASTNAME&gt;Miller&lt;/LASTNAME&gt;&lt;STREET&gt;443 Seventh Av.&lt;/STREET&gt;&lt;CITY&gt;Lyon&lt;/CITY&gt;&lt;/CUSTOMER&gt;");
+test.compare(client.statusText, "Created");
+</pre></div><p>
+Furthermore, this function can send FormData according to the FormData Web
+<acronym class="acronym">API</acronym> using an HTTP <code class="code">POST</code> or <code class="code">PUT</code>
+request. The following example shows how another customer can be
+added to the same database as above using FormData.
+</p><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">JavaScript</span><pre class="programlisting">
+var client = new XMLHttpRequest();
+client.open("POST", "http://www.example.com/rest/CUSTOMER/", false);
+client.setRequestHeader( "Content-type", "multipart/form-data" );
+
+var data = new FormData();
+data.append("id", "61");
+data.append("firstname", "John");
+data.append("lastname", "Smith");
+data.append("street", "1301 Ferguson Rd");
+data.append("city", "Sebastopol");
+
+client.send(data);
+test.compare(client.statusText, "Created");
+</pre></div><p>
+When sending form data this way it is important to use
+<a class="xref" href="rgs-js.html#js-XMLHttpRequest.setRequestHeader-function"><code class="function">XMLHttpRequest.setRequestHeader</code></a> and to set the media type with
+<code class="literal">Content-type</code> to <code class="literal">multipart/form-data</code>.
+Setting the <code class="literal">Content-type</code> header is imperative for data to be
+interpreted correctly by the server.
+</p><p>
+It is possible to set a custom boundary used in the <acronym class="acronym">HTTP</acronym>
+request body to separate the keys from the values and avoid any random
+boundaries. This boundary is provided as a second optional argument for the
+send method. The boundary should not exceed 70 characters and should contain
+only characters from the <acronym class="acronym">US-ASCII</acronym> character set. When using
+<acronym class="acronym">UTF-8</acronym> characters please set the charset inside Content-Type
+header accordingly.
+</p><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">JavaScript</span><pre class="programlisting">
+client.send(data, "CUSTOMBOUNDARY");
+</pre></div><p>
+For further details how to handle such data please refer to the section
+<a class="xref" href="rgs-js.html#formdata-object" title="6.16.12. FormData Object">FormData Object (Section 6.16.12)</a>.
+</p><div class="funcsynopsis"><a id="js-XMLHttpRequest.setRequestHeader-function"></a><p><code class="funcdef"><b class="fsfunc">XMLHttpRequest.setRequestHeader</b>(</code><var class="pdparam">header</var>, <var class="pdparam">value</var><code>)</code>;</p></div><p>
+
+This function adds a header to the list of request headers, of if
+<em class="parameter"><code>header</code></em> is already in the list of headers,
+combines its value with
+<em class="parameter"><code>value</code></em> An example showing an explicit setting of
+the type of message being sent:
+
+</p><pre class="programlisting">
+client.setRequestHeader("Content-Type", "text/plain;charset=UTF-8");
+client.send(message);
+</pre><a id="js-XMLHttpRequest.status-property"></a>
+Number <span class="property">XMLHttpRequest.status</span>
+<p>
+This read-only property holds the HTTP status code of the previous
+request. For example, 200 if a GET request succeeded. See
+the <a class="ulink" href="http://www.iana.org/assignments/http-status-codes/http-status-codes.xhtml" target="_blank">Status Code Registry</a> for a complete listing.
+</p><a id="js-XMLHttpRequest.statusText-property"></a>
+String <span class="property">XMLHttpRequest.statusText</span>
+<p>
+This read-only property holds the HTTP status text of the previous
+request. For example, "OK" if a GET request succeeded. See
+the <a class="ulink" href="http://www.iana.org/assignments/http-status-codes/http-status-codes.xhtml" target="_blank">Status
+Code Registry</a> for a complete listing.
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="formdata-object"></a>6.16.12. FormData Object</h3></div></div></div><p>
+The <code class="literal">FormData</code> object offers a key-value-based container for
+handling data collected in forms. It resembles the FormData Web
+<acronym class="acronym">API</acronym>. Most of the functions have been implemented to enable test
+suites to prepare, handle and send FormData using
+<a class="xref" href="rgs-js.html#js-XMLHttpRequest.send-function"><code class="function">XMLHttpRequest.send</code></a> of the <a class="xref" href="rgs-js.html#js-XMLHttpRequest-object" title="6.16.11. XMLHttpRequest Object">XMLHttpRequest Object (Section 6.16.11)</a>.
+</p><p>
+The following example shows the creation of a FormData object and usage of all
+its methods. Accompanying descriptions follow further below.
+</p><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">JavaScript</span><pre class="programlisting">
+var data = new FormData();
+
+// appending values
+data.append("key", "value 1");
+data.append("key", "value 2");
+var valueList = data.getAll("key");
+
+// looking for values
+if (data.has("key")) {
+  // ...
+}
+
+// overwriting values
+data.set("key", "new value");
+var singleValue = data.get("key");
+
+// removing values
+data.remove("key");
+</pre></div><div class="funcsynopsis"><a id="js-FormData.append-function"></a><p><code class="funcdef"><b class="fsfunc">data.append</b>(</code><var class="pdparam">key</var>, <var class="pdparam">value</var><code>)</code>;</p></div><p>
+This method appends a <em class="parameter"><code>value</code></em> of any type identified by a
+<em class="parameter"><code>key</code></em>. The FormData container can store multiple values for
+one key. All values are handled as strings. Additional parsing is needed for
+handling other types.
+</p><p>
+It is also possible to append files. In contrast to the Web
+<acronym class="acronym">API</acronym> for FormData documentation, <span class="emphasis"><em>Squish</em></span> utilizes the
+File API offered by <a class="xref" href="rgs-js.html#file-object" title="6.16.4. File Object">File Object (Section 6.16.4)</a>. The following example appends
+a plain text file to a FormData instance.
+</p><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Note: Caution"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/note.png"></img></td><th align="left">Caution</th></tr><tr><td align="left" valign="top"><p>Sending binary files is currently not supported.</p></td></tr></table></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">JavaScript</span><pre class="programlisting">
+var data = new FormData();
+var file = File.open("data.txt","r");
+data.append("test.txt", file.read());
+file.close();
+</pre></div><p>
+For more details about the File object and its methods, see
+<a class="xref" href="rgs-js.html#js-File.open-function"><code class="function">File.open</code></a>,
+<a class="xref" href="rgs-js.html#js-file.read-function"><code class="function"><span class="emphasis"><em>file</em></span>.read</code></a> and
+<a class="xref" href="rgs-js.html#js-file.close-function"><code class="function"><span class="emphasis"><em>file</em></span>.close</code></a>.
+</p><div class="funcsynopsis"><a id="js-FormData.get-function"></a><p><code class="funcdef">String <b class="fsfunc">data.get</b>(</code>
+    <var class="pdparam">key</var>
+  <code>)</code>;</p></div><p>
+Gets a single value stored with <a class="xref" href="rgs-js.html#js-FormData.append-function"><code class="function"><span class="emphasis"><em>data</em></span>.append</code></a>
+or <a class="xref" href="rgs-js.html#js-FormData.set-function"><code class="function"><span class="emphasis"><em>data</em></span>.set</code></a>. It returns either a single
+value or the first stored value for keys with multiple values.
+</p><div class="funcsynopsis"><a id="js-FormData.getAll-function"></a><p><code class="funcdef">ListOfString <b class="fsfunc">data.getAll</b>(</code>
+    <var class="pdparam">key</var>
+  <code>)</code>;</p></div><p>
+Returns all values for a given key as a list.
+</p><div class="funcsynopsis"><a id="js-FormData.has-function"></a><p><code class="funcdef">Boolean <b class="fsfunc">data.has</b>(</code><var class="pdparam">key</var><code>)</code>;</p></div><p>
+Returns <code class="code">true</code> if the container has a value for <code class="code">key</code>,
+otherwise <code class="code">false</code>.
+</p><div class="funcsynopsis"><a id="js-FormData.remove-function"></a><p><code class="funcdef"><b class="fsfunc">data.remove</b>(</code>
+    <var class="pdparam">key</var>
+  <code>)</code>;</p></div><p>
+Removes all values for <em class="parameter"><code>key</code></em>. If multiple values were stored
+all of them are removed.
+</p><div class="funcsynopsis"><a id="js-FormData.set-function"></a><p><code class="funcdef"><b class="fsfunc">data.set</b>(</code><var class="pdparam">key</var>, <var class="pdparam">value</var><code>)</code>;</p></div><p>
+Overrides the stored <em class="parameter"><code>key</code></em>-<em class="parameter"><code>value</code></em> pair
+with the provided value. If there were multiple values before, all of them will
+be removed before adding the new value.
+</p></div></div><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" type="text/javascript" src="ScriptingLanguage.js"></script><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format">setScriptingLanguage();</script><div class="navfooter"><hr></hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="rgs-tcl.html">Prev</a> </td><td width="20%" align="center"><a accesskey="u" href="api.man.html">Up</a></td><td width="40%" align="right"> <a accesskey="n" href="rgs-pl.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">6.15. Tcl Notes </td><td width="20%" align="center"><a accesskey="h" href="index-noframes.html">Home</a></td><td width="40%" align="right" valign="top"> 6.17. Perl Notes</td></tr></table></div></body>
+<!-- Mirrored from rgs-js.html by HTTrack Website Copier/3.x [XR&CO'2013], Wed, 06 Jul 2022 13:29:00 GMT -->
+</html>

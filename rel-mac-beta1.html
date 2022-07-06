@@ -1,0 +1,66 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<!-- Mirrored from rel-mac-beta1.html by HTTrack Website Copier/3.x [XR&CO'2013], Wed, 06 Jul 2022 13:28:58 GMT -->
+<head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><title>2.67. Squish for macOS, Beta 1</title><link rel="stylesheet" href="manual.css" type="text/css"></link><meta name="generator" content="DocBook XSL Stylesheets V1.73.2"></meta><link rel="start" href="index-noframes.html" title="Squish Manual"></link><link rel="up" href="relnotes.html" title="Chapter 2. Release Notes—for Upgraders"></link><link rel="prev" href="rel-322.html" title="2.66. Version 3.2.2"></link><link rel="next" href="rel-320.html" title="2.68. Version 3.2"></link><style xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" type="text/css" media="screen">
+        div.toc * { margin-left: 6px; margin-right: auto; max-width: 75em; }
+        div.toc span { margin-left: 0px; }
+        * { margin-left: auto; margin-right: auto; max-width: 75em; }
+        body { margin-left: 6px; margin-right: 6px; }
+        table th { padding: .5ex }
+        table td { padding: .5ex }
+    </style><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format">
+        function keyPress() {
+            var e = window.event;
+            if ( e == undefined ) {
+                return;
+            }
+            /* ### does not properly scroll, yet
+            if ( e.keyCode == 32 ) {
+            var l = document.links;
+            for ( var i = 0; i < l.length; i++ ) {
+                if ( l[i].innerText == "Next" ) {
+                location.href = l[i].href;
+                }
+            }
+            } else
+                */
+                if ( e.keyCode == 0x08 ) {
+            var l = document.links;
+            for ( var i = 0; i < l.length; i++ ) {
+                if ( l[i].innerText == "Prev" ) {
+                location.href = l[i].href;
+                }
+            }
+            }
+        }
+        document.onkeypress = keyPress;
+    </script></head><body><div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="rel-mac-beta1"></a>2.67. Squish for macOS, Beta 1</h2></div></div></div><p>Following you find some notes (mainly limitations and known-issues)
+on the first beta release of <span class="emphasis"><em>Squish</em></span> for testing macOS applications
+written with Carbon or Cocoa. This beta release is based on the
+<span class="emphasis"><em>Squish</em></span> 3.2 code base.</p><div class="itemizedlist"><ul type="disc"><li><p>This beta was only tested on macOS 10.4 (Tiger) - it
+                might not work on other versions of
+                macOS.</p></li><li><p>The most common control types are already supported.
+                However, there are still some missing. This does not mean
+                that you can't record actions on the unsupported
+                controls; it just means that the resulting script code is
+                not as stable against changes in the GUI than
+                desired.</p><p>The controls that need improved support in the future
+                include <code class="classname">NSComboBox</code>,
+                <code class="classname">NSOutlineView</code>,
+                <code class="classname">NSSlider</code>,
+                <code class="classname">NSTokenField</code>,
+                <code class="classname">NSSplitView</code> and most Carbon
+                controls.</p></li><li><p>Activation of items in context menus are currently recorded
+                as a click on the item with relative coordinates inside the
+                view containing the menu items. This is not the desired
+                behavior in respect to maintainability of the
+                scripts.</p></li><li><p>Drag and drop is not supported - neither with recording nor
+                with play back.</p></li><li><p><span class="emphasis"><em>Squish</em></span> does not yet make many of the properties of
+                Carbon controls accessible to the scripting language and
+                the <span class="application">Spy</span>.</p></li><li><p>Most of the properties and functions of Cocoa objects are
+                available in <span class="emphasis"><em>Squish</em></span>'s script bindings. Structs, selectors
+                and class objects are not yet supported in method
+                signatures; the corresponding methods are missing in the
+                script bindings.</p></li></ul></div></div><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" type="text/javascript" src="ScriptingLanguage.js"></script><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format">setScriptingLanguage();</script><div class="navfooter"><hr></hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="rel-322.html">Prev</a> </td><td width="20%" align="center"><a accesskey="u" href="relnotes.html">Up</a></td><td width="40%" align="right"> <a accesskey="n" href="rel-320.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">2.66. Version 3.2.2 </td><td width="20%" align="center"><a accesskey="h" href="index-noframes.html">Home</a></td><td width="40%" align="right" valign="top"> 2.68. Version 3.2</td></tr></table></div></body>
+<!-- Mirrored from rel-mac-beta1.html by HTTrack Website Copier/3.x [XR&CO'2013], Wed, 06 Jul 2022 13:28:58 GMT -->
+</html>

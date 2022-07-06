@@ -1,0 +1,168 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<!-- Mirrored from rghsa-sub.html by HTTrack Website Copier/3.x [XR&CO'2013], Wed, 06 Jul 2022 13:29:00 GMT -->
+<head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><title>7.7. Record / Replay on Sub-Processes started by the AUT</title><link rel="stylesheet" href="manual.css" type="text/css"></link><meta name="generator" content="DocBook XSL Stylesheets V1.73.2"></meta><link rel="start" href="index-noframes.html" title="Squish Manual"></link><link rel="up" href="ref.man.html" title="Chapter 7. Tools Reference Manual"></link><link rel="prev" href="rg-ini-files.html" title="7.6. Squish Initialization Files"></link><link rel="next" href="rghsa-attach.html" title="7.8. Attaching to Running Applications"></link><style xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" type="text/css" media="screen">
+        div.toc * { margin-left: 6px; margin-right: auto; max-width: 75em; }
+        div.toc span { margin-left: 0px; }
+        * { margin-left: auto; margin-right: auto; max-width: 75em; }
+        body { margin-left: 6px; margin-right: 6px; }
+        table th { padding: .5ex }
+        table td { padding: .5ex }
+    </style><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format">
+        function keyPress() {
+            var e = window.event;
+            if ( e == undefined ) {
+                return;
+            }
+            /* ### does not properly scroll, yet
+            if ( e.keyCode == 32 ) {
+            var l = document.links;
+            for ( var i = 0; i < l.length; i++ ) {
+                if ( l[i].innerText == "Next" ) {
+                location.href = l[i].href;
+                }
+            }
+            } else
+                */
+                if ( e.keyCode == 0x08 ) {
+            var l = document.links;
+            for ( var i = 0; i < l.length; i++ ) {
+                if ( l[i].innerText == "Prev" ) {
+                location.href = l[i].href;
+                }
+            }
+            }
+        }
+        document.onkeypress = keyPress;
+    </script></head><body><div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="rghsa-sub"></a>7.7. Record / Replay on Sub-Processes started by the AUT</h2></div></div></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><span class="section"><a href="rghsa-sub.html#rg.squish.for.java.sub.processes">7.7.1. Hooking up Java Sub-Processes in <span class="emphasis"><em>Squish</em></span> for Java</a></span></dt><dt><span class="section"><a href="rghsa-sub.html#rg.squish.for.qt.sub.processes">7.7.2. Hooking up Qt Sub-Processes in <span class="emphasis"><em>Squish</em></span> for Qt</a></span></dt><dt><span class="section"><a href="rghsa-sub.html#rg.squish.for.windows.sub.processes">7.7.3. Hooking up Sub-Processes in <span class="emphasis"><em>Squish</em></span> for Windows</a></span></dt><dt><span class="section"><a href="rghsa-sub.html#rg.squish.for.macosx.sub.processes">7.7.4. Hooking up Sub-Processes in <span class="emphasis"><em>Squish</em></span> for macOS</a></span></dt></dl></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="rg.squish.for.java.sub.processes"></a>7.7.1. Hooking up Java Sub-Processes in <span class="emphasis"><em>Squish</em></span> for Java</h3></div></div></div><p><span class="emphasis"><em>Squish</em></span> for Java hooks up Java sub-processes automatically,
+if they are launched through <span class="application">java</span>
+(or <span class="application">java.exe</span>,
+<span class="application">javaw.exe</span>). However, further setup steps
+may be required. Please contact <span class="emphasis"><em>Squish</em></span> technical support in case
+record/replay on Java sub-processes does not work for you.
+</p><p>
+When recording sub-processes, the test script will contain calls to the
+<a class="xref" href="rgs-squish.html#waitForApplicationLaunch-function"><code class="function">waitForApplicationLaunch</code></a> function. This
+function returns an <span class="type">ApplicationContext</span> object for each
+application started as a sub-process. (See also, <a class="xref" href="rgs-squish.html#rgss-appcontext" title="6.3.12. Application Context">Application Context (Section 6.3.12)</a>.) Using context objects makes it possible to
+tell <span class="emphasis"><em>Squish</em></span> which application it should be interacting with at various
+points in the test script's execution. (See <a class="xref" href="ugs-appcontext.html#ugsac-appcontext" title="5.12.3. How to Use ApplicationContext Objects">How to Use ApplicationContext Objects (Section 5.12.3)</a> for details about working with application
+contexts.)
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="rg.squish.for.qt.sub.processes"></a>7.7.2. Hooking up Qt Sub-Processes in <span class="emphasis"><em>Squish</em></span> for Qt</h3></div></div></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><span class="section"><a href="rghsa-sub.html#rg.squish.for.qt.sub.processes.on.windows">7.7.2.1. Additional Setup for Hooking up Qt Sub-Processes on Windows</a></span></dt><dt><span class="section"><a href="rghsa-sub.html#rg.squish.for.qt.sub.processes.on.windows.non.invasively">7.7.2.2. Additional Setup for Hooking up Qt Sub-Processes on Windows Non-Invasively</a></span></dt></dl></div><p>
+By default, <span class="emphasis"><em>Squish</em></span> for Qt hooks into the application which is
+started by the test and ignores any sub-processes that the AUT may
+start. However, <span class="emphasis"><em>Squish</em></span> for Qt generally supports testing of
+programs started as sub-processes, when this is enabled in <span class="emphasis"><em>Squish</em></span>
+for Qt.
+</p><p>
+To enable recording and replaying on Qt sub-processes open the test
+suite settings by clicking the project's <span class="guilabel">Test Suite
+Settings</span> to make the
+<a class="xref" href="ide.views.html#ide.the-settings.view" title="8.2.16. Test Suite Settings view">Test Suite Settings view (Section 8.2.16)</a> appear, then check the
+<span class="guilabel">Hook into sub-processes launched by the application</span>
+checkbox.
+</p><p>
+Please note that the additional setup steps described in
+<a class="xref" href="rghsa-sub.html#rg.squish.for.qt.sub.processes.on.windows" title="7.7.2.1. Additional Setup for Hooking up Qt Sub-Processes on Windows">Additional Setup for Hooking up Qt Sub-Processes on Windows (Section 7.7.2.1)</a>
+or <a class="xref" href="rghsa-sub.html#rg.squish.for.qt.sub.processes.on.windows.non.invasively" title="7.7.2.2. Additional Setup for Hooking up Qt Sub-Processes on Windows Non-Invasively">Additional Setup for Hooking up Qt Sub-Processes on Windows Non-Invasively (Section 7.7.2.2)</a>
+must be applied for recording and replaying on Qt sub-processes on
+Windows, as well.
+</p><p>
+When recording sub-processes, the test script will contain calls to the
+<a class="xref" href="rgs-squish.html#waitForApplicationLaunch-function"><code class="function">waitForApplicationLaunch</code></a> function. This
+function returns an <span class="type">ApplicationContext</span> object for each
+application started as a sub-process. (See also, <a class="xref" href="rgs-squish.html#rgss-appcontext" title="6.3.12. Application Context">Application Context (Section 6.3.12)</a>.) Using context objects makes it possible to
+tell <span class="emphasis"><em>Squish</em></span> which application it should be interacting with at various
+points in the test script's execution. (See <a class="xref" href="ugs-appcontext.html#ugsac-appcontext" title="5.12.3. How to Use ApplicationContext Objects">How to Use ApplicationContext Objects (Section 5.12.3)</a> for details about working with application
+contexts.)
+</p><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="rg.squish.for.qt.sub.processes.on.windows"></a>7.7.2.1. Additional Setup for Hooking up Qt Sub-Processes on Windows</h4></div></div></div><p>
+(Also see <a class="xref" href="rghsa-sub.html#rg.squish.for.qt.sub.processes.on.windows.non.invasively" title="7.7.2.2. Additional Setup for Hooking up Qt Sub-Processes on Windows Non-Invasively">Additional Setup for Hooking up Qt Sub-Processes on Windows Non-Invasively (Section 7.7.2.2)</a>
+for an alternative approach to this.)
+</p><p>
+To enable <span class="emphasis"><em>Squish</em></span> for Qt to hook up sub-processes of the AUT on
+Windows a small change to the AUT's source code is required, which
+essentially results in starting the sub-process through a wrapper
+program (<span class="application">SQUISH_DIR/bin/dllpreload.exe</span>).
+</p><p>
+The required change to the AUT can be made so that it is only
+enabled when the AUT gets started via <span class="emphasis"><em>Squish</em></span>, for example by
+checking for the existence of an environment variable called
+<code class="envar">SQUISH_PREFIX</code>. (<span class="emphasis"><em>Squish</em></span> sets this environment
+variable for the AUT process.)
+</p><p>
+For example, suppose that the AUT had the following source code to start
+a sub-process:
+</p><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage"></span><pre class="programlisting">
+QProcess process;
+process.start("subprogram.exe");
+</pre></div><p>
+To change this to work with <span class="emphasis"><em>Squish</em></span>, change the AUT in two ways. First
+add a new command line argument, say <code class="option">--testing</code>, that
+when given sets a global Boolean, say, <code class="code">TESTING</code> to
+<code class="code">true</code>. Now update the code that calls the subprocess as
+follows:
+</p><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage"></span><pre class="programlisting">
+QProcess process;
+QStringList commands;
+#ifdef Q_OS_WIN32
+if (TESTING)
+    commands.append("dllpreload.exe");
+#endif
+commands.append("subprogram.exe");
+process.start(commands[0], commands.mid(1));
+</pre></div><p>
+When <code class="code">TESTING</code> isn't defined the <code class="code">commands</code> string
+list will only contain one item ("subprogram.exe"), and
+<code class="code">commands.mid(1)</code> will harmlessly return an empty list.
+</p><p>
+To make the change effective, in the <a class="xref" href="ide.views.html#ide.the-settings.view" title="8.2.16. Test Suite Settings view">Test Suite Settings view (Section 8.2.16)</a> (or for  <span class="emphasis"><em>Squish</em></span> 3, the Test
+Suite Settings dialog), add <code class="code">--testing</code> to the AUT's
+<span class="guilabel">Arguments</span>.
+</p><p>
+Now, when <span class="emphasis"><em>Squish</em></span> executes the AUT on Windows and the sub-process is
+started, what will actually happen is that <span class="emphasis"><em>Squish</em></span>'s
+<span class="application">dllpreload.exe</span> program will be started with
+the intended application (e.g.,
+<span class="application">subprogram.exe</span>) as its first argument, and
+any other arguments passed as arguments to the intended application as
+normal. This means that the AUT and sub-process' behavior will be
+exactly what it was before.
+</p><p>
+When recording sub-processes, the test script will contain calls to the
+<a class="xref" href="rgs-squish.html#waitForApplicationLaunch-function"><code class="function">waitForApplicationLaunch</code></a> function. This
+function returns an <span class="type">ApplicationContext</span> object for each
+application started as a sub-process. (See also, <a class="xref" href="rgs-squish.html#rgss-appcontext" title="6.3.12. Application Context">Application Context (Section 6.3.12)</a>.) Using context objects makes it possible to
+tell <span class="emphasis"><em>Squish</em></span> which application it should be interacting with at various
+points in the test script's execution. (See <a class="xref" href="ugs-appcontext.html#ugsac-appcontext" title="5.12.3. How to Use ApplicationContext Objects">How to Use ApplicationContext Objects (Section 5.12.3)</a> for details about working with application
+contexts.)
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="rg.squish.for.qt.sub.processes.on.windows.non.invasively"></a>7.7.2.2. Additional Setup for Hooking up Qt Sub-Processes on Windows Non-Invasively</h4></div></div></div><p>
+(Also see <a class="xref" href="rghsa-sub.html#rg.squish.for.qt.sub.processes.on.windows" title="7.7.2.1. Additional Setup for Hooking up Qt Sub-Processes on Windows">Additional Setup for Hooking up Qt Sub-Processes on Windows (Section 7.7.2.1)</a>
+for an alternative approach to this.)
+</p><p>
+To enable <span class="emphasis"><em>Squish</em></span> for Qt to hook up sub-processes of the AUT on
+Windows <span class="emphasis"><em>without</em></span> a change to the AUT's source
+code (as described in the alternative approach at
+<a class="xref" href="rghsa-sub.html#rg.squish.for.qt.sub.processes.on.windows" title="7.7.2.1. Additional Setup for Hooking up Qt Sub-Processes on Windows">Additional Setup for Hooking up Qt Sub-Processes on Windows (Section 7.7.2.1)</a>) the
+following steps must be performed:
+</p><div class="orderedlist"><ol type="1"><li><p>Rename the AUT's executable to have an underscore before the
+period (e.g., rename <code class="code">myapp.exe</code> to
+<code class="code">myapp_.exe</code>)</p></li><li><p>Copy <code class="code">dllpreload.exe</code> into the same directory as
+<code class="code">myapp_.exe</code></p></li><li><p>Rename the copied <code class="code">dllpreload.exe</code> to the AUT's
+original name (e.g., to <code class="code">myapp.exe</code>)</p></li></ol></div><p>
+Now, when the AUT is executed, it is really
+<span class="application">dllpreload.exe</span> that gets executed, and
+<span class="application">dllpreload.exe</span> is smart enough to check
+the name it was called as and will try to execute the executable with
+the same name but with an underscore before the period.
+</p></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="rg.squish.for.windows.sub.processes"></a>7.7.3. Hooking up Sub-Processes in <span class="emphasis"><em>Squish</em></span> for Windows</h3></div></div></div><p><span class="emphasis"><em>Squish</em></span> for Windows hooks up sub-processes automatically. No
+additional settings or setup steps are required.
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="rg.squish.for.macosx.sub.processes"></a>7.7.4. Hooking up Sub-Processes in <span class="emphasis"><em>Squish</em></span> for macOS</h3></div></div></div><p>
+To enable recording and replaying on native macOS sub-processes open the test
+suite settings by clicking the project's <span class="guilabel">Test Suite
+Settings</span> to make the
+<a class="xref" href="ide.views.html#ide.the-settings.view" title="8.2.16. Test Suite Settings view">Test Suite Settings view (Section 8.2.16)</a> appear, then check the
+<span class="guilabel">Hook into sub-processes launched by the application</span>
+checkbox.
+</p></div></div><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" type="text/javascript" src="ScriptingLanguage.js"></script><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format">setScriptingLanguage();</script><div class="navfooter"><hr></hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="rg-ini-files.html">Prev</a> </td><td width="20%" align="center"><a accesskey="u" href="ref.man.html">Up</a></td><td width="40%" align="right"> <a accesskey="n" href="rghsa-attach.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">7.6. <span class="emphasis"><em>Squish</em></span> Initialization Files </td><td width="20%" align="center"><a accesskey="h" href="index-noframes.html">Home</a></td><td width="40%" align="right" valign="top"> 7.8. Attaching to Running Applications</td></tr></table></div></body>
+<!-- Mirrored from rghsa-sub.html by HTTrack Website Copier/3.x [XR&CO'2013], Wed, 06 Jul 2022 13:29:00 GMT -->
+</html>

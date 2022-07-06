@@ -1,0 +1,112 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<!-- Mirrored from rg-templates.html by HTTrack Website Copier/3.x [XR&CO'2013], Wed, 06 Jul 2022 13:29:00 GMT -->
+<head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><title>7.14. Testcase Templates</title><link rel="stylesheet" href="manual.css" type="text/css"></link><meta name="generator" content="DocBook XSL Stylesheets V1.73.2"></meta><link rel="start" href="index-noframes.html" title="Squish Manual"></link><link rel="up" href="ref.man.html" title="Chapter 7. Tools Reference Manual"></link><link rel="prev" href="rg-cppapi.html" title="7.13. Squish's C++ API"></link><link rel="next" href="rg-conversion.html" title="7.15. Migrating to the Scripted Object Map: Common conversion problems"></link><style xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" type="text/css" media="screen">
+        div.toc * { margin-left: 6px; margin-right: auto; max-width: 75em; }
+        div.toc span { margin-left: 0px; }
+        * { margin-left: auto; margin-right: auto; max-width: 75em; }
+        body { margin-left: 6px; margin-right: 6px; }
+        table th { padding: .5ex }
+        table td { padding: .5ex }
+    </style><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format">
+        function keyPress() {
+            var e = window.event;
+            if ( e == undefined ) {
+                return;
+            }
+            /* ### does not properly scroll, yet
+            if ( e.keyCode == 32 ) {
+            var l = document.links;
+            for ( var i = 0; i < l.length; i++ ) {
+                if ( l[i].innerText == "Next" ) {
+                location.href = l[i].href;
+                }
+            }
+            } else
+                */
+                if ( e.keyCode == 0x08 ) {
+            var l = document.links;
+            for ( var i = 0; i < l.length; i++ ) {
+                if ( l[i].innerText == "Prev" ) {
+                location.href = l[i].href;
+                }
+            }
+            }
+        }
+        document.onkeypress = keyPress;
+    </script></head><body><div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="rg-templates"></a>7.14. Testcase Templates</h2></div></div></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><span class="section"><a href="rg-templates.html#rg-templates-new">7.14.1. Creating a New Template</a></span></dt><dt><span class="section"><a href="rg-templates.html#rgo-templates-using">7.14.2. Using a Template</a></span></dt><dt><span class="section"><a href="rg-templates.html#rgo-templates-customdir">7.14.3. Choosing a Custom Location for Storing Templates</a></span></dt></dl></div><p>
+After creating a number of test cases in <span class="emphasis"><em>Squish</em></span>, you might find that
+many of them have some basic structure and functionality in common. When
+it comes to common functionality the solution is to use shared scripts
+(see <a class="xref" href="ug-shareddata.html" title="5.23. How to Create and Use Shared Data and Shared Scripts">How to Create and Use Shared Data and Shared Scripts (Section 5.23)</a>). But for common structure the
+solution is to use a template. Once you have a template, instead of
+creating each test script from scratch and copy and pasting, you can
+tell the <span class="application">Squish IDE</span> to create a new test script based on a template and have
+the skeleton already in place ready for you to customize.
+</p><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="rg-templates-new"></a>7.14.1. Creating a New Template</h3></div></div></div><p>
+Each new test case template is effectively a copy of an existing test.
+So to create a new test case template, first create a new
+“<span class="quote">dummy</span>” test case, and then copy or type into the
+<code class="filename">test.py</code> (or <code class="filename">test.js</code>, etc.)
+test script exactly—and only—the code that you want in the
+template. For example, you might create a test case template like this
+(which happens to use Python, but the same applies in principle to any
+scripting language):
+</p><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Python</span><pre class="programlisting">
+import os
+import re
+import sys
+
+# Import functionality needed by more than one test script
+source(findFile("scripts", "common.py"))
+
+def main():
+    pass
+</pre></div><p>
+Here we always import some standard library modules and our own custom
+file (<code class="filename">common.py</code>), that contains functions that we
+want all our tests to be able to access.
+</p><p>
+Once we have created the dummy test case with the contents we want to
+use for the template, we are ready to create the template itself. To do
+this, invoke the <a class="xref" href="ide.views.html#ide.the-test-suites.view" title="8.2.19. Test Suites view">Test Suites view (Section 8.2.19)</a>'s Test Cases
+list's context menu and choose the <span class="guimenuitem">Create Template from
+Testcase</span> option. This will pop up the Create Test Case
+Template dialog—simply enter the template's name and click the
+<span class="guibutton">OK</span> button to create a template that is an exact
+copy of the currently highlighted test case (i.e., the dummy test case).
+</p><p>
+Once the test case template has been created it is safe to delete the
+dummy test case.
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="rgo-templates-using"></a>7.14.2. Using a Template</h3></div></div></div><p>
+Once we have created one or more templates we can use them whenever we
+want to create a new test case. This is easily done. First click the
+main window's <span class="guibutton">New</span> toolbar button or press
+<span class="keycap"><strong>Ctrl</strong></span>+<span class="keycap"><strong>N</strong></span>—either
+of these will pop up the <a class="xref" href="ide.dialogs.html#ide.new.dialog" title="8.3.9. New dialog">New dialog (Section 8.3.9)</a>. Now choose
+the “<span class="quote">Squish Test Case from Template</span>” item and click the
+<span class="guibutton">Next</span> button. Now enter a name for the new test
+case and then click the template you wish to use for it, and finally,
+click the <span class="guibutton">Finish</span> button. After a moment the new
+test case will appear in the current test suite, and its
+<code class="filename">test.py</code> (or <code class="filename">test.js</code>, etc.)
+file will have exactly the same contents as the template you chose.
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="rgo-templates-customdir"></a>7.14.3. Choosing a Custom Location for Storing Templates</h3></div></div></div><p>
+Test case templates are stored in a default directory. If you prefer to
+store them somewhere else—perhaps in a directory that is version
+controlled, you can easily do so. To change the directory click
+<span class="guimenuitem">Preferences</span>
+and then click the <span class="guilabel">Squish</span> item and then the
+<span class="guilabel">Test Creation</span> subitem to make the Test Creation
+pane visible. This pane shows the default template directory—click
+the <span class="guibutton">Browse</span> button to pop up a directory chooser
+dialog through which you can set the directory of your choice.
+</p><div class="warning" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Warning: Deprecated Feature"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Warning]" src="images/warning.png"></img></td><th align="left">Deprecated Feature</th></tr><tr><td align="left" valign="top"><p>
+Some older versions of <span class="emphasis"><em>Squish</em></span> used the
+<code class="envar">SQUISH_TESTCASE_TEMPLATES_DIR</code> environment variable to
+specify where test templates are stored. This environment variable is no
+longer supported, so if you have been using it you must change the
+directory in the <span class="application">Squish IDE</span> as described above.
+</p></td></tr></table></div></div></div><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" type="text/javascript" src="ScriptingLanguage.js"></script><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format">setScriptingLanguage();</script><div class="navfooter"><hr></hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="rg-cppapi.html">Prev</a> </td><td width="20%" align="center"><a accesskey="u" href="ref.man.html">Up</a></td><td width="40%" align="right"> <a accesskey="n" href="rg-conversion.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">7.13. <span class="emphasis"><em>Squish</em></span>'s C++ API </td><td width="20%" align="center"><a accesskey="h" href="index-noframes.html">Home</a></td><td width="40%" align="right" valign="top"> 7.15. Migrating to the Scripted Object Map: Common conversion problems</td></tr></table></div></body>
+<!-- Mirrored from rg-templates.html by HTTrack Website Copier/3.x [XR&CO'2013], Wed, 06 Jul 2022 13:29:00 GMT -->
+</html>

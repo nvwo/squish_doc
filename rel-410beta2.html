@@ -1,0 +1,121 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<!-- Mirrored from rel-410beta2.html by HTTrack Website Copier/3.x [XR&CO'2013], Wed, 06 Jul 2022 13:28:56 GMT -->
+<head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><title>2.47. Version 4.1.0 Beta 2</title><link rel="stylesheet" href="manual.css" type="text/css"></link><meta name="generator" content="DocBook XSL Stylesheets V1.73.2"></meta><link rel="start" href="index-noframes.html" title="Squish Manual"></link><link rel="up" href="relnotes.html" title="Chapter 2. Release Notes—for Upgraders"></link><link rel="prev" href="rel-410final.html" title="2.46. Version 4.1.0 Final"></link><link rel="next" href="rel-410beta1.html" title="2.48. Version 4.1.0 Beta 1"></link><style xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" type="text/css" media="screen">
+        div.toc * { margin-left: 6px; margin-right: auto; max-width: 75em; }
+        div.toc span { margin-left: 0px; }
+        * { margin-left: auto; margin-right: auto; max-width: 75em; }
+        body { margin-left: 6px; margin-right: 6px; }
+        table th { padding: .5ex }
+        table td { padding: .5ex }
+    </style><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format">
+        function keyPress() {
+            var e = window.event;
+            if ( e == undefined ) {
+                return;
+            }
+            /* ### does not properly scroll, yet
+            if ( e.keyCode == 32 ) {
+            var l = document.links;
+            for ( var i = 0; i < l.length; i++ ) {
+                if ( l[i].innerText == "Next" ) {
+                location.href = l[i].href;
+                }
+            }
+            } else
+                */
+                if ( e.keyCode == 0x08 ) {
+            var l = document.links;
+            for ( var i = 0; i < l.length; i++ ) {
+                if ( l[i].innerText == "Prev" ) {
+                location.href = l[i].href;
+                }
+            }
+            }
+        }
+        document.onkeypress = keyPress;
+    </script></head><body><div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="rel-410beta2"></a>2.47. Version 4.1.0 Beta 2</h2></div></div></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><span class="section"><a href="rel-410beta2.html#idp36137032">2.47.1. General</a></span></dt><dt><span class="section"><a href="rel-410beta2.html#idp36142432">2.47.2. New IDE</a></span></dt><dt><span class="section"><a href="rel-410beta2.html#idp36153384">2.47.3. Qt-specific</a></span></dt><dt><span class="section"><a href="rel-410beta2.html#idp36158248">2.47.4. <span class="trademark">Java</span>™-specific</a></span></dt><dt><span class="section"><a href="rel-410beta2.html#idp36160728">2.47.5. Web-specific</a></span></dt><dt><span class="section"><a href="rel-410beta2.html#idp36162600">2.47.6. Windows (native)-specific</a></span></dt><dt><span class="section"><a href="rel-410beta2.html#idp36164616">2.47.7. Mac-specific (Cocoa/Carbon edition)</a></span></dt><dt><span class="section"><a href="rel-410beta2.html#idp36166048">2.47.8. iPhone/iPad-specific</a></span></dt><dt><span class="section"><a href="rel-410beta2.html#idp36167400">2.47.9. Tk-specific</a></span></dt><dt><span class="section"><a href="rel-410beta2.html#idp36171296">2.47.10. Documentation</a></span></dt><dt><span class="section"><a href="rel-410beta2.html#idp36175000">2.47.11. Source Builds</a></span></dt></dl></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="idp36137032"></a>2.47.1. General</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Fixed ignored --aut switch on --testsuite
+recording.</p></li><li><p>Fixed default slider settings in Image Verification
+Point editor.</p></li><li><p>Better handling of invalid arguments in
+<code class="code">startApplication()</code> and <code class="code">attachToApplication()</code>
+Python functions.</p></li><li><p>Fixed <code class="code">Math.random()</code> JavaScript function
+to returning reasonably random numbers on Windows.</p></li><li><p>Fixed Beta 1 regression that caused crashes on JS
+syntax errors.</p></li><li><p>Provided host and port properties on
+ApplicationContext script objects.</p></li><li><p>Adapted Mac OS X packages to also run on
+'Lion'.</p></li><li><p>Provide <code class="code">OS.machine</code>
+and <code class="code">OS.release</code> properties in JavaScript test
+scripts.</p></li><li><p>Don't have the Tcl debugger crash on unbalanced return
+commands.</p></li><li><p>Avoid lingering extrawwindowwatcher processes after
+<span class="application">squishserver</span> exits.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="idp36142432"></a>2.47.2. New IDE</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Fixed display of Screenshot Verification Points
+created with older versions.</p></li><li><p>Improved editor tab titles.</p></li><li><p>Fixed handling of inconsistent line endings that lead
+to empty lines in the AUT log output on Windows.</p></li><li><p>Avoid possibly hurtful environment variables being
+inherited from the IDE to the AUT.</p></li><li><p>Work around a menu problem caused by a bug in Ubuntu
+11.04 when running IDE from all-in-one package. Documented the same as
+a FAQ entry for users of the standalone version.</p></li><li><p>Avoid exception when an empty property value is copied
+from the Spy into the system clipboard.</p></li><li><p>Fixed debug View state in the IDE when
+stepping.</p></li><li><p>Fixed a case of missing scrollbars.</p></li><li><p>Improved selection after completing built-in functions
+in the script editor.</p></li><li><p>Allow opening arbitrary files from Resource Views in
+the Test Suite View.</p></li><li><p>Open external editor for PNG files as generated on
+failed image comparisons.</p></li><li><p>Allow opening of test.* files with script languages other
+than the default one.</p></li><li><p>Fixed Null Pointer Exception that occurred when the
+Projects View was accessed (e.g. upon import of a test resource)
+before it was opened.</p></li><li><p>Proper shutdown of ScriptConsole when script execution
+ends. Makes system threads started in the background exit
+properly.</p></li><li><p>Fixed incompatibility with 4.0 toolkit
+packages.</p></li><li><p>Added an editor for a summary and description for the
+test suite and each test case.</p></li><li><p>Exposed <code class="option">--resultdir</code> feature that was
+previously added to <span class="application">squishrunner</span>.</p></li><li><p>Fixed exception caused by race condition in file
+system monitor watching test case directories.</p></li><li><p>Fixed repeated execution of <span class="guimenuitem">Record
+Snippet</span>.</p></li><li><p>Ensure a reasonable minimum size of the Control
+Bar.</p></li><li><p>Fixed a case of the AUT not being stopped when
+recording got cancelled.</p></li><li><p>Avoid accidental deletion from workspace data on the
+hard disk.</p></li><li><p>Don't start VP editor twice when in Run-Record-VP
+mode.</p></li><li><p>Fixed deletion of Test Cases and Resources via
+<span class="guimenuitem">Edit/Delete</span>.</p></li><li><p>Try to bring the main window to front after the
+Control Bar is closed.</p></li><li><p>Hide IDE again when continuing execution after hitting
+a breakpoint.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="idp36153384"></a>2.47.3. Qt-specific</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Added safeguard for property access on deleted
+QObjects.</p></li><li><p>Fixed dynamic wrapping of QAxWidget wrapper for
+ActiveX controls.</p></li><li><p>Implemented menu recording with the Cocoa port of Qt
+on Mac OS X.</p></li><li><p>Fixed <code class="code">setWindowState(...,Maximize)</code> with
+Qt 4.7.2 on Mac.</p></li><li><p>Better handle sudden deletion of QtDeclarative
+Items.</p></li><li><p>Fixed style-related menu action replay on Mac OS
+X.</p></li><li><p>Fixed check of combined Qt+Web licenses when the
+browser is embedded into the C++ application.</p></li><li><p>Updated RPM package for MeeGo
+devices.</p></li><li><p>Stop shipping a copy of the QtWebKit DLL on
+Windows. It's an optional requirement.</p></li><li><p>Ensure that QWebView widgets have JavaScript support
+enabled when we try to test them.</p></li><li><p>Throw proper error when <code class="code">openContextMenu()</code>
+is called on invalid <code class="code">QGraphicsView</code>
+items.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="idp36158248"></a>2.47.4. <span class="trademark">Java</span>™-specific</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Fixed a bug in setting of CLASSPATH
+environment variable.</p></li><li><p>Fixed recorded drag distance.</p></li><li><p>Fixed JTable cell caption value when columns are
+rearranged with respect to model columns.</p></li><li><p>Fixed click coordinate
+of <code class="code">clickTreeHandle()</code> calls after an SWT tree got
+scrolled.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="idp36160728"></a>2.47.5. Web-specific</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Added support for Firefox 4.</p></li><li><p>Fixed fetching of style properties in
+Firefox.</p></li><li><p>Fixed launching of server of new alternative style of
+Web browser testing.</p></li><li><p>Fix escaping of single quotes in recorded
+multi-property names.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="idp36162600"></a>2.47.6. Windows (native)-specific</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Partial support for Exontrols GUI controls. Will be
+completed with final version of 4.1. Available upon
+request.</p></li><li><p>Improved error reporting for Windows controls obscured
+by other applications.</p></li><li><p>Fixed packaging of example script files.</p></li><li><p>Commenced work on old-style Infragistics COM
+components. Scheduled to be completed in 4.1.0 final. Available upon
+request.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="idp36164616"></a>2.47.7. Mac-specific (Cocoa/Carbon edition)</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Support more <code class="code">NSCell</code>
+subclasses.</p></li><li><p>Added support for table view header
+cells.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="idp36166048"></a>2.47.8. iPhone/iPad-specific</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Improved detection of iPhone simulator preferences
+directory.</p></li><li><p> Added detection of the iPhone SDK that the
+application was built with. So specifying the --sdk option to the
+iphonelauncher utility is no longer required.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="idp36167400"></a>2.47.9. Tk-specific</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Support <code class="code">attachToApplication()</code> for
+Squish/Tk. Works for both statically and dynamically linked
+applications.</p></li><li><p>Made <span class="application">startaut</span> work on
+Windows.</p></li><li><p>Make sure items in a <code class="code">tkTable</code> widget are
+visible before clicking.</p></li><li><p>Support 64-bit applications on Windows.</p></li><li><p>Fixed <code class="code">waitForObjectItem()</code> to really wait
+for the item.</p></li><li><p>Support system-modal message boxes in event
+handlers.</p></li><li><p>Fixed crashes on slow AUT startup.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="idp36171296"></a>2.47.10. Documentation</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Documented startaut's --wrapper option.</p></li><li><p>Documented
+global <code class="code">mousePress()</code>, <code class="code">mouseMove()</code>
+and <code class="code">mouseRelease()</code> functions.</p></li><li><p>Added documentation and <code class="option">--help</code> option
+for <code class="code">squishhrunner --config setBrowserPath</code>
+action.</p></li><li><p>Documented new Java <code class="code">collapse()</code>
+and <code class="code">expand()</code> functions.</p></li><li><p>Started work on a new Squish for Web tutorial. Will
+ship with 4.1.0 final.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="idp36175000"></a>2.47.11. Source Builds</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Made build interruptable with Ctrl-C on
+Windows.</p></li><li><p>Fixed X11 library linking with recent Qt installations
+that are build with the --as-needed switch.</p></li></ul></div></div></div><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" type="text/javascript" src="ScriptingLanguage.js"></script><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format">setScriptingLanguage();</script><div class="navfooter"><hr></hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="rel-410final.html">Prev</a> </td><td width="20%" align="center"><a accesskey="u" href="relnotes.html">Up</a></td><td width="40%" align="right"> <a accesskey="n" href="rel-410beta1.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">2.46. Version 4.1.0 Final </td><td width="20%" align="center"><a accesskey="h" href="index-noframes.html">Home</a></td><td width="40%" align="right" valign="top"> 2.48. Version 4.1.0 Beta 1</td></tr></table></div></body>
+<!-- Mirrored from rel-410beta2.html by HTTrack Website Copier/3.x [XR&CO'2013], Wed, 06 Jul 2022 13:28:56 GMT -->
+</html>

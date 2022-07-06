@@ -1,0 +1,1884 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<!-- Mirrored from rg-cmdline.html by HTTrack Website Copier/3.x [XR&CO'2013], Wed, 06 Jul 2022 13:29:03 GMT -->
+<head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><title>7.4. Command Line Reference</title><link rel="stylesheet" href="manual.css" type="text/css"></link><meta name="generator" content="DocBook XSL Stylesheets V1.73.2"></meta><link rel="start" href="index-noframes.html" title="Squish Manual"></link><link rel="up" href="ref.man.html" title="Chapter 7. Tools Reference Manual"></link><link rel="prev" href="rg-autsettings.html" title="7.3. AUTs and Settings"></link><link rel="next" href="rg-envvars.html" title="7.5. Environment Variables"></link><style xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" type="text/css" media="screen">
+        div.toc * { margin-left: 6px; margin-right: auto; max-width: 75em; }
+        div.toc span { margin-left: 0px; }
+        * { margin-left: auto; margin-right: auto; max-width: 75em; }
+        body { margin-left: 6px; margin-right: 6px; }
+        table th { padding: .5ex }
+        table td { padding: .5ex }
+    </style><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format">
+        function keyPress() {
+            var e = window.event;
+            if ( e == undefined ) {
+                return;
+            }
+            /* ### does not properly scroll, yet
+            if ( e.keyCode == 32 ) {
+            var l = document.links;
+            for ( var i = 0; i < l.length; i++ ) {
+                if ( l[i].innerText == "Next" ) {
+                location.href = l[i].href;
+                }
+            }
+            } else
+                */
+                if ( e.keyCode == 0x08 ) {
+            var l = document.links;
+            for ( var i = 0; i < l.length; i++ ) {
+                if ( l[i].innerText == "Prev" ) {
+                location.href = l[i].href;
+                }
+            }
+            }
+        }
+        document.onkeypress = keyPress;
+    </script></head><body><div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="rg-cmdline"></a>7.4. Command Line Reference</h2></div></div></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><span class="section"><a href="rg-cmdline.html#rgc-installer">7.4.1. Installer</a></span></dt><dt><span class="section"><a href="rg-cmdline.html#rg-squishconfig">7.4.2. squishconfig</a></span></dt><dt><span class="section"><a href="rg-cmdline.html#rg-squishrunner-cli">7.4.3. squishrunner</a></span></dt><dt><span class="section"><a href="rg-cmdline.html#rgc-squishserver">7.4.4. squishserver</a></span></dt><dt><span class="section"><a href="rg-cmdline.html#rgc-squishidl">7.4.5. squishidl</a></span></dt><dt><span class="section"><a href="rg-cmdline.html#rgc-squishide">7.4.6. squishide</a></span></dt><dt><span class="section"><a href="rg-cmdline.html#rgc-startaut-cli">7.4.7. start*aut</a></span></dt><dt><span class="section"><a href="rg-cmdline.html#rg-webproxy">7.4.8. Web Proxy</a></span></dt><dt><span class="section"><a href="rg-cmdline.html#rgc-convertvp">7.4.9. convertvp</a></span></dt><dt><span class="section"><a href="rg-cmdline.html#rgc-uibrowser">7.4.10. <span class="application">uibrowser</span></a></span></dt><dt><span class="section"><a href="rg-cmdline.html#rgc-xml2jira">7.4.11. <span class="application">xml2jira</span></a></span></dt><dt><span class="section"><a href="rg-cmdline.html#rgc-commandfiles">7.4.12. Command Files</a></span></dt><dt><span class="section"><a href="rg-cmdline.html#rgc-configure">7.4.13. configure</a></span></dt></dl></div><p>
+In the following descriptions, command line options shown in square
+brackets are <span class="emphasis"><em>optional</em></span>, and those followed by a
+<code class="code">*</code> may be occur zero or more times. Alternatives are
+indicated using the vertical bar (<code class="code">|</code>)—they are
+enclosed in square brackets if all the alternatives are optional or in
+angle brackets if one of the alternatives must be specified. Italics are
+used to indicate variable items (for example, groups of options, or
+options that you must enter such as a directory name).
+</p><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Note: Command Line Tool Return Values"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/note.png"></img></td><th align="left">Command Line Tool Return Values</th></tr><tr><td align="left" valign="top"><p>
+When a command line tool succeeds it returns 0 to the operating system (as
+is conventional), and if it fails it returns 255 (-1). Probably the most
+common cause of failure is forgetting to start the <span class="application">squishserver</span>. If
+the <span class="application">squishserver</span> is running, the most common problems are not being
+able to find the AUT, or not being able to start or connect to the AUT.
+</p></td></tr></table></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="rgc-installer"></a>7.4.1. Installer</h3></div></div></div><p>
+The <span class="emphasis"><em>Squish</em></span> installer supports a range of command line options to permit <a class="link" href="ins-commandline-tools-server-ide.html#ins-binary-unattended" title="3.1.1.4. Performing Unattended Installations">unattended installations</a>.
+</p><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Note"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/note.png"></img></td><th align="left">Note</th></tr><tr><td align="left" valign="top"><p>
+The actual name of the installer depends on the particular <span class="emphasis"><em>Squish</em></span>
+package being installed. For the following paragraphs, this documentation will
+use the generic placeholder name "&lt;squishinstaller&gt;".
+</p></td></tr></table></div><p>
+Usage:
+</p><p>
+</p><div class="cmdsynopsis"><p><code class="command">&lt;squishinstaller&gt;</code>  {unattended=1} [targetdir=&lt;PATH&gt;] [licensekey=&lt;KEY&gt;] [ide=1] [testcenter=1] [jrepath=&lt;PATH&gt;] [support-applets=1] [qtpath=&lt;PATH&gt;] [startmenupath=&lt;PATH&gt;] [menushortcut=1] [desktopshortcut=1] [python=&lt;VERSION&gt;]</p></div><p>
+</p><div class="variablelist"><dl><dt><span class="term"><code class="option">unattended=1</code></span></dt><dd><p>
+    Causes any values required during the installation (such as the target
+    directory name) to be read from the command line.
+    </p></dd><dt><span class="term"><code class="option">targetdir=&lt;PATH&gt;</code></span></dt><dd><p>
+    Optional, defines to which directory the <span class="emphasis"><em>Squish</em></span> package is installed. If
+    the directory exists already, it will be overwritten. If this argument is
+    omitted, the <span class="emphasis"><em>Squish</em></span> installer will select a default target directory in
+    the home directory (for Windows and Linux) resp. the <code class="filename">/Applications</code> directory (for macOS) based
+    on the name of the package being installed.
+    </p></dd><dt><span class="term"><code class="option">licensekey=&lt;KEY&gt;</code></span></dt><dd><p>
+    <span class="emphasis"><em>Required if no key installed already.</em></span> Specifies the
+    license key to use for the installation. If this setting is omitted, a
+    previously installed license key will be used if available.
+    </p></dd><dt><span class="term"><code class="option">ide=1</code></span></dt><dd><p>
+    Specifies whether the Squish IDE component will be installed (1) or not (0).
+    Installed by default when the argument is not specified.
+    </p></dd><dt><span class="term"><code class="option">testcenter=1</code></span></dt><dd><p>
+    Specifies whether the Squish Test Center component will be installed (1) or
+    not (0). Installed by default when the argument is not specified.
+    </p></dd><dt><span class="term"><code class="option">jrepath=&lt;PATH&gt;</code></span></dt><dd><p>Optional, relevant for testing Java applications. Specifies the path
+    to the <acronym class="acronym">JRE</acronym> used by the application to be tested. If this
+    argument is omitted, the <span class="emphasis"><em>Squish</em></span> installer will try to auto-detect a
+    <acronym class="acronym">JRE</acronym> installation.
+    </p></dd><dt><span class="term"><code class="option">support-applets=1</code></span></dt><dd><p>
+    Optional, relevant for testing Web applications. Specifies whether the
+    support for automating Java applets in Web pages will be disabled.
+    </p></dd><dt><span class="term"><code class="option">qtpath=&lt;PATH&gt;</code></span></dt><dd><p>
+    <span class="emphasis"><em>Required on macOS</em></span>. Specifies the path to the Qt
+    library used by the application to be tested. This value is ignored on other
+    operating systems.
+    </p></dd><dt><span class="term"><code class="option">startmenupath=&lt;PATH&gt;</code></span></dt><dd><p>
+    Only supported on <span class="trademark">Microsoft</span>® Windows. Defines the place where start menu
+    shortcuts are to be created. Implicitely sets
+    <code class="option">menushortcut=1</code>.
+    </p></dd><dt><span class="term"><code class="option">menushortcut=1</code></span></dt><dd><p>
+    Causes the installer to create shortcuts (e.g. to the <span class="application">Squish IDE</span>) in the
+    application menu, i.e. the start menu on <span class="trademark">Microsoft</span>® Windows. On Windows,
+    the <span class="emphasis"><em>Squish</em></span> installer will create shortcuts in
+    <code class="literal">Squish for &lt;edition&gt;
+    &lt;version&gt;</code> (e.g. <code class="literal">Squish for Qt
+    6.0.1</code>) unless <code class="option">startmenupath</code> defines a different
+    path.
+    </p></dd><dt><span class="term"><code class="option">desktopshortcut=1</code></span></dt><dd><p>
+    Only supported on <span class="trademark">Microsoft</span>® Windows. Causes the installer to place a
+    shortcut to the <span class="application">Squish IDE</span> on the desktop.
+    </p></dd><dt><span class="term"><code class="option">python=&lt;VERSION&gt;</code></span></dt><dd><p>
+    Specifies which Python version to use when executing <span class="emphasis"><em>Squish</em></span> tests written
+    in Python. If a <span class="emphasis"><em>Squish</em></span> package does not support the specified Python version
+    the option is not available. If omitted during the installation, the
+    default Python version will be used.
+    </p></dd></dl></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="rg-squishconfig"></a>7.4.2. squishconfig</h3></div></div></div><p>
+The <span class="command"><strong>squishconfig</strong></span> program is used to configure a specific
+<span class="emphasis"><em>Squish</em></span> installation such that it uses a given license key and other system
+dependencies (such as a particular Java installation or a particular web
+browser).
+</p><p>
+Usage:
+</p><p>
+</p><div class="cmdsynopsis"><p><code class="command">squishconfig</code>  {--licensekey=&lt;STRING&gt;} [--python=[2|3]] [--java=&lt;PATH&gt;] [--swt=&lt;PATH&gt;] [--support-applets] [--qt=&lt;PATH&gt;]</p></div><p>
+</p><div class="variablelist"><dl><dt><span class="term"><code class="option">--licensekey=&lt;STRING&gt;</code></span></dt><dd><p>
+    Defines the license key to use for this
+    <span class="emphasis"><em>Squish</em></span> installation. Specify the license key exactly as given by the
+    <span class="emphasis"><em>froglogic</em></span> team, i.e. including any dashes.
+    </p><p>
+    This argument can also be used to specify an activation code provided by
+    <span class="emphasis"><em>froglogic</em></span> when configuring a node-locked installation.
+    <span class="command"><strong>squishconfig</strong></span> will then attempt to contact the
+    <span class="emphasis"><em>froglogic</em></span> license activation server to activate the license.
+    </p><p>
+    You can also pass an address of a floating license
+    server; when configuring an installation using a floating license.
+    <span class="command"><strong>squishconfig</strong></span> will then attempt to contact the
+    license server to verify its compatibility with your installation.
+    </p></dd><dt><span class="term"><code class="option">--python=[2|3]</code></span></dt><dd><p>
+    Specifies which Python version to use when executing <span class="emphasis"><em>Squish</em></span> tests written
+    in Python. The argument is not available if a <span class="emphasis"><em>Squish</em></span> package does not have
+    support for multiple Python versions.
+    </p><p>
+    If the argument is omitted, the default Python version 2 will be used.
+    </p></dd><dt><span class="term"><code class="option">--java=&lt;PATH&gt;</code></span></dt><dd><p>
+    Relevant for testing Java applications or Java applets; defines the path to the
+    Java Runtime Environment (<acronym class="acronym">JRE</acronym>) used by the application to
+    test.
+    </p></dd><dt><span class="term"><code class="option">--swt=&lt;PATH&gt;</code></span></dt><dd><p>
+    Relevant for testing Java/SWT applications. Specifies the path to the
+    <code class="filename">swt.jar</code> file.
+    </p></dd><dt><span class="term"><code class="option">--support-applets</code></span></dt><dd><p>
+    Relevant for testing Web applications; defines, whether automation of Java
+    applets into web pages is supported or not.
+    </p></dd><dt><span class="term"><code class="option">--qt=&lt;PATH&gt;</code></span></dt><dd><p>
+    Relevant for testing Qt
+    applications on macOS; specifies the path to the Qt library used by the application.
+    </p></dd></dl></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="rg-squishrunner-cli"></a>7.4.3. squishrunner</h3></div></div></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><span class="section"><a href="rg-cmdline.html#rg-squishrunner-cli-server-options">7.4.3.1. Server Options</a></span></dt><dt><span class="section"><a href="rg-cmdline.html#rg-squishrunner-cli-suite.conf">7.4.3.2. The suite.conf File</a></span></dt><dt><span class="section"><a href="rg-cmdline.html#rg-squishrunner-cli--testsuite">7.4.3.3. squishrunner --testsuite: Running tests in batch mode</a></span></dt><dt><span class="section"><a href="rg-cmdline.html#rg-squishrunner-cli-playback--local">7.4.3.4.  <code class="option">squishrunner --local</code>: Start and stop a local squishserver </a></span></dt><dt><span class="section"><a href="rg-cmdline.html#rg-squishrunner-cli-playback--resultdir">7.4.3.5.  <code class="option">squishrunner --resultdir</code>: Setting the Result Directory </a></span></dt><dt><span class="section"><a href="rg-cmdline.html#rg-squishrunner-report-generators">7.4.3.6.  <code class="option">squishrunner --reportgen</code>: Generating Reports</a></span></dt><dt><span class="section"><a href="rg-cmdline.html#rg-squishrunner-cli-playback--testcase">7.4.3.7.  Playback option <code class="option">--testcase</code> or
+<code class="option">--skip-testcase</code></a></span></dt><dt><span class="section"><a href="rg-cmdline.html#rg-squishrunner-cli-playback--enable-video-capture">7.4.3.8. Playback option <code class="option">--enable-video-capture</code></a></span></dt><dt><span class="section"><a href="rg-cmdline.html#rg-squishrunner-cli--aut">7.4.3.9.  Playback option <code class="option">--aut</code></a></span></dt><dt><span class="section"><a href="rg-cmdline.html#rg-squishrunner-cli---interactive">7.4.3.10.  Playback option <code class="option">--interactive</code> </a></span></dt><dt><span class="section"><a href="rg-cmdline.html#rg-squishrunner-cli-playback--abortOnFail">7.4.3.11. Playback option <code class="option">--abortOnFail</code></a></span></dt><dt><span class="section"><a href="rg-cmdline.html#rg-squishrunner-cli-playback--webbrowser">7.4.3.12. Playback option <code class="option">--webbrowser</code></a></span></dt><dt><span class="section"><a href="rg-cmdline.html#rg-squishrunner-cli-playback--device">7.4.3.13. Playback option <code class="option">--device</code></a></span></dt><dt><span class="section"><a href="rg-cmdline.html#rg-squishrunner-cli-playback--snoozeFactor">7.4.3.14.  Playback option <code class="option">--snoozeFactor</code> </a></span></dt><dt><span class="section"><a href="rg-cmdline.html#rg-squishrunner-cli-playback--exitCodeOnFail">7.4.3.15. Playback option <code class="option">--exitCodeOnFail</code></a></span></dt><dt><span class="section"><a href="rg-cmdline.html#rg-squishrunner-cli-playback--timeout">7.4.3.16. Playback option <code class="option">--timeout</code></a></span></dt><dt><span class="section"><a href="rg-cmdline.html#rg-squishrunner-cli-playback--retry">7.4.3.17. Playback option <code class="option">--retry</code></a></span></dt><dt><span class="section"><a href="rg-cmdline.html#rg-squishrunner-cli-playback--scriptargs">7.4.3.18. Playback option <code class="option">--scriptargs</code></a></span></dt><dt><span class="section"><a href="rg-cmdline.html#rg-squishrunner-cli-playback--tags">7.4.3.19. Playback option <code class="option">--tags</code></a></span></dt><dt><span class="section"><a href="rg-cmdline.html#rg-squishrunner-cli-playback--random">7.4.3.20. Playback option <code class="option">--random</code></a></span></dt><dt><span class="section"><a href="rg-cmdline.html#rg-squishrunner-cli--testsuite--record">7.4.3.21. <code class="option">squishrunner --record</code>: Recording a Test Case</a></span></dt><dt><span class="section"><a href="rg-cmdline.html#rg-squishrunner-cli-recording--disableEventCompression">7.4.3.22.  Recording option <code class="option">--disableEventCompression</code> </a></span></dt><dt><span class="section"><a href="rg-cmdline.html#rg-squishrunner-cli-recording--webbrowser">7.4.3.23.  Recording option <code class="option">--webbrowser</code></a></span></dt><dt><span class="section"><a href="rg-cmdline.html#rg-squishrunner-cli-recording--aut">7.4.3.24.  Recording option <code class="option">--aut</code> </a></span></dt><dt><span class="section"><a href="rg-cmdline.html#rg-squishrunner-cli--testcase">7.4.3.25. Executing a Test Case (Advanced)</a></span></dt><dt><span class="section"><a href="rg-cmdline.html#rg-squishrunner-cli--info">7.4.3.26. Querying for Information</a></span></dt><dt><span class="section"><a href="rg-cmdline.html#rg-squishrunner-cli--config">7.4.3.27. Configuring <span class="application">squishrunner</span></a></span></dt></dl></div><p>
+<span class="application">squishrunner</span> is used to execute and record test cases and test suites,
+and to set and retrieve the settings that <span class="application">squishrunner</span> uses at
+runtime. In fact, <span class="application">squishrunner</span> has many different modes of use, all of
+which we will cover here.
+</p><p>
+Note that in almost every case, to make use of the <span class="application">squishrunner</span>, a
+<span class="application">squishserver</span> must already be running.
+</p><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="rg-squishrunner-cli-server-options"></a>7.4.3.1. Server Options</h4></div></div></div><p>
+Every mode of use can accept one or more of these server option arguments:
+</p><table class="simplelist" border="0" summary="Simple list"><tr><td><code class="option">[--host <span class="emphasis"><em>host</em></span>]</code></td></tr><tr><td><code class="option">[--port <span class="emphasis"><em>port</em></span>]</code></td></tr><tr><td><code class="option">[--debugLog <span class="emphasis"><em>commands</em></span>]</code></td></tr></table><p>
+The square brackets are not part of the syntax—they indicate
+optional items. Here, every option is optional.
+</p><p>
+By default <span class="application">squishrunner</span> connects to the <span class="application">squishserver</span> on the local
+host (127.0.0.1). Use the <code class="option">--host
+<span class="emphasis"><em>host</em></span></code> option if you want <span class="application">squishrunner</span> to
+connect to a <span class="application">squishserver</span> running on a different machine.
+</p><p>
+By default <span class="application">squishrunner</span> tries to connect to the <span class="application">squishserver</span> on port
+4322, which is also the port <span class="application">squishserver</span> listens to by default. If
+you have told <span class="application">squishserver</span> to listen on another port, use the
+<code class="option">--port <span class="emphasis"><em>port</em></span></code> option to tell
+<span class="application">squishrunner</span> which port it should use when connecting to the
+<span class="application">squishserver</span>.
+</p><p>
+The <code class="option">--host</code> and <code class="option">--port</code> options
+are optional—<span class="emphasis"><em>Squish</em></span> will use sensible defaults if they aren't
+specified.
+</p><div class="section" lang="en"><div class="titlepage"><div><div><h5 class="title"><a id="rgcr-debuglog"></a>7.4.3.1.1. squishrunner --debugLog</h5></div></div></div><p>
+This command line option can be used to output additional debugging
+information to the <span class="application">squishserver</span>'s debug log.
+</p><p>
+Example:
+</p><pre class="screen">
+squishrunner --debugLog alpw --testsuite /home/reggie/squish_addressbook_py
+</pre><p>
+This will execute all the test cases in the specified test suite and
+output all the additional debugging information that is available.
+</p><p>
+The “<span class="quote">apwl</span>” is <span class="emphasis"><em>not</em></span> a single command,
+but rather a list of one-letter commands, 'a', 'l', 'p', and 'w'. Any of
+them can be specified, for example, <code class="code">ap</code>, or <code class="code">w</code>.
+The meaning of the letters are:
+</p><div class="itemizedlist"><ul type="disc" compact><li><p><code class="code">a</code> – log the application's start (this is
+the same as checking the <span class="application">Squish IDE</span>'s <span class="guibutton">Application
+Start</span> checkbox in the <a class="xref" href="ide.dialogs.html#ide.preferences.dialog" title="8.3.17. Pref­er­ences dialog">Pref­er­ences dialog (Section 8.3.17)</a>'s Squish pane's Logging child pane).
+</p></li><li><p><code class="code">l</code> – log
+<span class="application">dllpreload.exe</span> (this only applies on Windows;
+if used on other platforms it is safely ignored).
+</p></li><li><p><code class="code">p</code> – log the preload phase (this is
+the same as checking the <span class="application">Squish IDE</span>'s <span class="guibutton">Hooking</span> checkbox
+in the <a class="xref" href="ide.dialogs.html#ide.preferences.dialog" title="8.3.17. Pref­er­ences dialog">Pref­er­ences dialog (Section 8.3.17)</a>'s
+Squish pane's Logging pane).
+</p></li><li><p><code class="code">w</code> – log the wrapping phase (this is
+the same as checking the <span class="application">Squish IDE</span>'s <span class="guibutton">Wrapper Library</span>
+checkbox in the <a class="xref" href="ide.dialogs.html#ide.preferences.dialog" title="8.3.17. Pref­er­ences dialog">Pref­er­ences dialog (Section 8.3.17)</a>'s
+Squish pane's Logging pane).
+</p></li></ul></div></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="rg-squishrunner-cli-suite.conf"></a>7.4.3.2. The suite.conf File</h4></div></div></div><p>
+When the <span class="application">squishrunner</span> is executed with the
+<code class="option">--testsuite</code> option, it
+reads in the <code class="filename">suite.conf</code> file in the test suite's
+root directory, and its behavior will be affected by the
+specified options in those files. Note also that many of these settings can be
+viewed and edited using the <span class="application">Squish IDE</span> (see <a class="xref" href="ide.views.html#ide.the-settings.view" title="8.2.16. Test Suite Settings view">Test Suite Settings view (Section 8.2.16)</a>.)
+</p><div class="itemizedlist"><ul type="disc"><li><p><code class="option">AUT=<span class="emphasis"><em>aut</em></span>
+[<span class="emphasis"><em>argument</em></span>]*</code> This specifies the AUT to
+start for each test case, and optionally any command line arguments that
+should be passed to the AUT when it is started. (This can be overridden
+on <span class="application">squishrunner</span>'s command line using the <code class="option">--testsuite</code>
+and <code class="option">--testcase</code> options' <code class="option">--aut</code> option.
+The <code class="option">--aut</code> option requires that
+<code class="option">Automatically start the AUT</code> option in the test
+suite settings is checked/enabled.)
+</p></li><li><p><code class="option">CLASSPATH</code> - for setting the <span class="trademark">Java</span>™
+<code class="varname">CLASSPATH</code> in Squish for Java
+</p></li><li><p><code class="option">CWD=<span class="emphasis"><em>pathOrMagic</em></span></code>
+This specifies the AUT's working directory when being tested. If this
+option isn't present or if its value is empty, the AUT's working
+directory is set to the path of the AUT's executable. If the value is
+not empty it is taken to be the path to use (e.g.,
+<code class="code">C:\temp</code>); unless it has one of two “<span class="quote">magic</span>”
+values. One magic value is <code class="code">&lt;AUT_path&gt;</code> which
+means use the path of the AUT's executable (just the same as if the
+value were empty). Another magic value is
+<code class="code">&lt;CWD_of_Server&gt;</code> which sets the AUT's working
+directory to the <span class="application">squishserver</span>'s working directory. This setting is
+normally set through the <span class="application">Squish IDE</span>; see the <a class="xref" href="ide.views.html#ide.the-settings.view" title="8.2.16. Test Suite Settings view">Test Suite Settings view (Section 8.2.16)</a>'s Working Directory panel.
+</p></li><li><p><code class="option">ENVVARS=<span class="emphasis"><em>filename</em></span></code>
+This specifies a file that contains one or more lines of
+<code class="option">VARIABLE=VALUE</code> pairs which define the environment
+variables and their values that should be in force during the AUT's
+execution. <span class="emphasis"><em>Squish</em></span> will ensure that the environment is set up correctly
+before each run of the AUT. (This can be overridden on <span class="application">squishrunner</span>'s
+command line using the <code class="option">--testcase</code> option when also
+using the <code class="option">--record</code> option, by using the
+<code class="option">--envvars</code> option. Alternatively, again when using the
+<code class="option">--testcase</code> option when also using the
+<code class="option">--record</code> option, it is possible to specify individual
+additional environment variables using one or more
+<code class="option">--envvar</code> options.)
+</p></li><li><p><code class="option">HOOK_SUB_PROCESSES=<span class="emphasis"><em>Boolean</em></span></code>
+This specifies whether <span class="emphasis"><em>Squish</em></span> should hook into sub-processes launched
+by the AUT. The <code class="option"><span class="emphasis"><em>Boolean</em></span></code> should be
+<code class="code">true</code> or <code class="code">1</code> or
+<code class="code">false</code> or <code class="code">0</code>. This setting is normally set
+through the <span class="application">Squish IDE</span>; see the <a class="xref" href="ide.views.html#ide.the-settings.view" title="8.2.16. Test Suite Settings view">Test Suite Settings view (Section 8.2.16)</a>'s
+Application Under Test (AUT) panel.
+</p></li><li><p><code class="option">IMPLICITAUTSTART=<span class="emphasis"><em>Boolean</em></span></code>
+This specifies whether <span class="emphasis"><em>Squish</em></span> should automatically start
+the AUT. This was common for <span class="emphasis"><em>Squish</em></span> 3 scripts; but for
+<span class="emphasis"><em>Squish</em></span> 4 this setting is normally <code class="code">false</code> and the AUT
+is started in the test script using the
+<a class="xref" href="rgs-squish.html#startApplication-function"><code class="function">startApplication</code></a> function.
+ The <code class="option"><span class="emphasis"><em>Boolean</em></span></code> should be
+<code class="code">true</code> or <code class="code">1</code> or
+<code class="code">false</code> or <code class="code">0</code>. This setting is normally set
+through the <span class="application">Squish IDE</span>; see the <a class="xref" href="ide.views.html#ide.the-settings.view" title="8.2.16. Test Suite Settings view">Test Suite Settings view (Section 8.2.16)</a>'s
+Application Under Test (AUT) panel.
+</p></li><li><p><code class="option">LANGUAGE=<span class="emphasis"><em>language</em></span></code>
+This specifies the scripting language used by the test scripts.
+Currently this must be
+<code class="option">JavaScript</code>,
+<code class="option">Python</code>,
+<code class="option">Perl</code>,
+<code class="option">Ruby</code>, or
+<code class="option">Tcl</code>.
+(This can be overridden
+on <span class="application">squishrunner</span>'s command line using the
+<code class="option">--testcase</code> option's <code class="code">--lang</code>
+option.)</p></li><li><p><code class="option">NAMINGSCHEME=<span class="emphasis"><em>scheme</em></span></code>
+If present, the naming <code class="option"><span class="emphasis"><em>scheme</em></span></code> must
+be <code class="code">MULTIPROP</code> or <code class="code">HIERARCHICAL</code>. Normally it is
+best to use <code class="code">MULTIPROP</code> (the default), except for Tk
+applications where <code class="code">HIERARCHICAL</code> is used.
+</p></li><li><p><code class="option">OBJECTMAP=<span class="emphasis"><em>filename</em></span></code>
+By default, <span class="emphasis"><em>Squish</em></span> reads the test suite's object map from the
+<code class="filename">objects.map</code> file in the root of the test suite's
+directory. If a different filename (with full path) is specified here,
+<span class="emphasis"><em>Squish</em></span> will use the specified file instead of reading the default file.
+(This can be overridden on <span class="application">squishrunner</span>'s
+command line using the <code class="option">--testcase</code> option when also
+using the <code class="option">--record</code> option, by using the
+<code class="option">--objectmap</code> option.)
+</p><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Note"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/note.png"></img></td><th align="left">Note</th></tr><tr><td align="left" valign="top"><p>
+This configurating setting only applies to <a class="xref" href="rg-objectmap.html#rgo-squish-textbased" title="7.11.5. Text-Based Object Map">Text-Based Object Map (Section 7.11.5)</a>.
+</p></td></tr></table></div></li><li><p><code class="option">TEST_CASES=<span class="emphasis"><em>testcase</em></span>
+[<span class="emphasis"><em>testcase</em></span>]*</code>
+The value of this option is a space-separated list of one or more test
+case names. If the entire test suite is run, e.g., by using the
+<span class="application">squishrunner</span>'s <code class="option">--testsuite</code> option
+<span class="emphasis"><em>without</em></span> using the <code class="option">--testcase</code>
+option to specify which ones, <span class="emphasis"><em>every</em></span> test case will
+be run. If every test case is run and this <code class="option">TEST_CASES</code>
+option is set, the given test cases will be run first—in
+order—followed by those test cases that aren't listed (if any). In
+addition, this option is used by the <span class="application">Squish IDE</span> to determine the order in
+which the test cases are shown in the Test Cases view. (If you only want
+to have particular test cases run then use the <span class="application">squishrunner</span>'s
+<code class="option">--testcase</code> option.)
+</p></li><li><p><code class="option">WRAPPERS=<span class="emphasis"><em>wrappers</em></span></code>
+This lists the wrappers which must be loaded for the tests to run
+successfully. Currently supported are <code class="option">Qt</code> and
+<code class="option">XView</code>. Additionally, a number of AUT-specific bindings
+libraries (application wrappers) to be loaded may also be
+specified. (This can be overridden on <span class="application">squishrunner</span>'s command line using
+the <code class="option">--testcase</code> option's
+<code class="code">--wrapper</code> options.) Tests using <span class="emphasis"><em>Squish</em></span> 4 should
+rarely need to use this option.</p></li></ul></div><p>
+The values used in the <code class="filename">suite.conf</code> file can also
+refer to environment variables. The syntax for this is
+<code class="option">$(ENVVAR)</code>. When such an entry is read, it is
+effectively replaced by the value of the environment variable of the
+same name. So if there was an environment variable called
+<code class="code">MAIL</code> with value
+<code class="code">/var/spool/mail/reggie</code>, if we used
+<code class="code">$(MAIL)</code> in the <code class="filename">suite.conf</code> file,
+it would be replaced with <code class="code">/var/spool/mail/reggie</code>.
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="rg-squishrunner-cli--testsuite"></a>7.4.3.3. squishrunner --testsuite: Running tests in batch mode</h4></div></div></div><p>
+Use <span class="application">squishrunner</span> with the <code class="option">--testsuite</code> option to
+execute all of a test suite's test cases, or one or more specified test
+cases.
+</p><p>
+Usage:
+</p><p>
+<code class="code">squishrunner [<span class="emphasis"><em>server-options</em></span>] [<span class="emphasis"><em>settings-option</em></span>] --testsuite <span class="emphasis"><em>test-suite-dir</em></span> [<span class="emphasis"><em>other-options</em></span>]</code>
+</p><p>
+All items in square brackets are optional. The
+<code class="code"><span class="emphasis"><em>server-options</em></span></code> are described in <a class="xref" href="rg-cmdline.html#rg-squishrunner-cli-server-options" title="7.4.3.1. Server Options">Server Options (Section 7.4.3.1)</a>. The
+<code class="code"><span class="emphasis"><em>settings-option</em></span></code> and
+<code class="code"><span class="emphasis"><em>other-options</em></span></code> are
+discussed shortly.
+When used in this mode the <span class="application">squishrunner</span>'s behavior is affected by the
+test suite's <code class="filename">suite.conf</code>; see
+<a class="xref" href="rg-cmdline.html#rg-squishrunner-cli-suite.conf" title="7.4.3.2. The suite.conf File">The suite.conf File (Section 7.4.3.2)</a>.
+</p><p>
+There is one <span class="emphasis"><em>deprecated</em></span>
+<code class="code"><span class="emphasis"><em>settings-option</em></span></code>:
+</p><table class="simplelist" border="0" summary="Simple list"><tr><td><code class="option">[--settingsGroup <span class="emphasis"><em>settingsGroup</em></span>]</code></td></tr></table><p>
+The square brackets are not part of the syntax—they indicate that
+this option is optional. This option makes it possible to specify which
+settings group to use. (Settings groups are deprecated and have no
+support in the <span class="application">Squish IDE</span>. This option exists purely for backward
+compatibility.) Since the option was not used in the example
+above, the default settings were used in that case.
+</p><p>
+There are several <code class="code"><span class="emphasis"><em>other-options</em></span></code>:
+</p><table class="simplelist" border="0" summary="Simple list"><tr><td><code class="option">[--local]</code></td></tr><tr><td><code class="option">[--resultdir <span class="emphasis"><em>result-dir</em></span>]</code></td></tr><tr><td><code class="option">[--reportgen <span class="emphasis"><em>report-generator</em></span>[,<span class="emphasis"><em>filename|dir</em></span>]]</code></td></tr><tr><td><code class="option">[--testcase|--skip-testcase <span class="emphasis"><em>test-case-dir</em></span>]*</code></td></tr><tr><td><code class="option">[--interactive]</code></td></tr><tr><td><code class="option">[--abortOnFail]</code></td></tr><tr><td><code class="option">[--enable-video-capture]</code></td></tr><tr><td><code class="option">[--webbrowser <span class="emphasis"><em>browser</em></span>]</code></td></tr><tr><td><code class="option">[--webbrowserargs <span class="emphasis"><em>args</em></span>]</code></td></tr><tr><td><code class="option">[--applauncher <span class="emphasis"><em>launcher</em></span>]</code></td></tr><tr><td><code class="option">[--launcherargs <span class="emphasis"><em>args</em></span>]</code></td></tr><tr><td><code class="option">[--device <span class="emphasis"><em>serial-number</em></span>]</code></td></tr><tr><td><code class="option">[--exitCodeOnFail <span class="emphasis"><em>code</em></span>]</code></td></tr><tr><td><code class="option">[--snoozeFactor <span class="emphasis"><em>factor</em></span>]</code></td></tr><tr><td><code class="option">[--timeout <span class="emphasis"><em>seconds</em></span>]</code></td></tr><tr><td><code class="option">[--retry <span class="emphasis"><em>number</em></span>]</code></td></tr><tr><td><code class="option">[--scriptargs [<span class="emphasis"><em>scriptargument</em></span>]*]</code></td></tr><tr><td><code class="option">[--tags <span class="emphasis"><em>tags</em></span>]*</code></td></tr><tr><td><code class="option">[--random [<span class="emphasis"><em>sequence-number</em></span>]]</code></td></tr><tr><td><code class="option">[--aut <span class="emphasis"><em>aut</em></span> [<span class="emphasis"><em>argument</em></span>]*]</code></td></tr></table><p>
+The square brackets are not part of the syntax—they indicate
+optional items. Here, every option is optional, and some parts of some
+options are optional. The <code class="code">*</code> indicates an option that can
+occur zero or more times, and <code class="code">|</code> indicates alternatives.
+</p><p>
+See <a class="xref" href="rg-cmdline.html#rg-squishrunner-cli-playback--testcase" title="7.4.3.7.  Playback option --testcase or --skip-testcase"> Playback option <code class="option">--testcase</code> or
+<code class="option">--skip-testcase</code> (Section 7.4.3.7)</a> for more details on playback related options.
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="rg-squishrunner-cli-playback--local"></a>7.4.3.4.  <code class="option">squishrunner --local</code>: Start and stop a local squishserver </h4></div></div></div><p>
+<span class="application">squishrunner</span> can automatically start and stop a local <span class="application">squishserver</span> process
+as needed, during the playback of a test suite. Using this option means no
+<code class="option">--host</code> or <code class="option">--port</code> options are needed, and no
+separate <span class="application">squishserver</span> process needs to be started.
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="rg-squishrunner-cli-playback--resultdir"></a>7.4.3.5.  <code class="option">squishrunner --resultdir</code>: Setting the Result Directory </h4></div></div></div><p>
+The <code class="option">--resultdir</code> option is used in combination with
+file-based report generators (stdout, xmljunit, xml2), and determines the
+location to save the test report and failed screenshot files, if any.
+There is no need to use this option in combination with
+report generators (xml3, html) that take a directory as an argument.
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="rg-squishrunner-report-generators"></a>7.4.3.6.  <code class="option">squishrunner --reportgen</code>: Generating Reports</h4></div></div></div><p>
+<span class="emphasis"><em>Squish</em></span> supports several report generators simultaneously, with one limitation,
+there can be at most one directory based generator.
+</p><p>
+Use <code class="literal">squishrunner --help</code> for a list of supported generators.
+</p><p>
+Some generators output to the console unless a <span class="emphasis"><em>destination</em></span> is specified.
+</p><div class="tip" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Tip:  Use the latest version "><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Tip]" src="images/tip.png"></img></td><th align="left"> Use the latest version </th></tr><tr><td align="left" valign="top"><p>Generally, it is recommended to use the latest version available for any
+report generator. </p></td></tr></table></div><div class="section" lang="en"><div class="titlepage"><div><div><h5 class="title"><a id="rg-squishrunner-report-generators-html"></a>7.4.3.6.1. HTML report generator</h5></div></div></div><pre class="screen">
+squishrunner --testsuite &lt;test-suite-dir&gt; --reportgen html,&lt;report-dir&gt;
+</pre></div><div class="section" lang="en"><div class="titlepage"><div><div><h5 class="title"><a id="rg-squishrunner-report-generators-json"></a>7.4.3.6.2. JSON report generator</h5></div></div></div><div class="itemizedlist"><ul type="disc"><li><p><code class="option">json1.2</code> (<span class="emphasis"><em>Squish</em></span> 6.3 and newer)</p><pre class="screen">
+squishrunner --testsuite &lt;test-suite-dir&gt; --reportgen json1.2,&lt;report-dir&gt;
+</pre></li><li><p><code class="option">json1.1</code> (<span class="emphasis"><em>Squish</em></span> 6.1 and newer)</p><pre class="screen">
+squishrunner --testsuite &lt;test-suite-dir&gt; --reportgen json1.1,&lt;report-dir&gt;
+</pre></li><li><p><code class="option">json</code> (<span class="emphasis"><em>Squish</em></span> 6.0 and newer)</p><pre class="screen">
+squishrunner --testsuite &lt;test-suite-dir&gt; --reportgen json,&lt;report-dir&gt;
+</pre></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h5 class="title"><a id="rg-squishrunner-report-generators-junit"></a>7.4.3.6.3. JUnit report generator</h5></div></div></div><p>The "junit" generator outputs reports in the same format as JUnit tests do,
+as single file in XML format.
+
+</p><pre class="screen">
+squishrunner --testsuite &lt;test-suite-dir&gt; --reportgen junit,&lt;reportfile.xml&gt;
+</pre><p>
+</p><p>The older "xmljunit" generator outputs reports in the same format as
+JUnit tests do, as single file in XML format. However, since it pre-dates
+Squish' BDD support it does not preserve the test case and BDD test
+structure in its generated test report as well as the "junit" report
+generator.
+
+</p><pre class="screen">
+squishrunner --testsuite &lt;test-suite-dir&gt; --reportgen xmljunit,&lt;reportfile.xml&gt;
+</pre><p>
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h5 class="title"><a id="rg-squishrunner-report-generators-null"></a>7.4.3.6.4. Null report generator</h5></div></div></div><p>Generates no report, this is useful to not have the default stdout output.</p><pre class="screen">
+squishrunner --testsuite &lt;test-suite-dir&gt; --reportgen null
+</pre></div><div class="section" lang="en"><div class="titlepage"><div><div><h5 class="title"><a id="rg-squishrunner-report-generators-stdout"></a>7.4.3.6.5. stdout report generator</h5></div></div></div><p>An ASCII plain text table, the default used by <span class="application">squishrunner</span> when no
+other generator is specified.
+
+</p><pre class="screen">
+squishrunner --testsuite &lt;test-suite-dir&gt;
+</pre><p>
+
+or
+
+</p><pre class="screen">
+squishrunner --testsuite &lt;test-suite-dir&gt; --reportgen stdout
+</pre><p>
+
+The stdout report generator can accept an optional destination filename:
+
+</p><pre class="screen">
+squishrunner --testsuite &lt;test-suite-dir&gt; --reportgen stdout,&lt;reportfile.txt&gt;
+</pre><p>
+
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h5 class="title"><a id="rg-squishrunner-report-generators-testcenter"></a>7.4.3.6.6. <span class="application">Squish Test Center</span> report generator</h5></div></div></div><p>For uploading to <span class="application">Squish Test Center</span>.</p><pre class="screen">
+squishrunner --testsuite &lt;test-suite-dir&gt; --reportgen testcenter,&lt;url&gt;/project/&lt;project-name&gt;?token=&lt;token&gt;
+</pre><p> <em class="parameter"><code>token</code></em> is an upload token, created from
+<span class="application">Squish Test Center</span> user settings. See <a class="ulink" href="https://doc.froglogic.com/squish-testcenter/latest/ug-user-management.html#upload-token" target="_blank">Upload Tokens</a>
+in <span class="application">Squish Test Center</span> documentation for further details.
+</p><p> The full
+<em class="parameter"><code>url</code></em> can also include a query that specifies which
+labels or batches should be applied to the result. See <a class="ulink" href="https://doc.froglogic.com/squish-testcenter/latest/ug-testcenter-pushing-results.html#upload-via-cli" target="_blank">Pushing Results</a>
+in <span class="application">Squish Test Center</span> documentation for an example.
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h5 class="title"><a id="rg-squishrunner-report-generators-xls"></a>7.4.3.6.7. <span class="trademark">Excel</span>™ spreadsheet report generator</h5></div></div></div><pre class="screen">
+squishrunner --testsuite &lt;test-suite-dir&gt; --reportgen xls,&lt;reportfile.xml&gt;
+</pre></div><div class="section" lang="en"><div class="titlepage"><div><div><h5 class="title"><a id="rg-squishrunner-report-generators-xml"></a>7.4.3.6.8. XML report generator</h5></div></div></div><p>
+The XML report generator comes in a variety of versions, each newer one adding
+more detail. It is mainly used by internal tools and <span class="application">Squish Test Center</span>, the generated
+report is not meant for manual browsing.
+</p><div class="itemizedlist"><ul type="disc"><li><p><code class="option">xml3.5</code> (<span class="emphasis"><em>Squish</em></span> 6.8 and newer)</p><pre class="screen">
+squishrunner --testsuite &lt;test-suite-dir&gt; --reportgen xml3.5,&lt;report-dir&gt;
+</pre><p> Adds support for Video Capture. Also increases the precision of time
+attributes (now contains milliseconds). </p></li><li><p><code class="option">xml3.4</code> (<span class="emphasis"><em>Squish</em></span> 6.5 and newer)</p><pre class="screen">
+squishrunner --testsuite &lt;test-suite-dir&gt; --reportgen xml3.4,&lt;report-dir&gt;
+</pre><p> Allows seeing result attachments, screenshots, as well as script backtraces. </p></li><li><p><code class="option">xml3.3</code> (<span class="emphasis"><em>Squish</em></span> 6.4 and newer)</p><pre class="screen">
+squishrunner --testsuite &lt;test-suite-dir&gt; --reportgen xml3.3,&lt;report-dir&gt;
+</pre><p> Images can be seen in <span class="application">Squish Test Center</span>. </p></li><li><p><code class="option">xml3.2</code> (<span class="emphasis"><em>Squish</em></span> 6.3 and newer)</p><pre class="screen">
+squishrunner --testsuite &lt;test-suite-dir&gt; --reportgen xml3.2,&lt;report-dir&gt;
+</pre><p> Uses a new &lt;retry&gt; tag, and reports retries for test cases and scenarios. </p></li></ul></div><p>
+Given a test suite called <span class="emphasis"><em>suite_myapp</em></span>,
+a test case called <span class="emphasis"><em>tst_case1</em></span>, a <em class="parameter"><code>report-dir</code></em>
+called <code class="filename">my_app_results</code>, and assuming that an image
+verification point fails, <span class="application">squishrunner</span> will write:
+<code class="filename">my_app_results/results.xml</code> and
+<code class="filename">my_app_results/suite_myapp/tst_case1/verificationPoints/failedImages/failed_1.png</code>.
+</p><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Note: Legacy XML Formats"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/note.png"></img></td><th align="left">Legacy XML Formats</th></tr><tr><td align="left" valign="top"><p>Older formats (<code class="option">xml3.1</code>, <code class="option">xml3</code>,
+<code class="option">xml2.2</code>, <code class="option">xml2.1</code>, <code class="option">xml2</code>,
+<code class="option">xml</code>) are kept for backward compatibility. Those older than
+<code class="option">xml3</code> take a filename instead of a directory.
+</p></td></tr></table></div></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="rg-squishrunner-cli-playback--testcase"></a>7.4.3.7.  Playback option <code class="option">--testcase</code> or
+<code class="option">--skip-testcase</code></h4></div></div></div><p>
+By default, all the test suite's test cases are executed, but if we want
+to specify exactly which test case or test cases are executed we can do
+so by supplying 1 or more of the <code class="option">--testcase
+<span class="emphasis"><em>test-case-dir</em></span></code> option for each test case
+we want executed. Alternatively to the <code class="option">--testcase</code> it's
+possible to skip test cases by using the <code class="option">--skip-testcase
+<span class="emphasis"><em>test-case-dir</em></span></code> option.
+</p><p>
+Example:
+</p><pre class="screen">
+squishrunner --testsuite /home/reggie/suite_addressbook --testcase tst_add_address --testcase tst_edit_address
+</pre><p>
+This example runs two specific test cases in the
+<code class="filename">suite_addressbook</code> suite. If we wanted to run all of
+the suite's test cases we would simply omit the two
+<code class="option">--testcase</code> options since without them <span class="application">squishrunner</span>
+defaults to running all of the suite's test cases. If we wanted to run all
+test cases <span class="emphasis"><em>but</em></span> <code class="literal">tst_add_address</code>, we would
+do something like this:
+</p><pre class="screen">
+squishrunner --testsuite /home/reggie/suite_addressbook --skip-testcase tst_add_address
+</pre></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="rg-squishrunner-cli-playback--enable-video-capture"></a>7.4.3.8. Playback option <code class="option">--enable-video-capture</code></h4></div></div></div><p>
+  <span class="application">squishrunner</span> will automatically start capture a video of the desktop of any application
+  started via <a class="xref" href="rgs-squish.html#startApplication-function"><code class="function">startApplication</code></a> or attached via <a class="xref" href="rgs-squish.html#attachToApplication-function"><code class="function">attachToApplication</code></a>. The videos are stored as part
+  of the report, as if the <a class="xref" href="rgs-squish.html#test.startVideoCapture-function"><code class="function">test.startVideoCapture</code></a> function had been used and
+  they are terminated once the application terminates or is disconnected from. The test report
+  will have corresponding start and end entries when the capture starts and stops using a message that
+  includes the application context's name.
+  </p></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="rg-squishrunner-cli--aut"></a>7.4.3.9.  Playback option <code class="option">--aut</code></h4></div></div></div><p>
+By default, the AUT specified in the test suite's
+<code class="filename">suite.conf</code> file will be used for the execution of
+the test cases, along with any command line arguments that are
+specified there. However, we can override this by specifying the name
+of the AUT using the <code class="option">--aut
+<span class="emphasis"><em>aut</em></span></code> option, followed by zero or more
+command line arguments. The specified AUT must be registered as a
+<span class="emphasis"><em>Mapped AUT</em></span> already and the
+<code class="option">Automatically start the AUT</code> option in the test
+suite settings must be checked/enabled. (See also,
+<a class="xref" href="rg-cmdline.html#rg-squishrunner-cli-suite.conf" title="7.4.3.2. The suite.conf File">The suite.conf File (Section 7.4.3.2)</a>.)
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="rg-squishrunner-cli---interactive"></a>7.4.3.10.  Playback option <code class="option">--interactive</code> </h4></div></div></div><p>
+By default <span class="application">squishrunner</span> works in non-interactive mode which allows it to run
+without access to any kind of graphical display. For using any of the
+<code class="code">testInteraction</code> functions (See <a class="xref" href="rgs-squish.html#rgs-testinteraction" title="6.3.18. testInteraction Functions"><code class="code">testInteraction</code> Functions (Section 6.3.18)</a>) however <span class="application">squishrunner</span> needs to be run in
+interactive mode. Pass the <code class="option">--interactive</code> option to enable
+interactive mode which will allow <span class="application">squishrunner</span> to display dialogs and message
+boxes.
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="rg-squishrunner-cli-playback--abortOnFail"></a>7.4.3.11. Playback option <code class="option">--abortOnFail</code></h4></div></div></div><p>
+<span class="application">squishrunner</span> with <code class="option">--testsuite</code> option executes all test suite's
+test cases one by one. If the <code class="option">--abortOnFail</code> option is specified,
+<span class="application">squishrunner</span> will terminate the suite execution as soon as a failed test case
+is detected.
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="rg-squishrunner-cli-playback--webbrowser"></a>7.4.3.12. Playback option <code class="option">--webbrowser</code></h4></div></div></div><p>
+When recording a web test, the browser to be used can be specified via
+the <code class="option">--webbrowser <span class="emphasis"><em>browser</em></span></code> option.
+The <span class="emphasis"><em>browser</em></span> can be any of:
+<code class="option">firefox</code> (Firefox),
+<code class="option">ie</code> (<span class="trademark">Microsoft</span>® Internet Explorer),
+<code class="option">edge</code> (<span class="trademark">Microsoft</span>® Edge),
+<code class="option">safari</code> (Safari),
+<code class="option">google-chrome</code> (Google Chrome), or
+<code class="option">chromium-based</code> (Chromium-based Applications).
+</p><p>
+Additionally, a <code class="option">--webbrowserargs</code> option can be
+passed to invoke the chosen web browser with your choice of command line
+arguments.
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="rg-squishrunner-cli-playback--device"></a>7.4.3.13. Playback option <code class="option">--device</code></h4></div></div></div><p>
+The <code class="option">--device</code> option is for the <span class="emphasis"><em>Squish</em></span> Android edition
+only. It is required when more than one Android devices connected and/or
+emulators running, to specify on which the application should be tested.
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="rg-squishrunner-cli-playback--snoozeFactor"></a>7.4.3.14.  Playback option <code class="option">--snoozeFactor</code> </h4></div></div></div><p>
+Most modern tests use the <a class="xref" href="rgs-squish.html#waitForObject-function"><code class="function">waitForObject</code></a>
+function, but for various reasons some tests may have calls to the
+<a class="xref" href="rgs-squish.html#snooze-function"><code class="function">snooze</code></a> function. To influence the delay
+triggered by calls to the <a class="xref" href="rgs-squish.html#snooze-function"><code class="function">snooze</code></a> function,
+it is possible to use the <code class="option">--snoozeFactor
+<span class="emphasis"><em>factor</em></span></code> option. The
+<span class="emphasis"><em>factor</em></span> must be a number—if it is less than 1
+(i.e., a decimal fraction, like 0.5), it will cause shorter delays, and
+if it is greater than 1 it will cause longer delays. A factor of 0 will
+produce the fastest possible execution.
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="rg-squishrunner-cli-playback--exitCodeOnFail"></a>7.4.3.15. Playback option <code class="option">--exitCodeOnFail</code></h4></div></div></div><p>
+By default <span class="application">squishrunner</span> returns non-zero value in case of fatal errors and 0 otherwise,
+regardless of the tests results. If <code class="option">--exitCodeOnFail</code> option
+is set and defines the specific exit code (between 0 and 255), <span class="application">squishrunner</span> will return
+the custom exit code on fatal errors or if any of the test cases has failed, and 0
+otherwise.
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="rg-squishrunner-cli-playback--timeout"></a>7.4.3.16. Playback option <code class="option">--timeout</code></h4></div></div></div><p>
+The <code class="option">--timeout</code> option defines the amount of time (in seconds), after
+which a test case will be terminated regardless of its state. The option applies
+in <code class="option">--testsuite</code> mode only and accepts positive integer values.
+After a test case is timed out, it terminates and the execution proceeds with the
+next text case, if any.
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="rg-squishrunner-cli-playback--retry"></a>7.4.3.17. Playback option <code class="option">--retry</code></h4></div></div></div><p>
+The <code class="option">--retry</code> option defines the number of times <span class="emphasis"><em>Squish</em></span> should
+try to execute a failed test case again (at maximum). This retrying of the current
+test case will end as soon as it passes. The option only applies to the
+<code class="option">--testsuite</code> mode and accepts only positive integer values.
+For BDD tests the <code class="option">--retry</code> option applies to every scenario of a feature.
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="rg-squishrunner-cli-playback--scriptargs"></a>7.4.3.18. Playback option <code class="option">--scriptargs</code></h4></div></div></div><p>
+The <code class="option">--scriptargs</code> option marks the end of <span class="application">squishrunner</span>
+arguments. All following arguments are passed to the executed script which
+may process them. See <a class="xref" href="rgs-js.html#js-OS.argv-property">OS.argv</a> for an example of how to
+access the script arguments from a JavaScript array. Python's standard library
+offers <span class="property">sys.argv</span> to do the same thing. Perl, Ruby and Tcl each have
+similar variables called <span class="property">@ARGV</span>, <span class="property">ARGV</span>, and
+<span class="property">$argv</span> respectively.
+
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="rg-squishrunner-cli-playback--tags"></a>7.4.3.19. Playback option <code class="option">--tags</code></h4></div></div></div><p>
+The <code class="option">--tags</code> option can be used to execute just those test scripts
+or BDD scenarios which match a given tag filter.
+The leading '@' sign from the feature file tags can be omitted.
+Some examples for the <code class="option">--tags</code> option follows:
+</p><div class="table"><a id="idp55406632"></a><p class="title"><b>Table 7.1. Semantics of <code class="option">--tags</code> switch to select scenarios or test scripts</b></p><div class="table-contents"><table summary="Semantics of --tags switch to select scenarios or test scripts" border="1"><colgroup><col></col><col></col></colgroup><thead><tr><th>Options given</th><th>Meaning</th></tr></thead><tbody><tr><td>--tags foo</td><td>Execute all scenarios or test scripts with the tag <code class="literal">foo</code></td></tr><tr><td>--tags ~foo</td><td>Execute all scenarios or test scripts <span class="emphasis"><em>not</em></span> tagged
+<code class="literal">foo</code></td></tr><tr><td>--tags foo,bar</td><td>Execute all scenarios or test scripts tagged <code class="literal">foo</code>
+<span class="emphasis"><em>or</em></span> <code class="literal">bar</code> (or both).</td></tr><tr><td>--tags foo --tags bar</td><td>Execute all scenarios or test scripts tagged both <code class="literal">foo</code>
+<span class="emphasis"><em>and</em></span> <code class="literal">bar</code>.</td></tr><tr><td>--tags foo,bar --tags yoyo</td><td>Execute all scenarios or test scripts with the tag <code class="literal">yoyo</code> and one (or
+both) of <code class="literal">foo</code> and <code class="literal">bar</code>.  </td></tr></tbody></table></div></div><br class="table-break"></br><p> For an example of how to @tag a BDD scenario, see <a class="ulink" href="https://www.froglogic.com/blog/executing-desired-bdd-scenarios" target="_blank">this
+page</a>. </p></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="rg-squishrunner-cli-playback--random"></a>7.4.3.20. Playback option <code class="option">--random</code></h4></div></div></div><p>
+The <code class="option">--random</code> option is for executing testcases in random order.
+The used sequence number is printed in the report as log message. If it is necessary
+to reproduce a specific order the sequence number can be given as parameter to the
+<code class="option">--random</code> option. This can be used to reproduce a failure
+that occurs during random test execution. A sequence number of 0 indicates that a
+new sequence number is generated. It gives the same behavior as when the value for
+the option is omitted.
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="rg-squishrunner-cli--testsuite--record"></a>7.4.3.21. <code class="option">squishrunner --record</code>: Recording a Test Case</h4></div></div></div><p>
+Use <span class="application">squishrunner</span> with the <code class="option">--testsuite</code> and
+<code class="option">--record</code> options to record a new test case in the test
+suite.
+</p><p>
+Usage:
+</p><p>
+<code class="code">squishrunner [<span class="emphasis"><em>server-options</em></span>] --testsuite <span class="emphasis"><em>test-suite-dir</em></span> --record tst_<span class="emphasis"><em>test-case-dir</em></span> [<span class="emphasis"><em>other-options</em></span>]</code>
+</p><p>
+All items in square brackets are optional. The
+<code class="code"><span class="emphasis"><em>server-options</em></span></code> are described in <a class="xref" href="rg-cmdline.html#rg-squishrunner-cli-server-options" title="7.4.3.1. Server Options">Server Options (Section 7.4.3.1)</a>. The
+<code class="code"><span class="emphasis"><em>other-options</em></span></code> are discussed shortly.
+When used in this mode the <span class="application">squishrunner</span>'s behavior is affected by the
+test suite's <code class="filename">suite.conf</code>; see <a class="xref" href="rg-cmdline.html#rg-squishrunner-cli-suite.conf" title="7.4.3.2. The suite.conf File">The suite.conf File (Section 7.4.3.2)</a>. The
+<code class="code">tst_<span class="emphasis"><em>test-case-dir</em></span></code> is the test case's
+name (and the directory where it will be stored)—it
+<span class="emphasis"><em>must</em></span> start with <code class="code">tst_</code>.
+</p><p>
+Example:
+</p><pre class="screen">
+squishrunner --testsuite /home/reggie/suite_addressbook --record tst_search_for_address --useWaitFor
+</pre><p>
+This example will cause <span class="application">squishrunner</span> to execute the AUT specified in
+the test suite's <code class="filename">suite.conf</code> file. All your
+interactions with the AUT will be recorded in the test suite's
+<code class="filename">tst_search_for_address</code> subdirectory in the
+<code class="filename">test.py</code> file (or in <code class="filename">test.js</code>,
+etc., depending on the language specified in the
+<code class="filename">suite.conf</code> file).
+</p><p>
+Notice that we used the <code class="option">--useWaitFor</code> option. This
+forces <span class="emphasis"><em>Squish</em></span> to use the <a class="xref" href="rgs-squish.html#waitForObject-function"><code class="function">waitForObject</code></a>
+function rather than the <a class="xref" href="rgs-squish.html#snooze-function"><code class="function">snooze</code></a> function to
+provide the best possible playback reliability.
+</p><p>
+There are several <code class="code"><span class="emphasis"><em>other-options</em></span></code>:
+</p><table class="simplelist" border="0" summary="Simple list"><tr><td><code class="option">[--useWaitFor]</code></td></tr><tr><td><code class="option">[--testdata <span class="emphasis"><em>testdata</em></span>]*</code></td></tr><tr><td><code class="option">[--disableEventCompression]</code></td></tr><tr><td><code class="option">[--webbrowser <span class="emphasis"><em>browser</em></span>]</code></td></tr><tr><td><code class="option">[--webbrowserargs <span class="emphasis"><em>arguments</em></span>]</code></td></tr><tr><td><code class="option">[--aut <span class="emphasis"><em>aut</em></span> [<span class="emphasis"><em>argument</em></span>]*]</code></td></tr></table><p>
+The square brackets are not part of the syntax—they indicate
+optional items. Here, every option is optional. The <code class="code">*</code>
+indicates an option that can occur zero or more times.
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="rg-squishrunner-cli-recording--disableEventCompression"></a>7.4.3.22.  Recording option <code class="option">--disableEventCompression</code> </h4></div></div></div><p>
+By default, <span class="application">squishrunner</span> uses event compression during
+recording—this means that mouse moves and drags result in high-level API
+calls rather than lots of intermediate mouse hover and move events. If the
+<code class="option">--disableEventCompression</code> is used, this compression is switched
+off. This option is only supported for Qt Widgets.
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="rg-squishrunner-cli-recording--webbrowser"></a>7.4.3.23.  Recording option <code class="option">--webbrowser</code></h4></div></div></div><p>
+The <code class="option">--webbrowser</code> and <code class="option">--webbrowserargs</code>
+have the same behavior in recording mode as in playback mode, please refer
+to <a class="xref" href="rg-cmdline.html#rg-squishrunner-cli-playback--webbrowser" title="7.4.3.12. Playback option --webbrowser">Playback option <code class="option">--webbrowser</code> (Section 7.4.3.12)</a>.
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="rg-squishrunner-cli-recording--aut"></a>7.4.3.24.  Recording option <code class="option">--aut</code> </h4></div></div></div><p>
+By default, the AUT specified in the test suite's
+<code class="filename">suite.conf</code> file will be used for the recording of
+the test case, along with any command line arguments that are
+specified there. However, we can override this by specifying the name
+(with full path) of the AUT using the <code class="option">--aut
+<span class="emphasis"><em>aut</em></span></code> option, followed by zero or more
+command line arguments—if any arguments are specified they will be
+passed to the AUT when it is started up.
+(See also, <a class="xref" href="rg-cmdline.html#rg-squishrunner-cli-suite.conf" title="7.4.3.2. The suite.conf File">The suite.conf File (Section 7.4.3.2)</a>.)
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="rg-squishrunner-cli--testcase"></a>7.4.3.25. Executing a Test Case (Advanced)</h4></div></div></div><p>
+Use <span class="application">squishrunner</span> with the <code class="option">--testcase</code> option to
+execute or record a specific test case. Using the
+<code class="option">--testsuite</code> option is easier and more convenient than
+using this advanced option; see <a class="xref" href="rg-cmdline.html#rg-squishrunner-cli--testsuite" title="7.4.3.3. squishrunner --testsuite: Running tests in batch mode">squishrunner --testsuite: Running tests in batch mode (Section 7.4.3.3)</a>
+and <a class="xref" href="rg-cmdline.html#rg-squishrunner-cli--testsuite--record" title="7.4.3.21. squishrunner --record: Recording a Test Case"><code class="option">squishrunner --record</code>: Recording a Test Case (Section 7.4.3.21)</a>.
+</p><p>
+Usage:
+</p><p>
+<code class="code">squishrunner [<span class="emphasis"><em>server-options</em></span>] --testcase
+tst_<span class="emphasis"><em>test-case-dir</em></span> [<span class="emphasis"><em>other-options</em></span>]</code>
+</p><p>
+All items in square brackets are optional. The
+<code class="code"><span class="emphasis"><em>server-options</em></span></code> are described in <a class="xref" href="rg-cmdline.html#rg-squishrunner-cli-server-options" title="7.4.3.1. Server Options">Server Options (Section 7.4.3.1)</a>. The
+<code class="code"><span class="emphasis"><em>other-options</em></span></code> are discussed shortly.
+</p><p>
+Keep in mind that the <span class="application">squishrunner</span> needs to know various items of
+information to work correctly in <code class="option">--testcase</code> mode. One
+way to ensure it has the information it needs is to specify each item
+individually using the <code class="option">--wrapper</code> option, the
+<code class="option">--objectmap</code> option, and so on.
+</p><p>
+Example:
+</p><pre class="screen">
+squishrunner --testcase tst_update_address --aut addressbook
+</pre><p>
+This example starts the <span class="application">addressbook</span>
+application and executes the specified test case. Since no language has
+been explicitly specified <span class="emphasis"><em>Squish</em></span> will assume Tcl. (And similarly, if
+the <code class="option">--record</code> option is used, <span class="emphasis"><em>Squish</em></span> will write Tcl.
+This can be changed of course, as we will see next.)
+</p><p>
+There are many <code class="code"><span class="emphasis"><em>other-options</em></span></code>:
+</p><table class="simplelist" border="0" summary="Simple list"><tr><td><code class="option">[--record]</code></td></tr><tr><td><code class="option">[--explicitAutStart]</code></td></tr><tr><td><code class="option">[--testdata <span class="emphasis"><em>testdata</em></span>]*</code></td></tr><tr><td><code class="option">[--lang <span class="emphasis"><em>language</em></span>]</code></td></tr><tr><td><code class="option">[--disableEventCompression]</code></td></tr><tr><td><code class="option">[--snoozeFactor <span class="emphasis"><em>factor</em></span>]</code></td></tr><tr><td><code class="option">[--reportgen <span class="emphasis"><em>report-generator</em></span>[,<span class="emphasis"><em>filename</em></span>]]</code></td></tr><tr><td><code class="option">[--wrapper <span class="emphasis"><em>wrapper</em></span>]*</code></td></tr><tr><td><code class="option">[--envvars <span class="emphasis"><em>filename</em></span>]</code></td></tr><tr><td><code class="option">[--envvar <span class="emphasis"><em>key</em></span>=<span class="emphasis"><em>value</em></span>]*</code></td></tr><tr><td><code class="option">[--cwd @app|@server|<span class="emphasis"><em>path</em></span>]</code></td></tr><tr><td><code class="option">[--objectmap <span class="emphasis"><em>filename</em></span>]</code></td></tr><tr><td><code class="option">[--webbrowser <span class="emphasis"><em>browser</em></span>]</code></td></tr><tr><td><code class="option">[--webbrowserargs <span class="emphasis"><em>arguments</em></span>]</code></td></tr><tr><td><code class="option">[--interactive]</code></td></tr><tr><td><code class="option">[--aut <span class="emphasis"><em>aut</em></span> [<span class="emphasis"><em>argument</em></span>]*]</code></td></tr></table><p>
+The square brackets are not part of the syntax—they indicate
+optional items. Here, every option is potentially optional. The
+<code class="code">*</code> indicates an option that can occur zero or more times,
+and <code class="code">|</code> indicates alternatives.
+</p><p>
+<span class="application">squishrunner</span> will assume that the scripting language (to execute, or
+to record) is Tcl unless the <code class="option">--lang
+<span class="emphasis"><em>language</em></span></code> option is used. If the script
+does not have a call to <a class="xref" href="rgs-squish.html#startApplication-function"><code class="function">startApplication</code></a>,
+then the <code class="option">--aut <span class="emphasis"><em>aut</em></span></code> option must be
+used to specify the AUT.
+</p><p>
+If the <code class="option">--record</code> option is used the test case will be
+recorded; otherwise it will be executed.
+</p><p>
+    If the <code class="option">--explicitAutStart</code> option is used a recording will include
+    a call to the <a class="xref" href="rgs-squish.html#startApplication-function"><code class="function">startApplication</code></a> function. This is useful for
+    Test Suites created by the <span class="application">Squish IDE</span> which do not automatically start the AUT when
+    executing a testcase.
+</p><p>
+Zero or more <code class="option">--testdata <span class="emphasis"><em>testdata</em></span></code>
+files may be specified.
+</p><p>
+To change from <span class="emphasis"><em>Squish</em></span>'s default scripting language (Tcl), use the
+<code class="option">lang <span class="emphasis"><em>language</em></span></code> option, where
+<code class="option"><span class="emphasis"><em>language</em></span></code> is one of JavaScript,
+Python, Perl, Ruby, or Tcl.
+</p><p>
+By default, <span class="application">squishrunner</span> uses event compression during
+recording—this means that common event sequences result in
+high-level API calls rather than lots of low-level events. If the
+<code class="option">--disableEventCompression</code> is used the compression is
+switched off. Using this option is not recommended.
+</p><p>
+Most modern tests use the <a class="xref" href="rgs-squish.html#waitForObject-function"><code class="function">waitForObject</code></a>
+function, but for various reasons some tests may have calls to the
+<a class="xref" href="rgs-squish.html#snooze-function"><code class="function">snooze</code></a> function. To influence the delay
+triggered by calls to the <a class="xref" href="rgs-squish.html#snooze-function"><code class="function">snooze</code></a> function,
+it is possible to use the <code class="option">--snoozeFactor
+<span class="emphasis"><em>factor</em></span></code> option. The
+<span class="emphasis"><em>factor</em></span> must be a number—if it is less than 1
+(i.e., a decimal fraction, like 0.5), it will cause shorter delays, and
+if it is greater than 1 it will cause longer delays. A factor of 0 will
+produce the fastest possible execution.
+</p><p>
+<span class="emphasis"><em>Squish</em></span> can output a report detailing what happened during test case
+execution. Several different report generators are supported, and the
+one to use along with the file into which the report should be written
+can be specified using the <code class="option">--reportgen
+<span class="emphasis"><em>report-generator</em></span>,<span class="emphasis"><em>directorypath</em></span></code>
+option. For example, <code class="option">--reportgen xml3.5,/tmp/results</code>.
+(Notice the comma "," which is essential.)
+</p><p> For a list of all report-generator formats, see
+<a class="xref" href="rg-cmdline.html#rg-squishrunner-report-generators" title="7.4.3.6.  squishrunner --reportgen: Generating Reports"> <code class="option">squishrunner --reportgen</code>: Generating Reports (Section 7.4.3.6)</a> </p><p>
+If the test case needs one or more wrappers these can be specified by
+using a <code class="option">--wrapper <span class="emphasis"><em>wrapper</em></span></code> option
+for each one.
+</p><p>
+The test case's entire environment can be specified using the
+<code class="option">--envvars <span class="emphasis"><em>filename</em></span></code> option where the
+<code class="option"><span class="emphasis"><em>filename</em></span></code> specifies the full path
+to a file that has
+<code class="code"><span class="emphasis"><em>key</em></span>=<span class="emphasis"><em>value</em></span></code>
+entries, one per line, and that will be set as environment variables.
+</p><p>
+It is also possible to add or override one or more environment variables
+by using one or more <code class="option">--envvar
+<span class="emphasis"><em>key</em></span>=<span class="emphasis"><em>value</em></span></code> options.
+</p><p>
+By default, <span class="application">squishrunner</span> will use the current working directory when
+executing or recording the test case. But this can be overridden by
+using <code class="option">--cwd @app</code> which tells <span class="application">squishrunner</span> to use the
+AUT's directory as the working directory, or by <code class="option">--cwd
+@server</code> which says to use <span class="application">squishserver</span>'s directory, or by
+<code class="option">--cwd <span class="emphasis"><em>path</em></span></code> where we specify an
+explicit absolute path.
+</p><p>
+When using <a class="xref" href="rg-objectmap.html#rgo-squish-textbased" title="7.11.5. Text-Based Object Map">Text-Based Object Map (Section 7.11.5)</a>, the object map must be
+loaded by the test case itself using the <a class="xref" href="rgs-squish.html#objectMap.load-function"><code class="function">objectMap.load</code></a> function, but it can also be specified
+using the <code class="option">--objectmap <span class="emphasis"><em>filename</em></span></code> option
+where the <code class="option"><span class="emphasis"><em>filename</em></span></code> specifies the full
+path of the object map to read (if executing or recording a test) or create or
+append to (if recording a test).
+</p><p>
+When executing a web test, the browser to be used
+can be specified via the <code class="option">--webbrowser
+<span class="emphasis"><em>browser</em></span></code> option.
+The <span class="emphasis"><em>browser</em></span> can be any of:
+<code class="option">firefox</code> (Firefox),
+<code class="option">ie</code> (<span class="trademark">Microsoft</span>® Internet Explorer),
+<code class="option">edge</code> (<span class="trademark">Microsoft</span>® Edge),
+<code class="option">safari</code> (Safari),
+<code class="option">google-chrome</code> (Google Chrome), or
+<code class="option">chromium-based</code> (Chromium-based Applications).
+</p><p>
+Additionally, a <code class="option">--webbrowserargs</code> option can be
+passed to invoke the chosen web browser with your choice of command line
+arguments.
+</p><p>
+If the test case doesn't use the <a class="xref" href="rgs-squish.html#startApplication-function"><code class="function">startApplication</code></a> function, the AUT (with full
+path) must be specified using the <code class="option">--aut
+<span class="emphasis"><em>aut</em></span></code> option, followed by zero or more
+command line arguments—if any arguments are specified they will be
+passed to the AUT when it is started up.
+</p><p>
+By default <span class="application">squishrunner</span> works in non-interactive mode which allows it to run
+without access to any kind of graphical display. For using any of the
+<code class="code">testInteraction</code> functions (See <a class="xref" href="rgs-squish.html#rgs-testinteraction" title="6.3.18. testInteraction Functions"><code class="code">testInteraction</code> Functions (Section 6.3.18)</a>) however <span class="application">squishrunner</span> needs to be run in
+interactive mode. Pass the <code class="option">--interactive</code> option to enable
+interactive mode which will allow <span class="application">squishrunner</span> to display dialogs and message
+boxes.
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="rg-squishrunner-cli--info"></a>7.4.3.26. Querying for Information</h4></div></div></div><p>
+Use <span class="application">squishrunner</span> with the <code class="option">--info</code> option to
+query for various items of information.
+</p><p>
+Usage:
+</p><p>
+<code class="code">squishrunner --info <span class="emphasis"><em>topic</em></span></code>
+</p><p>
+The <code class="option"><span class="emphasis"><em>topic</em></span></code> may be any one of:
+<code class="code">wrappers</code>,
+<code class="code">applications</code>,
+<code class="code">AUTTimeout</code>,
+<code class="code">cursorAnimation</code>,
+<code class="code">settingsKey</code>,
+<code class="code">attachableApplications</code>,
+<code class="code">webBrowsers</code>,
+<code class="code">defaultWebBrowser</code>,
+<code class="code">responseTimeout</code>,
+<code class="code">androidDevices</code>, or
+<code class="code">androidInstrumentation</code>.
+</p><p>
+Example:
+</p><pre class="screen">
+squishrunner --info applications
+</pre><p>
+This will print a list of the registered AUTs and their paths on the
+console.
+</p><p>
+Here is a description of the information that is output for each of the
+available <code class="option"><span class="emphasis"><em>topic</em></span></code>s. (As is usual for
+<span class="application">squishrunner</span>, a <span class="application">squishserver</span> should be running for <span class="application">squishrunner</span> to
+work.)
+</p><table class="simplelist" border="0" summary="Simple list"><tr><td><code class="option">--info wrappers</code></td></tr><tr><td><code class="option">--info applications</code></td></tr><tr><td><code class="option">--info AUTTimeout</code></td></tr><tr><td><code class="option">--info cursorAnimation</code></td></tr><tr><td><code class="option">--info settingsKey</code></td></tr><tr><td><code class="option">--info attachableApplications</code></td></tr><tr><td><code class="option">--info webBrowsers</code></td></tr><tr><td><code class="option">--info defaultWebBrowser</code></td></tr><tr><td><code class="option">--info responseTimeout</code></td></tr><tr><td><code class="option">--info androidDevices</code></td></tr><tr><td><code class="option">--info androidInstrumentation</code></td></tr></table><p>
+If the <code class="option">wrappers</code> topic is specified, <span class="application">squishrunner</span> will
+print out a list of the installed wrappers.
+</p><p>
+If the <code class="option">applications</code> topic is specified, <span class="application">squishrunner</span>
+will print out a list of all the applications which are located in the
+<span class="application">squishserver</span>'s application paths and that can be tested by <span class="emphasis"><em>Squish</em></span>
+with the current settings.
+</p><p>
+If the <code class="option">AUTTimeout</code> topic is specified, <span class="application">squishrunner</span>
+will print out how many seconds <span class="application">squishrunner</span> will wait before timing
+out with a test failure if the AUT doesn't respond after being started.
+(This value can be changed using the <code class="option">--config
+setAUTTimeout</code> option; see <a class="xref" href="rg-cmdline.html#rg-squishrunner-cli--config" title="7.4.3.27. Configuring squishrunner">Configuring <span class="application">squishrunner</span> (Section 7.4.3.27)</a>.)
+</p><p>
+If the <code class="option">cursorAnimation</code> topic is specified,
+<span class="application">squishrunner</span> will print “<span class="quote">on</span>” if the mouse cursor should
+be animated (visually moved between positions) during script playback;
+otherwise it will print “<span class="quote">off</span>”.
+(This value can be changed using the <code class="option">--config
+setCursorAnimation</code> option; see <a class="xref" href="rg-cmdline.html#rg-squishrunner-cli--config" title="7.4.3.27. Configuring squishrunner">Configuring <span class="application">squishrunner</span> (Section 7.4.3.27)</a>.)
+</p><p>
+If the <code class="option">settingsKey</code> topic is specified, <span class="application">squishrunner</span>
+will print the settings key for this Squish installation, e.g.,
+“<span class="quote">ver1</span>”.
+</p><p>
+If the <code class="option">attachableApplications</code> topic is specified,
+<span class="application">squishrunner</span> will print a list of all the registered attachable
+applications.
+</p><p>
+If the <code class="option">webBrowsers</code> topic is specified, <span class="application">squishrunner</span>
+will print a list of all the system's web browsers that it has detected.
+</p><p>
+If the <code class="option">defaultWebBrowser</code> topic is specified,
+<span class="application">squishrunner</span> will print the name of the web browser that it uses for
+web testing.
+</p><p>
+If the <code class="option">responseTimeout</code> topic is specified,
+<span class="application">squishrunner</span> will print the number of seconds that <span class="emphasis"><em>Squish</em></span> will wait
+before timing out with a test failure during
+(mostly network based) communication between the <span class="application">squishserver</span> and
+the <span class="application">squishrunner</span>, and also between other <span class="emphasis"><em>Squish</em></span> components.
+</p><p>
+If the <code class="option">androidDevices</code> topic is specified,
+<span class="application">squishrunner</span> will print a list of all attached Android
+emulator/device instances.
+</p><p>
+If the <code class="option">androidInstrumentation</code> topic is specified,
+<span class="application">squishrunner</span> will print a list of all installed instrumentation
+packages on all attached Android emulator/device instances.
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="rg-squishrunner-cli--config"></a>7.4.3.27. Configuring <span class="application">squishrunner</span></h4></div></div></div><p>
+Use <span class="application">squishrunner</span> with the <code class="option">--config</code> option to change
+various settings.
+</p><p>
+Usage:
+</p><p>
+<code class="code">squishrunner --config <span class="emphasis"><em>action</em></span></code>
+</p><p>
+Only a single configuration action can be specified each time.
+</p><p>
+Example:
+</p><pre class="screen">
+squishrunner --config setAUTTimeout 60
+</pre><p>
+This will set the AUT timeout to 60 seconds (the default is 20 seconds).
+</p><p>
+Many <code class="option"><span class="emphasis"><em>action</em></span></code>s are supported:
+</p><table class="simplelist" border="0" summary="Simple list"><tr><td><code class="option">--config setBaseDir <span class="emphasis"><em>wrapper</em></span>
+<span class="emphasis"><em>directory</em></span></code></td></tr><tr><td><code class="option">--config setBrowserPath <span class="emphasis"><em>browser</em></span> <span class="emphasis"><em>executable</em></span></code></td></tr><tr><td><code class="option">--config addInitScript <span class="emphasis"><em>wrapper</em></span>
+<span class="emphasis"><em>script</em></span></code></td></tr><tr><td><code class="option">--config setAUTTimeout <span class="emphasis"><em>seconds</em></span></code></td></tr><tr><td><code class="option">--config setResponseTimeout <span class="emphasis"><em>seconds</em></span></code></td></tr><tr><td><code class="option">--config setAUTPostMortemTimeout <span class="emphasis"><em>milliseconds</em></span></code></td></tr><tr><td><code class="option">--config setCursorAnimation on|off</code></td></tr><tr><td><code class="option">--config setDefaultWebBrowser <span class="emphasis"><em>browser</em></span></code></td></tr><tr><td><code class="option">--config addAttachableAUT <span class="emphasis"><em>aut</em></span>
+[<span class="emphasis"><em>host</em></span>:]<span class="emphasis"><em>port</em></span></code></td></tr><tr><td><code class="option">--config removeAttachableAUT <span class="emphasis"><em>aut</em></span>
+[<span class="emphasis"><em>host</em></span>:]<span class="emphasis"><em>port</em></span></code></td></tr><tr><td><code class="option">--config isBrowserExtensionInstalled <span class="emphasis"><em>browser-id</em></span> <span class="emphasis"><em>browser-executable</em></span></code></td></tr><tr><td><code class="option">--config installBrowserExtension <span class="emphasis"><em>browser-id</em></span> <span class="emphasis"><em>browser-executable</em></span></code></td></tr><tr><td><code class="option">--config getGlobalScriptDirs</code></td></tr><tr><td><code class="option">--config setGlobalScriptDirs <span class="emphasis"><em>dir1</em></span>,<span class="emphasis"><em>dir2</em></span>,<span class="emphasis"><em>dir3</em></span>,...</code></td></tr></table><p>
+Use the <code class="option">setBaseDir</code> action to create a new wrapper with
+the given <code class="option"><span class="emphasis"><em>wrapper</em></span></code> name and with
+the given base <code class="option"><span class="emphasis"><em>directory</em></span></code>.
+</p><p>
+Use the <code class="option">setBrowserPath</code> action to specify a browser and
+the path to its executable. The browser should be one of
+<code class="option">firefox</code> (Firefox),
+<code class="option">ie</code> (<span class="trademark">Microsoft</span>® Internet Explorer),
+<code class="option">edge</code> (<span class="trademark">Microsoft</span>® Edge), or
+<code class="option">safari</code> (Safari),
+<code class="option">chromium-based</code> (Chromium-based Applications),
+and the executable should include the full path to the browser's
+executable.
+</p><p>
+Use the <code class="option">addInitScript</code> action to specify the filename of
+a Tcl script that should be executed when the specified wrapper is used.
+The <code class="option"><span class="emphasis"><em>script</em></span></code> should either be a
+filename with an absolute path or a filename with a path relative to the
+wrapper's base directory. Whenever a test case needs to use a wrapper,
+<span class="emphasis"><em>Squish</em></span> first executes all the scripts registered with this action for
+the wrapper (if any), before the test case is executed. (Although
+<code class="code">init</code> scripts must be written in Tcl, they are only used to
+initialize GUI toolkit wrappers, and have no effect on what language we
+use to write our test scripts.)
+</p><p>
+Use the <code class="option">setAUTTimeout</code> action to specify how long <span class="emphasis"><em>Squish</em></span>
+should wait before timing out with a test failure if the AUT doesn't
+respond after being started. (This action's current setting can be
+output using the <code class="option">--info AUTTimeout</code> option; see <a class="xref" href="rg-cmdline.html#rg-squishrunner-cli--info" title="7.4.3.26. Querying for Information">Querying for Information (Section 7.4.3.26)</a>.)
+</p><p>
+Use the <code class="option">setResponseTimeout</code> action to specify how long
+<span class="emphasis"><em>Squish</em></span> should wait before timing out with a test failure during
+(mostly network based) communication between the <span class="application">squishserver</span> and
+the <span class="application">squishrunner</span>, and also between other <span class="emphasis"><em>Squish</em></span> components.
+</p><p>
+Use the <code class="option">setAUTPostMortemTimeout</code> action to specify how
+long <span class="emphasis"><em>Squish</em></span> should wait after an application has exited to end
+<span class="application">squishrunner</span>. In some setups, a second process is started from the
+first one and the second <span class="emphasis"><em>Squish</em></span> hookup happens after the first one
+has exited.
+</p><p>
+Use the <code class="option">setCursorAnimation</code> action with an argument of
+<code class="code">on</code> or <code class="code">off</code> to specify whether the mouse cursor
+should be animated (visually moved between positions) during script
+playback. (This action's current setting can be
+output using the <code class="option">--info cursorAnimation</code> option; see
+<a class="xref" href="rg-cmdline.html#rg-squishrunner-cli--info" title="7.4.3.26. Querying for Information">Querying for Information (Section 7.4.3.26)</a>.)
+
+</p><p>
+For web applications use the <code class="option">setDefaultWebBrowser</code>
+action to specify the default web browser.
+The <span class="emphasis"><em>browser</em></span> can be any of:
+<code class="option">firefox</code> (Firefox),
+<code class="option">ie</code> (<span class="trademark">Microsoft</span>® Internet Explorer),
+<code class="option">edge</code> (<span class="trademark">Microsoft</span>® Edge),
+<code class="option">safari</code> (Safari),
+<code class="option">google-chrome</code> (Google Chrome), or
+<code class="option">chromium-based</code> (Chromium-based application).
+</p><p>
+Use the <code class="option">addAttachableAUT</code> action to specify an AUT that
+should be attached to when the test case is run.
+</p><p>
+Use the <code class="option">removeAttachableAUT</code> action to unregister an AUT
+that was previously registered using the
+<code class="option">addAttachableAUT</code> action.
+</p><p>
+Use the <code class="option">isBrowserExtensionAvailable</code> option to verify whether the
+extension for the <span class="emphasis"><em>browser-id</em></span> is installed, enabled and the
+version allows automation with this version of Squish. This option currently
+supports using <code class="option">firefox</code> and <code class="option">google-chrome</code> for the
+<span class="emphasis"><em>browser-id</em></span>. The command will output its results to the command window
+from where it is being invoked. If you have multiple browser
+installations on your system or Squish cannot find the browser by itself you can provide the
+<span class="emphasis"><em>executable</em></span> as another argument.
+</p><p>
+Use the <code class="option">installBrowserExtension</code> option to install the browser extension
+needed to automate the browser identified by <span class="emphasis"><em>browser-id</em></span>. The installation
+procedure will start the browser and point it to the extension, the browser will then request
+your permission to install and activate the extension and eventually it will require you to
+restart the browser. Once all of this has completed make sure to completely quit the browser by
+using the Quit menu entry. This option currently supports using <code class="option">firefox</code> and
+<code class="option">google-chrome</code> for the <span class="emphasis"><em>browser-id</em></span>. If you have multiple browser
+installations on your system or Squish cannot find the browser by itself you can provide the
+<span class="emphasis"><em>executable</em></span> as another argument.
+The command will output its results to the command window from where it is being invoked.
+</p><p>
+The <code class="option">getGlobalScriptDirs</code> prints out a list of currently set
+GlobalScript locations.
+</p><p>
+Use the <code class="option">setGlobalScriptDirs</code> option to define GlobalScript
+locations, which will be included when interpreter searches for
+<code class="code">source(findFile())</code> includes. Several comma separated locations can
+be given.
+</p><p>
+Additional Note: Use <span class="emphasis"><em>squishrunner --help</em></span> to get a list of
+any options and actions which your currently used Squish package actually
+supports.
+</p></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="rgc-squishserver"></a>7.4.4. squishserver</h3></div></div></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><span class="section"><a href="rg-cmdline.html#rg-squishserver--port">7.4.4.1. Serving</a></span></dt><dt><span class="section"><a href="rg-cmdline.html#rg-squishserver--stop">7.4.4.2. Stopping</a></span></dt><dt><span class="section"><a href="rg-cmdline.html#rg-squishserver--config">7.4.4.3. Configuring <span class="application">squishserver</span></a></span></dt></dl></div><p>
+The <span class="application">squishserver</span> is responsible for handling the communications between
+the <span class="application">squishrunner</span> and the application under test. The <span class="application">squishserver</span>
+must be run on the same machine as the AUT, although <span class="application">squishrunner</span> can
+run on a different machine.
+</p><p>
+If the <span class="application">squishserver</span> is started without any command line options, it
+will listen to connections on port 4322 and will only accept connections
+from the local host (127.0.0.1). To make it accept connections from
+other hosts, those hosts must be specified. For this purpose,
+<span class="application">squishserver</span> reads the file <code class="filename">/etc/squishserverrc</code>
+(on Unix-like systems) or <code class="filename">C:\squishserverrc</code> (on
+Windows). If the file isn't found the <span class="application">squishserver</span> will try
+<code class="filename">SQUISHDIR/etc/squishserverrc</code> (on Unix-like systems)
+and <code class="filename">SQUISHDIR\etc\squishserverrc</code> and
+<code class="filename">SQUISHDIR\etc\squishserverrc.txt</code> (on Windows).
+</p><p>
+The <code class="filename">squishserverrc</code> file can specify the IP
+addresses from which connections are allowed using a line of this form:
+</p><pre class="screen">
+ALLOWED_HOSTS=ip-address1 ip-address2 ...
+</pre><p>
+Wildcards can be used in the specified IP addresses to match more than a single IP address. For example:
+</p><pre class="screen">
+ALLOWED_HOSTS=192.168.0.* ...
+</pre><p>
+The port number that <span class="application">squishserver</span> listens to can be changed by adding
+a line of the form <code class="code">PORT=<span class="emphasis"><em>port</em></span></code> to the
+<code class="filename">squishserverrc</code> file.
+</p><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Note: The squishserverrc File"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/note.png"></img></td><th align="left">The squishserverrc File</th></tr><tr><td align="left" valign="top"><p>
+<span class="emphasis"><em>Squish</em></span> does not create a <code class="filename">squishserverrc</code> file
+itself; if one is needed, it must be created manually using a plain text
+editor.
+</p></td></tr></table></div><p>
+The <span class="application">squishserver</span> has three modes of use: serving, stopping, and
+configuring, all of which we will cover here.
+</p><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="rg-squishserver--port"></a>7.4.4.1. Serving</h4></div></div></div><p>
+Use <span class="application">squishserver</span> with no command line options, or with those
+documented here, to have a server for <span class="application">squishrunner</span> to use.
+</p><p>
+Usage:
+</p><p>
+<code class="code">
+squishserver [--quiet] [--verbose]
+             [--configfile <span class="emphasis"><em>configfile</em></span>]
+             [--host <span class="emphasis"><em>address</em></span>] [--port <span class="emphasis"><em>port</em></span>]
+             [--local] [--listenfile <span class="emphasis"><em>listenfile</em></span>]
+             [--daemon [--logfile <span class="emphasis"><em>logfile</em></span>]]
+             [--disable-presence]
+</code>
+</p><p>
+The items in square brackets are optional.
+</p><p>
+<span class="application">squishserver</span> can be used with no options at all, or with a
+<code class="option">--port <span class="emphasis"><em>port</em></span></code> to specify which port
+to listen on. The command line option overrides any
+<code class="code">PORT=<span class="emphasis"><em>port</em></span></code> that is specified in the
+<code class="filename">squishserverrc</code> file.
+</p><p>
+Another useful option is an <code class="option">--host <span class="emphasis"><em>host</em></span></code>
+to specify the IP address to listen on. The default is is to accept connections on any
+IP address assigned to the machine where squishserver is running.
+</p><p>
+If the <code class="option">--verbose</code> option is used, <span class="application">squishserver</span> will
+produce more output than usual. The extra output is designed to be
+helpful for investigating problems such as remote server connection
+problems or incorrect Qt library path settings.
+</p><p>
+On Unix-like platforms (i.e., not on Windows), the
+<code class="option">--daemon</code> option can be specified. If this option is
+used then the <span class="application">squishserver</span> will be run in the background. This means
+that the server will detach itself from the controlling terminal and
+stop printing anything to standard output or to standard error. Anything
+that the AUT prints to these channels will be lost, unless also the
+<code class="option">--logfile</code> with full path to a file name is given.
+There is no point using the <code class="option">--verbose</code> option when the
+<code class="option">--daemon</code> option is used without a log file. (The
+<span class="application">squishserver</span> also supports a <code class="option">--local</code> option in this
+mode; it exists for backward compatibility and should not be used now.)
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="rg-squishserver--stop"></a>7.4.4.2. Stopping</h4></div></div></div><p>
+To stop a <span class="application">squishserver</span> from running use the <code class="option">--stop</code>
+option.
+</p><p>
+Usage:
+</p><p>
+<code class="code">squishserver --stop [--host <span class="emphasis"><em>address</em></span>] [--port <span class="emphasis"><em>port</em></span>]</code>
+</p><p>
+If the port isn't specified the server will be contacted using
+<span class="emphasis"><em>Squish</em></span>'s default port number.
+</p><p>
+Example:
+</p><pre class="screen">
+squishserver --stop
+</pre><p>
+This tells the <span class="application">squishserver</span> to shut down. (In almost all use cases,
+a <span class="application">squishrunner</span> cannot operate without a <span class="application">squishserver</span>.)
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="rg-squishserver--config"></a>7.4.4.3. Configuring <span class="application">squishserver</span></h4></div></div></div><p>
+Use <span class="application">squishserver</span> with the <code class="option">--config</code> option to change
+various settings.
+</p><p>
+Usage:
+</p><p>
+<code class="code">squishserver --config <span class="emphasis"><em>action</em></span></code>
+</p><p> Most of these configuration commands operate on the
+<code class="filename">server.ini</code> file by default, which is in
+<code class="filename">ver1</code> of the Squish User Settings Directory. You can provide
+the location of a different configuration file by using the
+<code class="option">--configfile</code> option.
+</p><p>
+Usage:
+</p><p>
+<code class="code">squishserver [--configfile /path/to/myserver.ini] --config <span class="emphasis"><em>action</em></span></code>
+</p><p>
+Only a single configuration action can be specified each time.
+(For backward compatibility an additional optional option,
+<code class="option">--settingsGroup <span class="emphasis"><em>settingsGroup</em></span></code>
+is supported. If specified it tells the <span class="application">squishserver</span> which
+settings group to use. The <span class="application">Squish IDE</span> has no support for settings
+groups and this option is deprecated.)
+</p><p>
+Example #1:
+</p><pre class="screen">
+squishserver --config addAppPath C:\squish\examples\qt4\addressbook
+</pre><p>
+This will add the
+<code class="filename">C:\squish\examples\qt4\addressbook</code> path to
+<span class="emphasis"><em>Squish</em></span>'s list of paths in which to look for AUTs.
+</p><p>
+Note that it is possible to refer to environment variables on the
+command line using the syntax <code class="code">$(<span class="emphasis"><em>NAME</em></span>)</code>
+(although on some shells—typically those used on Unix—the
+<code class="code">$()</code> parts may need to be escaped).
+</p><p>
+Example #2.
+</p><pre class="screen">
+squishserver --config addAUT addressbook $(SQUISHPATH)/examples/qt4/addressbook
+</pre><p>
+Here we have added a new AUT and to do so we have used the
+<code class="envar">SQUISHPATH</code> environment variable—which must have
+been set earlier.
+</p><p>
+Many <code class="option"><span class="emphasis"><em>action</em></span></code>s are supported:
+</p><table class="simplelist" border="0" summary="Simple list"><tr><td><code class="option">--config addAppPath <span class="emphasis"><em>path</em></span></code></td></tr><tr><td><code class="option">--config removeAppPath <span class="emphasis"><em>path</em></span></code></td></tr><tr><td><code class="option">--config addAUT <span class="emphasis"><em>aut</em></span> <span class="emphasis"><em>path</em></span></code></td></tr><tr><td><code class="option">--config removeAUT <span class="emphasis"><em>aut</em></span> <span class="emphasis"><em>path</em></span></code></td></tr><tr><td><code class="option">--config addAttachableAUT <span class="emphasis"><em>aut</em></span> [<span class="emphasis"><em>host</em></span>:]<span class="emphasis"><em>port</em></span></code></td></tr><tr><td><code class="option">--config removeAttachableAUT <span class="emphasis"><em>aut</em></span> [<span class="emphasis"><em>host</em></span>:]<span class="emphasis"><em>port</em></span></code></td></tr><tr><td><code class="option">--config setWrapperLibs <span class="emphasis"><em>aut</em></span> <span class="emphasis"><em>lib1</em></span>[,<span class="emphasis"><em>lib</em></span>]*</code></td></tr><tr><td><code class="option">--config usesBuiltinHook <span class="emphasis"><em>aut</em></span></code></td></tr><tr><td><code class="option">--config setAUTTimeout <span class="emphasis"><em>seconds</em></span></code></td></tr><tr><td><code class="option">--config setResponseTimeout <span class="emphasis"><em>seconds</em></span></code></td></tr><tr><td><code class="option">--config setAUTPostMortemTimeout <span class="emphasis"><em>milliseconds</em></span></code></td></tr><tr><td><code class="option">--config setHardExitTimeout <span class="emphasis"><em>milliseconds</em></span></code></td></tr><tr><td><code class="option">--config setSoftExitTimeout <span class="emphasis"><em>milliseconds</em></span></code></td></tr><tr><td><code class="option">--config setBrowserPath <span class="emphasis"><em>browser</em></span> <span class="emphasis"><em>executable</em></span></code></td></tr><tr><td><code class="option">--config setJavaVM <span class="emphasis"><em>filename</em></span></code></td></tr><tr><td><code class="option">--config setLibJVM <span class="emphasis"><em>filename</em></span></code></td></tr><tr><td><code class="option">--config setJavaVersion <span class="emphasis"><em>version</em></span></code></td></tr><tr><td><code class="option">--config setSWTJar <span class="emphasis"><em>filename</em></span></code></td></tr><tr><td><code class="option">--config setConfig <span class="emphasis"><em>aut</em></span> <span class="emphasis"><em>path</em></span></code></td></tr><tr><td><code class="option">--config removeConfig <span class="emphasis"><em>aut</em></span> <span class="emphasis"><em>path</em></span></code></td></tr></table><p>
+Use the <code class="option">addAppPath</code> action to add a path to the
+list of paths in which <span class="application">squishserver</span> looks for applications when
+starting an AUT.
+</p><p>
+Use the <code class="option">removeAppPath</code> action to remove a path
+from the list of paths in which <span class="application">squishserver</span> looks for applications
+when starting an AUT.
+</p><p>
+Use the <code class="option">addAUT</code> action to add an application
+mapped to the specified path. If different versions of the same
+application have the same executable name and appear in different paths
+that have been registered using the <code class="option">--config addAppPath</code>
+option then which one should <span class="emphasis"><em>Squish</em></span> use? By using the <code class="option">--config
+addAUT</code> option, we can say specifically which executable should
+be used in which path thereby avoiding any ambiguities.
+</p><p>
+Use the <code class="option">removeAUT</code> action to remove an
+application mapped to a specified path.
+</p><p>
+Use the <code class="option">addAttachableAUT</code> action to specify an
+AUT that can be attached to.
+</p><p>
+Use the <code class="option">removeAttachableAUT</code> action to
+unregister an AUT that was previously registered using the
+<code class="option">addAttachableAUT</code> action.
+</p><p>
+Use the <code class="option">setWrapperLibs</code> action to specify the wrapper
+library or libraries to use with the specified AUT.
+</p><p>
+Use the <code class="option">usesBuiltinHook</code> to force <span class="emphasis"><em>Squish</em></span> to use a
+built-in hook rather than the default non-intrusive hooking. Be sure to
+read about this option before using it—see <a class="xref" href="rg-cppapi.html#rgcpp-qtbuiltin" title="7.13.2. Using the Built-in Hook">Using the Built-in Hook (Section 7.13.2)</a>.
+</p><p>
+Use the <code class="option">setAUTTimeout</code> action to specify how many
+seconds <span class="emphasis"><em>Squish</em></span> should wait before timing out with a test failure
+if the AUT doesn't respond after being started. The default is 20.
+</p><p>
+Use the <code class="option">setResponseTimeout</code> action to specify how
+many seconds <span class="emphasis"><em>Squish</em></span> should wait before timing out with a test
+failure when waiting for a response from the AUT. The default is 300.
+(This is distinct from the timeout used by the <a class="xref" href="rgs-squish.html#waitForObject-function"><code class="function">waitForObject</code></a> function.)
+</p><p>
+Use the <code class="option">setHardExitTimeout</code> action to specify how
+many milliseconds <span class="application">squishserver</span> should maximally wait after sending a SIGTERM to an
+application, before sending a SIGKILL if the application is still running.
+(The time is on top of <code class="option">setSoftExitTimeout</code>.)
+This option does nothing on Windows. The default is 100 milliseconds.
+</p><p>
+Use the <code class="option">setSoftExitTimeout</code> action to specify how
+many milliseconds <span class="application">squishserver</span> should maximally wait after <span class="application">squishrunner</span> has ended
+before killing the application if it is still running, when started
+automatically or with <a class="xref" href="rgs-squish.html#startApplication-function"><code class="function">startApplication</code></a>. The default
+is 2000 milliseconds.
+</p><p>
+Use the <code class="option">setAUTPostMortemTimeout</code> action to specify
+how many milliseconds <span class="emphasis"><em>Squish</em></span> should wait after the first AUT
+process has exited. This applies to AUTs that actually start the
+"real" AUT as a new/separate (sub-)process, like Java Web Start, but
+also third party Java application launchers. In those cases the
+first AUT process may exit before the second (the "real") AUT
+process has been hooked up by Squish. And this will cause <span class="emphasis"><em>Squish</em></span> to
+abort its attempt to start (and hook up) the AUT with an error -
+unless hooking of the second AUT process succeeds within the number
+of milliseconds specified by this setting. The default is 1500.
+</p><p>
+Use the <code class="option">setBrowserPath</code> action to specify a browser and
+the path to its executable. The browser should normally be one of
+<code class="option">firefox</code> (Firefox),
+<code class="option">ie</code> (<span class="trademark">Microsoft</span>® Internet Explorer),
+<code class="option">edge</code> (<span class="trademark">Microsoft</span>® Edge), or
+<code class="option">safari</code> (Safari),
+<code class="option">chromium-based</code> (Chromium-based application),
+and the executable should include the full path to the browser's
+executable.
+</p><p>
+<span class="emphasis"><em>Squish</em></span> supports specific web browsers on specific desktop platforms
+out of the box. However, it is also possible to test other web browsers
+or test on non-desktop platforms (e.g., iPhones and similar) by using
+<span class="emphasis"><em>Squish</em></span>'s web proxy (<a class="xref" href="rg-cmdline.html#rg-webproxy" title="7.4.8. Web Proxy">Web Proxy (Section 7.4.8)</a>).
+</p><p>
+All the following configuration actions are specific to <span class="trademark">Java</span>™ AUTs.
+</p><p>
+Use the <code class="option">setJavaVM</code> action to tell <span class="emphasis"><em>Squish</em></span> where the
+Java executable is located, giving it the full path (e.g.,
+<code class="filename">/usr/lib/jvm/java-6-sun/jre/bin/java</code> on Linux).
+</p><p>
+Use the <code class="option">setLibJVM</code> action to tell <span class="emphasis"><em>Squish</em></span> where the
+Java virtual machine is located, giving it the full path (e.g.,
+<code class="filename">/usr/lib/jvm/java-6-sun/jre/lib/i386/client/libjvm.so</code>
+on Linux).
+</p><p>
+Use the <code class="option">setJavaVersion</code> action to specify a particular
+version of Java to use (e.g., <code class="code">1.5.0_11</code>).
+</p><p>
+For <span class="trademark">Java</span>™ AUT's using the SWT GUI library, the SWT library to use
+should be specified using the <code class="option">setSWTJar</code> action and
+giving the full path to the <code class="filename">.jar</code> file (e.g.,
+<code class="filename">C:\swt\swt.jar</code> on Windows).
+</p><p>
+Use the <code class="option">setConfig</code> action to register a custom
+<code class="filename">.jar</code> file that implements <span class="emphasis"><em>Squish</em></span>'s Java Extension
+API. (See <a class="xref" href="rgs-javaconvenience.html#api-javaextapi" title="6.7.4. Java Extension API for Custom Widgets">Java Extension API for Custom Widgets (Section 6.7.4)</a>.)
+</p><p>
+Use the <code class="option">removeConfig</code> action to unregister a custom
+<code class="filename">.jar</code> file that implements <span class="emphasis"><em>Squish</em></span>'s Java Extension
+API. (See <a class="xref" href="rgs-javaconvenience.html#api-javaextapi" title="6.7.4. Java Extension API for Custom Widgets">Java Extension API for Custom Widgets (Section 6.7.4)</a>.)
+</p><p>
+The <span class="application">squishserver</span> has some other configuration options, specifically,
+<code class="option">usesBuiltinHook</code> and <code class="option">setJavaHookMethod</code>;
+these are for backward compatibility; they should not be used now.
+</p></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="rgc-squishidl"></a>7.4.5. squishidl</h3></div></div></div><p>
+<span class="application">squishidl</span> is a tool which parses C++ header files and generates C++
+introspection and automation code. It is mostly used internally by other
+<span class="emphasis"><em>Squish</em></span> tools, although some customers have also found it useful.
+(Note that since <span class="emphasis"><em>Squish</em></span> 4 this tool is rarely needed since
+<span class="emphasis"><em>Squish</em></span> 4 is often able to dynamically detect properties and
+methods, even of custom AUT objects.)
+</p><p>
+For each C++ header file that is processed, two output files are
+required—a <code class="filename">.h</code> file and a
+<code class="filename">.cpp</code> file. To produce these files, <span class="application">squishidl</span> must
+be run twice: first to produce the <code class="filename">.h</code> file; and
+second, using the original and generated header files to produce the
+<code class="filename">.cpp</code> file.
+</p><p>
+Usage:
+</p><p>
+<code class="code">squishidl &lt;--decl|--impl&gt; -i <span class="emphasis"><em>filename.h</em></span> [<span class="emphasis"><em>other-options</em></span>]</code>
+</p><p>
+The item in angle brackets is required; <code class="code">|</code> signifies
+alternatives. So here, either the <code class="option">--decl</code> option or the
+<code class="option">--impl</code> must be specified. The <code class="option">-i</code>
+(input) option is also required.
+</p><p>
+To generate the header file, run <span class="application">squishidl</span> with the
+<code class="option">--decl</code> (declaration) option, and specify the C++ header
+that must be parsed with the <code class="option">-i</code> option. For
+example:</p><pre class="screen">
+squishidl --decl -i myapp.h -o generated.h
+</pre><p>
+This reads the input header <code class="filename">myapp.h</code> and outputs the
+generated header <code class="filename">generated.h</code>.
+</p><p>
+To generate the cpp file, run <span class="application">squishidl</span> with the
+<code class="option">--impl</code> (implementation) option, and specify both the
+C++ header using the <code class="option">-i</code> option, and the header that was
+just generated using the <code class="option">-h</code> option. For example:
+</p><pre class="screen">
+squishidl --impl -i myapp.h -h generated.h -o generated.cpp
+</pre><p>
+This reads the input header <code class="filename">myapp.h</code> and the
+generated header <code class="filename">generated.h</code>, and outputs the
+generated implementation file <code class="filename">generated.cpp</code>.
+</p><p>
+Many optional <code class="option"><span class="emphasis"><em>other-option</em></span></code>s are
+supported—and some can be used multiple times (indicated by
+<code class="code">*</code>):
+</p><table class="simplelist" border="0" summary="Simple list"><tr><td><code class="option">[-o <span class="emphasis"><em>outputfile</em></span>]</code></td></tr><tr><td><code class="option">[--dump [<span class="emphasis"><em>dumpfile</em></span>]]</code></td></tr><tr><td><code class="option">[-D <span class="emphasis"><em>macro</em></span>]*</code></td></tr><tr><td><code class="option">[-U <span class="emphasis"><em>macro</em></span>]*</code></td></tr><tr><td><code class="option">[-I <span class="emphasis"><em>includepath</em></span>]*</code></td></tr><tr><td><code class="option">[-F <span class="emphasis"><em>path</em></span>]*</code></td></tr><tr><td><code class="option">[--strict]</code></td></tr><tr><td><code class="option">[--filter <span class="emphasis"><em>expr</em></span>]*</code></td></tr><tr><td><code class="option">[--nocache]</code></td></tr><tr><td><code class="option">[--includePrefix <span class="emphasis"><em>prefix</em></span>]</code></td></tr><tr><td><code class="option">[--extraInclude <span class="emphasis"><em>includefile</em></span>]*</code></td></tr><tr><td><code class="option">[--commandFile <span class="emphasis"><em>filename</em></span>]</code></td></tr></table><p>
+By default the output is written to the <code class="filename">stdout</code>
+stream (e.g., to the console). Use the <code class="option">-o
+<span class="emphasis"><em>outputfile</em></span></code> option to specify a file for
+the output to be written to.
+</p><p>
+The <code class="option">--dump <span class="emphasis"><em>dumpfile</em></span></code> option is used
+for debugging <span class="application">squishidl</span> so should not normally be used. It causes
+<span class="application">squishidl</span>'s intermediate format after parsing the C++ header and that
+is then processed by the output generator, to be output. By default the
+output is sent to the <code class="filename">stdout</code> stream (e.g., to the
+console), but if a filename is specified the output will be written to
+the file instead.
+</p><p>
+Use the <code class="option">-D <span class="emphasis"><em>macro</em></span></code> to define a macro
+on the command line—this works just the same way as defining
+macros for a C++ compiler using the command line. Any macros defined
+like this when compiling the input file should also be passed to
+<span class="application">squishidl</span>.
+</p><p>
+Use the <code class="option">-U <span class="emphasis"><em>macro</em></span></code> to undefine a macro
+on the command line—this works just the same way as undefining
+macros for a C++ compiler using the command line. Any macros undefined
+like this when compiling the input file should also be passed to
+<span class="application">squishidl</span>.
+</p><p>
+Use the <code class="option">-I <span class="emphasis"><em>includepath</em></span></code> option to
+add an include search path in the same way as is done on the command line
+with a C++ compiler. The same include paths as passed to the C++
+compiler when compiling the input file should be passed to <span class="application">squishidl</span>.
+</p><p>
+On macOS use the <code class="option">-F <span class="emphasis"><em>path</em></span></code> option
+to add include search paths in frameworks. The same frameworks include
+paths as passed to the C++ compiler when compiling the input file should
+be passed to <span class="application">squishidl</span>.
+</p><p>
+By default, when parsing the C++ header file, parse errors are
+interpreted as warnings. Use the <code class="option">--strict</code> option to
+force <span class="application">squishidl</span> to treat parse errors as fatal errors.
+</p><p>
+Use the <code class="option">--filter <span class="emphasis"><em>expr</em></span></code> option to
+specify a global function, class, method, or template instantiation, for
+which introspection code should <span class="emphasis"><em>not</em></span> be generated.
+The <code class="option"><span class="emphasis"><em>expr</em></span></code> must be the fully
+qualified signature of a type or of a function. For example, to exclude the
+<code class="code">QListIterator</code> class use <code class="option">--filter
+QListIterator</code>. And to exclude both of the
+<code class="code">QList::erase</code> methods, the option must be used twice,
+<code class="option">--filter "QList::iterator QList::erase(QList::iterator)"</code>
+and
+<code class="option">--filter "QList::iterator
+QList::erase(QList::iterator,QList::iterator)"</code>; the quotes are
+needed to account for the whitespace between the return type and the
+method name.
+</p><p>
+By default <span class="application">squishidl</span> caches its first run's data in an intermediate
+format and only parses the C++ header file on the second run if the
+cache's timestamp has changed. Use the <code class="option">--nocache</code> option
+to switch off <span class="application">squishidl</span>'s caching. (Using this option will slow
+<span class="application">squishidl</span> down and should not be necessary.)
+</p><p>
+Use the <code class="option">--includePrefix <span class="emphasis"><em>prefix</em></span></code>
+option to specify the prefix which should be used when generating
+<code class="code">#include</code> statements. An empty
+<code class="option"><span class="emphasis"><em>prefix</em></span></code> means the same as
+specifying the current directory. For example, if the input file has the
+include <code class="code">#include &lt;header&gt;</code> and an
+<code class="option">--includePrefix</code> of <code class="code">../parallel/</code> is
+specified, then the generated result will be <code class="code">#include
+&lt;../parallel/header&gt;</code>.
+</p><p>
+Use the <code class="option">--extraInclude <span class="emphasis"><em>include</em></span></code>
+option to specify a filename which should appear in the generated file
+in an <code class="code">#include</code> statement.
+</p><p>
+Options can also be read using the <code class="option">--commandFile
+<span class="emphasis"><em>filename</em></span></code> option; see <a class="xref" href="rg-cmdline.html#rgc-commandfiles" title="7.4.12. Command Files">Command Files (Section 7.4.12)</a>.
+</p><p>
+The <span class="application">squishidl</span> tool has one small limitation which very occasionally
+comes to light: the tool cannot wrap the properties of types that have a
+private assignment constructor or a private copy constructor. This is
+because <span class="emphasis"><em>Squish</em></span>'s bindings need to copy property values and obviously
+that isn't possible for types that disallow assignment or copying.
+</p><p>
+See also, <a class="xref" href="ug-appbindings.html" title="5.27. How to Create and Access Application Bindings">How to Create and Access Application Bindings (Section 5.27)</a>.
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="rgc-squishide"></a>7.4.6. squishide</h3></div></div></div><p>
+The <span class="application">Squish IDE</span> is a GUI tool used to create, record, modify, debug, and run
+tests.
+</p><p>
+Usage:
+</p><p>
+<code class="code">squishide [-h|-help|--help] [-toolsPackage=<span class="emphasis"><em>toolsDirectory</em></span>] [-data <span class="emphasis"><em>workspaceDirectory</em></span>] [-use-ide-cwd-for-squishserver] [<span class="emphasis"><em>suite_test</em></span>...]</code>
+</p><p>
+This is the new IDE introduced with <span class="emphasis"><em>Squish</em></span> 4.0.
+When the <span class="application">Squish IDE</span> is started it restores the previous session—that is
+it opens the same test suite and creates tabs for the same test cases
+that were open at the time the <span class="application">Squish IDE</span> was last exited.
+</p><p>
+You can specify the directory that the IDE should use for the Squish commandline
+tools using the -toolsPackage commandline option. The directory will be preferred
+over any previously set directory, but can be overridden if the IDE is bundled along
+with the commandline tools in a single package.
+The commandline tools directory can also be specified by setting an environment variable
+called SQUISHIDE_TOOLS_PACKAGE_DIRECTORY.
+</p><p>
+You can specify the directory where the IDE will store the previous session and all its settings using
+the <span class="emphasis"><em>-data</em></span> switch. The given directory will be used instead of the default workspace
+that the IDE would normally use ($HOME/.squish/workspace-ver-4 on Linux/Unix/MacOSX and
+%APPDATA%\froglogic\Squish\workspace-ver-4 on Windows).
+</p><p>
+The IDE sets the working directory of squishserver to the bin subdirectory of the package it belongs to.
+Using the option <span class="emphasis"><em>-use-ide-cwd-for-squishserver</em></span> you can change this behavior and make
+the IDE use its own working directory also as the working directory for squishserver. </p><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Note"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/note.png"></img></td><th align="left">Note</th></tr><tr><td align="left" valign="top"><p>
+This can cause problems when automating Eclipse RCP applications when starting the IDE from inside the directory containing squishide.exe
+</p></td></tr></table></div><p>
+If the <span class="application">Squish IDE</span> is started with one or more optional command line arguments that
+specifies the path to an existing test suite, after restoring the previous
+session, the <span class="application">Squish IDE</span> then opens the specified test suite ready for use.
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="rgc-startaut-cli"></a>7.4.7. start*aut</h3></div></div></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><span class="section"><a href="rg-cmdline.html#startaut">7.4.7.1. startaut</a></span></dt><dt><span class="section"><a href="rg-cmdline.html#androidobserver">7.4.7.2. androidobserver</a></span></dt><dt><span class="section"><a href="rg-cmdline.html#startjavaaut">7.4.7.3. startjavaaut</a></span></dt><dt><span class="section"><a href="rg-cmdline.html#startwinaut">7.4.7.4. startwinaut</a></span></dt></dl></div><p>
+The <span class="application">start*aut</span> programs start an AUT that is
+to be attached to by <span class="emphasis"><em>Squish</em></span>. There are three of these programs:
+<a class="xref" href="rg-cmdline.html#androidobserver" title="7.4.7.2. androidobserver">androidobserver (Section 7.4.7.2)</a> for android AUTs,
+<a class="xref" href="rg-cmdline.html#startaut" title="7.4.7.1. startaut">startaut (Section 7.4.7.1)</a> for Qt, macOS, and Tk AUTs,
+<a class="xref" href="rg-cmdline.html#startjavaaut" title="7.4.7.3. startjavaaut">startjavaaut (Section 7.4.7.3)</a> for Java AUTs, and
+<a class="xref" href="rg-cmdline.html#startwinaut" title="7.4.7.4. startwinaut">startwinaut (Section 7.4.7.4)</a> for native Windows AUTs.
+</p><p>
+See <a class="xref" href="rghsa-attach.html" title="7.8. Attaching to Running Applications">Attaching to Running Applications (Section 7.8)</a> for an example of how to make use of
+these tools.
+</p><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="startaut"></a>7.4.7.1. startaut</h4></div></div></div><p>
+Usage:
+</p><p>
+<code class="code">
+startaut [--verbose] [--wrapper=<span class="emphasis"><em>toolkit</em></span>] [--cwd=<span class="emphasis"><em>working-directory</em></span>]
+[--capture-output]
+--port=<span class="emphasis"><em>port</em></span> <span class="emphasis"><em>aut</em></span> [<span class="emphasis"><em>aut-command-line-options</em></span>]
+</code>
+</p><p>
+or:
+</p><p>
+<code class="code">
+startaut [--verbose] [--wrapper=<span class="emphasis"><em>toolkit</em></span>] [--cwd=<span class="emphasis"><em>working-directory</em></span>]
+--uses-builtin-hook <span class="emphasis"><em>aut</em></span> [<span class="emphasis"><em>aut-command-line-options</em></span>]
+</code>
+</p><div class="itemizedlist"><ul type="disc"><li><p>
+<code class="option">--verbose</code> is used to get <span class="emphasis"><em>Squish</em></span> internal log messages shown in the command line.
+</p><p>
+Note: Log messages are output to the standard error channel.
+</p></li><li><p>
+<code class="option">--wrapper</code> is used to specify the AUT's GUI toolkit, which must be one of
+<code class="code">Qt</code>, <code class="code">Mac</code>, or <code class="code">Tk</code>.
+</p><p>
+Note: If <code class="option">--wrapper</code> is not specified, <code class="code">Qt</code> is assumed.
+</p></li><li><p>
+<code class="option">--cwd</code> is used to specify the working directory for the AUT.
+</p></li><li><p>
+<code class="option">--capture-output</code> is used to suppress all AUT output.
+</p><p>
+Note: When the environment variable 'SQUISH_NO_CAPTURE_OUTPUT' is set to something other than 0 this switch has no effect.
+</p><p>
+Note: This has no effect when used in combination with <code class="option">--uses-builtin-hook</code>.
+</p></li><li><p>
+<code class="option">--port</code> is used to specify the port number that <span class="emphasis"><em>Squish</em></span> should use for communicating with the AUT.
+</p><p>
+Note: This must not be used in combination with <code class="option">--uses-builtin-hook</code>.
+</p></li><li><p>
+<code class="option">--uses-builtin-hook</code> is used to specify that the AUT uses the
+<a class="link" href="rg-cppapi.html#rgcppqti-attach" title="7.13.2.3. Attaching to a Running Application with the Built-in Hook">attachable built-in Hook</a>.
+</p><p>
+Note: This must not be used in combination with <code class="option">--port</code>.
+</p></li><li><p>
+<span class="emphasis"><em>aut</em></span> is used to specify the AUT executable.
+</p></li><li><p>
+Any <span class="emphasis"><em>aut-command-line-options</em></span> options are passed to the AUT.
+</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="androidobserver"></a>7.4.7.2. androidobserver</h4></div></div></div><p>
+Usage:
+</p><p>
+<code class="code">
+androidobserver [--device serialNumber] [--port <span class="emphasis"><em>port</em></span>]
+[--clear-app-settings]
+[--force-rotation <span class="emphasis"><em>rotation</em></span>]
+[--attach-port <span class="emphasis"><em>attachPort</em></span>]
+[--no-autostart-observer] [--no-ui-automation]
+[--web-hookup-timeout <span class="emphasis"><em>msec</em></span>]
+[-e <span class="emphasis"><em>key</em></span> <span class="emphasis"><em>value</em></span>]* <span class="emphasis"><em>aut</em></span>
+</code>
+</p><div class="section" lang="en"><div class="titlepage"><div><div><h5 class="title"><a id="androidobserver-device"></a>7.4.7.2.1. --device</h5></div></div></div><p>
+The <code class="option">--device</code> option is required when more than one
+Android devices connected and/or emulators running, but otherwise optional.</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h5 class="title"><a id="androidobserver-clear"></a>7.4.7.2.2. --clear-app-settings</h5></div></div></div><p>
+The <code class="option">--clear-app-settings</code> runs Android package manager clear
+command for the AUT before launching it.</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h5 class="title"><a id="androidobserver-force-rotation"></a>7.4.7.2.3. --force-rotation</h5></div></div></div><p>The <code class="option">--force-rotation</code> is a workaround in case screenshots
+are rotated or upside down. The <code class="option"><span class="emphasis"><em>rotation</em></span></code>
+value must be either 0, 1, 2 or 3, representing resp. zero, 90, 180 or 270
+degrees.</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h5 class="title"><a id="androidobserver-port"></a>7.4.7.2.4. --port</h5></div></div></div><p>The <code class="option">--port</code> option is used when multiple simultaneous tests are
+started from the commandline. Each <span class="application">androidobserver</span>
+forwards this TCP port to the device or emulator. The default value is 37090.</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h5 class="title"><a id="androidobserver-attach-port"></a>7.4.7.2.5. --attach-port</h5></div></div></div><p>The <code class="option">--attach-port</code> option is used to specify the port number
+that <span class="emphasis"><em>Squish</em></span> should use for communicating with the AUT. Naturally,
+the <code class="option"><span class="emphasis"><em>aut</em></span></code>, which is the Android package
+name, must be specified and must have been instrumented first by the <span class="application">Squish IDE</span> or
+<a class="xref" href="install_android.html#android_app_extern_instrumentation" title="3.9.1.1. Using a separate test package">Using a separate test package (Section 3.9.1.1)</a>.</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h5 class="title"><a id="androidobserver-no-autostart-observer"></a>7.4.7.2.6. --no-autostart-observer</h5></div></div></div><p>This option will considerably speed-up the Android app launch time. It
+skips part of the hook-up process. The test script must contain
+<a class="xref" href="rgs-androidconvenience.html#android-startObserver-function"><code class="function">startObserver</code></a> in order to complete it.
+It can be used to overcome a start-up timeout.
+Between <a class="xref" href="rgs-squish.html#startApplication-function"><code class="function">startApplication</code></a> and
+<a class="xref" href="rgs-androidconvenience.html#android-startObserver-function"><code class="function">startObserver</code></a> the object recognition is
+limited.</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h5 class="title"><a id="androidobserver-no-ui-automation"></a>7.4.7.2.7. --no-ui-automation</h5></div></div></div><p>This option will disable Android
+<a class="link" href="ug-how.to.use.the.android.api.html#ug-how.to.use.the.android.accessibility" title="5.7.1. How to Work with Accessibility objects">UIAutomation</a>
+support (technically, run the <span class="emphasis"><em>Squish</em></span> instrumentation runner without the
+wait option). Before <span class="emphasis"><em>Squish</em></span> version 6.1 this was the default. <span class="emphasis"><em>Squish</em></span>
+version 6.1 automatically enables UiAutomation when available
+(Android-4.3 or later).</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h5 class="title"><a id="androidobserver-web-hookup-timeout"></a>7.4.7.2.8. --web-hookup-timeout</h5></div></div></div><p>This option sets the time <span class="emphasis"><em>Squish</em></span> will wait after a page-finished
+event to do a
+<a class="ulink" href="https://developer.android.com/reference/android/webkit/WebView.html" target="_blank">WebView</a>
+control hook-up.</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h5 class="title"><a id="androidobserver-extra"></a>7.4.7.2.9. -e key value</h5></div></div></div><p>This option allows passing key/value pairs to the Android
+<a class="ulink" href="https://developer.android.com/reference/android/content/Intent.html#getExtras()" target="_blank">Intent</a>.
+</p></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="startjavaaut"></a>7.4.7.3. startjavaaut</h4></div></div></div><p>
+Usage:
+</p><p>
+<code class="code">startjavaaut [--verbose] [--cwd=<span class="emphasis"><em>directory</em></span>]
+--port=<span class="emphasis"><em>port</em></span>
+<span class="emphasis"><em>aut</em></span>
+[<span class="emphasis"><em>aut-command-line-options</em></span>]</code>
+</p><p>
+The <code class="option">--verbose</code> option is only useful for debugging the
+tool itself and is not normally used. The <code class="option">--cwd</code>
+option is used to specify the AUT's working directory. The
+<code class="option">--port</code> option is used to specify the port number that
+<span class="emphasis"><em>Squish</em></span> should use for communicating with the AUT. Naturally,
+the <code class="option"><span class="emphasis"><em>aut</em></span></code> must be specified and must
+be a <a class="xref" href="rg-autsettings.html#rgaspm-mapped" title="7.3.2.2. Mapped AUT">Mapped AUT (Section 7.3.2.2)</a> name. Any
+<code class="option"><span class="emphasis"><em>aut-command-line-options</em></span></code> options
+are passed to the AUT when the <span class="application">startjavaaut</span>
+program starts it.
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="startwinaut"></a>7.4.7.4. startwinaut</h4></div></div></div><p>
+<span class="application">startwinaut</span> can be used to start an AUT as a
+child process, or to attach to an already running one, depending on the options
+that are used. Usage:
+</p><p>
+<code class="code">startwinaut --port=<span class="emphasis"><em>port</em></span>
+[--aut-timeout=<span class="emphasis"><em>seconds</em></span>]
+(--window-title=<span class="emphasis"><em>title of window</em></span> |
+--pid=<span class="emphasis"><em>Process ID of AUT</em></span> |
+[--cwd=<span class="emphasis"><em>directory</em></span>] <span class="emphasis"><em>command</em></span>
+[<span class="emphasis"><em>command-line-options</em></span>]</code>)
+</p><div class="itemizedlist"><ul type="disc"><li><p> <code class="option">--port</code> is required to specify the port number
+that <span class="emphasis"><em>Squish</em></span> should use for communicating with the AUT. </p></li><li><p> <code class="option">--aut-timeout</code> can be used to specify the number
+of seconds to wait for the given program to show any GUI. Increasing this can be
+useful for applications which take longer than 20s to show a main window.
+</p></li><li><p> <code class="option">--pid</code> option is used to specify the process ID
+of the AUT to attach to. </p></li><li><p> <code class="option">--window-title</code> option is used to specify the
+window caption of the AUT to attach to. The value may use simple glob-style
+wildcards (<code class="code">*</code> for zero or more of any character,
+<code class="code">?</code> for any single character). It is not possible to escape
+the special meaning of the <code class="code">*</code> and <code class="code">?</code> characters
+at this point. </p></li><li><p> The <code class="option"><span class="emphasis"><em>command</em></span></code> may be an AUT
+or a batch file that starts the AUT. Any <code class="option"><span class="emphasis"><em>command-line-options</em></span></code>
+options are passed to the <span class="emphasis"><em>command</em></span> if the <span class="application">startwinaut</span>
+program starts it this way. </p></li><li><p> <code class="option">--cwd</code> is used to specify the
+<span class="emphasis"><em>command</em></span>'s working directory.
+</p></li></ul></div><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Note"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/note.png"></img></td><th align="left">Note</th></tr><tr><td align="left" valign="top"><p> When startwinaut is started in a console window (such as the one
+of <span class="application">cmd.exe</span>) with the
+<code class="option">--window-title</code> option and wildcards, it is possible
+that the console window is found instead of the desired target window.
+This is because the console window title may change to the executed
+command. It is possible to overcome this by using the "start" command
+built into <span class="application">cmd.exe</span> to start startwinaut with
+a new, separate console window which does not have a dynamic window
+title:
+</p><pre class="screen">
+<code class="prompt">c:\&gt;</code> <span class="application">start $SQUISHDIR/bin/startwinaut</span> <code class="option"><span class="emphasis"><em>--window-title=somewindow</em></span></code>
+</pre><p>
+</p></td></tr></table></div></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="rg-webproxy"></a>7.4.8. Web Proxy</h3></div></div></div><p>
+There are two ways to work with web applications—directly, or
+using the web proxy mechanism introduced in <span class="emphasis"><em>Squish</em></span> 4.1. For
+testing web applications with <span class="application">Safari</span> on macOS, <span class="application">Microsoft Internet Explorer</span> on Windows, or
+<span class="application">Firefox</span> on Windows/MacOSX/Linux/Unix it is best <span class="emphasis"><em>not</em></span> to use
+the proxy mechanism since the mechanism imposes a few limitations.
+</p><p>
+For all other browsers, including Safari on Windows or iOS, the proxy mechanism
+must be used. If the proxy mechanism is used the key limitations that apply are
+that native dialogs and file-upload fields are not supported, it is not
+possible to use a single proxy for multiple parallel test recordings/replays,
+the <code class="code">HTTPS</code> protocol is not supported, and screenshot verifications
+on remote browsers (e.g., browsers running on iPhones and iPads) are not
+supported.
+</p><p>
+In addition, when using the proxy mechanism, some browsers may show a
+progress indicator throughout test recording and replay—this is to
+be expected because <span class="emphasis"><em>Squish</em></span> is in constant communication with the web
+application.
+</p><p>
+The web proxy mechanism is set up by changing the web editions
+configuration, telling the <span class="application">Squish IDE</span> to use the web proxy, and by running
+the web proxy itself. For the web edition configuration see the
+<code class="filename">etc/webwrapper.ini</code> file, in particular,
+<code class="option">ProxyConnectAddress</code>,
+<code class="option">ProxyImplicitStart</code> and
+<code class="option">ProxyStartBrowser</code>. For the <span class="application">Squish IDE</span> set the browser
+to use to be “<span class="quote">Web Proxy</span>”; (see <a class="xref" href="ide.dialogs.html#the.squish.pane.s.child.panes" title="8.3.17.7.1. Squish Preferences Child Panes">Squish Preferences Child Panes (Section 8.3.17.7.1)</a>).
+</p><p>
+The web proxy is in <code class="filename">SQUISHDIR/bin/webproxy</code> and its
+executable is called <code class="filename">proxy</code>. The
+<code class="filename">proxy</code> must be executed with a command line like the
+following:
+</p><pre class="screen">
+<code class="prompt">$</code> <span class="application">$SQUISHDIR/bin/webproxy/proxy</span> [<code class="option">&lt;-H|--host&gt;</code> <code class="option"><span class="emphasis"><em>proxy-host</em></span></code>] [<code class="option">&lt;-p|--port&gt;</code> <code class="option"><span class="emphasis"><em>proxy-port</em></span></code>] [<span class="emphasis"><em>listen-host</em></span>] [<span class="emphasis"><em>listen-port</em></span>]
+</pre><p>
+The <code class="option">-H</code> (or <code class="option">--host</code>) option is used to
+specify the ip address on which to listen as a HTTP proxy; it defaults
+to <code class="code">localhost</code>. The
+<code class="option">-p</code> (or <code class="option">--port</code>) option is used to
+specify the port on which to listen as a HTTP proxy; it defaults to 8000.
+These two options can be followed by the hostname and/or port number that
+<span class="emphasis"><em>Squish</em></span> must use to communicate with the web proxy. If they are not
+specified they default to <code class="code">localhost</code> as the hostname and
+<code class="code">8001</code>for the port number—
+these must match the values set using the web edition configuration's
+<code class="option">ProxyConnectAddress</code> option.
+</p><p>
+For an example of the web proxy mechanism in use see
+<a class="xref" href="installation.for.web.testing.html#installation.for.web.testing.on.mobile.devices" title="3.7.9. Browsers on mobile devices">Browsers on mobile devices (Section 3.7.9)</a>.
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="rgc-convertvp"></a>7.4.9. convertvp</h3></div></div></div><p>
+This program is used internally by <span class="emphasis"><em>Squish</em></span> to handle image
+verifications. However, some customers have found one of its facilities
+useful: its ability to take two images and produce a third image which
+is a diff (shows the difference) of the other two. When used with two
+identical images it simply produces a plain white image the same size as
+the two images it was given.
+</p><p>
+Here is an example of it in use:
+</p><pre class="screen">
+convertvp --diff screenshot1.jpg screenshot2.jpg diff.png
+</pre><p>
+The program takes four arguments, <code class="code">--diff</code>, followed by the
+names of the two images files that are to be compared, followed by the
+name of the resultant image file. The filenames may include paths.
+The program supports all the image formats that the underlying Qt
+library supports, which at a minimum includes,
+<code class="filename">BMP</code>,
+<code class="filename">JPG</code>,
+<code class="filename">PNG</code>,
+<code class="filename">PPM</code>,
+<code class="filename">TIFF</code>,
+<code class="filename">XBM</code>,
+and
+<code class="filename">XPM</code>.
+</p><p>
+The program has several other options, but the only one likely to be of
+use is <code class="code">--topng</code> which converts an image in one format to
+another format. Use <code class="code">convertvp -h</code> to get a list of the
+commands and their arguments.
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="rgc-uibrowser"></a>7.4.10. <span class="application">uibrowser</span></h3></div></div></div><p>
+<span class="application">uibrowser</span> is a tool for browsing the AUT's GUI while examining a GUI coverage
+results file. When given a filename, will open it as an XML gui coverage results
+file, and display a UI Browser that looks like this: </p><div class="screenshot"><div class="mediaobject" align="center"><img src="images/guicoverage-browser.png" align="middle"></img><div class="caption">The UI browser</div></div></div><p> For info about what the browser displays, and how to save GUI coverage
+results, see <a class="xref" href="tutorials-qt.html#tutorial-guicoverage-qt" title="4.1.4. Tutorial: Coverage of GUI elements">Tutorial: Coverage of GUI elements (Section 4.1.4)</a>. </p><p>
+To open the <span class="application">uibrowser</span> to browse a single coverage file:
+</p><pre class="screen">
+$ uibrowser <span class="emphasis"><em>coveragefile.xml</em></span>
+</pre><p>
+To merge the results of 2 coverage files into a single output file:
+</p><pre class="screen">
+$ uibrowser [-o <span class="emphasis"><em>coverage_outputfile.xml</em></span>] [--coverage <span class="emphasis"><em>file1.xml</em></span> [<span class="emphasis"><em>file2.xml</em></span>]*]
+</pre><p> To merge results of all coverage files found in a directory:
+</p><pre class="screen">
+$ uibrowser [-o <span class="emphasis"><em>coverage_outputfile.xml</em></span>] [--coveragedir <span class="emphasis"><em>directory</em></span>]
+</pre><p> The options <code class="option">--coverage</code> and
+<code class="option">--coveragedir</code> cannot be used together. </p><p> <code class="option">-d</code> and <code class="option">--coveragedir</code> are equivalent.
+<code class="option">-o</code> and <code class="option">--output</code> are equivalent. </p></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="rgc-xml2jira"></a>7.4.11. <span class="application">xml2jira</span></h3></div></div></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><span class="section"><a href="rg-cmdline.html#rgc-xml2jira-synopsis">7.4.11.1. Synopsis</a></span></dt><dt><span class="section"><a href="rg-cmdline.html#rgc-xml2jira-examples">7.4.11.2. Examples</a></span></dt></dl></div><p>
+The <span class="application">xml2jira</span> tool offers a simple way to automate creation/updating of JIRA
+issue tickets based on result output generated by Squish tests. It is
+feature-frozen and deprecated now that <span class="application">Squish Test Center</span> offers a <a class="ulink" href="https://www.froglogic.com/testcenter/jira-integration/" target="_blank">Jira
+Integration</a> that is more powerful and flexible.
+</p><p>
+<span class="application">xml2jira</span> creates a JIRA ticket corresponding to a Squish test suite.
+When it got passed a new result.xml file, it connects to JIRA and
+(related to the test suite which has generated the result) creates
+a ticket there, or (if a related ticket already exists) it updates
+the already existing ticket with these new gathered, actual test results.
+</p><p>
+To make ticket creation and updating possible for <span class="application">xml2jira</span>, your
+JIRA system needs to be configured so that 'labels' field is
+settable from within a project's default ticket creation dialog.
+Xml2jira needs the 'labels' field to 'mark' a ticket, so it later can
+identify it as being the right ticket, corresponding to exactly that
+test suite which new gathered results are going to be updated.
+</p><p>
+The JIRA issue <span class="guilabel">Description</span> contains
+the <span class="guilabel">Test suite status</span> describing when the
+executed test cases passed or failed last and the test execution
+duration. If a corresponding issue already exists its description
+will be updated accordingly.
+</p><div class="screenshot"><div class="mediaobject" align="center"><img src="images/xml2jira_test_suite_status.png" align="middle"></img><div class="caption">Test suite status</div></div></div><p>
+In addition, on every invocation of <span class="application">xml2jira</span>, a comment
+containing an overview (<span class="guilabel">Test suite
+summary</span>) of the test cases executions mentioned
+in the specified <span class="emphasis"><em>Squish</em></span> XML report file, will be added to the
+respective JIRA issue.
+</p><div class="screenshot"><div class="mediaobject" align="center"><img src="images/xml2jira_test_suite_summary.png" align="middle"></img><div class="caption">Test suite summary</div></div></div><p>
+Optionally the <span class="emphasis"><em>Squish</em></span> XML report file can be added
+as file attachment to the JIRA issue for later analysis.
+</p><p>
+The <span class="application">xml2jira</span> tool changes the JIRA issue status to
+<span class="guilabel">Open</span> if the <span class="emphasis"><em>Squish</em></span> XML
+report file may contain any failure. If the report
+file does not contain failures, the status is set
+to <span class="guilabel">Closed</span>.
+</p><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="rgc-xml2jira-synopsis"></a>7.4.11.1. Synopsis</h4></div></div></div><p>
+</p><div class="cmdsynopsis"><p><code class="command">xml2jira</code>  {--server &lt;url&gt;} {--user &lt;name&gt;} {--password &lt;password&gt;} {--project &lt;project key&gt;} {--reportfile &lt;filename&gt;} [--issueType &lt;name&gt;] [--component &lt;name&gt;] [--transitions &lt;workflow&gt;] [--customField &lt;field=content&gt;] [--commandFile &lt;filename&gt;] [--attachSquishReport] [--deleteIssue]</p></div><p>
+</p><p>
+The available arguments are described below:
+
+</p><div class="variablelist"><dl><dt><span class="term"><code class="option">--server &lt;url&gt;</code></span></dt><dd><p>The URL of the JIRA server including the port, e.g. <code class="code">http://jira:8080</code>.
+</p></dd><dt><span class="term"><code class="option">--user &lt;name&gt;</code></span></dt><dd><p>Indicates the name of the JIRA user used to authenticate against the JIRA server.
+</p></dd><dt><span class="term"><code class="option">--password &lt;password&gt;</code></span></dt><dd><p>Indicates the password for the JIRA user.
+</p></dd><dt><span class="term"><code class="option">--project &lt;project key&gt;</code></span></dt><dd><p>Specifies the JIRA project by taking project key as argument.
+</p></dd><dt><span class="term"><code class="option">--component &lt;name&gt;</code></span></dt><dd><p>Optionally specifies the name of the JIRA project component.
+</p></dd><dt><span class="term"><code class="option">--issueType &lt;name&gt;</code></span></dt><dd><p>Optionally specifies issue type for the JIRA ticket. (when given, parameter must match
+one of the issueTypes defined in JIRA, otherwise ticket creation will fail.
+when option is omitted, issueType 'Bug' will be used per default.)
+</p></dd><dt><span class="term"><code class="option">--reportfile &lt;filename&gt;</code></span></dt><dd><p>Specifies the absolute path to the Squish XML report file for which a JIRA issue
+will be created or updated, e.g. <code class="filename">C:\reports\squishreport.xml</code>.
+Supported result formats are: xml2, xml2.1, xml2.2, xml3, xml3.1, xml3.2, xml3.3
+</p></dd><dt><span class="term"><code class="option">--commandfile &lt;filename&gt;</code></span></dt><dd><p>Specifies an optional UTF-8 encoded file containing command-line
+options used in addition to the options passed to the
+<span class="application">xml2jira</span> tool.
+</p></dd><dt><span class="term"><code class="option">--attachSquishReport</code></span></dt><dd><p>Optionally indicates to attach the Squish XML report file to the JIRA issue.
+</p></dd><dt><span class="term"><code class="option">--customField &lt;fieldname=fieldcontent&gt;</code></span></dt><dd><p>
+Optionally defines customfields on JIRA tickets for being updated by &lt;fieldcontent&gt;.
+Also it is used for filling fields with &lt;fieldcontent&gt; within the ticket creation dialog,
+which have been set 'required' for ticket creation. This option can be given several times,
+for each field which may need update. Also 'CustomOptionFields' (as Dropdown-fields or Combo-boxes) can be filled.
+In this case, &lt;fieldcontent&gt; must exactly match one of the field's selectable options.
+</p></dd><dt><span class="term"><code class="option">--transitions &lt;workflow endpoint definitions&gt;</code></span></dt><dd><p>
+Optionally defines custom workflow endpoint states and transitions between them. When your Jira platform is
+configured to use non-standard workflow definitions, this option can be used to let xml2jira know about them.
+</p><p>
+This option always needs 4 comma-separated parameters, given in this order:
+<code class="option">Active=metaID, AtransD=metaID, Disabled=metaID, DtransA=metaID</code>, otherwise ticket creation will fail:
+
+</p><div class="itemizedlist"><ul type="disc"><li><p>
+For 'Active' and 'Disabled' give the names of these states which xml2jira should use when updating
+results (in JIRA standard workflow, these would be called 'Open=1' and 'Closed=6'). A PASSED update
+would lead to a ticket being 'Disabled' and a FAILED update would lead to a ticket being 'Activated'.
+</p></li><li><p>
+For 'AtransD' and 'DtransA' names of the transitions leading from 'Active' to 'Disabled' state and vice
+versa must be given. (in JIRA standard workflow, these would be called 'CloseIssue=2' and 'ReopenIssue=3').
+</p></li><li><p>
+For each of these names also the &lt;meta-id&gt; must be given, separated by '=' sign.
+Short example: A --transition parameter which matches the JIRA predefined standard states and transitions
+would look like following:
+</p><pre class="screen">
+<span class="application">xml2jira</span> ... --transitions "Open=1,CloseIssue=2,Closed=6,ReopenIssue=3" ... --reportfile C:\report.xml
+</pre></li></ul></div><p>
+
+</p></dd><dt><span class="term"><code class="option">--deleteIssue</code></span></dt><dd><p>Deletes a Jira-ticket related to the test result given by <code class="option">--reportfile</code> option.
+(for this, reporting <code class="option">--user</code> need to have admin rights enabled on the JIRA server.)
+</p></dd></dl></div><p>
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="rgc-xml2jira-examples"></a>7.4.11.2. Examples</h4></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Here is an example invocation of the <span class="application">xml2jira</span> tool which imports the
+Squish XML report file <code class="filename">C:\report.xml</code> into the specified JIRA
+server using the user <span class="emphasis"><em>alice</em></span> and password <span class="emphasis"><em>al1ce</em></span> for the project
+<span class="emphasis"><em>SampleProject</em></span> and the component <span class="emphasis"><em>tests</em></span>.
+</p><pre class="screen">
+<span class="application">xml2jira</span> --server http://jira:8080 --user alice --password al1ce --project SampleProject --component tests --reportfile C:\report.xml
+</pre><p>
+</p></li></ul></div></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="rgc-commandfiles"></a>7.4.12. Command Files</h3></div></div></div><p>
+Command-line arguments can also be read from a file. These
+“<span class="quote">command</span>” files are plain text files and contain the
+command-line arguments in a single line or multiple lines.
+Using a command file can be convenient if a complex command line is
+required—especially if the same command line needs to be used
+repeatedly. Different operating systems have different command
+line length limits, so if this limit is reached, using a command file can
+circumvent the problem.
+</p><p>
+A command file has one or more lines of command-line options, written
+exactly as they would appear in the command line—including quoting
+for any whitespace. Blank lines are ignored as are comment
+lines (those beginning with <code class="code">#</code>).
+</p><p>
+Here is an example command file (in file <code class="filename">mycmd.txt</code>):
+</p><pre class="programlisting">
+# mycmd.txt
+--reportfile C:\report.xml
+</pre><p>
+This command file could be used with the <span class="application">xml2jira</span> tool as follows:
+</p><pre class="programlisting">
+<span class="application">xml2jira</span> --server http://jira:8080 --user alice --password al1ce --project SampleProject --component tests --commandfile C:\mycmd.txt
+
+</pre></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="rgc-configure"></a>7.4.13. configure</h3></div></div></div><p>
+If you want to build <span class="emphasis"><em>Squish</em></span> from source you must begin by running
+<span class="application">configure</span> so that information on your system
+can be gathered—for example, where your scripting language
+interpreters are, where your toolkit(s) are located, and so on.
+</p><p>
+Although all of <span class="application">configure</span>'s command line
+options are optional, if <span class="application">configure</span> cannot
+find a component you want to use, you may need to use the command line
+options to provide the necessary details.
+</p><p>
+Usage:
+</p><p>
+<code class="code">configure [<span class="emphasis"><em>options</em></span>]</code>
+</p><p>
+Three groups of options are supported: enabling, disabling, and
+“<span class="quote">with</span>” (used to set paths and filenames). Below, we list
+almost all of the available options (the full list is given by running
+<span class="application">configure -h</span>).
+</p><table class="simplelist" border="0" summary="Simple list"><tr><td><code class="option">[--disable-64bit]</code></td></tr><tr><td><code class="option">[--disable-all]</code></td></tr><tr><td><code class="option">[--disable-debug]</code></td></tr><tr><td><code class="option">[--disable-<span class="emphasis"><em>language</em></span>]</code></td></tr><tr><td><code class="option">[--disable-examples]</code></td></tr><tr><td><code class="option">[--disable-explorer]</code></td></tr><tr><td><code class="option">[--disable-ide]</code></td></tr><tr><td><code class="option">[--disable-idl]</code></td></tr><tr><td><code class="option">[--disable-pure-qt4]</code></td></tr><tr><td><code class="option">[--disable-runner]</code></td></tr><tr><td><code class="option">[--disable-server]</code></td></tr><tr><td><code class="option">[--disable-wrappers]</code></td></tr><tr><td><code class="option">[--enable-64bit]</code></td></tr><tr><td><code class="option">[--enable-all]</code></td></tr><tr><td><code class="option">[--enable-debug]</code></td></tr><tr><td><code class="option">[--enable-<span class="emphasis"><em>language</em></span>]</code></td></tr><tr><td><code class="option">[--enable-examples]</code></td></tr><tr><td><code class="option">[--enable-explorer]</code></td></tr><tr><td><code class="option">[--enable-ide]</code></td></tr><tr><td><code class="option">[--enable-idl]</code></td></tr><tr><td><code class="option">[--enable-pure-qt4]</code></td></tr><tr><td><code class="option">[--enable-runner]</code></td></tr><tr><td><code class="option">[--enable-server]</code></td></tr><tr><td><code class="option">[--enable-wrappers]</code></td></tr><tr><td><code class="option">[--with-java-home=<span class="emphasis"><em>dir</em></span>]</code></td></tr><tr><td><code class="option">[--with-pbsdk=<span class="emphasis"><em>dir</em></span>]</code></td></tr><tr><td><code class="option">[--with-perl=<span class="emphasis"><em>path</em></span>]</code></td></tr><tr><td><code class="option">[--with-pydir=<span class="emphasis"><em>dir</em></span>]</code></td></tr><tr><td><code class="option">[--with-python=<span class="emphasis"><em>path</em></span>]</code></td></tr><tr><td><code class="option">[--with-python3=<span class="emphasis"><em>path</em></span>]</code></td></tr><tr><td><code class="option">[--with-qtdir=<span class="emphasis"><em>dir</em></span>]</code></td></tr><tr><td><code class="option">[--with-qtimplibdir=<span class="emphasis"><em>dir</em></span>]</code></td></tr><tr><td><code class="option">[--with-qtnamespace=<span class="emphasis"><em>namespace</em></span>]</code></td></tr><tr><td><code class="option">[--with-ruby=<span class="emphasis"><em>path</em></span>]</code></td></tr><tr><td><code class="option">[--with-swtjar=<span class="emphasis"><em>path</em></span>]</code></td></tr><tr><td><code class="option">[--with-tclconfig=<span class="emphasis"><em>dir</em></span>]</code></td></tr><tr><td><code class="option">[--with-tkconfig=<span class="emphasis"><em>dir</em></span>]</code></td></tr></table><p>
+The square brackets are not part of the syntax—they indicate
+optional items. Here, every option is optional. For the
+<code class="option">--with-*</code> options,
+<code class="option"><span class="emphasis"><em>dir</em></span></code> means a directory and
+<code class="option"><span class="emphasis"><em>path</em></span></code> means a filename (with full
+path).
+</p><p>
+By default, everything (except debug) is enabled, so most of the
+<code class="option">--enable-*</code> options only make sense if you use
+<code class="option">--disable-all</code> to disable everything, and then use
+individual <code class="option">--enable-*</code> options to enable just those things
+that you want. Most of the <code class="option">--enable-*</code> and
+<code class="option">--disable-*</code> options are used when doing split builds so
+that you only build the necessary parts at each stage. To enable or
+disable a language, specify the language as
+<code class="code">js</code> (JavaScript), <code class="code">perl</code>, <code class="code">python</code>, or
+<code class="code">tcl</code>.
+</p><p>
+The <code class="option">--enable-64bit</code> option is used to make <span class="emphasis"><em>Squish</em></span> able
+to test 64-bit applications. The <code class="option">--enable-debug</code>
+option is used to build a debug version of <span class="emphasis"><em>Squish</em></span>—something very
+rarely necessary.
+</p><p>
+The <code class="option">--with-*</code> options are used to provide directories or
+paths (filenames with full path) of components that
+<span class="application">configure</span> failed to find, or where you want
+to ignore what <span class="application">configure</span> found and specify
+your own choice. For example, if you are using the Qt toolkit you might
+have two or more versions of Qt installed and want to tell
+<span class="application">configure</span> which one you want <span class="emphasis"><em>Squish</em></span> to use.
+</p><p>
+The <code class="option">--with-java-home</code> option is used to specify the
+directory where the <span class="trademark">Java</span>™ Development Kit (JDK) is installed.
+</p><p>
+The <code class="option">--with-pbsdk</code> option is used to specify the
+directory where the PowerBuilder SDK is installed.
+</p><p>
+The <code class="option">--with-perl</code> option is used to specify the path
+(filename with full path) where the Perl interpreter (i.e., the Perl
+executable) is installed.
+</p><p>
+The <code class="option">--with-pydir</code> option is used to specify the
+directory where Python is installed. An alternative is to use the
+<code class="option">--with-python</code> and <code class="option">--with-python3</code>
+options to specify the path (filename with full path) where the
+Python interpreter (i.e., the Python executable) is installed.
+</p><p>
+The <code class="option">--with-qtdir</code> option is used to specify the
+directory where Qt is installed. In some (unusual) setups, Qt's library
+(<code class="filename">.lib</code>) files are in a non-standard location; in
+such cases use the <code class="option">--with-qtimplibdir</code> option to specify
+the appropriate directory.
+</p><p>
+The <code class="option">--with-qtnamespace</code> option is used to specify the
+namespace that is used to wrap Qt library code in. This is needed for
+Qt libraries configured using the -qtnamespace switch.
+</p><p>
+The <code class="option">--with-ruby</code> option is used to specify the path
+(filename with full path) where the Ruby interpreter (i.e., the Ruby
+executable) is installed.
+</p><p>
+The <code class="option">--with-swtjar</code> option is used to specify the path
+(filename with full path) where the Java/SWT <code class="filename">.jar</code>
+file is installed.
+</p><p>
+The <code class="option">--with-tclconfig</code> option is used to specify the
+directory where the Tcl <code class="filename">tclConfig.sh</code> file is
+installed.
+</p><p>
+The <code class="option">--with-tkconfig</code> option is used to specify the
+directory where the Tcl/Tk <code class="filename">tkConfig.sh</code> file is
+installed.
+</p></div></div><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" type="text/javascript" src="ScriptingLanguage.js"></script><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format">setScriptingLanguage();</script><div class="navfooter"><hr></hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="rg-autsettings.html">Prev</a> </td><td width="20%" align="center"><a accesskey="u" href="ref.man.html">Up</a></td><td width="40%" align="right"> <a accesskey="n" href="rg-envvars.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">7.3. AUTs and Settings </td><td width="20%" align="center"><a accesskey="h" href="index-noframes.html">Home</a></td><td width="40%" align="right" valign="top"> 7.5. Environment Variables</td></tr></table></div></body>
+<!-- Mirrored from rg-cmdline.html by HTTrack Website Copier/3.x [XR&CO'2013], Wed, 06 Jul 2022 13:29:03 GMT -->
+</html>

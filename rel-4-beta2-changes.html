@@ -1,0 +1,91 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<!-- Mirrored from rel-4-beta2-changes.html by HTTrack Website Copier/3.x [XR&CO'2013], Wed, 06 Jul 2022 13:28:57 GMT -->
+<head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><title>2.54. Changes in 4.0 Beta 2</title><link rel="stylesheet" href="manual.css" type="text/css"></link><meta name="generator" content="DocBook XSL Stylesheets V1.73.2"></meta><link rel="start" href="index-noframes.html" title="Squish Manual"></link><link rel="up" href="relnotes.html" title="Chapter 2. Release Notes—for Upgraders"></link><link rel="prev" href="rel-4-beta3-changes.html" title="2.53. Changes in 4.0 Beta 3"></link><link rel="next" href="rel-4-beta1-changes.html" title="2.55. Changes in 4.0 Beta 1"></link><style xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" type="text/css" media="screen">
+        div.toc * { margin-left: 6px; margin-right: auto; max-width: 75em; }
+        div.toc span { margin-left: 0px; }
+        * { margin-left: auto; margin-right: auto; max-width: 75em; }
+        body { margin-left: 6px; margin-right: 6px; }
+        table th { padding: .5ex }
+        table td { padding: .5ex }
+    </style><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format">
+        function keyPress() {
+            var e = window.event;
+            if ( e == undefined ) {
+                return;
+            }
+            /* ### does not properly scroll, yet
+            if ( e.keyCode == 32 ) {
+            var l = document.links;
+            for ( var i = 0; i < l.length; i++ ) {
+                if ( l[i].innerText == "Next" ) {
+                location.href = l[i].href;
+                }
+            }
+            } else
+                */
+                if ( e.keyCode == 0x08 ) {
+            var l = document.links;
+            for ( var i = 0; i < l.length; i++ ) {
+                if ( l[i].innerText == "Prev" ) {
+                location.href = l[i].href;
+                }
+            }
+            }
+        }
+        document.onkeypress = keyPress;
+    </script></head><body><div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="rel-4-beta2-changes"></a>2.54. Changes in 4.0 Beta 2</h2></div></div></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><span class="section"><a href="rel-4-beta2-changes.html#rel-4-beta2-general">2.54.1. General</a></span></dt><dt><span class="section"><a href="rel-4-beta2-changes.html#rel-4-beta2-ide">2.54.2. New IDE</a></span></dt></dl></div><p>
+Here is a summary of the changes that have been made since the
+Technical Preview editions and since the <span class="emphasis"><em>Squish</em></span> 4.0-beta1
+editions, and which are incorporated in the new <span class="emphasis"><em>Squish</em></span> 4.0-beta2
+editions.
+</p><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="rel-4-beta2-general"></a>2.54.1. General</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>
+The <code class="option">--testsuite</code> <span class="application">squishrunner</span> mode no longer uses the
+obsolete <code class="option">--hook-subprocesses</code> option.
+</p></li><li><p>
+If the obsolete <code class="option">--hook-subprocesses</code> option is used a
+warning is issued—previously, use of it caused an error.
+</p></li><li><p>
+<span class="bold"><strong>Qt edition</strong></span>—Fixed internal method
+offsets for proper access to dynamically bound <code class="code">QObject</code>
+slots.
+</p></li><li><p>
+<span class="bold"><strong>Mac edition</strong></span>—Added a new
+<code class="code">WindowOpened</code> event handler.
+</p></li><li><p>
+Introduced a new version check that will allow the mixing of different
+versions of <span class="application">squishserver</span> and <span class="application">squishrunner</span> so long as they are
+considered compatible.
+</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="rel-4-beta2-ide"></a>2.54.2. New IDE</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>
+Fixed creation of Screenshot Verification Points on Windows.
+</p></li><li><p>
+Allow opening of test suites that do not have a suite_ prefix.
+</p></li><li><p>
+Fixed copying of Real Names from the Application Objects tree.
+</p></li><li><p>
+The New Squish Test Suite Wizard no longer finishes too early.
+</p></li><li><p>
+JavaScript source code formatting is now available.
+</p></li><li><p>
+Debugging is properly shutdown when Launch is finished.
+</p></li><li><p>
+Reduced the CPU load when waiting for the AUT to be launched.
+</p></li><li><p>
+Fixed miscellaneous problems with filenames retrieved from the script
+debugger.
+</p></li><li><p>
+Prevented a Null Pointer Exception occurring in editor context menus.
+</p></li><li><p>
+Fixed toolkit selection and validation in the New Test Suite Wizard.
+</p></li><li><p>
+Improved the error message when <code class="filename">suite.conf</code> is
+opened via
+<span class="guimenu">File</span>|<span class="guimenuitem">Open</span>.
+</p></li><li><p>
+Fixed the exception that occurred when the Choose Object Map File dialog
+in the Test Suite Settings editor is canceled.
+</p></li><li><p>
+Newly added objects are selected and revealed in the object map editor.
+</p></li></ul></div></div></div><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" type="text/javascript" src="ScriptingLanguage.js"></script><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format">setScriptingLanguage();</script><div class="navfooter"><hr></hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="rel-4-beta3-changes.html">Prev</a> </td><td width="20%" align="center"><a accesskey="u" href="relnotes.html">Up</a></td><td width="40%" align="right"> <a accesskey="n" href="rel-4-beta1-changes.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">2.53. Changes in 4.0 Beta 3 </td><td width="20%" align="center"><a accesskey="h" href="index-noframes.html">Home</a></td><td width="40%" align="right" valign="top"> 2.55. Changes in 4.0 Beta 1</td></tr></table></div></body>
+<!-- Mirrored from rel-4-beta2-changes.html by HTTrack Website Copier/3.x [XR&CO'2013], Wed, 06 Jul 2022 13:28:57 GMT -->
+</html>

@@ -1,0 +1,118 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<!-- Mirrored from rel-343.html by HTTrack Website Copier/3.x [XR&CO'2013], Wed, 06 Jul 2022 13:28:57 GMT -->
+<head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><title>2.58. Version 3.4.3</title><link rel="stylesheet" href="manual.css" type="text/css"></link><meta name="generator" content="DocBook XSL Stylesheets V1.73.2"></meta><link rel="start" href="index-noframes.html" title="Squish Manual"></link><link rel="up" href="relnotes.html" title="Chapter 2. Release Notes—for Upgraders"></link><link rel="prev" href="rel-344.html" title="2.57. Version 3.4.4"></link><link rel="next" href="rel-342.html" title="2.59. Version 3.4.2"></link><style xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" type="text/css" media="screen">
+        div.toc * { margin-left: 6px; margin-right: auto; max-width: 75em; }
+        div.toc span { margin-left: 0px; }
+        * { margin-left: auto; margin-right: auto; max-width: 75em; }
+        body { margin-left: 6px; margin-right: 6px; }
+        table th { padding: .5ex }
+        table td { padding: .5ex }
+    </style><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format">
+        function keyPress() {
+            var e = window.event;
+            if ( e == undefined ) {
+                return;
+            }
+            /* ### does not properly scroll, yet
+            if ( e.keyCode == 32 ) {
+            var l = document.links;
+            for ( var i = 0; i < l.length; i++ ) {
+                if ( l[i].innerText == "Next" ) {
+                location.href = l[i].href;
+                }
+            }
+            } else
+                */
+                if ( e.keyCode == 0x08 ) {
+            var l = document.links;
+            for ( var i = 0; i < l.length; i++ ) {
+                if ( l[i].innerText == "Prev" ) {
+                location.href = l[i].href;
+                }
+            }
+            }
+        }
+        document.onkeypress = keyPress;
+    </script></head><body><div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="rel-343"></a>2.58. Version 3.4.3</h2></div></div></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><span class="section"><a href="rel-343.html#general.1">2.58.1. General</a></span></dt><dt><span class="section"><a href="rel-343.html#ide.1">2.58.2. IDE</a></span></dt><dt><span class="section"><a href="rel-343.html#qt-specific.1">2.58.3. Qt-specific</a></span></dt><dt><span class="section"><a href="rel-343.html#java-specific.1">2.58.4. Java-specific</a></span></dt><dt><span class="section"><a href="rel-343.html#web-specific.1">2.58.5. Web-specific</a></span></dt><dt><span class="section"><a href="rel-343.html#tk-specific.1">2.58.6. Tk-specific</a></span></dt><dt><span class="section"><a href="rel-343.html#mac-specific-cocoa-carbon-edition">2.58.7. Mac-specific (Cocoa/Carbon edition)</a></span></dt><dt><span class="section"><a href="rel-343.html#source-builds.1">2.58.8. Source Builds</a></span></dt></dl></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="general.1"></a>2.58.1. General</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Added a --apply-mask mode to the convertp
+utility.</p></li><li><p>Added currentApplicationContext() function in all
+scripting languages. Will be used when recording in a
+multiple-application setting.</p></li><li><p>Fixed reading of <code class="filename">.tsv</code> (tab-separated values format) files that have empty
+fields.</p></li><li><p>Marked references to objects of an exited AUT as "dead"
+to prevent crashes on further access.</p></li><li><p>Fixed a Unicode problem if non-ASCII characters are
+used in symbolic object names.</p></li><li><p>Allow conversion of Tcl double values (or what the
+interpreter believes are doubles) to a string.</p></li><li><p>Added a fallback error message for findObject() to avoid
+crashes on Solaris.</p></li><li><p>Implemented .name and .caller properties on JavaScript
+function objects that allow assembling a better callstack for improved
+debugging. Also added a .lineNumber property to exception objects in
+addition to the .line property for compatibility to the Mozilla
+JavaScript engine.</p></li><li><p>Let the Python test.verify() function to use the standard
+Python truth value rules rather than restricting it to just int and long
+values.</p></li><li><p>Suppress "different type" result details for [test
+compare] when not applicable.</p></li><li><p>Let Python's waitFor() gracefully handle expressions
+that return a non-integer value.</p></li><li><p>Changed the JavaScript print() output so that it writes
+to stdout (instead of stderr) and uses the UTF-8 encoding to display
+non-ASCII characters properly.</p></li><li><p>Fixed crashes that occurred as a result of syntax errors
+in some Python test scripts.</p></li><li><p>Fixed a Unicode problem in the test result output that
+can occur in rare circumstances.</p></li><li><p>Fixed a regression when waitForObjectItem() is called on
+object names that contain a space.</p></li><li><p>Fixed a slight oversight in the improved error
+reporting. The unmatched properties are now reset when an error is
+reported and hence don't pollute later error
+messages.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="ide.1"></a>2.58.2. IDE</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Made the "End recording" button work if testing with
+sub AUTs and there are sub AUTs running.</p></li><li><p>Fixed focus problems that occurred when saving a
+file.</p></li><li><p>Let the Perl variable watcher display the value of
+mixed string/int and string/double types. Hide reserved variables that
+are denoted by a leading caret.</p></li><li><p>Prevented the creation of test cases with empty
+names.</p></li><li><p>src/gui/objectmapeditor.cpp: Allow dots when editing hierarchical
+	names in the objectmap editor.
+</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="qt-specific.1"></a>2.58.3. Qt-specific</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Instead of treating an access to the .text property of
+an invalid item view index as an invalid operation (that could cause a
+crash), an empty string is returned.
+</p></li><li><p>Fixed a crash caused by an access to an invalid
+iterator.</p></li><li><p>Avoid parse errors on Object Map name reuse if the map
+contains a mixture of multi-property and hierarchical
+names.</p></li><li><p>Fixed a possible source for crashes on 64-bit Windows
+systems.</p></li><li><p>Improved the detection of statically linked Qt
+applications.</p></li><li><p>Raise the AUT on playback on Mac OS X with Qt
+4.4.</p></li><li><p>Fixed a Spy Unicode problem with Qt 4.</p></li><li><p>Avoid wrong menu activation when replaying menu
+actions with Qt 4.4 on Mac OS X.</p></li><li><p>Fixed the recording of the QResizeEvent sent at
+application startup.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="java-specific.1"></a>2.58.4. Java-specific</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Fixed the replaying of type("swing-object",
+"&lt;Ctrl+X&gt;").</p></li><li><p>Fixed the wrong "selection" property of TreeItemProxy.
+It was always false.</p></li><li><p>Don't record mouseClick() on glass panes if these
+events are dispatched in the application and trigger a mouse event in
+the content pane. Mouse clicks on components below a glass pane will be
+replayed by sending clicks to the glass pane.</p></li><li><p>Let the application context name property of
+sub-applications be the argv[0] system value rather than using
+"squish".</p></li><li><p>Stopped FigureCanvas only looking at IFigure and
+ignoring SWT widget children.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="web-specific.1"></a>2.58.5. Web-specific</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Fixed replaying text input on file input fields with
+Internet Explorer 6.</p></li><li><p>Fixed the recording of backslashes in file input fields
+with Internet Explorer.</p></li><li><p>Support isBrowserDialogOpen() for Mozilla on X11
+systems like Linux.</p></li><li><p>Fixed a communication problem that could cause objects
+not being found when testing with Safari.</p></li><li><p>Fixed random crashes of the internal webhook tool when
+doing Safari testing.</p></li><li><p>Fixed the recording and playback of text input on input
+fields with type "search" (they are understood by
+Safari).</p></li><li><p>Support for Kiwi Matrix tables.</p></li><li><p>Fixed the handling of strings containing the character
+sequence 'HTTP'.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="tk-specific.1"></a>2.58.6. Tk-specific</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Improved support for the Tk "scale" widget. Replaying
+scrollTo now uses real mouse events so custom bindings to mouse-press
+will also be triggered.</p></li><li><p>Fixed infinite recursion when dealing with the VTK
+KWWidget combobox control.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="mac-specific-cocoa-carbon-edition"></a>2.58.7. Mac-specific (Cocoa/Carbon edition)</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Added support for Cocoa toolbars and toolbar
+items.</p></li><li><p>Fixed the object picker (and highlighter) for Carbon
+applications: sometimes, it did not manage to find the right objects
+under the cursor.</p></li><li><p>Fixed the problem that occurred in some Carbon
+applications when the application menu did not show up (e.g., in the Spy
+and during recording and playback).</p></li><li><p>Added support for HIDataBrowser. Please view with
+the wrapperexplorer to see which APIs are supported by the
+HIDataBrowser and HIDataBrowserCell wrapper classes.</p></li><li><p>Fixed the playback of menus which in some Carbon
+applications sometimes selected the wrong menu item.
+</p></li><li><p>Fixed the recording of menu events on Mac OS 10.5 (Leopard)
+for Carbon applications.</p></li><li><p>Mouse clicks are recorded after the Quit menu option is
+chosen so that actions on the modification alert can be recorded.
+</p></li><li><p>Allow picking of objects in a sheet in the
+Spy.</p></li><li><p>Fixed a race condition which caused random crashes on
+playback of waitForObject() on sheets (and may have been the cause of
+other crashes too).</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="source-builds.1"></a>2.58.8. Source Builds</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Fixed building with Qt 4.5.</p></li><li><p>Fixed the 'Record and insert here' feature for
+when Squish is built without Tcl support.</p></li><li><p>Fixed the compilation problem in xml2reportgenerator.cpp
+which occurred when building squishrunner if JavaScript support was
+disabled.</p></li></ul></div></div></div><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" type="text/javascript" src="ScriptingLanguage.js"></script><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format">setScriptingLanguage();</script><div class="navfooter"><hr></hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="rel-344.html">Prev</a> </td><td width="20%" align="center"><a accesskey="u" href="relnotes.html">Up</a></td><td width="40%" align="right"> <a accesskey="n" href="rel-342.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">2.57. Version 3.4.4 </td><td width="20%" align="center"><a accesskey="h" href="index-noframes.html">Home</a></td><td width="40%" align="right" valign="top"> 2.59. Version 3.4.2</td></tr></table></div></body>
+<!-- Mirrored from rel-343.html by HTTrack Website Copier/3.x [XR&CO'2013], Wed, 06 Jul 2022 13:28:57 GMT -->
+</html>

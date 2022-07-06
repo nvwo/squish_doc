@@ -1,0 +1,98 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<!-- Mirrored from rel-662.html by HTTrack Website Copier/3.x [XR&CO'2013], Wed, 06 Jul 2022 13:28:55 GMT -->
+<head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><title>2.6. Version 6.6.2</title><link rel="stylesheet" href="manual.css" type="text/css"></link><meta name="generator" content="DocBook XSL Stylesheets V1.73.2"></meta><link rel="start" href="index-noframes.html" title="Squish Manual"></link><link rel="up" href="relnotes.html" title="Chapter 2. Release Notes—for Upgraders"></link><link rel="prev" href="rel-670.html" title="2.5. Version 6.7"></link><link rel="next" href="rel-661.html" title="2.7. Version 6.6.1"></link><style xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" type="text/css" media="screen">
+        div.toc * { margin-left: 6px; margin-right: auto; max-width: 75em; }
+        div.toc span { margin-left: 0px; }
+        * { margin-left: auto; margin-right: auto; max-width: 75em; }
+        body { margin-left: 6px; margin-right: 6px; }
+        table th { padding: .5ex }
+        table td { padding: .5ex }
+    </style><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format">
+        function keyPress() {
+            var e = window.event;
+            if ( e == undefined ) {
+                return;
+            }
+            /* ### does not properly scroll, yet
+            if ( e.keyCode == 32 ) {
+            var l = document.links;
+            for ( var i = 0; i < l.length; i++ ) {
+                if ( l[i].innerText == "Next" ) {
+                location.href = l[i].href;
+                }
+            }
+            } else
+                */
+                if ( e.keyCode == 0x08 ) {
+            var l = document.links;
+            for ( var i = 0; i < l.length; i++ ) {
+                if ( l[i].innerText == "Prev" ) {
+                location.href = l[i].href;
+                }
+            }
+            }
+        }
+        document.onkeypress = keyPress;
+    </script></head><body><div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="rel-662"></a>2.6. Version 6.6.2</h2></div></div></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><span class="section"><a href="rel-662.html#rel-662-general">2.6.1. General</a></span></dt><dt><span class="section"><a href="rel-662.html#rel-662-ide">2.6.2. Squish IDE-specific</a></span></dt><dt><span class="section"><a href="rel-662.html#rel-662-qt">2.6.3. Qt-specific</a></span></dt><dt><span class="section"><a href="rel-662.html#rel-662-java">2.6.4. <span class="trademark">Java</span>™-specific</a></span></dt><dt><span class="section"><a href="rel-662.html#rel-662-web">2.6.5. Web-specific</a></span></dt><dt><span class="section"><a href="rel-662.html#rel-662-android">2.6.6. Android-specific</a></span></dt><dt><span class="section"><a href="rel-662.html#rel-662-windows">2.6.7. Windows (native)-specific</a></span></dt><dt><span class="section"><a href="rel-662.html#rel-662-mac">2.6.8. macOS-specific (Cocoa/Carbon edition)</a></span></dt><dt><span class="section"><a href="rel-662.html#rel-662-tk">2.6.9. Tk-specific</a></span></dt><dt><span class="section"><a href="rel-662.html#rel-662-source">2.6.10. Source Packages</a></span></dt><dt><span class="section"><a href="rel-662.html#rel-662-known-issues">2.6.11. Known Issues</a></span></dt></dl></div><p><span class="emphasis"><em>Squish</em></span> 6.6.2 is a maintenance release containing bug fixes for all
+  editions of the product. See the following sections for a detailed list of
+  all changes.</p><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="rel-662-general"></a>2.6.1. General</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Fixed an issue which caused Squish to start incorrectly
+      after installation into the root directory of Unix
+      systems.</p></li><li><p>Corrected the port number limits for the <span class="application">squishserver</span>
+      <code class="option">--config</code> <code class="option">addAttachableAUT</code>
+      command.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="rel-662-ide"></a>2.6.2. Squish IDE-specific</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Fixed a problem which caused the Auto-Import functionality in
+      the Python editor to be perpetually enabled, regardless of preference
+      settings.</p></li><li><p>Fixed a problem which caused 0-byte ZIP files to be
+      generated when exporting a test report from the <span class="application">Squish IDE</span>.</p></li><li><p>Corrected an issue which caused the <span class="application">Squish IDE</span> to function
+      improperly when reading an empty <span class="application">Squish Test Center</span> configuration
+      file.</p></li><li><p>Cancelling tests that start long-running subprocesses
+      (for example using <span class="command"><strong>startaut</strong></span> to start an
+       <acronym class="acronym">AUT</acronym> as part of the test script) now works as
+      intended.</p></li><li><p>Fixed a potential <code class="literal">NullPointerException</code>
+      error when recording or creating verification point
+      files.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="rel-662-qt"></a>2.6.3. Qt-specific</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Improved compatibility with the Qt for WebAssembly plugin
+      in Qt 5.15.</p></li><li><p>Added support for calling methods of <code class="code">QObject</code>
+      objects when the method signature contains <code class="code">QTreeWidgetItem</code>
+      arguments.</p></li><li><p>Fixed compiler warnings pertaining to a private field
+      <code class="code">d</code> not being used when including the
+      <code class="filename">include/recordhint.h</code> header.</p></li><li><p>Corrected a defect which prevented the object map in the
+      <code class="filename">csvtable/suite_rb</code> example from being
+      saved.</p></li><li><p>Fixed recording and replaying interactions on QtQuick
+      <code class="code">Rectangle</code> objects when using Qt 5.12 or
+      newer.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="rel-662-java"></a>2.6.4. <span class="trademark">Java</span>™-specific</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Add support for applications using Java
+      15.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="rel-662-web"></a>2.6.5. Web-specific</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Enabled access to elements embedded into the content of
+      Chromium-based applications using the <code class="code">&lt;webview&gt;</code>
+      element tag.</p></li><li><p>Fixed a problem with interacting with confirm, alert and
+      prompt dialogs in <span class="application">Microsoft Internet Explorer</span>, which led to an error being reported involving
+      <acronym class="acronym">COM</acronym> exception code 80020101.</p></li><li><p>Fixed a defect which caused <span class="emphasis"><em>Squish</em></span> to fail automating
+      <span class="application">Firefox</span> versions prior to 57.</p></li><li><p>Resolved a problem with JavaScript evaluation answers
+      being delayed by the browser. A potential side effect of this resolution
+      includes object lookup errors being slightly delayed, and thus also
+      delaying how long <a class="xref" href="rgs-squish.html#waitForObject-function"><code class="function">waitForObject</code></a> takes until an
+      object is successfully found.</p></li><li><p>Fixed a problem with activating webviews, when typing
+      into objects that live in different webview objects in a Chromium-based
+      application.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="rel-662-android"></a>2.6.6. Android-specific</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Improved performance when recording and
+      replaying.</p></li><li><p>Accessing WebView controls now works as expected on
+      Android 10 and later.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="rel-662-windows"></a>2.6.7. Windows (native)-specific</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Fixed a regression which caused blacklisted subprocesses
+      to be hooked by <span class="emphasis"><em>Squish</em></span>.</p></li><li><p>Added support for <a class="xref" href="rgs-windowsconvenienceapi.html#win-mouseDrag-function"><code class="function">mouseDrag</code></a>
+      operation on <code class="literal">msctls_trackbar32</code>
+      controls.</p></li><li><p>Introduced logging of any noticed <acronym class="acronym">AUT</acronym>
+      (sub)processes to the <span class="guilabel">Runner/Server</span> log of the
+      <span class="application">Squish IDE</span>.</p></li><li><p>Fixed hooking into subprocesses when
+      attaching to running applications (i.e. invoking
+      <span class="application">startwinaut</span> with both
+      <code class="option">--port</code> and <code class="option">--pid</code>).</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="rel-662-mac"></a>2.6.8. macOS-specific (Cocoa/Carbon edition)</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Fixed handling of color profiles in screenshot
+      verifications on macOS. Screenshot Verification Points taken in older
+      versions of <span class="emphasis"><em>Squish</em></span> would sometimes fail when testing with <span class="emphasis"><em>Squish</em></span> 6.6
+      due to incorrect handling of color profiles. This mishandling would show
+      as slightly wrong colors when comparing actual and reference
+      images.</p></li><li><p>Improved error reporting in cases where <a class="xref" href="rgs-squish.html#mouseMove-function"><code class="function">mouseMove</code></a> failed.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="rel-662-tk"></a>2.6.9. Tk-specific</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Added <span class="emphasis"><em>Squish</em></span> for Tk Windows packages for Tk
+      8.6.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="rel-662-source"></a>2.6.10. Source Packages</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p><span class="emphasis"><em>Squish</em></span> source packages now include all files required
+      for Squish for Qt on QNX.</p></li><li><p><span class="application">squishserver</span> can now be built against a static Qt
+      installation.</p></li><li><p>Fixed Qt symbol lookup on recent Linux systems by adding a
+      workaround for malformed <span class="application">nm</span> output.
+      </p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="rel-662-known-issues"></a>2.6.11. Known Issues</h3></div></div></div><p>For a list of noteworthy issues which were found after the release of
+    <span class="emphasis"><em>Squish</em></span> 6.6.2, please see the <a class="ulink" href="https://kb.froglogic.com/squish/known-issues/6-6-2/" target="_blank">Known
+    Issues page</a> in the froglogic Knowledge Base.</p></div></div><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" type="text/javascript" src="ScriptingLanguage.js"></script><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format">setScriptingLanguage();</script><div class="navfooter"><hr></hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="rel-670.html">Prev</a> </td><td width="20%" align="center"><a accesskey="u" href="relnotes.html">Up</a></td><td width="40%" align="right"> <a accesskey="n" href="rel-661.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">2.5. Version 6.7 </td><td width="20%" align="center"><a accesskey="h" href="index-noframes.html">Home</a></td><td width="40%" align="right" valign="top"> 2.7. Version 6.6.1</td></tr></table></div></body>
+<!-- Mirrored from rel-662.html by HTTrack Website Copier/3.x [XR&CO'2013], Wed, 06 Jul 2022 13:28:55 GMT -->
+</html>

@@ -1,0 +1,131 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<!-- Mirrored from ao-vs-integration.html by HTTrack Website Copier/3.x [XR&CO'2013], Wed, 06 Jul 2022 13:29:01 GMT -->
+<head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><title>9.8. Microsoft® Visual Studio® Integration</title><link rel="stylesheet" href="manual.css" type="text/css"></link><meta name="generator" content="DocBook XSL Stylesheets V1.73.2"></meta><link rel="start" href="index-noframes.html" title="Squish Manual"></link><link rel="up" href="addons.html" title="Chapter 9. Add-Ons Reference Manual"></link><link rel="prev" href="ao-rqmintegration.html" title="9.7. IBM Rational Quality Manager integration"></link><link rel="next" href="ao-devops.html" title="9.9. Microsoft Azure DevOps integration"></link><style xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" type="text/css" media="screen">
+        div.toc * { margin-left: 6px; margin-right: auto; max-width: 75em; }
+        div.toc span { margin-left: 0px; }
+        * { margin-left: auto; margin-right: auto; max-width: 75em; }
+        body { margin-left: 6px; margin-right: 6px; }
+        table th { padding: .5ex }
+        table td { padding: .5ex }
+    </style><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format">
+        function keyPress() {
+            var e = window.event;
+            if ( e == undefined ) {
+                return;
+            }
+            /* ### does not properly scroll, yet
+            if ( e.keyCode == 32 ) {
+            var l = document.links;
+            for ( var i = 0; i < l.length; i++ ) {
+                if ( l[i].innerText == "Next" ) {
+                location.href = l[i].href;
+                }
+            }
+            } else
+                */
+                if ( e.keyCode == 0x08 ) {
+            var l = document.links;
+            for ( var i = 0; i < l.length; i++ ) {
+                if ( l[i].innerText == "Prev" ) {
+                location.href = l[i].href;
+                }
+            }
+            }
+        }
+        document.onkeypress = keyPress;
+    </script></head><body><div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="ao-vs-integration"></a>9.8. <span class="trademark">Microsoft</span>® <span class="trademark">Visual Studio</span>® Integration</h2></div></div></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><span class="section"><a href="ao-vs-integration.html#ao-vs-integration-obtaining">9.8.1. Obtaining the <span class="trademark">Visual Studio</span>® Integration</a></span></dt><dt><span class="section"><a href="ao-vs-integration.html#ao-vs-integration-usage">9.8.2. Usage</a></span></dt></dl></div><p>
+		Since <span class="trademark">Microsoft</span>® <span class="trademark">Visual Studio</span>® 2015 instead of Squish plugin, there is a new Squish library that allows running Squish tests using unit tests. This way the GUI test execution is brought even closer to the AUT.
+	</p><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="ao-vs-integration-obtaining"></a>9.8.1. Obtaining the <span class="trademark">Visual Studio</span>® Integration</h3></div></div></div><p>
+			The newest <span class="trademark">Visual Studio</span>® Integration library can be downloaded using the following URL: <a class="ulink" href="https://download.froglogic.com/resources/squish-vs-integration-library_latest.zip" target="_blank">https://download.froglogic.com/resources/squish-vs-integration-library_latest.zip</a>.
+		</p><p>
+			The <span class="emphasis"><em>Squish</em></span> <span class="trademark">Visual Studio</span>® Integration package contains:
+			</p><div class="itemizedlist"><ul type="disc"><li><p>
+						SquishTest.dll library
+					</p></li><li><p>
+						Example tests project
+					</p></li></ul></div><p>
+		</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="ao-vs-integration-usage"></a>9.8.2. Usage</h3></div></div></div><p>
+			The example project implements three unit tests that execute the same test suite in three different configurations. The SquishTest.dll library was added to the project as a reference.
+		</p><p>
+			As in the <span class="emphasis"><em>UnitTest1.cs</em></span> from the provided example, to run a test suite you need to create a SquishRun object, set the report generators and call Start() method.
+			</p><pre class="programlisting">
+SquishRun squishRun = new SquishRun(squishPackage, testSuite, htmlDir);
+
+// Set the HTML reportgen
+squishRun.HtmlReport(htmlDir);
+
+//Set the Testcenter reportgen
+squishRun.TestcenterReport(testcenterBaseURL, uploadToken, project, batchName, labels);
+
+squishRun.Start();
+Assert.IsTrue(squishRun.ExecutionSuccessful, "Test execution failed.\n"+ squishRun.RunnerErrorOutput);
+</pre><p>
+		</p><p>
+			The SquishTest.dll library provides a <code class="code">SquishRun</code> object whose methods can be used for executing test suites prepared with <span class="emphasis"><em>Squish</em></span>.
+		</p><div class="funcsynopsis"><a id="SquishRun"></a><p><code class="funcdef">SquishRun <b class="fsfunc">SquishRun</b>(</code><var class="pdparam">squishPackage</var>, <var class="pdparam">testSuite</var><code>)</code>;</p></div><div class="funcsynopsis"><p><code class="funcdef">SquishRun <b class="fsfunc">SquishRun</b>(</code><var class="pdparam">squishPackage</var>, <var class="pdparam">testSuite</var>, <var class="pdparam">testCases</var><code>)</code>;</p></div><div class="funcsynopsis"><p><code class="funcdef">SquishRun <b class="fsfunc">SquishRun</b>(</code><var class="pdparam">squishPackage</var>, <var class="pdparam">testSuite</var>, <var class="pdparam">host</var>, <var class="pdparam">port</var><code>)</code>;</p></div><div class="funcsynopsis"><p><code class="funcdef">SquishRun <b class="fsfunc">SquishRun</b>(</code><var class="pdparam">squishPackage</var>, <var class="pdparam">testSuite</var>, <var class="pdparam">testCases</var>, <var class="pdparam">host</var>, <var class="pdparam">port</var><code>)</code>;</p></div><p>
+			The constructor of the <code class="code">SquishRun</code> object.
+			</p><div class="itemizedlist"><ul type="disc"><li><p>
+						<em class="parameter"><code>squishPackage</code></em> - a Squish installation directory path on a test machine
+					</p></li><li><p>
+						<em class="parameter"><code>testSuite</code></em> - a test suite path on the test machine
+					</p></li><li><p>
+						<em class="parameter"><code>testCases</code></em> - an array of test cases to execute (like the <code class="code">--testcase test_case_name</code> option from the command line execution)
+					</p></li><li><p>
+						<em class="parameter"><code>port</code></em> - port on which squishserver should be started
+					</p></li><li><p>
+						<em class="parameter"><code>host</code></em> - host used for remote execution. When used, squishserver needs to be started separately, e.g. manually or by a script.
+					</p></li></ul></div><p>
+		</p><p>
+			Once the <code class="code">SquishRun</code> object is created the following are available.
+
+			</p><div class="informaltable"><table border="0"><colgroup><col></col></colgroup><tbody><tr valign="top"><td valign="top">
+								<div class="itemizedlist"><ul type="disc" compact><li><p>
+											<a class="xref" href="ao-vs-integration.html#SquishRun.HtmlReport-function"><code class="function">SquishRun.HtmlReport</code></a>
+										</p></li><li><p>
+											<a class="xref" href="ao-vs-integration.html#SquishRun.TestcenterReport-function"><code class="function">SquishRun.TestcenterReport</code></a>
+										</p></li><li><p>
+											<a class="xref" href="ao-vs-integration.html#SquishRun.Start-function"><code class="function">SquishRun.Start</code></a>
+										</p></li><li><p>
+											<a class="xref" href="ao-vs-integration.html#SquishRun.ExecutionSuccessful-property">SquishRun.ExecutionSuccessful</a>
+										</p></li><li><p>
+											<a class="xref" href="ao-vs-integration.html#SquishRun.TestcenterReportID-property">SquishRun.TestcenterReportID</a>
+										</p></li></ul></div>
+							</td></tr></tbody></table></div><p>
+		</p><p>
+			</p><div class="funcsynopsis"><a id="SquishRun.HtmlReport-function"></a><p><code class="funcdef">void <b class="fsfunc">SquishRun.HtmlReport</b>(</code><var class="pdparam">htmlDir</var><code>)</code>;</p></div><p>
+		</p><p>
+			</p><div class="itemizedlist"><ul type="disc"><li><p>
+						<em class="parameter"><code>htmlDir</code></em> - path to the directory where an HTML report will be created
+					</p></li></ul></div><p>
+		</p><p>
+			</p><div class="funcsynopsis"><a id="SquishRun.TestcenterReport-function"></a><p><code class="funcdef">void <b class="fsfunc">SquishRun.TestcenterReport</b>(</code><var class="pdparam">testcenterBaseUrl</var>, <var class="pdparam">uploadToken</var>, <var class="pdparam">project</var>, <var class="pdparam">batchName</var>, <var class="pdparam">labels</var><code>)</code>;</p></div><p>
+		</p><p>
+			</p><div class="itemizedlist"><ul type="disc"><li><p>
+						<em class="parameter"><code>testcenterBaseUrl</code></em> - Base URL of the Testcenter instance to upload to, for example: http://myserver:8800
+					</p></li><li><p>
+						<em class="parameter"><code>uploadToken</code></em> - Upload token, created from <span class="application">Squish Test Center</span> user settings.
+						See <a class="ulink" href="https://doc.froglogic.com/squish-testcenter/latest/ug-user-management.html#upload-token" target="_blank"><span class="application">Squish Test Center</span> documentation</a> for further details.
+					</p></li><li><p>
+						<em class="parameter"><code>project</code></em> - Name of the project receiving the upload
+					</p></li><li><p>
+						<em class="parameter"><code>batchName</code></em> - (Optional) Name of the batch. If provided, will be the name of the batch created in the indicated project otherwise a name will be automatically generated
+					</p></li><li><p>
+						<em class="parameter"><code>labels</code></em> - (Optional) Dictionary of labels keys/values to set on the report.
+						Example: <code class="code">new Dictionary&lt;string, string&gt;{ {"OS", "Windows"} }</code>
+					</p></li></ul></div><p>
+		</p><p>
+			</p><div class="funcsynopsis"><a id="SquishRun.Start-function"></a><p><code class="funcdef">int <b class="fsfunc">SquishRun.Start</b>(</code><code>)</code>;</p></div><p>
+		</p><p>
+			The <code class="code">Start</code> method starts the test execution. It returns squishrunner exit code. Value <code class="code">99</code> means that tests were executed but results contain FAIL, ERROR, or FATAL entry.
+		</p><a id="SquishRun.TestcenterReportID-property"></a>
+			int <span class="property">SquishRun.TestcenterReportID</span>
+		<p>
+			This property holds the report ID returned by Squish Testcenter reportgen if the upload was successful. Default value is -1.
+		</p><a id="SquishRun.ExecutionSuccessful-property"></a>
+			boolean <span class="property">SquishRun.ExecutionSuccessful</span>
+		<p>
+			This property holds the information if the execution was successful, i.e. doesn't contain FAIL, ERROR, or FATAL.
+		</p></div></div><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" type="text/javascript" src="ScriptingLanguage.js"></script><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format">setScriptingLanguage();</script><div class="navfooter"><hr></hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="ao-rqmintegration.html">Prev</a> </td><td width="20%" align="center"><a accesskey="u" href="addons.html">Up</a></td><td width="40%" align="right"> <a accesskey="n" href="ao-devops.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">9.7. IBM Rational Quality Manager integration </td><td width="20%" align="center"><a accesskey="h" href="index-noframes.html">Home</a></td><td width="40%" align="right" valign="top"> 9.9. Microsoft Azure DevOps integration</td></tr></table></div></body>
+<!-- Mirrored from ao-vs-integration.html by HTTrack Website Copier/3.x [XR&CO'2013], Wed, 06 Jul 2022 13:29:01 GMT -->
+</html>

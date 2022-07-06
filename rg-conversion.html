@@ -1,0 +1,112 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<!-- Mirrored from rg-conversion.html by HTTrack Website Copier/3.x [XR&CO'2013], Wed, 06 Jul 2022 13:29:00 GMT -->
+<head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><title>7.15. Migrating to the Scripted Object Map: Common conversion problems</title><link rel="stylesheet" href="manual.css" type="text/css"></link><meta name="generator" content="DocBook XSL Stylesheets V1.73.2"></meta><link rel="start" href="index-noframes.html" title="Squish Manual"></link><link rel="up" href="ref.man.html" title="Chapter 7. Tools Reference Manual"></link><link rel="prev" href="rg-templates.html" title="7.14. Testcase Templates"></link><link rel="next" href="rg-licenseserver.html" title="7.16. License Server"></link><style xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" type="text/css" media="screen">
+        div.toc * { margin-left: 6px; margin-right: auto; max-width: 75em; }
+        div.toc span { margin-left: 0px; }
+        * { margin-left: auto; margin-right: auto; max-width: 75em; }
+        body { margin-left: 6px; margin-right: 6px; }
+        table th { padding: .5ex }
+        table td { padding: .5ex }
+    </style><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format">
+        function keyPress() {
+            var e = window.event;
+            if ( e == undefined ) {
+                return;
+            }
+            /* ### does not properly scroll, yet
+            if ( e.keyCode == 32 ) {
+            var l = document.links;
+            for ( var i = 0; i < l.length; i++ ) {
+                if ( l[i].innerText == "Next" ) {
+                location.href = l[i].href;
+                }
+            }
+            } else
+                */
+                if ( e.keyCode == 0x08 ) {
+            var l = document.links;
+            for ( var i = 0; i < l.length; i++ ) {
+                if ( l[i].innerText == "Prev" ) {
+                location.href = l[i].href;
+                }
+            }
+            }
+        }
+        document.onkeypress = keyPress;
+    </script></head><body><div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="rg-conversion"></a>7.15. Migrating to the Scripted Object Map: Common conversion problems</h2></div></div></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><span class="section"><a href="rg-conversion.html#rg-conversion-realnames">7.15.1. Real Names that contain Symbolic Names</a></span></dt><dt><span class="section"><a href="rg-conversion.html#rg-conversion-customfunctions">7.15.2. Custom functions that take Symbolic Names as parameters</a></span></dt><dt><span class="section"><a href="rg-conversion.html#rg-conversion-escaped">7.15.3. Symbolic Names that use characters that need to be escaped in the script language</a></span></dt></dl></div><p>
+The <span class="application">Squish IDE</span> offers a basic conversion wizard to convert test suites
+from the text based Object Map to the new script based Object Map. You
+can find this functionality in the Object Map section of the Test Suite
+Settings as well as in the top right corner of the Object Map Editor.
+The conversion is a very basic best-effort operation and is not
+guaranteed to produce a working Test Suite. Following are some common
+conversion problems.
+</p><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="rg-conversion-realnames"></a>7.15.1. Real Names that contain Symbolic Names</h3></div></div></div><p>
+When test scripts use Real Names that contain Symbolic Names, the
+conversion will replace the Symbolic Names inside the Real Names
+with Scripted Symbolic Names, which will break the test script execution.
+</p><p>
+This is an example of code that would not get converted correctly:
+</p><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Python</span><pre class="programlisting">
+clickButton(waitForObject("{text='New' type='QToolButton' unnamed='1' visible='1' window=':Address Book_MainWindow'}"))
+</pre></div><p>
+This is what the conversion would produce:
+</p><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Python</span><pre class="programlisting">
+clickButton(waitForObject("{text='New' type='QToolButton' unnamed='1' visible='1' window=names.address_Book_MainWindow}"))
+</pre></div><p>
+To solve this issue the old Real Name can be converted to a Scripted
+Real Name manually:
+</p><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Python</span><pre class="programlisting">
+clickButton(waitForObject({"text": "New", "type": "QToolButton", "unnamed": "1", "visible": "1", "window": names.address_Book_MainWindow}))
+</pre></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="rg-conversion-customfunctions"></a>7.15.2. Custom functions that take Symbolic Names as parameters</h3></div></div></div><p>
+Existing test frameworks might already be using custom script objects to
+identify gui elements (e.g. when using page objects) and there might be
+convenience functions inside the test scripts that work with both
+Symbolic Names and custom script objects. Since the conversion will
+simply replace all Symbolic Names with Scripted Symbolic Names all
+custom functions that are used with Symbolic Names also need to support
+Scripted Symbolic Names or the test scripts will not execute correctly.
+</p><p>
+This is an example of code that might not get converted correctly:
+</p><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Python</span><pre class="programlisting">
+def customVerification(objectOrName):
+    if isinstance(objectOrName,str):
+        #do something with the symbolic name
+    else:
+        #do something else
+
+def main():
+    startApplication("addressbook")
+    customVerification(":Address Book.New_QToolButton")
+</pre></div><p>
+This is what the conversion would produce:
+</p><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Python</span><pre class="programlisting">
+def customVerification(objectOrName):
+    if isinstance(objectOrName,str):
+        #do something with the symbolic name
+    else:
+        #do something else
+
+def main():
+    startApplication("addressbook")
+    customVerification(names.address_Book_New_QToolButton)
+</pre></div><p>
+To solve this issue the function code needs to be adapted manually
+to be compatible with dictionaries that squish uses as scripted
+real names.
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="rg-conversion-escaped"></a>7.15.3. Symbolic Names that use characters that need to be escaped in the script language</h3></div></div></div><p>
+When Symbolic Names contain characters that need to be escaped in
+the script language but not in the object map itself the name will
+simply not be replaced (e.g. the @ in Perl needs to be escaped,
+but not inside the object map).
+</p><p>
+This Perl code will not get converted because the object map entry
+will be “<span class="quote">John.Doe@froglogic.com_Item</span>”.
+</p><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Perl</span><pre class="programlisting">
+test::compare(waitForObject(":John.Doe\@froglogic.com_Item")-&gt;text, "John.Doe\@froglogic.com")
+</pre></div><p>
+To solve this issue the names will have to be converted manually.
+</p></div></div><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" type="text/javascript" src="ScriptingLanguage.js"></script><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format">setScriptingLanguage();</script><div class="navfooter"><hr></hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="rg-templates.html">Prev</a> </td><td width="20%" align="center"><a accesskey="u" href="ref.man.html">Up</a></td><td width="40%" align="right"> <a accesskey="n" href="rg-licenseserver.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">7.14. Testcase Templates </td><td width="20%" align="center"><a accesskey="h" href="index-noframes.html">Home</a></td><td width="40%" align="right" valign="top"> 7.16. License Server</td></tr></table></div></body>
+<!-- Mirrored from rg-conversion.html by HTTrack Website Copier/3.x [XR&CO'2013], Wed, 06 Jul 2022 13:29:00 GMT -->
+</html>

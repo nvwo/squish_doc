@@ -1,0 +1,65 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<!-- Mirrored from rel-504.html by HTTrack Website Copier/3.x [XR&CO'2013], Wed, 06 Jul 2022 13:28:56 GMT -->
+<head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><title>2.36. Version 5.0.4</title><link rel="stylesheet" href="manual.css" type="text/css"></link><meta name="generator" content="DocBook XSL Stylesheets V1.73.2"></meta><link rel="start" href="index-noframes.html" title="Squish Manual"></link><link rel="up" href="relnotes.html" title="Chapter 2. Release Notes—for Upgraders"></link><link rel="prev" href="rel-510.html" title="2.35. Version 5.1.0"></link><link rel="next" href="rel-503.html" title="2.37. Version 5.0.3"></link><style xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" type="text/css" media="screen">
+        div.toc * { margin-left: 6px; margin-right: auto; max-width: 75em; }
+        div.toc span { margin-left: 0px; }
+        * { margin-left: auto; margin-right: auto; max-width: 75em; }
+        body { margin-left: 6px; margin-right: 6px; }
+        table th { padding: .5ex }
+        table td { padding: .5ex }
+    </style><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format">
+        function keyPress() {
+            var e = window.event;
+            if ( e == undefined ) {
+                return;
+            }
+            /* ### does not properly scroll, yet
+            if ( e.keyCode == 32 ) {
+            var l = document.links;
+            for ( var i = 0; i < l.length; i++ ) {
+                if ( l[i].innerText == "Next" ) {
+                location.href = l[i].href;
+                }
+            }
+            } else
+                */
+                if ( e.keyCode == 0x08 ) {
+            var l = document.links;
+            for ( var i = 0; i < l.length; i++ ) {
+                if ( l[i].innerText == "Prev" ) {
+                location.href = l[i].href;
+                }
+            }
+            }
+        }
+        document.onkeypress = keyPress;
+    </script></head><body><div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="rel-504"></a>2.36. Version 5.0.4</h2></div></div></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><span class="section"><a href="rel-504.html#idp35711000">2.36.1. Web-specific</a></span></dt><dt><span class="section"><a href="rel-504.html#idp35714600">2.36.2. Java-specific</a></span></dt><dt><span class="section"><a href="rel-504.html#idp35719928">2.36.3. Android-specific</a></span></dt></dl></div><p><span class="emphasis"><em>Squish</em></span> 5.0.4 is a maintenance release of the Web, Java and Android
+edition prompted by the release of new browser and SDK
+versions.</p><p>The coming 5.1 release will bring new features and fixes for all
+editions of <span class="emphasis"><em>Squish</em></span>.</p><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="idp35711000"></a>2.36.1. Web-specific</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Added support for IE 11.</p></li><li><p>Protect against possible COM errors in
+IE.</p></li><li><p>Fixed accessing the HTML_Table.cellAt()
+function.</p></li><li><p>Fixed crash triggered when navigating HTML elements in
+the Object Tree of the IDE.</p></li><li><p>Make the IE ReadyState timeout configurable via
+<code class="filename">SQUISH_DIR/etc/webwrapper.ini</code>.</p></li><li><p>Fixed script errors on failed calls of nextSibling()
+and others.</p></li><li><p>Fixed return value of
+previousSibling().</p></li><li><p>Fixed accidental ignoring of frames with height or
+width properties set as percentage.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="idp35714600"></a>2.36.2. Java-specific</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Fixed clicking on nested CTab items.</p></li><li><p>Fixed type() on Mac OS X when text has a newline
+character.</p></li><li><p>Reduced memory usage of JFrame
+handling.</p></li><li><p>Fixed waitForObject() problem with popup
+menus.</p></li><li><p>Make JavaFX click replay more
+reliable.</p></li><li><p>Let the Spy ignore picking of JavaFx objects when the Ctrl
+key is pressed.</p></li><li><p>When clicking on combobox don't record skin type of
+nodes.</p></li><li><p>Fixed mouseClick() recording on list items with
+checkboxes.</p></li><li><p>Improved context menu activation on Mac OS X with JRE
+7.</p></li><li><p>Fixed sporadic AUT crashes at end of test
+case.</p></li><li><p>Drop spurious events being record with CCombo SWT
+control.</p></li><li><p>Fixed Java class registration issues in script
+languages.</p></li><li><p>Fixed exceptions on queries of JTable model
+data.</p></li><li><p>Fixed Java applets with JRE 7 on Mac OS X.</p></li><li><p>Fixed Java applet testing in recent Firefox
+versions.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="idp35719928"></a>2.36.3. Android-specific</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Added support for Android 4.4 KitKat
+SDK.</p></li><li><p>Support longPress() recording on WebView
+controls.</p></li><li><p>Fixed coordinate scaling problem with taps for Apps
+developed with older SDKs.</p></li></ul></div></div></div><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" type="text/javascript" src="ScriptingLanguage.js"></script><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format">setScriptingLanguage();</script><div class="navfooter"><hr></hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="rel-510.html">Prev</a> </td><td width="20%" align="center"><a accesskey="u" href="relnotes.html">Up</a></td><td width="40%" align="right"> <a accesskey="n" href="rel-503.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">2.35. Version 5.1.0 </td><td width="20%" align="center"><a accesskey="h" href="index-noframes.html">Home</a></td><td width="40%" align="right" valign="top"> 2.37. Version 5.0.3</td></tr></table></div></body>
+<!-- Mirrored from rel-504.html by HTTrack Website Copier/3.x [XR&CO'2013], Wed, 06 Jul 2022 13:28:56 GMT -->
+</html>

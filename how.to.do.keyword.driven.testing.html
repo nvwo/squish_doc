@@ -1,0 +1,858 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<!-- Mirrored from how.to.do.keyword.driven.testing.html by HTTrack Website Copier/3.x [XR&CO'2013], Wed, 06 Jul 2022 13:28:59 GMT -->
+<head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><title>5.16. How to Do Keyword-Driven Testing</title><link rel="stylesheet" href="manual.css" type="text/css"></link><meta name="generator" content="DocBook XSL Stylesheets V1.73.2"></meta><link rel="start" href="https://index-noframes.html" title="Squish Manual"></link><link rel="up" href="https://users-guide.html" title="Chapter 5. User Guide"></link><link rel="prev" href="https://ugs-screenshotsonfail.html" title="5.15. How to Create Automatic Screenshots on Test Failures and Errors"></link><link rel="next" href="https://ug-interact-with-files-environment.html" title="5.17. How to Interact with Files and with the Environment in Test Scripts"></link><style xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" type="text/css" media="screen">
+        div.toc * { margin-left: 6px; margin-right: auto; max-width: 75em; }
+        div.toc span { margin-left: 0px; }
+        * { margin-left: auto; margin-right: auto; max-width: 75em; }
+        body { margin-left: 6px; margin-right: 6px; }
+        table th { padding: .5ex }
+        table td { padding: .5ex }
+    </style><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format">
+        function keyPress() {
+            var e = window.event;
+            if ( e == undefined ) {
+                return;
+            }
+            /* ### does not properly scroll, yet
+            if ( e.keyCode == 32 ) {
+            var l = document.links;
+            for ( var i = 0; i < l.length; i++ ) {
+                if ( l[i].innerText == "Next" ) {
+                location.href = l[i].href;
+                }
+            }
+            } else
+                */
+                if ( e.keyCode == 0x08 ) {
+            var l = document.links;
+            for ( var i = 0; i < l.length; i++ ) {
+                if ( l[i].innerText == "Prev" ) {
+                location.href = l[i].href;
+                }
+            }
+            }
+        }
+        document.onkeypress = keyPress;
+    </script></head><body><div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="how.to.do.keyword.driven.testing"></a>5.16. How to Do Keyword-Driven Testing</h2></div></div></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><span class="section"><a href="https://how.to.do.keyword.driven.testing.html#how.to.create.a.keyword.driven.test">5.16.1. How to Create a Keyword-Driven Test</a></span></dt><dt><span class="section"><a href="https://how.to.do.keyword.driven.testing.html#how.to.create.aut.specific.support.for.keyword.driven.tests">5.16.2. How to Create AUT-Specific Support for Keyword Driven Tests</a></span></dt><dt><span class="section"><a href="https://how.to.do.keyword.driven.testing.html#how.to.create.a.generic.keyword.driver.function">5.16.3. How to Create a Generic Keyword Driver Function</a></span></dt></dl></div><p>
+Keyword-driven testing (also called “<span class="quote">table-driven testing</span>”
+and “<span class="quote">action-word testing</span>”) is a testing methodology whereby
+tests are driven wholly by data. What makes keyword-driven testing
+different from data-driven testing is that in the latter we just read in
+data items, for example, to populate a GUI table, but in the former the
+data items aren't just data but the names of AUT-specific functions and
+their arguments which are then executed as the test runs.
+</p><p>
+The great advantage of keyword-driven testing is that the tests can be
+created purely as data tables in terms of high-level AUT actions such as
+“<span class="quote">Add Item</span>” or “<span class="quote">Delete Item</span>” that testers
+familiar with the AUT can relate to without having to know the more
+technical aspects under the hood.
+</p><p>
+The creation of keyword-driven tests involves two phases. First comes
+the one-off creation of some AUT-specific test script functions to
+interpret the data and of a generic “<span class="quote">driver</span>” function that
+reads test data from a data source and that executes the AUT-specific
+test script functions based on the data. The second is the creation of
+one or more test cases and corresponding data tables that are used to
+drive the tests.
+</p><p>
+In this section we will first look at how a tester goes about creating a
+test case and the corresponding test data, as well as the results this
+produces, and then we will look at the one-off work that must be done
+behind the scenes to make it all work.
+</p><p>
+All the examples shown in this section are in <span class="emphasis"><em>Squish</em></span>'s examples
+directory
+(<code class="filename">SQUISHDIR/examples/qt/addressbook/suite_keyword_py</code>
+for the Python version,
+<code class="filename">SQUISHDIR/examples/qt/addressbook/suite_keyword_js</code>
+for the JavaScript version, and so on). The test case itself is called
+<code class="filename">tst_keyword_driven</code>.
+</p><p>
+Although we have used a Qt-based AUT the underlying GUI toolkit doesn't
+matter—using the ideas shown in this section you could create
+keyword-driven testing for any toolkit that <span class="emphasis"><em>Squish</em></span> supports.
+</p><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="how.to.create.a.keyword.driven.test"></a>5.16.1. How to Create a Keyword-Driven Test</h3></div></div></div><p>
+The test case needed for keyword-driven tests is always the
+same—and incredibly simple:
+</p><div xmlns="" class="scriptlang"><form><select name="scriptlangcombo" onchange="javascript:changeScriptingLanguage(this)" onclick="javascript:changeScriptingLanguage(this)"><option value="all" selected>Show All</option><option value="JavaScript">Show JavaScript</option><option value="Perl">Show Perl</option><option value="Python">Show Python</option><option value="Ruby">Show Ruby</option><option value="Tcl">Show Tcl</option></select></form></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Python</span><pre class="programlisting">
+
+source(findFile("scripts", "driver.py"))
+
+def main():
+    drive("keywords.tsv")
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">JavaScript</span><pre class="programlisting">
+
+source(findFile("scripts", "driver.js"));
+
+function main()
+{
+    drive("keywords.tsv");
+}
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Perl</span><pre class="programlisting">
+
+source( findFile( "scripts", "driver.pl" ) );
+
+sub main {
+    drive("keywords.tsv");
+}
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Ruby</span><pre class="programlisting">
+
+def main
+  require findFile("scripts", "driver.rb")
+  drive("keywords.tsv")
+end
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Tcl</span><pre class="programlisting">
+
+source [findFile "scripts" "driver.tcl"]
+
+proc main {} {
+    drive "keywords.tsv"
+}
+</pre></div><p>
+First the test program loads in the generic “<span class="quote">driver</span>”
+functionality and then it executes the <code class="code">drive()</code> function on
+a test data file. The test data file specifes exactly what actions
+should be taken, beginning with starting the AUT and ending with
+terminating the AUT.
+</p><p>
+Here is what a typical (but rather small) data file might look like:
+</p><pre class="screen">
+Keyword→Argument 1→Argument 2→Argument 3→Argument 4
+startApplication→addressbook
+chooseMenuItem→File→New
+verifyRowCount→0
+addAddress→Red→Herring→red.herring@froglogic.com→555 123 4567
+addAddress→Blue→Cod→blue.cod@froglogic.com→555 098 7654
+addAddress→Green→Pike→green.pike@froglogic.com→555 675 8493
+verifyRowCount→3
+removeAddress→green.pike@froglogic.com
+removeAddress→blue.cod@froglogic.com
+removeAddress→red.herring@froglogic.com
+verifyRowCount→0
+terminate
+</pre><p>
+(We have indicated tab-separators using the → character.)
+The first row contains the field names, the other rows contain the
+actions to be performed. In each action row the first column contains
+the name of a high-level AUT-specific function to execute, and the
+remaining columns contain any arguments that the function might require.
+</p><p>
+Here, the <code class="code">terminate</code> function requires no arguments and the
+<code class="code">verifyRowCount</code> and <code class="code">removeAddress</code> functions
+both require one argument (the former a row count to verify, and the
+latter an email address to identify the row to be deleted). Similarly,
+the <code class="code">chooseMenuItem</code> function always requires
+two arguments (the name of the menu and the name of the menu's menu
+item) and the <code class="code">addAddress</code> function requires four arguments
+(forename, surname, email, phone).
+</p><p>
+Here are the results produced by a typical test run (with dates and most
+items elided):
+</p><pre class="screen">
+Start tst_keyword_driven
+Log Drive: 'keywords.tsv'
+Log Execute: startApplication('addressbook')
+Log Execute: chooseMenuItem('File', 'New')
+Log Execute: verifyRowCount('0')
+Pass Verified
+Log Execute: addAddress('Red', 'Herring', 'red.herring@froglogic.com',
+'555 123 4567')
+Pass Verified
+Pass Comparison
+Pass Comparison
+Pass Comparison
+Pass Comparison
+...
+Log Execute: verifyRowCount('3')
+Pass Verified
+Log Execute: removeAddress('green.pike@froglogic.com')
+Log Removed green.pike@froglogic.com
+Pass Verified
+...
+Log Execute: verifyRowCount('0')
+Pass Verified
+Log Execute: terminate()
+</pre><p>
+It should be obvious that we can easily add as many keyword actions as
+we like—quite independently of the test case script which will
+simply carry out whatever tests are specified in the data file. And, of
+course, if additional actions were required—such as an
+<code class="code">editAddress</code> function—there's no reason why that
+couldn't be added as an AUT-specific function, and once added it could
+then be used in the data file along with all the rest.
+</p><p>
+So, from the point of view of a tester who wants to do keyword-driven
+testing, the job is straightforward. However, for this simplicity to be
+achieved requires the writing of the AUT-specific functions that the
+test data needs to execute, along with the generic driver function.
+These are covered in the next two subsections.
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="how.to.create.aut.specific.support.for.keyword.driven.tests"></a>5.16.2. How to Create AUT-Specific Support for Keyword Driven Tests</h3></div></div></div><p>
+Every keyword action specified in the test data must have a
+corresponding function that takes the given arguments and performs the
+given actions. There is no generic solution for this because each action
+will be AUT-specific. Nonetheless, for completeness, we will show the
+implementations of all the actions used in the test data shown above,
+with one exception. The exception is the <a class="xref" href="https://rgs-squish.html#startApplication-function"><code class="function">startApplication</code></a> function which is already built
+into <span class="emphasis"><em>Squish</em></span> so we don't need to implement it ourselves.
+</p><p>
+The following functions are all taken from the
+<code class="filename">action.py</code> (or <code class="filename">action.js</code> and so
+on), script.
+</p><div xmlns="" class="scriptlang"><form><select name="scriptlangcombo" onchange="javascript:changeScriptingLanguage(this)" onclick="javascript:changeScriptingLanguage(this)"><option value="all" selected>Show All</option><option value="JavaScript">Show JavaScript</option><option value="Perl">Show Perl</option><option value="Python">Show Python</option><option value="Ruby">Show Ruby</option><option value="Tcl">Show Tcl</option></select></form></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Python</span><pre class="programlisting">
+
+def chooseMenuItem(menu, item):
+    activateItem(waitForObjectItem(":Address Book_QMenuBar", menu))
+    activateItem(waitForObjectItem(":Address Book.%s_QMenu" % menu, item))
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">JavaScript</span><pre class="programlisting">
+
+function chooseMenuItem(menu, item)
+{
+    activateItem(waitForObjectItem(":Address Book_QMenuBar", menu));
+    activateItem(waitForObjectItem(":Address Book." + menu + "_QMenu",
+                item));
+}
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Perl</span><pre class="programlisting">
+
+sub chooseMenuItem {
+    my ( $menu, $item ) = @_;
+    activateItem( waitForObjectItem( ":Address Book_QMenuBar", $menu ) );
+    activateItem(
+        waitForObjectItem( ":Address Book." . $menu . "_QMenu", $item ) );
+}
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Ruby</span><pre class="programlisting">
+
+def chooseMenuItem(menu, item)
+  activateItem(waitForObjectItem(":Address Book_QMenuBar", menu))
+  activateItem(waitForObjectItem(":Address Book.#{menu}_QMenu", item))
+end
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Tcl</span><pre class="programlisting">
+
+proc chooseMenuItem {menu item} {
+    invoke activateItem [waitForObjectItem ":Address Book_QMenuBar" $menu]
+    invoke activateItem [waitForObjectItem ":Address Book.${menu}_QMenu" $item]
+}
+</pre></div><p>
+This function activates the given menu and then the given menu item. We
+have used symbolic names which we got from the <a class="xref" href="https://rg-objectmap.html" title="7.11. Object Map">Object Map (Section 7.11)</a>.
+</p><p>
+Of course, the Object Map starts out empty, so the first thing we
+did—before creating any functions—was to record and play
+back a dummy test. In that test we did everything we planned to do in
+the keyword driven test (but with no repetitions). So we created a new
+file, added an address, removed an address, and quit. This populated the
+Object Map with most of the names we need.
+</p><p>
+The menu bar and menu options had more than one symbolic name referring
+to them because as the AUT's state changed, its window title changed,
+and <span class="emphasis"><em>Squish</em></span> kept track of this by creating multiple symbolic names, each
+with a different <code class="code">window</code> property value. This property's
+value varied depending on the window's title, which itself varied. We
+need to be able to access the menu bar and menu items regardless of the
+AUT's state (and in particular, regardless of its window title).
+</p><p>
+To solve the problem we used the <a class="xref" href="https://ide.views.html#ide.the-object-map.view" title="8.2.10. Object Map view">Object Map view (Section 8.2.10)</a> to edit the Object Map. First we we
+deleted the <code class="code">window</code> property from the <code class="code">":Address
+Book_QMenuBar"</code> item so that the menu bar could be found no matter
+what the window's title. Then we deleted the <code class="code">window</code>
+property from the <code class="code">":Address Book.File_QMenu"</code> item for the
+same reason. Then we copied the <code class="code">":Address Book.File_QMenu"</code>
+symbolic name and pasted it; we renamed the pasted version
+<code class="code">":Address Book.Edit_QMenu"</code> and changed its
+<code class="code">title</code> property's value from “<span class="quote">File</span>” to
+“<span class="quote">Edit</span>”. We then deleted any menu items that contained
+“<span class="quote">Unnamed</span>” in their symbolic names.
+</p><p>
+After editing the Object Map this function for invoking a menu and then
+one of its menu options works perfectly—irrespective of the AUT's
+window title.
+</p><div xmlns="" class="scriptlang"><form><select name="scriptlangcombo" onchange="javascript:changeScriptingLanguage(this)" onclick="javascript:changeScriptingLanguage(this)"><option value="all" selected>Show All</option><option value="JavaScript">Show JavaScript</option><option value="Perl">Show Perl</option><option value="Python">Show Python</option><option value="Ruby">Show Ruby</option><option value="Tcl">Show Tcl</option></select></form></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Python</span><pre class="programlisting">
+
+    import __builtin__ # Python 2
+
+def verifyRowCount(rows):
+    test.verify(__builtin__.int(rows) == getRowCount(), "row count")
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">JavaScript</span><pre class="programlisting">
+
+function verifyRowCount(rows)
+{
+    rows = parseInt(rows)
+    test.verify(rows == getRowCount(), "row count");
+}
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Perl</span><pre class="programlisting">
+
+sub verifyRowCount {
+    my $rows = shift;
+    test::verify( $rows eq getRowCount(), "row count" );
+}
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Ruby</span><pre class="programlisting">
+
+def verifyRowCount(rows)
+  Test.verify(rows.to_i == getRowCount(), "row count")
+end
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Tcl</span><pre class="programlisting">
+
+proc verifyRowCount {rows} {
+    test compare $rows [getRowCount] "row count"
+}
+</pre></div><p>
+This function is used to verify that the number of rows in the AUT are
+what we expect.
+</p><p>
+All of the keyword data is stored and retrieved as strings. We could, of
+course, use two columns for data items (type, value), or some other
+type-specifying scheme (such as type=value) items. But this pushes the
+burden of dealing with different types on the tester. So instead we
+accept everything in the form of strings and where we need other types,
+as here, we perform the conversion in the AUT-specific functions.
+(Except for Perl where we simply force a string comparison.)
+</p><p>
+For Python the conversion is slightly complicated by the fact that
+<span class="emphasis"><em>Squish</em></span> imports its own Python-specific <code class="code">int()</code> function
+that's different from the built-in one. To work around this we import
+Python's <code class="code">__builtin__</code> (Python 2) or <code class="code">builtins</code> (Python 3)
+module and access Python's own <code class="code">int()</code> conversion function to turn
+the <code class="code">rows</code> string into a number (See <a class="xref" href="https://rgs-py.html" title="6.14. Python Notes">Python Notes (Section 6.14)</a>.)
+</p><div xmlns="" class="scriptlang"><form><select name="scriptlangcombo" onchange="javascript:changeScriptingLanguage(this)" onclick="javascript:changeScriptingLanguage(this)"><option value="all" selected>Show All</option><option value="JavaScript">Show JavaScript</option><option value="Perl">Show Perl</option><option value="Python">Show Python</option><option value="Ruby">Show Ruby</option><option value="Tcl">Show Tcl</option></select></form></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Python</span><pre class="programlisting">
+
+def getRowCount():
+    tableWidget = waitForObject(
+            ":Address Book - Unnamed.File_QTableWidget")
+    return tableWidget.rowCount
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">JavaScript</span><pre class="programlisting">
+
+function getRowCount()
+{
+    tableWidget = waitForObject(
+        ":Address Book - Unnamed.File_QTableWidget");
+    return tableWidget.rowCount;
+}
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Perl</span><pre class="programlisting">
+
+sub getRowCount {
+    my $tableWidget =
+      waitForObject(":Address Book - Unnamed.File_QTableWidget");
+    return $tableWidget-&gt;rowCount;
+}
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Ruby</span><pre class="programlisting">
+
+def getRowCount
+  tableWidget = waitForObject(
+  ":Address Book - Unnamed.File_QTableWidget")
+  tableWidget.rowCount
+end
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Tcl</span><pre class="programlisting">
+
+proc getRowCount {} {
+    set tableWidget [waitForObject \
+            ":Address Book - Unnamed.File_QTableWidget"]
+    return [property get $tableWidget rowCount]
+}
+</pre></div><p>
+This helper function retrieves a reference to the underlying toolkit's
+table (in this case a <code class="code">QTableWidget</code>), and then returns the
+value of its <code class="code">rowCount</code> property. The table's symbolic name
+was copied from the Object Map after the dummy test run had populated
+the Object Map.
+</p><div xmlns="" class="scriptlang"><form><select name="scriptlangcombo" onchange="javascript:changeScriptingLanguage(this)" onclick="javascript:changeScriptingLanguage(this)"><option value="all" selected>Show All</option><option value="JavaScript">Show JavaScript</option><option value="Perl">Show Perl</option><option value="Python">Show Python</option><option value="Ruby">Show Ruby</option><option value="Tcl">Show Tcl</option></select></form></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Python</span><pre class="programlisting">
+
+def addAddress(forename, surname, email, phone):
+    oldRowCount = getRowCount()
+    chooseMenuItem("Edit", "Add...")
+    type(waitForObject(":Forename:_LineEdit"), forename)
+    type(waitForObject(":Surname:_LineEdit"), surname)
+    type(waitForObject(":Email:_LineEdit"), email)
+    type(waitForObject(":Phone:_LineEdit"), phone)
+    clickButton(waitForObject(":Address Book - Add.OK_QPushButton"))
+    newRowCount = getRowCount()
+    test.verify(oldRowCount + 1 == newRowCount, "row count")
+    row = oldRowCount # The first item is inserted at row 0;
+    if row &gt; 0:       # subsequent ones at row rowCount - 1
+        row -= 1
+    checkTableRow(row, forename, surname, email, phone)
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">JavaScript</span><pre class="programlisting">
+
+function addAddress(forename, surname, email, phone)
+{
+    var oldRowCount = getRowCount();
+    chooseMenuItem("Edit", "Add...");
+    type(waitForObject(":Forename:_LineEdit"), forename);
+    type(waitForObject(":Surname:_LineEdit"), surname);
+    type(waitForObject(":Email:_LineEdit"), email);
+    type(waitForObject(":Phone:_LineEdit"), phone);
+    clickButton(waitForObject(":Address Book - Add.OK_QPushButton"));
+    var newRowCount = getRowCount();
+    test.verify(oldRowCount + 1 == newRowCount, "row count");
+    var row = oldRowCount // The first item is inserted at row 0;
+    if (row &gt; 0) {        // subsequent ones at row rowCount - 1
+        --row;
+    }
+    checkTableRow(row, forename, surname, email, phone);
+}
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Perl</span><pre class="programlisting">
+
+sub addAddress {
+    my ( $forename, $surname, $email, $phone ) = @_;
+    my $oldRowCount = getRowCount();
+    chooseMenuItem( "Edit", "Add..." );
+    type( waitForObject(":Forename:_LineEdit"), $forename );
+    type( waitForObject(":Surname:_LineEdit"),  $surname );
+    type( waitForObject(":Email:_LineEdit"),    $email );
+    type( waitForObject(":Phone:_LineEdit"),    $phone );
+    clickButton( waitForObject(":Address Book - Add.OK_QPushButton") );
+    my $newRowCount = getRowCount();
+    test::verify( $oldRowCount + 1 == $newRowCount, "row count" );
+    my $row = $oldRowCount;    # The first item is inserted at row 0
+
+    if ( $row &gt; 0 ) {          # subsequent ones at row rowCount - 1
+        --$row;
+    }
+    checkTableRow( $row, $forename, $surname, $email, $phone );
+}
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Ruby</span><pre class="programlisting">
+
+def addAddress(forename, surname, email, phone)
+  oldRowCount = getRowCount()
+  chooseMenuItem("Edit", "Add...")
+  type(waitForObject(":Forename:_LineEdit"), forename)
+  type(waitForObject(":Surname:_LineEdit"), surname)
+  type(waitForObject(":Email:_LineEdit"), email)
+  type(waitForObject(":Phone:_LineEdit"), phone)
+  clickButton(waitForObject(":Address Book - Add.OK_QPushButton"))
+  newRowCount = getRowCount()
+  Test.verify(oldRowCount + 1 == newRowCount, "row count")
+  row = oldRowCount # The first item is inserted at row 0;
+  if row &gt; 0        # subsequent ones at row rowCount - 1
+    row -= 1
+  end
+  checkTableRow(row, forename, surname, email, phone)
+end
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Tcl</span><pre class="programlisting">
+
+proc addAddress {forename surname email phone} {
+    set oldRowCount [getRowCount]
+    chooseMenuItem "Edit" "Add..."
+    invoke type [waitForObject ":Forename:_LineEdit"] $forename
+    invoke type [waitForObject ":Surname:_LineEdit"] $surname
+    invoke type [waitForObject ":Email:_LineEdit"] $email
+    invoke type [waitForObject ":Phone:_LineEdit"] $phone
+    invoke clickButton [waitForObject ":Address Book - Add.OK_QPushButton"]
+    set newRowCount [getRowCount]
+    test compare [expr {$oldRowCount + 1}] $newRowCount "row count"
+    set row $oldRowCount
+    if {$row &gt; 0} {
+        set row [expr {$row - 1}]
+    }
+    checkTableRow $row $forename $surname $email $phone
+}
+</pre></div><p>
+This function adds an address to the
+<span class="application">addressbook</span> application. It begins by
+retrieving the row count, then it uses the custom
+<code class="code">chooseMenuItem</code> function to invoke the Edit|Add... menu
+option to pop up the Add dialog, and then it types in each piece of
+information into the appropriate line editor. Next, it clicks the
+dialog's OK button. Once the dialog has been accepted the row count is
+retrieved once more and we verify that it is now one more than before.
+We also check that every item of data was correctly entered into the
+table using a custom <code class="code">checkTableRow</code> function.
+</p><p>
+One slightly tricky part at the end of the function is that the row we
+ask the <code class="code">checkTableRow</code> function to verify must be computed
+with care. If there are no addresses (which is the initial case), the
+new address will be inserted at row 0 (the first row). But each
+subsequent address is inserted <span class="emphasis"><em>before</em></span> the current
+row (and the current row is always the one that was inserted before). So
+the second address is also inserted at row 0, the third address at row
+1, and so on. This is simply a behavioral quirk of our
+<span class="application">addressbook</span> application that we must account
+for in our test.
+</p><div xmlns="" class="scriptlang"><form><select name="scriptlangcombo" onchange="javascript:changeScriptingLanguage(this)" onclick="javascript:changeScriptingLanguage(this)"><option value="all" selected>Show All</option><option value="JavaScript">Show JavaScript</option><option value="Perl">Show Perl</option><option value="Python">Show Python</option><option value="Ruby">Show Ruby</option><option value="Tcl">Show Tcl</option></select></form></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Python</span><pre class="programlisting">
+
+FORENAME, SURNAME, EMAIL, PHONE = list(range(4))
+
+def checkTableRow(row, forename, surname, email, phone):
+    tableWidget = waitForObject(
+            ":Address Book - Unnamed.File_QTableWidget")
+    test.compare(forename, tableWidget.item(row, FORENAME).text(),
+            "forename")
+    test.compare(surname, tableWidget.item(row, SURNAME).text(), "surname")
+    test.compare(email, tableWidget.item(row, EMAIL).text(), "email")
+    test.compare(phone, tableWidget.item(row, PHONE).text(), "phone")
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">JavaScript</span><pre class="programlisting">
+
+var FORENAME = 0;
+var SURNAME = 1;
+var EMAIL = 2;
+var PHONE = 3;
+
+function checkTableRow(row, forename, surname, email, phone)
+{
+    tableWidget = waitForObject(
+        ":Address Book - Unnamed.File_QTableWidget");
+    test.compare(forename, tableWidget.item(row, FORENAME).text(),
+        "forename");
+    test.compare(surname, tableWidget.item(row, SURNAME).text(),
+        "surname");
+    test.compare(email, tableWidget.item(row, EMAIL).text(), "email");
+    test.compare(phone, tableWidget.item(row, PHONE).text(), "phone");
+}
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Perl</span><pre class="programlisting">
+
+my $FORENAME = 0;
+my $SURNAME  = 1;
+my $EMAIL    = 2;
+my $PHONE    = 3;
+
+sub checkTableRow {
+    my ( $row, $forename, $surname, $email, $phone ) = @_;
+    my $tableWidget =
+      waitForObject(":Address Book - Unnamed.File_QTableWidget");
+    test::compare( $forename, $tableWidget-&gt;item( $row, $FORENAME )-&gt;text(),
+        "forename" );
+    test::compare( $surname, $tableWidget-&gt;item( $row, $SURNAME )-&gt;text(),
+        "surname" );
+    test::compare( $email, $tableWidget-&gt;item( $row, $EMAIL )-&gt;text(),
+        "email" );
+    test::compare( $phone, $tableWidget-&gt;item( $row, $PHONE )-&gt;text(),
+        "phone" );
+}
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Ruby</span><pre class="programlisting">
+
+FORENAME = 0
+SURNAME = 1
+EMAIL = 2
+PHONE = 3
+
+def checkTableRow(row, forename, surname, email, phone)
+  tableWidget = waitForObject(
+  ":Address Book - Unnamed.File_QTableWidget")
+  Test.compare(forename, tableWidget.item(row, FORENAME).text(),
+  "forename")
+  Test.compare(surname, tableWidget.item(row, SURNAME).text(), "surname")
+  Test.compare(email, tableWidget.item(row, EMAIL).text(), "email")
+  Test.compare(phone, tableWidget.item(row, PHONE).text(), "phone")
+end
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Tcl</span><pre class="programlisting">
+
+proc checkTableRow {row forename surname email phone} {
+    set FORENAME 0
+    set SURNAME 1
+    set EMAIL 2
+    set PHONE 3
+    set tableWidget [waitForObject \
+            ":Address Book - Unnamed.File_QTableWidget"]
+    set text [invoke [invoke $tableWidget item $row $FORENAME] text]
+    test compare $forename $text "forename"
+    set text [invoke [invoke $tableWidget item $row $SURNAME] text]
+    test compare $surname $text "surname"
+    set text [invoke [invoke $tableWidget item $row $EMAIL] text]
+    test compare $email $text "email"
+    set text [invoke [invoke $tableWidget item $row $PHONE] text]
+    test compare $phone $text "phone"
+}
+</pre></div><p>
+This function compares each table cell that has just been edited with
+the text that was typed into it to verify that they are the same.
+</p><div xmlns="" class="scriptlang"><form><select name="scriptlangcombo" onchange="javascript:changeScriptingLanguage(this)" onclick="javascript:changeScriptingLanguage(this)"><option value="all" selected>Show All</option><option value="JavaScript">Show JavaScript</option><option value="Perl">Show Perl</option><option value="Python">Show Python</option><option value="Ruby">Show Ruby</option><option value="Tcl">Show Tcl</option></select></form></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Python</span><pre class="programlisting">
+
+def removeAddress(email):
+    tableWidget = waitForObject(
+        ":Address Book - Unnamed.File_QTableWidget")
+    oldRowCount = getRowCount()
+    for row in range(oldRowCount):
+        if tableWidget.item(row, EMAIL).text() == email:
+            tableWidget.setCurrentCell(row, EMAIL)
+            chooseMenuItem("Edit", "Remove...")
+            clickButton(waitForObject(
+                ":Address Book - Delete.Yes_QPushButton"))
+            test.log("Removed %s" % email)
+            break
+    newRowCount = getRowCount()
+    test.verify(oldRowCount - 1 == newRowCount, "row count")
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">JavaScript</span><pre class="programlisting">
+
+function removeAddress(email) {
+    tableWidget = waitForObject(
+        ":Address Book - Unnamed.File_QTableWidget")
+    var oldRowCount = getRowCount();
+    for (var row = 0; row &lt; oldRowCount; ++row) {
+        if (tableWidget.item(row, EMAIL).text() == email) {
+            tableWidget.setCurrentCell(row, EMAIL);
+            chooseMenuItem("Edit", "Remove...");
+            clickButton(waitForObject(
+                    ":Address Book - Delete.Yes_QPushButton"))
+            test.log("Removed " + email);
+            break;
+        }
+    }
+    var newRowCount = getRowCount();
+    test.verify(oldRowCount - 1 == newRowCount, "row count");
+}
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Perl</span><pre class="programlisting">
+
+sub removeAddress {
+    my $email = shift;
+    my $tableWidget =
+      waitForObject(":Address Book - Unnamed.File_QTableWidget");
+    my $oldRowCount = getRowCount();
+    for ( my $row = 0 ; $row &lt; $oldRowCount ; ++$row ) {
+        if ( $tableWidget-&gt;item( $row, $EMAIL )-&gt;text() eq $email ) {
+            $tableWidget-&gt;setCurrentCell( $row, $EMAIL );
+            chooseMenuItem( "Edit", "Remove..." );
+            clickButton(
+                waitForObject(":Address Book - Delete.Yes_QPushButton") );
+            test::log("Removed $email");
+            last;
+        }
+    }
+    my $newRowCount = getRowCount();
+    test::verify( $oldRowCount - 1 == $newRowCount, "row count" );
+}
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Ruby</span><pre class="programlisting">
+
+def removeAddress(email)
+  tableWidget = waitForObject(
+  ":Address Book - Unnamed.File_QTableWidget")
+  oldRowCount = getRowCount()
+  for row in 0...oldRowCount
+    if tableWidget.item(row, EMAIL).text() == email
+      tableWidget.setCurrentCell(row, EMAIL)
+      chooseMenuItem("Edit", "Remove...")
+      clickButton(waitForObject(
+      ":Address Book - Delete.Yes_QPushButton"))
+      Test.log("Removed #{email}")
+      break
+    end
+  end
+  newRowCount = getRowCount()
+  Test.verify(oldRowCount - 1 == newRowCount, "row count")
+end
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Tcl</span><pre class="programlisting">
+
+proc removeAddress {email} {
+    set EMAIL 2
+    set tableWidget [waitForObject \
+        ":Address Book - Unnamed.File_QTableWidget"]
+    set oldRowCount [getRowCount]
+    for {set row 0} {$row &lt; $oldRowCount} {incr row} {
+        set text [toString [invoke [invoke $tableWidget item $row $EMAIL] text]]
+        if {[string equal $text $email]} {
+            invoke $tableWidget setCurrentCell $row $EMAIL
+            chooseMenuItem "Edit" "Remove..."
+            invoke clickButton [waitForObject \
+                ":Address Book - Delete.Yes_QPushButton"]
+            test log "Removed $email"
+            break
+        }
+    }
+    set newRowCount [getRowCount]
+    test compare [expr {$oldRowCount - 1}] $newRowCount "row count"
+}
+</pre></div><p>
+To make it easier for testers who are populating the keyword data we
+have provided a <code class="code">removeAddress</code> function that takes an email
+address to identify which row to delete. (This is based on the
+reasonable assumption that every email address in the address book is
+unique.)
+</p><p>
+The function begins by retrieving a reference to the AUT's table and
+also the current row count. It then iterates over every row until it
+finds one with a matching email address. Once it has a match it makes
+the corresponding cell the current one and invokes the AUT's
+Edit|Remove... menu option to delete it. This menu option results in a
+Yes/No confirmation dialog popping up—the function clicks the
+dialog's Yes button. Once the deletion is done the loop is broken out of
+and we verify that the row count is one less than it was before.
+</p><div xmlns="" class="scriptlang"><form><select name="scriptlangcombo" onchange="javascript:changeScriptingLanguage(this)" onclick="javascript:changeScriptingLanguage(this)"><option value="all" selected>Show All</option><option value="JavaScript">Show JavaScript</option><option value="Perl">Show Perl</option><option value="Python">Show Python</option><option value="Ruby">Show Ruby</option><option value="Tcl">Show Tcl</option></select></form></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Python</span><pre class="programlisting">
+
+def terminate():
+    sendEvent("QCloseEvent", waitForObject(":Address Book_MainWindow"))
+    clickButton(waitForObject(":Address Book.No_QPushButton"))
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">JavaScript</span><pre class="programlisting">
+
+function terminate()
+{
+    sendEvent("QCloseEvent", waitForObject(":Address Book_MainWindow"));
+    clickButton(waitForObject(":Address Book.No_QPushButton"));
+}
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Perl</span><pre class="programlisting">
+
+sub terminate {
+    sendEvent( "QCloseEvent", waitForObject(":Address Book_MainWindow") );
+    clickButton( waitForObject(":Address Book.No_QPushButton") );
+}
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Ruby</span><pre class="programlisting">
+
+def terminate
+  sendEvent("QCloseEvent", waitForObject(":Address Book_MainWindow"))
+  clickButton(waitForObject(":Address Book.No_QPushButton"))
+end
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Tcl</span><pre class="programlisting">
+
+proc terminate {} {
+    sendEvent QCloseEvent [waitForObject ":Address Book_MainWindow"]
+    invoke clickButton [waitForObject ":Address Book.No_QPushButton"]
+}
+</pre></div><p>
+To terminate the AUT we must first invoke the File|Quit menu option and
+then click No on the “<span class="quote">save changes</span>” dialog that pops up so
+that we cleanly exit without saving anything.
+</p><p>
+This completes the review of the AUT-specific functions. All the
+functions except for the <code class="code">getRowCount</code> helper function are
+used in the keyword data. The only missing piece is the driver function
+that will take the keyword data and use it to call the AUT-specific
+functions: we will cover this in the next subsection.
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="how.to.create.a.generic.keyword.driver.function"></a>5.16.3. How to Create a Generic Keyword Driver Function</h3></div></div></div><p>
+The <code class="filename">driver.py</code> file (or
+<code class="filename">driver.js</code>, and so on), provides a single function,
+<code class="code">driver</code>, that accepts a keywords data file as its sole
+argument and executes the commands specified in that data.
+</p><div xmlns="" class="scriptlang"><form><select name="scriptlangcombo" onchange="javascript:changeScriptingLanguage(this)" onclick="javascript:changeScriptingLanguage(this)"><option value="all" selected>Show All</option><option value="JavaScript">Show JavaScript</option><option value="Perl">Show Perl</option><option value="Python">Show Python</option><option value="Ruby">Show Ruby</option><option value="Tcl">Show Tcl</option></select></form></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Python</span><pre class="programlisting">
+
+source(findFile("scripts", "actions.py"))
+
+def drive(datafile):
+    test.log("Drive: '%s'" % datafile)
+    for _, record in enumerate(testData.dataset(datafile)):
+        command = testData.field(record, "Keyword") + "("
+        comma = ""
+        for i in range(1, 5):
+            arg = testData.field(record, "Argument %d" % i)
+            if arg:
+                command += "%s%r" % (comma, arg)
+                comma = ", "
+            else:
+                break
+        command += ")"
+        test.log("Execute: %s" % command)
+        eval(command)
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">JavaScript</span><pre class="programlisting">
+
+source(findFile("scripts", "actions.js"));
+
+function drive(datafile)
+{
+    test.log("Drive: '" + datafile + "'");
+    var records = testData.dataset(datafile);
+    for (var row = 0; row &lt; records.length; ++row) {
+        var command = testData.field(records[row], "Keyword") + "(";
+        var comma = "";
+        for (var i = 1; i &lt;= 4; ++i) {
+            var arg = testData.field(records[row], "Argument " + i);
+            if (arg != "") {
+                command += comma + "'" + arg + "'";
+                comma = ", ";
+            }
+            else {
+                break;
+            }
+        }
+        command += ")";
+        test.log("Execute: " + command);
+        eval(command);
+    }
+}    
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Perl</span><pre class="programlisting">
+
+source( findFile( "scripts", "actions.pl" ) );
+
+sub drive {
+    my $datafile = shift;
+    test::log("Drive: '$datafile'");
+    my @records = testData::dataset($datafile);
+    for ( my $row = 0 ; $row &lt; scalar(@records) ; ++$row ) {
+        my $command = testData::field( $records[$row], "Keyword" ) . "(";
+        my $comma = "";
+        for ( my $i = 1 ; $i &lt;= 4 ; ++$i ) {
+            my $arg = testData::field( $records[$row], "Argument $i" );
+            if ( $arg ne "" ) {
+                $command .= "$comma\"$arg\"";
+                $comma = ", ";
+            }
+            else {
+                last;
+            }
+        }
+        $command .= ");";
+        test::log("Execute: $command");
+        eval $command;
+    }
+}
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Ruby</span><pre class="programlisting">
+
+def drive(datafile)
+  require findFile("scripts", "actions.rb")
+  Test.log("Drive: '#{datafile}'")
+  TestData.dataset(datafile).each_with_index do
+    |record, row|
+    command = TestData.field(record, "Keyword") + "("
+    comma = ""
+    for i in 1...5
+      arg = TestData.field(record, "Argument #{i}")
+      if arg and arg != ""
+        command += "#{comma}'#{arg}'"
+        comma = ", "
+      else
+        break
+      end
+    end
+    command += ")"
+    Test.log("Execute: #{command}")
+    eval command
+  end
+end
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Tcl</span><pre class="programlisting">
+
+source [findFile "scripts" "actions.tcl"]
+
+proc drive {datafile} {
+    test log "Drive: '$datafile'"
+    set data [testData dataset $datafile]
+    for {set row 0} {$row &lt; [llength $data]} {incr row} {
+        set command [testData field [lindex $data $row] "Keyword"]
+        for {set i 1} {$i &lt;= 4} {incr i} {
+            set arg [testData field [lindex $data $row] "Argument $i"]
+            if {$arg != ""} {
+                set command "${command} \"${arg}\""
+            } else {
+                break
+            }
+        }
+        test log "Execute: $command"
+        eval $command
+    }
+}
+</pre></div><p>
+The first thing that must be done is to access the AUT-specific actions
+by importing the <code class="filename">actions.py</code> file (or
+<code class="filename">actions.js</code> and so on).
+</p><p>
+The <code class="code">drive</code> function iterates over every row in the test data
+(<span class="emphasis"><em>Squish</em></span>'s <a class="xref" href="https://rgs-squish.html#testData.dataset-function"><code class="function">testData.dataset</code></a> function
+automatically skips over the first row that has the field names). For
+each row the function retrieves the keyword (i.e., the name of the
+AUT-specific function to execute), and then the arguments. In this case
+we have limited the keyword data to have up to four arguments but it is
+easy to allow more.
+</p><p>
+For each keyword data record we create a command string consisting of
+the AUT-specific function to call and any arguments that have been
+given. Once the command has been prepared we log what is about to be
+executed and then evaluate (i.e., execute) the command.
+</p><p>
+This completes the under-the-hood functionality required to support
+keyword-driven testing in <span class="emphasis"><em>Squish</em></span>. None of the work needed is
+particularly difficult. The driver function need be written only once
+since it can be used with any AUTs no matter what GUI toolkits they use
+(providing only that the AUT-specific functions are in a script called
+<code class="filename">actions.py</code> or <code class="filename">actions.js</code> and
+so on, as appropriate for the scripting language).
+The AUT-specific functionality need be written only once per AUT,
+although some functions might be reusable across AUTs that use the same
+GUI toolkit.
+</p></div></div><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" type="text/javascript" src="ScriptingLanguage.js"></script><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format">setScriptingLanguage();</script><div class="navfooter"><hr></hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="https://ugs-screenshotsonfail.html">Prev</a> </td><td width="20%" align="center"><a accesskey="u" href="https://users-guide.html">Up</a></td><td width="40%" align="right"> <a accesskey="n" href="https://ug-interact-with-files-environment.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">5.15. How to Create Automatic Screenshots on Test Failures and Errors </td><td width="20%" align="center"><a accesskey="h" href="https://index-noframes.html">Home</a></td><td width="40%" align="right" valign="top"> 5.17. How to Interact with Files and with the Environment in Test Scripts</td></tr></table></div></body>
+<!-- Mirrored from how.to.do.keyword.driven.testing.html by HTTrack Website Copier/3.x [XR&CO'2013], Wed, 06 Jul 2022 13:28:59 GMT -->
+</html>

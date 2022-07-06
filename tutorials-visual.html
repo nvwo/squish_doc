@@ -1,0 +1,366 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<!-- Mirrored from tutorials-visual.html by HTTrack Website Copier/3.x [XR&CO'2013], Wed, 06 Jul 2022 13:28:59 GMT -->
+<head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><title>4.14. Squish for VNC Tutorials</title><link rel="stylesheet" href="manual.css" type="text/css"></link><meta name="generator" content="DocBook XSL Stylesheets V1.73.2"></meta><link rel="start" href="index-noframes.html" title="Squish Manual"></link><link rel="up" href="tutorials.html" title="Chapter 4. Tutorials"></link><link rel="prev" href="tutorials-flex.html" title="4.13. Squish for Flex Tutorials"></link><link rel="next" href="tutorial-uploading-results.html" title="4.15.  Tutorial: Uploading Results to Squish Test Center"></link><style xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" type="text/css" media="screen">
+        div.toc * { margin-left: 6px; margin-right: auto; max-width: 75em; }
+        div.toc span { margin-left: 0px; }
+        * { margin-left: auto; margin-right: auto; max-width: 75em; }
+        body { margin-left: 6px; margin-right: 6px; }
+        table th { padding: .5ex }
+        table td { padding: .5ex }
+    </style><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format">
+        function keyPress() {
+            var e = window.event;
+            if ( e == undefined ) {
+                return;
+            }
+            /* ### does not properly scroll, yet
+            if ( e.keyCode == 32 ) {
+            var l = document.links;
+            for ( var i = 0; i < l.length; i++ ) {
+                if ( l[i].innerText == "Next" ) {
+                location.href = l[i].href;
+                }
+            }
+            } else
+                */
+                if ( e.keyCode == 0x08 ) {
+            var l = document.links;
+            for ( var i = 0; i < l.length; i++ ) {
+                if ( l[i].innerText == "Prev" ) {
+                location.href = l[i].href;
+                }
+            }
+            }
+        }
+        document.onkeypress = keyPress;
+    </script></head><body><div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="tutorials-visual"></a>4.14. <span class="emphasis"><em>Squish for VNC</em></span> Tutorials</h2></div></div></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><span class="section"><a href="tutorials-visual.html#tutorial-getting-started-visual">4.14.1. Tutorial: Starting to Test Remote Applications using <span class="emphasis"><em>Squish for VNC</em></span> </a></span></dt></dl></div><p>
+        Learn how to test applications running in Remote Displays.
+        </p><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="tutorial-getting-started-visual"></a>4.14.1. Tutorial: Starting to Test Remote Applications using <span class="emphasis"><em>Squish for VNC</em></span> </h3></div></div></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><span class="section"><a href="tutorials-visual.html#tgs-concepts-visual">4.14.1.1. Squish Concepts</a></span></dt><dt><span class="section"><a href="tutorials-visual.html#tut-visual-creating-a-test-suite">4.14.1.2. Creating a Test Suite</a></span></dt><dt><span class="section"><a href="tutorials-visual.html#tut-visual-vnc-setup">4.14.1.3.  Setup for Desktop Automation using VNC Protocol </a></span></dt><dt><span class="section"><a href="tutorials-visual.html#tut-visual-native-setup">4.14.1.4.  Setup for Desktop Automation using Native Protocol </a></span></dt><dt><span class="section"><a href="tutorials-visual.html#tut-visual-recording-tests">4.14.1.5. Recording Tests and Verification Points</a></span></dt></dl></div><p>
+This tutorial will show you how to create, run, and modify tests for a remote
+display, such as VNC.
+In the process you will learn about
+<span class="emphasis"><em>Squish</em></span>'s most frequently used features so that by the end of the
+tutorial you will be able to start writing your own tests for your own
+applications.
+</p><p>
+This chapter presents most of the major concepts behind <span class="emphasis"><em>Squish</em></span> and
+provides the information you need to get started using <span class="emphasis"><em>Squish</em></span> for
+testing your own applications. This tutorial does not discuss all
+of <span class="emphasis"><em>Squish</em></span>'s features, and those that it does cover are not covered in
+full detail. After reading this tutorial we recommend reading the
+<a class="xref" href="users-guide.html" title="Chapter 5. User Guide">User Guide (Chapter 5)</a>, and at least skimming the
+<a class="xref" href="api.man.html" title="Chapter 6. API Reference Manual">API Reference Manual (Chapter 6)</a> and the
+<a class="xref" href="ref.man.html" title="Chapter 7. Tools Reference Manual">Tools Reference Manual (Chapter 7)</a>, so that you are familiar with all the
+features that <span class="emphasis"><em>Squish</em></span> has to offer, even if you don't need to use them
+all straight away.
+</p><p>
+This tutorial is divided into several sections. If you are new to
+<span class="emphasis"><em>Squish</em></span>, it is best
+to read all of them. If you are already using <span class="emphasis"><em>Squish</em></span> you might want to
+just skim the tutorial, stopping only to read those sections that cover
+any new features that you haven't used before—or you could just
+skip straight to the <a class="xref" href="users-guide.html" title="Chapter 5. User Guide">User Guide (Chapter 5)</a>.
+</p><p>
+<span class="emphasis"><em>Squish</em></span> comes with an IDE and command line tools. Using the IDE is the easiest
+and best way to start, but once
+you build up lots of tests you will want to automate them, (e.g., doing
+nightly runs of your regression test suite), so it is worth knowing how
+to use the command line tools since they can be run from batch files or
+shell scripts.
+</p><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="tgs-concepts-visual"></a>4.14.1.1. Squish Concepts</h4></div></div></div><p>
+<span class="emphasis"><em>Squish for VNC</em></span> can be used in 2 ways:
+</p><div class="orderedlist"><ol type="1"><li><p>
+Using the VNC protocol, where only the VNC server must be installed and running
+on the Tested System.
+</p></li><li><p>
+Natively, where <span class="emphasis"><em>Squish for VNC</em></span> must be installed and running on the Test Driver
+and also the Tested System.
+</p></li></ol></div><p>
+In both cases, <span class="emphasis"><em>Squish</em></span> runs a small server (<span class="application">squishserver</span>)
+that handles the communication between a <em class="firstterm">Virtual AUT</em>
+and the test script. We say the AUT is <span class="emphasis"><em>virtual</em></span> because it
+actually <span class="emphasis"><em>represents</em></span> an open network connection,
+either VNC or "Native", between the <span class="application">squishserver</span> and the remote display.
+When the connection is terminated, we say the AUT is not running.
+</p><p>
+The test script is executed by the <span class="application">squishrunner</span> tool, which in turn connects
+to the <span class="application">squishserver</span>. The <span class="application">squishserver</span> starts the Virtual AUT, or establishes a
+remote display connection, and injects the <span class="emphasis"><em>Squish</em></span> hook into it.
+The hook is a small library that makes the Virtual AUT
+accessible and that can communicate with the
+<span class="application">squishserver</span>. With the hook in place, the <span class="application">squishserver</span> can automate the
+remote display, and can execute commands—all on
+behalf of the <span class="application">squishrunner</span>. The <span class="application">squishrunner</span> itself requests
+that the Virtual AUT performs whatever actions the test script specifies.
+</p><p> The following diagrams illustrate the two ways that the individual
+<span class="emphasis"><em>Squish</em></span> tools work together. The first shows the most common
+use-case, where <span class="emphasis"><em>Squish</em></span> is used to automate displays that
+have a running VNC server. In this case, it is not necessary to
+install/configure any of <span class="emphasis"><em>Squish for VNC</em></span> on the Tested system.
+</p><div class="mediaobject" align="center"><img src="images/design_network_vnc.png" align="middle"></img><div class="caption"><p>Using <span class="emphasis"><em>Squish for VNC</em></span> with the VNC Protocol </p></div></div><p>
+</p><p>The second diagram shows the
+<span class="application">squishserver</span> installed and configured on the Tested system. Instead of VNC,
+tests can use Squish's own <span class="guilabel">Native</span> proprietary remote protocol
+which allows a similar remote control and display.
+</p><div class="mediaobject" align="center"><img src="images/design_network_native.png" align="middle"></img><div class="caption"><p>Using <span class="emphasis"><em>Squish for VNC</em></span> with the Native protocol </p></div></div><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Note: The Squish Directory"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/note.png"></img></td><th align="left">The <span class="emphasis"><em>Squish</em></span> Directory</th></tr><tr><td align="left" valign="top"><p>
+Throughout the manual, we often refer to the <code class="filename">SQUISHDIR/</code>
+directory. This means the directory where <span class="emphasis"><em>Squish</em></span> is installed, which
+might be <code class="filename">C:\Squish</code>,
+<code class="filename">/usr/local/squish</code>,
+<code class="filename">~/squish</code>, or somewhere else, depending on
+where you installed it. The exact location doesn't matter, so long as
+you mentally translate the <code class="filename">SQUISHDIR</code> directory to
+whatever the directory really is when you see paths and filenames in
+this manual.
+</p></td></tr></table></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="tut-visual-creating-a-test-suite"></a>4.14.1.2. Creating a Test Suite</h4></div></div></div><p>
+A test suite is a collection of one or more test cases
+(<span class="emphasis"><em>tests</em></span>).
+Using a test suite is convenient since it makes it easy to share tests
+scripts and test data between tests.
+</p><p>
+To begin with start up the <span class="application">Squish IDE</span>, either by clicking or double-clicking
+the <span class="application">squishide</span> icon, or by launching <span class="application">squishide</span> from the taskbar menu
+or by executing <span class="application">squishide</span> on the command line—whichever you
+prefer and that is suitable for the platform you are using. Once
+<span class="emphasis"><em>Squish</em></span> starts up you might be greeted with a <span class="emphasis"><em>Welcome Page</em></span>
+in case you're starting the <span class="application">squishide</span> for the first time. Click the
+<span class="emphasis"><em>Workbench</em></span> button in the upper right to dismiss it. Then, the
+<span class="application">squishide</span> will look <span class="emphasis"><em>similar</em></span> to the screenshot—but probably
+slightly different depending on the windowing system, colors, fonts, and
+theme that you use, and so on.
+</p><div class="screenshot"><div class="mediaobject" align="center"><img src="images/tut-squish1.png" align="middle"></img><div class="caption">The Squish IDE with no Test Suites
+</div></div></div><p>
+Once <span class="emphasis"><em>Squish</em></span> has started click
+<span class="guimenu">File</span>|<span class="guimenuitem">New Test
+Suite...</span> to
+pop-up the <a class="xref" href="ide.dialogs.html#ide.new.squish.test.suite.wizard" title="8.3.13. New Squish Test Suite wizard">New Squish Test Suite wizard (Section 8.3.13)</a> shown below.
+</p><div class="screenshot"><div class="mediaobject" align="center"><img src="images/tut-squish-newtestsuite1-qt.png" align="middle"></img><div class="caption">The New Test Suite wizard's Name &amp; Directory page
+</div></div></div><p>
+Enter a name for your test suite and choose the folder where you want
+the test suite to be stored. In the screenshot we have called the test
+suite <code class="filename">suite_py</code> and will put it inside the
+<code class="filename">addressbook</code> folder. (For your own tests you might
+use a more meaningful name such as "suite_addressbook"; we chose
+"suite_py" because for the sake of the tutorial we will create several
+suites, one for each scripting language that <span class="emphasis"><em>Squish</em></span> supports.)
+Naturally, you can choose whatever name and folder you prefer. Once the
+details are complete, click <span class="guibutton">Next</span> to go on to the
+Toolkit (or Scripting Language) page.
+</p><div class="screenshot"><div class="mediaobject" align="center"><img src="images/squish-vnc-suite.png" align="middle"></img><div class="caption">The New Test Suite wizard's Toolkit page
+</div></div></div><p>
+On this wizard page, we choose the Squish Edition we are using. For this
+example, we select <span class="guilabel">VNC</span> since we are automating a remote
+desktop. Then click <span class="guibutton">Next</span> to go to the Scripting
+Language page.
+</p><div class="screenshot"><div class="mediaobject" align="center"><img src="images/tut-squish-newtestsuite3.png" align="middle"></img><div class="caption">The New Test Suite wizard's Scripting Language page
+</div></div></div><p>
+Choose whichever scripting language you want—the only constraint
+is that you can only use one scripting language per test suite. (So if
+you want to use multiple scripting languages, just create multiple test
+suites, one for each scripting language you want to use.) The
+functionality offered by <span class="emphasis"><em>Squish</em></span> is the same for all languages. Having
+chosen a scripting language, click <span class="guibutton">Next</span> once more
+to get to the wizard's last page.
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="tut-visual-vnc-setup"></a>4.14.1.3.  Setup for Desktop Automation using VNC Protocol </h4></div></div></div><p>
+If VNC is the desired protocol, select <span class="guibutton">VNC</span>
+from the <span class="guilabel">Protocol</span> drop down menu.
+From here you can configure how <span class="emphasis"><em>Squish</em></span> connects to a remote target.
+</p><div class="screenshot"><div class="mediaobject" align="center"><img src="images/connection-page.jpg" align="middle"></img><div class="caption">VNC connection page
+</div></div></div><p>
+In this form you can enter the needed settings for your specific VNC server.
+</p><div class="orderedlist"><ol type="1"><li><p>
+Enter the hostname of the machine running the VNC server.
+</p></li><li><p>
+If your VNC server uses a custom port, enter it, otherwise <span class="emphasis"><em>Squish</em></span> will
+use the default port (5900) for VNC.
+</p></li><li><p>
+<span class="emphasis"><em>Squish for VNC</em></span> supports basic authentication,
+so if your VNC server is only accessible
+with a valid username password combination, enter it here.
+</p></li></ol></div><p>
+To avoid hardcoding passwords in the test cases, Squish offers
+a separate GUI for entering passwords, and a separate file for storing them.
+The <span class="guilabel">Password:</span> drop-down is initially empty. You can
+add entries to the dropdown by clicking on <span class="guibutton">Edit...</span> to the
+right of that. A <span class="guilabel">Passwords</span> dialog pops up. </p><div class="screenshot"><div class="mediaobject" align="center"><img src="images/passwords-dialog.png" align="middle"></img><div class="caption">Passwords Dialog</div></div></div><p>
+Passwords can be added here, and/or later added/modified from the
+<span class="guibutton">Test Suite Settings</span> -
+<a class="xref" href="ide.views.html#ide.the-settings.view.passwords" title="8.2.16.6. Password Information">Password Information (Section 8.2.16.6)</a> tab.
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="tut-visual-native-setup"></a>4.14.1.4.  Setup for Desktop Automation using Native Protocol </h4></div></div></div><p>
+If, in the Connection settings, the Protocol chosen is
+<span class="guilabel">Native</span>, this means that instead of VNC,
+we use <span class="emphasis"><em>Squish</em></span>'s Remote Control protocol between <span class="application">squishrunner</span>
+and <span class="application">squishserver</span>, and <span class="application">squishserver</span> must be installed and running on the
+Tested System.
+</p><p>First, follow these steps on the Tested System:</p><div class="orderedlist"><ol type="1"><li><p>
+Install <span class="emphasis"><em>Squish for VNC</em></span>
+</p></li><li><p>
+Edit <code class="filename">SQUISHDIR/etc/squishserverrc</code> and include Test Driver
+IP address for ALLOWED HOSTS. See <a class="xref" href="rg-regressiontesting.html#rgr-disttesting" title="7.1.2. Distributed Tests">Distributed Tests (Section 7.1.2)</a> for details.
+</p></li><li><p> Start <span class="application">squishserver</span> from the command line (use the default
+port or pick one). </p></li></ol></div><p>
+Next, on the Test Driver system, from the <span class="application">Squish IDE</span> go to
+<span class="guilabel">Preferences</span>|<span class="guilabel">Squish</span>|<span class="guilabel">Remote Testing</span>
+and enter the IP address (and port, if you specified one when you started
+<span class="application">squishserver</span>) of the Tested System.
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="tut-visual-recording-tests"></a>4.14.1.5. Recording Tests and Verification Points</h4></div></div></div><p>After the New Test Suite wizard is finished,
+the connection parameters can later be configured from the
+<span class="guilabel">Test Suite Settings</span> -
+<a class="xref" href="ide.views.html#ide.the-settings.view.connection" title="8.2.16.3. Connection Information">Connection Information (Section 8.2.16.3)</a> tab.
+</p><p>
+This configuration is what is used whenever the Virtual AUT needs
+to be started, which is whenever you record or play a test, or explicitly select
+<span class="guimenu">Run</span>|<span class="guimenu">Launch AUT</span>.
+</p><p>
+We are now ready to start creating tests.
+</p><div class="screenshot"><div class="mediaobject" align="center"><img src="images/tut-squish2.png" align="middle"></img><div class="caption">The Squish IDE with the suite_py test suite
+</div></div></div><p>
+<span class="emphasis"><em>Squish</em></span> records tests using the scripting language that was specified
+for the test suite. Once a
+test has been recorded, we can <span class="guibutton">Run Test</span> (<span class="guiicon"><img src="images/ide/run.png"></img></span>) and
+<span class="emphasis"><em>Squish</em></span> will faithfully repeat all the actions that we inserted or recorded,
+but without all the pauses that humans are prone to
+but which computers don't need. It is also possible—and very
+common—to edit recorded tests, or to copy parts of recorded tests
+into manually created tests, as we will see later on in the tutorial.
+</p><p>
+Recordings are made into existing test cases. We begin by
+creating a <span class="guilabel">New Script Test Case</span>.
+There are two ways we can do this. One way
+is to click <span class="guimenu">File</span>|<span class="guimenuitem">New Test
+Case...</span>. This will pop up the <a class="xref" href="ide.dialogs.html#ide.new.squish.test.case.wizard" title="8.3.10. New Squish Test Case wizard">New Squish Test Case wizard (Section 8.3.10)</a>—simply enter the name
+for the test case and then click <span class="guibutton">Finish</span>. Another
+way is to click the <span class="guibutton">New Script Test Case</span> (<span class="guiicon"><img src="images/ide/new_test_case.png"></img></span>) button (to
+the right of the <span class="guilabel">Test Cases</span> label in the
+<span class="guilabel">Test Suites</span> view); this will create a new test
+case with a default name (which you can easily change). Use one of these
+methods and give the new test case the name “<span class="quote">tst_general</span>”.
+<span class="emphasis"><em>Squish</em></span> automatically creates a sub-folder inside the test suite's
+folder with this name and also a test file, for example
+<code class="filename">test.py</code>. (If we had chosen JavaScript as our
+scripting language the file would be called
+<code class="filename">test.js</code>, and correspondingly for Perl, Ruby, or Tcl.)
+</p><div class="screenshot"><div class="mediaobject" align="center"><img src="images/tut-squish3.png" align="middle"></img><div class="caption">The Squish IDE with the tst_general test case
+</div></div></div><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Note"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/note.png"></img></td><th align="left">Note</th></tr><tr><td align="left" valign="top"><div class="mediaobject" align="right"><img src="images/tut-squish-testcase-type.png" align="right"></img></div><p>
+If you get a sample <code class="filename">.feature</code> file instead of a hello-world
+script, then click on the arrow left of the
+<span class="guibutton">Run Test Suite</span> (<span class="guiicon"><img src="images/ide/run_test_suite.png"></img></span>) button and select <span class="guibutton">New Script Test Case</span> (<span class="guiicon"><img src="images/ide/new_test_case.png"></img></span>).
+</p></td></tr></table></div><p>
+To make the test script file (e.g., <code class="filename">test.py</code>) appear
+in an <a class="xref" href="ide.views.html#ide.the-editor.view" title="8.2.6. Editor view">Editor view (Section 8.2.6)</a>, click—or double-click
+depending on the <span class="guimenuitem">Preferences</span>|<span class="guimenuitem">General</span>|<span class="guimenuitem">Open mode</span>
+setting—the test case.
+(Incidentally, the checkboxes are used to control which test cases are
+run when the <span class="guibutton">Run Test Suite</span> (<span class="guiicon"><img src="images/ide/run_test_suite.png"></img></span>) toolbar button is clicked; we can always run
+a single test case by clicking its <span class="guibutton">Run Test</span> (<span class="guiicon"><img src="images/ide/run.png"></img></span>) button.) Initially, the
+script contains a hello-world <code class="function">main</code> script.
+The name "main" is special to
+<span class="emphasis"><em>Squish</em></span>—tests may contain as many functions and other code as we
+like (providing it is legal for the scripting language), but when the
+test is executed (i.e., run), <span class="emphasis"><em>Squish</em></span> always executes the
+<code class="function">main</code> function. This is actually very convenient since it
+means we are free to create other functions, import libraries, and so
+on, without problems. It is also possible to share commonly used code
+between test scripts—this is covered in the <a class="xref" href="users-guide.html" title="Chapter 5. User Guide">User Guide (Chapter 5)</a>. (In fact, two other function names are special
+to <span class="emphasis"><em>Squish</em></span>, <code class="function">cleanup</code> and <code class="function">init</code>; see <a class="xref" href="api.special.functions.html" title="6.1. Tester-Created Special Functions">Tester-Created Special Functions (Section 6.1)</a> for details.)
+</p><p>
+Once the new test case has been created, we are now free to write
+test code manually, or to record a test. If we choose to record we can
+either replace all the test's code with the recorded code, or insert
+recorded code into the middle of some existing test code. We will show
+how to record snippets later in the tutorial.
+</p><p>
+We are now ready to record our first test. Click the <span class="guibutton">Record</span> (<span class="guiicon"><img src="images/ide/record.png"></img></span>) toolbar button
+to the right of the <code class="code">tst_general</code> test case shown in the <a class="xref" href="ide.views.html#ide.the-test-suites.view" title="8.2.19. Test Suites view">Test Suites view (Section 8.2.19)</a>'s Test Cases list. This will cause
+<span class="emphasis"><em>Squish</em></span> to connect to the <span class="application">squishserver</span>, hide the <span class="application">Squish IDE</span>, open the
+<span class="guilabel">Control Bar</span>, and also the
+<span class="guilabel">Squish Remote Control</span>
+window which displays the screen of the target display.
+This window will be your way to
+interact with the remote server.
+</p><div class="mediaobject" align="center"><img src="images/tut-visual-remote-control-toolbar.png" align="middle"></img><div class="caption"><p>The Remote Control window of <span class="emphasis"><em>Squish for VNC</em></span> </p></div></div><div class="mediaobject" align="center"><img src="images/controlbar.png" align="middle"></img><div class="caption"><p>The Squish Control Bar </p></div></div><h5><a id="idp44359752"></a> Recording Mouse Clicks </h5><p>
+The <span class="guilabel">Squish Remote Control</span> window is able to record key
+presses directly but not mouse clicks, although the remote display
+will still react to your mouse. To insert mouse clicks, use the
+<span class="guilabel">Insert</span>
+(<span class="guiicon"><img src="images/ide/insert_action.gif"></img></span>)
+drop-down button, (one exists on the <span class="guilabel">Control Bar</span>, and
+also on the <span class="guilabel">Squish Remote Control</span> window)
+combined with <span class="guimenuitem">Image</span>
+or <span class="guimenuitem">OCR</span>, to pick the location
+of the desired click.
+This helps avoid the need for recording mouse clicks with desktop coordinates.
+Please see <a class="xref" href="ug-imagebasedtesting.html" title="5.24. How to Do Image-Based Testing">How to Do Image-Based Testing (Section 5.24)</a> for more information.
+</p><h5><a id="idp44364184"></a>Inserting Verifications</h5><p> From the <span class="guilabel">Control Bar</span>, or from the
+<span class="guilabel">Squish Remote Control</span> window, you
+can click <span class="guibutton">Verify</span> to drop-down a menu.
+From here, you can verify <span class="guimenuitem">Search Image</span>
+or <span class="guimenuitem">OCR Text</span>.
+For more information about OCR search and verification, see
+<a class="xref" href="ug-imagebasedtesting.html#ug-ocr-engine-setup" title="5.24.1. OCR setup">OCR setup (Section 5.24.1)</a>.</p><p>
+After you are done with recording, press <span class="guibutton">Stop Recording</span>
+(<span class="guiicon"><img src="images/ide/stop-recording.png"></img></span>)
+to save it as a script.
+</p><p>
+If the recorded test doesn't appear, click (or double-click depending on
+your platform and settings) the <code class="filename">tst_general</code> test
+case; this will make <span class="emphasis"><em>Squish</em></span> show the test's
+<code class="filename">test.py</code> file in an editor window as shown in the
+screenshot.
+</p><p>
+Now that we've recorded the test we can try to play it back, i.e.,
+run it. This in itself is useful in that if the play back failed it
+might mean that we forgot to insert a mouse-click somewhere.
+Furthermore, every verification we inserted will be checked.
+</p><p>
+While replaying a test, the <span class="guilabel">Squish Remote Control</span> window
+can be hidden/shown with the <span class="guibutton">Remote Control</span> button
+(<span class="guiicon"><img src="images/ide/remote_control.png"></img></span>) in the
+<span class="guilabel">Control Bar</span>.
+One important thing to note is that opening and closing the
+<span class="guilabel">Squish Remote Control</span>
+window is not synonymous with starting and stopping the Virtual AUT.
+To actually close the Virtual AUT's VNC or Native connection, use the
+<span class="guibutton">Quit AUT</span> button
+(<span class="guiicon"><img src="images/ide/quit_aut.png"></img></span>).
+</p><h5><a id="idp44374536"></a>When Image Search Fails</h5><p> With Image Search, playback may fail due to a single different pixel
+in the expected versus actual image. For example, there could be differences
+due to changes in hardware, color profile, brightness of surroundings (in the case
+where a device has a light sensor), time of day (for example Day Mode vs Night
+Mode), lossy compression, or sub-pixel antialiasing rendering. Or maybe the
+image is different and needs to be acquired again.
+</p><div class="mediaobject" align="center"><img src="images/vnc-tut-image_not_found.png" align="middle"></img><div class="caption"><p>Image Not Found dialog</p></div></div><p>
+If this happens, the
+<a class="xref" href="ide.dialogs.html#ide.image.not.found.dialog" title="8.3.4. Image Not Found dialog">Image Not Found dialog (Section 8.3.4)</a> pops up. At this point, there are lots of
+things you can do. </p><div class="itemizedlist"><ul type="disc"><li><p> If the expected image is out of date, you can <span class="guilabel">Update</span>
+the image from the current desktop. </p></li><li><p> If you want to relax the image search parameters for that
+particular statement, you can click <span class="guibutton">Adjust Search Parameters</span>.
+</p></li><li><p>
+If you want to apply a default tolerant image search for your test suite based
+on how closely the current actual matches the expected, click
+<span class="guibutton">Attempt to fix image search errors automatically</span>
+followed by <span class="guilabel">Change Defaults</span>.
+</p><p>
+Default tolerance levels for the test suite can later be seen/set
+from <span class="guibutton">Test Suite Settings</span> -
+<a class="xref" href="ide.views.html#ide.the-settings.view.imagesearch" title="8.2.16.5. Image Search">Image Search (Section 8.2.16.5)</a> tab.
+</p></li></ul></div><h5><a id="idp44381720"></a> Recording Snippets </h5><p>
+After playback is finished, the Virtual AUT terminates. The
+<span class="guilabel">Squish Remote Control</span> window is
+tinted red and not responding to events, or invisible.
+By selecting <span class="guimenu">Run</span>|<span class="guimenuitem">Launch AUT</span>, the
+VNC or Native connection is re-established and the
+<span class="guilabel">Squish Remote Control</span> window responds to the mouse and
+keyboard, and can be used as a terminal for your remote display.
+</p><p>
+The <span class="application">Squish IDE</span> is now in Spy perspective, neither recording nor
+playing back a test case.
+At this point, you can click to focus the cursor anywhere in your test script,
+and then <span class="guibutton">Record</span> (<span class="guiicon"><img src="images/ide/record.png"></img></span>) a snippet to be inserted at that location.
+Click <span class="guibutton">Stop Recording</span>
+(<span class="guiicon"><img src="images/ide/stop-recording.png"></img></span>)
+to see the snippet inserted into your test script.
+</p></div></div></div><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" type="text/javascript" src="ScriptingLanguage.js"></script><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format">setScriptingLanguage();</script><div class="navfooter"><hr></hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="tutorials-flex.html">Prev</a> </td><td width="20%" align="center"><a accesskey="u" href="tutorials.html">Up</a></td><td width="40%" align="right"> <a accesskey="n" href="tutorial-uploading-results.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">4.13. Squish for Flex Tutorials </td><td width="20%" align="center"><a accesskey="h" href="index-noframes.html">Home</a></td><td width="40%" align="right" valign="top"> 4.15.  Tutorial: Uploading Results to <span class="application">Squish Test Center</span> </td></tr></table></div></body>
+<!-- Mirrored from tutorials-visual.html by HTTrack Website Copier/3.x [XR&CO'2013], Wed, 06 Jul 2022 13:28:59 GMT -->
+</html>

@@ -1,0 +1,67 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<!-- Mirrored from ide.ref.man.html by HTTrack Website Copier/3.x [XR&CO'2013], Wed, 06 Jul 2022 13:29:01 GMT -->
+<head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><title>Chapter 8. IDE Reference Manual</title><link rel="stylesheet" href="manual.css" type="text/css"></link><meta name="generator" content="DocBook XSL Stylesheets V1.73.2"></meta><link rel="start" href="https://index-noframes.html" title="Squish Manual"></link><link rel="up" href="https://index-noframes.html" title="Squish Manual"></link><link rel="prev" href="https://rg-licenseserver.html" title="7.16. License Server"></link><link rel="next" href="https://ide.main.window.html" title="8.1. Main Window"></link><style xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" type="text/css" media="screen">
+        div.toc * { margin-left: 6px; margin-right: auto; max-width: 75em; }
+        div.toc span { margin-left: 0px; }
+        * { margin-left: auto; margin-right: auto; max-width: 75em; }
+        body { margin-left: 6px; margin-right: 6px; }
+        table th { padding: .5ex }
+        table td { padding: .5ex }
+    </style><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format">
+        function keyPress() {
+            var e = window.event;
+            if ( e == undefined ) {
+                return;
+            }
+            /* ### does not properly scroll, yet
+            if ( e.keyCode == 32 ) {
+            var l = document.links;
+            for ( var i = 0; i < l.length; i++ ) {
+                if ( l[i].innerText == "Next" ) {
+                location.href = l[i].href;
+                }
+            }
+            } else
+                */
+                if ( e.keyCode == 0x08 ) {
+            var l = document.links;
+            for ( var i = 0; i < l.length; i++ ) {
+                if ( l[i].innerText == "Prev" ) {
+                location.href = l[i].href;
+                }
+            }
+            }
+        }
+        document.onkeypress = keyPress;
+    </script></head><body><div class="chapter" lang="en"><div class="titlepage"><div><div><h2 class="title"><a id="ide.ref.man"></a>Chapter 8. IDE Reference Manual</h2></div></div></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><span class="section"><a href="https://ide.main.window.html">8.1. Main Window</a></span></dt><dd><dl><dt><span class="section"><a href="https://ide.main.window.html#ide.main.window.s.actions">8.1.1. Main Window Actions</a></span></dt><dt><span class="section"><a href="https://ide.main.window.html#ide.perspectives">8.1.2. Perspectives</a></span></dt><dt><span class="section"><a href="https://ide.main.window.html#ide-the-controlbar-window">8.1.3. Control Bar Window</a></span></dt></dl></dd><dt><span class="section"><a href="https://ide.views.html">8.2. Views</a></span></dt><dd><dl><dt><span class="section"><a href="https://ide.views.html#ide.the-application-objects.view">8.2.1. Application Objects view</a></span></dt><dt><span class="section"><a href="https://ide.views.html#ide.the-breakpoints.view">8.2.2. Breakpoints view</a></span></dt><dt><span class="section"><a href="https://ide.views.html#ide.the-console.view">8.2.3. Console view</a></span></dt><dt><span class="section"><a href="https://ide.views.html#ide.the-call-hierarchy.view">8.2.4. Call Hierarchy view</a></span></dt><dt><span class="section"><a href="https://ide.views.html#ide.the-debug.view">8.2.5. Debug view</a></span></dt><dt><span class="section"><a href="https://ide.views.html#ide.the-editor.view">8.2.6. Editor view</a></span></dt><dt><span class="section"><a href="https://ide.views.html#ide.the-global-scripts.view">8.2.7. Global Scripts view</a></span></dt><dt><span class="section"><a href="https://ide.views.html#ide.the-image.view">8.2.8. Image Viewer</a></span></dt><dt><span class="section"><a href="https://ide.views.html#ide.the-methods.view">8.2.9. Methods view</a></span></dt><dt><span class="section"><a href="https://ide.views.html#ide.the-object-map.view">8.2.10. Object Map view</a></span></dt><dt><span class="section"><a href="https://ide.views.html#ide.the-outline.view">8.2.11. Outline view</a></span></dt><dt><span class="section"><a href="https://ide.views.html#ide.the-properties.view">8.2.12. Properties view</a></span></dt><dt><span class="section"><a href="https://ide.views.html#ide.runner.server.log.view">8.2.13. Runner/Server Log view</a></span></dt><dt><span class="section"><a href="https://ide.views.html#ide.search.image.view">8.2.14. Image Selection Editor view</a></span></dt><dt><span class="section"><a href="https://ide.views.html#ide.the-search.view">8.2.15. Search view</a></span></dt><dt><span class="section"><a href="https://ide.views.html#ide.the-settings.view">8.2.16. Test Suite Settings view</a></span></dt><dt><span class="section"><a href="https://ide.views.html#ide.the-test-center.view">8.2.17. Test Center view</a></span></dt><dt><span class="section"><a href="https://ide.views.html#ide.the-test-results.view">8.2.18. Test Results view</a></span></dt><dt><span class="section"><a href="https://ide.views.html#ide.the-test-suites.view">8.2.19. Test Suites view</a></span></dt><dt><span class="section"><a href="https://ide.views.html#ide.the-test-summary.view">8.2.20. Test Summary view</a></span></dt><dt><span class="section"><a href="https://ide.views.html#ide.the-variables.view">8.2.21. Variables view</a></span></dt><dt><span class="section"><a href="https://ide.views.html#ide.verification.point.creator.view">8.2.22. Verification Point Creator view</a></span></dt><dt><span class="section"><a href="https://ide.views.html#ide.the-videoplayer-view">8.2.23. Video Player view</a></span></dt></dl></dd><dt><span class="section"><a href="https://ide.dialogs.html">8.3. Dialogs</a></span></dt><dd><dl><dt><span class="section"><a href="https://ide.dialogs.html#ide.collect.support.information.dialog">8.3.1. Collect Information for Squish Support dialog</a></span></dt><dt><span class="section"><a href="https://ide.dialogs.html#ide.customize.perspective.dialog">8.3.2. Customize Perspective dialog</a></span></dt><dt><span class="section"><a href="https://ide.dialogs.html#ide.find.and.replace.dialog">8.3.3. Find/Replace dialog</a></span></dt><dt><span class="section"><a href="https://ide.dialogs.html#ide.image.not.found.dialog">8.3.4. Image Not Found dialog</a></span></dt><dt><span class="section"><a href="https://ide.dialogs.html#ide.text.not.found.dialog">8.3.5. Text Not Found dialog</a></span></dt><dt><span class="section"><a href="https://ide.dialogs.html#ide.image.search.preview.dialog">8.3.6. Image Search Preview dialog</a></span></dt><dt><span class="section"><a href="https://ide.dialogs.html#ide.import.squish.resource.dialog">8.3.7. Import Squish Resource dialog</a></span></dt><dt><span class="section"><a href="https://ide.dialogs.html#ide.search.image.selection.dialog">8.3.8. The Search Image Selection dialog</a></span></dt><dt><span class="section"><a href="https://ide.dialogs.html#ide.new.dialog">8.3.9. New dialog</a></span></dt><dt><span class="section"><a href="https://ide.dialogs.html#ide.new.squish.test.case.wizard">8.3.10. New Squish Test Case wizard</a></span></dt><dt><span class="section"><a href="https://ide.dialogs.html#ide.new.squish.test.data.dialog">8.3.11. New Squish Test Data dialog</a></span></dt><dt><span class="section"><a href="https://ide.dialogs.html#ide.new.squish.test.script.dialog">8.3.12. New Squish Test Script dialog</a></span></dt><dt><span class="section"><a href="https://ide.dialogs.html#ide.new.squish.test.suite.wizard">8.3.13. New Squish Test Suite wizard</a></span></dt><dt><span class="section"><a href="https://ide.dialogs.html#ide.object.not.found.dialog">8.3.14. Object Not Found dialog</a></span></dt><dt><span class="section"><a href="https://ide.dialogs.html#ide.ocr.selection.dialog">8.3.15. OCR Selection dialog</a></span></dt><dt><span class="section"><a href="https://ide.dialogs.html#ide.open.perspective.dialog">8.3.16. Open Perspective dialog</a></span></dt><dt><span class="section"><a href="https://ide.dialogs.html#ide.preferences.dialog">8.3.17. Pref­er­ences dialog</a></span></dt><dt><span class="section"><a href="https://ide.dialogs.html#ide.remote.control.dialog">8.3.18. Remote Control dialog</a></span></dt><dt><span class="section"><a href="https://ide.dialogs.html#ide.screenshot.verification.dialog">8.3.19. Screenshot Verification Point dialog</a></span></dt><dt><span class="section"><a href="https://ide.dialogs.html#ide.search.dialog">8.3.20. Search dialog</a></span></dt><dt><span class="section"><a href="https://ide.dialogs.html#ide.show.view.dialog">8.3.21. Show View dialog</a></span></dt><dt><span class="section"><a href="https://ide.dialogs.html#ide.squish.server.settings.dialog">8.3.22. Squish Server Settings dialog</a></span></dt><dt><span class="section"><a href="https://ide.dialogs.html#ide.squish.support.request.wizard">8.3.23. Squish Support Request Wizard</a></span></dt><dt><span class="section"><a href="https://ide.dialogs.html#ide.switch.to.editor.dialog">8.3.24. Switch to Editor dialog</a></span></dt><dt><span class="section"><a href="https://ide.dialogs.html#ide.vvp.dialog">8.3.25. Visual Verification Point editor</a></span></dt></dl></dd><dt><span class="section"><a href="https://ide.keyboard.shortcuts.html">8.4. Keyboard Shortcuts</a></span></dt></dl></div><p>
+This <span class="application">Squish IDE</span> User's Guide explains all aspects and features of the
+<span class="application">squishide</span> in detail. To learn how to use <span class="emphasis"><em>Squish</em></span> it is best
+to start with one of the tutorials, and then at least skim read the
+<a class="xref" href="https://users-guide.html" title="Chapter 5. User Guide">User Guide (Chapter 5)</a> and <a class="xref" href="https://ref.man.html" title="Chapter 7. Tools Reference Manual">Tools Reference Manual (Chapter 7)</a>.
+This document is designed purely to provide details of the <span class="application">Squish IDE</span> for
+those already familiar with <span class="emphasis"><em>Squish</em></span>.
+</p><p>
+As noted in the tutorials, the <span class="application">Squish IDE</span> works just like the <a class="ulink" href="http://www.eclipse.org/home/categories/index.php?category=ide" target="_blank">
+Eclipse IDE</a>. If you aren't used to
+Eclipse it is crucial to understand one key concept:
+<span class="emphasis"><em>Views</em></span> and <span class="emphasis"><em>Perspectives</em></span>. In
+Eclipse (and therefore in the <span class="application">Squish IDE</span>), a
+<span class="emphasis"><em>View</em></span> is essentially a child window (perhaps a dock
+window, or a tab in an existing window). And a
+<span class="emphasis"><em>Perspective</em></span> is a collection of Views arranged
+together. Both are accessible through the
+<span class="guimenuitem">Window</span> menu.
+</p><p>
+The <span class="application">Squish IDE</span> is supplied with three Perspectives—Squish Test
+Management (which is the Perspective that the <span class="application">Squish IDE</span> starts with),
+Squish Test Debugging, and Squish Spy. You can change these
+Perspectives to include additional Views (or to get rid of any Views
+that you don't want), and you can create your own Perspectives with
+exactly the Views you want. So if your windows change dramatically it
+just means that the Perspective changed; you can always use the
+<span class="guimenuitem">Window</span> menu to change back to the Perspective
+you want.
+</p></div><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" type="text/javascript" src="ScriptingLanguage.js"></script><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format">setScriptingLanguage();</script><div class="navfooter"><hr></hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="https://rg-licenseserver.html">Prev</a> </td><td width="20%" align="center"> </td><td width="40%" align="right"> <a accesskey="n" href="https://ide.main.window.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">7.16. License Server </td><td width="20%" align="center"><a accesskey="h" href="https://index-noframes.html">Home</a></td><td width="40%" align="right" valign="top"> 8.1. Main Window</td></tr></table></div></body>
+<!-- Mirrored from ide.ref.man.html by HTTrack Website Copier/3.x [XR&CO'2013], Wed, 06 Jul 2022 13:29:01 GMT -->
+</html>

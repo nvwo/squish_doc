@@ -1,0 +1,578 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<!-- Mirrored from rg-namingconfig.html by HTTrack Website Copier/3.x [XR&CO'2013], Wed, 06 Jul 2022 13:29:00 GMT -->
+<head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><title>7.12. Object Name Generation</title><link rel="stylesheet" href="manual.css" type="text/css"></link><meta name="generator" content="DocBook XSL Stylesheets V1.73.2"></meta><link rel="start" href="index-noframes.html" title="Squish Manual"></link><link rel="up" href="ref.man.html" title="Chapter 7. Tools Reference Manual"></link><link rel="prev" href="rg-objectmap.html" title="7.11. Object Map"></link><link rel="next" href="rg-cppapi.html" title="7.13. Squish's C++ API"></link><style xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" type="text/css" media="screen">
+        div.toc * { margin-left: 6px; margin-right: auto; max-width: 75em; }
+        div.toc span { margin-left: 0px; }
+        * { margin-left: auto; margin-right: auto; max-width: 75em; }
+        body { margin-left: 6px; margin-right: 6px; }
+        table th { padding: .5ex }
+        table td { padding: .5ex }
+    </style><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format">
+        function keyPress() {
+            var e = window.event;
+            if ( e == undefined ) {
+                return;
+            }
+            /* ### does not properly scroll, yet
+            if ( e.keyCode == 32 ) {
+            var l = document.links;
+            for ( var i = 0; i < l.length; i++ ) {
+                if ( l[i].innerText == "Next" ) {
+                location.href = l[i].href;
+                }
+            }
+            } else
+                */
+                if ( e.keyCode == 0x08 ) {
+            var l = document.links;
+            for ( var i = 0; i < l.length; i++ ) {
+                if ( l[i].innerText == "Prev" ) {
+                location.href = l[i].href;
+                }
+            }
+            }
+        }
+        document.onkeypress = keyPress;
+    </script></head><body><div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="rg-namingconfig"></a>7.12. Object Name Generation</h2></div></div></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><span class="section"><a href="rg-namingconfig.html#rg-namingconfig-why">7.12.1. Object Names</a></span></dt><dt><span class="section"><a href="rg-namingconfig.html#rg-namingconfig-how">7.12.2. Defining Property Sets</a></span></dt><dt><span class="section"><a href="rg-namingconfig.html#rg-namingconfig-how-advanced">7.12.3. Advanced Property Set Definitions</a></span></dt><dt><span class="section"><a href="rg-namingconfig.html#rg-namegen-web">7.12.4. Name Generation Algorithm used by Squish for Web</a></span></dt></dl></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="rg-namingconfig-why"></a>7.12.1. Object Names</h3></div></div></div><p>
+When recording a test case or picking objects in the <span class="application">Spy</span>, <span class="emphasis"><em>Squish</em></span>
+automatically creates a name for each object that is accessed so that it
+can be identified later, for example, in a test script. This name
+could be a multi-property (real) name or a hierarchical name.
+Hierarchical names are still used by default when testing some toolkits, such as
+Web and Tk.
+For most toolkits, the default naming scheme is multi-property (real)
+names since they lead to much more flexible and reliable object identification
+in the face of application changes.
+</p><p>
+As discussed in the <a class="xref" href="rg-objectmap.html" title="7.11. Object Map">Object Map (Section 7.11)</a> chapter, the representation
+of real names differs depending on the kind of object map implementation used;
+for <a class="xref" href="rg-objectmap.html#rgo-squish-textbased" title="7.11.5. Text-Based Object Map">Text-Based Object Map (Section 7.11.5)</a>, a real name consists of a
+set of space-separated
+&lt;propertyName&gt;=&lt;value&gt;
+pairs enclosed in {curly braces}. For example, a multi-property name
+which identifies the object whose <span class="property">type</span> is
+<code class="code">Button</code> and whose <span class="property">text</span> is “<span class="quote">Hello</span>”
+will be a string like this, in all script languages:
+</p><pre class="screen">
+{type='Button' text='Hello'}
+</pre><p>
+The section <a class="xref" href="rg-objectmap.html#rgo-squish-scriptbased-location" title="7.11.4.2. Structure of Script-Based Object Maps">Structure of Script-Based Object Maps (Section 7.11.4.2)</a> explains that the
+very same object name can also be expressed as a native dictionary or map
+(the syntax of course varies slightly depending on the scripting language used):
+</p><div xmlns="" class="scriptlang"><form><select name="scriptlangcombo" onchange="javascript:changeScriptingLanguage(this)" onclick="javascript:changeScriptingLanguage(this)"><option value="all" selected>Show All</option><option value="JavaScript">Show JavaScript</option><option value="Perl">Show Perl</option><option value="Python">Show Python</option><option value="Ruby">Show Ruby</option><option value="Tcl">Show Tcl</option></select></form></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Python</span><pre class="programlisting">
+{"type": "Button", "text": "Hello"}
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">JavaScript</span><pre class="programlisting">
+{type: 'Button', text: 'Hello'};
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Ruby</span><pre class="programlisting">
+{:type =&gt; 'Button', :text =&gt; 'Hello'}
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Perl</span><pre class="programlisting">
+{'type' =&gt; 'Button', 'text' =&gt; 'Hello'}
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Tcl</span><pre class="programlisting">
+ObjectName type Button text Hello
+</pre></div><p>
+Every multi-property name <span class="emphasis"><em>must</em></span> have at least two
+properties, one of which is a mandatory toolkit-specific
+property. The toolkit-specific properties are: </p><div class="itemizedlist"><ul type="disc"><li><p> Java: <span class="property">type</span> or
+<span class="property">basetype</span> (but not both) </p></li><li><p> Web: <span class="property">tagName</span> </p></li><li><p> All others: <span class="property">type</span> </p></li></ul></div><p>
+Some objects can only be found inside other containing objects because of
+their class design. In those cases, a <em class="firstterm">container property</em>
+is also required in the real name. This is an object reference
+to a <span class="property">container</span> (or <span class="property">window</span>, or
+<span class="property">parentItem</span>). Container properties are needed whenever
+Squish needs to cross otherwise unrelated object hierarchies to find an object.
+Some examples are: List, Tree and Table items,
+<code class="classname">QGraphicsItem</code>s, QtQuick Items, and HTML elements from an
+embedded HTML control, such as a <code class="classname">QWebView</code>.
+</p><p> Note that the <span class="property">type</span>, <span class="property">basetype</span>,
+<span class="property">tagName</span> properties (and a few others) can only be matched
+exactly—most other string properties can be matched using wildcards or
+regexes to make <span class="emphasis"><em>Squish</em></span> test scripts more flexible in the face of
+changes. (See <a class="xref" href="rg-namelookup.html" title="7.10. Improving Object Identification">Improving Object Identification (Section 7.10)</a>.)
+</p><p>
+Many objects have lots of properties, and <span class="emphasis"><em>Squish</em></span> must choose amongst
+them to create names that will correctly and uniquely identify each
+object, and that are as short as possible, i.e., that use as few
+properties as possible. Unfortunately, these two requirements conflict
+with each other: uniqueness can be ensured by using all or most of an object's
+properties, but short names require us to use as few properties
+as possible.
+</p><p>
+Why do we need short names at all? Because the fewer properties we use
+to identify an object, the less chance there is that a change to the
+application which affects one of the object's properties will affect one
+of the properties that we are using to identify the object. So short names
+(i.e., names with as few properties as possible), are more robust in the
+face of application changes. On the other hand, if we use too few
+properties we might end up with names that are too general, that match two or
+more objects, and if <span class="emphasis"><em>Squish</em></span> cannot uniquely identify an object, how can it
+know which object is intended to be accessed in a test script?
+</p><p>
+There is no one right or perfect answer to this problem. Names which are
+invalidated because of application changes (i.e., names where the value
+of one or more of the properties used in the name have changed), result
+in test scripts that fail. Similarly, names which are no longer unique
+(perhaps due to using too few properties for an object and then having
+an application change that leads to another object with identical
+properties being added to the application), also lead to test script
+failure. So <span class="emphasis"><em>Squish</em></span> must find the right balance when creating names
+so that they are both unique and robust.
+</p><p>
+<span class="emphasis"><em>Squish</em></span> uses a set of built-in heuristics ("rules of thumb") to
+determine what properties to use. In most everyday testing situations
+these work fine and <span class="emphasis"><em>Squish</em></span> creates names that are both unique and
+robust.
+</p><p>
+Unfortunately, there are some situations where the heuristics <span class="emphasis"><em>Squish</em></span>
+uses produce poor results. For example, when writing a Qt test, <span class="emphasis"><em>Squish</em></span>
+will use the <code class="classname">QObject</code> <span class="property">objectName</span> property
+(which <span class="emphasis"><em>Squish</em></span> calls <span class="property">name</span>) to identify an object,
+providing this property has some text in it. In most cases this works
+very well, especially if the AUT's developers have chosen unique names
+for their <code class="classname">QObject</code>s. However, if the property changes over
+time, then clearly <span class="emphasis"><em>Squish</em></span> cannot rely on it for identification purposes, and
+we need to have some way of excluding it from the list of properties that
+<span class="emphasis"><em>Squish</em></span> makes use of.
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="rg-namingconfig-how"></a>7.12.2. Defining Property Sets</h3></div></div></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><span class="section"><a href="rg-namingconfig.html#rg-namingconfig-how-location">7.12.2.1. Descriptor File Locations</a></span></dt><dt><span class="section"><a href="rg-namingconfig.html#rg-namingconfig-how-format">7.12.2.2. Descriptor File Format</a></span></dt></dl></div><p>
+In <span class="emphasis"><em>Squish</em></span>, the property list used to create real names can be configured by
+editing some straightforward <acronym class="acronym">XML</acronym> files. How to use these
+files to customize the name creation process is explained in the following two
+sections.
+</p><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Note: Applies to All GUI Toolkits Except
+Web"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/note.png"></img></td><th align="left">Applies to All GUI Toolkits Except
+Web</th></tr><tr><td align="left" valign="top"><p> The following sections do <span class="emphasis"><em>not</em></span>
+apply to the testing of Web applications. For these, see <a class="xref" href="rg-namingconfig.html#rg-namegen-web" title="7.12.4. Name Generation Algorithm used by Squish for Web">Name Generation Algorithm used by Squish for Web (Section 7.12.4)</a>.
+</p></td></tr></table></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="rg-namingconfig-how-location"></a>7.12.2.1. Descriptor File Locations</h4></div></div></div><p>
+The list of properties that <span class="emphasis"><em>Squish</em></span> uses to create multi-property
+(real) names for objects are specified using
+<acronym class="acronym">XML</acronym> files. For each wrapper which your application
+uses there can be up to two <acronym class="acronym">XML</acronym> files—called
+“<span class="quote">descriptor files</span>” in <span class="emphasis"><em>Squish</em></span> terminology—which must
+follow a particular naming scheme so that <span class="emphasis"><em>Squish</em></span> can find them:
+</p><div class="variablelist"><dl><dt><span class="term"><code class="filename">&lt;SQUISHDIR&gt;/etc/&lt;wrapper&gt;_descriptors.xml</code></span></dt><dd><p>
+This <acronym class="acronym">XML</acronym> file contains the default properties which
+<span class="emphasis"><em>Squish</em></span> uses for creating real (multi-property) names. Depending on the
+type of package you use, you might find
+<code class="filename">qtwrapper_descriptors.xml</code>,
+<code class="filename">javawrapper_descriptors.xml</code> or others in
+<code class="filename">SQUISHDIR/etc</code>.
+</p><p>
+&lt;SQUISHDIR&gt; stands for the directory
+where you installed your <span class="emphasis"><em>Squish</em></span> package.
+</p></dd><dt><span class="term"><code class="filename">&lt;Squish_User_Settings&gt;/&lt;wrapper&gt;_user_descriptors.xml</code></span></dt><dd><p>
+If you want to override the default behavior, or add new properties, you
+can do so by creating a user descriptors file for each wrapper you want
+to affect. These files have names similar to the predefined descriptor
+files supplied with <span class="emphasis"><em>Squish</em></span>, but with <code class="filename">_user_</code>
+inserted in the middle of the name as shown above.
+</p><p>
+&lt;Squish_User_Settings&gt; stands for the directory
+where user specific settings are stored. On Windows, this is <code class="filename">%APPDATA%\froglogic\Squish</code>, and on
+Unix-like systems (Linux, macOS, etc.), it is <code class="filename">~/.squish</code>. If you set the environment
+variable <a class="xref" href="rg-envvars.html#SQUISH_USER_SETTINGS_DIR">SQUISH_USER_SETTINGS_DIR</a> to point to a different
+directory, that directory is used instead for storing the user
+settings—and also for user descriptor files.
+</p></dd></dl></div><p>
+Exactly the same file format is used for the predefined descriptor files
+that are supplied with <span class="emphasis"><em>Squish</em></span> and for the user descriptor files that
+you can create to customize how <span class="emphasis"><em>Squish</em></span> generates names.
+</p><p>
+Every descriptor file contains a list of types together with the
+names of the properties that can be used when generating names for
+objects of each particular type. <span class="emphasis"><em>Squish</em></span> reads its own predefined
+descriptor files first, and then it reads any user descriptor
+files. This makes it possible for user descriptor files (those with
+filenames of the form
+<code class="filename">&lt;wrapper&gt;_user_descriptors.xml</code>),
+to override the behavior specified in the predefined descriptor files,
+and to add new type descriptors.
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="rg-namingconfig-how-format"></a>7.12.2.2. Descriptor File Format</h4></div></div></div><p>
+The list of types and the properties that can be used for their
+objects are specified using a simple <acronym class="acronym">XML</acronym> format.
+Here's a short example for a fictional application toolkit which has a
+Button type:
+</p><pre class="screen">
+&lt;objectdescriptors&gt;
+  &lt;descriptor&gt;
+    &lt;type name="Button"/&gt;
+    &lt;realidentifiers&gt;
+      &lt;property&gt;caption&lt;/property&gt;
+    &lt;/realidentifiers&gt;
+  &lt;/descriptor&gt;
+&lt;/objectdescriptors&gt;
+</pre><p>
+This descriptor file defines just one &lt;descriptor&gt;
+which says that for all objects of <span class="property">type</span>
+<code class="classname">Button</code>, <span class="property">caption</span>
+should be used when generating the real name.
+</p><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Note: Name Inheritance"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/note.png"></img></td><th align="left">Name Inheritance</th></tr><tr><td align="left" valign="top"><p>This means that not only objects which are instances
+of the <code class="classname">Button</code> class will get the
+<span class="property">caption</span> property in their real name,
+but also instances of classes which inherit <code class="classname">Button</code>! When
+deciding which descriptors to use for generating the name for a given object,
+<span class="emphasis"><em>Squish</em></span> takes the inheritance hierarchy into account and will use
+all descriptors whose type name shows up in the inheritance
+hierarchy of the given object.</p></td></tr></table></div><p>
+In this example, only the name of the <span class="property">type</span> was used for
+identifying the object. However, it is also possible to apply constraints, so
+that only those objects of the given <span class="property">type</span> and that meet
+specified constraints are identified. Here's a slightly longer example to
+illustrate this:
+</p><pre class="screen">
+&lt;objectdescriptors&gt;
+  &lt;descriptor&gt;
+    &lt;type name="Button"&gt;
+      &lt;constraint name="visible"&gt;false&lt;/constraint&gt;
+    &lt;/type&gt;
+    &lt;realidentifiers&gt;
+      &lt;property&gt;caption&lt;/property&gt;
+      &lt;property&gt;tooltip&lt;/property&gt;
+    &lt;/realidentifiers&gt;
+  &lt;/descriptor&gt;
+
+  &lt;descriptor&gt;
+    &lt;type name="Button"/&gt;
+    &lt;realidentifiers&gt;
+      &lt;property&gt;caption&lt;/property&gt;
+      &lt;property&gt;xpos&lt;/property&gt;
+      &lt;property&gt;ypos&lt;/property&gt;
+    &lt;/realidentifiers&gt;
+  &lt;/descriptor&gt;
+&lt;/objectdescriptors&gt;
+</pre><p>
+Here we have created two separate descriptors, although they both refer
+to objects of the same <span class="property">type</span>.
+</p><p>
+The first descriptor applies to objects of <span class="property">type</span>
+<code class="classname">Button</code>—but only when the button's
+<span class="property">visible</span> property is <code class="code">false</code>, in other
+words, this descriptor only applies to hidden Buttons. So when the
+application has a hidden button, this descriptor says that the properties
+that should be used to identify it when creating real names are
+<span class="property">caption</span> and <span class="property">tooltip</span>.
+</p><p>
+The second descriptor applies to objects of <span class="property">type</span>
+<code class="classname">Button</code>, but only <span class="property">visible</span> ones since
+hidden Buttons are handled by the first descriptor. This descriptor says that
+when creating real names for <code class="classname">Button</code> objects, their
+<span class="property">caption</span>, <span class="property">xpos</span>, and
+<span class="property">ypos</span> properties should be used.
+</p><p>
+Although we have only shown the use of a single constraint, it is
+possible to use as many as we like. In such cases the descriptor will
+only be used if <span class="emphasis"><em>all</em></span> the constraints are met.
+</p><p>
+In general, when multiple descriptors are specified which apply to the
+same type, <span class="emphasis"><em>Squish</em></span> will try to use the one that is the best match for
+the object it is accessing, essentially working from the descriptor with
+the most constraints to the one with the least.
+</p><p> So in terms of the second example above, if <span class="emphasis"><em>Squish</em></span> encounters a
+<code class="classname">Button</code>, it will first try the first descriptor (since
+that has the most, i.e., one, constraints). If the button is hidden, <span class="emphasis"><em>Squish</em></span>
+has a match and will generate a real name that uses the Button's
+<span class="property">caption</span> and <span class="property">tooltip</span>.
+However, if the Button is <span class="property">visible</span>, the first descriptor
+won't match, so <span class="emphasis"><em>Squish</em></span> will try the next one, and this matches (since it has
+no constraints, so will match any <code class="classname">Button</code>), and generates
+a real name that uses the Button's <span class="property">caption</span>,
+<span class="property">xpos</span>, and <span class="property">ypos</span>. </p></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="rg-namingconfig-how-advanced"></a>7.12.3. Advanced Property Set Definitions</h3></div></div></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><span class="section"><a href="rg-namingconfig.html#rg-namingconfig-how-advanced-catchall">7.12.3.1. The Catch-All <code class="code">*</code> Descriptor</a></span></dt><dt><span class="section"><a href="rg-namingconfig.html#rg-namingconfig-how-advanced-groups">7.12.3.2. Groups of Exclusive Properties</a></span></dt><dt><span class="section"><a href="rg-namingconfig.html#rg-namingconfig-how-advanced-objects">7.12.3.3. Properties with Object Name Values</a></span></dt><dt><span class="section"><a href="rg-namingconfig.html#rg-namingconfig-how-advanced-excludingproperties">7.12.3.4. Excluding Individual Properties From Some Objects' Real Names</a></span></dt></dl></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="rg-namingconfig-how-advanced-catchall"></a>7.12.3.1. The Catch-All <code class="code">*</code> Descriptor</h4></div></div></div><p>
+In addition to the normal descriptors, which match an object by the type name
+(and optionally, by constraints), there's a special descriptor called
+<code class="code">*</code> (star or asterisk), which matches objects of
+<span class="emphasis"><em>any</em></span> type. This special descriptor can also have constraints
+applied to it, in exactly the same way as for normal descriptors.
+The toolkit wrappers that support <code class="code">*</code> as a catch-all are Qt, Java,
+and Mac. For Windows or Android, use <code class="classname">WinGUIObject</code> or
+<code class="classname">Control</code> for the type name instead.
+Here's an example of how it might be used:
+</p><pre class="screen">
+&lt;objectdescriptors&gt;
+  &lt;descriptor&gt;
+    &lt;type name="*"/&gt;
+    &lt;realidentifiers&gt;
+      &lt;property&gt;id&lt;/property&gt;
+    &lt;/realidentifiers&gt;
+  &lt;/descriptor&gt;
+
+  &lt;descriptor&gt;
+    &lt;type name="Button"/&gt;
+    &lt;realidentifiers&gt;
+      &lt;property&gt;caption&lt;/property&gt;
+    &lt;/realidentifiers&gt;
+  &lt;/descriptor&gt;
+&lt;/objectdescriptors&gt;
+</pre><p>
+In this example, a catch-all descriptor is defined. This means that for
+all objects, no matter what their type name is, <span class="property">id</span>
+will be used when generating real names. If a particular object does not have
+an <span class="property">id</span>, the property will be silently ignored and
+this will not trigger an error.
+</p><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Note: Harmless Catch-Alls"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/note.png"></img></td><th align="left">Harmless Catch-Alls</th></tr><tr><td align="left" valign="top"><p>
+It is harmless to list properties in a catch-all descriptor which don't
+exist for some object types. For example, if almost all of our object
+types have an <span class="property">id</span> that we normally want to use when real
+names are generated, the best approach is to specify this property using a
+catch-all descriptor. This will ensure that <span class="property">id</span> is
+always used for real names for those objects that have it, and yet it is safely
+and silently ignored for those few that don't.
+</p></td></tr></table></div><p>
+When real names are generated, the properties used are those for the
+matching class descriptor, plus those for the matching descriptor of the
+object's base class, and so on, up the inheritance hierarchy. In
+addition, any catch-all descriptors are also used.
+</p><p>
+Given the example descriptors shown above, if a <code class="classname">Button</code>
+object was encountered—and assuming that Buttons have an
+<span class="property">id</span>, <span class="emphasis"><em>Squish</em></span> would generate a real name that would use
+<span class="property">caption</span> (from the <code class="classname">Button</code> descriptor)
+<span class="emphasis"><em>and</em></span> <span class="property">id</span> (from the <code class="code">*</code>
+descriptor). And if the <code class="classname">Button</code> didn't have an
+<span class="property">id</span>, <span class="emphasis"><em>Squish</em></span> would simply use <span class="property">caption</span>
+and ignore <span class="property">id</span>. If the <code class="classname">Button</code> derived
+from another type, for example, <code class="classname">Widget</code>, that had a
+descriptor that specified, say, <span class="property">hasfocus</span>, then that
+property would also be included in the generated real name.
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="rg-namingconfig-how-advanced-groups"></a>7.12.3.2. Groups of Exclusive Properties</h4></div></div></div><p>
+Suppose we have a descriptor file that contains the following rule for
+<code class="classname">Button</code>:
+</p><pre class="screen">
+&lt;objectdescriptors&gt;
+  &lt;descriptor&gt;
+    &lt;type name="Button"/&gt;
+    &lt;realidentifiers&gt;
+      &lt;property&gt;id&lt;/property&gt;
+      &lt;property&gt;caption&lt;/property&gt;
+      &lt;property&gt;tooltip&lt;/property&gt;
+      &lt;property&gt;enabled&lt;/property&gt;
+    &lt;/realidentifiers&gt;
+  &lt;/descriptor&gt;
+&lt;/objectdescriptors&gt;
+</pre><p>
+This descriptor specifies four properties: <span class="property">id</span>,
+<span class="property">caption</span>, <span class="property">tooltip</span>
+and <span class="property">enabled</span>, that will be used to generate the real
+names for <code class="classname">Button</code> objects.
+
+Unfortunately, in practice this might lead to
+less robust real names. This is because we are using too many
+properties, so our test scripts will be vulnerable if a Button's
+<span class="property">caption</span> <span class="emphasis"><em>or</em></span> its
+<span class="property">tooltip</span> changes. What we really want to say
+is that if <span class="property">caption</span> has a value, then we should use it,
+but if <span class="property">caption</span> is empty then we should use
+<span class="property">tooltip</span> as a fallback.
+</p><p>
+<span class="emphasis"><em>Squish</em></span> provides a means of solving this problem. The mechanism is part
+of the descriptor file format, and it allows us to specify two or more
+properties such that <span class="emphasis"><em>Squish</em></span> will only use one of them—the first
+one which actually has a value. The mechanism is called “<span class="quote">property
+groups</span>”. Here is an example:
+</p><pre class="screen">
+&lt;objectdescriptors&gt;
+  &lt;descriptor&gt;
+    &lt;type name="Button"/&gt;
+    &lt;realidentifiers&gt;
+      &lt;property&gt;id&lt;/property&gt;
+      &lt;group&gt;
+        &lt;property&gt;caption&lt;/property&gt;
+        &lt;property&gt;tooltip&lt;/property&gt;
+      &lt;/group&gt;
+      &lt;property&gt;enabled&lt;/property&gt;
+    &lt;/realidentifiers&gt;
+  &lt;/descriptor&gt;
+&lt;/objectdescriptors&gt;
+</pre><p>
+Here we have put <span class="property">caption</span> and <span class="property">tooltip</span>
+in a &lt;group&gt; together. The effect of this is to tell <span class="emphasis"><em>Squish</em></span>
+to use <span class="property">caption</span> if it has a value (i.e., if it isn't an
+empty string), and to use <span class="property">tooltip</span> otherwise. So when
+<span class="emphasis"><em>Squish</em></span> generates a real name for a <code class="classname">Button</code> using this
+descriptor, the name will have <span class="property">id</span>,
+<span class="property">enabled</span>, and <span class="emphasis"><em>either</em></span>
+<span class="property">caption</span> <span class="emphasis"><em>or</em></span>
+<span class="property">tooltip</span>—but never both—plus any properties from
+the matching descriptors of the classes that <code class="classname">Button</code>
+inherits from, plus any properties from any catch-all <code class="code">*</code> descriptor.
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="rg-namingconfig-how-advanced-objects"></a>7.12.3.3. Properties with Object Name Values</h4></div></div></div><p>
+In addition to specifying the names and values of properties, real names
+can also specify references to related objects, and such references can
+help to uniquely identify an object of a particular type.
+</p><p>
+For example, we might have a form with several single line editors. In
+themselves these editors might all have the same properties with nothing
+to distinguish them, but in all probability they will all have labels
+beside them so that the user knows what they are expected to type into
+them. In some toolkits such labels might be identified by their position
+in relation to the object—left or above—and in other
+toolkits they are identified by their relationship to the
+object—for example, they are its <span class="property">buddy</span>.
+</p><p>
+Here's an example real name for a fictional single line editor which is
+identified by its own properties, and also by its <span class="property">buddy</span>
+whose value is a reference to a related object:
+</p><pre class="screen">
+{type='LineEdit' maxChars='32' allowDigits='false' buddy={type='Label' text='Last Name:'}}
+</pre><p>
+Normal property values are enclosed in quotes, but when the value is a
+reference to a related object, quotes are not used and instead the
+related object's real name is used, enclosed in braces.
+(So we end up with one real name nested inside another.)
+</p><p>
+The same object name can of course also be expressed when using <a class="xref" href="rg-objectmap.html#rgo-squish-scriptbased" title="7.11.4. Script-Based Object Map">Script-Based Object Map (Section 7.11.4)</a>:
+</p><div xmlns="" class="scriptlang"><form><select name="scriptlangcombo" onchange="javascript:changeScriptingLanguage(this)" onclick="javascript:changeScriptingLanguage(this)"><option value="all" selected>Show All</option><option value="JavaScript">Show JavaScript</option><option value="Perl">Show Perl</option><option value="Python">Show Python</option><option value="Ruby">Show Ruby</option><option value="Tcl">Show Tcl</option></select></form></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Python</span><pre class="programlisting">
+{"type": "LineEdit", "maxChars": 32, "allowDigits": False, "buddy": {"type": "Label", "text": "Last Name:"}}
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">JavaScript</span><pre class="programlisting">
+{type: 'LineEdit', maxChars: 32, allowDigits: false, buddy: {type: 'Label', text: 'Last Name:'}}
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Ruby</span><pre class="programlisting">
+{:type =&gt; 'LineEdit', :maxChars =&gt; 32, :allowDigits =&gt; false, :buddy =&gt; {:type =&gt; 'Label', :text =&gt; 'Last Name:'}}
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Perl</span><pre class="programlisting">
+{'type' =&gt; 'LineEdit', 'maxChars' =&gt; 32, 'allowDigits' =&gt; 'false', 'buddy' =&gt; {'type' =&gt; 'Label', 'text' =&gt; 'Last Name:'}}
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Tcl</span><pre class="programlisting">
+ObjectName type LineEdit maxChars 32 allowDigits false buddy [ObjectName type Label text {Last Name:}]
+</pre></div><p>
+If we want to use a property that refers to another object in a
+descriptor, we simply name it using the &lt;object&gt;
+tag instead of the &lt;property&gt; tag, as the following
+example illustrates:
+</p><pre class="screen">
+&lt;objectdescriptors&gt;
+  &lt;descriptor&gt;
+    &lt;type name="LineEdit"/&gt;
+    &lt;realidentifiers&gt;
+      &lt;property&gt;maxChars&lt;/property&gt;
+      &lt;property&gt;allowDigits&lt;/property&gt;
+      &lt;object&gt;buddy&lt;/object&gt;
+    &lt;/realidentifiers&gt;
+  &lt;/descriptor&gt;
+&lt;/objectdescriptors&gt;
+</pre><p>
+What this descriptor says is that when <span class="emphasis"><em>Squish</em></span> encounters a
+<code class="classname">LineEdit</code>, it should generate a real name that includes
+<span class="property">maxChars</span> and <span class="property">allowDigits</span>, and also
+<span class="property">buddy</span> which is an object reference.
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="rg-namingconfig-how-advanced-excludingproperties"></a>7.12.3.4. Excluding Individual Properties From Some Objects' Real Names</h4></div></div></div><p>
+In some situations we want a particular property to be used when
+generating real names for most objects of a type, but not for absolutely all
+of them. For example, we might have a bunch of objects derived from
+<code class="classname">Widget</code> with a <span class="property">dropEnabled</span>.
+If most of the derived objects are editing widgets, the property makes sense,
+but it probably doesn't make sense for
+a derived <code class="classname">Button</code> object. So we want to create a
+descriptor that includes <span class="property">dropEnabled</span> for all
+<code class="classname">Widget</code>s, except for <code class="classname">Button</code>.
+<span class="emphasis"><em>Squish</em></span> allows us to do this by using the <span class="property">exclude</span>
+attribute of &lt;property&gt; as the following example shows:
+</p><pre class="screen">
+&lt;objectdescriptors&gt;
+  &lt;descriptor&gt;
+    &lt;type name="Widget"/&gt;
+    &lt;realidentifiers&gt;
+      &lt;property&gt;dropEnabled&lt;/property&gt;
+      &lt;property&gt;text&lt;/property&gt;
+    &lt;/realidentifiers&gt;
+  &lt;/descriptor&gt;
+
+  &lt;descriptor&gt;
+    &lt;type name="Button"/&gt;
+    &lt;realidentifiers&gt;
+      &lt;property exclude="yes"&gt;dropEnabled&lt;/property&gt;
+    &lt;/realidentifiers&gt;
+  &lt;/descriptor&gt;
+&lt;/objectdescriptors&gt;
+</pre><p>
+In this example, <code class="classname">Widget</code> is the base class of all
+<acronym class="acronym">GUI</acronym> objects. The first descriptor tells <span class="emphasis"><em>Squish</em></span> to use
+<span class="property">dropEnabled</span> and <span class="property">text</span> when generating
+real names for <code class="classname">Widget</code> objects and for all objects that
+derive from it (such as <code class="classname">LineEdit</code> and
+<code class="classname">Button</code>). There is no
+&lt;descriptor&gt; for <code class="classname">LineEdit</code> since
+they are derived from <code class="classname">Widget</code> and we have no properties
+to add or change. But for <code class="classname">Button</code> we have created a
+&lt;descriptor&gt; so that we can stop
+<span class="property">dropEnabled</span> from being used for
+<code class="classname">Button</code> names. </p><p>
+If we were to use the descriptor file above with our fictional toolkit,
+it would change the way that <span class="emphasis"><em>Squish</em></span> creates real names. For
+<code class="classname">LineEdit</code>s (assuming they are derived from
+<code class="classname">Widget</code>) <span class="emphasis"><em>Squish</em></span> will create real names
+that have <span class="property">dropEnabled</span>, <span class="property">text</span> (and of course
+<span class="property">type</span> since that is <span class="emphasis"><em>always</em></span> included), but
+for <code class="classname">Button</code>s, <span class="emphasis"><em>Squish</em></span> will create real names that only
+use <span class="property">text</span> and <span class="property">type</span>.
+</p></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="rg-namegen-web"></a>7.12.4. Name Generation Algorithm used by Squish for Web</h3></div></div></div><p>
+Squish for Web has a different heuristic to generate object names,
+it does not use the descriptor files mentioned in the previous section.
+
+The name generation first checks all extensions that registered a hook for name
+generation through <a class="xref" href="rgs-webconvenience.html#web-Squish.nameOf-function"><code class="function">Squish.nameOf</code></a>. Afterwards it applies
+the following rules, taking the first one that matches. All multi-property names include
+the <span class="property">tagName</span>, this one is required for Squish for Web
+object names. The names can also include a <span class="property">context</span>
+containing the name of the frame/iframe element in which the object is located.
+This property is not included for objects in the toplevel page.
+</p><div class="itemizedlist"><ul type="disc"><li><p><code class="literal">SELECT</code>, <code class="literal">INPUT</code> and
+<code class="literal">BUTTON</code> elements include the properties
+<span class="property">name</span>,  <span class="property">id</span>,
+<span class="property">type</span> and <span class="property">innerText</span> if they are not
+empty. In addition a <span class="property">form</span> property is generated
+if the containing form has a <span class="property">name</span> or
+<span class="property">id</span> property set. <code class="literal">SELECT</code> and
+<code class="literal">INPUT</code> fields also get the <span class="property">type</span> property
+added to the object name.
+</p></li><li><p><code class="literal">TD</code> elements having the
+<code class="literal">cMenuTD</code> <span class="property">class</span> include the properties
+<span class="property">class</span>, <span class="property">id</span>, <span class="property">name</span>
+and <span class="property">innerText</span> if they are not empty.
+</p></li><li><p><code class="literal">IMG</code> elements having <span class="property">id</span>,
+<span class="property">name</span> or <span class="property">alt</span> set to a non-empty string
+will generate a multi property name including those properties. Otherwise Squish
+uses a hierarchical name for <code class="literal">IMG</code> elements. The
+<span class="property">alt</span> attribute of the element will be reflected
+as <span class="property">img_alt</span> in the multi-property name
+</p></li><li><p>The next step is walking up the hierarchy of elements to the one
+for which a name is to be generated. For each parent, Squish checks if it is a
+<code class="literal">link</code> element. If it is, the following rules are applied to
+generate a name for it:
+</p><div class="itemizedlist"><ul type="circle"><li><p>If the element has a non-empty <span class="property">id</span>,
+    <span class="property">name</span> or <span class="property">innerText</span>
+    property it will get a multi-property name including those properties.
+    </p></li><li><p>If all of the three are empty or
+    not present Squish looks at the content of the link to see if there is an IMG element inside. If there
+    is such an element and it has a non-empty <span class="property">id</span>,
+    <span class="property">name</span> or <span class="property">alt</span> attribute the name for
+    the <code class="literal">link</code> element will use those values as <span class="property">img_id</span>,
+    <span class="property">img_name</span> and <span class="property">img_alt</span> respectively
+    for its multi-property name.
+    </p></li><li><p>
+    If the inner <code class="literal">IMG</code> element does not have a non-empty
+    <span class="property">id</span>, <span class="property">name</span> or
+    <span class="property">alt</span> attribute, Squish checks the
+    <span class="property">src</span> attribute. If that attribute is not-empty, Squish
+    extracts the substring after the last '/' from
+    the <span class="property">src</span> attribute and includes that using the
+    <span class="property">img_src</span> property in the multi-property name for
+    the link.
+    </p></li><li><p>
+    If all of the above mentioned attributes are empty Squish falls back to
+    using a hierarchical name for the <code class="literal">link</code> element.
+    </p></li></ul></div><p>
+If the top-level element is reached Squish returns to the original object for
+which a name is to be generated and continues with the next rule.
+</p></li><li><p>If the element has a <span class="property">tagName</span> and either a <span class="property">title</span>,
+<span class="property">id</span> or <span class="property">name</span> attribute set, Squish generates
+a multi-property name including those properties.
+</p></li><li><p>If the element is a <code class="literal">SPAN</code>,
+<code class="literal">DIV</code>, <code class="literal">LI</code>, <code class="literal">TD</code> or
+<code class="literal">TR</code> element and it has a non-empty
+<span class="property">innerText</span> attribute, then Squish generates a multi-property
+name using that attribute as a property.
+</p></li><li><p>
+In all other cases Squish will generate a hierarchical name for the object
+</p></li></ul></div><p>The last step is to calculate the <span class="property">occurrence</span> property
+in case a multi-property name has been generated.</p><p>
+Squish for Web also allows customization of name generation. For details on that
+see <a class="xref" href="rgs-webconvenience.html#rg-jsapi" title="6.10.44. JavaScript Extension API">JavaScript Extension API (Section 6.10.44)</a>.
+</p></div></div><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" type="text/javascript" src="ScriptingLanguage.js"></script><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format">setScriptingLanguage();</script><div class="navfooter"><hr></hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="rg-objectmap.html">Prev</a> </td><td width="20%" align="center"><a accesskey="u" href="ref.man.html">Up</a></td><td width="40%" align="right"> <a accesskey="n" href="rg-cppapi.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">7.11. Object Map </td><td width="20%" align="center"><a accesskey="h" href="index-noframes.html">Home</a></td><td width="40%" align="right" valign="top"> 7.13. <span class="emphasis"><em>Squish</em></span>'s C++ API</td></tr></table></div></body>
+<!-- Mirrored from rg-namingconfig.html by HTTrack Website Copier/3.x [XR&CO'2013], Wed, 06 Jul 2022 13:29:00 GMT -->
+</html>

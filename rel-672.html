@@ -1,0 +1,180 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<!-- Mirrored from rel-672.html by HTTrack Website Copier/3.x [XR&CO'2013], Wed, 06 Jul 2022 13:28:55 GMT -->
+<head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><title>2.3. Version 6.7.2</title><link rel="stylesheet" href="manual.css" type="text/css"></link><meta name="generator" content="DocBook XSL Stylesheets V1.73.2"></meta><link rel="start" href="index-noframes.html" title="Squish Manual"></link><link rel="up" href="relnotes.html" title="Chapter 2. Release Notes—for Upgraders"></link><link rel="prev" href="rel-700.html" title="2.2. Version 7.0"></link><link rel="next" href="rel-671.html" title="2.4. Version 6.7.1"></link><style xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" type="text/css" media="screen">
+        div.toc * { margin-left: 6px; margin-right: auto; max-width: 75em; }
+        div.toc span { margin-left: 0px; }
+        * { margin-left: auto; margin-right: auto; max-width: 75em; }
+        body { margin-left: 6px; margin-right: 6px; }
+        table th { padding: .5ex }
+        table td { padding: .5ex }
+    </style><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format">
+        function keyPress() {
+            var e = window.event;
+            if ( e == undefined ) {
+                return;
+            }
+            /* ### does not properly scroll, yet
+            if ( e.keyCode == 32 ) {
+            var l = document.links;
+            for ( var i = 0; i < l.length; i++ ) {
+                if ( l[i].innerText == "Next" ) {
+                location.href = l[i].href;
+                }
+            }
+            } else
+                */
+                if ( e.keyCode == 0x08 ) {
+            var l = document.links;
+            for ( var i = 0; i < l.length; i++ ) {
+                if ( l[i].innerText == "Prev" ) {
+                location.href = l[i].href;
+                }
+            }
+            }
+        }
+        document.onkeypress = keyPress;
+    </script></head><body><div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="rel-672"></a>2.3. Version 6.7.2</h2></div></div></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><span class="section"><a href="rel-672.html#rel-672-scripting">2.3.1. Script Interpreters</a></span></dt><dt><span class="section"><a href="rel-672.html#rel-672-ide">2.3.2. Squish IDE</a></span></dt><dt><span class="section"><a href="rel-672.html#rel-672-server">2.3.3. <span class="application">squishserver</span></a></span></dt><dt><span class="section"><a href="rel-672.html#rel-672-qt">2.3.4. Qt</a></span></dt><dt><span class="section"><a href="rel-672.html#rel-672-win">2.3.5. Windows</a></span></dt><dt><span class="section"><a href="rel-672.html#rel-672-web">2.3.6. Web</a></span></dt><dt><span class="section"><a href="rel-672.html#rel-672-macos">2.3.7. macOS</a></span></dt><dt><span class="section"><a href="rel-672.html#rel-672-ios">2.3.8. iOS</a></span></dt><dt><span class="section"><a href="rel-672.html#rel-672-src">2.3.9. Source Packages</a></span></dt><dt><span class="section"><a href="rel-672.html#rel-672-android">2.3.10. Android</a></span></dt><dt><span class="section"><a href="rel-672.html#rel-672-java">2.3.11. <span class="trademark">Java</span>™-specific</a></span></dt><dt><span class="section"><a href="rel-672.html#rel-672-tk">2.3.12. Tk</a></span></dt><dt><span class="section"><a href="rel-672.html#rel-672-known-issues">2.3.13. Known Issues</a></span></dt></dl></div><p><span class="emphasis"><em>Squish</em></span> 6.7.2 is a maintenance release containing bug fixes for
+  different editions of the product. See the following sections for a detailed
+  list of all changes.</p><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="rel-672-scripting"></a>2.3.1. Script Interpreters</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>
+      Adapted behavior of <code class="function">Object.preventExtensions()</code>
+      and <code class="function">Object.isExtensible()</code> to ECMAScript 2015.
+      Both functions will no longer throw an error on non-object type arguments.
+      </p></li><li><p>
+      Fixed <code class="code">this</code> value in function called via a <code class="code">super</code> reference.
+      </p></li><li><p>
+      Fixed an unintended syntax change for wildcard matches in object names when the
+      AUT is using Qt 6 or newer. Characters with special meaning in wildcard strings
+      are now backslash-escaped regardless of the Qt version in use.
+      </p></li><li><p>
+      The class <code class="classname">FormData</code> offers handling form data according to the
+      <a class="ulink" href="https://xhr.spec.whatwg.org/#interface-formdata" target="_blank">FormData Web API</a>.
+      It allows tests written in JavaScript to send form data with the
+      <code class="function">xmlHttpRequest</code> to HTTP Servers using either POST or PUT
+      requests.
+      </p></li><li><p>
+      Enabled stacktraces for warnings in Squish test results.
+      </p></li><li><p>
+      Added support for 64-bit ARM processors in <a class="xref" href="rgs-js.html#js-OS.machine-property">OS.machine</a>.
+      </p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="rel-672-ide"></a>2.3.2. Squish IDE</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>
+      Fixed a problem with converting text-based object maps to scripted
+      object maps when a symbolic name contains a backslash.
+      </p></li><li><p>
+      Fixed an issue which caused the <span class="guibutton">Record Snippet</span> to disable
+      at a breakpoint where an initially hooked up AUT process was replaced with a secondary
+      AUT process.
+      </p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="rel-672-server"></a>2.3.3. <span class="application">squishserver</span></h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>
+      Fixed storing the <code class="code">usesBuiltinHook</code> setting for AUTs in the wrong format.
+      </p></li><li><p>
+      Fixed a crash on <code class="function">startApplication</code> when <span class="application">squishserver</span> was
+      built with Qt 6.1 or newer.
+      </p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="rel-672-qt"></a>2.3.4. Qt</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>
+      Fixed a compatibility problem of <code class="filename">qtbuiltinhook.pri</code>
+      for Qt 6 on Android.
+      </p></li><li><p>
+      Dropped an unneeded dependency on the QtNetwork module for Qt 5 or newer.
+      </p></li><li><p>
+      Fixed performance problems with <code class="function">mouseClick</code> and
+      <code class="function">tapObject</code> on <code class="classname">QQuickItem</code> and
+      <code class="classname">QWindow</code>. Both functions applied a delay to avoid
+      accidental double-clicks in too many cases.
+      </p></li><li><p>
+      Fixed an out-of-memory condition for static Qt builds when moving the mouse
+      cursor.
+      </p></li><li><p>
+      Fixed Qt menubar recording and replay on macOS for Qt &gt;= 6.0.
+      </p></li><li><p>
+      <span class="emphasis"><em>Squish</em></span> for Qt packages for 64-bit MinGW now contain 64-bit instead of 32-bit
+      <span class="emphasis"><em>Squish</em></span> Tools (i.e. <span class="application">squishrunner</span> and <span class="application">squishserver</span>).
+      This was already the case for packages for the MSVC compiler and is important
+      when configuring an external (64-bit) Python interpreter.
+      </p></li><li><p>
+      Added support for providing standard <span class="emphasis"><em>Squish</em></span> for Qt packages for Qt 6.1
+      on macOS and iOS, instead of the remote-testing packages provided in
+      previous releases.
+      </p></li><li><p>
+      Fixed a crash when replaying <code class="code"> type(o, "&lt;Backspace&gt;") </code>
+      or other special keys on Qt 6 or newer.
+      </p></li><li><p>
+      Squish now records a <code class="function">closeWindow</code> call on normal toplevel
+      windows created from QML like an <code class="classname">ApplicationWindow</code>
+      from Qt Quick Controls 2.
+      </p></li><li><p>
+      Recording on QtQuick content now ignores the "Compress Events" setting as
+      done by other parts of Squish which cannot record without event compression.
+      This allows uncompressed recordings on QtWidgets while still getting sensible
+      statements recorded on QtQuick content.
+      </p></li><li><p>
+      Fixed recording <code class="function">mouseWheel</code> as a last statement of a
+      script recording.
+      </p></li><li><p>
+      Fixed a problem with a missing dependency (Qt6QuickLayouts) of the QtQuick
+      addressbook in S/Qt packages for Qt 6.1 and later.
+      </p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="rel-672-win"></a>2.3.5. Windows</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>
+      Fixed a regression which prevented verification of older screenshot VPs
+      (Squish version &lt; 4) on Windows.
+      </p></li><li><p>
+      Fixed process crashing on Windows after a sub-process is started. In some
+      cases the logging of the started sub-process was causing problems.
+      </p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="rel-672-web"></a>2.3.6. Web</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>
+      Fixed two problems creating touch events in browsers running on touch-enabled
+      devices for mobile browser testing.
+      </p></li><li><p>
+      Fixed a problem where <code class="function">openNewTab</code> would not find the
+      newly-opened tab in the list of tabs, resulting in "random" script errors
+      (Internet Explorer).
+      </p></li><li><p>
+      Provide a <code class="filename">webwrapper.ini</code> option,
+      <em class="parameter"><code>UseSessionStorageForEvents</code></em> that allows <span class="emphasis"><em>Squish</em></span> for Web
+      to work better with Visual Studio Code and other Chromium-based applications
+      that prevent HTTP connections. In particular, this option allows picking
+      and recording of scripts.
+      </p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="rel-672-macos"></a>2.3.7. macOS</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>
+      Fixed a problem on macOS Big Sur where clicks on the global application menu and on
+      dropdown lists in WebViews caused an additional <code class="function">mouseClick</code>
+      call to be recorded that would not replay correctly.
+      </p></li><li><p>
+      Fixed a problem with the <code class="function">mouseClick</code> overload taking x/y
+      coordinates that could cause the web object to receive "-1" for
+      the pressed mouse button instead of the expected number for the left button.
+      </p></li><li><p>
+      Fixed <code class="function">nativeType</code> on macOS 12 Monterey, where
+      <code class="function">nativeType</code>'ing key combinations would often
+      only work the first time. Subsequent attempts would trigger the
+      "invalid hotkey pressed" system sound of macOS.
+      </p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="rel-672-ios"></a>2.3.8. iOS</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>
+      Fix iOS simulators not being listed with Xcode 12.5.
+      The <span class="application">iphonelauncher</span> utility Squish uses to
+      obtain the list of available simulators from Xcode returned an empty
+      list with Xcode 12.5.
+      </p></li><li><p>
+      Fix testing apps built with Xamarin.iOS on iOS devices.
+      </p><p>
+      There was a problem with <code class="filename">libsquishioswrapper.a</code> where the
+      Squish initialization function was not found at runtime. Compiling the app
+      would still work fine.</p><p>This only affects testing on real devices, not the iOS Simulator.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="rel-672-src"></a>2.3.9. Source Packages</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>
+      <code class="function">XMLHttpRequest</code> in JavaScript is now capable of
+      sending <code class="classname">FormData</code>. This data is encoded as
+      multipart/form-data using <code class="classname">QHttpMultiPart</code> which
+      is available since Qt 4.8.0. </p><p>
+      This new feature increases the required minimal Qt version for building
+      Squish IDE Utilities and squishrunner from Qt 4.6.0 to 4.8.0.
+      </p></li><li><p>
+      Fixed building Qt toolkit support for QNX platforms.
+      </p></li><li><p>
+      configure: Add "--with-nm" to set a custom nm tool (used for Qt symbol
+      lookup when building Qt toolkit support).
+      </p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="rel-672-android"></a>2.3.10. Android</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>
+    Fixed instrument and deploy for Android targets &gt;= 30. These targets
+    require the v2 signing scheme.
+    </p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="rel-672-java"></a>2.3.11. <span class="trademark">Java</span>™-specific</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>
+      The Java Wrapper enables testing of AUTs running Java &gt;= 16.
+      </p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="rel-672-tk"></a>2.3.12. Tk</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>
+      Fixed picking problems as well as object lookup errors with some Tcl/Tk
+      distributions/builds.
+      </p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="rel-672-known-issues"></a>2.3.13. Known Issues</h3></div></div></div><p>For a list of noteworthy issues which were found after the release of
+    <span class="emphasis"><em>Squish</em></span> 6.7.2, please see the
+    <a class="ulink" href="https://kb.froglogic.com/squish/known-issues/6-7-2/" target="_blank">Known
+    Issues page</a> in the froglogic Knowledge Base.</p></div></div><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" type="text/javascript" src="ScriptingLanguage.js"></script><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format">setScriptingLanguage();</script><div class="navfooter"><hr></hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="rel-700.html">Prev</a> </td><td width="20%" align="center"><a accesskey="u" href="relnotes.html">Up</a></td><td width="40%" align="right"> <a accesskey="n" href="rel-671.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">2.2. Version 7.0 </td><td width="20%" align="center"><a accesskey="h" href="index-noframes.html">Home</a></td><td width="40%" align="right" valign="top"> 2.4. Version 6.7.1</td></tr></table></div></body>
+<!-- Mirrored from rel-672.html by HTTrack Website Copier/3.x [XR&CO'2013], Wed, 06 Jul 2022 13:28:55 GMT -->
+</html>

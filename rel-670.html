@@ -1,0 +1,226 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<!-- Mirrored from rel-670.html by HTTrack Website Copier/3.x [XR&CO'2013], Wed, 06 Jul 2022 13:28:55 GMT -->
+<head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><title>2.5. Version 6.7</title><link rel="stylesheet" href="manual.css" type="text/css"></link><meta name="generator" content="DocBook XSL Stylesheets V1.73.2"></meta><link rel="start" href="index-noframes.html" title="Squish Manual"></link><link rel="up" href="relnotes.html" title="Chapter 2. Release Notes—for Upgraders"></link><link rel="prev" href="rel-671.html" title="2.4. Version 6.7.1"></link><link rel="next" href="rel-662.html" title="2.6. Version 6.6.2"></link><style xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" type="text/css" media="screen">
+        div.toc * { margin-left: 6px; margin-right: auto; max-width: 75em; }
+        div.toc span { margin-left: 0px; }
+        * { margin-left: auto; margin-right: auto; max-width: 75em; }
+        body { margin-left: 6px; margin-right: 6px; }
+        table th { padding: .5ex }
+        table td { padding: .5ex }
+    </style><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format">
+        function keyPress() {
+            var e = window.event;
+            if ( e == undefined ) {
+                return;
+            }
+            /* ### does not properly scroll, yet
+            if ( e.keyCode == 32 ) {
+            var l = document.links;
+            for ( var i = 0; i < l.length; i++ ) {
+                if ( l[i].innerText == "Next" ) {
+                location.href = l[i].href;
+                }
+            }
+            } else
+                */
+                if ( e.keyCode == 0x08 ) {
+            var l = document.links;
+            for ( var i = 0; i < l.length; i++ ) {
+                if ( l[i].innerText == "Prev" ) {
+                location.href = l[i].href;
+                }
+            }
+            }
+        }
+        document.onkeypress = keyPress;
+    </script></head><body><div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="rel-670"></a>2.5. Version 6.7</h2></div></div></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><span class="section"><a href="rel-670.html#rel-670-vnc-edition">2.5.1. New Edition: <span class="emphasis"><em>Squish</em></span> for VNC</a></span></dt><dt><span class="section"><a href="rel-670.html#rel-670-uitoolkit-upgrades">2.5.2. Support for the Latest UI Technologies</a></span></dt><dt><span class="section"><a href="rel-670.html#rel-670-tech-support-ide">2.5.3. Faster, Simpler Access To Tech Support</a></span></dt><dt><span class="section"><a href="rel-670.html#rel-670-general">2.5.4. General</a></span></dt><dt><span class="section"><a href="rel-670.html#rel-670-ide">2.5.5. Squish IDE-specific</a></span></dt><dt><span class="section"><a href="rel-670.html#rel-670-scripting">2.5.6. Scripting</a></span></dt><dt><span class="section"><a href="rel-670.html#rel-670-qt">2.5.7. Qt-specific</a></span></dt><dt><span class="section"><a href="rel-670.html#rel-670-web">2.5.8. Web-specific</a></span></dt><dt><span class="section"><a href="rel-670.html#rel-670-android">2.5.9. Android-specific</a></span></dt><dt><span class="section"><a href="rel-670.html#rel-670-windows">2.5.10. Windows (native)-specific</a></span></dt><dt><span class="section"><a href="rel-670.html#rel-670-mac">2.5.11. macOS-specific (Cocoa edition)</a></span></dt><dt><span class="section"><a href="rel-670.html#rel-670-ios">2.5.12. iOS-specific (iPhone/iPad edition)</a></span></dt><dt><span class="section"><a href="rel-670.html#rel-670-source">2.5.13. Source Packages</a></span></dt><dt><span class="section"><a href="rel-670.html#rel-670-known-issues">2.5.14. Known Issues</a></span></dt><dt><span class="section"><a href="rel-670.html#rel-670-platform">2.5.15. Platform Support</a></span></dt></dl></div><p><span class="emphasis"><em>Squish</em></span> 6.7 is a feature release which delivers new features, bug
+  fixes and usability improvements to all editions of the product.</p><p>Noteworthy highlights of this release include:</p><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="rel-670-vnc-edition"></a>2.5.1. New Edition: <span class="emphasis"><em>Squish</em></span> for VNC</h3></div></div></div><p>This version introduces a new edition to the Squish ecosystem: Squish
+    for VNC. This edition employs state-of-the-art image detection and
+    <acronym class="acronym">AI</acronym>-based <acronym class="acronym">OCR</acronym> algorithms to enable
+    robust <acronym class="acronym">GUI</acronym> test automation for any
+    <acronym class="acronym">GUI</acronym>.</p><p>Squish for VNC unifies multiple powerful features in a single
+    solution:</p><div class="itemizedlist"><ul type="disc"><li><p>Toolkit agnostic: Squish for VNC abstracts away the
+      technology used for building the user interface, making it possible to
+      test applications built with legacy or completely custom
+      <acronym class="acronym">UI</acronym> technologies.</p></li><li><p>Unintrusive: no internals of any application need to be
+      accessed.</p></li><li><p>Holistic testing: Squish for VNC automates the entire
+      display. Multi-process applications in which the <acronym class="acronym">GUI</acronym>
+      is composed from multiple separate processes can be tested
+      seamlessly.</p></li><li><p>Full Network Transparency allows accessing the user
+      interface for both desktop as well as embedded user interfaces
+      remotely.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="rel-670-uitoolkit-upgrades"></a>2.5.2. Support for the Latest UI Technologies</h3></div></div></div><p>The Squish for Qt edition was extended to feature full support for
+    applications built with the latest Qt major release, Qt 6. The <span class="emphasis"><em>Squish</em></span>
+    script <acronym class="acronym">API</acronym> is fully compatible with Qt 6, but script
+    code directly accessing the Qt <acronym class="acronym">API</acronym> may require
+    updating.</p><p>Squish for Windows now fully supports .NET 5 applications and allows
+    replaying gestures such as pinching or swiping for applications using touch
+    screens such as the ones featured on Microsoft Surface devices.</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="rel-670-tech-support-ide"></a>2.5.3. Faster, Simpler Access To Tech Support</h3></div></div></div><p>Reaching out to the froglogic tech support team is easier than ever.
+    A straightforward support wizard is now available right within the <span class="application">Squish IDE</span>.
+    Questions on your mind about how to use <span class="emphasis"><em>Squish</em></span>? Wondering if there
+    are best practices? Get in touch with the froglogic experts and benefit
+    from having years of experience at your fingertips!</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="rel-670-general"></a>2.5.4. General</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p><span class="emphasis"><em>Squish</em></span> now uses network connections more efficiently,
+      resulting in faster test executions especially for remote
+      testing.</p></li><li><p>Fixed a defect in the JUnit report generator causing
+      invalid <acronym class="acronym">XML</acronym> to be generated when executing
+      verification points with non-printable characters in the
+      name.</p></li><li><p><span class="emphasis"><em>Squish</em></span> now supports acquiring and releasing <a class="ulink" href="https://www.froglogic.com/squish/prices/floating-license/" target="_blank">floating
+      licenses</a> from a license server.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="rel-670-ide"></a>2.5.5. Squish IDE-specific</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Fixed opening test suites using the relative path
+      <code class="literal">.</code> via the command line.</p></li><li><p>The <span class="emphasis"><em>Squish</em></span> script console now stores the history of
+      commands so that previously typed commands can be edited or executed
+      again. The history can be traversed using arrow keys: <span class="keysym">Up</span>
+      (previous command) and <span class="keysym">Down</span> (next
+      command).</p></li><li><p>It is now possible to contact the <span class="emphasis"><em>Squish</em></span> tech support
+      team by filling a form offered by the <span class="application">Squish IDE</span>. The form permits adding a
+      freeform description of the problem or technical question, and allows
+      attaching support information, logs or screenshots.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="rel-670-scripting"></a>2.5.6. Scripting</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Clarified an error message shown when a test script
+      tries to pass an object of another <acronym class="acronym">AUT</acronym> to a global
+      function like <code class="code">mouseClick()</code>.  Instead of <code class="literal">No matching
+      'mouseClick(Object)' overload found</code>, the error message now
+      points out that the object is not accessible in the current application
+      context.</p></li><li><p>Fixed an intermittent issue due to which accessing
+      properties of <acronym class="acronym">AUT</acronym> controls would yield an error
+      message along the lines of <code class="literal">RuntimeError: Property read
+      failed</code>.</p></li><li><p>Resolved an issue where existing names were not reused
+      when <code class="filename">names.tcl</code> contained imports from the test suites
+      folder when recording names in a scripted Object Map.</p></li><li><p>Added <a class="xref" href="rgs-squish.html#squishinfo.testCaseName-property">squishinfo.testCaseName</a>
+      and <a class="xref" href="rgs-squish.html#squishinfo.testSuiteName-property">squishinfo.testSuiteName</a> properties to
+      make the name of the current test case and test suite easily
+      accessible.</p></li><li><p>Added <a class="xref" href="rgs-squish.html#testInteraction.choice-function"><code class="function">testInteraction.choice</code></a>
+      function which allows interactive selection of one item from a provided
+      list of items.</p></li><li><p>Added <a class="xref" href="rgs-squish.html#testSettings.logStacktraceOnLog-property">testSettings.logStacktraceOnLog</a> and <a class="xref" href="rgs-squish.html#testSettings.logStacktraceOnPass-property">testSettings.logStacktraceOnPass</a> to enable
+      stacktrace information for <code class="literal">LOG</code> and
+      <code class="literal">PASS</code> test result entries.</p></li><li><p>Fixed <code class="code">const</code> and <code class="code">let</code>
+      redeclaration errors on multiple invocations of JavaScript
+      functions.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="rel-670-qt"></a>2.5.7. Qt-specific</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Squish for Qt releases now include binary packages for
+      testing applications built with Qt 6.</p></li><li><p>Overhauled the way <span class="emphasis"><em>Squish</em></span> accesses
+      <code class="code">QtWebEngine</code> components, fixing randomly appearing object
+      lookup errors for <acronym class="acronym">HTML</acronym> objects as well as an inability to
+      pick objects when the lookup error occurs.</p></li><li><p>Added <a class="xref" href="rgs-qtconvenience.html#qt-uninstallLazySignalHandler-function"><code class="function">uninstallLazySignalHandler</code></a> function to remove a
+      signal handler previously added via <a class="xref" href="rgs-qtconvenience.html#qt-installLazySignalHandler-function"><code class="function">installLazySignalHandler</code></a>.</p></li><li><p>Support added for calling <a class="xref" href="rgs-qtconvenience.html#qt-setFocus-function"><code class="function">setFocus</code></a> on
+      objects of type <code class="code">QQuickItem</code> and <code class="code">QWindow</code> for
+      explicit keyboard input focus changes.</p></li><li><p>The Qt specific <code class="filename">recordhints.h</code> header
+      changed its implementation for Qt 6 compatibility.  Customers integrating
+      the <code class="code">RecordHint</code> feature in their application code need to
+      rebuild with the current version of this header.</p></li><li><p>Removed undocumented <code class="code">dragStart</code> function. Qt
+      objects can be dragged using <a class="xref" href="rgs-qtconvenience.html#qt-startDrag-function"><code class="function">startDrag</code></a> +
+      <a class="xref" href="rgs-qtconvenience.html#qt-dropOn-function"><code class="function">dropOn</code></a> or <a class="xref" href="rgs-qtconvenience.html#qt-dragAndDrop-function"><code class="function">dragAndDrop</code></a>.</p></li><li><p>Fixed name generation with object properties that are
+      simple values while Squish assumes them to be a complex object, leading
+      to object names that could not be looked up again.</p></li><li><p>Fixed images generated when calling <a class="xref" href="rgs-qtconvenience.html#qt-grabWidget-function"><code class="function">grabWidget</code></a> on <code class="code">QGraphicsItem</code> objects.
+      In some cases, the background was left in a random (uninitialized)
+    state.</p></li><li><p>Squish releases no longer come with binary packages for
+      Qt 3. Please contact <code class="email">&lt;<a class="email" href="mailto:squish@froglogic.com">squish@froglogic.com</a>&gt;</code> if you still
+      require such a build.</p></li><li><p>Improved replaying mouse and touch input events for Qt 5
+      and Qt 6 applications.</p></li><li><p>Squish for Qt on macOS for Qt version 6.0.0 is
+      currently provided as a so-called remote-testing package. The package
+      includes the Qt wrapper as well as the tools
+      <span class="application">squishconfig</span>, <span class="application">squishserver</span> and
+      <span class="application">startaut</span> to launch Qt 6-based applications. For
+      the <span class="application">Squish IDE</span> and test script execution part, a normal <span class="emphasis"><em>Squish</em></span> for Qt for Qt
+      5 (for example for Qt 5.15) package can be downloaded and
+      installed.</p><p>Once extracted from the ZIP you may need to run the following
+      command in the directory to remove the quarantine flag set by macOS upon
+      downloading: <strong class="userinput"><code><span class="command"><strong>xattr</strong></span> <code class="option">-c</code>
+      <code class="option">-r</code> <code class="filename">.</code></code></strong>.
+      Afterwards please run the command
+      <strong class="userinput"><code><span class="command"><strong>bin/squishconfig</strong></span>
+      <code class="option">--qt=&lt;path-to-qt-lib-dir&gt;</code></code></strong>
+      and replace &lt;path-to-qt-lib-dir&gt; with the directory
+      containing the <code class="filename">QtCore.framework</code>
+      directory (this might be inside your application bundle).</p><p>Finally start <span class="command"><strong>bin/squishserver</strong></span> if you use <a class="xref" href="rgs-squish.html#startApplication-function"><code class="function">startApplication</code></a> or use
+      <span class="command"><strong>bin/startaut</strong></span> from the zipped package to start the
+      <acronym class="acronym">AUT</acronym> for attaching.</p><p>In the <span class="application">Squish IDE</span> you need to configure remote testing. This is done by
+      opening the preferences dialog using <span class="guimenu">Squish
+      IDE</span>|<span class="guimenuitem">Preferences</span> from the
+      menu. In the dialog expand the <span class="guilabel">Squish</span> node and
+      select <span class="guilabel">Remote Testing</span>. Now uncheck the checkbox for
+      automatically starting <span class="application">squishserver</span>. The default values for host and port
+      should work if you started <span class="application">squishserver</span> from the commandline as
+      mentioned above.</p><p>In order to verify the setup works, open the <span class="guilabel">Server
+      Settings</span> dialog via
+      <span class="guimenu">Edit</span>|<span class="guimenuitem">Server
+      Settings</span>. If the dialog appears and shows the
+      configured <acronym class="acronym">AUT</acronym>, everything is fine. If something fails,
+      please review the output in the <span class="guilabel">Runner/Server Log</span>
+      tab as well as the output produced by the <span class="command"><strong>squishserver</strong></span>
+      command.</p></li><li><p>Switched backend used for taking screenshots on Windows
+      for <span class="emphasis"><em>Squish</em></span> for Qt packages built with MinGW to fix problems with scaled
+      or HiDPI screens.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="rel-670-web"></a>2.5.8. Web-specific</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Added a <a class="xref" href="rgs-webconvenience.html#web-BrowserTab.setUrl-function"><code class="function">BrowserTab.setUrl</code></a>
+      function to <a class="xref" href="rgs-webconvenience.html#web-BrowserTab-class" title="6.10.2. BrowserTab Class">BrowserTab Class (Section 6.10.2)</a> which allows to specify
+      the timeout to wait for the new page to be loaded and
+      hooked.</p></li><li><p>Support for <span class="application">Firefox</span> versions older than version 57 has
+      been removed.</p></li><li><p>Improved logic for taking screenshots to yield accurate
+      results on Windows and Linux systems.</p></li><li><p>Added a new function <a class="xref" href="rgs-webconvenience.html#web-openNewTab-function"><code class="function">openNewTab</code></a> which opens a new tab in the browser
+      and loads a <acronym class="acronym">URL</acronym> into it. Supported for <span class="application">Firefox</span>, Google
+      Chrome, <span class="application">Safari</span> (version 12 and later) <span class="trademark">Microsoft</span>®
+      Edge.</p></li><li><p>Added an optional timeout argument to the <a class="xref" href="rgs-webconvenience.html#web-startBrowser-function"><code class="function">startBrowser</code></a> function.</p></li><li><p>Fixed a problem causing <a class="xref" href="rgs-webconvenience.html#web-typeText-function"><code class="function">typeText</code></a> to trigger the error message
+      <code class="literal">IEFrame parent window not found</code> when trying to type
+      text into an <span class="application">Microsoft Internet Explorer</span> control embedded into a Windows
+      application.</p></li><li><p>Fixed a problem that prevented <span class="emphasis"><em>Squish</em></span> from hooking
+      certain websites that disallowed execution of JavaScript code in the
+      loading phase.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="rel-670-android"></a>2.5.9. Android-specific</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>It is now possible to record interactions with
+      accessibility objects outside of the <acronym class="acronym">AUT</acronym> by using the
+      <span class="guilabel">Remote Control</span> view of the <span class="application">Squish IDE</span>.</p></li><li><p><a class="xref" href="rgs-androidconvenience.html#android-installEventHandler-function"><code class="function">installEventHandler</code></a>
+      now supports a new event name <code class="literal">Vibrate</code> which is
+      triggered every time the <acronym class="acronym">AUT</acronym> calls the
+      <code class="code"> android.os.Vibrator.vibrate()</code> function.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="rel-670-windows"></a>2.5.10. Windows (native)-specific</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Squish for Windows now logs more information about
+      <acronym class="acronym">AUT</acronym> (sub-)processes to the <span class="guilabel">Runner/Server
+      Log</span> of the <span class="application">Squish IDE</span>.</p></li><li><p>Squish for Windows now supports replaying gestures via
+      the <a class="xref" href="rgs-windowsconvenienceapi.html#win-gesture-function"><code class="function">gesture</code></a> function.</p></li><li><p>Added support for Windows Forms and WPF controls in .NET
+      5.</p></li><li><p>Telerik Tables for Windows Forms can now be verified
+      using <a class="link" href="ug-vps.html#ugv-table" title="5.22.2. How to Create and Use Table Verifications">table verification
+      points</a>.</p></li><li><p>Extended the set of properties to be considered when
+      generating names for <code class="code">List</code>, <code class="code">ListView</code>,
+      <code class="code">Tree</code>, <code class="code">GridControl</code>, <code class="code">Pane</code> and
+      <code class="code">TitleBar</code> controls. The resulting names should be much less
+      prone to including the <code class="code">occurrence</code> property
+      now.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="rel-670-mac"></a>2.5.11. macOS-specific (Cocoa edition)</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>The "native" script function family (<a class="xref" href="rgs-squish.html#nativeType-function"><code class="function">nativeType</code></a>, <a class="xref" href="rgs-squish.html#nativeMouseClick-function"><code class="function">nativeMouseClick</code></a>
+      etc.) will now throw an error if the Accessibility <acronym class="acronym">API</acronym> is not
+      enabled for <span class="emphasis"><em>Squish</em></span> or the <acronym class="acronym">AUT</acronym>.</p></li><li><p>Fixed a problem with activating menu items on macOS 11
+      in the <span class="guimenu">Help</span> menu when the <span class="guimenu">Help</span> menu
+      contained a <span class="guimenuitem">Search</span> field at the
+      top.</p></li><li><p><a class="xref" href="rgs-macconvenience.html#mac-scrollToObject-function"><code class="function">scrollToObject</code></a> no longer
+      silently ignores problems while scrolling. Instead, an error is logged in
+      the test report.</p></li><li><p>Squish for Mac for testing ARM64 applications is
+      currently provided as a so-called remote-testing package. The package
+      includes the Mac wrapper as well as the tools <span class="application">squishserver</span> and
+      <span class="application">startaut</span> to launch ARM64-based applications.
+      For the <span class="application">Squish IDE</span> and test script execution part, a normal <span class="emphasis"><em>Squish</em></span> for Mac
+      package for Intel architecture can be downloaded and installed.</p><p>Once extracted from the ZIP you may need to run the following
+      command in the directory to remove the quarantine flag set by macOS upon
+      downloading: <strong class="userinput"><code><span class="command"><strong>xattr</strong></span> <code class="option">-c</code>
+      <code class="option">-r</code> <code class="filename">.</code></code></strong>.
+      Afterwarsd, start <span class="command"><strong>bin/squishserver</strong></span> if you use <a class="xref" href="rgs-squish.html#startApplication-function"><code class="function">startApplication</code></a> or use
+      <span class="command"><strong>bin/startaut</strong></span> from the zipped package to start the
+      <acronym class="acronym">AUT</acronym> for attaching.</p><p>In the <span class="application">Squish IDE</span> you need to configure remote testing. This is done by
+      opening the preferences dialog using <span class="guimenu">Squish
+      IDE</span>|<span class="guimenuitem">Preferences</span> from the
+      menu. In the dialog expand the <span class="guilabel">Squish</span> node and
+      select <span class="guilabel">Remote Testing</span>. Now uncheck the checkbox for
+      automatically starting <span class="application">squishserver</span>. The default values for host and port
+      should work if you started <span class="application">squishserver</span> from the commandline like
+      mentioned above.</p><p>In order to verify the setup works open the <span class="guilabel">Server
+      Settings</span> dialog via
+      <span class="guimenu">Edit</span>|<span class="guimenuitem">Server
+      Settings</span>. If the dialog appears and shows the
+      configured <acronym class="acronym">AUT</acronym>, everything is fine. If something fails,
+      please review the output in the <span class="guilabel">Runner/Server Log</span>
+      tab as well as the output produced by the <span class="command"><strong>squishserver</strong></span>
+      command.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="rel-670-ios"></a>2.5.12. iOS-specific (iPhone/iPad edition)</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Fixed highlighting of GUI elements when selected in the
+        Application Objects view of the <span class="application">Squish IDE</span>.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="rel-670-source"></a>2.5.13. Source Packages</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Added support for building Qt Toolkit Support with Qt
+      6.</p></li><li><p>Building the Qt Toolkit Support does not hardcode the Qt
+      installation path anymore by default, making the behavior identical to
+      Squish binary packages. Customers who build from source do not need to
+      pass <code class="option">--disable-qt-hardcoded-path</code> to
+      <span class="command"><strong>configure</strong></span> anymore.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="rel-670-known-issues"></a>2.5.14. Known Issues</h3></div></div></div><p>For a list of noteworthy issues which were found after the release of
+    <span class="emphasis"><em>Squish</em></span> 6.7, please see the <a class="ulink" href="https://kb.froglogic.com/squish/known-issues/6-7-0/" target="_blank">Known
+    Issues page</a> in the froglogic Knowledge Base.</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="rel-670-platform"></a>2.5.15. Platform Support</h3></div></div></div><p>The support for running the <span class="application">Squish IDE</span> on some older
+    operating systems is being phased out. Hence, starting with one of the
+    next <span class="emphasis"><em>Squish</em></span> releases, out-of-the-box support for some older platforms
+    may be available in the form of remote testing only. In particular, this
+    affects</p><div class="itemizedlist"><ul type="disc"><li><p>macOS releases before macOS 10.12</p></li><li><p>Linux installations older than CentOS/RHEL 7</p></li></ul></div><p>This is due to the dwindling support of frameworks employed by
+    the <span class="application">Squish IDE</span>. See this <a class="ulink" href="https://www.eclipse.org/eclipse/development/plans/eclipse_project_plan_4_18.xml#target_environments" target="_blank">
+    target environments link</a> by the Eclipse project or the <a class="ulink" href="https://adoptopenjdk.net/supported_platforms.html" target="_blank">platforms supported
+    by AdoptOpenJDK project</a> for example.</p></div></div><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" type="text/javascript" src="ScriptingLanguage.js"></script><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format">setScriptingLanguage();</script><div class="navfooter"><hr></hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="rel-671.html">Prev</a> </td><td width="20%" align="center"><a accesskey="u" href="relnotes.html">Up</a></td><td width="40%" align="right"> <a accesskey="n" href="rel-662.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">2.4. Version 6.7.1 </td><td width="20%" align="center"><a accesskey="h" href="index-noframes.html">Home</a></td><td width="40%" align="right" valign="top"> 2.6. Version 6.6.2</td></tr></table></div></body>
+<!-- Mirrored from rel-670.html by HTTrack Website Copier/3.x [XR&CO'2013], Wed, 06 Jul 2022 13:28:55 GMT -->
+</html>

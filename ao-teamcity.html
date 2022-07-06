@@ -1,0 +1,103 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<!-- Mirrored from ao-teamcity.html by HTTrack Website Copier/3.x [XR&CO'2013], Wed, 06 Jul 2022 13:29:01 GMT -->
+<head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><title>9.5. JetBrains TeamCity integration</title><link rel="stylesheet" href="manual.css" type="text/css"></link><meta name="generator" content="DocBook XSL Stylesheets V1.73.2"></meta><link rel="start" href="https://index-noframes.html" title="Squish Manual"></link><link rel="up" href="https://addons.html" title="Chapter 9. Add-Ons Reference Manual"></link><link rel="prev" href="https://ao-bamboo.html" title="9.4. Atlassian Bamboo integration"></link><link rel="next" href="https://ao-qc.html" title="9.6. Quality Center™ Integration"></link><style xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" type="text/css" media="screen">
+        div.toc * { margin-left: 6px; margin-right: auto; max-width: 75em; }
+        div.toc span { margin-left: 0px; }
+        * { margin-left: auto; margin-right: auto; max-width: 75em; }
+        body { margin-left: 6px; margin-right: 6px; }
+        table th { padding: .5ex }
+        table td { padding: .5ex }
+    </style><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format">
+        function keyPress() {
+            var e = window.event;
+            if ( e == undefined ) {
+                return;
+            }
+            /* ### does not properly scroll, yet
+            if ( e.keyCode == 32 ) {
+            var l = document.links;
+            for ( var i = 0; i < l.length; i++ ) {
+                if ( l[i].innerText == "Next" ) {
+                location.href = l[i].href;
+                }
+            }
+            } else
+                */
+                if ( e.keyCode == 0x08 ) {
+            var l = document.links;
+            for ( var i = 0; i < l.length; i++ ) {
+                if ( l[i].innerText == "Prev" ) {
+                location.href = l[i].href;
+                }
+            }
+            }
+        }
+        document.onkeypress = keyPress;
+    </script></head><body><div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="ao-teamcity"></a>9.5. JetBrains TeamCity integration</h2></div></div></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><span class="section"><a href="https://ao-teamcity.html#ao-teamcity-intro">9.5.1. Introduction</a></span></dt><dt><span class="section"><a href="https://ao-teamcity.html#ao-teamcity-inst">9.5.2. Installation</a></span></dt><dt><span class="section"><a href="https://ao-teamcity.html#ao-teamcity-job">9.5.3. Build Step definition</a></span></dt><dt><span class="section"><a href="https://ao-teamcity.html#ao-teamcity-execution">9.5.4. Build execution</a></span></dt></dl></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="ao-teamcity-intro"></a>9.5.1. Introduction</h3></div></div></div><p>
+
+<a class="ulink" href="http://www.jetbrains.com/teamcity/" target="_blank">JetBrains TeamCity</a>
+ is a continuous integration server that can build,
+test and release software. <span class="emphasis"><em>Squish Runner</em></span> plugin provides a seamless <span class="emphasis"><em>Squish</em></span>
+integration with TeamCity. It allows adding one or multiple <span class="emphasis"><em>Squish
+Runner</em></span> build steps to a <span class="guilabel">Build Configuration</span>,
+and executing <span class="emphasis"><em>Squish</em></span> GUI tests on designated local or remote agents.
+After execution is done, the build is set as success if all tests are <code class="literal">pass</code>,
+otherwise the build is set to <code class="literal">failed</code>. Additionally artifacts
+for <span class="emphasis"><em>Squish</em></span> tests are stored to allow efficient defect troubleshooting.
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="ao-teamcity-inst"></a>9.5.2. Installation</h3></div></div></div><p>
+The plugin is available from:
+<a class="ulink" href="https://download.froglogic.com/resources/squish-teamcity-latest.zip" target="_blank">download.froglogic.com/resources/squish-teamcity-latest.zip</a>.
+</p><p>To install the <span class="emphasis"><em>Squish Runner</em></span> plugin shut down TeamCity server and
+copy the zip archive with the plugin to <code class="code">TeamCity Data Directory/plugins</code> directory.
+Finally start the TeamCity server: the plugin files will be unpacked and processed automatically.
+</p><p>
+To check where <code class="code">TeamCity Data Directory</code> is located go to <span class="guilabel">Administration</span>,
+next <span class="guilabel">Global Settings</span> page.
+</p><p>
+To verify that plugin is installed go to <span class="guilabel">Administration</span> and choose
+<span class="guilabel">Plugins List</span>. <span class="emphasis"><em>Squish Runner</em></span> plugin shall
+be listed in <span class="guilabel">External Plugins</span> list.
+
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="ao-teamcity-job"></a>9.5.3. Build Step definition</h3></div></div></div><p>
+During build <span class="guilabel">Configuration Steps</span> definition go to
+<span class="guilabel">Build Step</span> option. Next press <span class="guibutton">Add build step</span>
+button. Next from <span class="guilabel">Runner type</span> drop down list choose
+<span class="guilabel">Squish Runner</span>. In one build configuration we can add
+multiple <span class="guilabel">Squish Runner</span> build steps.
+</p><div class="screenshot"><div class="mediaobject" align="center"><img src="https://images/teamcity-cfg.png" align="middle"></img><div class="caption">Build Step Configuration</div></div></div><p>
+Next configure the build step executed by the plugin. In <span class="guilabel">Squish installation</span>
+section, in <span class="guilabel">Installation root</span> field specify the path to
+Squish directory.  User can enter manually the path or use previously defined value from
+<span class="guilabel">Build Parameters</span>.
+</p><p>
+In <span class="guilabel">Tests</span> section we need to define Test Cases for execution by Squish.
+The mandatory setting is <span class="guilabel">Test suite</span>, where test suite name with full path
+need to be defined. If we only define <span class="guilabel">Test suite</span> and leave
+<span class="guilabel">Test cases</span> field empty then all test cases from given test suite will
+be executed. If we would like only defined test cases from test suite to be executed,
+we need to define them in <span class="guilabel">Test cases</span> field. Single or multiple values
+(separated by comma) are accepted.
+</p><p>
+In <span class="guilabel">Settings</span> section we can define additional parameters for
+executing GUI automated tests. In <span class="guilabel">Host</span> field we can define host
+where  <span class="application">squishserver</span> is running. If not defined default value localhost is used.
+In <span class="guilabel">Port</span> field we can define port number
+where  <span class="application">squishserver</span> is listening. If not defined default port number 4322 is used.
+The <span class="guilabel">Environment variables</span> field can hold environment
+variables (for both <span class="application">squishrunner</span> and <span class="application">squishserver</span>). We can add multiple environment
+variables separated by a space. If <span class="guilabel">Start/stop squishserver</span>
+checkbox is marked, then <span class="application">squishserver</span> is started on the host where the agent is running
+and is listening on the port configured in the build step. When the execution of tests
+is done, <span class="application">squishserver</span> is stopped. Starting and stopping  <span class="application">squishserver</span> is
+not supported on agents running on Windows platform.
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="ao-teamcity-execution"></a>9.5.4. Build execution</h3></div></div></div><p>
+<span class="emphasis"><em>Squish Runner</em></span> tests are executed as a part of a whole build. If any
+of test cases fails due to an FAIL or ERROR then a build is marked as failed. In
+<span class="guilabel">Build log</span> user can check which <span class="emphasis"><em>Squish Runner</em></span>
+step is causing the whole build failure. All reports are stored in
+<span class="guilabel">Artifacts</span> tab, including Results XML files, HTML Reports and
+screenshots taken by <span class="emphasis"><em>Squish</em></span> in case of FAIL or ERROR.
+</p></div></div><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" type="text/javascript" src="ScriptingLanguage.js"></script><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format">setScriptingLanguage();</script><div class="navfooter"><hr></hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="https://ao-bamboo.html">Prev</a> </td><td width="20%" align="center"><a accesskey="u" href="https://addons.html">Up</a></td><td width="40%" align="right"> <a accesskey="n" href="https://ao-qc.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">9.4. Atlassian Bamboo integration </td><td width="20%" align="center"><a accesskey="h" href="https://index-noframes.html">Home</a></td><td width="40%" align="right" valign="top"> 9.6. <span class="trademark">Quality Center</span>™ Integration</td></tr></table></div></body>
+<!-- Mirrored from ao-teamcity.html by HTTrack Website Copier/3.x [XR&CO'2013], Wed, 06 Jul 2022 13:29:01 GMT -->
+</html>

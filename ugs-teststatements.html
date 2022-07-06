@@ -1,0 +1,99 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<!-- Mirrored from ugs-teststatements.html by HTTrack Website Copier/3.x [XR&CO'2013], Wed, 06 Jul 2022 13:28:59 GMT -->
+<head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><title>5.9. How to Use Test Statements</title><link rel="stylesheet" href="manual.css" type="text/css"></link><meta name="generator" content="DocBook XSL Stylesheets V1.73.2"></meta><link rel="start" href="index-noframes.html" title="Squish Manual"></link><link rel="up" href="users-guide.html" title="Chapter 5. User Guide"></link><link rel="prev" href="ug-how.to.use.the.ios.api.html" title="5.8. How to Use the iOS API"></link><link rel="next" href="ugs-eventhandlers.html" title="5.10. How to Use Event Handlers"></link><style xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" type="text/css" media="screen">
+        div.toc * { margin-left: 6px; margin-right: auto; max-width: 75em; }
+        div.toc span { margin-left: 0px; }
+        * { margin-left: auto; margin-right: auto; max-width: 75em; }
+        body { margin-left: 6px; margin-right: 6px; }
+        table th { padding: .5ex }
+        table td { padding: .5ex }
+    </style><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format">
+        function keyPress() {
+            var e = window.event;
+            if ( e == undefined ) {
+                return;
+            }
+            /* ### does not properly scroll, yet
+            if ( e.keyCode == 32 ) {
+            var l = document.links;
+            for ( var i = 0; i < l.length; i++ ) {
+                if ( l[i].innerText == "Next" ) {
+                location.href = l[i].href;
+                }
+            }
+            } else
+                */
+                if ( e.keyCode == 0x08 ) {
+            var l = document.links;
+            for ( var i = 0; i < l.length; i++ ) {
+                if ( l[i].innerText == "Prev" ) {
+                location.href = l[i].href;
+                }
+            }
+            }
+        }
+        document.onkeypress = keyPress;
+    </script></head><body><div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="ugs-teststatements"></a>5.9. How to Use Test Statements</h2></div></div></div><p>
+This section discusses the API <span class="emphasis"><em>Squish</em></span> offers to perform tests that
+will create test results. Verification points also use this test API;
+more coverage of verification points is given in the <a class="xref" href="ug-vps.html" title="5.22. How to Create and Use Verification Points">How to Create and Use Verification Points (Section 5.22)</a> section. Working with the test result log is
+discussed in the <a class="xref" href="rg-regressiontesting.html#rgr-processresults" title="7.1.3. Processing Test Results">Processing Test Results (Section 7.1.3)</a> section.
+</p><p>
+To compare two values and write the result of the comparison to the test
+log, use the <a class="xref" href="rgs-squish.html#test.compare-function"><code class="function">test.compare</code></a> function. To
+simply check that something is true (i.e., to check a Boolean
+value), use the <a class="xref" href="rgs-squish.html#test.verify-function"><code class="function">test.verify</code></a> function. To
+write some neutral information to the test log at a particular point in
+the test run, use the <a class="xref" href="rgs-squish.html#test.log-function"><code class="function">test.log</code></a> function,
+and to write a warning to the test log use the <a class="xref" href="rgs-squish.html#test.warning-function"><code class="function">test.warning</code></a> function.
+</p><p>
+Here are a few examples that show how to use these functions.
+</p><div xmlns="" class="scriptlang"><form><select name="scriptlangcombo" onchange="javascript:changeScriptingLanguage(this)" onclick="javascript:changeScriptingLanguage(this)"><option value="all" selected>Show All</option><option value="JavaScript">Show JavaScript</option><option value="Perl">Show Perl</option><option value="Python">Show Python</option><option value="Ruby">Show Ruby</option><option value="Tcl">Show Tcl</option></select></form></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Python</span><pre class="programlisting">
+lineedit = waitForObject(":Address Book - Add.Forename:_QLabel")
+test.verify(lineedit.enabled)
+test.compare(lineedit.text, "Jane")
+test.log("Important note", "This is an important note about the test")
+test.warning("Suspicious warning",
+        "This test is incomplete and should be extended!")
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">JavaScript</span><pre class="programlisting">
+var lineedit = waitForObject(":Address Book - Add.Forename:_QLabel");
+test.verify(lineedit.enabled);
+test.compare(lineedit.text, "John");
+test.log("Important note", "This is an important note about the test");
+test.warning("Suspicious warning",
+        "This test is incomplete and should be extended!");
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Perl</span><pre class="programlisting">
+my $lineedit = waitForObject(":Address Book - Add.Forename:_QLabel");
+test::verify($lineedit-&gt;enabled);
+test::compare($lineedit-&gt;text, "Jane");
+test::log("Important note", "This is an important note about the test");
+test::warning("Suspicious warning",
+        "This test is incomplete and should be extended!");
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Ruby</span><pre class="programlisting">
+lineedit = waitForObject(":Address Book - Add.Forename:_QLabel")
+Test.verify(lineedit.enabled)
+Test.compare(lineedit.text, "Jane")
+Test.log("Important note", "This is an important note about the test")
+Test.warning("Suspicious warning",
+        "This test is incomplete and should be extended!")
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Tcl</span><pre class="programlisting">
+set lineedit [waitForObject ":Address Book - Add.Forename:_QLabel"]
+test verify [property get $lineedit enabled]
+test compare [property get $lineedit text] "John"
+test log "Important note" "This is an important note about the test"
+test warning "Suspicious warning" \
+        "This test is incomplete and should be extended!"
+</pre></div><p>
+Both the <a class="xref" href="rgs-squish.html#test.log-function"><code class="function">test.log</code></a> and
+<a class="xref" href="rgs-squish.html#test.warning-function"><code class="function">test.warning</code></a> functions can be given either
+one or two arguments, the first is the “<span class="quote">message</span>” text, and
+the optional second argument can be used to provide additional details.
+</p><p>
+Many other test functions are available, including ones for verifying
+expected failures and expected exceptions, and various functions for
+writing messages to the test log. The complete API is documented in the
+<a class="xref" href="rgs-squish.html#rgss-teststatements" title="6.3.8. Verification Functions">Verification Functions (Section 6.3.8)</a> section in the <a class="xref" href="ref.man.html" title="Chapter 7. Tools Reference Manual">Tools Reference Manual (Chapter 7)</a>.
+</p></div><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" type="text/javascript" src="ScriptingLanguage.js"></script><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format">setScriptingLanguage();</script><div class="navfooter"><hr></hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="ug-how.to.use.the.ios.api.html">Prev</a> </td><td width="20%" align="center"><a accesskey="u" href="users-guide.html">Up</a></td><td width="40%" align="right"> <a accesskey="n" href="ugs-eventhandlers.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">5.8. How to Use the iOS API </td><td width="20%" align="center"><a accesskey="h" href="index-noframes.html">Home</a></td><td width="40%" align="right" valign="top"> 5.10. How to Use Event Handlers</td></tr></table></div></body>
+<!-- Mirrored from ugs-teststatements.html by HTTrack Website Copier/3.x [XR&CO'2013], Wed, 06 Jul 2022 13:28:59 GMT -->
+</html>

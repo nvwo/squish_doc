@@ -1,0 +1,211 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<!-- Mirrored from ao-rqmintegration.html by HTTrack Website Copier/3.x [XR&CO'2013], Wed, 06 Jul 2022 13:29:01 GMT -->
+<head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><title>9.7. IBM Rational Quality Manager integration</title><link rel="stylesheet" href="manual.css" type="text/css"></link><meta name="generator" content="DocBook XSL Stylesheets V1.73.2"></meta><link rel="start" href="https://index-noframes.html" title="Squish Manual"></link><link rel="up" href="https://addons.html" title="Chapter 9. Add-Ons Reference Manual"></link><link rel="prev" href="https://ao-qc.html" title="9.6. Quality Center™ Integration"></link><link rel="next" href="https://ao-vs-integration.html" title="9.8. Microsoft® Visual Studio® Integration"></link><style xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" type="text/css" media="screen">
+        div.toc * { margin-left: 6px; margin-right: auto; max-width: 75em; }
+        div.toc span { margin-left: 0px; }
+        * { margin-left: auto; margin-right: auto; max-width: 75em; }
+        body { margin-left: 6px; margin-right: 6px; }
+        table th { padding: .5ex }
+        table td { padding: .5ex }
+    </style><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format">
+        function keyPress() {
+            var e = window.event;
+            if ( e == undefined ) {
+                return;
+            }
+            /* ### does not properly scroll, yet
+            if ( e.keyCode == 32 ) {
+            var l = document.links;
+            for ( var i = 0; i < l.length; i++ ) {
+                if ( l[i].innerText == "Next" ) {
+                location.href = l[i].href;
+                }
+            }
+            } else
+                */
+                if ( e.keyCode == 0x08 ) {
+            var l = document.links;
+            for ( var i = 0; i < l.length; i++ ) {
+                if ( l[i].innerText == "Prev" ) {
+                location.href = l[i].href;
+                }
+            }
+            }
+        }
+        document.onkeypress = keyPress;
+    </script></head><body><div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="ao-rqmintegration"></a>9.7. IBM Rational Quality Manager integration</h2></div></div></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><span class="section"><a href="https://ao-rqmintegration.html#ao-rqmintegration-installation">9.7.1. Installing the <span class="emphasis"><em>Squish</em></span> Adapter</a></span></dt><dt><span class="section"><a href="https://ao-rqmintegration.html#ao-rqmintegration-concept">9.7.2. Squish Adapter Concept</a></span></dt><dt><span class="section"><a href="https://ao-rqmintegration.html#ao-rqmintegration-configuration-file">9.7.3. Preparing test configuration files</a></span></dt><dt><span class="section"><a href="https://ao-rqmintegration.html#ao-rqmintegration-start">9.7.4. Starting the <span class="emphasis"><em>Squish</em></span> Adapter</a></span></dt><dt><span class="section"><a href="https://ao-rqmintegration.html#ao-rqmintegration-using-the-adapter">9.7.5. Using the <span class="emphasis"><em>Squish</em></span> Adapter from Rational Quality Manager</a></span></dt><dt><span class="section"><a href="https://ao-rqmintegration.html#ao-rqmintegration-execution">9.7.6. Executing a Test Script</a></span></dt></dl></div><p>
+Rational Quality Manager is a test management tool from IBM. For more
+information about Rational Quality Manager see
+<a class="ulink" href="http://www.ibm.com/software/awdtools/rqm/" target="_blank">ibm.com</a>.
+<span class="emphasis"><em>Squish</em></span> tests can be started from Rational Quality Manager by using an
+execution adapter, the <code class="literal">Squish Adapter</code>.
+The <code class="literal">Squish Adapter</code> is a separate application
+that has to be executed in parallel to Rational Quality Manager. It may
+be executed on a different system than the server and needs to be registered
+to the server. The <code class="literal">Squish Adapter</code> itself has to be
+configured regarding the server and the <span class="emphasis"><em>Squish</em></span> installation it should use.
+</p><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Note: Separate Purchase"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/note.png"></img></td><th align="left">Separate Purchase</th></tr><tr><td align="left" valign="top"><p>
+This add-on must be bought separately.
+Contact <code class="email">&lt;<a class="email" href="mailto:sales@froglogic.com">sales@froglogic.com</a>&gt;</code> for details.
+</p></td></tr></table></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="ao-rqmintegration-installation"></a>9.7.1. Installing the <span class="emphasis"><em>Squish</em></span> Adapter</h3></div></div></div><p>
+To install uncompress the <code class="filename">tar.gz</code> or
+<code class="filename">zip</code> archive to a directory of your choice.
+The adapter may be installed on any system that can connect the Rational
+Quality Manager server by network. Of course Rational Quality Manager and the
+<code class="literal">Squish Adapter</code> can be installed on the same system.
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="ao-rqmintegration-concept"></a>9.7.2. Squish Adapter Concept</h3></div></div></div><p>
+Basically a <code class="literal">Test Script</code> resource in Rational Quality
+Manager is used to select and configure the <code class="literal">Squish Adapter</code>
+which will execute the <span class="emphasis"><em>Squish</em></span> test. The <code class="literal">Test Script</code>
+resource has to choose a configuration file name and the <span class="emphasis"><em>Squish</em></span> test to
+execute. The configuration file must contain at least a base path to a
+directory where <span class="emphasis"><em>Squish</em></span> test suites can be found.
+</p><p>
+The configuration file name will be looked up by the
+<code class="literal">Squish Adapter</code> inside a configuration file directory which
+can be chosen at the <code class="literal">Squish Adapter</code> startup. This way the
+<code class="literal">Test Script</code> does not need to be changed if it should run on
+another machine. Adapting the configuration file for each machine is all need
+to do.
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="ao-rqmintegration-configuration-file"></a>9.7.3. Preparing test configuration files</h3></div></div></div><p>
+The <code class="literal">Squish Adapter</code> uses a test configuration file when
+executing tests. The test configuration file is a simple text file with the
+file extension <code class="filename">.conf</code> that contains properties and their
+values. The adapter looks for configuration files inside the directory that is
+configured on startup by the argument <code class="option">-configDir</code>.
+</p><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Note: Forward and backward slashes"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/note.png"></img></td><th align="left">Forward and backward slashes</th></tr><tr><td align="left" valign="top"><p>
+Note that the file has to follow the syntax of Java properties files. This
+means that a backslash has a special meaning. If you are using Windows you
+should either use forward slashes or escape the backslash by writing two of
+them when adding an absolute path to the configuration file.
+</p></td></tr></table></div><p>
+</p><div class="informaltable"><table width="100%" border="1"><colgroup><col></col><col></col><col></col><col></col></colgroup><thead><tr><th align="left">Key</th><th align="left">Value</th><th align="left">Required</th><th align="left">Example</th></tr></thead><tbody valign="top"><tr><td align="left" valign="top">testSuiteBaseDirectory</td><td align="left" valign="top">Absolute path to a directory which contains <span class="emphasis"><em>Squish</em></span> test suites.
+           This path will be used by the <code class="literal">Squish Adapter</code> to
+           search for the test suite specified inside the
+           <code class="literal">Test Script</code> resource.</td><td align="center" valign="middle">yes</td><td align="left" valign="top"><code class="code">testSuiteBaseDirectory="C:\\Squish"</code></td></tr><tr><td align="left" valign="top">preExecutable</td><td align="left" valign="top">Absolute path to an executable the <code class="literal">Squish Adapter</code>
+           runs before executing the test. The following arguments are passed
+           to the executable on execution:
+           <p>
+           <code class="code">preExecutable working_dir test_suite [test_cases]*</code>
+           </p>
+           <div class="itemizedlist"><ul type="disc"><li><p>
+           working_dir: Absolute path to the working directory in which
+                        the adapter will store its log files.
+           </p></li><li><p>
+           test_suite: Name of the test suite which will be executed.
+           </p></li><li><p>
+           test_cases: Name of the test cases of the test suite the adapter
+                       intends to run. If no arguments are given the complete
+                       test suite will be executed.
+           </p></li></ul></div>
+           </td><td align="center" valign="middle">no</td><td align="left" valign="top"><code class="code">preExecutable="C:\\pre_task.bat"</code></td></tr><tr><td align="left" valign="top">postExecutable</td><td align="left" valign="top">Absolute path to an executable the <code class="literal">Squish Adapter</code>
+           runs after executing the tests. The <code class="literal">postExecutable</code>
+           will receive the same arguments as the
+           <code class="literal">preExecutable</code>.</td><td align="center" valign="middle">no</td><td align="left" valign="top"><code class="code">postExecutable="C:\\post_task.bat"</code></td></tr><tr><td align="left" valign="top">squishServerHost</td><td align="left" valign="top">This can be omitted if the <span class="application">squishserver</span> should be started locally;
+           otherwise set this to the IP address or host name of the remote PC
+           where <span class="application">squishserver</span> is running.</td><td align="center" valign="middle">no</td><td align="left" valign="top"><code class="code">squishServerHost="192.168.1.42"</code></td></tr><tr><td align="left" valign="top">squishServerPort</td><td align="left" valign="top">This can be omitted if the default behavior of using any random free
+           port is acceptable; otherwise specify a port.</td><td align="center" valign="middle">no</td><td align="left" valign="top"><code class="code">squishServerPort="4711"</code></td></tr></tbody></table></div><p>
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="ao-rqmintegration-start"></a>9.7.4. Starting the <span class="emphasis"><em>Squish</em></span> Adapter</h3></div></div></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><span class="section"><a href="https://ao-rqmintegration.html#ao-rqmintegration-start-preconditions">9.7.4.1. Preconditions</a></span></dt><dt><span class="section"><a href="https://ao-rqmintegration.html#ao-rqmintegration-start-synopsis">9.7.4.2. Synopsis</a></span></dt><dt><span class="section"><a href="https://ao-rqmintegration.html#ao-rqmintegration-start-example">9.7.4.3. Example</a></span></dt><dt><span class="section"><a href="https://ao-rqmintegration.html#ao-rqmintegration-restarting">9.7.4.4. Restarting the <span class="emphasis"><em>Squish</em></span> Adapter</a></span></dt></dl></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="ao-rqmintegration-start-preconditions"></a>9.7.4.1. Preconditions</h4></div></div></div><p>
+As a precondition Java 1.5 or newer has to be installed. The java executable
+has to be available through the executable search path of your system. As the
+<code class="literal">Squish Adapter</code> uses a Python script to convert the Squish
+XML result to HTML also Python of version 2.4, 2.5, 2.6 or 2.7 has to be
+available inside the executable search path.
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="ao-rqmintegration-start-synopsis"></a>9.7.4.2. Synopsis</h4></div></div></div><p>
+To start the <code class="literal">Squish Adapter</code> you have to run the startup
+script. The command line arguments passed to this script are automatically
+written to the configuration file <code class="filename">Config.ini</code> which is
+located inside the <code class="literal">Squish Adapter</code> installation directory.
+Therefore some command line arguments are mandatory on the first run only. The
+arguments passed to the startup script are the same for Windows and for Linux.
+For Windows the startup script is named <code class="filename">start.bat</code>, for
+Linux it's <code class="filename">start.sh</code>. The following example will use
+<code class="filename">start.bat</code>.
+</p><p>
+</p><div class="cmdsynopsis"><p><code class="command">start.bat</code>  {-repository https://&lt;hostname&gt;:&lt;port&gt;/&lt;qm&gt;} {[-user &lt;userid&gt;] |  [-userFile &lt;filename&gt;]} {[-password &lt;password&gt;] |  [-passwordFile &lt;filename&gt;]} {-squishDir &lt;directory&gt;} {-configDir &lt;directory&gt;} {-projectArea &lt;name&gt;}</p></div><p>
+</p><p>
+The exact meaning of the individual arguments mentioned in the above synopses
+is as follows:
+</p><div class="variablelist"><dl><dt><span class="term"><code class="option">
+    -repository https://&lt;hostname&gt;:
+        &lt;port&gt;/
+        &lt;qm&gt;
+</code></span></dt><dd><p>The hostname/IP of the RQM server, the port where the RQM server is
+running and the context root of the Rational Quality Manager (defaults to
+<code class="literal">qm</code>, but may be customized).</p></dd><dt><span class="term"><code class="option">-user &lt;userid&gt;</code></span></dt><dd><p>A registered user ID within RQM that has the license to run an adapter.
+</p></dd><dt><span class="term"><code class="option">-userFile &lt;filename&gt;</code></span></dt><dd><p>If the registered user ID within RQM contains non-ASCII characters the ID has to
+be written into an UTF-8 encoded file as a single line. This is only required for the
+first start of the <code class="literal">Squish Adapter</code> when running on Windows.
+</p></dd><dt><span class="term"><code class="option">-password &lt;password&gt;</code></span></dt><dd><p>The password of the user ID used.</p></dd><dt><span class="term"><code class="option">-passwordFile &lt;filename&gt;</code></span></dt><dd><p>If the password of the used user ID contains non-ASCII characters the password
+has to be written into an UTF-8 encoded file as a single line. This is only required
+for the first start of the <code class="literal">Squish Adapter</code> when running on Windows.</p></dd><dt><span class="term"><code class="option">-squishDir &lt;directory&gt;</code></span></dt><dd><p>Path to the directory where <span class="emphasis"><em>Squish</em></span> is installed.</p></dd><dt><span class="term"><code class="option">-configDir &lt;directory&gt;</code></span></dt><dd><p>Path were the adapter should look for test configuration files.</p></dd><dt><span class="term"><code class="option">-projectArea &lt;name&gt;</code></span></dt><dd><p>Name or alias of the project being logged into, default is
+<code class="literal">QualityManager</code>.</p></dd></dl></div><p>
+The complete options for the <code class="literal">Squish Adapter</code> can be found
+inside the <code class="filename">readme.txt</code> file which is shipped with the
+<code class="filename">tar.gz</code> and <code class="filename">zip</code> file.
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="ao-rqmintegration-start-example"></a>9.7.4.3. Example</h4></div></div></div><p>
+The example shows the adapter connecting to the RQM server
+<code class="literal">192.168.1.42</code> on port <code class="literal">9443</code>, using the
+default context root <code class="literal">qm</code>. The RQM user <code class="literal">bert</code>
+with its password <code class="literal">xxxyz</code> is used to use the project area
+<code class="literal">froglogic</code>. <span class="emphasis"><em>Squish</em></span> is installed at
+<code class="filename">C:\Squish</code> and configuration files are
+searched at <code class="filename">C:\SquishAdapterConfigs</code>.
+</p><pre class="screen">
+start.bat -repository https://192.168.1.42:9443/qm -user bert -password xxxyz -squishDir “<span class="quote">C:\Squish</span>” -configDir “<span class="quote">C:\SquishAdapterConfigs</span>” -projectArea “<span class="quote">froglogic</span>”
+</pre><p>
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="ao-rqmintegration-restarting"></a>9.7.4.4. Restarting the <span class="emphasis"><em>Squish</em></span> Adapter</h4></div></div></div><p>
+After the first run the <code class="literal">Squish Adapter</code> will read its
+configuration from the file <code class="filename">Config.ini</code> file by default
+which is located inside the <code class="literal">Squish Adapter</code> installation
+directory. Therefore no command line arguments have to be given to start the
+adapter.
+</p></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="ao-rqmintegration-using-the-adapter"></a>9.7.5. Using the <span class="emphasis"><em>Squish</em></span> Adapter from Rational Quality Manager</h3></div></div></div><p>
+To prepare execution of <span class="emphasis"><em>Squish</em></span> tests through Rational Quality Manager a
+<code class="literal">Test Script</code> resource has to be created:
+</p><div class="itemizedlist"><ul type="disc"><li><p>Log into Rational Quality Manager</p></li><li><p>Open the project the test should be created for</p></li><li><p>Select <span class="guimenu">Construction</span>|<span class="guimenuitem">Create Test Script</span></p></li></ul></div><p>
+This creates a new <code class="literal">Test Script</code>. Now the
+<code class="literal">Squish Adapter</code> that should be used for test runs has to be
+selected and to be configured which is described as follows.
+</p><div class="orderedlist"><ol type="1"><li><p>Select <span class="guimenu">Type</span>|<span class="guimenuitem">Command Line</span>.
+</p><div class="screenshot"><div class="mediaobject" align="center"><img src="https://images/rqmPlugin_select_command_line.png" align="middle"></img></div></div></li><li><p>Select <span class="guibutton">Use test resources that are local to a test machine</span>
+and click on <span class="guibutton">Select Adapter</span>.
+</p><div class="screenshot"><div class="mediaobject" align="center"><img src="https://images/rqmPlugin_select_test_resources_and_adapter.png" align="middle"></img></div></div></li><li><p>Select the <code class="literal">Squish Adapter</code> from the list and press
+<span class="guibutton">Next</span>.
+</p><div class="screenshot"><div class="mediaobject" align="center"><img src="https://images/rqmPlugin_select_squish_adapter.png" align="middle"></img></div></div></li><li><p>Insert <code class="literal">Squish</code> into the field <span class="guibutton">Project Path</span>,
+press <span class="guibutton">Go</span> and select the configuration file that should
+be used for the test runs and finally click on <span class="guibutton">Finish</span>.
+</p><div class="screenshot"><div class="mediaobject" align="center"><img src="https://images/rqmPlugin_select_conf_file.png" align="middle"></img></div></div></li><li><p>
+The test suite and test cases that should be run from this
+<code class="literal">Test Script</code> have to be defined using the field
+<span class="guibutton">Arguments</span>.
+</p><div class="screenshot"><div class="mediaobject" align="center"><img src="https://images/rqmPlugin_set_arguments.png" align="middle"></img></div></div><div class="informaltable"><table width="100%" border="1"><colgroup><col></col><col></col><col></col><col></col></colgroup><thead><tr><th align="left">Property</th><th align="left">Meaning</th><th align="left">Required</th><th align="left">Example</th></tr></thead><tbody valign="top"><tr><td align="left" valign="top">test suite</td><td align="left" valign="top">Name of the test suite which will be executed. The name has to meet
+           the <span class="emphasis"><em>Squish</em></span> naming convention, it has to start with the
+           <span class="emphasis"><em>suite_</em></span> prefix.</td><td align="center" valign="middle">yes</td><td align="left" valign="top"><code class="code">suite_alpha</code></td></tr><tr><td align="left" valign="top">test cases</td><td align="left" valign="top">Name of the test case(s) that should be executed. Leave this argument
+           to run the complete test suite. A test case name has to meet the
+           <span class="emphasis"><em>Squish</em></span> naming convention, it has to start with the
+           <span class="emphasis"><em>tst_</em></span> prefix.</td><td align="center" valign="middle">no</td><td align="left" valign="top"><code class="code">tst_a tst_b</code></td></tr></tbody></table></div><p>
+Click <span class="guibutton">Save</span> to save the <code class="literal">Test Script</code>
+finally.
+</p></li></ol></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="ao-rqmintegration-execution"></a>9.7.6. Executing a Test Script</h3></div></div></div><p>
+Executing a <code class="literal">Test Script</code> is beyond the scope of this document.
+There are different ways to execute a <code class="literal">Test Script</code> which are
+described in the Rational Quality Manager manual.
+</p><p>
+The result of a <code class="literal">Test Script</code> run can be accessed through a
+<code class="literal">Test Execution Record</code> provided by Rational Quality Manager.
+The <code class="literal">Test Execution Record</code> shows the general result of the
+test run and contains some more detailed information in form of log files. The
+log files can be found under <code class="literal">Result Details</code>.
+</p><div class="screenshot"><div class="mediaobject" align="center"><img src="https://images/rqmPlugin_execution_result.png" align="middle"></img></div></div><p>
+</p><div class="informaltable"><table width="100%" border="1"><colgroup><col></col><col></col></colgroup><thead><tr><th align="left">Filename</th><th align="left">Content</th></tr></thead><tbody valign="top"><tr><td align="left" valign="top">server.log</td><td align="left" valign="top">Output of the squishserver process</td></tr><tr><td align="left" valign="top">xmlToHtml.log</td><td align="left" valign="top">Output of the conversion script</td></tr><tr><td align="left" valign="top">result.html</td><td align="left" valign="top">Detailed <span class="emphasis"><em>Squish</em></span> HTML test result</td></tr><tr><td align="left" valign="top">runner.log</td><td align="left" valign="top">Output of the squishrunner process</td></tr><tr><td align="left" valign="top">result.xml</td><td align="left" valign="top"><span class="emphasis"><em>Squish</em></span> XML test result</td></tr><tr><td align="left" valign="top">preExec.log</td><td align="left" valign="top">Output of the preExecutable script if specified inside the configuration file</td></tr><tr><td align="left" valign="top">postExec.log</td><td align="left" valign="top">Output of the postExecutable script if specified inside the configuration file</td></tr><tr><td align="left" valign="top">adapter.log</td><td align="left" valign="top">Log file of the <span class="emphasis"><em>Squish</em></span> Adapter</td></tr></tbody></table></div><p>
+</p><p>
+The <code class="literal">Squish Adapter</code> will mark the execution result as
+<code class="literal">Failed</code> if any verification of the executed tests failed. In
+case of an error the execution result will be marked as <code class="literal">Error</code>.
+If all test verifications have been passed the result will be set to
+<code class="literal">Passed</code>.
+</p></div></div><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" type="text/javascript" src="ScriptingLanguage.js"></script><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format">setScriptingLanguage();</script><div class="navfooter"><hr></hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="https://ao-qc.html">Prev</a> </td><td width="20%" align="center"><a accesskey="u" href="https://addons.html">Up</a></td><td width="40%" align="right"> <a accesskey="n" href="https://ao-vs-integration.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">9.6. <span class="trademark">Quality Center</span>™ Integration </td><td width="20%" align="center"><a accesskey="h" href="https://index-noframes.html">Home</a></td><td width="40%" align="right" valign="top"> 9.8. <span class="trademark">Microsoft</span>® <span class="trademark">Visual Studio</span>® Integration</td></tr></table></div></body>
+<!-- Mirrored from ao-rqmintegration.html by HTTrack Website Copier/3.x [XR&CO'2013], Wed, 06 Jul 2022 13:29:01 GMT -->
+</html>

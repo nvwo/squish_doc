@@ -1,0 +1,298 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<!-- Mirrored from ao-cc.html by HTTrack Website Copier/3.x [XR&CO'2013], Wed, 06 Jul 2022 13:29:03 GMT -->
+<head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><title>9.13. CruiseControl integration</title><link rel="stylesheet" href="manual.css" type="text/css"></link><meta name="generator" content="DocBook XSL Stylesheets V1.73.2"></meta><link rel="start" href="https://index-noframes.html" title="Squish Manual"></link><link rel="up" href="https://addons.html" title="Chapter 9. Add-Ons Reference Manual"></link><link rel="prev" href="https://ao-maven.html" title="9.12. Maven integration"></link><link rel="next" href="https://ao-ant.html" title="9.14. Ant integration"></link><style xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" type="text/css" media="screen">
+        div.toc * { margin-left: 6px; margin-right: auto; max-width: 75em; }
+        div.toc span { margin-left: 0px; }
+        * { margin-left: auto; margin-right: auto; max-width: 75em; }
+        body { margin-left: 6px; margin-right: 6px; }
+        table th { padding: .5ex }
+        table td { padding: .5ex }
+    </style><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format">
+        function keyPress() {
+            var e = window.event;
+            if ( e == undefined ) {
+                return;
+            }
+            /* ### does not properly scroll, yet
+            if ( e.keyCode == 32 ) {
+            var l = document.links;
+            for ( var i = 0; i < l.length; i++ ) {
+                if ( l[i].innerText == "Next" ) {
+                location.href = l[i].href;
+                }
+            }
+            } else
+                */
+                if ( e.keyCode == 0x08 ) {
+            var l = document.links;
+            for ( var i = 0; i < l.length; i++ ) {
+                if ( l[i].innerText == "Prev" ) {
+                location.href = l[i].href;
+                }
+            }
+            }
+        }
+        document.onkeypress = keyPress;
+    </script></head><body><div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="ao-cc"></a>9.13. CruiseControl integration</h2></div></div></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><span class="section"><a href="https://ao-cc.html#ao-cc-obtaining">9.13.1. Obtaining the CruiseControl Plugin</a></span></dt><dt><span class="section"><a href="https://ao-cc.html#ao-cc-installation">9.13.2. Installing the CruiseControl Plugin</a></span></dt><dt><span class="section"><a href="https://ao-cc.html#ao-cc-example">9.13.3. Using the CruiseControl Plugin</a></span></dt><dt><span class="section"><a href="https://ao-cc.html#ao-cc-xml">9.13.4. CruiseControl XML reference</a></span></dt></dl></div><p>
+<a class="ulink" href="http://cruisecontrol.sourceforge.net/" target="_blank">CruiseControl</a>
+is a framework that supports a continuous build and integration process.
+It includes, but is not limited to, plugins for email notification, Ant
+and various source control tools. A web interface is provided to view
+the details of the current and previous builds.
+</p><p>
+It is possible to run <span class="emphasis"><em>Squish</em></span> tests from a CruiseControl continuous
+build using the plugin described here.
+</p><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="ao-cc-obtaining"></a>9.13.1. Obtaining the CruiseControl Plugin</h3></div></div></div><p>
+The CruiseControl plugin is available from:
+<a class="ulink" href="https://download.froglogic.com/resources/squish-cc-plugin_latest.zip" target="_blank">download.froglogic.com/resources/squish-cc-plugin_latest.zip</a>
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="ao-cc-installation"></a>9.13.2. Installing the CruiseControl Plugin</h3></div></div></div><p>
+To install the plugin simply unzip the zip file and copy the jar files to
+<code class="filename">CC_HOME\lib</code>
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="ao-cc-example"></a>9.13.3. Using the CruiseControl Plugin</h3></div></div></div><p>
+Here is the example used in the CruiseControl distribution:
+</p><pre class="programlisting">
+
+&lt;cruisecontrol&gt;
+  &lt;project name="connectfour"&gt;
+
+    &lt;property environment="env" /&gt;
+
+    &lt;listeners&gt;
+      &lt;currentbuildstatuslistener file="logs/${project.name}/status.txt" /&gt;
+    &lt;/listeners&gt;
+
+    &lt;bootstrappers&gt;
+      &lt;antbootstrapper anthome="${env.ANT_HOME}" buildfile="projects/${project.name}/build.xml" target="clean" /&gt;
+    &lt;/bootstrappers&gt;
+
+    &lt;modificationset quietperiod="30"&gt;
+      &lt;!-- touch any file in connectfour project to trigger a build --&gt;
+      &lt;filesystem folder="projects/${project.name}" /&gt;
+    &lt;/modificationset&gt;
+
+    &lt;schedule interval="300"&gt;
+      &lt;ant anthome="${env.ANT_HOME}" buildfile="projects/${project.name}/build.xml" /&gt;
+    &lt;/schedule&gt;
+
+    &lt;log&gt;
+      &lt;merge dir="projects/${project.name}/target/test-results" /&gt;
+    &lt;/log&gt;
+
+    &lt;publishers&gt;
+      &lt;onsuccess&gt;
+        &lt;artifactspublisher dest="artifacts/${project.name}" file="projects/${project.name}/target/${project.name}.jar" /&gt;
+      &lt;/onsuccess&gt;
+    &lt;/publishers&gt;
+
+  &lt;/project&gt;
+&lt;/cruisecontrol&gt;
+
+</pre><p>
+The <span class="emphasis"><em>Squish</em></span> CruiseControl plugin must be declared before using it. The
+best way to do this is to declare it as the project's first child. If we
+apply this to the example shown above, the first few lines will now look
+like this:
+</p><pre class="programlisting">
+&lt;cruisecontrol&gt;
+  &lt;project name="connectfour"&gt;
+
+    <span class="bold"><strong>&lt;plugin name="squishtest" classname="com.froglogic.squish.cc.builders.SquishTestBuilder" /&gt;</strong></span>
+  ...
+</pre><p>
+To run a <span class="emphasis"><em>Squish</em></span> test, the following change must be made to the
+schedule section:
+</p><pre class="programlisting">
+    ...
+    &lt;schedule interval="300"&gt;
+      <span class="bold"><strong>&lt;composite&gt;</strong></span>
+        &lt;ant anthome="${env.ANT_HOME}" buildfile="projects/${project.name}/build.xml" /&gt;
+        <span class="bold"><strong>&lt;squishtest
+          suite="C:\Squish\examples\qt\addressbook\suite_py"
+          path="C:\Squish" /&gt;
+      &lt;/composite&gt;</strong></span>
+    &lt;/schedule&gt;
+    ...
+</pre><p>
+The composite is needed since we have multiple tasks in this
+case—the ant build file is executed <span class="emphasis"><em>and</em></span> a
+<span class="emphasis"><em>Squish</em></span> test is run. Note that it is also possible to do the
+<code class="code">squishtest</code> first or to use <code class="code">squishtest</code> more
+than once in order to run multiple test suites.
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="ao-cc-xml"></a>9.13.4. CruiseControl XML reference</h3></div></div></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><span class="section"><a href="https://ao-cc.html#book-cc-squish-squishtest-tag">9.13.4.1. squishtest</a></span></dt><dt><span class="section"><a href="https://ao-cc.html#book-cc-squish-testcase-tag">9.13.4.2. testcase</a></span></dt><dt><span class="section"><a href="https://ao-cc.html#book-cc-squish-report-tag">9.13.4.3. report</a></span></dt></dl></div><p>
+This section provides an overview of the tags that can be used after
+installing the CruiseControl plugin.
+</p><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="book-cc-squish-squishtest-tag"></a>9.13.4.1. squishtest</h4></div></div></div><p>
+The <code class="code">squishtest</code> tag can be used to run <span class="emphasis"><em>Squish</em></span> test cases
+or a test suite. The table below shows the attributes that can be used:
+</p><div class="table"><a id="idp59012072"></a><p class="title"><b>Table 9.6. squishtest tag</b></p><div class="table-contents"><table summary="squishtest tag" border="1"><colgroup><col></col><col></col><col></col></colgroup><thead><tr><th>
+          Attribute
+        </th><th>
+          Description
+        </th><th>
+           Required
+        </th></tr></thead><tbody><tr><td>
+          <code class="code">suite</code>
+        </td><td>
+          The absolute path to the <span class="emphasis"><em>Squish</em></span> suite that is to be run.
+        </td><td>
+          Yes
+        </td></tr><tr><td>
+          <code class="code">testcase</code>
+        </td><td>
+          <span class="bold"><strong>Deprecated</strong></span> The <span class="bold"><strong>one</strong></span> test case from the suite
+          to be run, available for backwards compatibility only. Leave this attribute out to run the complete test suite.
+          To specify which test cases should be executed explicitly use the <a class="xref" href="https://ao-cc.html#book-cc-squish-testcase-tag" title="9.13.4.2. testcase">testcase (Section 9.13.4.2)</a> element instead.
+        </td><td>
+          No
+        </td></tr><tr><td>
+          <code class="code">path</code>
+        </td><td>
+          The absolute path to <span class="emphasis"><em>Squish</em></span>'s root directory.
+        </td><td>
+          Only if not set in the <span class="bold"><strong>squishtest</strong></span> tag.
+        </td></tr><tr><td>
+          <code class="code">host</code>
+        </td><td>
+          The hostname of the machine where the <span class="application">squishserver</span> is running.
+          Leave this parameter out to let the plugin start the <span class="application">squishserver</span> automatically.
+        </td><td>
+          No
+        </td></tr><tr><td>
+          <code class="code">port</code>
+        </td><td>
+          The port number that the <span class="application">squishserver</span> is listening on.
+          Leave this parameter out to let the plugin start the <span class="application">squishserver</span> automatically.
+        </td><td>
+          No
+        </td></tr><tr><td>
+          <code class="code">snoozeFactor</code>
+        </td><td>
+          The snooze factor to use when running <span class="emphasis"><em>Squish</em></span> tests, defaults to 1.
+        </td><td>
+          No
+        </td></tr><tr><td>
+          <code class="code">reportdir</code>
+        </td><td>
+          <span class="bold"><strong>Deprecated</strong></span> The directory where test reports should be output to,
+          available for backwards compatibility only. To generate reports use the <a class="xref" href="https://ao-cc.html#book-cc-squish-report-tag" title="9.13.4.3. report">report (Section 9.13.4.3)</a> element instead.
+        </td><td>
+          No
+        </td></tr><tr><td>
+          <code class="code">resultdir</code>
+        </td><td>
+          The absolute path to a directory which is used to save test results, corresponds to
+          the <span class="application">squishrunner</span>'s <code class="option">--resultdir</code> which is documented at
+          <a class="xref" href="https://rg-cmdline.html#rg-squishrunner-cli--testcase" title="7.4.3.25. Executing a Test Case (Advanced)">Executing a Test Case (Advanced) (Section 7.4.3.25)</a>.
+        </td><td>
+          No
+        </td></tr><tr><td>
+          <code class="code">webbrowser</code>
+        </td><td>
+          When executing a web test the browser to be used. Supported values are listed at the <span class="application">squishrunner</span>'s
+          <code class="option">--webbrowser</code> option at <a class="xref" href="https://rg-cmdline.html#rg-squishrunner-cli--testcase" title="7.4.3.25. Executing a Test Case (Advanced)">Executing a Test Case (Advanced) (Section 7.4.3.25)</a>.
+        </td><td>
+          No
+        </td></tr><tr><td>
+          <code class="code">webbrowserargs</code>
+        </td><td>
+          When executing a web test the command line arguments passed to the used browser.
+        </td><td>
+          No
+        </td></tr><tr><td>
+          <code class="code">failOnVerificationFail</code>
+        </td><td>
+          If set to 'yes' the build will be marked as failure if <span class="emphasis"><em>Squish</em></span> verifications fail or an
+          error occurred inside the test execution. Defaults to 'no'.
+        </td><td>
+          No
+        </td></tr></tbody></table></div></div><br class="table-break"></br><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Note"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/note.png"></img></td><th align="left">Note</th></tr><tr><td align="left" valign="top"><p>
+When the attributes mentioned in the table are set in the <span class="emphasis"><em>Squish</em></span>
+<code class="code">plugin</code> binding tag, they act as default values. This means that
+the attributes are inherited from the <code class="code">plugin</code> tag and can be
+overridden if necessary in the <code class="code">squishtest</code> tag.
+</p></td></tr></table></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="book-cc-squish-testcase-tag"></a>9.13.4.2. testcase</h4></div></div></div><p>
+The <code class="code">testcase</code> tag can be used to specify which test cases should be
+executed explicitly. It must be a child of the <code class="code">squishtest</code> tag.
+</p><div class="table"><a id="idp59036720"></a><p class="title"><b>Table 9.7. testcase tag</b></p><div class="table-contents"><table summary="testcase tag" border="1"><colgroup><col></col><col></col><col></col></colgroup><thead><tr><th>
+          Attribute
+        </th><th>
+          Description
+        </th><th>
+          Required
+        </th></tr></thead><tbody><tr><td>
+          <code class="code">name</code>
+        </td><td>
+          Name of the test case to be executed.
+        </td><td>
+          Yes
+        </td></tr></tbody></table></div></div><br class="table-break"></br><p>
+Here is an example of using the <code class="code">testcase</code> tag in a CruiseControl
+configuration file:
+</p><pre class="programlisting">
+&lt;cruisecontrol&gt;
+  &lt;project name="connectfour"&gt;
+    ...
+    &lt;schedule interval="300"&gt;
+      &lt;composite&gt;
+        &lt;ant anthome="${env.ANT_HOME}" buildfile="projects/${project.name}/build.xml" /&gt;
+        &lt;squishtest
+          suite="C:\Squish\examples\qt\addressbook\suite_py"
+          path="C:\Squish"&gt;
+          <span class="bold"><strong>&lt;testcases&gt;
+            &lt;testcase name="tst_adding" /&gt;
+            &lt;testcase name="tst_general" /&gt;
+          &lt;/testcases&gt;</strong></span>
+        &lt;/squishtest&gt;
+      &lt;/composite&gt;
+    &lt;/schedule&gt;
+    ...
+</pre></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="book-cc-squish-report-tag"></a>9.13.4.3. report</h4></div></div></div><p>
+The <code class="code">report</code> tag can be used to specify which reports should be
+generated. It must be a child of the <code class="code">squishtest</code> tag.
+</p><div class="table"><a id="idp59043200"></a><p class="title"><b>Table 9.8. report tag</b></p><div class="table-contents"><table summary="report tag" border="1"><colgroup><col></col><col></col><col></col></colgroup><thead><tr><th>
+          Attribute
+        </th><th>
+          Description
+        </th><th>
+          Required
+        </th></tr></thead><tbody><tr><td>
+          <code class="code">format</code>
+        </td><td>
+          Report format to be generated. Supported values are listed at the <span class="application">squishrunner</span>'s
+          <code class="option">--reportgen</code> option at <a class="xref" href="https://rg-cmdline.html#rg-squishrunner-cli--testcase" title="7.4.3.25. Executing a Test Case (Advanced)">Executing a Test Case (Advanced) (Section 7.4.3.25)</a>.
+        </td><td>
+          Yes
+        </td></tr><tr><td>
+          <code class="code">file</code>
+        </td><td>
+          The absolute path to a file which the report is written to.
+        </td><td>
+          Yes
+        </td></tr></tbody></table></div></div><br class="table-break"></br><p>
+Here is an example of using the <code class="code">report</code> tag in a CruiseControl configuration file:
+</p><pre class="programlisting">
+&lt;cruisecontrol&gt;
+  &lt;project name="connectfour"&gt;
+    ...
+    &lt;schedule interval="300"&gt;
+      &lt;composite&gt;
+        &lt;ant anthome="${env.ANT_HOME}" buildfile="projects/${project.name}/build.xml" /&gt;
+        &lt;squishtest
+          suite="C:\Squish\examples\qt\addressbook\suite_py"
+          path="C:\Squish"&gt;
+          &lt;testcases&gt;
+            &lt;testcase name="tst_adding" /&gt;
+            &lt;testcase name="tst_general" /&gt;
+          &lt;/testcases&gt;
+          <span class="bold"><strong>&lt;reports&gt;
+            &lt;report format="xml2.2" file="C:\xml_reports\addressbook.xml" /&gt;
+            &lt;report format="xmljunit" file="C:\junit_reports\addressbook.xml" /&gt;
+          &lt;/reports&gt;</strong></span>
+        &lt;/squishtest&gt;
+      &lt;/composite&gt;
+    &lt;/schedule&gt;
+    ...
+</pre></div></div></div><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" type="text/javascript" src="ScriptingLanguage.js"></script><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format">setScriptingLanguage();</script><div class="navfooter"><hr></hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="https://ao-maven.html">Prev</a> </td><td width="20%" align="center"><a accesskey="u" href="https://addons.html">Up</a></td><td width="40%" align="right"> <a accesskey="n" href="https://ao-ant.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">9.12. Maven integration </td><td width="20%" align="center"><a accesskey="h" href="https://index-noframes.html">Home</a></td><td width="40%" align="right" valign="top"> 9.14. Ant integration</td></tr></table></div></body>
+<!-- Mirrored from ao-cc.html by HTTrack Website Copier/3.x [XR&CO'2013], Wed, 06 Jul 2022 13:29:03 GMT -->
+</html>

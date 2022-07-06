@@ -1,0 +1,350 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<!-- Mirrored from rg-licenseserver.html by HTTrack Website Copier/3.x [XR&CO'2013], Wed, 06 Jul 2022 13:29:00 GMT -->
+<head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><title>7.16. License Server</title><link rel="stylesheet" href="manual.css" type="text/css"></link><meta name="generator" content="DocBook XSL Stylesheets V1.73.2"></meta><link rel="start" href="index-noframes.html" title="Squish Manual"></link><link rel="up" href="ref.man.html" title="Chapter 7. Tools Reference Manual"></link><link rel="prev" href="rg-conversion.html" title="7.15. Migrating to the Scripted Object Map: Common conversion problems"></link><link rel="next" href="ide.ref.man.html" title="Chapter 8. IDE Reference Manual"></link><style xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" type="text/css" media="screen">
+        div.toc * { margin-left: 6px; margin-right: auto; max-width: 75em; }
+        div.toc span { margin-left: 0px; }
+        * { margin-left: auto; margin-right: auto; max-width: 75em; }
+        body { margin-left: 6px; margin-right: 6px; }
+        table th { padding: .5ex }
+        table td { padding: .5ex }
+    </style><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format">
+        function keyPress() {
+            var e = window.event;
+            if ( e == undefined ) {
+                return;
+            }
+            /* ### does not properly scroll, yet
+            if ( e.keyCode == 32 ) {
+            var l = document.links;
+            for ( var i = 0; i < l.length; i++ ) {
+                if ( l[i].innerText == "Next" ) {
+                location.href = l[i].href;
+                }
+            }
+            } else
+                */
+                if ( e.keyCode == 0x08 ) {
+            var l = document.links;
+            for ( var i = 0; i < l.length; i++ ) {
+                if ( l[i].innerText == "Prev" ) {
+                location.href = l[i].href;
+                }
+            }
+            }
+        }
+        document.onkeypress = keyPress;
+    </script></head><body><div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="rg-licenseserver"></a>7.16. License Server</h2></div></div></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><span class="section"><a href="rg-licenseserver.html#rg-licenseserver-logging">7.16.1. License Server Logging</a></span></dt><dt><span class="section"><a href="rg-licenseserver.html#rg-licenseserver-configuration">7.16.2. Configuration</a></span></dt><dt><span class="section"><a href="rg-licenseserver.html#rg-licenseserver-rest-api">7.16.3. REST API</a></span></dt></dl></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="rg-licenseserver-logging"></a>7.16.1. License Server Logging</h3></div></div></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><span class="section"><a href="rg-licenseserver.html#rg-licenseserver-logging-linux">7.16.1.1. License Server Logging on Linux</a></span></dt><dt><span class="section"><a href="rg-licenseserver.html#rg-licenseserver-logging-macos">7.16.1.2. License Server Logging on macOS</a></span></dt><dt><span class="section"><a href="rg-licenseserver.html#rg-licenseserver-logging-windows">7.16.1.3. License Server Logging on Windows</a></span></dt></dl></div><p>
+The <span class="emphasis"><em>Squish License Server</em></span> sends its log messages to a platform-specific destination by default.
+</p><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="rg-licenseserver-logging-linux"></a>7.16.1.1. License Server Logging on Linux</h4></div></div></div><p>
+When <span class="emphasis"><em>Squish License Server</em></span> is installed as a systemd service on Linux, it writes log messages via the standard syslog
+interface and they will be stored as part of the systemd journal.
+To see today's log messages, execute <code class="code">journalctl --since today -u squish-license-server.service</code> as an
+administrator.
+</p><p>
+Example log output:
+</p><pre class="programlisting">
+$ journalctl -u squish-license-server.service --since today
+-- Logs begin at Tue 2021-08-31 19:17:32 CEST, end at Fri 2022-01-21 12:32:57 CET. --
+Jan 21 09:43:18 host systemd[1]: Starting Squish Floating License Server...
+Jan 21 09:43:18 host systemd[1]: Started Squish Floating License Server.
+Jan 21 09:43:18 host licenseserver[1477]: Searching for license files (*.cfg) in '/etc/squish-license-server/licenses'
+Jan 21 09:43:18 host licenseserver[1477]: Starting Squish License Server 7.0.0 on machine id f7ff1122a223344f5544ff00
+Jan 21 09:43:18 host licenseserver[1477]: Loading server settings from '/etc/squish-license-server/licenses/my_license.settings.ini'
+Jan 21 09:43:18 host licenseserver[1477]: Serving REST API on [0.0.0.0]:47001
+Jan 21 09:43:18 host licenseserver[1477]: [my_license] Serving 10 tester and 10 execution licenses on [0.0.0.0]:49345, host:49345
+
+Jan 21 09:43:18 host licenseserver[1477]: Announcing server via SSDP as licenseserver://host:49345
+Jan 21 12:12:47 host systemd[1]: squish-license-server.service: Succeeded.
+</pre><p>
+Additional ways to filter, limit or follow log messages as they are created can be found in
+<a class="ulink" href="https://www.freedesktop.org/software/systemd/man/journalctl.html" target="_blank">systemd's journalctl manual</a>.
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="rg-licenseserver-logging-macos"></a>7.16.1.2. License Server Logging on macOS</h4></div></div></div><p>
+When <span class="emphasis"><em>Squish License Server</em></span> is installed as a service on macOS, it writes log messages via the standard syslog interface
+and they will be stored as part of the Apple unified log system.
+To see today's log messages, execute <code class="code">log show --process licenseserver --style compact --info --last 1d</code> as an
+administrator.
+</p><p>
+Example log output:
+</p><pre class="programlisting">
+$ log show --process licenseserver --style compact --info --last 1d
+Filtering the log data using "process BEGINSWITH[cd] "licenseserver""
+Skipping debug messages, pass --debug to include.
+Timestamp               Ty Process[PID:TID]
+2022-01-25 09:35:51.057 I  licenseserver[736:2989] Searching for license files (*.cfg) in '/etc/squish-license-server/licenses'
+2022-01-25 09:35:51.058 I  licenseserver[736:2989] [com.apple.CarbonCore:coreservicesdaemon] SCSession SCSession( id=100, this=0x0x7fd9b1508070 option=65538) created, forUID=0 mach_port_t=0x2503.
+2022-01-25 09:35:51.058 I  licenseserver[736:2989] [com.apple.CarbonCore:coreservicesdaemon] SCSession SCSession( id=101, this=0x0x7fd9b1508180 option=65538) created, forUID=0 mach_port_t=0x2603.
+2022-01-25 09:35:51.058 I  licenseserver[736:2989] [com.apple.CarbonCore:coreservicesdaemon] connectToCoreServicesD Instantiating server (coreservicesd based) SCSession, port=0x2503 serverOptions=0x10002.
+2022-01-25 09:35:51.059 I  licenseserver[736:2989] Starting Squish License Server 7.0.0 on machine id f7ff1122a223344f5544ff00
+2022-01-25 09:35:51.060 I  licenseserver[736:2989] Saving default server settings to '/etc/squish-license-server/licenses/my_license.settings.ini'
+2022-01-25 09:35:51.062 I  licenseserver[736:2989] No listen address/port configured, disabling REST API
+2022-01-25 09:35:51.064 I  licenseserver[736:2989] [my_license] Serving 10 tester and 10 execution licenses on [0.0.0.0]:49345, host:49345
+2022-01-25 09:35:51.064 I  licenseserver[736:2989] Announcing server via SSDP as licenseserver://host:49345
+</pre></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="rg-licenseserver-logging-windows"></a>7.16.1.3. License Server Logging on Windows</h4></div></div></div><p>
+When running as a Windows Service, <span class="emphasis"><em>Squish License Server</em></span> will write its log messages to
+<code class="filename">C:\ProgramData\Squish License Server\log\squish-license-server.log</code>.
+The logfile will be limited to a maximum size of 2 MB and be rotated (i.e. renamed) automatically
+to keep up to 5 previous logfiles around.
+</p><p>
+Example logfile contents:
+</p><pre class="programlisting">
+2022-01-31T13:33:25 Searching for license files (*.cfg) in 'C:\ProgramData\Squish License Server\licenses'
+2022-01-31T13:33:25 Starting Squish License Server 7.0.0 Alpha on machine id f7ff1122a223344f5544ff00
+2022-01-31T13:33:25 Saving default server settings to 'C:\ProgramData\Squish License Server\licenses\my_license.settings.ini'
+2022-01-31T13:33:25 No listen address/port configured, disabling REST API
+2022-01-31T13:33:25 [my_license] Serving 10 tester and 10 execution licenses on [0.0.0.0]:49345, host:49345
+2022-01-31T13:33:25 Announcing server via SSDP as licenseserver://host:49345
+</pre></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="rg-licenseserver-configuration"></a>7.16.2. Configuration</h3></div></div></div><p>
+<span class="emphasis"><em>Squish License Server</em></span> expects one or more license files whose filename ends with <code class="filename">.cfg</code>.
+By default it searches for license files in the following directory:
+</p><div class="itemizedlist"><ul type="disc"><li><p>
+Linux and macOS: <code class="filename">/etc/squish-license-server/licenses/</code>
+</p></li><li><p>
+Windows: <code class="filename">C:\ProgramData\Squish License Server\licenses\</code>
+</p></li></ul></div><p>
+</p><p>
+In addition, per-license settings will be read from a file in the aforementioned directory with the same filename as
+the license file but ending in <code class="filename">.settings.ini</code> instead of <code class="filename">.cfg</code>.
+If this file does not exist then the server will create it with default values to serve as a template for editing.
+The following groups of settings can be modified by editing the settings file (followed by a server restart):
+</p><pre class="programlisting">
+[License]
+LeaseTime=0
+</pre><p>
+<code class="varname">LeaseTime</code> is the maximum time in seconds that a connected client (like <span class="application">Squish IDE</span>) can use a license.
+The default 0 (or an empty value) means that there's no limit of how long a client can hold onto a license.
+Set this to automatically disconnect clients if they use a license for "too long".
+Keep in mind that this also limits the maximum allowed time any automated Squish test execution can take because a
+loss of license will abort script execution.
+</p><pre class="programlisting">
+[REST]
+AnonymousReadAccess=true
+ListenAddress=
+ListenPort=
+ReadAccessTokens=
+</pre><p>
+<code class="varname">AnonymousReadAccess</code> controls whether unauthenticated HTTP GET requests to the REST API are allowed.
+If set to <code class="constant">false</code>, you will also need to add one or more tokens to
+<a class="xref" href="rg-licenseserver.html#rg-licenseserver-configuration-rest-readaccesstokens">REST/ReadAccessTokens</a> to make use of the REST API.
+</p><p>
+<code class="varname">ListenAddress</code> is the IP address to accept REST API requests on.
+If left empty, the REST API will be available on all network interfaces.
+</p><p><a id="rg-licenseserver-configuration-rest-listenport"></a>
+<code class="varname">ListenPort</code> is the TCP port number to accept REST API request on.
+If empty (or an invalid value), the REST API will be disabled.
+To enable the REST API, set an otherwise unused TCP port number (1 - 65535) here.
+</p><p><a id="rg-licenseserver-configuration-rest-readaccesstokens"></a>
+<code class="varname">ReadAccessTokens</code> is a comma-separated list of tokens for authenticated HTTP GET requests to the REST API.
+The tokens do not have a defined format (yet) but they cannot contain whitespace and we recommend to stick to
+ASCII characters to make it easy for clients to provide them in their HTTP requests.
+</p><pre class="programlisting">
+[SSDP]
+AnnouncementHostName=
+AnnouncementPort=
+Enabled=true
+</pre><p>
+<code class="varname">AnnouncementHostName</code> is the (DNS) hostname used in network-wide SSDP announcements.
+Change this value if the hostname that clients should connect to differs from the local hostname of the system.
+</p><p>
+<code class="varname">AnnouncementPort</code> is the TCP port number used in network-wide SSDP announcements.
+If empty (or an invalid value), the TCP port number from the license configuration will be used.
+Change this value when some sort of redirection or tunneling requires clients to connect to a different TCP port
+number (1 - 65535) than the one the server is actually listening on.
+</p><p>
+<code class="varname">Enabled</code> is the switch for enabling/disabling SSDP announcements.
+The default value is <code class="constant">true</code>.
+If set to <code class="constant">false</code>, SSDP announcements will be disabled.
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="rg-licenseserver-rest-api"></a>7.16.3. REST API</h3></div></div></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><span class="section"><a href="rg-licenseserver.html#rg-licenseserver-rest-api-v1-clients">7.16.3.1. <code class="filename">/v1/clients</code></a></span></dt><dt><span class="section"><a href="rg-licenseserver.html#idp56555888">7.16.3.2. <code class="filename">/v1/serverinfo</code></a></span></dt><dt><span class="section"><a href="rg-licenseserver.html#idp56562192">7.16.3.3. <code class="filename">/v1/statistics</code></a></span></dt></dl></div><p>
+<span class="emphasis"><em>Squish License Server</em></span> supports querying information about itself, connected clients as well as statistics about license usage via
+a HTTP-based REST API.
+This functionality is disabled by default and can be enabled by setting a valid TCP port number in the settings file,
+see <a class="xref" href="rg-licenseserver.html#rg-licenseserver-configuration-rest-listenport">REST/ListenPort</a>.
+</p><p>
+Clients need to be able to issue HTTP requests (currently limited to GET requests) and will receive a JSON-formatted
+reply both in case of success or errors.
+By default requests do not require any form of authentication.
+Administrators can configure the server to require HTTP Bearer Token Authentication, see
+<a class="xref" href="rg-licenseserver.html#rg-licenseserver-configuration-rest-readaccesstokens">REST/ReadAccessTokens</a>.
+</p><p>
+This document uses the commandline tools <a class="ulink" href="https://curl.se/" target="_blank">curl</a> and
+<a class="ulink" href="https://stedolan.github.io/jq/" target="_blank">jq</a> in its commandline examples to create HTTP requests and format
+the resulting JSON output.
+</p><p>
+Currently the following API endpoints are available:
+</p><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="rg-licenseserver-rest-api-v1-clients"></a>7.16.3.1. <code class="filename">/v1/clients</code></h4></div></div></div><p>
+Returns an array of connected clients.
+A client object can contain the following properties:
+</p><div class="itemizedlist"><ul type="disc"><li><p>
+<code class="varname">clientAddress</code>:
+IP address of the connected client.
+</p></li><li><p>
+<code class="varname">clientPort</code>:
+Server-side port number of the connection.
+</p></li><li><p>
+<code class="varname">grantTime</code>:
+ISO timestamp of the time a license was granted to this client.
+Empty if the client did not receive a license yet.
+</p></li><li><p>
+<code class="varname">licenseType</code>:
+Type of license requested by the client.
+Possible values include <code class="constant">execution</code> and <code class="constant">tester</code> or an empty string in case the
+client did not request a license so far.
+</p></li><li><p>
+<code class="varname">machineId</code>:
+Internal identifier of the connected client.
+</p></li><li><p>
+<code class="varname">requestTime</code>:
+Time when the client requested a license.
+Empty string if the client did not request a license so far.
+</p></li></ul></div><p>
+Example curl request:
+</p><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage"></span><pre class="programlisting">
+curl -s "http://localhost:47001/v1/clients" | jq
+</pre></div><p>
+Example JSON response:
+</p><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">JavaScript</span><pre class="programlisting">
+[
+  {
+    "clientAddress": "::ffff:127.0.0.1",
+    "clientPort": 44198,
+    "grantTime": "2022-01-05T11:34:37.732Z",
+    "licenseType": "tester",
+    "machineId": "{5544eebb-1234-4a00-abcd-7a7a7aff99d2}",
+    "requestTime": "2022-01-05T11:34:37.732Z"
+  }
+]
+</pre></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="idp56555888"></a>7.16.3.2. <code class="filename">/v1/serverinfo</code></h4></div></div></div><p>
+Returns an object with information about the license served to clients.
+The following properties can be present:
+</p><div class="itemizedlist"><ul type="disc"><li><p>
+<code class="varname">customerNumber</code>:
+Internal number of the customer owning the license.
+</p></li><li><p>
+<code class="varname">editions</code>:
+Array of strings for the product editions supported by the license.
+</p></li><li><p>
+<code class="varname">expirationDate</code>:
+ISO date when the served license will expire.
+Clients connecting after this date will not receive a license anymore!
+</p></li><li><p>
+<code class="varname">issueDate</code>:
+ISO date when the served license was issued to the customer.
+</p></li><li><p>
+<code class="varname">machineId</code>:
+Internal identifier for the host running the server.
+</p></li><li><p>
+<code class="varname">port</code>:
+TCP port number the server accepts license requests on.
+</p></li></ul></div><p>
+Example curl request:
+</p><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage"></span><pre class="programlisting">
+curl -s "http://localhost:47001/v1/serverinfo" | jq
+</pre></div><p>
+Example JSON response:
+</p><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">JavaScript</span><pre class="programlisting">
+{
+  "customerNumber": 12345,
+  "editions": [
+    "Squish/Qt"
+  ],
+  "expirationDate": "2023-01-23",
+  "issueDate": "2021-01-22",
+  "machineId": "ca3ff112233001122abcdabcd",
+  "port": 49345
+}
+</pre></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="idp56562192"></a>7.16.3.3. <code class="filename">/v1/statistics</code></h4></div></div></div><p>
+Returns an object containing statistics about clients and how long they waited for a license.
+Currently statistics are not kept during a server restart but this may change in a future release.
+</p><div class="itemizedlist"><ul type="disc"><li><p>
+<code class="varname">activeLicenses</code>:
+Counts the number of licenses that are in use for the individual license types.
+Contains an <code class="constant">execution</code> and <code class="constant">tester</code> sub-object with the following
+properties:
+
+</p><div class="itemizedlist"><ul type="circle"><li><p>
+<code class="varname">current</code>:
+Number of actively used licenses at the time of the HTTP request.
+</p></li><li><p>
+<code class="varname">max</code>:
+Maximum number of active licenses (determined by the license configuration file).
+</p></li><li><p>
+<code class="varname">peak</code>:
+Highest number of actively used licenses since the last statistics reset.
+</p></li></ul></div><p>
+
+</p></li><li><p>
+<code class="varname">waitingQueue</code>:
+Counts the number of clients waiting for an unused license.
+Contains an <code class="constant">execution</code> and <code class="constant">tester</code> sub-object, each with the following
+properties:
+
+</p><div class="itemizedlist"><ul type="circle"><li><p>
+<code class="varname">current</code>:
+Number of clients waiting for a license at the time of the HTTP request.
+</p></li><li><p>
+<code class="varname">peak</code>:
+Highest number of clients waiting for a license since the last statistics reset.
+</p></li></ul></div><p>
+
+</p></li><li><p>
+<code class="varname">waitingTimeInMs</code>:
+Duration of clients waiting for an unused license.
+Contains an <code class="constant">execution</code> and <code class="constant">tester</code> sub-object, each with the following
+properties:
+
+</p><div class="itemizedlist"><ul type="circle"><li><p>
+<code class="varname">current</code>:
+Duration (in milliseconds) of the longest waiting client right now.
+</p></li><li><p>
+<code class="varname">peak</code>:
+Highest duration a client was waiting for an unused license since the last statistics reset.
+</p></li></ul></div><p>
+
+</p></li></ul></div><p>
+These statistics can serve as a way to find out if the number of tester and execution seats is enough for all users.
+Especially the peak values can tell when more seats are needed to not keep users or automated tests waiting for a
+free license.
+</p><p>
+Example curl request:
+</p><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage"></span><pre class="programlisting">
+curl -s http://localhost:47001/v1/statistics | jq
+</pre></div><p>
+Example JSON response:
+</p><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">JavaScript</span><pre class="programlisting">
+{
+  "activeLicenses": {
+    "execution": {
+      "current": 0,
+      "max": 10,
+      "peak": 0
+    },
+    "tester": {
+      "current": 1,
+      "max": 2,
+      "peak": 1
+    }
+  },
+  "waitingQueue": {
+    "execution": {
+      "current": 0,
+      "peak": 0
+    },
+    "tester": {
+      "current": 0,
+      "peak": 1
+    }
+  },
+  "waitingTimeInMs": {
+    "execution": {
+      "current": 0,
+      "peak": 0
+    },
+    "tester": {
+      "current": 0,
+      "peak": 16637
+    }
+  }
+}
+</pre></div></div></div></div><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" type="text/javascript" src="ScriptingLanguage.js"></script><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format">setScriptingLanguage();</script><div class="navfooter"><hr></hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="rg-conversion.html">Prev</a> </td><td width="20%" align="center"><a accesskey="u" href="ref.man.html">Up</a></td><td width="40%" align="right"> <a accesskey="n" href="ide.ref.man.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">7.15. Migrating to the Scripted Object Map: Common conversion problems </td><td width="20%" align="center"><a accesskey="h" href="index-noframes.html">Home</a></td><td width="40%" align="right" valign="top"> Chapter 8. IDE Reference Manual</td></tr></table></div></body>
+<!-- Mirrored from rg-licenseserver.html by HTTrack Website Copier/3.x [XR&CO'2013], Wed, 06 Jul 2022 13:29:00 GMT -->
+</html>

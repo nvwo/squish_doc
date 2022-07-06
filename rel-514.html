@@ -1,0 +1,87 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<!-- Mirrored from rel-514.html by HTTrack Website Copier/3.x [XR&CO'2013], Wed, 06 Jul 2022 13:29:03 GMT -->
+<head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><title>2.31. Version 5.1.4</title><link rel="stylesheet" href="manual.css" type="text/css"></link><meta name="generator" content="DocBook XSL Stylesheets V1.73.2"></meta><link rel="start" href="index-noframes.html" title="Squish Manual"></link><link rel="up" href="relnotes.html" title="Chapter 2. Release Notes—for Upgraders"></link><link rel="prev" href="rel-515.html" title="2.30. Version 5.1.5"></link><link rel="next" href="rel-513.html" title="2.32. Version 5.1.3"></link><style xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" type="text/css" media="screen">
+        div.toc * { margin-left: 6px; margin-right: auto; max-width: 75em; }
+        div.toc span { margin-left: 0px; }
+        * { margin-left: auto; margin-right: auto; max-width: 75em; }
+        body { margin-left: 6px; margin-right: 6px; }
+        table th { padding: .5ex }
+        table td { padding: .5ex }
+    </style><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format">
+        function keyPress() {
+            var e = window.event;
+            if ( e == undefined ) {
+                return;
+            }
+            /* ### does not properly scroll, yet
+            if ( e.keyCode == 32 ) {
+            var l = document.links;
+            for ( var i = 0; i < l.length; i++ ) {
+                if ( l[i].innerText == "Next" ) {
+                location.href = l[i].href;
+                }
+            }
+            } else
+                */
+                if ( e.keyCode == 0x08 ) {
+            var l = document.links;
+            for ( var i = 0; i < l.length; i++ ) {
+                if ( l[i].innerText == "Prev" ) {
+                location.href = l[i].href;
+                }
+            }
+            }
+        }
+        document.onkeypress = keyPress;
+    </script></head><body><div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="rel-514"></a>2.31. Version 5.1.4</h2></div></div></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><span class="section"><a href="rel-514.html#idp35503896">2.31.1. Windows-specific</a></span></dt><dt><span class="section"><a href="rel-514.html#idp35513280">2.31.2. iOS-specific</a></span></dt><dt><span class="section"><a href="rel-514.html#idp35514528">2.31.3. Web-specific</a></span></dt><dt><span class="section"><a href="rel-514.html#idp35521448">2.31.4. Flex-specific</a></span></dt><dt><span class="section"><a href="rel-514.html#idp35522712">2.31.5. Qt-specific</a></span></dt></dl></div><p><span class="emphasis"><em>Squish</em></span> 5.1.4 is a maintenance release that provides updates of
+the Windows, iOS, Web and Flex editions. In addition, licensees of the
+Qt edition will receive access to an updated source package for builds
+against Qt 5.5 Alpha.</p><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="idp35503896"></a>2.31.1. Windows-specific</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Introduce new 'column' property for TableColumn
+objects. Fixed row index to start counting from 1 instead of
+0.</p></li><li><p>Support comboboxes within .NET
+DataGridViews.</p></li><li><p>Default to using primary mouse button instead of left
+mouse button to do the right thing for both right-handed and
+left-handed mouse setups. The <code class="code">Respect Swapped Mouse Buttons</code>
+entry in <code class="filename">SQUISH_DIR/etc/winwrapper.ini</code> can be used
+to revert to the old behavior if needed.</p></li><li><p>Reuse existing Object Map names when picking
+objects.</p></li><li><p>Fixed geometry detection of Windows Forms Splitter
+controls for picking, record and replay.</p></li><li><p>Have startwinaut deal more friendly with sub-processes
+started by the application.</p></li><li><p>Fixed bogus cell texts in Table VPs for scrolled-off
+<acronym class="acronym">WPF</acronym> DataGrid cells.</p></li><li><p>Support complex tree items in <acronym class="acronym">.NET</acronym>
+Telerik controls.</p></li><li><p>Fixed calling <code class="code">setValue()</code>
+on <acronym class="acronym">MFC</acronym> slider controls.</p></li><li><p>Fixed hit test for MFC TreeView items used in 64-bit
+applications.</p></li><li><p>Fixed automation of sub-processes of attached
+applications.</p></li><li><p>Fixed handling of <code class="code">TextBlock</code> elements
+in <acronym class="acronym">WPF</acronym> ListViews</p></li><li><p>Expose <code class="code">name</code> property on UI Automation
+<code class="code">Edit</code> controls.</p></li><li><p>Fixed attaching to an application with an embedded
+Internet Explorer control multiple times.</p></li><li><p>Let UI Automation access to ComboBox controls expose
+both <code class="code">name</code> and <code class="code">text</code>
+properties.</p></li><li><p>Fixed Windows resource (<acronym class="acronym">GDI</acronym> handle)
+leak impacting long running tests.</p></li><li><p>Fixed crash occurring when accessing Windows system
+tray icons.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="idp35513280"></a>2.31.2. iOS-specific</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Fixed crashes when recording and replaying tests on
+ARM64 hardware.</p></li><li><p>Added support for testing 64-bit Apps in the iOS
+Simulator.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="idp35514528"></a>2.31.3. Web-specific</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>More robust recording of
+SmartGWT <code class="code">SelectItem</code> elements.</p></li><li><p>Do not clear Chrome history between runs. Information
+about accepted https certificates will be lost
+otherwise.</p></li><li><p>Avoid Firefox settings getting lost in case record or
+replay is aborted.</p></li><li><p>Enable testing with Firefox for sites using
+the <code class="code">Content-Security-Policy</code> HTTP
+header. </p></li><li><p>Improved handling of <code class="code">ButtonItem</code> controls
+with buggy SmartClient versions.</p></li><li><p>Support access to <code class="code">IFRAME</code> elements from
+other origins when testing with Chrome.</p></li><li><p>Suppress Chromes 'First Run' and other interactive
+checks that can interrupted an automated tests.</p></li><li><p>Disable Chrome's automated data syncing with Google
+servers.</p></li><li><p>Do not store test-passwords in Chromes permanent
+password store.</p></li><li><p>Added support for HTML 5 input fields of
+type <code class="code">number</code>, <code class="code">url</code>
+and <code class="code">tel.</code></p></li><li><p>Avoid crash when accessing a connection to a browser
+(or document) is lost for some reason.</p></li><li><p>Fix clicking buttons and possibly other SmartGWT
+objects in IE9 standard mode.</p></li><li><p>Fixed <code class="code">clickItem()</code> calls on checkboxes in
+SmartGWT 5.0</p></li><li><p>Fixed input field type determination for IE in Quirks
+mode.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="idp35521448"></a>2.31.4. Flex-specific</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Fixed cleanup of multiple Flex applications running in
+the browser at the same time.</p></li><li><p>Fixed handling of non-connected Flex
+applications.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="idp35522712"></a>2.31.5. Qt-specific</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>New set of source packages for builds of the Qt
+Wrapper against Qt 5.5 Alpha. Binary packages will be made available
+once the final version of Qt 5.5 has been released.</p></li></ul></div></div></div><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" type="text/javascript" src="ScriptingLanguage.js"></script><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format">setScriptingLanguage();</script><div class="navfooter"><hr></hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="rel-515.html">Prev</a> </td><td width="20%" align="center"><a accesskey="u" href="relnotes.html">Up</a></td><td width="40%" align="right"> <a accesskey="n" href="rel-513.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">2.30. Version 5.1.5 </td><td width="20%" align="center"><a accesskey="h" href="index-noframes.html">Home</a></td><td width="40%" align="right" valign="top"> 2.32. Version 5.1.3</td></tr></table></div></body>
+<!-- Mirrored from rel-514.html by HTTrack Website Copier/3.x [XR&CO'2013], Wed, 06 Jul 2022 13:29:03 GMT -->
+</html>

@@ -1,0 +1,1037 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<!-- Mirrored from api.fmi.interface.html by HTTrack Website Copier/3.x [XR&CO'2013], Wed, 06 Jul 2022 13:29:00 GMT -->
+<head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><title>6.20. FMI Interface support</title><link rel="stylesheet" href="manual.css" type="text/css"></link><meta name="generator" content="DocBook XSL Stylesheets V1.73.2"></meta><link rel="start" href="https://index-noframes.html" title="Squish Manual"></link><link rel="up" href="https://api.man.html" title="Chapter 6. API Reference Manual"></link><link rel="prev" href="https://api.bdt.functions.html" title="6.19. Behavior Driven Testing"></link><link rel="next" href="https://api.can.interface.html" title="6.21. CAN bus support"></link><style xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" type="text/css" media="screen">
+        div.toc * { margin-left: 6px; margin-right: auto; max-width: 75em; }
+        div.toc span { margin-left: 0px; }
+        * { margin-left: auto; margin-right: auto; max-width: 75em; }
+        body { margin-left: 6px; margin-right: 6px; }
+        table th { padding: .5ex }
+        table td { padding: .5ex }
+    </style><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format">
+        function keyPress() {
+            var e = window.event;
+            if ( e == undefined ) {
+                return;
+            }
+            /* ### does not properly scroll, yet
+            if ( e.keyCode == 32 ) {
+            var l = document.links;
+            for ( var i = 0; i < l.length; i++ ) {
+                if ( l[i].innerText == "Next" ) {
+                location.href = l[i].href;
+                }
+            }
+            } else
+                */
+                if ( e.keyCode == 0x08 ) {
+            var l = document.links;
+            for ( var i = 0; i < l.length; i++ ) {
+                if ( l[i].innerText == "Prev" ) {
+                location.href = l[i].href;
+                }
+            }
+            }
+        }
+        document.onkeypress = keyPress;
+    </script></head><body><div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="api.fmi.interface"></a>6.20. FMI Interface support</h2></div></div></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><span class="section"><a href="https://api.fmi.interface.html#api.fmi.overview">6.20.1. FMI Overview </a></span></dt><dt><span class="section"><a href="https://api.fmi.interface.html#api.fmi.import">6.20.2. Fmi2Import class</a></span></dt><dt><span class="section"><a href="https://api.fmi.interface.html#api.fmi.variable">6.20.3. Fmi2Variable class</a></span></dt><dt><span class="section"><a href="https://api.fmi.interface.html#api.fmi.type">6.20.4. Fmi2Type class</a></span></dt><dt><span class="section"><a href="https://api.fmi.interface.html#api.fmi.unit">6.20.5. Fmi2Unit class</a></span></dt><dt><span class="section"><a href="https://api.fmi.interface.html#api.fmi.state">6.20.6. Fmi2State class</a></span></dt><dt><span class="section"><a href="https://api.fmi.interface.html#api.fmi.examples">6.20.7. Examples</a></span></dt></dl></div><p>
+Applications that communicate with external devices are inherently difficult to
+test in isolation. A large number of simulation tools is available, that allow
+interfacing such applications with a simulated device. This enables application
+development, testing and evaluation in absence of an actual device. In addition
+simulation can easily provide information on current device state, and simulate
+conditions that are rare and difficult to achieve on request in a physical
+device (ie. specific malfunctions). Squish supports communication to such tools
+using the FMI interface.
+</p><p>
+The Functional Mockup Interface is an industry standard for model exchange and
+co-simulation of dynamic models. It describes interface between exporters and
+importers of simulation units called Functional Mockup Units (FMUs). Squish
+has the capability to import FMUs that support FMI 2.0 CoSimulation mode. As an
+FMU importer, <span class="emphasis"><em>Squish</em></span> has access to all variables exposed by a FMU, and is
+responsible for driving the simulation process. The following section introduces
+APIs that <span class="emphasis"><em>Squish</em></span> provides to import and execute FMUs.
+</p><p>
+Full FMI 2.0 specification text can be obtained at
+<a class="ulink" href="https://www.fmi-standard.org/" target="_blank">https://www.fmi-standard.org</a>.
+Squish support of FMI interface is based upon
+<a class="ulink" href="http://www.jmodelica.org/FMILibrary" target="_blank">the FMI library</a> from
+the JModelica platform.
+</p><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="api.fmi.overview"></a>6.20.1. FMI Overview </h3></div></div></div><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Note"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/note.png"></img></td><th align="left">Note</th></tr><tr><td align="left" valign="top"><p>
+The interface described here is not considered the final version. The details of
+the described API can change in the release version of the feature.
+</p></td></tr></table></div><p>
+The FMI standard specifies that a FMU can contain either compiled executable
+code in form of a platform-specific shared object file, or a set of source code
+files that can be compiled by an FMI importer. <span class="emphasis"><em>Squish</em></span> supports only the
+former.
+</p><p>
+It is not recommended to load a FMU in the same context as the AUT. In order to
+separate the FMU from any other processes <span class="emphasis"><em>Squish</em></span> provides a utility
+executable <code class="code">fmiutil</code>.  FMI functionality is available only in the
+application context of the <code class="code">fmiutil</code> tool. It is located in <span class="emphasis"><em>Squish</em></span>
+binary installation directory. In order to launch <code class="code">fmiutil</code>, the
+<a class="xref" href="https://api.fmi.interface.html#startFMI-function"><code class="function">startFMI</code></a> function can be used.
+</p><div class="funcsynopsis"><a id="startFMI-function"></a><p><code class="funcdef">ApplicationContext <b class="fsfunc">startFMI</b>(</code><code>)</code>;</p></div><div class="funcsynopsis"><p><code class="funcdef">ApplicationContext <b class="fsfunc">startFMI</b>(</code><var class="pdparam">host</var><code>)</code>;</p></div><div class="funcsynopsis"><p><code class="funcdef">ApplicationContext <b class="fsfunc">startFMI</b>(</code><var class="pdparam">host</var>, <var class="pdparam">port</var><code>)</code>;</p></div><div class="funcsynopsis"><p><code class="funcdef">ApplicationContext <b class="fsfunc">startFMI</b>(</code><var class="pdparam">host</var>, <var class="pdparam">port</var>, <var class="pdparam">timeoutSecs</var><code>)</code>;</p></div><p>
+Starts a new <code class="code">fmiutil</code> instance and returns a handle to its
+application context.
+</p><p>
+Optionally, as first and second parameters a <em class="parameter"><code>host</code></em>
+and <em class="parameter"><code>port</code></em> can be specified. If these parameters
+are used, instead of connecting to the default host and port (as
+specified in the <span class="application">Squish IDE</span>'s settings or on <span class="application">squishrunner</span>'s command line), a
+connection to the <span class="application">squishserver</span> on the specified host and listening to
+the specified port will be established.
+</p><p>
+The third parameter, <em class="parameter"><code>timeoutSecs</code></em> (an integer
+number of seconds) can also be specified. This tells <span class="emphasis"><em>Squish</em></span> how long it
+should be prepared to wait for the application to start before throwing
+an error. If specified, this value overrides <span class="application">squishrunner</span>'s default
+AUT timeout. If not specified the
+<span class="application">squishserver</span>'s default is used—this is 20 seconds, unless it has
+been changed; see <a class="xref" href="https://ide.dialogs.html#ide.squish.server.settings.dialog" title="8.3.22. Squish Server Settings dialog">Squish Server Settings dialog (Section 8.3.22)</a>.
+</p><p>
+If you want to specify a timeout, but don't want to change the host or
+port, you can do so by passing an empty string as the host (which will
+make <span class="emphasis"><em>Squish</em></span> use the configured host—<code class="code">localhost</code> by
+default), and by passing -1 as the port.
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="api.fmi.import"></a>6.20.2. Fmi2Import class</h3></div></div></div><p>
+The <code class="classname">Fmi2Import</code> class is the core of the <span class="emphasis"><em>Squish</em></span> FMI
+Interface support. It represents an FMU imported by <span class="emphasis"><em>Squish</em></span>.
+</p><div class="funcsynopsis"><a id="Fmi2Import.create-function"></a><p><code class="funcdef">Fmi2Import <b class="fsfunc">Fmi2Import.create</b>(</code><var class="pdparam">filename</var>, <var class="pdparam">workingDirectory</var><code>)</code>;</p><p><code class="funcdef">Fmi2Import <b class="fsfunc">Fmi2Import.create</b>(</code><var class="pdparam">filename</var><code>)</code>;</p></div><p>
+This static method opens a specified FMU using the specified directory as a
+working directory, and returns a <code class="classname">Fmi2Import</code> object. If
+<code class="code">workingDirectory</code> is not specified, a temporary directory is created
+in %TEMP% directory on each invocation of the method.
+</p><a id="Fmi2Import.lastError"></a>
+<span class="property">Fmi2Import.lastError</span><p>
+This read-only property holds a string describing the last error a FMU has
+encountered. It is set by <code class="classname">Fmi2Import</code> methods when
+returning an error.
+</p><a id="Fmi2Import.name"></a>
+<span class="property">Fmi2Import.name</span><a id="Fmi2Import.identifierME"></a>
+<span class="property">Fmi2Import.identifierME</span><a id="Fmi2Import.identifierCS"></a>
+<span class="property">Fmi2Import.identifierCS</span><a id="Fmi2Import.guid"></a>
+<span class="property">Fmi2Import.guid</span><a id="Fmi2Import.description"></a>
+<span class="property">Fmi2Import.description</span><a id="Fmi2Import.author"></a>
+<span class="property">Fmi2Import.author</span><a id="Fmi2Import.copyright"></a>
+<span class="property">Fmi2Import.copyright</span><a id="Fmi2Import.license"></a>
+<span class="property">Fmi2Import.license</span><a id="Fmi2Import.version"></a>
+<span class="property">Fmi2Import.version</span><a id="Fmi2Import.standardVersion"></a>
+<span class="property">Fmi2Import.standardVersion</span><a id="Fmi2Import.generationTool"></a>
+<span class="property">Fmi2Import.generationTool</span><a id="Fmi2Import.generationDate"></a>
+<span class="property">Fmi2Import.generationDate</span><a id="Fmi2Import.namingConvetion"></a>
+<span class="property">Fmi2Import.namingConvetion</span><a id="Fmi2Import.continuousStates"></a>
+<span class="property">Fmi2Import.continuousStates</span><a id="Fmi2Import.eventIndicators"></a>
+<span class="property">Fmi2Import.eventIndicators</span><a id="Fmi2Import.defaultExperimentStart"></a>
+<span class="property">Fmi2Import.defaultExperimentStart</span><a id="Fmi2Import.defaultExperimentStop"></a>
+<span class="property">Fmi2Import.defaultExperimentStop</span><a id="Fmi2Import.defaultExperimentTolerance"></a>
+<span class="property">Fmi2Import.defaultExperimentTolerance</span><a id="Fmi2Import.defaultExperimentStep"></a>
+<span class="property">Fmi2Import.defaultExperimentStep</span><p>
+These read-only properties hold meatadata for a FMU object as specified
+by FMI 2.0 standard.
+</p><a id="Fmi2Import.fmuKind"></a>
+<span class="property">Fmi2Import.fmuKind</span><p>
+This read-only property holds a value that indicates the FMI modes supported by
+a FMU. It can be one of:
+</p><div class="itemizedlist"><ul type="disc" compact><li><p><code class="code">Fmi2Import.KindUnknown</code>
+    — An unknkown FMU kind</p></li><li><p><code class="code">Fmi2Import.KindME</code>
+    — A FMU that supports only ModelExchange mode</p></li><li><p><code class="code">Fmi2Import.KindCS</code>
+    — A FMU that supports only CoSimulation mode</p></li><li><p><code class="code">Fmi2Import.KindMECS</code>
+    — A FMU that supports both ModelExchange and CoSimulation mode
+    </p></li></ul></div><a id="Fmi2Import.state"></a>
+<span class="property">Fmi2Import.state</span><p>
+This read-only property holds the current state of a FMU. It can be one of:
+</p><div class="itemizedlist"><ul type="disc" compact><li><p><code class="code">Fmi2Import.Preloaded</code> — The XML file describing the
+    FMU was parsed, but binary model executable was not loaded yet.</p></li><li><p><code class="code">Fmi2Import.Instantiated</code> — The binary model
+    executable was successfully loaded and the model was instantiated.</p></li><li><p><code class="code">Fmi2Import.Init</code> — The FMU has entered the
+    initialization mode.</p></li><li><p><code class="code">Fmi2Import.Event</code> — The FMU is in event state. This
+    state is only available for ModelExchange FMUs.</p></li><li><p><code class="code">Fmi2Import.Continous</code> — The FMU is in continous
+    state. This state is only available for ModelExchange FMUs.</p></li><li><p><code class="code">Fmi2Import.StepComplete</code> — The last simulation step
+    was successfully completed. This state is only available for CoSimulation
+    FMUs.</p></li><li><p><code class="code">Fmi2Import.StepFailed</code> — The last simulation step
+    has failed. This state is only available for CoSimulation FMUs.</p></li><li><p><code class="code">Fmi2Import.Terminated</code> — The simulation process was
+    terminated.</p></li><li><p><code class="code">Fmi2Import.Error</code> — A simulation error has occured.
+    The simulation should be either terminated or restored to a prevoiously
+    saved state.</p></li><li><p><code class="code">Fmi2Import.Fatal</code> — A fatal error has occured within
+    the FMU. The FMU should be abandoned in its current state.</p></li></ul></div><a id="Fmi2Import.type"></a>
+<span class="property">Fmi2Import.type</span><p>
+Read-only property that describes the type of the FMU that was instantiated. The
+value of this property before the FMU is instantiated is indeterminate. It can
+be one of:
+</p><div class="itemizedlist"><ul type="disc" compact><li><p><code class="code">Fmi2Import.TypeME</code> — The FMU was instantiated in
+    ModelExchange mode.</p></li><li><p><code class="code">Fmi2Import.TypeCS</code> — The FMU was instantiated in
+    CoSimulation mode.</p></li></ul></div><a id="Fmi2Import.time"></a>
+<span class="property">Fmi2Import.time</span><p>
+This read-only property holds the current simulation time of the FMU.
+</p><a id="Fmi2Import.typesPlatform"></a>
+<span class="property">Fmi2Import.typesPlatform</span><p>
+This read-only property holds a string identifier that corresponds to
+a basic set of primitive types that are used on the current platform by FMI
+applications. Attempts to use a FMU that was compiled with different
+<span class="property">typesPlatform</span> than the one used to compile <span class="emphasis"><em>Squish</em></span> will
+cause an error, as mandated by the FMI 2.0 standard.
+</p><a id="Fmi2Import.types"></a>
+<span class="property">Fmi2Import.types</span><p>
+This read-only property holds an array of Fmi2Type objects that describe type
+definitions for a FMU.
+</p><a id="Fmi2Import.units"></a>
+<span class="property">Fmi2Import.units</span><p>
+This read-only property holds an array of <code class="classname">Fmi2Unit</code>
+objects that describe units used by a FMU.
+</p><a id="Fmi2Import.variables"></a>
+<span class="property">Fmi2Import.variables</span><p>
+This read-only property holds an array of <code class="classname">Fmi2Variable</code>
+objects that describe variables used by a FMU.
+</p><a id="Fmi2Import.vendors"></a>
+<span class="property">Fmi2Import.vendors</span><p>
+This read-only property holds an array of strings - each describing a software
+vendor that contributed to the loaded FMU.
+</p><a id="Fmi2Import.logCategories"></a>
+<span class="property">Fmi2Import.logCategories</span><p>
+This read-only property holds an array of string identifiers describing log
+categories that a FMU uses.
+</p><a id="Fmi2Import.logCategoriesDescriptions"></a>
+<span class="property">Fmi2Import.logCategoriesDescriptions</span><p>
+This read-only property holds an array of string descriptions for log categories
+that a FMU uses.
+</p><a id="Fmi2Import.sourceFilesME"></a>
+<span class="property">Fmi2Import.sourceFilesME</span><p>
+This read-only property holds an array of file names. If a FMU delivers source
+code for a ModelExchange binary, this array contains the names of those source
+files.
+</p><a id="Fmi2Import.sourceFilesCS"></a>
+<span class="property">Fmi2Import.sourceFilesCS</span><p>
+This read-only property holds an array of file names. If a FMU delivers source
+code for a CoSimulation binary, this array contains the names of those source
+files.
+</p><a id="Fmi2Import.outputs"></a>
+<span class="property">Fmi2Import.outputs</span><p>
+This read-only property holds a <code class="classname">Fmi2VariableArray</code> object
+that lists output variables defined for a FMU.
+</p><a id="Fmi2Import.derivatives"></a>
+<span class="property">Fmi2Import.derivatives</span><p>
+This read-only property holds a <code class="classname">Fmi2VariableArray</code> object
+that lists derivative variables defined for a FMU.
+</p><a id="Fmi2Import.discreteStates"></a>
+<span class="property">Fmi2Import.discreteStates</span><p>
+This read-only property holds a <code class="classname">Fmi2VariableArray</code> object
+that lists discrete-state variables defined for a FMU.
+</p><a id="Fmi2Import.initialUnknowns"></a>
+Fmi2Import <span class="property">initialUnknowns</span><p>
+This read-only property holds a <code class="classname">Fmi2VariableArray</code> object
+that lists variables of initially unknown value defined for a FMU.
+</p><div class="funcsynopsis"><p><code class="funcdef"><b class="fsfunc">Fmi2Import.instantiate</b>(</code><var class="pdparam">name</var>, <var class="pdparam">type</var>, <var class="pdparam">visible</var><code>)</code>;</p></div><p>
+This method loads the dynamic library bundled with the FMU and instantiates a
+FMU object. <em class="parameter"><code>type</code></em> must be either
+<code class="code">Fmi2Import.TypeME</code> or <code class="code">Fmi2Import.TypeCS</code>. The Chosen
+type must be supported by FMU as indicated by the
+<a class="xref" href="https://api.fmi.interface.html#Fmi2Import.fmuKind">Fmi2Import.fmuKind</a> property. The default value for this
+parameter is <code class="code">Fmi2Import.TypeCS</code> if supported by the FMU, and
+<code class="code">Fmi2Import.TypeME</code> otherwise.
+<em class="parameter"><code>name</code></em> should be a short string. It is used in error
+messages as model identifier. Default value for this parameter is the value of
+the <a class="xref" href="https://api.fmi.interface.html#Fmi2Import.name">Fmi2Import.name</a> property.
+<em class="parameter"><code>visible</code></em> should be a boolean value. In case the FMU shows
+its own GUI - either directly or by an external and possibly pre-existing
+application - this parameter indicates whether such GUI should be brought to the
+foreground immediately. If the FMU shows no GUI of any kind, this parameter is
+ignored.
+</p><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Note"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/note.png"></img></td><th align="left">Note</th></tr><tr><td align="left" valign="top"><p>
+In case any non-static method of a <code class="classname">Fmi2Import</code> object
+is called, this method is called implicitly with default parameter values.
+</p></td></tr></table></div><div class="funcsynopsis"><p><code class="funcdef"><b class="fsfunc">Fmi2Import.setupExperiment</b>(</code><var class="pdparam">startTime</var>, <var class="pdparam">stopTime</var>, <var class="pdparam">tolerance</var><code>)</code>;</p></div><p>
+This method informs a FMU to setup the experiment and causes the FMU to enter
+the initialization mode. This method requires the FMU to be instantiated. If this
+method is called after the initialization mode has been entered, an error is
+reported. Default values for parameters are
+<a class="xref" href="https://api.fmi.interface.html#Fmi2Import.defaultExperimentStart">Fmi2Import.defaultExperimentStart</a>,
+<a class="xref" href="https://api.fmi.interface.html#Fmi2Import.defaultExperimentStop">Fmi2Import.defaultExperimentStop</a> and
+<a class="xref" href="https://api.fmi.interface.html#Fmi2Import.defaultExperimentTolerance">Fmi2Import.defaultExperimentTolerance</a> respectively.
+</p><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Note"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/note.png"></img></td><th align="left">Note</th></tr><tr><td align="left" valign="top"><p>
+In case any method of a <code class="classname">Fmi2Import</code> object that requires it to set-up is called,
+this method is called implicitly with default parameter values.
+</p></td></tr></table></div><div class="funcsynopsis"><p><code class="funcdef"><b class="fsfunc">Fmi2Import.exitInitializationMode</b>(</code><code>)</code>;</p></div><p>
+This method causes a FMU to exit initialization mode and enter
+<code class="code">Fmi2Import.StepComplete</code> (for CoSimulation FMUs) or
+<code class="code">Fmi2Import.Event</code> (for ModelExchange FMUs) state. This method
+requires FMU to be in the initialization state.
+</p><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Note"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/note.png"></img></td><th align="left">Note</th></tr><tr><td align="left" valign="top"><p>
+In case any method of a <code class="classname">Fmi2Import</code> object that requires it to initialized is
+called, this method is called implicitly.
+</p></td></tr></table></div><div class="funcsynopsis"><a id="Fmi2Import.getCapability-function"></a><p><code class="funcdef"><b class="fsfunc">Fmi2Import.getCapability</b>(</code><var class="pdparam">capability</var><code>)</code>;</p></div><p>
+This method returns an integer that describes the requested
+<em class="parameter"><code>capability</code></em> of a FMU. <em class="parameter"><code>capablity</code></em> can
+be one of:
+</p><div class="itemizedlist"><ul type="disc" compact><li><p><code class="code">Fmi2Import.ME_needsExecutionTool</code> — If the value of
+    this capability is 1, the FMU doesn't contain the full ModelExchange model
+    implementation and requires additional software to be available.</p></li><li><p><code class="code">Fmi2Import.ME_canBeInstantiatedOnlyOncePerProcess</code> —
+    If the value of this capability is 1, the FMU can only be instantiated once
+    in ModelExchange mode.
+    This has only informational value, as <span class="emphasis"><em>Squish</em></span> allows only a single instance
+    of any FMU.</p></li><li><p><code class="code">Fmi2Import.ME_canGetAndSetFMUstate</code> — If the value
+    of this capability is 1, the ModelExchange FMU can utilize
+    <a class="xref" href="https://api.fmi.interface.html#Fmi2Import.getState-function"><code class="function">Fmi2Import.getState</code></a> and
+    <a class="xref" href="https://api.fmi.interface.html#Fmi2Import.setState-function"><code class="function">Fmi2Import.setState</code></a> in order to save and restore the
+    current FMU state.</p></li><li><p><code class="code">Fmi2Import.ME_canSerializeFMUstate</code> —  If the value
+    of this capability is 1, the ModelExchange FMU state can be serialized.
+    </p></li><li><p><code class="code">Fmi2Import.CS_needsExecutionTool</code> — If the value of
+    this capability is 1, the FMU doesn't contain the full CoSimulation model
+    implementation and requires additional software to be available.</p></li><li><p><code class="code">Fmi2Import.CS_canHandleVariableCommunicationStepSize</code>
+    — If the value of this capability is 0, using different step size
+    values with a CoSimulation FMU may cause an error.</p></li><li><p><code class="code">Fmi2Import.CS_canBeInstantiatedOnlyOncePerProcess</code> —
+    If the value of this capability is 1, the FMU can only be instantiated once
+    in CoSimulation mode.
+    This has only informational value, as <span class="emphasis"><em>Squish</em></span> allows only a single instance
+    of any FMU.</p></li><li><p><code class="code">Fmi2Import.CS_canGetAndSetFMUstate</code> — If the value
+    of this capability is 1, the CoSimulation FMU can utilize
+    <a class="xref" href="https://api.fmi.interface.html#Fmi2Import.getState-function"><code class="function">Fmi2Import.getState</code></a> and
+    <a class="xref" href="https://api.fmi.interface.html#Fmi2Import.setState-function"><code class="function">Fmi2Import.setState</code></a> in order to save and restore the
+    current FMU state.</p></li><li><p><code class="code">Fmi2Import.CS_canSerializeFMUstate</code> —  If the value
+    of this capability is 1, the CoSimulation FMU state can be serialized.
+    </p></li></ul></div><div class="funcsynopsis"><p><code class="funcdef"><b class="fsfunc">Fmi2Import.getAliasBase</b>(</code><var class="pdparam">var</var><code>)</code>;</p></div><p>
+If <em class="parameter"><code>var</code></em> is an alias variable, it returns the non-alias
+variable that <em class="parameter"><code>var</code></em> aliases. If <em class="parameter"><code>var</code></em>
+is a non-alias variable, it returns <em class="parameter"><code>var</code></em>.
+</p><div class="funcsynopsis"><p><code class="funcdef"><b class="fsfunc">Fmi2Import.getAliases</b>(</code><var class="pdparam">var</var><code>)</code>;</p></div><p>
+This method returns a <code class="classname">Fmi2VariableArray</code> object that contains all known
+aliases for the <em class="parameter"><code>var</code></em> variable. The array includes the base
+(non-alias) variable.
+</p><div class="funcsynopsis"><p><code class="funcdef"><b class="fsfunc">Fmi2Import.getVariable</b>(</code><var class="pdparam">name</var><code>)</code>;</p></div><p>
+This method returns a Fmi2Variable object that describes a variable of a given
+<em class="parameter"><code>name</code></em>. If no variable named <em class="parameter"><code>name</code></em> is
+found in a FMU, an error is reported.
+</p><div class="funcsynopsis"><p><code class="funcdef"><b class="fsfunc">Fmi2Import.getVariables</b>(</code><var class="pdparam">names</var><code>)</code>;</p></div><p>
+This method returns a <code class="classname">Fmi2VariableArray</code> object that contains variables of the
+names in <em class="parameter"><code>names</code></em> array. If any of the names in the
+<em class="parameter"><code>names</code></em> array is not found in a FMU, an error is reported.
+</p><div class="funcsynopsis"><p><code class="funcdef"><b class="fsfunc">Fmi2Import.getVariableByName</b>(</code><var class="pdparam">name</var><code>)</code>;</p></div><p>
+This method returns a <code class="classname">Fmi2Variable</code> object that describes a variable of a given
+<em class="parameter"><code>name</code></em>. If no variable named <em class="parameter"><code>name</code></em> is
+found in a FMU, it returns <code class="code">null</code>.
+</p><div class="funcsynopsis"><p><code class="funcdef"><b class="fsfunc">Fmi2Import.getVariableByReference</b>(</code><var class="pdparam">vref</var><code>)</code>;</p></div><p>
+This method returns a <code class="classname">Fmi2Variable</code> object that describes a variable of a given
+<em class="parameter"><code>vref</code></em> variable reference. If no variable with
+<em class="parameter"><code>vref</code></em> variable reference is found in a FMU, it returns
+<code class="code">null</code>.
+</p><div class="funcsynopsis"><p><code class="funcdef"><b class="fsfunc">Fmi2Import.setDebugLogging</b>(</code><var class="pdparam">loggingOn</var>, <var class="pdparam">categories</var><code>)</code>;</p></div><p>
+This method sets debug logging on a FMU. If <em class="parameter"><code>loggingOn</code></em> is
+<code class="code">true</code>, logging is enabled. <em class="parameter"><code>categories</code></em> is an
+array that specifies which log categories are to be logged. Entries of this
+array can be any of the identifiers found in
+<a class="xref" href="https://api.fmi.interface.html#Fmi2Import.logCategories">Fmi2Import.logCategories</a> array.
+</p><div class="funcsynopsis"><p><code class="funcdef"><b class="fsfunc">Fmi2Import.setReal</b>(</code><var class="pdparam">variables</var>, <var class="pdparam">values</var><code>)</code>;</p></div><p>
+This method sets the values of the FMU variables to the specified values. It
+returns <code class="code">true</code> in case of success, or <code class="code">false</code> in case the
+values were rejected by FMU. This usually happens for numerical reasons: value
+outside bounds was set, integrator could not converge, etc.
+</p><p>
+<em class="parameter"><code>variables</code></em> should be a
+<code class="classname">Fmi2VariableArray</code> object or an array of either variable
+names or <a class="xref" href="https://api.fmi.interface.html#api.fmi.variable" title="6.20.3. Fmi2Variable class">Fmi2Variable class (Section 6.20.3)</a> objects. The
+specified variables must be exclusively real variables.
+<em class="parameter"><code>values</code></em> should be an array of numeric values for
+corresponding variables. The length of <em class="parameter"><code>variables</code></em> and
+<em class="parameter"><code>values</code></em> must be the same. This method requires the FMU to
+be instantiated.
+</p><div class="funcsynopsis"><p><code class="funcdef"><b class="fsfunc">Fmi2Import.setInteger</b>(</code><var class="pdparam">variables</var>, <var class="pdparam">values</var><code>)</code>;</p></div><p>
+This method sets the values of the FMU variables to the specified values. It
+returns <code class="code">true</code> in case of success, or <code class="code">false</code> in case the
+values were rejected by FMU. This usually happens for numerical reasons: value
+outside bounds was set, integrator could not converge, etc.
+</p><p>
+<em class="parameter"><code>variables</code></em> should be a Fmi2VariableArray object or an
+array of either variable names or <a class="xref" href="https://api.fmi.interface.html#api.fmi.variable" title="6.20.3. Fmi2Variable class">Fmi2Variable class (Section 6.20.3)</a> objects. The
+specified variables must be either integer or enumeration variables.
+<em class="parameter"><code>values</code></em> should be an array of numeric values for
+corresponding variables. The length of <em class="parameter"><code>variables</code></em> and
+<em class="parameter"><code>values</code></em> must be the same. This method requires the FMU to
+be instantiated.
+</p><div class="funcsynopsis"><p><code class="funcdef"><b class="fsfunc">Fmi2Import.setBoolean</b>(</code><var class="pdparam">variables</var>, <var class="pdparam">values</var><code>)</code>;</p></div><p>
+This method sets the values of the FMU variables to the specified values. It
+returns <code class="code">true</code> in case of success, or <code class="code">false</code> in case the
+values were rejected by FMU. This usually happens for numerical reasons: value
+outside bounds was set, integrator could not converge, etc.
+</p><p>
+<em class="parameter"><code>variables</code></em> should be a <code class="classname">Fmi2VariableArray</code> object or an
+array of either variable names or <a class="xref" href="https://api.fmi.interface.html#api.fmi.variable" title="6.20.3. Fmi2Variable class">Fmi2Variable class (Section 6.20.3)</a> objects. The
+specified variables must be exclusively boolean variables.
+<em class="parameter"><code>values</code></em> should be an array of boolean values for
+corresponding variables. The length of <em class="parameter"><code>variables</code></em> and
+<em class="parameter"><code>values</code></em> must be the same. This method requires the FMU to
+be instantiated.
+</p><div class="funcsynopsis"><p><code class="funcdef"><b class="fsfunc">Fmi2Import.setString</b>(</code><var class="pdparam">variables</var>, <var class="pdparam">values</var><code>)</code>;</p></div><p>
+This method sets the values of the FMU variables to the specified values. It
+returns <code class="code">true</code> in case of success, or <code class="code">false</code> in case the
+values were rejected by FMU. This usually happens for numerical reasons: value
+outside bounds was set, integrator could not converge, etc.
+</p><p>
+<em class="parameter"><code>variables</code></em> should be a <code class="classname">Fmi2VariableArray</code> object or an
+array of either variable names or <a class="xref" href="https://api.fmi.interface.html#api.fmi.variable" title="6.20.3. Fmi2Variable class">Fmi2Variable class (Section 6.20.3)</a> objects. The
+specified variables must be exclusively string variables.
+<em class="parameter"><code>values</code></em> should be an array of string values for
+corresponding variables. The length of <em class="parameter"><code>variables</code></em> and
+<em class="parameter"><code>values</code></em> must be the same. This method requires the FMU to
+be instantiated.
+</p><div class="funcsynopsis"><a id="Fmi2Import.setValue-function"></a><p><code class="funcdef"><b class="fsfunc">Fmi2Import.setValue</b>(</code><var class="pdparam">variables</var>, <var class="pdparam">values</var><code>)</code>;</p></div><p>
+This method sets the values of the FMU variables to the specified values. It
+returns <code class="code">true</code> in case of success, or <code class="code">false</code> in case the
+values were rejected by FMU. This usually happens for numerical reasons: value
+outside bounds was set, integrator could not converge, etc.
+</p><p>
+<em class="parameter"><code>variables</code></em> should be a <code class="classname">Fmi2VariableArray</code> object or an
+array of either variable names or <a class="xref" href="https://api.fmi.interface.html#api.fmi.variable" title="6.20.3. Fmi2Variable class">Fmi2Variable class (Section 6.20.3)</a> objects. The
+specified variables can be of any type.
+<em class="parameter"><code>values</code></em> should be an array of values for corresponding
+variables. The length of <em class="parameter"><code>variables</code></em> and
+<em class="parameter"><code>values</code></em> must be the same, and the types of values must
+match corresponding variable definition. This method requires the FMU to be
+instantiated.
+</p><div class="funcsynopsis"><p><code class="funcdef"><b class="fsfunc">Fmi2Import.getReal</b>(</code><var class="pdparam">variables</var><code>)</code>;</p></div><p>
+This method returns an array containing the values of specified FMU variables.
+<em class="parameter"><code>variables</code></em> should be an array of variable names, an array
+of <a class="xref" href="https://api.fmi.interface.html#api.fmi.variable" title="6.20.3. Fmi2Variable class">Fmi2Variable class (Section 6.20.3)</a> objects or a <code class="classname">Fmi2VariableArray</code> object. The
+specified variables must be exclusively real variables. This method requires
+the FMU to be set-up.
+</p><div class="funcsynopsis"><p><code class="funcdef"><b class="fsfunc">Fmi2Import.getInteger</b>(</code><var class="pdparam">variables</var><code>)</code>;</p></div><p>
+This method returns an array containing the values of specified FMU variables.
+<em class="parameter"><code>variables</code></em> should be an array of variable names, an array
+of <a class="xref" href="https://api.fmi.interface.html#api.fmi.variable" title="6.20.3. Fmi2Variable class">Fmi2Variable class (Section 6.20.3)</a> objects or a <code class="classname">Fmi2VariableArray</code> object. The
+specified variables must be either integer or enumeration variables. This method
+requires the FMU to be set-up.
+</p><div class="funcsynopsis"><p><code class="funcdef"><b class="fsfunc">Fmi2Import.getBoolean</b>(</code><var class="pdparam">variables</var><code>)</code>;</p></div><p>
+This method returns an array containing the values of specified FMU variables.
+<em class="parameter"><code>variables</code></em> should be an array of variable names, an array
+of <a class="xref" href="https://api.fmi.interface.html#api.fmi.variable" title="6.20.3. Fmi2Variable class">Fmi2Variable class (Section 6.20.3)</a> objects or a
+<code class="classname">Fmi2VariableArray</code> object. The
+specified variables must be exclusively boolean variables. This method requires
+the FMU to be set-up.
+</p><div class="funcsynopsis"><p><code class="funcdef"><b class="fsfunc">Fmi2Import.getString</b>(</code><var class="pdparam">variables</var><code>)</code>;</p></div><p>
+This method returns an array containing the values of specified FMU variables.
+<em class="parameter"><code>variables</code></em> should be an array of variable names, an array
+of <a class="xref" href="https://api.fmi.interface.html#api.fmi.variable" title="6.20.3. Fmi2Variable class">Fmi2Variable class (Section 6.20.3)</a> objects or a
+<code class="classname">Fmi2VariableArray</code> object. The
+specified variables must be exclusively string variables. This method requires
+the FMU to be set-up.
+</p><div class="funcsynopsis"><a id="Fmi2Import.getState-function"></a><p><code class="funcdef">Fmi2State <b class="fsfunc">Fmi2Import.getState</b>(</code><var class="pdparam"></var><code>)</code>;</p></div><p>
+This method returns a <code class="classname">Fmi2State</code> object that represents the current FMU state. It
+can be used as an argument to <a class="xref" href="https://api.fmi.interface.html#Fmi2Import.setState-function"><code class="function">Fmi2Import.setState</code></a> to restore
+an FMU from a previously saved state. This method requires a FMU to be
+instantiated.
+</p><div class="funcsynopsis"><a id="Fmi2Import.setState-function"></a><p><code class="funcdef"><b class="fsfunc">Fmi2Import.setState</b>(</code><var class="pdparam">state</var><code>)</code>;</p></div><p>
+This method restores the FMU state to state saved in
+<a class="xref" href="https://api.fmi.interface.html#api.fmi.state" title="6.20.6. Fmi2State class">Fmi2State class (Section 6.20.6)</a> object <code class="code">state</code>. This method requires a FMU
+to be instantiated.
+</p><div class="funcsynopsis"><p><code class="funcdef"><b class="fsfunc">Fmi2Import.terminate</b>(</code><var class="pdparam"></var><code>)</code>;</p></div><p>
+This method terminates the current simulation and changes the current FMU state
+to <code class="code">Fmi2Import.Terminated</code>. This method requires a FMU to be
+initialized, and not to be in <code class="code">Fmi2Import.Error</code> state.
+</p><div class="funcsynopsis"><p><code class="funcdef"><b class="fsfunc">Fmi2Import.reset</b>(</code><var class="pdparam"></var><code>)</code>;</p></div><p>
+This method restores a FMU to the <code class="code">Fmi2Import.Instantiated</code> state.
+This method requires a FMU to be instantiated.
+</p><div class="funcsynopsis"><p><code class="funcdef"><b class="fsfunc">Fmi2Import.doStep</b>(</code><var class="pdparam">stepSize</var>, <var class="pdparam">noPriorState</var><code>)</code>;</p></div><p>
+This method performs a simulation step in CoSimulation mode. It increases
+internal FMU simulation time <a class="xref" href="https://api.fmi.interface.html#Fmi2Import.time">Fmi2Import.time</a> by
+<code class="code">stepSize</code>. It returns <code class="code">true</code> if a simulation step was
+performed correctly, or <code class="code">false</code> if a simulation step could not be
+completed. This usually happens for numerical reasons; ie. internal FMU
+integrator did not converge. Returning to a previously saved state and retrying
+the simulation step with modified inputs may succeed. This method requires a FMU
+to be initialized.
+</p><p>
+An optional parameter <em class="parameter"><code>noPriorState</code></em> can be specified, it
+informs the
+FMU that it will no longer be restored to a state with time before current FMU
+time. It can be used by a FMU as hint to flush cache buffers. Default value for
+this parameter is <code class="code">true</code>.
+</p><div class="funcsynopsis"><a id="Fmi2Import.run-function"></a><p><code class="funcdef"><b class="fsfunc">Fmi2Import.run</b>(</code><var class="pdparam">runtime</var>, <var class="pdparam">stepSize</var>, <var class="pdparam">timeFactor</var><code>)</code>;</p></div><div class="funcsynopsis"><p><code class="funcdef"><b class="fsfunc">Fmi2Import.run</b>(</code><var class="pdparam">runtime</var>, <var class="pdparam">stepSize</var><code>)</code>;</p></div><p>
+This method performs a series of simulation steps of <code class="code">stepSize</code>. The
+simulation is continued until internal FMU time is increased by
+<code class="code">runtime</code> or until a simulation step could not be performed, in which
+case this method returns <code class="code">false</code>. This method requires a FMU to be
+initialized.
+</p><p>
+An optional argument <code class="code">timeFactor</code> controls speed at which simulation
+steps are performed. It provides the relation between the simulation time and
+the simulation execution time. For example if time factor equals
+<code class="code">0.5</code>, two seconds of simulation time should be excuted in one second
+of execution time. In case of simulation of real systems interacting with
+external software the <code class="code">timeFactor</code> of <code class="code">1</code> is probably most
+useful. Default value for this parameter is <code class="code">0</code> - simulation steps
+are performed as quickly as the environment and the FMU allows.
+</p><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Note"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/note.png"></img></td><th align="left">Note</th></tr><tr><td align="left" valign="top"><p>
+Squish cannot execute the simulation quicker than an FMU and execution
+environment allow. If the simulation runs slower than requested, consider increasing
+<span class="property">stepSize</span> to reduce FMU interaction frequency.
+</p></td></tr></table></div><div class="funcsynopsis"><a id="Fmi2Import.runDetached-function"></a><p><code class="funcdef"><b class="fsfunc">Fmi2Import.runDetached</b>(</code><var class="pdparam">stepSize</var>, <var class="pdparam">timeFactor</var><code>)</code>;</p></div><div class="funcsynopsis"><p><code class="funcdef"><b class="fsfunc">Fmi2Import.runDetached</b>(</code><var class="pdparam">stepSize</var><code>)</code>;</p></div><p>
+This method performs a series of simulation steps of <code class="code">stepSize</code> just
+as <a class="xref" href="https://api.fmi.interface.html#Fmi2Import.run-function"><code class="function">Fmi2Import.run</code></a>. The difference is, that this method returns
+immediateley and performs simulation in background, parallel to further test
+script execution. Any errors encountered during the simulation are reported by
+<a class="xref" href="https://api.fmi.interface.html#Fmi2Import.sync-function"><code class="function">Fmi2Import.sync</code></a> method.
+This method requires a FMU to be initialized.
+</p><div class="funcsynopsis"><a id="Fmi2Import.sync-function"></a><p><code class="funcdef"><b class="fsfunc">Fmi2Import.sync</b>(</code><var class="pdparam"></var><code>)</code>;</p></div><p>
+If FMU runs a detached simulation started by
+<a class="xref" href="https://api.fmi.interface.html#Fmi2Import.runDetached-function"><code class="function">Fmi2Import.runDetached</code></a> it waits until requested simulation
+steps are performed and returns <code class="code">false</code> if the simulation was
+interrupted prematurely. If any errors were encountered during the simulation,
+an exception is thrown.
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="api.fmi.variable"></a>6.20.3. Fmi2Variable class</h3></div></div></div><p>
+The <code class="classname">Fmi2Variable</code> class represents a variable exposed by a FMU.
+</p><a id="Fmi2Variable.name"></a>
+<span class="property">Fmi2Variable.name</span><p>
+This read-only property holds a variable name.
+</p><a id="Fmi2Variable.value"></a>
+<span class="property">Fmi2Variable.value</span><p>
+This property holds the current value of the variable. If a FMU is not ready to
+provide variable values (i.e. it wasn't fully initialized), the result is the
+default empty value - zero for numeric and enumeration types, <code class="code">false</code>
+for boolean variables and an empty string for string variables.
+</p><p>
+This property is read-only. In order to change values of input variables use
+<a class="xref" href="https://api.fmi.interface.html#Fmi2Import.setValue-function"><code class="function">Fmi2Import.setValue</code></a> or type-specific
+<code class="code">Fmi2Import.set*</code> methods.
+</p><a id="Fmi2Variable.description"></a>
+<span class="property">Fmi2Variable.description</span><p>
+This read-only property holds a human-readable variable description.
+</p><a id="Fmi2Variable.valueReference"></a>
+<span class="property">Fmi2Variable.valueReference</span><p>
+This read-only property holds the value reference for a variable. Value
+reference is an integer that is used internally by an FMU to identify the
+variable. Alias variables use the same valueReference as their base variable,
+and therefore always have the same value.
+</p><a id="Fmi2Variable.declaredType"></a>
+<span class="property">Fmi2Variable.declaredType</span><p>
+This read-only property holds an object of the <a class="xref" href="https://api.fmi.interface.html#api.fmi.type" title="6.20.4. Fmi2Type class">Fmi2Type class (Section 6.20.4)</a>
+type in case the variable has a declared type, <code class="code">null</code> otherwise.
+</p><a id="Fmi2Variable.baseType"></a>
+<span class="property">Fmi2Variable.baseType</span><p>
+This read-only property holds a value that describes the basic data type of a
+variable. It can be one of:
+</p><div class="itemizedlist"><ul type="disc" compact><li><p><code class="code">Fmi2Import.Real</code> — a real variable;</p></li><li><p><code class="code">Fmi2Import.Integer</code> — an integer variable;
+    </p></li><li><p><code class="code">Fmi2Import.Boolean</code> — a boolean variable;</p></li><li><p><code class="code">Fmi2Import.String</code> — a string variable;</p></li><li><p><code class="code">Fmi2Import.Enum</code> — an enumeration variable.
+    </p></li></ul></div><a id="Fmi2Variable.hasStart"></a>
+<span class="property">Fmi2Variable.hasStart</span><p>
+This read-only property holds a boolean that indicates whether a variable has a
+defined startup value.
+</p><a id="Fmi2Variable.variability"></a>
+<span class="property">Fmi2Variable.variability</span><p>
+This read-only property holds a value that describes when changes in value of
+a variable are allowed. It can be one of:
+</p><div class="itemizedlist"><ul type="disc" compact><li><p><code class="code">Fmi2Variable.Constant</code> — the value of a variable
+never changes;</p></li><li><p><code class="code">Fmi2Variable.Fixed</code> — the value of a variable
+remains constant after a FMU has been initialized.</p></li><li><p><code class="code">Fmi2Variable.Tunable</code> — The value cannot change
+between events (ModelExchange) or between simulation steps (CoSimulation);
+</p></li><li><p><code class="code">Fmi2Variable.Discrete</code> — The value cannot change
+between events (ModelExchange) or between simulation steps (CoSimulation);
+</p></li><li><p><code class="code">Fmi2Variable.Continuous</code> — no restrictions on value
+changes;</p></li><li><p><code class="code">Fmi2Variable.UnknownVariability</code> — unknown
+variablity.</p></li></ul></div><a id="Fmi2Variable.causality"></a>
+<span class="property">Fmi2Variable.causality</span><p>
+This read-only property indicates how the value for a variable is obtained.
+It can be one of:
+</p><div class="itemizedlist"><ul type="disc" compact><li><p><code class="code">Fmi2Variable.Parameter</code> — an independent parameter;
+can be set by a test script.</p></li><li><p><code class="code">Fmi2Variable.CalculatedParameter</code> — calculated
+within the FMU model during initialization or after a parameter is changed.
+</p></li><li><p><code class="code">Fmi2Variable.Input</code> — an input variable;
+can be set by a test script.</p></li><li><p><code class="code">Fmi2Variable.Output</code> — an output variable;
+</p></li><li><p><code class="code">Fmi2Variable.Local</code> — internal FMU variable;
+</p></li><li><p><code class="code">Fmi2Variable.Independent</code> — an independent variable
+for a simulation. All other variables are defined as functions of the
+independent variable. Default independent variable is 'time'. There can be at
+most one independent variable in a FMU;
+</p></li><li><p><code class="code">Fmi2Variable.UnknownCausaility</code> — unknown causality.
+</p></li></ul></div><a id="Fmi2Variable.initial"></a>
+<span class="property">Fmi2Variable.initial</span><p>
+This read-only property holds a value that indicates how the initial value for a
+variable is obtained. It can be one of:
+</p><div class="itemizedlist"><ul type="disc" compact><li><p><code class="code">Fmi2Variable.Exact</code> — a <code class="code">start</code> attribute
+is used as initial value;</p></li><li><p><code class="code">Fmi2Variable.Approx</code> — an initial value is computed
+iteratively. A <code class="code">start</code> attribute is used as initial value for
+computation;</p></li><li><p><code class="code">Fmi2Variable.Calculated</code> — an initial value is
+calculated from values of other variables during initialization.</p></li></ul></div><a id="Fmi2Variable.previous"></a>
+<span class="property">Fmi2Variable.previous</span><p>
+This read-only property holds a <code class="classname">Fmi2Variable</code> that holds
+the previous value of the variable, or <code class="code">null</code> if no such variable was defined.
+</p><a id="Fmi2Variable.isAlias"></a>
+<span class="property">Fmi2Variable.isAlias</span><p>
+This read-only property holds a boolean that is <code class="code">true</code> if the
+variable is an alias for another variable.
+</p><div class="funcsynopsis"><p><code class="funcdef">Fmi2RealVariable <b class="fsfunc">Fmi2Variable.asReal</b>(</code><var class="pdparam"></var><code>)</code>;</p></div><p>
+This method casts a variable to <code class="code">Fmi2RealVariable</code> object if its
+<code class="code">baseType</code> is <code class="code">Real</code>, or <code class="code">null</code> otherwise.
+</p><div class="funcsynopsis"><p><code class="funcdef">Fmi2IntegerVariable <b class="fsfunc">Fmi2Variable.asInteger</b>
+(</code><var class="pdparam"></var><code>)</code>;</p></div><p>
+This method casts a variable to <code class="code">Fmi2IntegerVariable</code> object if its
+<code class="code">baseType</code> is <code class="code">Integer</code>, or <code class="code">null</code> otherwise.
+</p><div class="funcsynopsis"><p><code class="funcdef">Fmi2EnumVariable <b class="fsfunc">Fmi2Variable.asEnum</b>(</code><var class="pdparam"></var><code>)</code>;</p></div><p>
+This method casts a variable to <code class="code">Fmi2EnumVariable</code> object if its
+<code class="code">baseType</code> is <code class="code">Enum</code>, or <code class="code">null</code> otherwise.
+</p><div class="funcsynopsis"><p><code class="funcdef">Fmi2StringVariable <b class="fsfunc">Fmi2Variable.asString</b>
+  (</code><var class="pdparam"></var><code>)</code>;</p></div><p>
+This method casts a variable to <code class="code">Fmi2StringVariable</code> object if its
+<code class="code">baseType</code> is <code class="code">String</code>, or <code class="code">null</code> otherwise.
+</p><div class="funcsynopsis"><p><code class="funcdef">Fmi2BooleanVariable <b class="fsfunc">Fmi2Variable.asBoolean</b>
+  (</code><var class="pdparam"></var><code>)</code>;</p></div><p>
+This method casts a variable to <code class="code">Fmi2BooleanVariable</code> object if its
+<code class="code">baseType</code> is <code class="code">Boolean</code>, or <code class="code">null</code> otherwise.
+</p><span class="property">Fmi2RealVariable.start</span><span class="property">Fmi2IntegerVariable.start</span><span class="property">Fmi2EnumVariable.start</span><span class="property">Fmi2StringVariable.start</span><span class="property">Fmi2BooleanVariable.start</span><p>
+These read-only  properties hold start values of appropriate type for a variable.
+</p><span class="property">Fmi2RealVariable.min</span><span class="property">Fmi2RealVariable.max</span><span class="property">Fmi2IntegerVariable.min</span><span class="property">Fmi2IntegerVariable.max</span><span class="property">Fmi2EnumVariable.min</span><span class="property">Fmi2EnumVariable.max</span><p>
+These read-only properties hold minmal and maximal values for a variable.
+</p><span class="property">Fmi2RealVariable.derivativeOf</span><p>
+This read-only property holds an <code class="classname">Fmi2RealVariable</code> object for which the
+variable is a derivative, or <code class="code">null</code> if none.
+</p><span class="property">Fmi2RealVariable.unit</span><p>
+This read-only property holds an <code class="classname">Fmi2Unit</code> object if defined for a variable or
+<code class="code">null</code> otherwise.
+</p><span class="property">Fmi2RealVariable.displayUnit</span><p>
+This read-only property holds an <code class="classname">Fmi2DisplayUnit</code> object
+if defined for a variable or <code class="code">null</code> otherwise.
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="api.fmi.type"></a>6.20.4. Fmi2Type class</h3></div></div></div><p>
+The <code class="code">Fmi2Type</code> class contains information about an FMI type
+definition. It serves purely informational role.
+</p><span class="property">Fmi2Type.name</span><p>
+This read-only property holds a name for the type definition.
+</p><span class="property">Fmi2Type.description</span><p>
+This read-only property holds a description for the type definition.
+</p><span class="property">Fmi2Type.baseType</span><p>
+This read-only property holds a base type for the type definition. The meaning
+of this value is the same as <a class="xref" href="https://api.fmi.interface.html#Fmi2Variable.baseType">Fmi2Variable.baseType</a>.
+</p><span class="property">Fmi2Type.quantity</span><p>
+This read-only property holds a string that describes quantity of the type
+definition.
+</p><div class="funcsynopsis"><p><code class="funcdef">Fmi2RealType <b class="fsfunc">Fmi2Type.asReal</b>(</code><var class="pdparam"></var><code>)</code>;</p></div><p>
+This method casts a type definition to the Fmi2RealType object if its
+<code class="code">baseType</code> is <code class="code">Real</code>, or <code class="code">null</code> otherwise.
+</p><div class="funcsynopsis"><p><code class="funcdef">Fmi2IntegerType <b class="fsfunc">Fmi2Type.asInteger</b>(</code><var class="pdparam"></var><code>)</code>;</p></div><p>
+This method casts a type definition to the Fmi2ItegerType object if its
+<code class="code">baseType</code> is <code class="code">Real</code>, or <code class="code">null</code> otherwise.
+</p><div class="funcsynopsis"><p><code class="funcdef">Fmi2EnumType <b class="fsfunc">Fmi2Type.asEnum</b>(</code><var class="pdparam"></var><code>)</code>;</p></div><p>
+This method casts a type definition to the Fmi2EnumType object if its
+<code class="code">baseType</code> is <code class="code">Enum</code>, or <code class="code">null</code> otherwise.
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="api.fmi.unit"></a>6.20.5. Fmi2Unit class</h3></div></div></div><p>
+The <code class="code">Fmi2Unit</code> class contains information about an FMI unit
+definition. Each <code class="code">Fmi2Unit</code> class can have a number of associated
+<code class="code">Fmi2DisplayUnit</code> objects. Display units are used to display
+values in a user-friendly format. Both classes serve purely informational role.
+</p><span class="property">Fmi2Unit.name</span><p>
+This read-only property holds a name for the unit definition.
+</p><span class="property">Fmi2Unit.displayUnits</span><p>
+This read-only property holds an array of <code class="code">Fmi2DisplayUnit</code> objects
+that correspond to the unit definition.
+</p><span class="property">Fmi2Unit.SIexponents</span><p>
+This read-only property holds an array of integers that describe SI exponents
+for the unit definition.
+</p><span class="property">Fmi2Unit.SIfactor</span><span class="property">Fmi2Unit.SIoffset</span><p>
+These read-only properties hold a factor and an offset to a corresponding SI
+unit.
+</p><div class="funcsynopsis"><p><code class="funcdef"><b class="fsfunc">Fmi2Unit.fromSI</b>(</code><var class="pdparam">value</var><code>)</code>;</p></div><p>
+This method converts a value expressed in a corresponding SI unit to a value
+in the specified unit.</p><div class="funcsynopsis"><p><code class="funcdef"><b class="fsfunc">Fmi2Unit.toSI</b>(</code><var class="pdparam">value</var><code>)</code>;</p></div><p>
+This method converts a value expressed in the specified unit to a value in a
+corresponding SI unit.</p><span class="property">Fmi2DisplayUnit.name</span><p>
+This read-only property holds a name for the display unit definition.
+</p><span class="property">Fmi2DisplayUnit.baseUnit</span><p>
+This read-only property holds an associated <code class="code">Fmi2Unit</code> object.
+</p><span class="property">Fmi2DisplayUnit.factor</span><span class="property">Fmi2DisplayUnit.offset</span><p>
+These read-only properties hold a factor and an offset to a corresponding
+<code class="code">Fmi2Unit</code>.
+</p><div class="funcsynopsis"><p><code class="funcdef"><b class="fsfunc">Fmi2DisplayUnit.fromDisplayUnit</b>(</code><var class="pdparam">value</var><code>)</code>;</p></div><p>
+This method converts a value expressed in a corresponding <code class="code">Fmi2Unit</code>
+to a value in the display unit.</p><div class="funcsynopsis"><p><code class="funcdef"><b class="fsfunc">Fmi2DisplayUnit.toDisplayUnit</b>(</code><var class="pdparam">value</var><code>)</code>;</p></div><p>
+This method converts a value expressed in the display unit to a value in a
+corresponding <code class="code">Fmi2Unit</code> unit.</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="api.fmi.state"></a>6.20.6. Fmi2State class</h3></div></div></div><p>
+Some FMUs have the ability to store their current state and to restore
+from a previously saved state. <code class="code">Fmi2State</code> represents a stored FMU
+state.</p><p>You can query ability to save and restore the state of an FMU using
+<a class="xref" href="https://api.fmi.interface.html#Fmi2Import.getCapability-function"><code class="function">Fmi2Import.getCapability</code></a> method with the
+<code class="code">Fmi2Import.CS_canGetAndSetFMUstate</code> flag. Additionally, FMUs with
+the <code class="code">Fmi2Import.CS_canSerializeFMUstate</code> capability flag set can
+serialize such a state into a sequence of bytes that can be transfered between FMU
+instances.
+</p><span class="property">Fmi2DisplayUnit.size</span><p>
+This read-only property holds a size of a byte array that can hold serialized
+state data.
+</p><div class="funcsynopsis"><p><code class="funcdef"><b class="fsfunc">Fmi2State.serialize</b>(</code><var class="pdparam"></var><code>)</code>;</p></div><p>
+This method serializes the represented state and returns it as an array of
+bytes.</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="api.fmi.examples"></a>6.20.7. Examples</h3></div></div></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><span class="section"><a href="https://api.fmi.interface.html#idp54689800">6.20.7.1. Running a simulation</a></span></dt><dt><span class="section"><a href="https://api.fmi.interface.html#idp54698176">6.20.7.2. Running a simulation in parallel to the AUT</a></span></dt><dt><span class="section"><a href="https://api.fmi.interface.html#idp54706328">6.20.7.3. Waiting for simulation results</a></span></dt></dl></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="idp54689800"></a>6.20.7.1. Running a simulation</h4></div></div></div><p>
+The following snippet shows an example of loading a FMU object, accessing its
+variables and running the simulation process.
+</p><div xmlns="" class="scriptlang"><form><select name="scriptlangcombo" onchange="javascript:changeScriptingLanguage(this)" onclick="javascript:changeScriptingLanguage(this)"><option value="all" selected>Show All</option><option value="JavaScript">Show JavaScript</option><option value="Perl">Show Perl</option><option value="Python">Show Python</option><option value="Ruby">Show Ruby</option><option value="Tcl">Show Tcl</option></select></form></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">JavaScript</span><pre class="programlisting">
+function main() {
+    startFMI();
+    var fmu = Fmi2Import.create( '/data/deviceModel.fmu' );
+
+    // Retrieves model variable called 'varX'
+    var variableX = fmu.getVariable( "varX" );
+
+    // An alternative approach
+    var variableY = findObject( "{type='Fmi2Variable' name='varY'}" );
+
+    // Set the values of the variables
+    fmu.setValue( [ variableX, variableY, "varZ" ], [ 1, 2, 4 ] );
+
+    // Run the simulation in the background at real-time pace.
+    fmu.runDetached( 0.01, 1 );
+
+    // Run the simulation for specific time
+    snooze(5);
+
+    // Compare the value of a variable with expected value
+    test.compare( variableX.value, 1 );
+
+    // Destroys the FMI object and terminates 'fmiutil'
+    fmu.destroy();
+}
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Perl</span><pre class="programlisting">
+sub main() {
+    startFMI();
+    my $fmu = Fmi2Import::create( '/data/deviceModel.fmu' );
+
+    # Retrieves model variable called 'varX'
+    my $variableX = $fmu-&gt;getVariable( "varX" );
+
+    # An alternative approach
+    my $variableY = findObject( "{name='varY' type='Fmi2Variable'}" );
+
+    # Set the values of the variables
+    @variables = ( "varX", "varY", "varZ" );
+    @values = ( 1, 2, 4 );
+    $fmu-&gt;setValue( \@variables, \@values );
+
+    # Run the simulation in the background at real-time pace.
+    $fmu-&gt;runDetached( 0.01, 1 );
+
+    # Run the simulation for specific time
+    snooze(5);
+
+    # Compare the value of a variable with expected value
+    test::compare( $variableX-&gt;value, 1 );
+
+    # Destroys the FMI object and terminates 'fmiutil'
+    $fmu-&gt;destroy();
+}
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Python</span><pre class="programlisting">
+def main():
+    startFMI()
+    fmu = Fmi2Import.create( '/data/deviceModel.fmu' )
+
+    # Retrieves model variable called 'varX'
+    variableX = fmu.getVariable( "varX" )
+
+    # An alternative approach
+    variableY = findObject( "{name='varY' type='Fmi2Variable'}" )
+
+    # Set the values of the variables
+    fmu.setValue( [ variableX, variableY, "varZ" ], [ 1, 2, 4 ] )
+
+    # Run the simulation in the background at real-time pace.
+    fmu.runDetached( 0.01, 1 )
+
+    # Run the simulation for specific time
+    snooze(5)
+
+    # Compare the value of a variable with expected value
+    test.compare( variableX.value, 1 )
+
+    # Destroys the FMI object and terminates 'fmiutil'
+    fmu.destroy()
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Ruby</span><pre class="programlisting">
+require 'squish'
+
+include Squish
+
+def main
+    startFMI()
+    fmu = Fmi2Import.create( '/data/deviceModel.fmu' )
+
+    # Retrieves model variable called 'varX'
+    variableX = fmu.getVariable( "varX" )
+
+    # An alternative approach
+    variableY = findObject( "{name='varY' type='Fmi2Variable'}" )
+
+    # Set the values of the variables
+    fmu.setValue( [ "varX", "varY", "varZ" ], [ 1, 2, 4 ] )
+
+    # Run the simulation in the background at real-time pace.
+    fmu.runDetached( 0.01, 1 )
+
+    # Run the simulation for specific time
+    snooze(5)
+
+    # Compare the value of a variable with expected value
+    Test.compare( variableX.value, 1 )
+
+    # Destroys the FMI object and terminates 'fmiutil'
+    fmu.destroy()
+end
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Tcl</span><pre class="programlisting">
+proc main {} {
+    startFMI
+    set fmu [ invoke Fmi2Import create "/data/deviceModel.fmu" ]
+
+    # Retrieves model variable called 'varX'
+    set variableX [ invoke $fmu getVariable  "varX" ];
+
+    # An alternative approach
+    set variableY [ findObject "{name='varY' type='Fmi2Variable'}" ]
+
+    # Set the values of the variables
+    property set $variableX value 1
+    property set $variableY value 2
+    property set [ findObject "{name='varZ' type='Fmi2Variable'}" ] value 4
+
+    # Run the simulation in the background at real-time pace.
+    invoke $fmu runDetached 0.01 1
+
+    # Run the simulation for specific time
+    snooze 5
+
+    # Compare the value of a variable with expected value
+    test compare [ property get $variableX value ] 1
+
+    # Destroys the FMI object and terminates 'fmiutil'
+    invoke $fmu destroy
+}
+</pre></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="idp54698176"></a>6.20.7.2. Running a simulation in parallel to the AUT</h4></div></div></div><p>
+An FMU object is created in the utility process. If the test script accesses
+FMU and AUT, the current context must be changed to match currently accessed
+object, as described in <a class="xref" href="https://ugs-appcontext.html#ugsac-multipleaut" title="5.12.1. How to Start and Access Multiple Applications Under Test">How to Start and Access Multiple Applications Under Test (Section 5.12.1)</a>.
+</p><div xmlns="" class="scriptlang"><form><select name="scriptlangcombo" onchange="javascript:changeScriptingLanguage(this)" onclick="javascript:changeScriptingLanguage(this)"><option value="all" selected>Show All</option><option value="JavaScript">Show JavaScript</option><option value="Perl">Show Perl</option><option value="Python">Show Python</option><option value="Ruby">Show Ruby</option><option value="Tcl">Show Tcl</option></select></form></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">JavaScript</span><pre class="programlisting">
+function main() {
+    var fmictx = startFMI();
+    var fmu = Fmi2Import.create( '/data/deviceModel.fmu' );
+
+    // Run the simulation in the background at real-time pace.
+    fmu.runDetached( 0.01, 1 );
+
+    var autctx = startApplication( "/an/aut" );
+    activateItem( waitForObjectItem( ":_QMenuBar", "Device" ) );
+    activateItem( waitForObjectItem( ":Device_QMenu", "Start" ) );
+    setApplicationContext( fmictx );
+    test.compare( fmu.getVariable( "isStarted" ).value, True );
+
+    fmu.setValue( [ "isRunning" ], [ 1 ] );
+    setApplicationContext( autctx );
+    test.compare( waitForObject( ":Status_QLabel" ).text, "Running" );
+
+    setApplicationContext( fmictx );
+    fmu.destroy();
+}
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Perl</span><pre class="programlisting">
+sub main() {
+    my $fmictx = startFMI();
+    my $fmu = Fmi2Import::create( '/data/deviceModel.fmu' );
+
+    # Run the simulation in the background at real-time pace.
+    $fmu-&gt;runDetached( 0.01, 1 );
+
+    my $autctx = startApplication( "/an/aut" );
+    activateItem( waitForObjectItem( ":_QMenuBar", "Device" ) );
+    activateItem( waitForObjectItem( ":Device_QMenu", "Start" ) );
+    setApplicationContext( $fmictx );
+    test::compare( $fmu-&gt;getVariable( "isStarted" )-&gt;value, True );
+
+    @variables = ( "isRunning" );
+    @values = ( 1 );
+    $fmu-&gt;setValue( \@variables, \@values );
+    setApplicationContext( $autctx );
+    test::compare( waitForObject( ":Status_QLabel" )-&gt;text, "Running" );
+
+    setApplicationContext( $fmictx );
+    $fmu.destroy();
+}
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Python</span><pre class="programlisting">
+def main():
+    fmictx = startFMI()
+    fmu = Fmi2Import.create( '/data/deviceModel.fmu' )
+
+    // Run the simulation in the background at real-time pace.
+    fmu.runDetached( 0.01, 1 )
+
+    autctx = startApplication( "/an/aut" )
+    activateItem( waitForObjectItem( ":_QMenuBar", "Device" ) )
+    activateItem( waitForObjectItem( ":Device_QMenu", "Start" ) )
+    setApplicationContext( fmictx )
+    test.compare( fmu.getVariable( "isStarted" ).value, 1 )
+
+    fmu.setValue( [ "isRunning" ], [ 1 ] )
+    setApplicationContext( autctx )
+    test.compare( waitForObject( ":Status_QLabel" ).text, "Running" )
+
+    setApplicationContext( fmictx )
+    fmu.destroy()
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Ruby</span><pre class="programlisting">
+require 'squish'
+
+include Squish
+
+def main() {
+    fmictx = startApplication( "fmiutil" )
+    fmu = Fmi2Import.create( '/data/deviceModel.fmu' )
+
+    # Run the simulation in the background at real-time pace.
+    fmu.runDetached( 0.01, 1 )
+
+    var autctx = startApplication( "/an/aut" )
+    activateItem( waitForObjectItem( ":_QMenuBar", "Device" ) )
+    activateItem( waitForObjectItem( ":Device_QMenu", "Start" ) )
+    setApplicationContext( fmictx )
+    test.compare( fmu.getVariable( "isStarted" ).value, True )
+
+    fmu.setValue( [ "isRunning" ], [ 1 ] )
+    setApplicationContext( autctx )
+    test.compare( waitForObject( ":Status_QLabel" ).text, "Running" )
+
+    setApplicationContext( fmictx )
+    fmu.destroy()
+}
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Tcl</span><pre class="programlisting">
+proc main {} {
+    set fmictx [ startFMI ]
+    set fmu [ invoke Fmi2Import create "/data/deviceModel.fmu" ]
+
+    # Run the simulation in the background at real-time pace.
+    invoke $fmu runDetached 0.01 1
+
+    set autctx [ startApplication  "/an/aut" ]
+    invoke activateItem [waitForObjectItem ":_QMenuBar" "Device" ]
+    invoke activateItem [waitForObjectItem ":Device_QMenu" "Start" ]
+    setApplicationContext $fmictx
+    test compare [ property get [ invoke $fmu getVariable "isStarted" ] value ] 1
+
+    set isRunning [ invoke $fmu getVariable  "isRunning" ];
+    property set $isRunning value 1
+    setApplicationContext $autctx
+    test compare [ property get [ waitForObject ":Status_QLabel" ] text ] "Running"
+
+    setApplicationContext $fmictx
+    invoke $fmu destroy
+</pre></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="idp54706328"></a>6.20.7.3. Waiting for simulation results</h4></div></div></div><p>
+In order to wait for a simulation variable to take a specific value,
+<a class="xref" href="https://rgs-squish.html#waitForObject-function"><code class="function">waitForObject</code></a> can be used. If the <code class="code">value</code>
+property is specified, it will find only the variable of specified value, and
+wait if no such variable exists.
+</p><div xmlns="" class="scriptlang"><form><select name="scriptlangcombo" onchange="javascript:changeScriptingLanguage(this)" onclick="javascript:changeScriptingLanguage(this)"><option value="all" selected>Show All</option><option value="JavaScript">Show JavaScript</option><option value="Perl">Show Perl</option><option value="Python">Show Python</option><option value="Ruby">Show Ruby</option><option value="Tcl">Show Tcl</option></select></form></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">JavaScript</span><pre class="programlisting">
+// will wait until variable 'varY' has a value of 1.
+var variableY = waitForObject( "{type='Fmi2Variable' name='varY' value='1'}" );
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Perl</span><pre class="programlisting">
+// will wait until variable 'varY' has a value of 1.
+my $variableY = waitForObject( "{type='Fmi2Variable' name='varY' value='1'}" );
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Python</span><pre class="programlisting">
+// will wait until variable 'varY' has a value of 1.
+variableY = waitForObject( "{type='Fmi2Variable' name='varY' value='1'}" )
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Ruby</span><pre class="programlisting">
+// will wait until variable 'varY' has a value of 1.
+variableY = waitForObject( "{type='Fmi2Variable' name='varY' value='1'}" );
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Tcl</span><pre class="programlisting">
+// will wait until variable 'varY' has a value of 1.
+set variableY [ waitForObject  "{type='Fmi2Variable' name='varY' value='1'}" ]
+</pre></div><p>
+If the condition to wait for is more complex, a
+<a class="xref" href="https://rgs-squish.html#waitFor-function"><code class="function">waitFor</code></a> function can be used.
+</p><div xmlns="" class="scriptlang"><form><select name="scriptlangcombo" onchange="javascript:changeScriptingLanguage(this)" onclick="javascript:changeScriptingLanguage(this)"><option value="all" selected>Show All</option><option value="JavaScript">Show JavaScript</option><option value="Perl">Show Perl</option><option value="Python">Show Python</option><option value="Ruby">Show Ruby</option><option value="Tcl">Show Tcl</option></select></form></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">JavaScript</span><pre class="programlisting">
+var variableY = findObject( "{type='Fmi2Variable' name='varY'}" );
+waitFor( function() {
+    return variableY.value &lt; 1;
+} );
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Perl</span><pre class="programlisting">
+my $variableY = findObject( "{type='Fmi2Variable' name='varY'}" );
+waitFor( function() {
+    return $variableY-&gt;value &lt; 1;
+} );
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Python</span><pre class="programlisting">
+variableY = findObject( "{type='Fmi2Variable' name='varY'}" )
+waitFor( lambda: variableY.value &lt; 1 )
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Ruby</span><pre class="programlisting">
+var variableY = findObject( "{type='Fmi2Variable' name='varY'}" )
+waitFor( lambda { return variableY.value &lt; 1 } )
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Tcl</span><pre class="programlisting">
+set variableY [ findObject "{type='Fmi2Variable' name='varY'}" ]
+waitFor [ proc "" {} { expr [ property get $variableY value ] &lt; 1 } ]
+</pre></div><p>
+In case a variable of interest has the expected value for a relatively short
+period of time, it is possible - due to parallel nature of test script
+execution - that the above functions miss that value entirely. In order to gain
+fine control over the simulation process, it can be run directly from the test
+script.
+</p><div xmlns="" class="scriptlang"><form><select name="scriptlangcombo" onchange="javascript:changeScriptingLanguage(this)" onclick="javascript:changeScriptingLanguage(this)"><option value="all" selected>Show All</option><option value="JavaScript">Show JavaScript</option><option value="Perl">Show Perl</option><option value="Python">Show Python</option><option value="Ruby">Show Ruby</option><option value="Tcl">Show Tcl</option></select></form></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">JavaScript</span><pre class="programlisting">
+setApplicationContext( fmictx );
+// Stops background execution of the simulation process (if started).
+fmu.sync();
+
+var variableY = findObject( "{type='Fmi2Variable' name='varY'}" );
+for ( var i=0; i&lt;1000; ++i ) {
+    fmu.doStep( 0.01 );
+    if ( variableY.value &lt; 1 )
+        break;
+}
+test.verify( variableY.value &lt; 1 );
+// Re-start detahed execution ( if required )
+fmu.runDetached( 0.01, 1 );
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Perl</span><pre class="programlisting">
+setApplicationContext( $fmictx );
+// Stops background execution of the simulation process (if started).
+$fmu-&gt;sync();
+
+my $variableY = findObject( "{type='Fmi2Variable' name='varY'}" );
+for ( my $i=0; $i&lt;1000; $i++ ) {
+    $fmu-&gt;doStep( 0.01 );
+    if ( $variableY-&gt;value &lt; 1 ) {
+        last;
+    }
+}
+test::verify( $variableY-&gt;value &lt; 1 );
+// Re-start detahed execution ( if required )
+$fmu-&gt;runDetached( 0.01, 1 );
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Python</span><pre class="programlisting">
+setApplicationContext( fmictx )
+// Stops background execution of the simulation process (if started).
+fmu.sync()
+
+variableY = findObject( "{type='Fmi2Variable' name='varY'}" )
+for x in range(0, 1000):
+    fmu.doStep( 0.01 )
+    if variableY.value &lt; 1:
+        break
+
+test.verify( variableY.value &lt; 1 )
+// Re-start detahed execution ( if required )
+fmu.runDetached( 0.01, 1 )
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Ruby</span><pre class="programlisting">
+setApplicationContext( fmictx )
+// Stops background execution of the simulation process (if started).
+fmu.sync()
+
+variableY = findObject( "{type='Fmi2Variable' name='varY'}" )
+for x in 1..1000:
+    fmu.doStep( 0.01 )
+    if variableY.value &lt; 1 then
+        break
+    end
+end
+
+test.verify( variableY.value &lt; 1 )
+// Re-start detahed execution ( if required )
+fmu.runDetached( 0.01, 1 )
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Tcl</span><pre class="programlisting">
+setApplicationContext $fmictx
+# Stops background execution of the simulation process (if started).
+invoke fmu sync
+
+set variableY [ findObject "{type='Fmi2Variable' name='varY'}" ]
+for {set i 0} {$i &lt; 1000} {incr i} {
+    invoke $fmu doStep 0.01
+    if { expr [ property get $variableY value ] &lt; 1 } {
+        break
+    }
+}
+invoke test verify [ expr [ property get $variableY value ] &lt; 1 ]
+# Re-start detached execution ( if required )
+invoke fmu runDetached 0.01 1
+
+</pre></div></div></div></div><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" type="text/javascript" src="ScriptingLanguage.js"></script><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format">setScriptingLanguage();</script><div class="navfooter"><hr></hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="https://api.bdt.functions.html">Prev</a> </td><td width="20%" align="center"><a accesskey="u" href="https://api.man.html">Up</a></td><td width="40%" align="right"> <a accesskey="n" href="https://api.can.interface.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">6.19. Behavior Driven Testing </td><td width="20%" align="center"><a accesskey="h" href="https://index-noframes.html">Home</a></td><td width="40%" align="right" valign="top"> 6.21. CAN bus support</td></tr></table></div></body>
+<!-- Mirrored from api.fmi.interface.html by HTTrack Website Copier/3.x [XR&CO'2013], Wed, 06 Jul 2022 13:29:00 GMT -->
+</html>

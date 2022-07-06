@@ -1,0 +1,178 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<!-- Mirrored from ins-source-squishrunner.html by HTTrack Website Copier/3.x [XR&CO'2013], Wed, 06 Jul 2022 13:28:58 GMT -->
+<head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><title>3.12.  Building squishrunner with Video support</title><link rel="stylesheet" href="manual.css" type="text/css"></link><meta name="generator" content="DocBook XSL Stylesheets V1.73.2"></meta><link rel="start" href="index-noframes.html" title="Squish Manual"></link><link rel="up" href="install.html" title="Chapter 3. How to Install Squish"></link><link rel="prev" href="ins-tessseract-for-squish.html" title="3.11. OCR and Installing Tesseract for Squish"></link><link rel="next" href="ins-binary-usage.html" title="3.13. Using Squish"></link><style xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" type="text/css" media="screen">
+        div.toc * { margin-left: 6px; margin-right: auto; max-width: 75em; }
+        div.toc span { margin-left: 0px; }
+        * { margin-left: auto; margin-right: auto; max-width: 75em; }
+        body { margin-left: 6px; margin-right: 6px; }
+        table th { padding: .5ex }
+        table td { padding: .5ex }
+    </style><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format">
+        function keyPress() {
+            var e = window.event;
+            if ( e == undefined ) {
+                return;
+            }
+            /* ### does not properly scroll, yet
+            if ( e.keyCode == 32 ) {
+            var l = document.links;
+            for ( var i = 0; i < l.length; i++ ) {
+                if ( l[i].innerText == "Next" ) {
+                location.href = l[i].href;
+                }
+            }
+            } else
+                */
+                if ( e.keyCode == 0x08 ) {
+            var l = document.links;
+            for ( var i = 0; i < l.length; i++ ) {
+                if ( l[i].innerText == "Prev" ) {
+                location.href = l[i].href;
+                }
+            }
+            }
+        }
+        document.onkeypress = keyPress;
+    </script></head><body><div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="ins-source-squishrunner"></a>3.12.  Building <span class="application">squishrunner</span> with Video support </h2></div></div></div><p> Building <span class="application">squishrunner</span> from source is very rarely necessary.
+In the instructions from <a class="xref" href="ins-commandline-tools-server-ide.html#ins-source" title="3.1.2. Installing Squish for Qt from Desktop Source Packages">Installing Squish for Qt from Desktop Source Packages (Section 3.1.2)</a> or <a class="xref" href="ins-source-embedded.html" title="3.3. Installing Squish for Qt from Embedded Source Packages">Installing Squish for Qt from Embedded Source Packages (Section 3.3)</a>, we avoid building it entirely, since
+it is only <span class="application">squishserver</span> that needs to be binary-compatible with your AUT,
+while <span class="application">squishrunner</span> can be taken from one of our official binary releases
+and typically runs on a desktop or a CI server that is using a popular
+operating system/platform.
+</p><p> However, in the rare cases where you do need to build
+<span class="application">squishrunner</span>, (perhaps to support a different version of one of our
+supported script interpreters) this section explains how to build it with
+optional support for recording videos.
+</p><p> Before we can configure squish, we need to satisfy these requirements: </p><div class="orderedlist"><ol type="1"><li><p> Install the development packages of whatever
+script languages you plan to use, for Python, Ruby, Perl or TCL (JavaScript is
+included with Squish). </p></li><li><p> Qt 4.8 or greater must be available. If
+the path to <span class="command"><strong>qmake</strong></span> is in our
+<code class="envar">PATH</code>, it is picked up automatically by Squish's
+<span class="command"><strong>configure</strong></span> script. </p></li><li><p> A C++ compiler matching the version used for building Qt,
+and on Windows, a way to open a command shell window with the compiler's command
+line tools in our <code class="envar">PATH</code>.
+</p></li></ol></div><p> Next, we set up a build directory, which we will refer to as
+&lt;BUILDDIR&gt;
+in the steps below. This directory needs to have the following contents. </p><div class="orderedlist"><ol type="1"><li><p> Sources to build <code class="filename">openh264</code> v2.1.1 library </p></li><li><p> Sources to build <code class="filename">ffmpeg</code> 4.4 library </p></li><li><p> Sources to build <code class="filename">Squish</code> 7.0 or later (download the source archive from
+<a class="ulink" href="https://www.froglogic.com/squish/download/" target="_blank">Squish Download
+Center</a>. If you can not see it there, ask your
+sales rep for access to the desktop or embedded source packages.)
+</p></li><li><p> <a class="ulink" href="misc/build.sh" target="_blank">build.sh</a>, a cross-platform script for
+building ffmpeg with openh264 support:
+</p><pre class="programlisting">
+topDir=`pwd`
+
+packageName=$1
+
+cd $topDir/openh264
+make $OPENH264_ARGS
+make install-static $OPENH264_ARGS PREFIX=$topDir/install/openh264
+make install-headers $OPENH264_ARGS PREFIX=$topDir/install/openh264
+
+cd $topDir/ffmpeg
+export PKG_CONFIG_PATH=$topDir/install/openh264/lib/pkgconfig
+./configure $FFMPEG_ARGS --prefix=$topDir/install/ffmpeg \
+            --disable-static --enable-shared --disable-all \
+            --disable-autodetect --enable-ffmpeg --disable-doc \
+            --enable-avcodec --enable-avformat --enable-swscale \
+            --disable-everything --enable-libopenh264 --enable-encoder=libopenh264 \
+            --enable-protocol=file --enable-muxer=mp4 --build-suffix=Squish \
+            --enable-debug --disable-stripping
+make
+make install
+
+cd $topDir/install/ffmpeg
+for i in `find . -name "*Squish.lib" -o -name "*Squish.so" -o -name "*Squish.dylib"`
+do
+    cp -Pv $i `echo $i | sed s/Squish././`
+done
+
+tar -czf $topDir/$packageName -C $topDir/install ffmpeg
+
+</pre><p>
+</p></li><li><p> (On Windows only) <a class="ulink" href="misc/build.bat" target="_blank">build.bat</a>, a batch
+file for building ffmpeg on Windows that uses <span class="application">MSYS2</span> to run
+<code class="filename">build.sh</code>:
+</p><pre class="programlisting">
+set MSYSTEM=MSYS
+set CHERE_INVOKING=1
+set MSYS2_PATH_TYPE=inherit
+set OPENH264_ARGS=OS=msvc %OPENH264_ARGS%
+set FFMPEG_ARGS=--toolchain=msvc %FFMPEG_ARGS%
+set PATH=c:\msys64\usr\bin;%LOCALAPPDATA%\bin\NASM;%PROGRAMFILES%\Git\usr\bin;%PATH%
+bash -l build.sh ffmpeg-4.4-squish-windows-x64.tar.gz
+
+</pre><p>
+
+</p></li></ol></div><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Note:  For 32-bit builds "><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/note.png"></img></td><th align="left"> For 32-bit builds </th></tr><tr><td align="left" valign="top"><p> If you are using a 32-bit compiler and a 32-bit Qt,
+then ffmpeg and openh264 need to be built for 32 bits also. To do this,
+we set some environment variables near the top of
+<code class="filename">build.sh</code>. Set them to these values depending on your
+platform.
+</p><div class="tabularx"><table width="100%" border="1"><colgroup><col></col><col></col></colgroup><tbody valign="top"><tr><td align="left" valign="top"><p><span class="bold"><strong>Windows</strong></span></p></td><td align="left" valign="top"><pre class="programlisting">OPENH264_ARGS=ENABLE64BIT=No
+FFMPEG_ARGS=--arch=i686
+</pre>
+
+    </td></tr><tr><td align="left" valign="top"><p><span class="bold"><strong>Debian Linux/Ubuntu</strong></span></p></td><td align="left" valign="top"><pre class="programlisting">OPENH264_ARGS=ENABLE64BIT=No
+FFMPEG_ARGS="--arch=i686 --extra-cflags=-m32 --extra-cxxflags=-m32 --extra-ldflags=-m32"
+</pre>
+    </td></tr></tbody></table></div></td></tr></table></div><h3><a id="idp37960056"></a> Building ffmpeg with openh264 support </h3><p> The official binary releases of <span class="application">ffmpeg</span>
+on Windows use Windows Media Foundation for H.264 by default. On Linux,
+they use libx264. These binaries have issues when used with Squish.
+Configuring <span class="application">ffmpeg</span> using the script below disables
+everything except for Openh264, so there are no such issues.
+</p><div class="tabularx"><table width="100%" border="1"><colgroup><col></col><col></col></colgroup><tbody valign="top"><tr><td align="left" valign="top"><p><span class="bold"><strong>Windows</strong></span></p></td><td align="left" valign="top">
+    <p> Install <a class="ulink" href="https://www.nasm.us/" target="_blank">nasm</a>.</p>
+    <p> Install <a class="ulink" href="https://www.msys2.org/" target="_blank">MSYS2</a> </p>
+    <p> Open an <span class="application">MSYS2</span> terminal and from there,
+    install some additional packages:
+    </p><pre class="screen">
+$ pacman -sYY
+$ pacman -S make pkg-config tar git
+</pre><p> </p>
+	<p> Open an developer's command line shell, such as
+	<span class="application">x64 Native Tools Command Prompt for Visual Studio</span>
+	</p><pre class="screen">
+C:\&gt; cd &lt;BUILDDIR&gt;
+C:\builddir&gt; git clone https://github.com/cisco/openh264.git -b v2.1.1
+C:\builddir&gt; git clone https://git.ffmpeg.org/ffmpeg.git -b n4.4
+C:\builddir&gt; build.bat
+</pre><p>
+	</p>
+
+</td></tr><tr><td align="left" valign="top"><p><span class="bold"><strong>Debian Linux/Ubuntu</strong></span></p></td><td align="left" valign="top"><pre class="screen">
+$ sudo apt-get build-dep ffmpeg
+$ cd &lt;BUILDDIR&gt;
+$ git clone https://github.com/cisco/openh264.git -b v2.1.1
+$ git clone https://git.ffmpeg.org/ffmpeg.git -b n4.4
+$ ./build.sh ffmpeg-4.4-squish-linux-x64.tar.gz
+</pre>
+</td></tr></tbody></table></div><p> After this step is done, if all is successful, you should see in
+&lt;BUILDDIR&gt; a
+directory called <code class="filename">install</code>, containing the built ffmpeg,
+and a <code class="filename">ffmpeg-4.4-squish.tar.gz</code> archive containing the same
+files.
+</p><h3><a id="idp37971224"></a> Configuring and building <span class="application">squishrunner</span> with video support </h3><div class="tabularx"><table width="100%" border="1"><colgroup><col></col><col></col></colgroup><tbody valign="top"><tr><td align="left" valign="top"><p><span class="bold"><strong>Windows</strong></span></p></td><td align="left" valign="top">
+	<p> We need to specify in the configure line,
+	the location of things like <code class="filename">qmake</code>,
+	Python, and whatever other script interpreters we want to use, if they
+	are not already in our <code class="envar">PATH</code>: </p>
+    <pre class="screen">C:\builddir&gt; mkdir squish-build
+C:\builddir&gt; cd squish-build
+C:\builddir\squish-build&gt; ..\squish-7.0-qt-src\configure --with-qmake=C:\Qt\5.15.7\msvc2019_64\bin\qmake
+   --with-python3=C:\Python38\python.exe --disable-all --enable-runner --with-ffmpeg=..\install\ffmpeg\
+C:\builddir\squish-build&gt; build
+</pre>
+    </td></tr><tr><td align="left" valign="top"><p><span class="bold"><strong>Debian Linux/Ubuntu</strong></span></p></td><td align="left" valign="top"><p> Qt, Python and other script interpreters are usually found
+    automatically by <code class="filename">configure</code> as long as they were
+    installed using the system package manager.
+    </p><pre class="screen">
+$ sudo apt-get install libperl-dev ruby-dev python3-dev qt5-qmake
+$ mkdir squish-build
+$ cd squish-build
+$ ../squish-7.0-qt-src/configure --disable-all --enable-runner --with-ffmpeg=../install/ffmpeg/
+$ ./build
+</pre></td></tr></tbody></table></div></div><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" type="text/javascript" src="ScriptingLanguage.js"></script><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format">setScriptingLanguage();</script><div class="navfooter"><hr></hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="ins-tessseract-for-squish.html">Prev</a> </td><td width="20%" align="center"><a accesskey="u" href="install.html">Up</a></td><td width="40%" align="right"> <a accesskey="n" href="ins-binary-usage.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">3.11. OCR and Installing Tesseract for <span class="emphasis"><em>Squish</em></span> </td><td width="20%" align="center"><a accesskey="h" href="index-noframes.html">Home</a></td><td width="40%" align="right" valign="top"> 3.13. Using <span class="emphasis"><em>Squish</em></span></td></tr></table></div></body>
+<!-- Mirrored from ins-source-squishrunner.html by HTTrack Website Copier/3.x [XR&CO'2013], Wed, 06 Jul 2022 13:28:58 GMT -->
+</html>

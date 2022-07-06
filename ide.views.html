@@ -1,0 +1,1245 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<!-- Mirrored from ide.views.html by HTTrack Website Copier/3.x [XR&CO'2013], Wed, 06 Jul 2022 13:29:03 GMT -->
+<head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><title>8.2. Views</title><link rel="stylesheet" href="manual.css" type="text/css"></link><meta name="generator" content="DocBook XSL Stylesheets V1.73.2"></meta><link rel="start" href="https://index-noframes.html" title="Squish Manual"></link><link rel="up" href="https://ide.ref.man.html" title="Chapter 8. IDE Reference Manual"></link><link rel="prev" href="https://ide.main.window.html" title="8.1. Main Window"></link><link rel="next" href="https://ide.dialogs.html" title="8.3. Dialogs"></link><style xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" type="text/css" media="screen">
+        div.toc * { margin-left: 6px; margin-right: auto; max-width: 75em; }
+        div.toc span { margin-left: 0px; }
+        * { margin-left: auto; margin-right: auto; max-width: 75em; }
+        body { margin-left: 6px; margin-right: 6px; }
+        table th { padding: .5ex }
+        table td { padding: .5ex }
+    </style><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format">
+        function keyPress() {
+            var e = window.event;
+            if ( e == undefined ) {
+                return;
+            }
+            /* ### does not properly scroll, yet
+            if ( e.keyCode == 32 ) {
+            var l = document.links;
+            for ( var i = 0; i < l.length; i++ ) {
+                if ( l[i].innerText == "Next" ) {
+                location.href = l[i].href;
+                }
+            }
+            } else
+                */
+                if ( e.keyCode == 0x08 ) {
+            var l = document.links;
+            for ( var i = 0; i < l.length; i++ ) {
+                if ( l[i].innerText == "Prev" ) {
+                location.href = l[i].href;
+                }
+            }
+            }
+        }
+        document.onkeypress = keyPress;
+    </script></head><body><div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="ide.views"></a>8.2. Views</h2></div></div></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><span class="section"><a href="https://ide.views.html#ide.the-application-objects.view">8.2.1. Application Objects view</a></span></dt><dt><span class="section"><a href="https://ide.views.html#ide.the-breakpoints.view">8.2.2. Breakpoints view</a></span></dt><dt><span class="section"><a href="https://ide.views.html#ide.the-console.view">8.2.3. Console view</a></span></dt><dt><span class="section"><a href="https://ide.views.html#ide.the-call-hierarchy.view">8.2.4. Call Hierarchy view</a></span></dt><dt><span class="section"><a href="https://ide.views.html#ide.the-debug.view">8.2.5. Debug view</a></span></dt><dt><span class="section"><a href="https://ide.views.html#ide.the-editor.view">8.2.6. Editor view</a></span></dt><dt><span class="section"><a href="https://ide.views.html#ide.the-global-scripts.view">8.2.7. Global Scripts view</a></span></dt><dt><span class="section"><a href="https://ide.views.html#ide.the-image.view">8.2.8. Image Viewer</a></span></dt><dt><span class="section"><a href="https://ide.views.html#ide.the-methods.view">8.2.9. Methods view</a></span></dt><dt><span class="section"><a href="https://ide.views.html#ide.the-object-map.view">8.2.10. Object Map view</a></span></dt><dt><span class="section"><a href="https://ide.views.html#ide.the-outline.view">8.2.11. Outline view</a></span></dt><dt><span class="section"><a href="https://ide.views.html#ide.the-properties.view">8.2.12. Properties view</a></span></dt><dt><span class="section"><a href="https://ide.views.html#ide.runner.server.log.view">8.2.13. Runner/Server Log view</a></span></dt><dt><span class="section"><a href="https://ide.views.html#ide.search.image.view">8.2.14. Image Selection Editor view</a></span></dt><dt><span class="section"><a href="https://ide.views.html#ide.the-search.view">8.2.15. Search view</a></span></dt><dt><span class="section"><a href="https://ide.views.html#ide.the-settings.view">8.2.16. Test Suite Settings view</a></span></dt><dt><span class="section"><a href="https://ide.views.html#ide.the-test-center.view">8.2.17. Test Center view</a></span></dt><dt><span class="section"><a href="https://ide.views.html#ide.the-test-results.view">8.2.18. Test Results view</a></span></dt><dt><span class="section"><a href="https://ide.views.html#ide.the-test-suites.view">8.2.19. Test Suites view</a></span></dt><dt><span class="section"><a href="https://ide.views.html#ide.the-test-summary.view">8.2.20. Test Summary view</a></span></dt><dt><span class="section"><a href="https://ide.views.html#ide.the-variables.view">8.2.21. Variables view</a></span></dt><dt><span class="section"><a href="https://ide.views.html#ide.verification.point.creator.view">8.2.22. Verification Point Creator view</a></span></dt><dt><span class="section"><a href="https://ide.views.html#ide.the-videoplayer-view">8.2.23. Video Player view</a></span></dt></dl></div><p>
+    The <span class="application">Squish IDE</span> provides many different views. Most of the views are shown by
+    default in one perspective or another, but some can only be made visible
+    by explicitly showing them—for example using the <a class="xref" href="https://ide.main.window.html#ide.show.view.action" title="8.1.1.62. Show View action"><span class="guiicon">Show View</span> action (Section 8.1.1.62)</a>.
+    </p><p>
+    In this section we document all the views that are visible in the <span class="application">Squish IDE</span>,
+    plus some common ones that are not visible by default but that you might
+    want to use.
+    </p><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="ide.the-application-objects.view"></a>8.2.1. Application Objects view</h3></div></div></div><p>
+The Application Objects view is shown in the <a class="xref" href="https://ide.main.window.html#ide.squish.spy.perspective" title="8.1.2.1. Squish Spy Perspective">Squish Spy Perspective (Section 8.1.2.1)</a> and the <a class="xref" href="https://ide.main.window.html#ide.squish.test.debugging.perspective" title="8.1.2.3. Squish Test Debugging Perspective">Squish Test Debugging Perspective (Section 8.1.2.3)</a>. it shows all the
+application objects that the <span class="application">Squish IDE</span> currently knows about and presents
+them in a tree hierarchy.
+</p><div class="screenshot"><div class="mediaobject" align="center"><img src="https://images/ide/application-objects-view.png" align="middle"></img><div class="caption">The Application Objects view
+</div></div></div><p>
+The currently selected object's properties are shown in the <a class="xref" href="https://ide.views.html#ide.the-properties.view" title="8.2.12. Properties view">Properties view (Section 8.2.12)</a>. The tree of objects is lazily
+populated to improve performance. This means that if you expand an item
+that has lots of child items (e.g., a tree, table, or list widget), it
+might take a moment or two before those items become visible.
+</p><p>
+If you interact with the AUT after the Application Objects view has been
+shown—for example opening an AUT dialog—the new application
+objects may not be visible in the Application Objects view. This can
+easily be solved by clicking the view's <span class="guibutton">Refresh</span>
+toolbar button (<span class="guiicon"><img src="https://images/ide/refresh-application-objects.png"></img></span>).
+</p><p>
+The view's <span class="guibutton">Show Parent</span> toolbar button
+(<span class="guiicon"><img src="https://images/ide/parent-application-object.png"></img></span>)
+allows you to retrieve the parent object of the currently selected
+one. There are different valid reasons why picking
+(<span class="guiicon"><img src="https://images/ide/pick-application-object.png"></img></span>)
+an object doesn't hit the desired one. Being able to walk the object
+hierarchy upwards then, helps in getting to the correct object in the
+Application Objects View.
+</p><p><a id="object-picker"></a>
+If you want to find an object visually without drilling through the object
+tree, interact with the AUT as necessary to make the widget visibile, then
+click the view's <span class="guibutton">Pick</span> toolbar button
+(<span class="guiicon"><img src="https://images/ide/pick-application-object.png"></img></span>). Next
+click the AUT to give it focus and now as you move the mouse over the
+AUT's widgets, the widget under the mouse is shown outlined in red, and a
+tooltip shows the widget's real (multi-property) name. Click the widget
+you are interested in: this will result in the Application Objects view
+showing just that widget—and of course the <a class="xref" href="https://ide.views.html#ide.the-properties.view" title="8.2.12. Properties view">Properties view (Section 8.2.12)</a> will show the widget's properties.
+(If you want to see all the application objects again simply click the
+view's <span class="guibutton">Refresh</span> toolbar button
+(<span class="guiicon"><img src="https://images/ide/refresh-application-objects.png"></img></span>).
+</p><p>
+The view's <span class="guibutton">Highlight Object</span> toolbar button
+(<span class="guiicon"><img src="https://images/ide/highlight-application-object.png"></img></span>)
+lets you enable the highlighting of the objects inside the AUT. So
+when clicking an object in the Application Objects View
+with <span class="guibutton">Highlight Object</span> being activated, Squish
+highlights the corresponding object in the AUT. Note, that Squish is
+not trying to set focus to the AUT or bringing it to the foreground,
+so you might have to rearrange windows to correctly see the
+highlighting.
+
+The button's toggle behavior means you only have to enable the
+highlighting once, and then get the highlighting shown for any object
+that is clicked in the Application Objects View.
+</p><p>
+The Application Objects view provides a context menu with four options:
+<span class="guimenuitem">Copy Real Name</span>, <span class="guimenuitem">Copy Symbolic
+Name</span>, <span class="guimenuitem">Add to Object Map</span> and
+<span class="guimenuitem">Save Object Snapshot...</span>. The first two menu options
+are useful when you want to edit a test script and insert an object's name into
+it. (It is usually more convenient to use the symbolic name in such cases.) If
+you do intend copying an object name to the clipboard and pasting it into a
+test script, make sure that you add the name to the object map using the
+<span class="guimenuitem">Add to Object Map</span> menu option so that <span class="emphasis"><em>Squish</em></span> will
+remember it when the test is run.
+</p><p>
+The fourth option, <span class="guimenuitem">Save Object Snapshot...</span>, opens a
+dialog which allows creating a snapshot of the object hierarchy beneath the
+selected object in the Application Objects view. The snapshot includes all
+objects, their properties and optionally a screenshot of each object and the
+object names. On the hard disk, the snapshot is just an <acronym class="acronym">XML</acronym>
+file which represents the object hierarchy.
+</p><p>
+Object snapshots can be very useful for debugging problems. The snapshots can
+be shown in a dedicated browser program which shows the object hierarchy as
+well as any other contained information.
+</p><p>
+(See also, <a class="xref" href="https://ug-editdebug.html#uged-spy" title="5.21.3. How to Use the Spy">How to Use the Spy (Section 5.21.3)</a>.)
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="ide.the-breakpoints.view"></a>8.2.2. Breakpoints view</h3></div></div></div><p>
+The Breakpoints view is not shown in any perspective by default. It can
+be shown by using the <a class="xref" href="https://ide.main.window.html#ide.show.view.action" title="8.1.1.62. Show View action"><span class="guiicon">Show View</span> action (Section 8.1.1.62)</a> or by
+pressing
+<span class="keycap"><strong>Shift</strong></span>+<span class="keycap"><strong>Alt</strong></span>+<span class="keycap"><strong>Q</strong></span>, <span class="keycap"><strong>B</strong></span>.
+It shows a list of the currently set breakpoints.
+</p><div class="screenshot"><div class="mediaobject" align="center"><img src="https://images/ide/breakpoints-view.png" align="middle"></img><div class="caption">The Breakpoints view
+</div></div></div><p>
+The checkbox beside each breakpoint is checked for those that are
+enabled and unchecked for those that are disabled. You can check and
+uncheck them at will. Disabled (unchecked) breakpoints are not stopped
+at. (It is also possible to enable and disable breakpoints inside an
+<a class="xref" href="https://ide.views.html#ide.the-editor.view" title="8.2.6. Editor view">Editor view (Section 8.2.6)</a> using a context menu.)
+</p><p>
+The Breakpoints view provides several toolbar buttons—the
+following table briefly describes the actions they perform.
+</p><div class="informaltable"><table width="100%" border="1"><colgroup><col align="center"></col><col align="left"></col><col align="left"></col></colgroup><thead><tr><th align="center">Icon</th><th align="left">Toolbar Button Name</th><th align="left">Action</th></tr></thead><tbody valign="top"><tr><td align="center" valign="top"><span class="guiicon"><img src="https://images/ide/remove-selected-breakpoints.png"></img></span></td><td align="left" valign="top"><span class="guibutton">Remove Selected Breakpoints</span></td><td align="left" valign="top">Removes the selected breakpoints.</td></tr><tr><td align="center" valign="top"><span class="guiicon"><img src="https://images/ide/remove-all-breakpoints.png"></img></span></td><td align="left" valign="top"><span class="guibutton">Remove All Breakpoints</span></td><td align="left" valign="top">Removes all the breakpoints—this can also be
+done by invoking the <a class="xref" href="https://ide.main.window.html#remove.all.breakpoints.action" title="8.1.1.51. Remove All Breakpoints action"><span class="guiicon">Remove All Breakpoints</span> action (Section 8.1.1.51)</a>.</td></tr><tr><td align="center" valign="top"><span class="guiicon"><img src="https://images/ide/show-breakpoints-supported-by-selected-target.png"></img></span></td><td align="left" valign="top"><span class="guibutton">Show Breakpoints for Selected Target</span></td><td align="left" valign="top"><span class="emphasis"><em>This toolbar button is inherited from Eclipse; it
+is not functional in the <span class="application">Squish IDE</span></em></span>.</td></tr><tr><td align="center" valign="top"><span class="guiicon"><img src="https://images/ide/go-to-file-for-breakpoint.png"></img></span></td><td align="left" valign="top"><span class="guibutton">Go to File for Breakpoint</span></td><td align="left" valign="top">Makes the <span class="application">Squish IDE</span> open an <a class="xref" href="https://ide.views.html#ide.the-editor.view" title="8.2.6. Editor view">Editor view (Section 8.2.6)</a>
+showing the file that contains the selected breakpoint if it isn't
+already open—and if it is open, it is made active—and puts
+the cursor on the line containing the breakpoint.</td></tr><tr><td align="center" valign="top"><span class="guiicon"><img src="https://images/ide/skip-all-breakpoints.png"></img></span></td><td align="left" valign="top"><span class="guibutton">Skip All Breakpoints</span></td><td align="left" valign="top">A toggle button. If down, all breakpoints are skipped. (For
+finer control, disable those you want skipped.) <span class="emphasis"><em>(Skipping
+breakpoints is not supported in <span class="application">Squish IDE</span> versions 4.0.0 and
+4.0.1.)</em></span></td></tr><tr><td align="center" valign="top"><span class="guiicon"><img src="https://images/ide/expand-all.png"></img></span></td><td align="left" valign="top"><span class="guibutton">Expand All</span></td><td align="left" valign="top">Expands all the entries shown in the view if they are being
+shown as a tree rather than as a list.</td></tr><tr><td align="center" valign="top"><span class="guiicon"><img src="https://images/ide/collapse-all.png"></img></span></td><td align="left" valign="top"><span class="guibutton">Collapse All</span></td><td align="left" valign="top">Collapses all the entries shown in the view if they are being
+shown as a tree rather than as a list.</td></tr><tr><td align="center" valign="top"><span class="guiicon"><img src="https://images/ide/link-with-debug-view.png"></img></span></td><td align="left" valign="top"><span class="guibutton">Link with Debug View</span></td><td align="left" valign="top"><span class="emphasis"><em>This toolbar button is inherited from Eclipse; it
+is not functional in the <span class="application">Squish IDE</span></em></span>.</td></tr><tr><td align="center" valign="top"><span class="guiicon"><img src="https://images/ide/view-menu.png"></img></span></td><td align="left" valign="top"><span class="guibutton">View Menu</span></td><td align="left" valign="top">This menu provides menu options for controlling various
+breakpoint-related aspects—for example, a <span class="guimenuitem">Group
+By</span> menu option that can be used to specify how the
+breakpoints are grouped in the view.</td></tr></tbody></table></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="ide.the-console.view"></a>8.2.3. Console view</h3></div></div></div><p>
+The <span class="emphasis"><em>Squish</em></span> Script Console in the Console view is shown in the <a class="xref" href="https://ide.main.window.html#ide.squish.test.debugging.perspective" title="8.1.2.3. Squish Test Debugging Perspective">Squish Test Debugging Perspective (Section 8.1.2.3)</a>. It can be used to
+interact with AUT objects, to perform computations in the scripting
+language being used for the AUT's tests, and to make additions to the
+test log. This view is also sometimes used to track down object not
+found or object not ready errors.
+</p><div class="screenshot"><div class="mediaobject" align="center"><img src="https://images/ide/console-view.png" align="middle"></img><div class="caption">The Console view (left) and the updated Test Results (right)
+</div></div></div><p>
+The Squish Script Console basically lets you do everything that can
+be done in the test script itself, except that accessing test script
+variables may not be available in every script language, and
+changing test script variables is not supported.
+</p><p>
+Much like Unix shell, Squish Script Console remembers commands that were
+entered and stores them in history file so that they can be edited or executed
+again later. History is remembered across debugging sessions as well as IDE
+restarts. To scroll through previously executed commands, the following
+keyboard shortcuts are available:
+</p><div class="itemizedlist"><ul type="disc"><li><p>
+<span class="bold"><strong>Up Arrow</strong></span>: Go to the previous command in history. Press
+the key multiple times to go backwards in history
+</p></li><li><p>
+<span class="bold"><strong>Down Arrow</strong></span>: Go to the next command in history. Press
+the key multiple times to go forwards in history
+</p></li></ul></div><p>
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="ide.the-call-hierarchy.view"></a>8.2.4. Call Hierarchy view</h3></div></div></div><p>
+The Call Hierarchy view is not shown in any perspective by default. It
+can be opened by invoking the Call Hierarchy action (by pressing
+<span class="keycap"><strong>Ctrl</strong></span>+<span class="keycap"><strong>Alt</strong></span>+<span class="keycap"><strong>H</strong></span>;
+see the <a class="xref" href="https://ide.views.html#ide.the-editor.view" title="8.2.6. Editor view">Editor view (Section 8.2.6)</a>'s Text Area Context Menu
+table for details), or chosen by using the <a class="xref" href="https://ide.main.window.html#ide.show.view.action" title="8.1.1.62. Show View action"><span class="guiicon">Show View</span> action (Section 8.1.1.62)</a>. The Call Hierarchy view shows the
+functions called from the selected function or the functions called by
+the selected function. (In this case, selected means that the function's
+name must be selected in an <a class="xref" href="https://ide.views.html#ide.the-editor.view" title="8.2.6. Editor view">Editor view (Section 8.2.6)</a>.)
+</p><div class="screenshot"><div class="mediaobject" align="center"><img src="https://images/ide/call-hierarchy-view.png" align="middle"></img><div class="caption">The Call Hierarchy view
+</div></div></div><p>
+(Note that this view is not functional for all scripting languages.)
+By default the Call Hierarchy view shows the functions called by the
+selected function as a tree. So if you are in the <code class="code">main</code>
+function you will see the entire hierarchy of calls. If you select a
+particular function the line number where it is called is shown in the
+right hand pane.
+</p><p>
+The view has a few toolbar buttons  of which the most useful are the
+<span class="guibutton">Callees</span> toolbar button (<span class="guiicon"><img src="https://images/ide/ch_callees.png"></img></span>) and the
+<span class="guibutton">Callers</span> toolbar button (<span class="guiicon"><img src="https://images/ide/ch_callers.png"></img></span>). Both the buttons are
+toggle buttons only one of which can be toggled at any one time. If the
+<span class="guibutton">Callees</span> toolbar button (<span class="guiicon"><img src="https://images/ide/ch_callees.png"></img></span>) is toggled the view
+shows all the functions called by the selected function. And if the
+<span class="guibutton">Callers</span> toolbar button (<span class="guiicon"><img src="https://images/ide/ch_callers.png"></img></span>) is toggled the view
+shows all the functions that call the selected function. If you click on
+a function in the tree the view's right hand pane will show the line
+where the function is called and an <a class="xref" href="https://ide.views.html#ide.the-editor.view" title="8.2.6. Editor view">Editor view (Section 8.2.6)</a> will be activated (or opened) showing
+the relevant file and highlighting the call.
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="ide.the-debug.view"></a>8.2.5. Debug view</h3></div></div></div><p>
+The Debug view is shown in the <a class="xref" href="https://ide.main.window.html#ide.squish.test.debugging.perspective" title="8.1.2.3. Squish Test Debugging Perspective">Squish Test Debugging Perspective (Section 8.1.2.3)</a>. It shows the filename
+and line number where <span class="emphasis"><em>Squish</em></span> has stopped—for example, at a
+breakpoint—including a full backtrace.
+</p><div class="screenshot"><div class="mediaobject" align="center"><img src="https://images/ide/debug-view.png" align="middle"></img><div class="caption">The Debug view
+</div></div></div><p>
+It is possible to jump to anywhere in the backtrace, simply by clicking
+the relevant item in the tree. The Debug view provides several toolbar
+buttons—the following table briefly describes the actions they
+perform.
+</p><div class="informaltable"><table width="100%" border="1"><colgroup><col align="center"></col><col align="left"></col><col align="left"></col></colgroup><thead><tr><th align="center">Icon</th><th align="left">Toolbar Button Name</th><th align="left">Action</th></tr></thead><tbody valign="top"><tr><td align="center" valign="top"><span class="guiicon"><img src="https://images/ide/remove-all-breakpoints.png"></img></span></td><td align="left" valign="top"><span class="guibutton">Remove Terminated Launches</span></td><td align="left" valign="top">Clears the details of any AUTs that have been terminated from
+the view</td></tr><tr><td align="center" valign="top"><span class="guiicon"><img src="https://images/ide/resume_co.png"></img></span></td><td align="left" valign="top"><span class="guibutton">Resume</span></td><td align="left" valign="top">Invokes the <a class="xref" href="https://ide.main.window.html#ide.resume.action" title="8.1.1.54. Resume action"><span class="guiicon">Resume</span> action (Section 8.1.1.54)</a>.</td></tr><tr><td align="center" valign="top"><span class="guiicon"><img src="https://images/ide/suspend.png"></img></span></td><td align="left" valign="top"><span class="guibutton">Suspend</span></td><td align="left" valign="top">Invokes the <a class="xref" href="https://ide.main.window.html#ide.suspend.action" title="8.1.1.73. Suspend action"><span class="guiicon">Suspend</span> action (Section 8.1.1.73)</a>—<span class="emphasis"><em>this action is not needed
+or functional in the <span class="application">Squish IDE</span></em></span>.</td></tr><tr><td align="center" valign="top"><span class="guiicon"><img src="https://images/ide/stop.png"></img></span></td><td align="left" valign="top"><span class="guibutton">Terminate</span></td><td align="left" valign="top">Invokes the <a class="xref" href="https://ide.main.window.html#ide.terminate.action" title="8.1.1.75. Terminate action"><span class="guiicon">Terminate</span> action (Section 8.1.1.75)</a>.</td></tr><tr><td align="center" valign="top"><span class="guiicon"><img src="https://images/ide/disconnect_co.png"></img></span></td><td align="left" valign="top"><span class="guibutton">Disconnect</span></td><td align="left" valign="top"><span class="emphasis"><em>This action is not functional in the
+<span class="application">Squish IDE</span></em></span>.</td></tr><tr><td align="center" valign="top"><span class="guiicon"><img src="https://images/ide/stepinto_co.png"></img></span></td><td align="left" valign="top"><span class="guibutton">Step Into</span></td><td align="left" valign="top">Invokes the <a class="xref" href="https://ide.main.window.html#ide.step.into.action" title="8.1.1.70. Step Into action"><span class="guiicon">Step Into</span> action (Section 8.1.1.70)</a>.</td></tr><tr><td align="center" valign="top"><span class="guiicon"><img src="https://images/ide/stepover_co.png"></img></span></td><td align="left" valign="top"><span class="guibutton">Step Over</span></td><td align="left" valign="top">Invokes the <a class="xref" href="https://ide.main.window.html#ide.step.over.action" title="8.1.1.71. Step Over action"><span class="guiicon">Step Over</span> action (Section 8.1.1.71)</a>.</td></tr><tr><td align="center" valign="top"><span class="guiicon"><img src="https://images/ide/stepreturn_co.png"></img></span></td><td align="left" valign="top"><span class="guibutton">Step Return</span></td><td align="left" valign="top">Invokes the <a class="xref" href="https://ide.main.window.html#ide.step.return.action" title="8.1.1.72. Step Return action"><span class="guiicon">Step Return</span> action (Section 8.1.1.72)</a>.</td></tr><tr><td align="center" valign="top"><span class="guiicon"><img src="https://images/ide/drop-to-frame.png"></img></span></td><td align="left" valign="top"><span class="guibutton">Drop To Frame</span></td><td align="left" valign="top"><span class="emphasis"><em>This action is not functional in the
+<span class="application">Squish IDE</span></em></span>.</td></tr><tr><td align="center" valign="top"><span class="guiicon"><img src="https://images/ide/use-step-filters.png"></img></span></td><td align="left" valign="top"><span class="guibutton">Use Step Filters</span></td><td align="left" valign="top"><span class="emphasis"><em>This toggle action is not functional in the
+<span class="application">Squish IDE</span></em></span>.</td></tr><tr><td align="center" valign="top"><span class="guiicon"><img src="https://images/ide/view-menu.png"></img></span></td><td align="left" valign="top"><span class="guibutton">View Menu</span></td><td align="left" valign="top">This menu provides menu options for controlling how the view
+presents its data.</td></tr></tbody></table></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="ide.the-editor.view"></a>8.2.6. Editor view</h3></div></div></div><p>
+The Editor view provides tabbed editors for viewing and editing a test
+suite's test case's test scripts. It is shown in all perspectives.
+</p><div class="screenshot"><div class="mediaobject" align="center"><img src="https://images/ide/editor-view.png" align="middle"></img><div class="caption">The Editor view
+</div></div></div><p>
+The Editor view's editors show line numbers and color syntax
+highlighting appropriate for the scripting language being used. In
+addition each editor is language-savvy and provides automatic
+indentation and other language-specific convenience features. These
+features are controlled though the <a class="xref" href="https://ide.dialogs.html#ide.preferences.dialog" title="8.3.17. Pref­er­ences dialog">Pref­er­ences dialog (Section 8.3.17)</a>—each supported scripting
+language has its own entry in the Preferences dialog's left-hand list,
+and within each language entry there is an Editor entry through which
+editing preferences can be set. In addition, general editing
+settings—that apply to every scripting language unless
+overridden—can be set in the Preferences dialog's General item's
+Editors subitem's Text Editors subsubitem (and its subsubsubitems). Note
+that if you hover the mouse over an Editor view tab the full path to the
+view's file is shown.
+</p><p>
+Every editor has two context menus, one that is invoked in relation to
+the line numbers and another that is invoked in relation to the editor's
+text area. The first is the same for all editors; the second has
+variations depending on the scripting language being used. The menu
+options offered by these context menus are shown in the following
+tables.
+</p><div class="table"><a id="idp57337224"></a><p class="title"><b>Table 8.1. Line Number Context Menu</b></p><div class="table-contents"><table summary="Line Number Context Menu" width="100%" border="1"><colgroup><col align="left"></col><col align="left"></col></colgroup><thead><tr><th align="left">Context Menu Option Name</th><th align="left">Action</th></tr></thead><tbody valign="top"><tr><td align="left" valign="top"><span class="guimenuitem">Toggle Breakpoint</span></td><td align="left" valign="top">Invokes the <a class="xref" href="https://ide.main.window.html#toggle.breakpoint.action" title="8.1.1.77. Toggle Breakpoint action"><span class="guiicon">Toggle Breakpoint</span> action (Section 8.1.1.77)</a>.</td></tr><tr><td align="left" valign="top"><span class="guimenuitem">Disable Breakpoint</span></td><td align="left" valign="top">Disables the breakpoint at the current line if there is one
+and it is enabled.</td></tr><tr><td align="left" valign="top"><span class="guimenuitem">Record Snippet</span></td><td align="left" valign="top">Invokes the <a class="xref" href="https://ide.main.window.html#ide.record.snippet.action" title="8.1.1.46. Re­cord Snip­pet action"><span class="guiicon">Re­cord Snip­pet</span> action (Section 8.1.1.46)</a></td></tr><tr><td align="left" valign="top"><span class="guimenuitem">Replace With TestData Field</span></td><td align="left" valign="top"><span class="emphasis"><em>This context menu option is currently not
+functional in the <span class="application">Squish IDE</span>.</em></span></td></tr><tr><td align="left" valign="top"><span class="guimenuitem">Show Quick Diff</span></td><td align="left" valign="top"><span class="emphasis"><em>This context menu option is currently not
+functional in the <span class="application">Squish IDE</span>.</em></span></td></tr><tr><td align="left" valign="top"><span class="guimenuitem">Show Line Numbers</span></td><td align="left" valign="top">This menu option is checkable—if checked the editor
+shows line numbers; otherwise it doesn't.</td></tr><tr><td align="left" valign="top"><span class="guimenuitem">Folding</span></td><td align="left" valign="top">This menu option has a submenu with options shown in <a class="xref" href="https://ide.views.html#folding.context.submenu" title="Table 8.2. Folding Context Menu">Table 8.2, “Folding Context Menu”</a>.
+Folding is where instead of showing the entire test script only the
+first line of each function or block or comment is shown. This makes it
+easier to see a script's overall structure. You can expand or collapse
+individual function entries by clicking the <span class="guiicon"><img src="https://images/ide/expandall.png"></img></span> or
+<span class="guiicon"><img src="https://images/ide/collapseall.png"></img></span>
+icons shown beside the line number; or expand or collapse everything
+using the submenu options listed above.
+</td></tr><tr><td align="left" valign="top"><span class="guimenuitem">Preferences</span></td><td align="left" valign="top">Invoking this option pops up the <a class="xref" href="https://ide.dialogs.html#ide.preferences.dialog" title="8.3.17. Pref­er­ences dialog">Pref­er­ences dialog (Section 8.3.17)</a> at the editor preferences item for
+the scripting language being used.</td></tr><tr><td align="left" valign="top"><span class="guimenuitem">Breakpoint Properties</span></td><td align="left" valign="top">This item is only enabled if the current line has a
+breakpoint, in which case it pops up a Properties dialog that can be
+used to make the breakpoint more sophisticated rather than always
+stopping the script unconditionally.</td></tr></tbody></table></div></div><br class="table-break"></br><div class="table"><a id="folding.context.submenu"></a><p class="title"><b>Table 8.2. Folding Context Menu</b></p><div class="table-contents"><table summary="Folding Context Menu" width="100%" border="1"><colgroup><col></col><col></col><col></col></colgroup><thead><tr><th align="left">Submenu Option Name</th><th align="left">Keyboard Shortcut</th><th align="left">Action</th></tr></thead><tbody valign="top"><tr><td align="left" valign="top"><span class="guimenuitem">Enable Folding</span></td><td align="left" valign="top"><span class="keycap"><strong>Ctrl</strong></span>+<span class="keycap"><strong>/</strong></span> on the
+numeric keypad</td><td align="left" valign="top">This toggle action is used to enable or disable
+folding.</td></tr><tr><td align="left" valign="top"><span class="guimenuitem">Expand All</span></td><td align="left" valign="top"><span class="keycap"><strong>Ctrl</strong></span>+<span class="keycap"><strong>*</strong></span>
+on the numeric keypad</td><td align="left" valign="top">Expands all folded items.</td></tr><tr><td align="left" valign="top"><span class="guimenuitem">Collapse All</span></td><td align="left" valign="top"><span class="keycap"><strong>Shift</strong></span>+<span class="keycap"><strong>Ctrl</strong></span>+<span class="keycap"><strong>/</strong></span> on the
+numeric keypad</td><td align="left" valign="top">Collapses all unfolded foldable items.</td></tr><tr><td align="left" valign="top"><span class="guimenuitem">Reset Structure</span></td><td align="left" valign="top"><span class="keycap"><strong>Shift</strong></span>+<span class="keycap"><strong>Ctrl</strong></span>+<span class="keycap"><strong>*</strong></span> on the
+numeric keypad</td><td align="left" valign="top">Expands all folded items and reevaluates the file's
+folding structure.</td></tr><tr><td align="left" valign="top"><span class="guimenuitem">Collapse Blocks</span></td><td align="left" valign="top"> </td><td align="left" valign="top">Folds all foldable blocks that aren't functions.</td></tr><tr><td align="left" valign="top"><span class="guimenuitem">Collapse Comments</span></td><td align="left" valign="top"> </td><td align="left" valign="top">Folds all foldable comments.</td></tr></tbody></table></div></div><br class="table-break"></br><div class="table"><a id="idp57367312"></a><p class="title"><b>Table 8.3. Text Area Context Menu</b></p><div class="table-contents"><table summary="Text Area Context Menu" width="100%" border="1"><colgroup><col></col><col></col><col></col></colgroup><thead><tr><th align="left">Languages</th><th align="left">Context Menu Option Name</th><th align="left">Action</th></tr></thead><tbody valign="top"><tr><td align="left" valign="top">JavaScript, Perl, Python, Ruby, Tcl</td><td align="left" valign="top"><span class="guimenuitem">Undo</span></td><td align="left" valign="top">Invokes the <a class="xref" href="https://ide.main.window.html#ide.undo.action" title="8.1.1.81. Undo action"><span class="guiicon">Undo</span> action (Section 8.1.1.81)</a>.</td></tr><tr><td align="left" valign="top">JavaScript, Perl, Python, Ruby, Tcl</td><td align="left" valign="top"><span class="guimenuitem">Revert File</span></td><td align="left" valign="top">This menu option restores the editor's contents to what it
+had when it was last saved. (The same effect can be achieved somewhat
+less conveniently by repeatedly invoking the <a class="xref" href="https://ide.main.window.html#ide.undo.action" title="8.1.1.81. Undo action"><span class="guiicon">Undo</span> action (Section 8.1.1.81)</a>.)</td></tr><tr><td align="left" valign="top">JavaScript, Perl, Python, Ruby, Tcl</td><td align="left" valign="top"><span class="guimenuitem">Save</span></td><td align="left" valign="top">Invokes the <a class="xref" href="https://ide.main.window.html#ide.save.action" title="8.1.1.56. Save action"><span class="guiicon">Save</span> action (Section 8.1.1.56)</a>.</td></tr><tr><td align="left" valign="top">JavaScript, Perl, Python, Ruby, Tcl</td><td align="left" valign="top"><span class="guimenuitem">Open Declaration</span></td><td align="left" valign="top"><span class="emphasis"><em>This menu option (invoked by
+<span class="keycap"><strong>F2</strong></span>) is not functional in the
+<span class="application">Squish IDE</span>.</em></span></td></tr><tr><td align="left" valign="top">JavaScript, Python, Tcl</td><td align="left" valign="top"><span class="guimenuitem">Open Type Hierarchy</span></td><td align="left" valign="top">This menu option (also invokable by pressing
+<span class="keycap"><strong>F4</strong></span>) shows the class hierarchy
+(super- and sub-classes) of the class of the item under the
+cursor. <span class="emphasis"><em>(Note that this is only functional for those scripting
+languages and classes for which the <span class="application">Squish IDE</span> has the appropriate
+information.)</em></span></td></tr><tr><td align="left" valign="top">JavaScript, Tcl</td><td align="left" valign="top"><span class="guimenuitem">Open Call Hierarchy</span></td><td align="left" valign="top">This menu option (also invokable by pressing
+<span class="keycap"><strong>Ctrl</strong></span>+<span class="keycap"><strong>Alt</strong></span>+<span class="keycap"><strong>H</strong></span>)
+opens the <a class="xref" href="https://ide.views.html#ide.the-call-hierarchy.view" title="8.2.4. Call Hierarchy view">Call Hierarchy view (Section 8.2.4)</a>  view. This view
+shows a tree of the current function and the functions it calls. If
+invoked in the test script's <code class="code">main</code> function it shows the
+entire hierarchy of functions that the test script calls. If you choose
+a called function anywhere in the hierarchy the view also shows the line
+number(s) where the function is called.
+</td></tr><tr><td align="left" valign="top">JavaScript, Python, Tcl</td><td align="left" valign="top"><span class="guimenuitem">Quick Outline</span></td><td align="left" valign="top">This menu option (also invokable by pressing
+<span class="keycap"><strong>Ctrl</strong></span>+<span class="keycap"><strong>O</strong></span>) pops up a
+dialog showing the file's structure—for example, its functions and
+global variables. If you navigate using the up and down arrow keys and
+press <span class="keycap"><strong>Enter</strong></span> on an item the dialog will close and the
+editor will show the item you chose; or just press <span class="keycap"><strong>Esc</strong></span>
+to cancel. <span class="emphasis"><em>(Note that this is only functional for those scripting
+languages for which the <span class="application">Squish IDE</span> has the appropriate
+information.)</em></span></td></tr><tr><td align="left" valign="top">JavaScript, Python, Tcl</td><td align="left" valign="top"><span class="guimenuitem">Quick Type Hierarchy</span></td><td align="left" valign="top">This menu option (also invokable by pressing
+<span class="keycap"><strong>Ctrl</strong></span>+<span class="keycap"><strong>T</strong></span>)
+shows a tree of the current function and the functions it calls. It is
+similar to the <span class="guimenuitem">Open Type Hierarchy</span> option, but
+uses a dialog rather than a view to present the information.
+</td></tr><tr><td align="left" valign="top">JavaScript, Perl, Python, Ruby, Tcl</td><td align="left" valign="top"><span class="guimenuitem">Show in</span></td><td align="left" valign="top"><span class="emphasis"><em>This menu option (also invokable by pressing
+<span class="keycap"><strong>Shift</strong></span>+<span class="keycap"><strong>Alt</strong></span>+<span class="keycap"><strong>W</strong></span>)
+is not functional in the <span class="application">Squish IDE</span>.</em></span></td></tr><tr><td align="left" valign="top">JavaScript, Perl, Python, Ruby, Tcl</td><td align="left" valign="top"><span class="guimenuitem">Cut</span></td><td align="left" valign="top">Invokes the <a class="xref" href="https://ide.main.window.html#ide.cut.action" title="8.1.1.12. Cut action"><span class="guiicon">Cut</span> action (Section 8.1.1.12)</a></td></tr><tr><td align="left" valign="top">JavaScript, Perl, Python, Ruby, Tcl</td><td align="left" valign="top"><span class="guimenuitem">Copy</span></td><td align="left" valign="top">Invokes the <a class="xref" href="https://ide.main.window.html#ide.copy.action" title="8.1.1.10. Copy action"><span class="guiicon">Copy</span> action (Section 8.1.1.10)</a></td></tr><tr><td align="left" valign="top">JavaScript, Perl, Python, Ruby, Tcl</td><td align="left" valign="top"><span class="guimenuitem">Paste</span></td><td align="left" valign="top">Invokes the <a class="xref" href="https://ide.main.window.html#ide.paste.action" title="8.1.1.36. Paste action"><span class="guiicon">Paste</span> action (Section 8.1.1.36)</a></td></tr><tr><td align="left" valign="top">Perl</td><td align="left" valign="top"><span class="guimenuitem">Shift Right</span></td><td align="left" valign="top">Moves the current line right two spaces.</td></tr><tr><td align="left" valign="top">Perl</td><td align="left" valign="top"><span class="guimenuitem">Shift Left</span></td><td align="left" valign="top">Moves the current line left two spaces (if possible).</td></tr><tr><td align="left" valign="top">JavaScript, Perl, Python, Ruby, Tcl</td><td align="left" valign="top"><span class="guimenuitem">Source</span></td><td align="left" valign="top">This menu option has a submenu with options shown in <a class="xref" href="https://ide.views.html#source.submenu" title="Table 8.4. Source Submenu">Table 8.4, “Source Submenu”</a>.
+    Note that when an editor view is active there is also a
+<span class="guimenu">Source</span> menu available from the menu bar. This menu
+has the same (or in some cases fewer) menu options as the context menu
+described here.
+</td></tr><tr><td align="left" valign="top">Perl</td><td align="left" valign="top"><span class="guimenuitem">Refactor</span></td><td align="left" valign="top">This menu option has a single submenu option
+<span class="guimenuitem">Extract Subroutine</span> that functions only if
+some lines are selected. If you invoke <span class="guimenuitem">Extract
+Subroutine</span>, first it prompts you for a subroutine name,
+then it creates a subroutine with the given name that contains the
+selected lines, and finally it replaces the original lines with a call
+to the subroutine.</td></tr><tr><td align="left" valign="top">Perl</td><td align="left" valign="top"><span class="guimenuitem">Perldoc</span></td><td align="left" valign="top"><span class="emphasis"><em>This menu option (also invokable by pressing
+<span class="keycap"><strong>Shift</strong></span>+<span class="keycap"><strong>Ctrl</strong></span>+<span class="keycap"><strong>H</strong></span>)
+is intended to run <span class="application">perldoc</span> but is not
+functional in the <span class="application">Squish IDE</span>.</em></span></td></tr><tr><td align="left" valign="top">JavaScript, Python, Tcl</td><td align="left" valign="top"><span class="guimenuitem">Search</span></td><td align="left" valign="top"><span class="emphasis"><em>This menu option is not functional in the
+<span class="application">Squish IDE</span>;</em></span> however, the menubar <a class="xref" href="https://ide.main.window.html#ide.search.action" title="8.1.1.59. Search action"><span class="guiicon">Search</span> action (Section 8.1.1.59)</a> provides search facilities</td></tr><tr><td align="left" valign="top">JavaScript</td><td align="left" valign="top"><span class="guimenuitem">Paste to JavaScript Console</span></td><td align="left" valign="top"><span class="emphasis"><em>This menu option is not fully functional in the
+<span class="application">Squish IDE</span>—all it currently does is copy the selected text to the
+clipboard</em></span></td></tr><tr><td align="left" valign="top">Tcl</td><td align="left" valign="top"><span class="guimenuitem">Paste to TclConsole</span></td><td align="left" valign="top"><span class="emphasis"><em>This menu option is not functional in the
+<span class="application">Squish IDE</span></em></span></td></tr><tr><td align="left" valign="top">JavaScript, Perl, Python, Ruby, Tcl</td><td align="left" valign="top"><span class="guimenuitem">Run As</span></td><td align="left" valign="top"><span class="emphasis"><em>This menu option is not functional in the
+<span class="application">Squish IDE</span></em></span></td></tr><tr><td align="left" valign="top">JavaScript, Perl, Python, Ruby, Tcl</td><td align="left" valign="top"><span class="guimenuitem">Debug As</span></td><td align="left" valign="top"><span class="emphasis"><em>This menu option is not functional in the
+<span class="application">Squish IDE</span></em></span></td></tr><tr><td align="left" valign="top">JavaScript, Perl, Python, Ruby, Tcl</td><td align="left" valign="top"><span class="guimenuitem">Team</span></td><td align="left" valign="top"><span class="emphasis"><em>This menu option is not functional in the
+<span class="application">Squish IDE</span></em></span></td></tr><tr><td align="left" valign="top">JavaScript, Perl, Python, Ruby, Tcl</td><td align="left" valign="top"><span class="guimenuitem">Compare With</span></td><td align="left" valign="top"><span class="emphasis"><em>This menu option is not functional in the
+<span class="application">Squish IDE</span></em></span></td></tr><tr><td align="left" valign="top">JavaScript, Perl, Python, Ruby, Tcl</td><td align="left" valign="top"><span class="guimenuitem">Replace With</span></td><td align="left" valign="top"><span class="emphasis"><em>This menu option is not functional in the
+<span class="application">Squish IDE</span></em></span></td></tr><tr><td align="left" valign="top">JavaScript, Perl, Python, Ruby, Tcl</td><td align="left" valign="top"><span class="guimenuitem">Record Snippet</span></td><td align="left" valign="top">Invokes the <a class="xref" href="https://ide.main.window.html#ide.record.snippet.action" title="8.1.1.46. Re­cord Snip­pet action"><span class="guiicon">Re­cord Snip­pet</span> action (Section 8.1.1.46)</a></td></tr><tr><td align="left" valign="top">JavaScript, Perl, Python, Ruby, Tcl</td><td align="left" valign="top"><span class="guimenuitem">Make Code Data Driven</span></td><td align="left" valign="top">This menu option inserts a loop that accesses every field in
+a test data file—it is only available if there is a test data
+file available to the test script. Make sure the cursor is on an empty
+line where you want the code to be inserted. Then choose this menu
+option and a Refactoring wizard will appear. The Refactoring wizard
+lists the test data file or files that are available: click the one you
+want to use, then click the <span class="guibutton">Next</span> button. The
+wizard will now show you the test script's current code and the code
+you'll have if you finish, as the screenshot shows:
+<div class="screenshot"><div><img src="https://images/ide/refactoring.png"></img></div></div>
+Click the <span class="guibutton">Finish</span> button to have the code
+inserted. (You can always use the <a class="xref" href="https://ide.main.window.html#ide.undo.action" title="8.1.1.81. Undo action"><span class="guiicon">Undo</span> action (Section 8.1.1.81)</a> if
+you change your mind.)
+</td></tr><tr><td align="left" valign="top">JavaScript, Perl, Python, Ruby, Tcl</td><td align="left" valign="top"><span class="guimenuitem">Replace With TestData Field</span></td><td align="left" valign="top">This menu option inserts a call to the <a class="xref" href="https://rgs-squish.html#testData.field-function"><code class="function">testData.field</code></a> function to access a data item
+from a record in a test data file—it is only available if there is a
+test data file available to the test script. Make sure the cursor is
+where you want the code to be inserted—for example to the right of
+an assignment such as <code class="code">averagingTime = </code>. Then choose this
+menu option and pick a submenu option—these options correspond to
+the fields that are available in the current test data—and a
+Refactoring wizard will appear. The Refactoring wizard will now show you
+the test script's current code and the code you'll have if you finish.
+Click the <span class="guibutton">Finish</span> button to have the code
+inserted. (You can always use the <a class="xref" href="https://ide.main.window.html#ide.undo.action" title="8.1.1.81. Undo action"><span class="guiicon">Undo</span> action (Section 8.1.1.81)</a> if
+you change your mind.) So if we started with <code class="code">averagingTime =
+</code>, our code will now be <code class="code">averagingTime =
+testData.field(record, "Averaging Time")</code>. Note that in general it
+may be more convenient to use the <span class="guimenuitem">Make Code Data
+Driven</span> menu option and then copy and paste any <a class="xref" href="https://rgs-squish.html#testData.field-function"><code class="function">testData.field</code></a> function calls that you need.
+</td></tr><tr><td align="left" valign="top">JavaScript, Perl, Python, Ruby, Tcl</td><td align="left" valign="top"><span class="guimenuitem">Preferences</span></td><td align="left" valign="top">Pops up the <a class="xref" href="https://ide.dialogs.html#ide.preferences.dialog" title="8.3.17. Pref­er­ences dialog">Pref­er­ences dialog (Section 8.3.17)</a> showing the preferences for the
+current editor view's type (e.g., Python editor, Tcl editor, etc.)</td></tr><tr><td align="left" valign="top">JavaScript, Perl, Python, Ruby, Tcl</td><td align="left" valign="top"><span class="guimenuitem">Input Methods</span></td><td align="left" valign="top">This menu option leads to a submenu of input method submenu
+options. These are useful for test engineers who are using non-Latin
+languages (e.g., those not using English or West European languages) and
+who wish to enter text in their own language</td></tr></tbody></table></div></div><br class="table-break"></br><div class="table"><a id="source.submenu"></a><p class="title"><b>Table 8.4. Source Submenu</b></p><div class="table-contents"><table summary="Source Submenu" width="100%" border="1"><colgroup><col></col><col></col><col></col></colgroup><thead><tr><th align="left">Languages</th><th align="left">Submenu Option Name</th><th align="left">Action</th></tr></thead><tbody valign="top"><tr><td align="left" valign="top">JavaScript</td><td align="left" valign="top"><span class="guimenuitem">Add Block Comment</span></td><td align="left" valign="top">This submenu option (also invokable by pressing
+<span class="keycap"><strong>Shift</strong></span>+<span class="keycap"><strong>Ctrl</strong></span>+<span class="keycap"><strong>/</strong></span>)
+inserts <code class="code">/*</code> before the selected text and <code class="code">*/</code>
+after the selected text to comment out all the selected text.</td></tr><tr><td align="left" valign="top">JavaScript</td><td align="left" valign="top"><span class="guimenuitem">Remove Block Comment</span></td><td align="left" valign="top">This submenu option (also invokable by pressing
+<span class="keycap"><strong>Shift</strong></span>+<span class="keycap"><strong>Ctrl</strong></span>+<span class="keycap"><strong>\</strong></span>)
+removes block comments (<code class="code">/*</code> and <code class="code">*/</code>).</td></tr><tr><td align="left" valign="top">JavaScript, Perl, Python, Ruby, Tcl</td><td align="left" valign="top"><span class="guimenuitem">Toggle Comment</span></td><td align="left" valign="top">This submenu option (also invokable by pressing
+<span class="keycap"><strong>Shift</strong></span>+<span class="keycap"><strong>Ctrl</strong></span>+<span class="keycap"><strong>C</strong></span>;
+except when in a Perl editor where it is invoked with
+<span class="keycap"><strong>Ctrl</strong></span>+<span class="keycap"><strong>/</strong></span>) comments
+out the current line if it is not commented out or uncomments the
+current line if it is commented out.</td></tr><tr><td align="left" valign="top">JavaScript, Python, Tcl</td><td align="left" valign="top"><span class="guimenuitem">Comment</span></td><td align="left" valign="top">This submenu option comments out the current line.</td></tr><tr><td align="left" valign="top">JavaScript, Python, Tcl</td><td align="left" valign="top"><span class="guimenuitem">Uncomment</span></td><td align="left" valign="top">This submenu option uncomments the current line.</td></tr><tr><td align="left" valign="top">JavaScript, Perl</td><td align="left" valign="top"><span class="guimenuitem">Format</span></td><td align="left" valign="top">This submenu option (also invokable by pressing <span class="keycap"><strong>Shift</strong></span>+<span class="keycap"><strong>Ctrl</strong></span>+<span class="keycap"><strong>F</strong></span>) reformats the editor's text—for
+example, tidying up the indentation</td></tr><tr><td align="left" valign="top">JavaScript</td><td align="left" valign="top"><span class="guimenuitem">Format Element</span></td><td align="left" valign="top"><span class="emphasis"><em>This submenu option has the same effect as the
+<span class="guimenuitem">Format</span> submenu option</em></span></td></tr><tr><td align="left" valign="top">JavaScript</td><td align="left" valign="top"><span class="guimenuitem">Correct Indentation</span></td><td align="left" valign="top">This submenu option (also invokable by pressing
+<span class="keycap"><strong>Ctrl</strong></span>+<span class="keycap"><strong>I</strong></span>) corrects
+the indentation for the selected lines</td></tr><tr><td align="left" valign="top">JavaScript, Python, Tcl</td><td align="left" valign="top"><span class="guimenuitem">Shift Left</span></td><td align="left" valign="top">This submenu option shifts the current line (or the
+selected lines) left by one indent width (often 4 spaces).</td></tr><tr><td align="left" valign="top">JavaScript, Python, Tcl</td><td align="left" valign="top"><span class="guimenuitem">Shift Right</span></td><td align="left" valign="top">This submenu option shifts the current line (or the
+selected lines) right by one indent width (often 4 spaces).</td></tr><tr><td align="left" valign="top">Perl</td><td align="left" valign="top"><span class="guimenuitem">Validate Syntax</span></td><td align="left" valign="top"><span class="emphasis"><em>This submenu option (also invokable by pressing
+<span class="keycap"><strong>Shift</strong></span>+<span class="keycap"><strong>F5</strong></span>) is
+inherited from Eclipse and is redundant since the <span class="application">Squish IDE</span> automatically
+highlights syntax errors in the left margin</em></span></td></tr><tr><td align="left" valign="top">Perl</td><td align="left" valign="top"><span class="guimenuitem">Pod::Checker</span></td><td align="left" valign="top">This submenu option (also invokable by pressing
+<span class="keycap"><strong>Shift</strong></span>+<span class="keycap"><strong>Ctrl</strong></span>+<span class="keycap"><strong>D</strong></span>)
+checks any Perl POD (Plain Old Documentation) that is in the file and
+marks any problems</td></tr><tr><td align="left" valign="top">Perl</td><td align="left" valign="top"><span class="guimenuitem">Clear Pod::Checker Markers</span></td><td align="left" valign="top">This submenu option clears any markers that have been set
+by running the Pod::Checker</td></tr><tr><td align="left" valign="top">Perl</td><td align="left" valign="top"><span class="guimenuitem">Perl::Critic</span></td><td align="left" valign="top">This submenu option (also invokable by pressing
+<span class="keycap"><strong>Shift</strong></span>+<span class="keycap"><strong>Ctrl</strong></span>+<span class="keycap"><strong>C</strong></span>)
+runs <span class="application">perlcritic</span> on the file and marks any
+problems</td></tr><tr><td align="left" valign="top">Perl</td><td align="left" valign="top"><span class="guimenuitem">Clear Perl::Critic Markers</span></td><td align="left" valign="top">This submenu option clears any markers that have been set
+by running Perl::Critic</td></tr><tr><td align="left" valign="top">Perl</td><td align="left" valign="top"><span class="guimenuitem">Clear All EPIC Markers</span></td><td align="left" valign="top">This submenu option clears any markers—this
+includes Pod::Checker markers, Perl::Critic markers, and the <span class="application">Squish IDE</span>'s
+standard syntax error highlighting markers</td></tr></tbody></table></div></div><br class="table-break"></br></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="ide.the-global-scripts.view"></a>8.2.7. Global Scripts view</h3></div></div></div><p>
+The Global Scripts view is shown in the <a class="xref" href="https://ide.main.window.html#ide.squish.test.management.perspective" title="8.1.2.2. Squish Test Management Perspective">Squish Test Management Perspective (Section 8.1.2.2)</a>. It shows the global
+scripts folders and the scripts they contain. These scripts can be
+accessed by any test case in any test suite. The view provides a means of
+adding and removing global scripts and global script folders. By
+default the view is shown beside the <a class="xref" href="https://ide.views.html#ide.the-editor.view" title="8.2.6. Editor view">Editor view (Section 8.2.6)</a>, but it can easily be dragged elsewhere
+if that's more convenient—for example, to be another tab beside
+the <a class="xref" href="https://ide.views.html#ide.the-test-summary.view" title="8.2.20. Test Summary view">Test Summary view (Section 8.2.20)</a>.
+</p><div class="important" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Important: Advanced"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Important]" src="https://images/important.png"></img></td><th align="left">Advanced</th></tr><tr><td align="left" valign="top"><p>
+Global scripts are an advanced feature.
+They are not recommended for new <span class="emphasis"><em>Squish</em></span> users. Even experienced users
+should use them with care—changing or deleting functionality (and
+in some cases even adding functionality) to a global script will affect
+<span class="emphasis"><em>every</em></span> test case in every test suite that uses the
+global script. If you plan to use global scripts we recommend putting
+them under version control.
+</p></td></tr></table></div><div class="screenshot"><div class="mediaobject" align="center"><img src="https://images/ide/global-scripts-view.png" align="middle"></img><div class="caption">The Global Scripts view
+</div></div></div><p>
+The first time the view appears all its toolbar buttons are disabled
+because no global scripts folders yet exist. Invoke the view's context
+menu (e.g., on most platforms by right-clicking the view), and choose
+the <span class="guimenu">Add</span>|<span class="guimenuitem">Global Script
+Directory</span> option. Use the folder dialog
+that pops up to choose or create a folder where global scripts will
+be stored. (There is no limit to the number of such folders that you
+can create.)
+</p><p>
+Once at least one folder exists you can create globally shared script
+files using the context menu's
+<span class="guimenu">Add</span>|<span class="guimenuitem">File</span>
+option or using the <span class="guibutton">New Scriptfile</span> toolbar
+button. New script files are called <code class="filename">script_1.py</code> and
+so on (with the appropriate scripting language extension of course).
+They can be renamed immediately by entering a new name, or at any time
+later by using the context menu's <span class="guimenuitem">Rename</span>
+option. Simply click the filename to invoke an <a class="xref" href="https://ide.views.html#ide.the-editor.view" title="8.2.6. Editor view">Editor view (Section 8.2.6)</a> in which to edit the file. Script files
+can easily be deleted by clicking their name in the view and using the
+context menu's <span class="guimenuitem">Delete</span> option or the
+<span class="guibutton">Delete</span> toolbar button—but great
+care must be taken since these scripts may be being used by many test
+cases in many test suites.
+</p><p>
+Global scripts are accessed using the same technique as we use for local
+scripts. For example, given a global script called
+<code class="filename">global.py</code> (or similar), we can make its contents
+available to the test case script in the usual way:
+</p><pre class="programlisting">
+source(findFile("scripts", "global.py"));
+</pre><p>
+This statement, uses the <a class="xref" href="https://rgs-squish.html#findFile-function"><code class="function">findFile</code></a> function to
+get the script's full name including its path and the <a class="xref" href="https://rgs-squish.html#source-function"><code class="function">source</code></a> function to evaluate the script to make its
+classes, functions, and variables accessible to the test case script.
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="ide.the-image.view"></a>8.2.8. Image Viewer</h3></div></div></div><p>
+The Image view is shown in the <a class="xref" href="https://ide.main.window.html#ide.squish.test.management.perspective" title="8.1.2.2. Squish Test Management Perspective">Squish Test Management Perspective (Section 8.1.2.2)</a>. It
+displays images opened either from the <a class="xref" href="https://ide.views.html#ide.the-test-suites.view" title="8.2.19. Test Suites view">Test Suites view (Section 8.2.19)</a> or from the <a class="xref" href="https://ide.views.html#ide.the-test-results.view" title="8.2.18. Test Results view">Test Results view (Section 8.2.18)</a> (for example failed images).
+</p><div class="screenshot"><div class="mediaobject" align="center"><img src="https://images/ide/image-viewer.png" align="middle"></img><div class="caption">The Image view, highlighting the zoom buttons
+</div></div></div><p>
+The Image view provides a couple of actions for zooming the image in the main
+toolbar of the IDE, in this order: a zoom-in button, a button to set the zoom
+factor to 100%, a zoom out button and finally a button that makes the image fit the
+window. The view is intended to fill a gap on systems where the IDE
+does not have access to the platforms standard image viewer and only
+provides basic viewing capabilities of the image.
+</p><p>
+It is possible to adjust the IDE's configuration to use a different viewer for
+images opened through the <a class="xref" href="https://ide.views.html#ide.the-test-results.view" title="8.2.18. Test Results view">Test Results view (Section 8.2.18)</a> or the
+<a class="xref" href="https://ide.views.html#ide.the-test-suites.view" title="8.2.19. Test Suites view">Test Suites view (Section 8.2.19)</a>. This is done through the File
+Assoications page in the <a class="xref" href="https://ide.dialogs.html#ide.preferences.dialog" title="8.3.17. Pref­er­ences dialog">Pref­er­ences dialog (Section 8.3.17)</a>. File
+Associations are stored on a file type basis, so for each image file type (png,
+gif, jpg) there's a separate entry. Selecting that entry fills the lower list
+of <span class="guilabel">Associated Editors</span> with entries that the IDE knows for opening such
+files. Clicking the <span class="guilabel">Add...</span> button for the
+<span class="guilabel">Associated Editors</span> list opens a dialog. Selecting
+<span class="guilabel">External Editor</span> here allows selecting any program
+installed on the system for opening files of the given file type. This change
+offers these additional editors in the <span class="guilabel">Open With</span> context
+menu.
+</p><p>
+In order to have image files opened from the <a class="xref" href="https://ide.views.html#ide.the-test-results.view" title="8.2.18. Test Results view">Test Results view (Section 8.2.18)</a> use that editor the default editor for that
+file type needs to be changed. This can be done by selecting the corresponding
+editor entry and clicking on the <span class="guilabel">Default</span> button next to
+the list.
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="ide.the-methods.view"></a>8.2.9. Methods view</h3></div></div></div><p>
+The Methods view is shown in the <a class="xref" href="https://ide.main.window.html#ide.squish.spy.perspective" title="8.1.2.1. Squish Spy Perspective">Squish Spy Perspective (Section 8.1.2.1)</a> and the <a class="xref" href="https://ide.main.window.html#ide.squish.test.debugging.perspective" title="8.1.2.3. Squish Test Debugging Perspective">Squish Test Debugging Perspective (Section 8.1.2.3)</a>. It shows the methods
+that can be called by the object highlighted in the <a class="xref" href="https://ide.views.html#ide.the-application-objects.view" title="8.2.1. Application Objects view">Application Objects view (Section 8.2.1)</a>—or by any other AUT
+object that has the same type.
+</p><div class="screenshot"><div class="mediaobject" align="center"><img src="https://images/ide/methods-view.png" align="middle"></img><div class="caption">The Methods view
+</div></div></div><p>
+The methods are shown using their native syntax (e.g., C++ in the
+screenshot above), so a tiny bit of mental translation may be needed to
+do the call you want.
+</p><p>
+The view allows filtering the list of methods based on some part of the method
+name, for example searching for the text <span class="emphasis"><em>round</em></span> will
+reduce the part of the list visible in the screenshot above to the two methods
+containing this text in their name. The filter works case-insensitive and also
+allows simple wildcard matching.
+</p><p>
+The view has a context menu that supports the <a class="xref" href="https://ide.main.window.html#ide.select.all.action" title="8.1.1.60. Select All action"><span class="guiicon">Select All</span> action (Section 8.1.1.60)</a> and the <a class="xref" href="https://ide.main.window.html#ide.copy.action" title="8.1.1.10. Copy action"><span class="guiicon">Copy</span> action (Section 8.1.1.10)</a>.
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="ide.the-object-map.view"></a>8.2.10. Object Map view</h3></div></div></div><p>
+The Object Map view is not shown in any perspective by default. It can
+be shown by clicking the  <a class="xref" href="https://ide.views.html#ide.the-test-suites.view" title="8.2.19. Test Suites view">Test Suites view (Section 8.2.19)</a>'s
+<span class="guibutton">Object Map</span> (<span class="guiicon"><img src="https://images/ide/object_map_button.png"></img></span>) toolbar button. Another way to see it is to right-click on
+a symbolic name in one its test cases, and select <span class="guilabel">Open Symbolic
+Name</span>. The Object Map view
+can be used to rename, add, edit, and delete entries from the test suite's
+object map. It can be used with the Text Based as well as Script-Based Object
+Maps.
+
+
+</p><div class="screenshot"><div class="mediaobject" align="center"><img src="https://images/ide/objects-map-view.png" align="middle"></img><div class="caption">The Object Map view
+</div></div></div><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Note: Storage of Object Names"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/note.png"></img></td><th align="left">Storage of Object Names</th></tr><tr><td align="left" valign="top"><p>
+There are 2 ways that the Object Map can be stored.
+For Script-Based Object Maps, we use
+<code class="filename">names.&lt;ext&gt;</code> under the
+<code class="filename">shared/scripts</code> directory of the test suite.
+For Text-Based Object Maps, it is stored a file called
+<code class="filename">objects.map</code>, which is plain text, in the test suite's
+root directory. In either case, you can the Object Map view, a script editor,
+a plain text editor, or a code editor in <span class="application">squishide</span> for editing object map
+entries.
+</p></td></tr></table></div><p>
+The Object Map view is split into an upper and a lower panel. The upper
+panel is labeled “<span class="quote">Symbolic Names</span>” and shows the AUT's
+symbolic names—these are the names <span class="emphasis"><em>Squish</em></span> uses when it records
+test scripts. These names are shown in a hierarchy, so if you don't see
+the name that you are interested in you may have to expand one or more
+entries to find it. It is best to use symbolic names wherever possible
+since they make it easier to adapt to changes in the AUT without being
+forced to change the test scripts themselves. The lower panel is
+labeled “<span class="quote">Real Name</span>” and shows the "value", which is usually a set
+of properties associated with the highlighted symbolic name.
+</p><p>
+In the screenshot, the highlighted symbolic name is
+<code class="code">address_Book_MyAddresses_adr_File_QTableWidget</code>.
+By looking at its properties, we can see its real (multi-property) name:
+<code class="code">{"aboveWidget": address_Book_MyAddresses_adr_File_QToolBar, "type":
+"QTableWidget", "unnamed": 1, "visible": 1, "window":
+address_Book_MyAddresses_adr_MainWindow}</code>.
+If later on, the AUT's developers decided to use a <code class="classname">QTableWidget</code>
+subclass, say, <code class="classname">EnhancedTableWidget</code>, all our test scripts
+that used the widget would break. Thanks to the Object Map, we don't
+have to edit any of our scripts to fix this; instead we can simply
+change the <span class="property">type</span> property's value to the new class name and
+all our scripts will work again. The flexibility and power of <span class="emphasis"><em>Squish</em></span>'s
+Object Map is one of the reasons why <span class="emphasis"><em>Squish</em></span> tests are so robust in the
+face of AUT changes.
+</p><div class="warning" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Warning:  No Undo "><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Warning]" src="https://images/warning.png"></img></td><th align="left"> No Undo </th></tr><tr><td align="left" valign="top"><p>
+  The Object Map view does <span class="emphasis"><em>not</em></span> have an undo facility.
+  In view of this, if you plan to delete or edit entries, we recommend
+  making a backup of the test suite's <code class="filename">objects.map</code>
+  file before making any changes. If you do make a mistake—for
+  example, delete a symbolic name by accident—the easiest solution
+  is to click the view's close button (<code class="code">X</code>) and then click the
+  <span class="guibutton">No</span> button when prompted to save changes to the
+  Object Map. This will revert all the changes you've made.
+</p></td></tr></table></div><p> The most common operation is renaming an entry. If you double-click
+on a symbolic name, you can edit it. After you save changes (provided you are using
+the Script-Based Object Map), a refactoring operation will happen, and the
+variable will be renamed in all test cases of your test suite.
+</p><p>
+Another common operation is to edit an entry's properties. For
+example, you might have an object with a <span class="property">windowTitle</span>
+property whose value is <code class="literal">Address Book - Untitled</code>, but it
+changes over time. <span class="emphasis"><em>Squish</em></span> will detect this and create a new symbolic name for
+each value, but if you want to use one symbolic name for all values, you could
+make the entry more general by removing or editing its
+<span class="property">windowTitle</span> property. By setting the operator to
+<code class="literal">Wildcard</code> and the value to <code class="literal">Address Book*</code>,
+this will match the window title when other files are opened later.
+(For more about matching object names see <a class="xref" href="https://rg-namelookup.html" title="7.10. Improving Object Identification">Improving Object Identification (Section 7.10)</a>.)
+</p><p>
+The Object Map view's upper panel can be used to remove existing
+symbolic names by selecting the name and clicking the upper panel's
+<span class="guibutton">Remove</span> button. As noted, there is no undo
+facility, so this feature should be used with care.
+</p><p>
+It is also possible to create a completely new symbolic name. To do this,
+click the upper panel's <span class="guibutton">New</span> button. This will
+create a new symbolic name with a default name of
+<code class="literal">"NewName"</code> (or <code class="literal">"NewName1"</code> and so on if that
+name is already in use), and with no properties at all. Double-click the
+name to make it editable, and then change the name to something that
+makes sense for your test suite. You can then add new properties by
+clicking the lower panel's <span class="guibutton">New</span> button once for
+each new property you need. Each property's name and value can be set by
+double-clicking the relevant cell and typing in the appropriate text.
+The operator can also be set by double-clicking and then using the up
+and down arrows to select the operator you want. For most GUI
+toolkits (the exceptions being <span class="emphasis"><em>Squish</em></span> for Windows and <span class="emphasis"><em>Squish</em></span> for
+Web), every real name should have a <span class="property">type</span> property, so be
+sure to add this property and set its value to the name of the object's
+type. Usually it is best to set at least two properties to help ensure
+that the object is uniquely identified.
+</p><p>
+It is possible to delete properties simply by selecting them and
+clicking the lower panel's <span class="guibutton">Remove</span> button. As
+noted, there is no undo facility, so this feature should be used with
+care.
+</p><p>
+These buttons are only enabled while the AUT is running.
+In cases where the AUT's GUI has changed, you might want to check whether the
+object a symbolic name refers to can be found. This can be done by selecting the
+name and clicking the <span class="guibutton">Check Existence</span> button. If it is
+not found, a red "x" appears. If it is found, a green check mark appears, and
+<span class="guibutton">Highlight Object</span> can be used to show it in your GUI
+with a transparent red rectangle over it. </p><p>
+The Object Map view has a context menu with some standard actions
+(specifically, the <a class="xref" href="https://ide.main.window.html#ide.copy.action" title="8.1.1.10. Copy action"><span class="guiicon">Copy</span> action (Section 8.1.1.10)</a>, the <a class="xref" href="https://ide.main.window.html#ide.cut.action" title="8.1.1.12. Cut action"><span class="guiicon">Cut</span> action (Section 8.1.1.12)</a>, the <a class="xref" href="https://ide.main.window.html#ide.paste.action" title="8.1.1.36. Paste action"><span class="guiicon">Paste</span> action (Section 8.1.1.36)</a>, and
+the <a class="xref" href="https://ide.main.window.html#ide.delete.action" title="8.1.1.13. Delete action"><span class="guiicon">Delete</span> action (Section 8.1.1.13)</a>). The <span class="guilabel">Copy</span> action
+copies the selected symbolic name to the clipboard. If you want the real
+(multi-property) name, use the <span class="guimenuitem">Copy Real Name</span>
+option to copy the real name to the clipboard.
+
+</p><p>
+Some AUTs have lots of symbolic names. If you are looking for a specific
+object, you can type some part of its name into the <span class="guilabel">Filter Object
+Names</span> line edit. For example, if you wanted to find a particular
+button, enter the button's class name (e.g., <code class="classname">Button</code>) and
+the list of symbolic names will be narrowed down to all those which contain the
+text “<span class="quote">Button</span>”.
+</p><p>
+For information about handling the Object Map programmatically in test
+scripts, see <a class="xref" href="https://rgs-squish.html#rgss-objmap" title="6.3.11. Object Map Functions">Object Map Functions (Section 6.3.11)</a>. For more about Object Maps in
+use, see the <a class="xref" href="https://rg-objectmap.html" title="7.11. Object Map">Object Map (Section 7.11)</a>.
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="ide.the-outline.view"></a>8.2.11. Outline view</h3></div></div></div><p>
+The Outline view is not shown in any perspective by default. It can be
+shown by using the <a class="xref" href="https://ide.main.window.html#ide.show.view.action" title="8.1.1.62. Show View action"><span class="guiicon">Show View</span> action (Section 8.1.1.62)</a> or by pressing
+<span class="keycap"><strong>Shift</strong></span>+<span class="keycap"><strong>Alt</strong></span>+<span class="keycap"><strong>Q</strong></span>, <span class="keycap"><strong>O</strong></span>.
+It shows the active file's structure: its classes, and its functions and
+their variables.
+</p><div class="screenshot"><div class="mediaobject" align="center"><img src="https://images/ide/outline-view.png" align="middle"></img><div class="caption">The Outline view
+</div></div></div><p>
+By default the view shows the classes and functions declared in the
+active <a class="xref" href="https://ide.views.html#ide.the-editor.view" title="8.2.6. Editor view">Editor view (Section 8.2.6)</a>. (Note that the display of
+variables is not supported for all scripting languages.) The view has a
+few toolbar buttons: one for sorting the contents alphabetically (i.e.,
+sorting both the functions and the variables used by each function); and
+some toggle buttons to switch off or on the display of classes,
+functions, and variables.
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="ide.the-properties.view"></a>8.2.12. Properties view</h3></div></div></div><p>
+The Properties view is shown in the <a class="xref" href="https://ide.main.window.html#ide.squish.spy.perspective" title="8.1.2.1. Squish Spy Perspective">Squish Spy Perspective (Section 8.1.2.1)</a> and the <a class="xref" href="https://ide.main.window.html#ide.squish.test.debugging.perspective" title="8.1.2.3. Squish Test Debugging Perspective">Squish Test Debugging Perspective (Section 8.1.2.3)</a>. It shows the
+properties of the  <a class="xref" href="https://ide.views.html#ide.the-application-objects.view" title="8.2.1. Application Objects view">Application Objects view (Section 8.2.1)</a>'s
+selected object. The name of the selected object is shown above the
+properties.
+</p><div class="screenshot"><div class="mediaobject" align="center"><img src="https://images/ide/properties-view.png" align="middle"></img><div class="caption">The Properties view
+</div></div></div><p>
+Multi-valued properties such as <code class="code">font</code> and
+<code class="code">geometry</code> have their value shown as a brace enclosed list of
+<span class="emphasis"><em>key</em></span> = <span class="emphasis"><em>value</em></span> pairs, although
+each individual value can be seen by expanding the property as the
+screenshot above shows for the <code class="code">frameGeometry</code> property.
+</p><p>
+If a test is being recorded or played back (i.e., when the <a class="xref" href="https://ide.main.window.html#ide.squish.test.debugging.perspective" title="8.1.2.3. Squish Test Debugging Perspective">Squish Test Debugging Perspective (Section 8.1.2.3)</a> is active), clicking
+a property will make the <a class="xref" href="https://ide.views.html#ide.verification.point.creator.view" title="8.2.22. Verification Point Creator view">Verification Point Creator view (Section 8.2.22)</a> become visible (if it isn't
+already), with the clicked property shown as a potential verification
+point. You can click as many properties as you like this way to create
+multiple verifications. (Note: Verification points are only actually
+inserted into the test script if you click the <a class="xref" href="https://ide.views.html#ide.verification.point.creator.view" title="8.2.22. Verification Point Creator view">Verification Point Creator view (Section 8.2.22)</a>'s
+<span class="guibutton">Insert</span> button.)
+</p><p>
+(See also, <a class="xref" href="https://ug-editdebug.html#uged-spy" title="5.21.3. How to Use the Spy">How to Use the Spy (Section 5.21.3)</a>.)
+</p><p>
+The view allows filtering the list of properties based on property
+name, for example entering the text <code class="literal">frame</code> will
+show in the list, only the two properties
+containing <code class="literal">frame</code> in their name. The filter is
+case-insensitive and also allows simple wildcard matching.
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="ide.runner.server.log.view"></a>8.2.13. Runner/Server Log view</h3></div></div></div><p>
+The Runner/Server Log view is initially docked at the bottom when in
+any perspective. If hidden, it can be shown by using the
+<a class="xref" href="https://ide.main.window.html#ide.show.view.action" title="8.1.1.62. Show View action"><span class="guiicon">Show View</span> action (Section 8.1.1.62)</a>.
+It logs messages from both the <span class="application">squishrunner</span> and <span class="application">squishserver</span>.
+When things are not working correctly, it often shows relevant error
+messages related to AUT launching and hooking, timeouts, etc.
+</p><div class="screenshot"><div class="mediaobject" align="center"><img src="https://images/ide/runner-server-log-view.png" align="middle"></img><div class="caption">The Runner/Server Log view
+</div></div></div><p>
+Log lines beginning with <code class="code">S:</code> are from the <span class="application">squishserver</span> and
+lines beginning with <code class="code">R:</code> are from the <span class="application">squishrunner</span>. Lines
+that don't start with either of these are from the <span class="application">Squish IDE</span>.
+</p><p>
+The Log view has a context menu through which the log's contents can be
+selected and then copied to the clipboard and then pasted into, say, an
+email. For example, you might be asked to do this by <span class="emphasis"><em>froglogic</em></span> to help
+solve a problem that you've encountered.
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="ide.search.image.view"></a>8.2.14. Image Selection Editor view</h3></div></div></div><p>
+The Image Selection Editor view is shown when we choose to insert an
+image-based action function using a new image into the test
+script. The insertion is initiated via the
+<a class="xref" href="https://ide.main.window.html#ide.insert.mouseclick.action" title="8.1.3.8. Insert &gt; mouseClick(&lt;Image&gt;) action"><span class="guiicon">Insert &gt; mouseClick(&lt;Image&gt;)</span> action (Section 8.1.3.8)</a>,
+<a class="xref" href="https://ide.main.window.html#ide.insert.doubleclick.action" title="8.1.3.9. Insert &gt; doubleClick(&lt;Image&gt;) action"><span class="guiicon">Insert &gt; doubleClick(&lt;Image&gt;)</span> action (Section 8.1.3.9)</a> or
+<a class="xref" href="https://ide.main.window.html#ide.insert.tapobject.action" title="8.1.3.10. Insert &gt; tapObject(&lt;Image&gt;) action"><span class="guiicon">Insert &gt; tapObject(&lt;Image&gt;)</span> action (Section 8.1.3.10)</a>.
+</p><div class="screenshot"><div class="mediaobject" align="center"><img src="https://images/ide-ref-image-selection-editor.png" align="middle"></img><div class="caption">The Image Selection Editor view
+</div></div></div><p>
+The Image Selection Editor view allows you to mark a region of the
+desktop's screenshot, which will copy and store the region on disk for
+subsequent searches. You can use scrollbars to pan to different
+parts of the screen, and a slider or zoom buttons to zoom in and out of the
+image.
+Drag the default rectangular selection into the
+correct position, and resize the edges to make it fit
+the element to be searched. It's advisable to keep the amount of
+background pixels as small as possible for faster and more robust
+searches.
+</p><p>
+Before inserting, it is recommended to enter a meaningful file name
+into the <span class="guilabel">Name</span>.
+On insert, the selected image will be stored in the test suite's shared visual
+look-up directory
+(<code class="code"><span class="emphasis"><em>test_suite</em></span>/shared/searchImages/</code>)
+and used as an argument to the <a class="xref" href="https://rgs-squish.html#waitForImage-function"><code class="function">waitForImage</code></a>
+function.
+</p><p>
+When clicking <span class="guibutton">Insert &lt;action&gt;</span> an attempt
+to execute the selected action will be performed, followed (upon
+sucess) by insertion of the respective script statement into the test
+script.
+</p><p>
+In case the first screen grab attempt returns an unwanted result,
+the <span class="guibutton">Refresh</span> and <span class="guibutton">Refresh in 3
+sec</span> buttons come in handy for grabbing the screen
+again, either immediately or with a delay. The delay is meant to give
+the user a chance to arrange the application, for example by opening an
+application menu.
+</p><p>
+The <span class="guibutton">Cancel</span> button will abort the insertion of a
+new script statement and take us back to the main recording mode.
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="ide.the-search.view"></a>8.2.15. Search view</h3></div></div></div><p>
+The Search view is not shown in any perspective by default. It can be
+shown by using the <a class="xref" href="https://ide.main.window.html#ide.show.view.action" title="8.1.1.62. Show View action"><span class="guiicon">Show View</span> action (Section 8.1.1.62)</a>; however, the
+usual way to make this view visible is simply to perform a search which
+uses this view to present its results.
+</p><div class="screenshot"><div class="mediaobject" align="center"><img src="https://images/ide/search-view.png" align="middle"></img><div class="caption">The Search view
+</div></div></div><p>
+The screenshot above shows the Search view that appeared as the result
+of invoking the <a class="xref" href="https://ide.main.window.html#ide.workspace.action" title="8.1.1.84. Workspace action"><span class="guiicon">Workspace</span> action (Section 8.1.1.84)</a> (by pressing
+<span class="keycap"><strong>Ctrl</strong></span>+<span class="keycap"><strong>Alt</strong></span>+<span class="keycap"><strong>G</strong></span>)
+when the cursor was on a function called
+<code class="code">addNameAndAddress</code> in an <a class="xref" href="https://ide.views.html#ide.the-editor.view" title="8.2.6. Editor view">Editor view (Section 8.2.6)</a> being used to edit a JavaScript test
+script. Here the Search view is showing the line where the search was
+initiated from (which is also where the function's definition begins),
+and the lines where the function is called or defined in other files in
+the same workspace (i.e., in the same test suite).
+</p><p>
+The Search view can appear as the result of a number of other search
+actions, some of which are scripting-language dependent.
+</p><p>
+The Search view provides several toolbar buttons—the following
+table briefly describes the actions they perform.
+</p><div class="informaltable"><table width="100%" border="1"><colgroup><col align="center"></col><col align="left"></col><col align="left"></col></colgroup><thead><tr><th align="center">Icon</th><th align="left">Toolbar Button Name</th><th align="left">Action</th></tr></thead><tbody valign="top"><tr><td align="center" valign="top"><span class="guiicon"><img src="https://images/ide/down-arrow.png"></img></span></td><td align="left" valign="top"><span class="guibutton">Show Next Match</span></td><td align="left" valign="top">Moves the highlight to the next match in the view and also
+makes the match visible in the <a class="xref" href="https://ide.views.html#ide.the-editor.view" title="8.2.6. Editor view">Editor view (Section 8.2.6)</a>
+(opening a new tab with a new file if necessary). This action can be
+invoked by pressing
+<span class="keycap"><strong>Ctrl</strong></span>+<span class="keycap"><strong>.</strong></span> (which when
+the Search view isn't active normally invokes the <a class="xref" href="https://ide.main.window.html#ide.next.annotation.action" title="8.1.1.29. Next Annotation action"><span class="guiicon">Next Annotation</span> action (Section 8.1.1.29)</a>.)</td></tr><tr><td align="center" valign="top"><span class="guiicon"><img src="https://images/ide/up-arrow.png"></img></span></td><td align="left" valign="top"><span class="guibutton">Show Previous Match</span></td><td align="left" valign="top">Moves the highlight to the previous match in the view and also
+makes the match visible in the <a class="xref" href="https://ide.views.html#ide.the-editor.view" title="8.2.6. Editor view">Editor view (Section 8.2.6)</a>
+(opening a new tab with a new file if necessary). This action can be
+invoked by pressing
+<span class="keycap"><strong>Ctrl</strong></span>+<span class="keycap"><strong>,</strong></span> (which when
+the Search view isn't active normally invokes the <a class="xref" href="https://ide.main.window.html#ide.previous.annotation.action" title="8.1.1.38. Prev­ious An­no­ta­tion action"><span class="guiicon">Prev­ious An­no­ta­tion</span> action (Section 8.1.1.38)</a>.)</td></tr><tr><td align="center" valign="top"><span class="guiicon"><img src="https://images/ide/pop.png"></img></span></td><td align="left" valign="top"><span class="guibutton">Remove Selected Matches</span></td><td align="left" valign="top">Removes any selected matches from the view. This action can
+be invoked by pressing the <span class="keycap"><strong>Delete</strong></span> key</td></tr><tr><td align="center" valign="top"><span class="guiicon"><img src="https://images/ide/progress_remall.png"></img></span></td><td align="left" valign="top"><span class="guibutton">Remove All Matches</span></td><td align="left" valign="top">Removes all the matches shown in the view</td></tr><tr><td align="center" valign="top"><span class="guiicon"><img src="https://images/ide/expandall.png"></img></span></td><td align="left" valign="top"><span class="guibutton">Expand All</span></td><td align="left" valign="top">Expands all the matches shown in the view; this toolbar
+button is not available if viewing in list rather than tree format</td></tr><tr><td align="center" valign="top"><span class="guiicon"><img src="https://images/ide/collapseall.png"></img></span></td><td align="left" valign="top"><span class="guibutton">Collapse All</span></td><td align="left" valign="top">Collapse all the matches shown in the view so that only the
+root of the match tree is shown; this toolbar button is not available if
+viewing in list rather than tree format</td></tr><tr><td align="center" valign="top"><span class="guiicon"><img src="https://images/ide/rerun-search.png"></img></span></td><td align="left" valign="top"><span class="guibutton">Run the Current Search Again</span></td><td align="left" valign="top">Reruns the search; this may be useful if files have changed
+since the search was last run</td></tr><tr><td align="center" valign="top"><span class="guiicon"><img src="https://images/ide/cancel-search.png"></img></span></td><td align="left" valign="top"><span class="guibutton">Cancel Current Search</span></td><td align="left" valign="top">Cancels the current search; this is useful if the search is
+taking a long time—for example, because it is looking at a very
+large number of big files</td></tr><tr><td align="center" valign="top"><span class="guiicon"><img src="https://images/ide/show-previous-searches.png"></img></span></td><td align="left" valign="top"><span class="guibutton">Show Previous Searches</span></td><td align="left" valign="top">If the non-menu part of the toolbar button is pressed a
+dialog is popped up showing a list of previous searches; if the menu
+part is pressed the list of previous searches is shown as a submenu
+</td></tr><tr><td align="center" valign="top"><span class="guiicon"><img src="https://images/ide/pin-search-view.png"></img></span></td><td align="left" valign="top"><span class="guibutton">Pin the Search View</span></td><td align="left" valign="top">If this toggle button is up (the default) any new searches
+show their results in the current Search view, displacing previous
+results (which are still accessible using the Show Previous Searches
+toolbar button). if this toggle button is down, this Search view is kept
+unchanged if a new search is performed and the new matches are shown in
+another Search view</td></tr><tr><td align="center" valign="top"><span class="guiicon"><img src="https://images/ide/view-menu.png"></img></span></td><td align="left" valign="top"><span class="guibutton">View Menu</span></td><td align="left" valign="top">This pops up a submenu of view options, including Show as
+List and Show as Tree (the default)</td></tr></tbody></table></div><p>
+More or fewer toolbar buttons may be available depending on the context,
+for example, depending whether the view is showing the matches as a list
+or as a tree. There are also some toolbar toggle buttons (not listed
+above) that control how the matches are grouped.
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="ide.the-settings.view"></a>8.2.16. Test Suite Settings view</h3></div></div></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><span class="section"><a href="https://ide.views.html#ide.the-settings.view.general">8.2.16.1. Test Suite Information</a></span></dt><dt><span class="section"><a href="https://ide.views.html#ide.the-settings.view.aut">8.2.16.2. AUT Information</a></span></dt><dt><span class="section"><a href="https://ide.views.html#ide.the-settings.view.connection">8.2.16.3. Connection Information</a></span></dt><dt><span class="section"><a href="https://ide.views.html#ide.the-settings.view.testsettings">8.2.16.4. Test Settings</a></span></dt><dt><span class="section"><a href="https://ide.views.html#ide.the-settings.view.imagesearch">8.2.16.5. Image Search</a></span></dt><dt><span class="section"><a href="https://ide.views.html#ide.the-settings.view.passwords">8.2.16.6. Password Information</a></span></dt><dt><span class="section"><a href="https://ide.views.html#ide.the-settings.view.descriptions">8.2.16.7. Descriptions</a></span></dt></dl></div><p>
+The <span class="guilabel">Test Suite Settings</span> view is not shown in any
+perspective by default. It can be shown by clicking the <a class="xref" href="https://ide.views.html#ide.the-test-suites.view" title="8.2.19. Test Suites view">Test Suites view (Section 8.2.19)</a>'s
+<span class="guibutton">Test Suite Settings</span> toolbar button. It is used to
+view and edit test suite-specific information. (See also <a class="xref" href="https://rg-cmdline.html#rg-squishrunner-cli-suite.conf" title="7.4.3.2. The suite.conf File">The suite.conf File (Section 7.4.3.2)</a>.)
+</p><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="ide.the-settings.view.general"></a>8.2.16.1. Test Suite Information</h4></div></div></div><div class="screenshot"><div class="mediaobject" align="center"><img src="https://images/ide/settings-view1.png" align="middle"></img><div class="caption">The General tab (Test Suite Settings)
+</div></div></div><p>
+The Test Suite Information gets most of its values when the <a class="xref" href="https://ide.dialogs.html#ide.new.squish.test.suite.wizard" title="8.3.13. New Squish Test Suite wizard">New Squish Test Suite wizard (Section 8.3.13)</a> is used to create a new
+test suite: it cannot be changed.
+</p><p>
+The Description section can be used to give the test suite both a short
+summary and a longer description.
+</p><p>
+The <span class="guilabel">Object Map</span> specifies the name and path of the
+<code class="filename">objects.map</code> file. (If no path is given then
+<span class="emphasis"><em>Squish</em></span> will look for it in the test suite's folder.) If you want to
+specify an <code class="filename">objects.map</code> file that isn't in the test
+suite's folder, you can either enter the filename and path directly or
+click the <span class="guibutton">Browse</span> button to pop up a file dialog to
+choose an <code class="filename">objects.map</code> file. If you enter a path by
+hand you can use an environment variable if you wish—for example:
+</p><pre class="screen">
+$(TEST_ENVIRONMENT)\myapp\objects.map
+</pre><p>
+If the environment in which the <span class="emphasis"><em>Squish</em></span> tools execute has an entry of
+<code class="code">TEST_ENVIRONMENT = C:\TestFolder</code> then <span class="emphasis"><em>Squish</em></span> will read the
+Object Map from the <code class="filename">C:\TestFolder\myapp\objects.map</code>
+file.
+</p><p>
+The Object Map can be edited using the <a class="xref" href="https://ide.views.html#ide.the-object-map.view" title="8.2.10. Object Map view">Object Map view (Section 8.2.10)</a>. For information about handling the
+Object Map programmatically in test scripts see <a class="xref" href="https://rgs-squish.html#rgss-objmap" title="6.3.11. Object Map Functions">Object Map Functions (Section 6.3.11)</a>. For more about Object Maps in use see the <a class="xref" href="https://rg-objectmap.html" title="7.11. Object Map">Object Map (Section 7.11)</a>.
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="ide.the-settings.view.aut"></a>8.2.16.2. AUT Information</h4></div></div></div><p>
+The AUT is normally set to the name of the AUT's executable, although
+for Java AWT/Swing applications it is normally set to the main class
+(the class that contains the <code class="code">main</code> method). For some AUTs
+it contains the name of a shell script or Windows
+<code class="filename">.bat</code> file. For <span class="trademark">Java</span>™ applications it is possible
+to specify a <code class="code">CLASSPATH</code> (although this is often done in a
+shell script or Windows <code class="filename">.bat</code> file for Java SWT
+applications). And for all application it is possible to specify the
+command line arguments that the AUT should be started with. If the
+<span class="guibutton">Hook into sub-processes launched by the
+application</span> checkbox is checked, <span class="emphasis"><em>Squish</em></span> will also be able
+to test application's launched by the AUT—providing they use a GUI
+toolkit that <span class="emphasis"><em>Squish</em></span> recognizes and is licensed for. (Java SWT
+applications must check this checkbox of course since the actual SWT
+application is launched from a shell script or Windows
+<code class="filename">.bat</code> file.) The
+<span class="guibutton">Automatically start the AUT</span> checkbox is unchecked
+by default and the AUT is started in the test script with a call to the
+<a class="xref" href="https://rgs-squish.html#startApplication-function"><code class="function">startApplication</code></a> function. This makes it
+possible to execute statements in the test script
+<span class="emphasis"><em>before</em></span> the AUT is launched.
+</p><div class="screenshot"><div class="mediaobject" align="center"><img src="https://images/ide/settings-view2.png" align="middle"></img><div class="caption">The AUT tab (Test Suite Settings)
+</div></div></div><p>
+The Working Directory is the folder where the AUT is run from. The
+default is the folder where the AUT's executable resides, but it
+is also possible to use the <span class="application">squishserver</span>'s working directory, or
+simply to choose any folder you like. If you choose the Custom location
+you can either enter a path or click the <span class="guibutton">Browse</span>
+button to pop up a file dialog to choose a path. If you enter a path by
+hand you can use an environment variable if you wish—for example:
+</p><pre class="screen">
+$(TEST_ENVIRONMENT)\myapp
+</pre><p>
+If the environment in which the <span class="emphasis"><em>Squish</em></span> tools execute has an entry of
+<code class="code">TEST_ENVIRONMENT = C:\TestFolder</code> then <span class="emphasis"><em>Squish</em></span> will execute
+the AUT with the AUT's working directory set to the
+<code class="filename">C:\TestFolder\myapp</code> directory.
+</p><p>
+The Environment can be used to specify the environment variables (names
+and values) that should be present when the AUT runs. If you need an
+AUT-specific environment, simply click (or double-click depending on
+your platform and <span class="application">Squish IDE</span> settings) an empty Key cell and enter an
+environment variable name. Then do the same to the corresponding Value
+cell. You can do this as many times as necessary. To delete a variable,
+simply delete its Key and press <span class="keycap"><strong>Enter</strong></span>. Note that
+<span class="emphasis"><em>Squish</em></span> has two different environments: the environment that the
+<span class="emphasis"><em>Squish</em></span> tools (such as <span class="application">squishserver</span> and <span class="application">squishrunner</span>) and the test
+cases execute in, and the AUT's environment. (See also, <a class="xref" href="https://rg-autsettings.html#rgas-envars" title="7.3.3. Setting Environment Variables">Setting Environment Variables (Section 7.3.3)</a>, <a class="xref" href="https://rg-autsettings.html#rgas-autenv" title="7.3.3.1. Setting Environment Variables for the AUT">Setting Environment Variables for the AUT (Section 7.3.3.1)</a>, and <a class="xref" href="https://rg-envvars.html" title="7.5. Environment Variables">Environment Variables (Section 7.5)</a>.)
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="ide.the-settings.view.connection"></a>8.2.16.3. Connection Information</h4></div></div></div><p>
+The <span class="guilabel">Connection</span> tab is only present for VNC test suites.
+It allows configuration of the connection parameters for the remote VNC server.
+For <span class="guilabel">Protocol</span> there are 2 choices,
+<span class="guilabel">Native</span>, which requires a <span class="application">squishserver</span> to be running on
+the remote system, or <span class="guilabel">VNC</span>, where the actual VNC protocol
+is used to connect.
+</p><p>
+If <span class="guilabel">Native</span> is chosen, the actual
+host and port to use are specified in the
+<a class="xref" href="https://ide.dialogs.html#ide.preferences.remote.testing.pane">Remote Testing Options</a>.
+</p><p>
+If <span class="guilabel">VNC</span> is chosen, some additional
+fields are visible. Of those, all but <span class="guilabel">Hostname</span>
+are optional, and depend on the configuration of the VNC server.
+</p><div class="screenshot"><div class="mediaobject" align="center"><img src="https://images/ide/settings-view6.png" align="middle"></img><div class="caption">The Connection tab (Test Suite Settings)
+</div></div></div><p>
+The password for the VNC server (if required) can be specified on the
+<a class="xref" href="https://ide.views.html#ide.the-settings.view.passwords" title="8.2.16.6. Password Information">Password Information (Section 8.2.16.6)</a> page. Once configured, it
+will become available as one of the options in the
+<span class="guibutton">Password</span> combo box.
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="ide.the-settings.view.testsettings"></a>8.2.16.4. Test Settings</h4></div></div></div><p>
+The <span class="guilabel">Test Settings</span> tab contains a number of options that
+influence execution of all scripts in the test suite.
+The initial settings in this section get default values from
+the properties of <a class="xref" href="https://rgs-squish.html#rgs-testsettings" title="6.3.19. testSettings Object"><code class="code">testSettings</code> Object (Section 6.3.19)</a>.
+</p><div class="screenshot"><div class="mediaobject" align="center"><img src="https://images/ide/settings-view3.png" align="middle"></img><div class="caption">The Test Settings tab (Test Suite Settings)
+</div></div></div><p>
+The options available in the editor correspond to the following
+properties:
+</p><div class="itemizedlist"><ul type="disc"><li><p><span class="guibutton">waitForObject() timeout</span>
+configures the default value for the
+<a class="xref" href="https://rgs-squish.html#testSettings.waitForObjectTimeout-property">testSettings.waitForObjectTimeout</a> property;
+</p></li><li><p><span class="guibutton">Log a screenshot on a PASS test result
+</span> configures the default value for the
+<a class="xref" href="https://rgs-squish.html#testSettings.logScreenshotOnPass-property">testSettings.logScreenshotOnPass</a> property;
+</p></li><li><p><span class="guibutton">Log a screenshot on a FAIL test result
+</span> configures the default value for the
+<a class="xref" href="https://rgs-squish.html#testSettings.logScreenshotOnFail-property">testSettings.logScreenshotOnFail</a> property;
+</p></li><li><p><span class="guibutton">Log a screenshot on an error</span>
+configures the default value for the
+<a class="xref" href="https://rgs-squish.html#testSettings.logScreenshotOnError-property">testSettings.logScreenshotOnError</a> property;
+</p></li><li><p><span class="guibutton">Verification Point retry timeout</span>
+configures the default value for the
+<a class="xref" href="https://rgs-squish.html#testSettings.retryDuration-property">testSettings.retryDuration</a> property;
+</p></li><li><p><span class="guibutton">Silent VP verifications</span>
+configures the default value for the
+<a class="xref" href="https://rgs-squish.html#testSettings.silentVerifications-property">testSettings.silentVerifications</a> property;
+</p></li><li><p><span class="guibutton">Throw an exception on a test
+failure</span> configures the default value for the
+<a class="xref" href="https://rgs-squish.html#testSettings.throwOnFailure-property">testSettings.throwOnFailure</a> property;
+</p></li><li><p><span class="guibutton">Interrupt test execution on failure, as if breakpoint
+was set</span> configures the default value for the
+<a class="xref" href="https://rgs-squish.html#testSettings.breakOnFailure-property">testSettings.breakOnFailure</a> property;
+</p></li><li><p><span class="guibutton">Debug 'Object Not Found'
+interactively</span> configures the default value for the
+<a class="xref" href="https://rgs-squish.html#testSettings.objectNotFoundDebugging-property">testSettings.objectNotFoundDebugging</a>
+property.</p></li><li><p><span class="guibutton">Debug 'Image Not Found'
+interactively</span> configures the default value for the
+<a class="xref" href="https://rgs-squish.html#testSettings.imageNotFoundDebugging-property">testSettings.imageNotFoundDebugging</a>
+property.</p></li><li><p><span class="guibutton">Debug 'Text Not Found'
+interactively</span> configures the default value for the
+<a class="xref" href="https://rgs-squish.html#testSettings.textNotFoundDebugging-property">testSettings.textNotFoundDebugging</a>
+property.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="ide.the-settings.view.imagesearch"></a>8.2.16.5. Image Search</h4></div></div></div><p>
+The <span class="guilabel">Image Search</span> tab contains options that influence squish
+image search functionality. The initial settings in this section get default
+values from the properties of <a class="xref" href="https://rgs-squish.html#rgs-testsettings" title="6.3.19. testSettings Object"><code class="code">testSettings</code> Object (Section 6.3.19)</a>.
+</p><div class="screenshot"><div class="mediaobject" align="center"><img src="https://images/ide/settings-view4.png" align="middle"></img><div class="caption">The Image Search tab (Test Suite Settings)
+</div></div></div><p>
+The options available in the editor correspond to the following
+properties:
+</p><div class="itemizedlist"><ul type="disc"><li><p><span class="guibutton">Tolerant image search</span>
+configures the default value for the
+<a class="xref" href="https://rgs-squish.html#testSettings.imageSearchTolerant-property">testSettings.imageSearchTolerant</a> property;
+</p></li><li><p><span class="guibutton">Image search threshold</span>
+configures the default value for the
+<a class="xref" href="https://rgs-squish.html#testSettings.imageSearchThreshold-property">testSettings.imageSearchThreshold</a> property;
+</p></li><li><p><span class="guibutton">Find resized images</span> configures
+the default value for the
+<a class="xref" href="https://rgs-squish.html#testSettings.imageSearchMultiscale-property">testSettings.imageSearchMultiscale</a> property;
+</p></li><li><p><span class="guibutton">Minimal size</span> configures the
+default value for the
+<a class="xref" href="https://rgs-squish.html#testSettings.imageSearchMinScale-property">testSettings.imageSearchMinScale</a> property;
+</p></li><li><p><span class="guibutton">Maximal size</span> configures the
+default value for the
+<a class="xref" href="https://rgs-squish.html#testSettings.imageSearchMaxScale-property">testSettings.imageSearchMaxScale</a> property;
+</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="ide.the-settings.view.passwords"></a>8.2.16.6. Password Information</h4></div></div></div><p>
+The <span class="guilabel">Passwords</span> tab lets you
+associate a list of passwords with the current test
+suite. These passwords can be retrieved in the test script using the
+<a class="xref" href="https://rgs-squish.html#testSettings.getPassword-function"><code class="function">testSettings.getPassword</code></a> function.
+</p><div class="screenshot"><div class="mediaobject" align="center"><img src="https://images/ide/settings-view7.png" align="middle"></img><div class="caption">The Passwords tab (Test Suite Settings)
+</div></div></div><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Note"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/note.png"></img></td><th align="left">Note</th></tr><tr><td align="left" valign="top"><p>
+The passwords stored in a Squish test suite have to be retrievable in plaintext
+form. Therefore, they are not stored in a "secure" way - they are just
+stored separately, so that it is not necessary to hard-code passwords in your
+test scripts.
+</p></td></tr></table></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="ide.the-settings.view.descriptions"></a>8.2.16.7. Descriptions</h4></div></div></div><div class="screenshot"><div class="mediaobject" align="center"><img src="https://images/ide/settings-view5.png" align="middle"></img><div class="caption">The Descriptions tab (Test Suite Settings)
+</div></div></div><p>
+The <span class="guilabel">Descriptions</span> tab allows editing of a sort summary and a
+longer description for each of the test cases in the current test suite. It
+also allows specification of a comma-separated list of <span class="guilabel">Tags</span>
+for each of the script-based test cases. The <span class="guilabel">Tags</span> field for
+the BDD test cases is disabled, because the Gherkin file format allows assigning
+tags to a scenario in the file itself. Tagged test cases can be executed
+selectively as described in the <a class="xref" href="https://rg-cmdline.html#rg-squishrunner-cli-playback--tags" title="7.4.3.19. Playback option --tags">Playback option <code class="option">--tags</code> (Section 7.4.3.19)</a>
+section.
+</p></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="ide.the-test-center.view"></a>8.2.17. Test Center view</h3></div></div></div><p>
+This view is not shown in any perspective by default, but can be shown from any
+perspective by selecting <span class="guimenu">Window</span>-<span class="guimenuitem">Show
+View</span>-<span class="guimenuitem">Other</span>-<span class="guimenuitem">Squish
+Tests</span>-<span class="guimenuitem">Squish Test Center</span>.
+</p><div class="screenshot"><div class="mediaobject" align="center"><img src="https://images/ide/test-center-view0.png" align="middle"></img><div class="caption"><p>The Test Center view
+</p></div></div></div><p> Initially, the view is empty. To see the available test results, a
+<span class="application">Squish Test Center</span> must first be
+<a class="ulink" href="https://doc.froglogic.com/squish-testcenter/latest/install-testcenter.html" target="_blank">
+installed and running</a>.
+Click the <span class="guibutton">Configure Squish Test Centers</span> button,
+and then click <span class="guibutton">Add...</span>,
+and enter the URL, email and password of your desired <span class="application">Squish Test Center</span> server.
+You can check your inputs with <span class="guibutton">Validate Settings</span> before
+clicking <span class="guibutton">OK</span> to add the server.
+</p><div class="screenshot"><div class="mediaobject" align="center"><img src="https://images/ide/test-center-view-add.png" align="middle"></img><div class="caption"><p>Adding a <span class="application">Squish Test Center</span>
+</p></div></div></div><p> Now, the table should be populated with rows representing batch runs
+(assuming some already have been uploaded to the Test Center previously).
+A row can be selected in the table and the <span class="guibutton">Download</span>
+tool button clicked, to bring the result into the <a class="xref" href="https://ide.views.html#ide.the-test-results.view" title="8.2.18. Test Results view">Test Results view (Section 8.2.18)</a>. </p><div class="screenshot"><div class="mediaobject" align="center"><img src="https://images/ide/test-center-view-download.png" align="middle"></img><div class="caption"><p>The Test Center view, populated
+</p></div></div></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="ide.the-test-results.view"></a>8.2.18. Test Results view</h3></div></div></div><p>
+The Test Results view is shown in the <a class="xref" href="https://ide.main.window.html#ide.squish.test.management.perspective" title="8.1.2.2. Squish Test Management Perspective">Squish Test Management Perspective (Section 8.1.2.2)</a>. It shows the results
+of the most recent test run.
+</p><div class="screenshot"><div class="mediaobject" align="center"><img src="https://images/ide/test-results-view.png" align="middle"></img><div class="caption"><p>The Test Results view
+</p></div></div></div><p>
+By default the view shows every kind of result: passes, fails, warnings, and so
+on. All these are controlled by the filter setting of the view using the
+corresponding toolbar dropdown and are on by default. Toggle any of them off if
+there are some categories that are not of interest.
+</p><p>
+The view has several toolbar items, starting with the <span class="guilabel">Recent Results</span> dropdown
+that allows loading test results that have been generated by an earlier test
+execution in the IDE. The following <span class="guilabel">Next</span> and
+<span class="guilabel">Previous</span> items in the toolbar jump
+backwards and forwards through the test results, stopping at each
+failure or error. The expand and collapse items following expand and collapse all
+nested entries in the results tree make it easy to go back to a highlevel
+view of the results after having drilled down. The <span class="guilabel">View Differences</span> toolbar
+item allows comparing the actual value of a verified object with the expected
+value stored in a verification point file. The <span class="guilabel">Use as
+Expected</span> item updates the verification point, replacing the current
+expected value with the actual one obtained
+during test execution. The <span class="guilabel">Select New Image Search</span> entry does a similar job for
+image lookups. The <span class="guilabel">Jump to Video at Timestamp</span> entry (<span class="guiicon"><img src="https://images/ide/jumpto_vid_timestamp.png"></img></span>) opens up the <a class="xref" href="https://ide.views.html#ide.the-videoplayer-view" title="8.2.23. Video Player view">Video Player view (Section 8.2.23)</a>
+and automatically seeks the video to the timestamp of the currently selected entry in the test results.
+The <span class="guilabel">Filter</span> dropdown allows hiding certain types of results as
+explained above, and the <span class="guilabel">Clear</span> action empties the results
+view. The <span class="guilabel">Export</span>
+and <span class="guilabel">Import</span> tool items allow saving and loading test results
+in a zipped format that can be easily shared.
+Finally, the <span class="guilabel">Upload Results to Test Center</span> tool button
+allows uploading the results directly to <span class="application">Squish Test Center</span>. This button will not be
+enabled unless a <span class="application">Squish Test Center</span> is configured in the <a class="xref" href="https://ide.views.html#ide.the-test-center.view" title="8.2.17. Test Center view">Test Center view (Section 8.2.17)</a>.
+</p><p>
+The view has a context menu that supports the <a class="xref" href="https://ide.main.window.html#ide.select.all.action" title="8.1.1.60. Select All action"><span class="guiicon">Select All</span> action (Section 8.1.1.60)</a> and the <a class="xref" href="https://ide.main.window.html#ide.copy.action" title="8.1.1.10. Copy action"><span class="guiicon">Copy</span> action (Section 8.1.1.10)</a>. There is also a <span class="guilabel">Re-Run Test</span>
+action which allows execution of the test case or scenario that the selected
+result entry belongs to.
+This makes it easy to re-run just the failed part of a larger test execution to
+investigate a failure. The other actions in the context menu are counterparts
+to the toolbar items explained above carrying the same names and icons.
+</p><div class="screenshot"><div class="mediaobject" align="center"><img src="https://images/ide/test-results-select-location.png" align="middle"></img><div class="caption">The result entry location dialog
+</div></div></div><p>
+When using the import functionality to load test results generated on a different
+system, the Test Results view may not always find the paths and files mentioned in the
+report on the local system when you double click an entry to look at the test
+script. In such cases it'll use the above dialog to ask where the particular
+file or directory can be found on the local system. The Test Results view will
+then try to guess other paths it needs based on the selection, so that it does
+not have to ask for every single file.
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="ide.the-test-suites.view"></a>8.2.19. Test Suites view</h3></div></div></div><p>
+The Test Suites view is shown in the <a class="xref" href="https://ide.main.window.html#ide.squish.test.management.perspective" title="8.1.2.2. Squish Test Management Perspective">Squish Test Management Perspective (Section 8.1.2.2)</a> and the <a class="xref" href="https://ide.main.window.html#ide.squish.spy.perspective" title="8.1.2.1. Squish Spy Perspective">Squish Spy Perspective (Section 8.1.2.1)</a>. It shows the current test suite
+(in a combobox), a list of the suite's test cases, a list of the current
+test case's resources, and a list of the test suite's resources.
+</p><div class="screenshot"><div class="mediaobject" align="center"><img src="https://images/ide/squish-test-suites-view.png" align="middle"></img><div class="caption">The Test Suites view
+</div></div></div><p>
+The test suite can be changed by interacting with the combobox. To the
+right of the combobox are some toolbar buttons. These are the
+<span class="guibutton">New Test Suite</span> toolbar button
+(<span class="guiicon"><img src="https://images/ide/new_test_suite.png"></img></span>) which invokes the
+<a class="xref" href="https://ide.main.window.html#ide.new.test.suite.action" title="8.1.1.28. New Test Suite action"><span class="guiicon">New Test Suite</span> action (Section 8.1.1.28)</a>, the <span class="guibutton">Open Test
+Suite</span> toolbar button (<span class="guiicon"><img src="https://images/ide/open_test_suite.png"></img></span>) which invokes the
+<a class="xref" href="https://ide.main.window.html#ide.open.test.suite.action" title="8.1.1.34. Open Test Suite action"><span class="guiicon">Open Test Suite</span> action (Section 8.1.1.34)</a>, the <span class="guibutton">Test Suite
+Settings</span> toolbar button (<span class="guiicon"><img src="https://images/ide/suite_settings.png"></img></span>) which makes the
+<a class="xref" href="https://ide.views.html#ide.the-settings.view" title="8.2.16. Test Suite Settings view">Test Suite Settings view (Section 8.2.16)</a> visible, and the
+<span class="guibutton">Object Map</span> (<span class="guiicon"><img src="https://images/ide/object_map_button.png"></img></span>) toolbar button which makes the
+<a class="xref" href="https://ide.views.html#ide.the-object-map.view" title="8.2.10. Object Map view">Object Map view (Section 8.2.10)</a> visible.
+</p><p>
+The Test Cases list also has toolbar buttons to its right. The first is
+the <span class="guibutton">New Script Test Case</span> (<span class="guiicon"><img src="https://images/ide/new_test_case.png"></img></span>) button which
+creates a new empty test case into which a new test script can be
+recorded, and the second is the <span class="guibutton">Run Test Suite</span>
+toolbar button (<span class="guiicon"><img src="https://images/ide/run_test_suite.png"></img></span>) which runs every test case in the
+test suite one after the other. To run an individual test case on its
+own, click the <span class="guibutton">Run Test Case</span> toolbar button
+(<span class="guiicon"><img src="https://images/ide/run.png"></img></span>) to
+the right of the test case you want to run.
+To record a new test case click the <span class="guibutton">Record Test
+Case</span> toolbar button (<span class="guiicon"><img src="https://images/ide/record.png"></img></span>) to the right of the test
+case you want to record—be aware that if
+you use this on a non-empty test case the existing test script will be
+completely replaced! (You can always use the <a class="xref" href="https://ide.main.window.html#ide.undo.action" title="8.1.1.81. Undo action"><span class="guiicon">Undo</span> action (Section 8.1.1.81)</a> immediately after to fix this.) If you want
+to <span class="emphasis"><em>insert</em></span> an extra recorded snippet into an
+existing test case use the <a class="xref" href="https://ide.main.window.html#ide.record.snippet.action" title="8.1.1.46. Re­cord Snip­pet action"><span class="guiicon">Re­cord Snip­pet</span> action (Section 8.1.1.46)</a>. To view or edit a test script in an
+<a class="xref" href="https://ide.views.html#ide.the-editor.view" title="8.2.6. Editor view">Editor view (Section 8.2.6)</a>, simply click it (or double-click
+it, depending on your <span class="application">Squish IDE</span> preferences).
+</p><p>
+The Test Case Resources and Test Suite Resources panels are structurally
+and functionally the same: the difference is that the former is
+concerned with test case specific resources and the latter with
+resources shared by the entire test suite. So we will describe them
+together as "Resources".
+</p><p>
+The Resources have two toolbar buttons to their right. The first is a
+<span class="guibutton">New Test Script File</span> toolbar button
+(<span class="guiicon"><img src="https://images/ide/new_test_script_file.png"></img></span>) which when
+clicked creates a new empty test script file, and the second is a
+<span class="guibutton">New Test Data File</span> toolbar button
+(<span class="guiicon"><img src="https://images/ide/new_test_data_file.png"></img></span>) which when
+clicked creates a new empty test data file. To view or edit a shared
+script or test data file simply click it (or double-click it, depending
+on your <span class="application">Squish IDE</span> preferences) and a suitable editor view will appear.
+</p><p>
+To make use of a shared test script you must use the <a class="xref" href="https://rgs-squish.html#source-function"><code class="function">source</code></a> function. And to access test data use the
+test data functions described in <a class="xref" href="https://rgs-squish.html#rgss-testdata" title="6.3.10. Test Data Functions">Test Data Functions (Section 6.3.10)</a>.
+</p><p>
+The Test Cases list and the Resources panels also have context menus
+with delete and rename options amongst others. If there is at least one
+test case present the Test Cases list's context menu has a
+<span class="guimenuitem">Create Template from Testcase</span> option. If this
+option is invoked it will pop up a Create Test Case Template
+dialog—simply enter the template's name and click the
+<span class="guibutton">OK</span> button to create a template that is an exact
+copy of the currently highlighted test case. The template is stored in
+the Test Case Template Directory; this directory can be changed in the
+<a class="xref" href="https://ide.dialogs.html#ide.preferences.dialog" title="8.3.17. Pref­er­ences dialog">Pref­er­ences dialog (Section 8.3.17)</a>'s Squish pane's Test Creation
+child pane. To create a new test case based on the template, i.e., to
+create a new test case that's initially an exact copy of the template
+use the <a class="xref" href="https://ide.dialogs.html#ide.new.dialog" title="8.3.9. New dialog">New dialog (Section 8.3.9)</a>'s Squish Test Case from
+Template option. (See also <a class="xref" href="https://rg-templates.html#rg-templates-new" title="7.14.1. Creating a New Template">Creating a New Template (Section 7.14.1)</a>.)
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="ide.the-test-summary.view"></a>8.2.20. Test Summary view</h3></div></div></div><p>
+The Test Summary view is shown in the <a class="xref" href="https://ide.main.window.html#ide.squish.test.management.perspective" title="8.1.2.2. Squish Test Management Perspective">Squish Test Management Perspective (Section 8.1.2.2)</a>. It shows a summary
+of of the most recent test run's results.
+</p><div class="screenshot"><div class="mediaobject" align="center"><img src="https://images/ide/test-summary-view.png" align="middle"></img><div class="caption">The Test Summary view
+</div></div></div><p>
+The Test Summary view has a context menu with the <a class="xref" href="https://ide.main.window.html#ide.select.all.action" title="8.1.1.60. Select All action"><span class="guiicon">Select All</span> action (Section 8.1.1.60)</a> and the <a class="xref" href="https://ide.main.window.html#ide.copy.action" title="8.1.1.10. Copy action"><span class="guiicon">Copy</span> action (Section 8.1.1.10)</a>.
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="ide.the-variables.view"></a>8.2.21. Variables view</h3></div></div></div><p>
+The Variables view is shown in the <a class="xref" href="https://ide.main.window.html#ide.squish.test.debugging.perspective" title="8.1.2.3. Squish Test Debugging Perspective">Squish Test Debugging Perspective (Section 8.1.2.3)</a>. It shows the test
+script's variables (which may include AUT objects), and their values.
+</p><div class="screenshot"><div class="mediaobject" align="center"><img src="https://images/ide/variables-view.png" align="middle"></img><div class="caption">The Variables view
+</div></div></div><p>
+The value of some objects is shown as <code class="code">&lt;complex
+object&gt;</code>. This usually means that the object is a composite
+object, in which case we can expand it (since the Variables view is a
+tree view), to see the name, type, and value of each of its components.
+The view is kept up to date as you step through the program so you can
+watch variables come into existence, watch their values change, and
+finally watch them disappear when they go out of scope.
+</p><p>
+The view has a few toolbar buttons that affect various aspects of how
+and what data it displays. It also has a context menu with the <a class="xref" href="https://ide.main.window.html#ide.select.all.action" title="8.1.1.60. Select All action"><span class="guiicon">Select All</span> action (Section 8.1.1.60)</a>, a Copy Variables action (invokable by
+pressing <span class="keycap"><strong>Ctrl</strong></span>+<span class="keycap"><strong>C</strong></span>)
+that copies a variable's name, type and value— or its name, type
+and components' names, types, and values—to the clipboard, and a
+Find action (invokable by pressing
+<span class="keycap"><strong>Ctrl</strong></span>+<span class="keycap"><strong>F</strong></span>) that pops
+up a Find dialog for searching amongst the variables by their names.
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="ide.verification.point.creator.view"></a>8.2.22. Verification Point Creator view</h3></div></div></div><p>
+The Verification Point Creator view appears automatically when we check
+a property's checkbox in the <a class="xref" href="https://ide.views.html#ide.the-properties.view" title="8.2.12. Properties view">Properties view (Section 8.2.12)</a>
+(unless it is already visible). This view is used to accumulate a list
+of one or more property verifications ready to be inserted into a test
+case's script.
+</p><div class="screenshot"><div class="mediaobject" align="center"><img src="https://images/ide/verificationpoint-creator-view.png" align="middle"></img><div class="caption">The Verification Point Creator view
+</div></div></div><p>
+The verifications listed in the Verification Point Creator view are
+<span class="emphasis"><em>only</em></span> inserted into the test script that is being
+recorded (or that is being played and is stopped at a breakpoint), if
+the <span class="guibutton">Insert</span> button (at the top-right) is clicked.
+</p><p>
+In the example shown in the screenshot, clicking the
+<span class="guibutton">Insert</span> button would result in the following lines
+being inserted into the test script (assuming we are using
+Python—the code for other languages is very similar):
+</p><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Python</span><pre class="programlisting">
+test.compare(waitForObjectExists(":Invoice:_QComboBox").currentText, "AXV-12200")
+test.compare(waitForObjectExists(":This Payment:_QSpinBox").value, 350)
+test.compare(waitForObjectExists(":Make Payment.Credit Card_QRadioButton").checked, True)
+</pre></div><p>
+If we wanted to do these same verifications in hand written code we
+could write the same as the above, but in practice we do things in a
+different style by hand and would instead do this:
+</p><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Python</span><pre class="programlisting">
+comboBox = waitForObject(":Invoice:_QComboBox")
+test.compare(comboBox.currentText, "AXV-12200")
+spinBox = waitForObject(":This Payment:_QSpinBox")
+test.compare(spinBox.value, 350)
+radioButton = waitForObject(":Make Payment.Credit Card_QRadioButton")
+test.verify(radioButton.checked)
+</pre></div><p>
+We can invert the meaning of a verification shown in the view by
+checking the <span class="guibutton">Expected Failure</span> checkbox and
+changing the value to one we do <span class="emphasis"><em>not</em></span> expect. To
+continue the example shown in the screenshot, we could set the radio
+button's <code class="code">checked</code> value to “<span class="quote">false</span>” and check
+the associated <span class="guibutton">Expected Failure</span> checkbox. This
+would make <span class="emphasis"><em>Squish</em></span> generate a call to the <a class="xref" href="https://rgs-squish.html#test.xcompare-function"><code class="function">test.xcompare</code></a> function rather than to the <a class="xref" href="https://rgs-squish.html#test.compare-function"><code class="function">test.compare</code></a> function and to use a value of
+<code class="code">false</code> in the comparison.
+</p><p>
+If we change our minds and don't want to insert a particular
+verification we can simply click its associated
+<span class="guibutton">Delete</span> button. And if we want to delete a
+verification after it has been inserted we just need to delete the one
+or two lines of code that do the verification in the test script's code.
+</p><p>
+By default verifications are inserted as “<span class="quote">Scriptified Properties
+VP</span>”s—this just means that they are inserted as code as
+shown above. This is by far the most convenient way to insert
+verifications because it makes them easy to read and easy to modify or
+delete.
+</p><p>
+It is also possible to insert a verification as a “<span class="quote">Properties
+VP</span>”—this creates a new resource in the <a class="xref" href="https://ide.views.html#ide.the-test-suites.view" title="8.2.19. Test Suites view">Test Suites view (Section 8.2.19)</a>'s Test Case Resources list (in the
+VPs tab) called “<span class="quote">VP1</span>” (or “<span class="quote">VP2</span>” if VP1 exists,
+etc.). Such verifications are inserted into the test script as calls to
+the <a class="xref" href="https://rgs-squish.html#test.vp-function"><code class="function">test.vp</code></a> function with the name of the
+verification point being passed as the sole parameter. The name can be
+changed by invoking the context menu on the verification point in the
+<a class="xref" href="https://ide.views.html#ide.the-test-suites.view" title="8.2.19. Test Suites view">Test Suites view (Section 8.2.19)</a>'s Test Case Resources
+list—if you do this, make sure that the name used in the call to
+the <a class="xref" href="https://rgs-squish.html#test.vp-function"><code class="function">test.vp</code></a> function is the same. If you
+delete a verification from the <a class="xref" href="https://ide.views.html#ide.the-test-suites.view" title="8.2.19. Test Suites view">Test Suites view (Section 8.2.19)</a>'s Test Case Resources list, you
+must also delete any associated calls to the <a class="xref" href="https://rgs-squish.html#test.vp-function"><code class="function">test.vp</code></a> function that refer to the deleted
+verification.
+</p><p>
+<span class="emphasis"><em>Squish</em></span> supports a third kind of verification, “<span class="quote">Screenshot
+VP</span>” as the screenshot below illustrates.
+</p><div class="screenshot"><div class="mediaobject" align="center"><img src="https://images/ide/verificationpoint-creator-view2.png" align="middle"></img><div class="caption">The Verification Point Creator view with a Screenshot VP
+</div></div></div><p>
+To create a screenshot verification double-click the object you want a
+screenshot of in the <a class="xref" href="https://ide.views.html#ide.the-application-objects.view" title="8.2.1. Application Objects view">Application Objects view (Section 8.2.1)</a>.
+This could be the entire application (i.e., if you click the top-level
+object), or just one widget (as here where we have double-clicked a
+spinbox). Screenshot verifications are very similar to Property
+verifications: they appear as resources in the <a class="xref" href="https://ide.views.html#ide.the-test-suites.view" title="8.2.19. Test Suites view">Test Suites view (Section 8.2.19)</a>'s Test Case Resources list and are
+invoked by a call to the <a class="xref" href="https://rgs-squish.html#test.vp-function"><code class="function">test.vp</code></a> function.
+Just as with Property verifications they can be renamed (in which case
+the name used in the <a class="xref" href="https://rgs-squish.html#test.vp-function"><code class="function">test.vp</code></a> function call
+must be changed to match), or deleted (in which case the <a class="xref" href="https://rgs-squish.html#test.vp-function"><code class="function">test.vp</code></a> function call must also be deleted).
+</p><p>
+In general it is much more reliable doing property verifications that
+screenshot verifications since the latter can be affected by all kinds
+of irrelevant influences. For example, a change to a computer's theme
+might mean that a different font is used or that widget borders are
+thinner, thicker or differently colored than before, and so on. So,
+here for this example, it is much better to verify the amount (350) than
+to use a screenshot verification.
+</p><p>
+See also, <a class="xref" href="https://ug-vps.html" title="5.22. How to Create and Use Verification Points">How to Create and Use Verification Points (Section 5.22)</a> and the <a class="xref" href="https://rgs-squish.html#rgss-teststatements" title="6.3.8. Verification Functions">Verification Functions (Section 6.3.8)</a>.
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="ide.the-videoplayer-view"></a>8.2.23. Video Player view</h3></div></div></div><p>
+        The Video Player view is shown in the <a class="xref" href="https://ide.main.window.html#ide.squish.test.management.perspective" title="8.1.2.2. Squish Test Management Perspective">Squish Test Management Perspective (Section 8.1.2.2)</a>.
+        It allows replaying of videos that have been captured as part of the test execution,
+        using the <a class="xref" href="https://rgs-squish.html#test.startVideoCapture-function"><code class="function">test.startVideoCapture</code></a> or the <a class="xref" href="https://rg-cmdline.html#rg-squishrunner-cli-playback--enable-video-capture" title="7.4.3.8. Playback option --enable-video-capture">Playback option <code class="option">--enable-video-capture</code> (Section 7.4.3.8)</a>.
+        This view can be opened or activated by double-clicking on a video attachment or using
+        <span class="guilabel">Jump to Video at Timestamp...</span> toolbar button (<span class="guiicon"><img src="https://images/ide/jumpto_vid_timestamp.png"></img></span>) or context menu in
+        <a class="xref" href="https://ide.views.html#ide.the-test-results.view" title="8.2.18. Test Results view">Test Results view (Section 8.2.18)</a>
+    </p><div class="screenshot"><div class="mediaobject" align="center"><img src="https://images/ide/video-player-view.png" align="middle"></img><div class="caption"><p>The Video Player view</p></div></div></div><p>
+        The Video Player view provides common actions for controlling the video playback, including a
+        <span class="guilabel">Play/Pause</span> button (<span class="guiicon"><img src="https://images/ide/video_play.png"></img></span>,<span class="guiicon"><img src="https://images/ide/video_pause.png"></img></span>) to interrupt the video
+        playback, buttons for jumping forwards
+        (<span class="guiicon"><img src="https://images/ide/video_forward.png"></img></span>) and backwards
+        (<span class="guiicon"><img src="https://images/ide/video_rewind.png"></img></span>) a few seconds,
+        and a <span class="guilabel">Stop</span> button to end video playback completely
+        (<span class="guiicon"><img src="https://images/ide/video_stop.png"></img></span>).
+        The current position of the video is displayed as a time offset from the beginning, next to the
+        duration of the complete video. The slider at the right allows seeking to a specific
+        point in the video and also resembles the current position of the video.
+    </p><p>
+        The video playback can be optionally synchronized with the selection in the <a class="xref" href="https://ide.views.html#ide.the-test-results.view" title="8.2.18. Test Results view">Test Results view (Section 8.2.18)</a>
+        and vice versa. This view setting can be changed in the view's toolbar menu indicated by three vertical dots by toggling
+        <span class="guilabel"> Synchronize with Test Report</span> menu entry (<span class="guiicon"><img src="https://images/ide/synced.png"></img></span>)
+        on/off.
+        </p><div class="screenshot"><div class="mediaobject" align="center"><img src="https://images/ide/video-player-view-synchronize.png" align="middle"></img><div class="caption"><p>The Video Player view with synchronization menu opened</p></div></div></div><p>
+        When the synchronization is enabled, it works in both ways: the selected item in the Test Results view
+        is automatically updated to follow the video playback. Similarly, as the user selects items in the test
+        result view, the playback fast forwards or rewinds to the corresponding position in the video.
+    </p><p>
+        Using the <span class="guilabel">Settings</span> dropdown
+        (<span class="guiicon"><img src="https://images/ide/vidplayback_settings.png"></img></span>) it is
+        possible to adjust the playback speed. This allows you
+        to observe quickly done interactions more closely, or to run faster
+        through longer periods of no interactions in the video.
+    </p></div></div><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" type="text/javascript" src="ScriptingLanguage.js"></script><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format">setScriptingLanguage();</script><div class="navfooter"><hr></hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="https://ide.main.window.html">Prev</a> </td><td width="20%" align="center"><a accesskey="u" href="https://ide.ref.man.html">Up</a></td><td width="40%" align="right"> <a accesskey="n" href="https://ide.dialogs.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">8.1. Main Window </td><td width="20%" align="center"><a accesskey="h" href="https://index-noframes.html">Home</a></td><td width="40%" align="right" valign="top"> 8.3. Dialogs</td></tr></table></div></body>
+<!-- Mirrored from ide.views.html by HTTrack Website Copier/3.x [XR&CO'2013], Wed, 06 Jul 2022 13:29:03 GMT -->
+</html>

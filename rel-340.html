@@ -1,0 +1,128 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<!-- Mirrored from rel-340.html by HTTrack Website Copier/3.x [XR&CO'2013], Wed, 06 Jul 2022 13:28:57 GMT -->
+<head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><title>2.61. Version 3.4.0</title><link rel="stylesheet" href="manual.css" type="text/css"></link><meta name="generator" content="DocBook XSL Stylesheets V1.73.2"></meta><link rel="start" href="index-noframes.html" title="Squish Manual"></link><link rel="up" href="relnotes.html" title="Chapter 2. Release Notes—for Upgraders"></link><link rel="prev" href="rel-341.html" title="2.60. Version 3.4.1"></link><link rel="next" href="rel-331.html" title="2.62. Version 3.3.1"></link><style xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" type="text/css" media="screen">
+        div.toc * { margin-left: 6px; margin-right: auto; max-width: 75em; }
+        div.toc span { margin-left: 0px; }
+        * { margin-left: auto; margin-right: auto; max-width: 75em; }
+        body { margin-left: 6px; margin-right: 6px; }
+        table th { padding: .5ex }
+        table td { padding: .5ex }
+    </style><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format">
+        function keyPress() {
+            var e = window.event;
+            if ( e == undefined ) {
+                return;
+            }
+            /* ### does not properly scroll, yet
+            if ( e.keyCode == 32 ) {
+            var l = document.links;
+            for ( var i = 0; i < l.length; i++ ) {
+                if ( l[i].innerText == "Next" ) {
+                location.href = l[i].href;
+                }
+            }
+            } else
+                */
+                if ( e.keyCode == 0x08 ) {
+            var l = document.links;
+            for ( var i = 0; i < l.length; i++ ) {
+                if ( l[i].innerText == "Prev" ) {
+                location.href = l[i].href;
+                }
+            }
+            }
+        }
+        document.onkeypress = keyPress;
+    </script></head><body><div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="rel-340"></a>2.61. Version 3.4.0</h2></div></div></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><span class="section"><a href="rel-340.html#general.4">2.61.1. General</a></span></dt><dt><span class="section"><a href="rel-340.html#qt-specific.4">2.61.2. Qt-specific</a></span></dt><dt><span class="section"><a href="rel-340.html#java-specific.4">2.61.3. Java-specific</a></span></dt><dt><span class="section"><a href="rel-340.html#web-specific.4">2.61.4. Web-specific</a></span></dt><dt><span class="section"><a href="rel-340.html#tk-specific.4">2.61.5. Tk-specific</a></span></dt><dt><span class="section"><a href="rel-340.html#source-builds.2">2.61.6. Source Builds</a></span></dt></dl></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="general.4"></a>2.61.1. General</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Automatic reuse of Object Map names that use wildcards and regular expressions.</p></li><li><p>Improved error messages when an object cannot be found on test execution.</p></li><li><p>Wizard for the creation of data-driven
+tests.</p></li><li><p>"Record at Cursor" mode for more efficient test script maintenance.</p></li><li><p>The toolkit wrapper can be specified on an
+application-basis thus allowing for tests of applications using
+different GUI technologies within one script.</p></li><li><p>Simplified navigation between script editor and Object
+Map.</p></li><li><p>Ant built system plugin for Squish test execution.</p></li><li><p>Integration plugin for the CruiseControl continuous
+integration framework.</p></li><li><p>Added spinUp() and spinDown() functions for recording
+and playback of QSpinBox usage.</p></li><li><p>Fixed a Perl syntax error in recorded sub-application
+scripts.</p></li><li><p>Cleaned up HTML documentation search
+index</p></li><li><p>More type tolerant Perl setter function for
+logScreenshotOnFail and logScreenshotOnError
+configuration.</p></li><li><p>Fixed memory management problems of DOM nodes created
+by the XML object as well as database connections created by the SQL
+object.</p></li><li><p>Don't report that the AUT crashed if it was explicitly
+killed.</p></li><li><p>Implement more verbose error reporting when an object
+is not found. Now reports the properties that didn't
+match</p></li><li><p>Fixed a JavaScript number-to-string conversion on
+SPARC and other big endian architectures.</p></li><li><p>Allow copy and paste of property name/value in the
+spy.</p></li><li><p>Allow passing Perl strings to functions that accept a
+numeric type.</p></li><li><p>When right-clicking on a selected text in the script
+editor, offer an option to replace the selected text with a reference
+to a field of a test data record in case the selected script code is
+within a test data loop.</p></li><li><p>Fixed clicking on Test Log items when the referenced
+script file contained a '-' or space character.</p></li><li><p>Reduced size of object names placed into the clipboard
+upon copying out of the Spy.</p></li><li><p>Prevent the AUT from crashing when doing object
+lookups with empty strings.</p></li><li><p>Implemented support for recording little snippets of
+script code and inserting it at the current cursor
+position.</p></li><li><p>Fixed invocation of the PDF manual viewer manual on
+Windows.</p></li><li><p>Prevent crash if the Spy is during a "Check all object
+existence" run.</p></li><li><p>Respect logScreenshot settings for test.fail() and
+test.fatal().</p></li><li><p>Fixed crashes occurring after an application launched
+with startApplication() has exited.</p></li><li><p>Support alternative locations for testcase templates
+by using the SQUISH_TESTCASE_TEMPLATES environment
+variable.</p></li><li><p>Fixed initialization defaultApplicationContext()
+properties.</p></li><li><p>Fixed picking of disabled plain Windows
+controls.</p></li><li><p>Prevent crash in the Perl debugger that occurred when
+trying to display variables referencing an application context or a
+test data record.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="qt-specific.4"></a>2.61.2. Qt-specific</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Implemented Qt 4.4 support.</p></li><li><p>Binary packages for MSVC 9 and 64-bit Linux.</p></li><li><p>Expose QPainter API for test
+scripts.</p></li><li><p>Add support for Input-Method events for Qt 4, so
+non-latin input is also recorded properly</p></li><li><p>Use row and column in clickItem() on Qt 4
+tables.</p></li><li><p>Mac OS X: make the binary edition work with Qt
+frameworks that are not installed in a standard framework-search
+location.</p></li><li><p>Support use of wildcards in item names when using the
+clickItem() function on Qt 4 itemviews like a
+QTreeWidget.</p></li><li><p>Improved parsing of CSV files, using RFC 4180 as
+reference for the parser implementation.</p></li><li><p>Fixed occurrence count recorded for Qt objects which
+don't have a QObject name set.</p></li><li><p>Temporary way to specify custom controls (like OpenGL
+controls) that require QPixmap::grabWindow() instead of grabWidget()
+for taking a screenshot: the SQUISH_GRABWINDOW_CLASSES environment
+variable can be set to a comma-separated list of class names of
+QWidget sub-classes.</p></li><li><p>Fixed recording of actions on native Windows controls
+with Qt 4.x</p></li><li><p>Don't show null objects (i.e. a null pointer to a
+QWidget) in expandable state in the Variable Watcher of the
+IDE.</p></li><li><p>Respect the --port=xxx argument of the startaut
+command.</p></li><li><p>Fixed calls to functions with C/C++ enum parameters in
+JavaScript, Tcl and Perl. Was already working in
+Python.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="java-specific.4"></a>2.61.3. Java-specific</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Implemented support for Eclipse 3.4 (Ganymede).</p></li><li><p>Java record extension API to enable high-level record
+and Spy support of complex custom controls.</p></li><li><p>Fixed item lookup differences between recording and
+replaying a clickItem() on a SWT Tree.  </p></li><li><p>Allow launching a SWT FileDialog, MessageBox or
+DirectoryDialog when the Squish IDE is in Spy mode.</p></li><li><p>Adjust x coordinate for SWT Tree item click to the
+middle of the viewable item rectangle, making clickItem() more stable
+for differently styled Trees.</p></li><li><p>Empty captions of SWT widgets were left out of the
+object property map, which made these multi-property names match
+unnecessary many objects. Now they are recorded as:
+caption=''</p></li><li><p>Add 'expanded' property to TreeItem proxy for the
+Spy.</p></li><li><p>Fixed JVM shutdown notification that made the Java
+process hang on exit in some setups.</p></li><li><p>Improved test script speed when interacting with Java
+classes.</p></li><li><p>Properly convert from Java unicode string to QString,
+so objects containing non-ASCII characters in the Spy.</p></li><li><p>Added synthetic 'isvisible' property for SWT which
+internally calls Control.isVisible(). For new names use 'isvisible' in
+favor of 'visible'.</p></li><li><p>Fixed 'Illegal constant pool index' error in the SWT
+FileOpen class.</p></li><li><p>Fixed registered extra classes not being recognized by
+the script bindings.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="web-specific.4"></a>2.61.4. Web-specific</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Fix recording of context switches to pages which have
+non-ASCII characters in their names.</p></li><li><p>Provide an additional '--webbrowserargs' command line argument which can be used to pass additional arguments to the browser process started when performing Web tests.</p></li><li><p>Fix playback of Web tests with Firefox when a
+different profile than the default one is used.</p></li><li><p>Launch Internet Explorer in a new process to make sure
+that a new session is used.</p></li><li><p>Fixed recording and replay of double and right
+mouse-button clicks.</p></li><li><p>Support the isBrowserDialogOpen() script function on
+Mac OS X.</p></li><li><p>Support the automateLogin() script function on Mac OS
+X.</p></li><li><p>Support Safari 3.1.</p></li><li><p>Fix retrieving objects with '%' in their
+value.</p></li><li><p>Fixed entering of non-alphanumerical characters using
+typeText() with Firefox.</p></li><li><p>Improved speed of the Spy when navigating through
+large web pages.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="tk-specific.4"></a>2.61.5. Tk-specific</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Fixed key event sending via the type()
+function.</p></li><li><p>Record plain mouse press events on buttons that could
+e.g. be used to open a popup menu.</p></li><li><p>Record button clicks with middle and right
+mouse button.</p></li><li><p>Small performance improvement on recording.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="source-builds.2"></a>2.61.6. Source Builds</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Allow compilation against Perl 5.10</p></li><li><p>Restore support for Python 2.2.</p></li><li><p>Avoid conflict between Perl flags and Solaris system
+headers.</p></li><li><p>Fixed compile problem with Solaris
+CC</p></li><li><p>Compile fix for strict compiler. abs() is defined in
+stdlib.h</p></li><li><p>Explicitly enforce run-time linking on AIX in order to
+allow loading of native Python extensions. Contributed by
+customer.</p></li><li><p>Fixed conflict with AIX system headers that was
+causing a compilation problem.</p></li></ul></div></div></div><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" type="text/javascript" src="ScriptingLanguage.js"></script><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format">setScriptingLanguage();</script><div class="navfooter"><hr></hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="rel-341.html">Prev</a> </td><td width="20%" align="center"><a accesskey="u" href="relnotes.html">Up</a></td><td width="40%" align="right"> <a accesskey="n" href="rel-331.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">2.60. Version 3.4.1 </td><td width="20%" align="center"><a accesskey="h" href="index-noframes.html">Home</a></td><td width="40%" align="right" valign="top"> 2.62. Version 3.3.1</td></tr></table></div></body>
+<!-- Mirrored from rel-340.html by HTTrack Website Copier/3.x [XR&CO'2013], Wed, 06 Jul 2022 13:28:57 GMT -->
+</html>

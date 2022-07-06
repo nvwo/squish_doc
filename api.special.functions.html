@@ -1,0 +1,144 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<!-- Mirrored from api.special.functions.html by HTTrack Website Copier/3.x [XR&CO'2013], Wed, 06 Jul 2022 13:29:00 GMT -->
+<head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><title>6.1. Tester-Created Special Functions</title><link rel="stylesheet" href="manual.css" type="text/css"></link><meta name="generator" content="DocBook XSL Stylesheets V1.73.2"></meta><link rel="start" href="https://index-noframes.html" title="Squish Manual"></link><link rel="up" href="https://api.man.html" title="Chapter 6. API Reference Manual"></link><link rel="prev" href="https://api.man.html" title="Chapter 6. API Reference Manual"></link><link rel="next" href="https://rgs-scripteq.html" title="6.2. Equivalent Script API"></link><style xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" type="text/css" media="screen">
+        div.toc * { margin-left: 6px; margin-right: auto; max-width: 75em; }
+        div.toc span { margin-left: 0px; }
+        * { margin-left: auto; margin-right: auto; max-width: 75em; }
+        body { margin-left: 6px; margin-right: 6px; }
+        table th { padding: .5ex }
+        table td { padding: .5ex }
+    </style><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format">
+        function keyPress() {
+            var e = window.event;
+            if ( e == undefined ) {
+                return;
+            }
+            /* ### does not properly scroll, yet
+            if ( e.keyCode == 32 ) {
+            var l = document.links;
+            for ( var i = 0; i < l.length; i++ ) {
+                if ( l[i].innerText == "Next" ) {
+                location.href = l[i].href;
+                }
+            }
+            } else
+                */
+                if ( e.keyCode == 0x08 ) {
+            var l = document.links;
+            for ( var i = 0; i < l.length; i++ ) {
+                if ( l[i].innerText == "Prev" ) {
+                location.href = l[i].href;
+                }
+            }
+            }
+        }
+        document.onkeypress = keyPress;
+    </script></head><body><div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="api.special.functions"></a>6.1. Tester-Created Special Functions</h2></div></div></div><p>
+When <span class="emphasis"><em>Squish</em></span> executes a test script it treats three functions in a
+special way. Of these functions, <code class="code">main</code>
+<span class="emphasis"><em>must</em></span> be present in every test, while the other two,
+<code class="code">init</code> and <code class="code">cleanup</code>, are optional. <span class="emphasis"><em>Squish</em></span>
+does not specially treat any other functions, so you are free to include
+as many supporting functions as you need inside your tests, and they can
+be called by the <code class="code">main</code> function (or by one of the other two
+special functions) as required.
+</p><p>
+Since <span class="emphasis"><em>Squish</em></span> treats functions called <code class="code">main</code>,
+<code class="code">init</code>, and <code class="code">cleanup</code>, specially, these names
+should only be used for functions that serve the purposes that <span class="emphasis"><em>Squish</em></span>
+expects, as described below.
+</p><div class="funcsynopsis"><a id="squish-cleanup-function"></a><p><code class="funcdef"><b class="fsfunc">cleanup</b>(</code><code>)</code>;</p></div><p>
+If we create a function called <code class="code">cleanup</code>, <span class="emphasis"><em>Squish</em></span> will call
+this function after the <code class="code">main</code> function has finished
+(whether it terminated normally or not—even if the <code class="code">main</code>
+function is aborted, for example, due to an uncaught exception), as the
+last action taken before the test execution finishes. (Functions for
+this purpose are often called "teardown" in unit testing frameworks.)
+</p><p>
+This function might be useful for deleting any files that the AUT has
+created as part of the test run.
+</p><div class="funcsynopsis"><a id="squish-init-function"></a><p><code class="funcdef"><b class="fsfunc">init</b>(</code><code>)</code>;</p></div><p>
+When a test is recorded <span class="emphasis"><em>Squish</em></span> puts a call to the <a class="xref" href="https://rgs-squish.html#startApplication-function"><code class="function">startApplication</code></a> function as the first statement in
+the <code class="code">main</code> function. If we need to execute some code
+<span class="emphasis"><em>before</em></span> the AUT is started, we can simply insert the
+code at the start of the <code class="code">main</code> function, before the call to
+the <a class="xref" href="https://rgs-squish.html#startApplication-function"><code class="function">startApplication</code></a> function. This is the
+recommended approach for executing code before the AUT is started, and
+makes the use of the <code class="code">init</code> function redundant. (Functions
+for this purpose are often called "setup" in unit testing frameworks.)
+</p><p>
+It is possible to have <span class="emphasis"><em>Squish</em></span> start an AUT without any explicit call
+to the <a class="xref" href="https://rgs-squish.html#startApplication-function"><code class="function">startApplication</code></a> function: simply
+check the <span class="guilabel">Automatically start the AUT</span> checkbox in
+the <a class="xref" href="https://ide.views.html#ide.the-settings.view" title="8.2.16. Test Suite Settings view">Test Suite Settings view (Section 8.2.16)</a>. If you do this, you will
+not be able to execute code before the AUT is started by <span class="emphasis"><em>Squish</em></span>.
+</p><p>
+In some situations we might wish to do our initialization before the AUT
+is started, and in fact to start the AUT at a time of our own choosing.
+This can be done by setting the <span class="guilabel">Application</span> in the
+<a class="xref" href="https://ide.views.html#ide.the-settings.view" title="8.2.16. Test Suite Settings view">Test Suite Settings view (Section 8.2.16)</a> to “<span class="quote">&lt;No
+Application&gt;</span>”. This means that when the test is run, <span class="emphasis"><em>Squish</em></span>
+won't be able to start the AUT since it won't know the AUT's name, so
+<span class="emphasis"><em>Squish</em></span> will begin by executing our <code class="code">init</code> function. In such
+cases, it is our responsibility to start the AUT ourselves at some point
+within the <code class="code">init</code> function, using the <a class="xref" href="https://rgs-squish.html#startApplication-function"><code class="function">startApplication</code></a> function.
+</p><div class="funcsynopsis"><a id="squish-main-function"></a><p><code class="funcdef"><b class="fsfunc">main</b>(</code><code>)</code>;</p></div><p>
+You <span class="emphasis"><em>must</em></span> create a function called
+<code class="code">main</code> in every test script. (If you record a test,
+<span class="emphasis"><em>Squish</em></span> will automatically record it into a function called
+<code class="code">main</code>.) When <span class="emphasis"><em>Squish</em></span> is told to run a test, if the
+<a class="xref" href="https://ide.views.html#ide.the-settings.view" title="8.2.16. Test Suite Settings view">Test Suite Settings view (Section 8.2.16)</a>'s <span class="guilabel">Automatically start
+the AUT</span> checkbox is unchecked (the default), <span class="emphasis"><em>Squish</em></span> will
+begin by executing the test's <code class="code">main</code> function. For recorded
+tests that haven't been hand-edited, the first statement in the
+<code class="code">main</code> function is a call to the <a class="xref" href="https://rgs-squish.html#startApplication-function"><code class="function">startApplication</code></a> function.
+</p><p>
+In many cases creating a <code class="code">main</code> function, possibly with some
+supporting functions, is perfectly sufficient. But in some situations we
+may want to run some separate initialization, or cleanup, or both. For
+initialization, we can insert the code we want directly in
+<code class="code">main</code> just before the call to the <a class="xref" href="https://rgs-squish.html#startApplication-function"><code class="function">startApplication</code></a> function; or we can create an
+initializing function (<span class="emphasis"><em>not</em></span> called
+<code class="code">init</code>!) and put a call to it in <code class="code">main</code> just
+before the call to the <a class="xref" href="https://rgs-squish.html#startApplication-function"><code class="function">startApplication</code></a>
+function. For cleanup, we can define a function called
+<a class="xref" href="https://api.special.functions.html#squish-cleanup-function"><code class="function">cleanup</code></a> which <span class="emphasis"><em>Squish</em></span> will call when
+the AUT terminates (whether normally or not).
+</p><p>
+If the <a class="xref" href="https://ide.views.html#ide.the-settings.view" title="8.2.16. Test Suite Settings view">Test Suite Settings view (Section 8.2.16)</a>'s <span class="guilabel">Automatically
+start the AUT</span> checkbox is checked, <span class="emphasis"><em>Squish</em></span> will begin by
+starting the AUT (unless the <a class="xref" href="https://ide.views.html#ide.the-settings.view" title="8.2.16. Test Suite Settings view">Test Suite Settings view (Section 8.2.16)</a>'s
+<span class="guilabel">Application</span> is set to “<span class="quote">&lt;No
+Application&gt;</span>”), then our <a class="xref" href="https://api.special.functions.html#squish-init-function"><code class="function">init</code></a> function (which should exist—and
+which should start the AUT with a call to the <a class="xref" href="https://rgs-squish.html#startApplication-function"><code class="function">startApplication</code></a> function if
+<span class="guilabel">Application</span> is set to “<span class="quote">&lt;No
+Application&gt;</span>”) is called, and once the AUT is running, <span class="emphasis"><em>Squish</em></span>
+will call the <code class="code">main</code> function.
+</p><div class="funcsynopsis"><a id="waitUntilObjectItemReady-function"></a><p><code class="funcdef"><b class="fsfunc">waitUntilObjectItemReady</b>(</code><var class="pdparam">item</var><code>)</code>;</p></div><p>
+<code class="function">waitForObjectItem()</code> can  perform additional custom actions
+if required.
+This is achieved by defining a callback function called
+<code class="function">waitUntilObjectItemReady(<em class="parameter"><code>item</code></em>)</code>
+that takes a single argument which it may use or ignore. <span class="emphasis"><em>If</em></span>
+a <code class="function">waitUntilObjectItemReady(<em class="parameter"><code>item</code></em>)</code>
+function is defined, whenever <code class="function">waitForObjectItem</code>
+is called, in addition to its normal actions, it will also call the custom
+<code class="function">waitUntilObjectItemReady()</code> function, with the item it is
+about to return as the argument.
+</p><div class="funcsynopsis"><a id="waitUntilObjectReady-function"></a><p><code class="funcdef"><b class="fsfunc">waitUntilObjectReady</b>(</code><var class="pdparam">anObject</var><code>)</code>;</p></div><p>
+<code class="function">waitForObject</code> can perform additional custom actions
+if required.
+This is achieved by defining a callback function called
+<code class="function">waitUntilObjectReady(<em class="parameter"><code>anObject</code></em>)</code>
+that takes a single argument (an object), which it may use or ignore.
+<span class="emphasis"><em>If</em></span>
+<code class="function">waitUntilObjectReady</code> is defined, whenever the
+<code class="function">waitForObject</code> is called, in addition to its
+normal actions, it will also call
+<code class="function">waitUntilObjectReady()</code>, with the object being
+waited for as argument. (For an example of use, see the AJAX loading
+example in the <a class="xref" href="https://ugs-webapi.html#ugsweb-sync" title="5.3.8. How to Synchronize Web Page Loading for Testing">How to Synchronize Web Page Loading for Testing (Section 5.3.8)</a> section.)
+</p></div><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" type="text/javascript" src="ScriptingLanguage.js"></script><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format">setScriptingLanguage();</script><div class="navfooter"><hr></hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="https://api.man.html">Prev</a> </td><td width="20%" align="center"><a accesskey="u" href="https://api.man.html">Up</a></td><td width="40%" align="right"> <a accesskey="n" href="https://rgs-scripteq.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">Chapter 6. API Reference Manual </td><td width="20%" align="center"><a accesskey="h" href="https://index-noframes.html">Home</a></td><td width="40%" align="right" valign="top"> 6.2. Equivalent Script API</td></tr></table></div></body>
+<!-- Mirrored from api.special.functions.html by HTTrack Website Copier/3.x [XR&CO'2013], Wed, 06 Jul 2022 13:29:00 GMT -->
+</html>

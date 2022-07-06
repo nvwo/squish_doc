@@ -1,0 +1,893 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<!-- Mirrored from rgs-javaconvenience.html by HTTrack Website Copier/3.x [XR&CO'2013], Wed, 06 Jul 2022 13:29:00 GMT -->
+<head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><title>6.7. Java™ Convenience API</title><link rel="stylesheet" href="manual.css" type="text/css"></link><meta name="generator" content="DocBook XSL Stylesheets V1.73.2"></meta><link rel="start" href="index-noframes.html" title="Squish Manual"></link><link rel="up" href="api.man.html" title="Chapter 6. API Reference Manual"></link><link rel="prev" href="rgs-xvconvenience.html" title="6.6. XView Convenience API"></link><link rel="next" href="package-com.froglogic.squish.extension.html" title="Package com.­froglogic.­squish.­extension"></link><style xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" type="text/css" media="screen">
+        div.toc * { margin-left: 6px; margin-right: auto; max-width: 75em; }
+        div.toc span { margin-left: 0px; }
+        * { margin-left: auto; margin-right: auto; max-width: 75em; }
+        body { margin-left: 6px; margin-right: 6px; }
+        table th { padding: .5ex }
+        table td { padding: .5ex }
+    </style><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format">
+        function keyPress() {
+            var e = window.event;
+            if ( e == undefined ) {
+                return;
+            }
+            /* ### does not properly scroll, yet
+            if ( e.keyCode == 32 ) {
+            var l = document.links;
+            for ( var i = 0; i < l.length; i++ ) {
+                if ( l[i].innerText == "Next" ) {
+                location.href = l[i].href;
+                }
+            }
+            } else
+                */
+                if ( e.keyCode == 0x08 ) {
+            var l = document.links;
+            for ( var i = 0; i < l.length; i++ ) {
+                if ( l[i].innerText == "Prev" ) {
+                location.href = l[i].href;
+                }
+            }
+            }
+        }
+        document.onkeypress = keyPress;
+    </script></head><body><div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="rgs-javaconvenience"></a>6.7. <span class="trademark">Java</span>™ Convenience API</h2></div></div></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><span class="section"><a href="rgs-javaconvenience.html#native.java.arrays">6.7.1. Native Java Arrays</a></span></dt><dt><span class="section"><a href="rgs-javaconvenience.html#java-GestureBuilder-class">6.7.2. GestureBuilder</a></span></dt><dt><span class="section"><a href="rgs-javaconvenience.html#rgs-javasyntheticproperties">6.7.3. <span class="trademark">Java</span>™ Hardcoded Synthetic Properties</a></span></dt><dt><span class="section"><a href="rgs-javaconvenience.html#api-javaextapi">6.7.4. Java Extension API for Custom Widgets</a></span></dt></dl></div><div class="important" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Important: Java-specific"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Important]" src="images/important.png"></img></td><th align="left">Java-specific</th></tr><tr><td align="left" valign="top"><p>
+The Java Convenience API is <span class="emphasis"><em>only</em></span> available for
+the Squish for <span class="trademark">Java</span>™ editions.
+</p></td></tr></table></div><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Note: Java Convenience Function Parameters"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/note.png"></img></td><th align="left"><a id="java-convenience.function.parameters"></a>Java Convenience Function Parameters</th></tr><tr><td align="left" valign="top"><p>
+Some of the Java convenience functions can take a
+<em class="parameter"><code>modifierState</code></em> argument which indicates which
+special keys are pressed at the time of a mouse click. And some of the
+functions can also take a <em class="parameter"><code>button</code></em> argument which
+indicates which mouse button was clicked.
+</p><p>
+The <em class="parameter"><code>modifierState</code></em> values are different for
+AWT/Swing/JavaFX and for SWT. The modifier states don't have an enumeration
+so you must use the values from the following table that are relevant to
+the GUI toolkit.
+</p><div class="informaltable"><table border="1"><colgroup><col></col><col></col><col></col><col></col><col></col></colgroup><thead><tr><th>Modifier</th><th><acronym class="acronym">AWT</acronym>/Swing/JavaFX</th><th>Value</th><th><acronym class="acronym">SWT</acronym></th><th>Value</th></tr></thead><tbody><tr><td>No modifier</td><td> </td><td align="center"><code class="code">0</code></td><td> </td><td align="right"><code class="code">0</code></td></tr><tr><td>Shift</td><td><code class="code">java.awt.Event.SHIFT_MASK</code></td><td align="center"><code class="code">1</code></td><td><code class="code">org.eclipse.swt.SWT.SHIFT</code></td><td align="right"><code class="code">131072</code></td></tr><tr><td>Control</td><td><code class="code">java.awt.Event.CTRL_MASK</code></td><td align="center"><code class="code">2</code></td><td><code class="code">org.eclipse.swt.SWT.CTRL</code></td><td align="right"><code class="code">262144</code></td></tr><tr><td>Meta</td><td><code class="code">java.awt.Event.META_MASK</code></td><td align="center"><code class="code">4</code></td><td> </td><td> </td></tr><tr><td>Alt</td><td><code class="code">java.awt.Event.ALT_MASK</code></td><td align="center"><code class="code">8</code></td><td><code class="code">org.eclipse.swt.SWT.ALT</code></td><td align="right"><code class="code">65536</code></td></tr><tr><td>Command</td><td> </td><td> </td><td><code class="code">org.eclipse.swt.SWT.COMMAND</code></td><td align="right"><code class="code">4194304</code></td></tr></tbody></table></div><p>
+If more than one is used they must be <code class="code">OR</code>-d together, for
+example, for Shift and Control use <code class="code">1|2</code> for AWT/Swing/JavaFX,
+and <code class="code">131072|262144</code> for SWT.
+</p><p>
+The <em class="parameter"><code>button</code></em> can be any one of the following:
+</p><div class="informaltable"><table border="1"><colgroup><col></col><col></col></colgroup><thead><tr><th>Button Specifier</th><th>Information</th></tr></thead><tbody><tr><td>Button.NoButton</td><td>Usually: Make target visible and move mouse, but do not click.</td></tr><tr><td>Button.Button1</td><td>Left mouse button</td></tr><tr><td>Button.Button2</td><td>Middle mouse button</td></tr><tr><td>Button.Button3</td><td>Right mouse button</td></tr></tbody></table></div><p>
+The form shown above works for Python and JavaScript.
+</p><p>
+For Perl use this: <code class="code">Button::Button1</code>, etc.
+</p><p>
+For Ruby use this: <code class="code">Button::BUTTON1</code>, etc.
+</p><p>
+For Tcl use this: <code class="code">enum Button Button1</code>, etc.
+</p></td></tr></table></div><p>
+Here are some quick links to the Java Convenience API's members:
+</p><div class="informaltable"><table border="0"><colgroup><col></col><col></col><col></col></colgroup><tbody><tr valign="top"><td valign="top">
+<div class="itemizedlist"><ul type="disc" compact><li><p><a class="xref" href="rgs-javaconvenience.html#java-activateAction-function"><code class="function">activateAction</code></a></p></li><li><p><a class="xref" href="rgs-javaconvenience.html#java-activateItem-function"><code class="function">activateItem</code></a></p></li><li><p><a class="xref" href="rgs-javaconvenience.html#java-chooseColor-function"><code class="function">chooseColor</code></a></p></li><li><p><a class="xref" href="rgs-javaconvenience.html#java-chooseDirectory-function"><code class="function">chooseDirectory</code></a></p></li><li><p><a class="xref" href="rgs-javaconvenience.html#java-chooseFile-function"><code class="function">chooseFile</code></a></p></li><li><p><a class="xref" href="rgs-javaconvenience.html#java-clickButton-function"><code class="function">clickButton</code></a></p></li><li><p><a class="xref" href="rgs-javaconvenience.html#java-clickItem-function"><code class="function">clickItem</code></a></p></li><li><p><a class="xref" href="rgs-javaconvenience.html#java-clickTab-function"><code class="function">clickTab</code></a></p></li><li><p><a class="xref" href="rgs-javaconvenience.html#java-clickTreeHandle-function"><code class="function">clickTreeHandle</code></a></p></li><li><p><a class="xref" href="rgs-javaconvenience.html#java-closeMessageBox-function"><code class="function">closeMessageBox</code></a></p></li><li><p><a class="xref" href="rgs-javaconvenience.html#java-closeWindow-function"><code class="function">closeWindow</code></a></p></li></ul></div>
+</td><td valign="top">
+<div class="itemizedlist"><ul type="disc" compact><li><p><a class="xref" href="rgs-javaconvenience.html#java-collapse-function"><code class="function">collapse</code></a></p></li><li><p><a class="xref" href="rgs-javaconvenience.html#java-doubleClick-function"><code class="function">doubleClick</code></a></p></li><li><p><a class="xref" href="rgs-javaconvenience.html#java-doubleClickItem-function"><code class="function">doubleClickItem</code></a></p></li><li><p><a class="xref" href="rgs-javaconvenience.html#java-dragAndDrop-function"><code class="function">dragAndDrop</code></a></p></li><li><p><a class="xref" href="rgs-javaconvenience.html#java-dragItemBy-function"><code class="function">dragItemBy</code></a></p></li><li><p><a class="xref" href="rgs-javaconvenience.html#java-dropOn-function"><code class="function">dropOn</code></a></p></li><li><p><a class="xref" href="rgs-javaconvenience.html#java-expand-function"><code class="function">expand</code></a></p></li><li><p><a class="xref" href="rgs-javaconvenience.html#java-gesture-function"><code class="function">gesture</code></a></p></li><li><p><a class="xref" href="rgs-javaconvenience.html#java-grabWidget-function"><code class="function">grabWidget</code></a></p></li><li><p><a class="xref" href="rgs-javaconvenience.html#java-installEventHandler-function"><code class="function">installEventHandler</code></a></p></li><li><p><a class="xref" href="rgs-javaconvenience.html#java-lastAlert.style-property">JavaArray.length</a></p></li></ul></div>
+</td><td valign="top">
+<div class="itemizedlist"><ul type="disc" compact><li><p><a class="xref" href="rgs-javaconvenience.html#java-lastAlert.text-property">JavaArray.text</a></p></li><li><p><a class="xref" href="rgs-javaconvenience.html#java-lastAlert.title-property">JavaArray.title</a></p></li><li><p><a class="xref" href="rgs-javaconvenience.html#java-mouseClick-function"><code class="function">mouseClick</code></a></p></li><li><p><a class="xref" href="rgs-javaconvenience.html#java-mouseDrag-function"><code class="function">mouseDrag</code></a></p></li><li><p><a class="xref" href="rgs-javaconvenience.html#java-mouseWheel-function"><code class="function">mouseWheel</code></a></p></li><li><p><a class="xref" href="rgs-javaconvenience.html#java-nativeMouseClick-function"><code class="function">nativeMouseClick</code></a></p></li><li><p><a class="xref" href="rgs-javaconvenience.html#java-readGesture-function"><code class="function">readGesture</code></a></p></li><li><p><a class="xref" href="rgs-javaconvenience.html#java-startDrag-function"><code class="function">startDrag</code></a></p></li><li><p><a class="xref" href="rgs-javaconvenience.html#java-type-function"><code class="function">type</code></a></p></li><li><p><a class="xref" href="rgs-javaconvenience.html#java-uninstallEventHandler-function"><code class="function">uninstallEventHandler</code></a></p></li></ul></div>
+</td></tr></tbody></table></div><div class="funcsynopsis"><a id="java-activateAction-function"></a><p><code class="funcdef"><b class="fsfunc">activateAction</b>(</code><var class="pdparam">objectName</var><code>)</code>;</p></div><p>
+This function activates the JFace action object with the
+<em class="parameter"><code>objectName</code></em> symbolic or real name.
+</p><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Note: SWT-specific"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/note.png"></img></td><th align="left">SWT-specific</th></tr><tr><td align="left" valign="top"><p>
+This function is only available when testing Java/SWT applications.
+</p></td></tr></table></div><div class="funcsynopsis"><a id="java-activateItem-function"></a><p><code class="funcdef"><b class="fsfunc">activateItem</b>(</code><var class="pdparam">objectOrName</var>, <var class="pdparam">itemText</var><code>)</code>;</p></div><p>
+This function activates the menu item with the specified
+<em class="parameter"><code>itemText</code></em> in the <em class="parameter"><code>objectName</code></em>
+menu, context menu, or menu bar.
+</p><div class="funcsynopsis"><a id="java-chooseColor-function"></a><p><code class="funcdef"><b class="fsfunc">chooseColor</b>(</code><var class="pdparam">objectOrName</var>, <var class="pdparam">red</var>, <var class="pdparam">green</var>, <var class="pdparam">blue</var><code>)</code>;</p></div><p>
+This function <span class="emphasis"><em>invisibly</em></span> invokes the platform's
+native “<span class="quote">choose color</span>” dialog. The
+<em class="parameter"><code>objectOrName</code></em> must always be the application's
+“<span class="quote">SWT</span>” object (<code class="code">":SWT"</code>). The color parameters
+must all be integers each in the range 0 to 255; they are used to
+specify the color that is chosen using the dialog.
+</p><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Note: SWT-specific"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/note.png"></img></td><th align="left">SWT-specific</th></tr><tr><td align="left" valign="top"><p>
+This function is only available when testing Java/SWT applications.
+</p></td></tr></table></div><div class="funcsynopsis"><a id="java-chooseDirectory-function"></a><p><code class="funcdef"><b class="fsfunc">chooseDirectory</b>(</code><var class="pdparam">objectOrName</var>, <var class="pdparam">path</var><code>)</code>;</p></div><p>
+This function <span class="emphasis"><em>invisibly</em></span> invokes the platform's
+native “<span class="quote">choose directory</span>” dialog. The
+<em class="parameter"><code>objectOrName</code></em> must always be the application's
+“<span class="quote">SWT</span>” object (<code class="code">":SWT"</code>) or
+“<span class="quote">SquishJavaFX</span>” object (<code class="code">":SquishJavaFX"</code>). The
+<em class="parameter"><code>path</code></em> is a string which specifies the directory
+chosen using the dialog.
+</p><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Note: Having native dialogs-specific"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/note.png"></img></td><th align="left">Having native dialogs-specific</th></tr><tr><td align="left" valign="top"><p>
+This function is only available when testing SWT or JavaFX applications.
+</p></td></tr></table></div><div class="funcsynopsis"><a id="java-chooseFile-function"></a><p><code class="funcdef"><b class="fsfunc">chooseFile</b>(</code><var class="pdparam">objectOrName</var>, <var class="pdparam">filename</var><code>)</code>;</p></div><p>
+This function <span class="emphasis"><em>invisibly</em></span> invokes the platform's
+native “<span class="quote">choose file</span>” dialog. The
+<em class="parameter"><code>objectOrName</code></em> must always be the application's
+“<span class="quote">SWT</span>” object (<code class="code">":SWT"</code>) or
+“<span class="quote">SquishJavaFX</span>” object (<code class="code">":SquishJavaFX"</code>). The
+<em class="parameter"><code>filename</code></em> is a string (that may include a path)
+which specifies the filename chosen using the dialog.
+</p><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Note: Having native dialogs-specific"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/note.png"></img></td><th align="left">Having native dialogs-specific</th></tr><tr><td align="left" valign="top"><p>
+This function is only available when testing SWT or JavaFX applications.
+</p></td></tr></table></div><div class="funcsynopsis"><a id="java-chooseFiles-function"></a><p><code class="funcdef"><b class="fsfunc">chooseFile</b>(</code><var class="pdparam">objectOrName</var>, <var class="pdparam">array of filenames</var><code>)</code>;</p></div><p>
+Multiple filenames can be set with <em class="parameter"><code>array of filenames</code></em>.
+</p><div xmlns="" class="scriptlang"><form><select name="scriptlangcombo" onchange="javascript:changeScriptingLanguage(this)" onclick="javascript:changeScriptingLanguage(this)"><option value="all" selected>Show All</option><option value="JavaScript">Show JavaScript</option><option value="Perl">Show Perl</option><option value="Python">Show Python</option><option value="Ruby">Show Ruby</option><option value="Tcl">Show Tcl</option></select></form></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">JavaScript</span><pre class="programlisting">
+chooseFile(":SWT", ["file1", "file2"]);
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Perl</span><pre class="programlisting">
+chooseFile(":SWT", ["file1", "file2"]);
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Python</span><pre class="programlisting">
+chooseFile(":SWT", ["file1", "file2"])
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Ruby</span><pre class="programlisting">
+chooseFile(":SWT", ["file1", "file2"])
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Tcl</span><pre class="programlisting">
+chooseFile(":SWT", [list "file1" "file2"])
+</pre></div><div class="funcsynopsis"><a id="java-clickButton-function"></a><p><code class="funcdef"><b class="fsfunc">clickButton</b>(</code><var class="pdparam">objectOrName</var><code>)</code>;</p></div><p>
+This function clicks the specified <em class="parameter"><code>objectOrName</code></em>
+button.
+</p><div class="funcsynopsis"><a id="java-clickItem-function"></a><p><code class="funcdef"><b class="fsfunc">clickItem</b>(</code><var class="pdparam">objectOrName</var>, <var class="pdparam">itemOrIndex</var>, <var class="pdparam">x</var>, <var class="pdparam">y</var><code>)</code>;</p></div><div class="funcsynopsis"><p><code class="funcdef"><b class="fsfunc">clickItem</b>(</code><var class="pdparam">objectOrName</var>, <var class="pdparam">itemOrIndex</var>, <var class="pdparam">x</var>, <var class="pdparam">y</var>, <var class="pdparam">modifierState</var>, <var class="pdparam">button</var><code>)</code>;</p></div><p>
+This function clicks the mouse on the item with the specified
+<em class="parameter"><code>itemOrIndex</code></em> inside the given
+<em class="parameter"><code>objectOrName</code></em> view widget. This function is
+typically used to access items inside views such as lists, tables,
+and trees. For tables the <em class="parameter"><code>itemOrIndex</code></em>
+is a string with the format <span class="emphasis"><em>row/column</em></span>, e.g.,
+<code class="code">"4/21"</code>; for other views it is the relevant item's text.
+</p><p>
+The click is made at position <em class="parameter"><code>x</code></em> and
+<em class="parameter"><code>y</code></em> (in the <em class="parameter"><code>itemOrIndex</code></em>
+item's coordinates). The <em class="parameter"><code>button</code></em> and
+<em class="parameter"><code>modifierState</code></em> parameters are optional; if they
+are not specified, the click is made with the left mouse button and
+using a null keyboard modifier state. If the
+<em class="parameter"><code>button</code></em> and <em class="parameter"><code>modifierState</code></em>
+are given, the click is made with the specified button and keyboard
+modifier state.
+</p><p>
+Supported view widgets are List, Combo, and ToolBar for the
+<acronym class="acronym">SWT</acronym> toolkit, and JList, JTable, JTree, List, and
+Choice for the <acronym class="acronym">AWT</acronym>/Swing toolkit.
+</p><p>
+See <a class="xref" href="rgs-javaconvenience.html#java-convenience.function.parameters" title="Java Convenience Function Parameters">Java Convenience Function Parameters</a> for which
+values are valid for the <em class="parameter"><code>modifierState</code></em> and for
+the <em class="parameter"><code>button</code></em> arguments.
+</p><div class="funcsynopsis"><a id="java-clickTab-function"></a><p><code class="funcdef"><b class="fsfunc">clickTab</b>(</code><var class="pdparam">objectOrName</var>, <var class="pdparam">tabText</var><code>)</code>;</p></div><div class="funcsynopsis"><p><code class="funcdef"><b class="fsfunc">clickTab</b>(</code><var class="pdparam">objectOrName</var>, <var class="pdparam">tabText</var>, <var class="pdparam">x</var>, <var class="pdparam">y</var><code>)</code>;</p></div><div class="funcsynopsis"><p><code class="funcdef"><b class="fsfunc">clickTab</b>(</code><var class="pdparam">objectOrName</var>, <var class="pdparam">tabText</var>, <var class="pdparam">x</var>, <var class="pdparam">y</var>, <var class="pdparam">modifierState</var>, <var class="pdparam">button</var><code>)</code>;</p></div><p>
+This function clicks on the tab that has the specified
+<em class="parameter"><code>tabText</code></em> on the
+<em class="parameter"><code>objectOrName</code></em> tab widget. The
+<em class="parameter"><code>x</code></em>, <em class="parameter"><code>y</code></em>,
+<em class="parameter"><code>modifierState</code></em>, and <em class="parameter"><code>button</code></em>
+parameters are optional. If the optional parameters are not given, the
+click is made with the left mouse button in the middle of the tab and
+with a null keyboard modifier state. And if all the parameters are
+given, this function clicks on the tab that has the specified
+<em class="parameter"><code>tabText</code></em> on the
+<em class="parameter"><code>objectOrName</code></em> tab widget at the position
+<em class="parameter"><code>x</code></em> and <em class="parameter"><code>y</code></em> (in the
+<em class="parameter"><code>objectOrName</code></em> tab widget's coordinates) using the
+specified <em class="parameter"><code>button</code></em> and the
+<em class="parameter"><code>modifierState</code></em> modifier.
+</p><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Note: Tab widget-specific"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/note.png"></img></td><th align="left">Tab widget-specific</th></tr><tr><td align="left" valign="top"><p>
+This function can only be used with the
+<code class="code">org.eclipse.swt.custom.CTabFolder</code> and
+<code class="code">javax.swing.JTabbedPane</code> tab widgets.
+</p></td></tr></table></div><p>
+See <a class="xref" href="rgs-javaconvenience.html#java-convenience.function.parameters" title="Java Convenience Function Parameters">Java Convenience Function Parameters</a> for which
+values are valid for the <em class="parameter"><code>modifierState</code></em> and for
+the <em class="parameter"><code>button</code></em> arguments.
+</p><div class="funcsynopsis"><a id="java-clickTreeHandle-function"></a><p><code class="funcdef"><b class="fsfunc">clickTreeHandle</b>(</code><var class="pdparam">objectOrName</var>, <var class="pdparam">itemText</var><code>)</code>;</p></div><p>
+This function clicks on the expand/collapse (tree handle) for the item
+that has the specified <em class="parameter"><code>itemText</code></em> on the
+<em class="parameter"><code>objectOrName</code></em> tree widget. The supported tree
+widgets are Tree for the <acronym class="acronym">SWT</acronym> toolkit and JTree for
+the <acronym class="acronym">AWT</acronym>/Swing toolkit.
+</p><div class="funcsynopsis"><a id="java-closeMessageBox-function"></a><p><code class="funcdef"><b class="fsfunc">closeMessageBox</b>(</code><var class="pdparam">objectOrName</var>, <var class="pdparam">result</var><code>)</code>;</p></div><p>
+This function <span class="emphasis"><em>invisibly</em></span> invokes the platform's
+native “<span class="quote">message box</span>” close dialog operation. The
+<em class="parameter"><code>objectOrName</code></em> must always be the application's
+“<span class="quote">SWT</span>” object (<code class="code">":SWT"</code>). The
+<em class="parameter"><code>result</code></em> is a constant which specifies the button
+clicked inside the dialog. Valid values for the
+<em class="parameter"><code>result</code></em> are
+<code class="code">SWT.ABORT</code>,
+<code class="code">SWT.CANCEL</code>,
+<code class="code">SWT.IGNORE</code>,
+<code class="code">SWT.NO</code>,
+<code class="code">SWT.OK</code>,
+<code class="code">SWT.RETRY</code>, and
+<code class="code">SWT.YES</code>.
+</p><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Note: SWT-specific"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/note.png"></img></td><th align="left">SWT-specific</th></tr><tr><td align="left" valign="top"><p>
+This function is only available when testing Java/SWT applications.
+</p></td></tr></table></div><div class="funcsynopsis"><a id="java-closeWindow-function"></a><p><code class="funcdef"><b class="fsfunc">closeWindow</b>(</code><var class="pdparam">objectOrName</var><code>)</code>;</p></div><p>
+This function closes the <em class="parameter"><code>objectName</code></em>
+<code class="code">Window</code> (or <code class="code">Shell</code> in <acronym class="acronym">SWT</acronym>) as
+if it was closed using its window system menu.
+</p><div class="funcsynopsis"><a id="java-collapse-function"></a><p><code class="funcdef"><b class="fsfunc">collapse</b>(</code><var class="pdparam">treeItem</var><code>)</code>;</p></div><p>
+If the <em class="parameter"><code>treeItem</code></em> is a Swing JTree item or an SWT
+Tree item (e.g., as returned by the <a class="xref" href="rgs-squish.html#waitForObjectItem-function"><code class="function">waitForObjectItem</code></a> function), it is collapsed so
+that none of its child items (if it has any) are visible; otherwise an
+exception is thrown. (See also <a class="xref" href="rgs-javaconvenience.html#java-expand-function"><code class="function">expand</code></a>.)
+</p><div class="funcsynopsis"><a id="java-doubleClick-function"></a><p><code class="funcdef"><b class="fsfunc">doubleClick</b>(</code><var class="pdparam">objectOrName</var>, <var class="pdparam">x</var>, <var class="pdparam">y</var>, <var class="pdparam">modifierState</var>, <var class="pdparam">button</var><code>)</code>;</p></div><p>
+This function double-clicks the mouse on the
+<em class="parameter"><code>objectOrName</code></em> widget at position
+<em class="parameter"><code>x</code></em> and <em class="parameter"><code>y</code></em> (in the
+<em class="parameter"><code>objectOrName</code></em> widget's coordinates) using the
+specified <em class="parameter"><code>button</code></em> and with the
+<em class="parameter"><code>modifierState</code></em> modifier state.
+</p><p>
+See <a class="xref" href="rgs-javaconvenience.html#java-convenience.function.parameters" title="Java Convenience Function Parameters">Java Convenience Function Parameters</a> for which
+values are valid for the <em class="parameter"><code>modifierState</code></em> and for
+the <em class="parameter"><code>button</code></em> arguments.
+</p><div class="funcsynopsis"><a id="java-doubleClickItem-function"></a><p><code class="funcdef"><b class="fsfunc">doubleClickItem</b>(</code><var class="pdparam">objectOrName</var>, <var class="pdparam">itemText</var>, <var class="pdparam">x</var>, <var class="pdparam">y</var><code>)</code>;</p></div><div class="funcsynopsis"><p><code class="funcdef"><b class="fsfunc">doubleClickItem</b>(</code><var class="pdparam">objectOrName</var>, <var class="pdparam">itemText</var>, <var class="pdparam">x</var>, <var class="pdparam">y</var>, <var class="pdparam">modifierState</var>, <var class="pdparam">button</var><code>)</code>;</p></div><p>
+This function double-clicks the mouse on the item with the specified
+<em class="parameter"><code>itemText</code></em> inside the given
+<em class="parameter"><code>objectOrName</code></em> view widget. The double-click is
+made at position <em class="parameter"><code>x</code></em> and <em class="parameter"><code>y</code></em>
+(in the <em class="parameter"><code>itemText</code></em> item's coordinates). The
+<em class="parameter"><code>button</code></em> and <em class="parameter"><code>modifierState</code></em>
+parameters are optional; if they are not specified, the double-click is
+made with the left mouse button and using a null keyboard modifier
+state. If the <em class="parameter"><code>button</code></em> and
+<em class="parameter"><code>modifierState</code></em> are given, the double-click is made
+with the specified button and keyboard modifier state.
+</p><p>
+The supported view widgets are List, Combo, and ToolBar for the
+<acronym class="acronym">SWT</acronym> toolkit, and JList, JTable, JTree, List, and
+Choice for the <acronym class="acronym">AWT</acronym>/Swing toolkit.
+</p><p>
+See <a class="xref" href="rgs-javaconvenience.html#java-convenience.function.parameters" title="Java Convenience Function Parameters">Java Convenience Function Parameters</a> for which
+values are valid for the <em class="parameter"><code>modifierState</code></em> and for
+the <em class="parameter"><code>button</code></em> arguments.
+</p><div class="funcsynopsis"><a id="java-dragAndDrop-function"></a><p><code class="funcdef"><b class="fsfunc">dragAndDrop</b>(</code><var class="pdparam">source_­object­Or­Name</var>, <var class="pdparam">sx</var>, <var class="pdparam">sy</var>, <var class="pdparam">target_­object­Or­Name</var>, <var class="pdparam">tx</var>, <var class="pdparam">ty</var>, <var class="pdparam">operation</var><code>)</code>;</p></div><div class="funcsynopsis"><p><code class="funcdef"><b class="fsfunc">dragAndDrop</b>(</code><var class="pdparam">source_­object­Or­Name</var>, <var class="pdparam">target_­object­Or­Name</var>, <var class="pdparam">operation</var><code>)</code>;</p></div><p>
+This function performs a drag and drop operation. It begins by
+initiating a drag on the <em class="parameter"><code>source_objectOrName</code></em>
+widget starting at position <em class="parameter"><code>sx</code></em> and
+<em class="parameter"><code>sy</code></em> (in the
+<em class="parameter"><code>source_objectOrName</code></em> widget's coordinates), and
+then it does the drop on the <em class="parameter"><code>target_objectOrName</code></em>
+widget at position <em class="parameter"><code>tx</code></em> and
+<em class="parameter"><code>ty</code></em> (in the
+<em class="parameter"><code>target_objectOrName</code></em> widget's coordinates). If
+<em class="parameter"><code>sx</code></em>, <em class="parameter"><code>sy</code></em> and
+<em class="parameter"><code>tx</code></em>, <em class="parameter"><code>ty</code></em> are omitted, then the
+respectively center of the object is taken. The
+<em class="parameter"><code>operation</code></em> is one of
+<code class="constant">DnD.DropNone</code>, <code class="constant">DnD.DropCopy</code>,
+<code class="constant">DnD.DropMove</code>, <code class="constant">DnD.DropLink</code>,
+<code class="constant">DnD.DropMoveTarget</code>, or <code class="constant">DnD.DropDefault</code>.
+</p><div class="funcsynopsis"><a id="java-dragItemBy-function"></a><p><code class="funcdef"><b class="fsfunc">dragItemBy</b>(</code><var class="pdparam">objectOrName</var>, <var class="pdparam">x</var>, <var class="pdparam">y</var>, <var class="pdparam">dx</var>, <var class="pdparam">dy</var>, <var class="pdparam">modifierState</var>, <var class="pdparam">button</var><code>)</code>;</p></div><p>
+This function performs a drag operation. It initiates a drag of the
+specified <em class="parameter"><code>objectOrName</code></em> widget starting at
+position <em class="parameter"><code>x</code></em> and <em class="parameter"><code>y</code></em> (in the
+<em class="parameter"><code>objectOrName</code></em> widget's coordinates), using the
+specified <em class="parameter"><code>button</code></em> and with the
+<em class="parameter"><code>modifierState</code></em> modifier state. The
+<em class="parameter"><code>objectOrName</code></em> widget is dragged by
+<em class="parameter"><code>dx</code></em> pixels horizontally and by
+<em class="parameter"><code>dy</code></em> pixels vertically.
+</p><p>
+See <a class="xref" href="rgs-javaconvenience.html#java-convenience.function.parameters" title="Java Convenience Function Parameters">Java Convenience Function Parameters</a> for which
+values are valid for the <em class="parameter"><code>modifierState</code></em> and for
+the <em class="parameter"><code>button</code></em> arguments.
+</p><div class="funcsynopsis"><a id="java-dropOn-function"></a><p><code class="funcdef"><b class="fsfunc">dropOn</b>(</code><var class="pdparam">target_objectOrName</var>, <var class="pdparam">tx</var>, <var class="pdparam">ty</var>, <var class="pdparam">operation</var><code>)</code>;</p></div><div class="funcsynopsis"><p><code class="funcdef"><b class="fsfunc">dropOn</b>(</code><var class="pdparam">target_objectOrName</var>, <var class="pdparam">operation</var><code>)</code>;</p></div><p>
+This function performs a drop that was initiated by a call to the <a class="xref" href="rgs-javaconvenience.html#java-startDrag-function"><code class="function">startDrag</code></a> function. It does the drop on the
+<em class="parameter"><code>target_objectOrName</code></em> widget at position
+<em class="parameter"><code>tx</code></em> and <em class="parameter"><code>ty</code></em> (in the
+<em class="parameter"><code>target_objectOrName</code></em> widget's coordinates, if omitted
+the widget's center is taken). The
+<em class="parameter"><code>operation</code></em> is one of
+<code class="constant">DnD.DropNone</code>, <code class="constant">DnD.DropCopy</code>,
+<code class="constant">DnD.DropMove</code>, <code class="constant">DnD.DropLink</code>,
+<code class="constant">DnD.DropMoveTarget</code>, or
+<code class="constant">DnD.DropDefault</code>.
+</p><div class="funcsynopsis"><a id="java-expand-function"></a><p><code class="funcdef"><b class="fsfunc">expand</b>(</code><var class="pdparam">treeItem</var><code>)</code>;</p></div><p>
+If the <em class="parameter"><code>treeItem</code></em> is a Swing JTree item or an SWT
+Tree item (e.g., as returned by the <a class="xref" href="rgs-squish.html#waitForObjectItem-function"><code class="function">waitForObjectItem</code></a> function), it is expanded to show
+its child items (if it has any); otherwise an exception is thrown. (See
+also <a class="xref" href="rgs-javaconvenience.html#java-collapse-function"><code class="function">collapse</code></a>.)
+</p><div class="funcsynopsis"><a id="java-gesture-function"></a><p><code class="funcdef"><b class="fsfunc">gesture</b>(</code><var class="pdparam">objectOrName</var>, <var class="pdparam">touches</var><code>)</code>;</p></div><p>
+This function plays a gesture. The specified
+<em class="parameter"><code>objectOrName</code></em> can refer to any object that is
+visible and serves for synchronization only.
+The specified <em class="parameter"><code>touches</code></em> refers to a
+<a class="xref" href="rgs-javaconvenience.html#java-GestureBuilder-class" title="6.7.2. GestureBuilder">GestureBuilder</a> object, which can be
+retrieved using <a class="xref" href="rgs-javaconvenience.html#java-readGesture-function"><code class="function">readGesture</code></a>.
+</p><div class="funcsynopsis"><a id="java-grabWidget-function"></a><p><code class="funcdef">QImage <b class="fsfunc">grabWidget</b>(</code><var class="pdparam">object</var><code>)</code>;</p></div><p>
+This function takes a screenshot of the <em class="parameter"><code>object</code></em>
+window (or widget) and returns it as an <a class="xref" href="rgs-squish.html#rgss-image-object" title="6.3.13. QImage Object"><code class="code">QImage</code> Object (Section 6.3.13)</a>.
+</p><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Note: The Newer Way to Grab a Widget "><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/note.png"></img></td><th align="left">The Newer Way to Grab a Widget </th></tr><tr><td align="left" valign="top"><p> Instead of using <code class="function">grabWidget</code> to get an
+AUT-side QImage, it is easier to capture an <a class="xref" href="rgs-squish.html#script-image-object" title="6.3.14. Image Object">Image Object (Section 6.3.14)</a>
+using <a class="xref" href="rgs-squish.html#object.grabScreenshot-function"><code class="function">object.grabScreenshot</code></a>.
+The <a class="xref" href="rgs-squish.html#Image.save-function"><code class="function">Image.save</code></a> function allows you to save
+directly to a location on the <span class="application">squishrunner</span> host.
+</p></td></tr></table></div><p>
+See the <a class="xref" href="rgs-squish.html#waitForObject-function"><code class="function">waitForObject</code></a> and <a class="xref" href="rgs-squish.html#findObject-function"><code class="function">findObject</code></a> functions for how to get an object
+reference to a window or widget.
+</p><div class="funcsynopsis"><a id="java-installEventHandler-function"></a><p><code class="funcdef"><b class="fsfunc">installEventHandler</b>(</code><var class="pdparam">eventName</var>, <var class="pdparam">handlerFunctionNameOrReference</var><code>)</code>;</p></div><p>
+This function installs a global event handler. The script function
+named or referenced in <em class="parameter"><code>handlerFunctionNameOrReference</code></em>,
+will be called when an event
+of the <em class="parameter"><code>eventName</code></em> type occurs.
+</p><p>
+The <em class="parameter"><code>eventName</code></em> can be the name of any of the
+following event types:
+</p><div class="variablelist"><dl><dt><span class="term"><code class="literal">Crash</code></span></dt><dd><p>This event occurs if the AUT crashes.</p></dd><dt><span class="term"><code class="literal">DialogOpened</code></span></dt><dd><p>This event occurs when a Dialog is opened.</p></dd><dt><span class="term"><code class="literal">MessageBoxOpened</code></span></dt><dd><p>This event occurs when a native SWT message box is
+  opened.</p></dd><dt><span class="term"><code class="literal">Timeout</code></span></dt><dd><p>This event occurs when the <span class="emphasis"><em>Squish</em></span> response timeout is
+  reached.</p></dd></dl></div><p>
+The function named in <em class="parameter"><code>handlerFunctionName</code></em> is called
+with a single argument—either the object on which the event occurred,
+or in the case of <code class="literal">MessageBoxOpened</code>, the text of the message
+box.
+</p><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Note: Python-specific"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/note.png"></img></td><th align="left">Python-specific</th></tr><tr><td align="left" valign="top"><p>
+In Python scripts, you can specify the callback function to invoke by
+passing an actual function or a lambda function.
+</p></td></tr></table></div><p>
+Using SWT's <code class="literal">MessageBoxOpened</code> as an example,
+an event handler might look like this:
+</p><div xmlns="" class="scriptlang"><form><select name="scriptlangcombo" onchange="javascript:changeScriptingLanguage(this)" onclick="javascript:changeScriptingLanguage(this)"><option value="all" selected>Show All</option><option value="JavaScript">Show JavaScript</option><option value="Perl">Show Perl</option><option value="Python">Show Python</option><option value="Ruby">Show Ruby</option><option value="Tcl">Show Tcl</option></select></form></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Python</span><pre class="programlisting">
+
+import names
+import os
+
+def handleMessageBox(notUsedText):
+    test.log("MessageBox opened: '{}' - '{}'".format(lastAlert.title, lastAlert.text))
+    if lastAlert.text.startswith("Save"):
+        closeMessageBox(waitForObject(names.sWT), SWT.NO)
+    else:
+        closeMessageBox(waitForObject(names.sWT), SWT.YES)  
+
+def main():
+    fn = os.path.join(os.getenv("SQUISH_PREFIX"), 
+        "examples/java/addressbook_swt/AddressBookSWT.jar")
+    startApplication('"{}"'.format(fn))
+    installEventHandler("MessageBoxOpened", handleMessageBox)
+    activateItem(waitForObjectItem(names.address_Book_Menu, "File"))
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">JavaScript</span><pre class="programlisting">
+
+import * as names from 'names.js';
+
+function messageBoxHandler(text) {
+    test.log("MessageBox opened [" + lastAlert.title + ": " + lastAlert.text + "]")
+    if (text.indexOf("Save") == 0)
+        closeMessageBox(waitForObject(names.sWT), SWT.NO)
+    else
+        closeMessageBox(waitForObject(names.sWT), SWT.YES)  
+}
+
+function main() {
+    startApplication('"' + OS.getenv("SQUISH_PREFIX") + 
+        '/examples/java/addressbook_swt/AddressBookSWT.jar"');
+    installEventHandler("MessageBoxOpened", messageBoxHandler)
+    activateItem(waitForObjectItem(names.addressBookMenu, "File"));
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Perl</span><pre class="programlisting">
+
+require 'names.pl';
+
+sub messageBoxHandler() {
+    my ($text) = @_;
+    test::log ("MessageBox Opened: [" . lastAlert-&gt;title() . ": " . lastAlert-&gt;text() . "]");
+    if ($text =~ "^Save.*") {
+        closeMessageBox(waitForObject($Names::swt), SWT-&gt;NO);
+    }
+    else {
+        closeMessageBox(waitForObject($Names::swt), SWT-&gt;YES);
+    }
+}
+
+sub main()
+{
+    startApplication("\"$ENV{'SQUISH_PREFIX'}/examples/java/addressbook_swt/AddressBookSWT.jar\"");
+    installEventHandler("MessageBoxOpened", "messageBoxHandler");
+    activateItem(waitForObjectItem($Names::address_book_menu, "File"));
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Ruby</span><pre class="programlisting">
+
+require 'squish'
+require 'names'
+
+include Squish
+
+
+def HandleMessageBox(text)
+    Test.log("MessageBox [" + LC::LastAlert.title + ": " + LC::LastAlert.text + "]")
+end
+
+def main
+    fn = File.join(ENV['SQUISH_PREFIX'], "examples/java/addressbook_swt/AddressBookSWT.jar")
+    startApplication('"' + fn + '"');
+    installEventHandler("MessageBoxOpened", "HandleMessageBox")
+    activateItem(waitForObjectItem(Names::Address_Book_Menu, "File"))
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Tcl</span><pre class="programlisting">
+
+source [findFile "scripts" "names.tcl"]
+
+proc handleMessageBox {text} {
+    test log [concat "Text: " $text]
+    test log [concat "LastAlert (" [property get lastAlert title] ": " [property get lastAlert text] ")"]
+}
+
+proc main {} {
+    startApplication "\"$::env(SQUISH_PREFIX)/examples/java/addressbook_swt/AddressBookSWT.jar\""
+    installEventHandler "MessageBoxOpened" "handleMessageBox"
+    invoke activateItem [waitForObjectItem $names::Address_Book_Menu "File"]
+</pre></div><div class="important" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Important: The AUT Must be Running"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Important]" src="images/important.png"></img></td><th align="left">The AUT Must be Running</th></tr><tr><td align="left" valign="top"><p>
+The <code class="code">installEventHandler</code> function will only work if it is
+called <span class="emphasis"><em>after</em></span> the AUT has been started (e.g., using
+the <a class="xref" href="rgs-squish.html#startApplication-function"><code class="function">startApplication</code></a> function).
+</p></td></tr></table></div><a id="java-lastAlert.style-property"></a>int
+<span class="property">lastAlert.style</span><p>
+This property contains the style of SWT <code class="code">MessageBox</code>
+or <code class="code">DirectoryDialog</code> of the last suppressed native dialog.
+See <a class="xref" href="rgs-javaconvenience.html#java-closeMessageBox-function"><code class="function">closeMessageBox</code></a>,
+<a class="xref" href="rgs-javaconvenience.html#java-chooseDirectory-function"><code class="function">chooseDirectory</code></a> and
+<a class="xref" href="rgs-javaconvenience.html#java-chooseFile-function"><code class="function">chooseFile</code></a>.
+</p><a id="java-lastAlert.text-property"></a>String
+<span class="property">lastAlert.text</span><p>
+This property contains the message, in case of SWT <code class="code">MessageBox</code>
+or <code class="code">DirectoryDialog</code>, or title, in case of JavaFX
+<code class="code">DirectoryChooser</code> or <code class="code">FileChooser</code> of the last
+suppressed native dialog. See <a class="xref" href="rgs-javaconvenience.html#java-closeMessageBox-function"><code class="function">closeMessageBox</code></a>,
+<a class="xref" href="rgs-javaconvenience.html#java-chooseDirectory-function"><code class="function">chooseDirectory</code></a> and
+<a class="xref" href="rgs-javaconvenience.html#java-chooseFile-function"><code class="function">chooseFile</code></a>.
+</p><a id="java-lastAlert.title-property"></a>String
+<span class="property">lastAlert.title</span><p>
+This property contains the title of a SWT <code class="code">MessageBox</code> or
+<code class="code">DirectoryDialog</code> of the last suppressed native dialog.
+See <a class="xref" href="rgs-javaconvenience.html#java-closeMessageBox-function"><code class="function">closeMessageBox</code></a>,
+<a class="xref" href="rgs-javaconvenience.html#java-chooseDirectory-function"><code class="function">chooseDirectory</code></a> and
+<a class="xref" href="rgs-javaconvenience.html#java-chooseFile-function"><code class="function">chooseFile</code></a>.
+</p><div class="funcsynopsis"><a id="java-mouseClick-function"></a><p><code class="funcdef"><b class="fsfunc">mouseClick</b>(</code><var class="pdparam">objectOrName</var><code>)</code>;</p></div><div class="funcsynopsis"><p><code class="funcdef"><b class="fsfunc">mouseClick</b>(</code><var class="pdparam">objectOrName</var>, <var class="pdparam">x</var>, <var class="pdparam">y</var>, <var class="pdparam">modifierState</var>, <var class="pdparam">button</var><code>)</code>;</p></div><p>
+This function clicks the mouse on the specified
+<em class="parameter"><code>objectOrName</code></em> widget. The <em class="parameter"><code>x</code></em>
+and <em class="parameter"><code>y</code></em> coordinates,
+<em class="parameter"><code>modifierState</code></em>, and <em class="parameter"><code>button</code></em>
+are all optional. If they are not specified the click is made in the
+center of the widget with the left mouse button and using a null
+keyboard modifier state. On the other hand, if the additional parameters
+are given, the click is made at position <em class="parameter"><code>x</code></em> and
+<em class="parameter"><code>y</code></em> (in the <em class="parameter"><code>objectOrName</code></em>
+widget's coordinates) using the specified <em class="parameter"><code>button</code></em>
+and with the <em class="parameter"><code>modifierState</code></em> modifier state.
+</p><p>
+See <a class="xref" href="rgs-javaconvenience.html#java-convenience.function.parameters" title="Java Convenience Function Parameters">Java Convenience Function Parameters</a> for which
+values are valid for the <em class="parameter"><code>modifierState</code></em> and for
+the <em class="parameter"><code>button</code></em> arguments.
+</p><div class="funcsynopsis"><p><code class="funcdef"><b class="fsfunc">mouseClick</b>(</code><var class="pdparam">objectOrName</var>, <var class="pdparam">x</var>, <var class="pdparam">y</var>, <var class="pdparam">clicks</var>, <var class="pdparam">modifierState</var>, <var class="pdparam">button</var><code>)</code>;</p></div><p>
+This function clicks the mouse on the specified
+<em class="parameter"><code>objectOrName</code></em> widget. The click is made at
+position <em class="parameter"><code>x</code></em> and <em class="parameter"><code>y</code></em> (in the
+<em class="parameter"><code>objectOrName</code></em> widget's coordinates) using the
+specified <em class="parameter"><code>button</code></em> and with the
+<em class="parameter"><code>modifierState</code></em> modifier state.
+The <em class="parameter"><code>clicks</code></em> parameter is a count of the number of
+clicks.
+</p><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Note: AWT/Swing-specific"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/note.png"></img></td><th align="left">AWT/Swing-specific</th></tr><tr><td align="left" valign="top"><p>
+This function is specific to the AWT/Swing toolkit. The
+<em class="parameter"><code>clicks</code></em> parameter corresponds to <span class="trademark">Java</span>™'s
+<code class="code">MouseEvent.getClickCount</code> function.
+</p></td></tr></table></div><p>
+See <a class="xref" href="rgs-javaconvenience.html#java-convenience.function.parameters" title="Java Convenience Function Parameters">Java Convenience Function Parameters</a> for which
+values are valid for the <em class="parameter"><code>modifierState</code></em> and for
+the <em class="parameter"><code>button</code></em> arguments.
+</p><div class="funcsynopsis"><a id="java-mouseDrag-function"></a><p><code class="funcdef"><b class="fsfunc">mouseDrag</b>(</code><var class="pdparam">objectOrName</var>, <var class="pdparam">x</var>, <var class="pdparam">y</var>, <var class="pdparam">dx</var>, <var class="pdparam">dy</var>, <var class="pdparam">modifierState</var>, <var class="pdparam">button</var><code>)</code>;</p></div><p>
+This function performs a mouse drag operation. It initiates a mouse drag
+of the specified <em class="parameter"><code>objectOrName</code></em> widget starting at
+position <em class="parameter"><code>x</code></em> and <em class="parameter"><code>y</code></em> (in the
+<em class="parameter"><code>objectOrName</code></em> widget's coordinates), using the
+specified <em class="parameter"><code>button</code></em> and with the
+<em class="parameter"><code>modifierState</code></em> modifier state. The
+<em class="parameter"><code>objectOrName</code></em> widget is dragged by
+<em class="parameter"><code>dx</code></em> pixels horizontally and by
+<em class="parameter"><code>dy</code></em> pixels vertically.
+</p><p>
+See <a class="xref" href="rgs-javaconvenience.html#java-convenience.function.parameters" title="Java Convenience Function Parameters">Java Convenience Function Parameters</a> for which
+values are valid for the <em class="parameter"><code>modifierState</code></em> and for
+the <em class="parameter"><code>button</code></em> arguments.
+</p><div class="funcsynopsis"><a id="java-mouseWheel-function"></a><p><code class="funcdef"><b class="fsfunc">mouseWheel</b>(</code><var class="pdparam">n</var><code>)</code>;</p></div><div class="funcsynopsis"><p><code class="funcdef"><b class="fsfunc">mouseWheel</b>(</code><var class="pdparam">n</var>, <var class="pdparam">modifierState</var><code>)</code>;</p></div><p>
+This function moves the mouse wheel with <em class="parameter"><code>n</code></em> number
+of ticks. When <em class="parameter"><code>n</code></em> is positive, the wheel is rotated
+forward and when negative, the wheel rotates backward. The optional
+<em class="parameter"><code>modifierState</code></em> indicates the mouse wheel action will
+be carried out while holding one or more modifier keys.
+</p><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Note"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/note.png"></img></td><th align="left">Note</th></tr><tr><td align="left" valign="top"><p>
+Note that <a class="xref" href="rgs-javaconvenience.html#java-mouseWheel-function"><code class="function">mouseWheel</code></a> should be used like the
+<a class="xref" href="rgs-squish.html#interaction.functions" title="6.3.5. Interaction Functions">Interaction Functions (Section 6.3.5)</a> for the
+<em class="parameter"><code>modifierState</code></em> argument. See
+<a class="xref" href="rgs-squish.html#squishapi.function.parameters" title="Squish API Function Parameters"><span class="emphasis"><em>Squish</em></span> API Function Parameters</a>
+</p></td></tr></table></div><div class="funcsynopsis"><a id="java-nativeMouseClick-function"></a><p><code class="funcdef"><b class="fsfunc">nativeMouseClick</b>(</code><var class="pdparam">objectOrName</var><code>)</code>;</p></div><div class="funcsynopsis"><p><code class="funcdef"><b class="fsfunc">nativeMouseClick</b>(</code><var class="pdparam">objectOrName</var>, <var class="pdparam">x</var>, <var class="pdparam">y</var>, <var class="pdparam">modifierState</var>, <var class="pdparam">button</var><code>)</code>;</p></div><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Note: AWT/Swing-specific"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/note.png"></img></td><th align="left">AWT/Swing-specific</th></tr><tr><td align="left" valign="top"><p>
+This function is specific to the AWT/Swing toolkit. (All SWT mouse clicks
+are always performed natively, so this function would be redundant for
+SWT.)
+</p></td></tr></table></div><p>
+This function clicks the mouse on the specified
+<em class="parameter"><code>objectOrName</code></em> widget. The <em class="parameter"><code>x</code></em>
+and <em class="parameter"><code>y</code></em> coordinates,
+<em class="parameter"><code>modifierState</code></em>, and <em class="parameter"><code>button</code></em>
+are all optional. If they are not specified the click is made in the
+center of the widget with the left mouse button and using a null
+keyboard modifier state. On the other hand, if the additional parameters
+are given, the click is made at position <em class="parameter"><code>x</code></em> and
+<em class="parameter"><code>y</code></em> (in the <em class="parameter"><code>objectOrName</code></em>
+widget's coordinates) using the specified <em class="parameter"><code>button</code></em>
+and with the <em class="parameter"><code>modifierState</code></em> modifier state.
+</p><p>
+See <a class="xref" href="rgs-javaconvenience.html#java-convenience.function.parameters" title="Java Convenience Function Parameters">Java Convenience Function Parameters</a> for which
+values are valid for the <em class="parameter"><code>modifierState</code></em> and for
+the <em class="parameter"><code>button</code></em> arguments.
+</p><div class="funcsynopsis"><a id="java-readGesture-function"></a><p><code class="funcdef"><b class="fsfunc">readGesture</b>(</code><var class="pdparam">gesture-file</var><code>)</code>;</p></div><p>
+This function opens a gesture file from a test suite directory and returns
+a <a class="xref" href="rgs-javaconvenience.html#java-GestureBuilder-class" title="6.7.2. GestureBuilder">GestureBuilder</a> object.
+This can then be passed to <a class="xref" href="rgs-javaconvenience.html#java-gesture-function"><code class="function">gesture</code></a>.
+The specified <em class="parameter"><code>gesture-file</code></em> refers to the filename.
+</p><div class="funcsynopsis"><a id="java-startDrag-function"></a><p><code class="funcdef"><b class="fsfunc">startDrag</b>(</code><var class="pdparam">source_objectOrName</var>, <var class="pdparam">sx</var>, <var class="pdparam">sy</var><code>)</code>;</p></div><div class="funcsynopsis"><p><code class="funcdef"><b class="fsfunc">startDrag</b>(</code><var class="pdparam">source_objectOrName</var><code>)</code>;</p></div><p>
+This function initiates a drag on the
+<em class="parameter"><code>source_objectOrName</code></em> widget starting at position
+<em class="parameter"><code>sx</code></em> and <em class="parameter"><code>sy</code></em> (in the
+<em class="parameter"><code>source_objectOrName</code></em> widget's coordinates, if
+omitted the widget's center is taken).
+The drop can be done using the <a class="xref" href="rgs-javaconvenience.html#java-dropOn-function"><code class="function">dropOn</code></a>
+function.
+</p><p>
+Normally the <a class="xref" href="rgs-javaconvenience.html#java-dragAndDrop-function"><code class="function">dragAndDrop</code></a> function is
+used to perform a drag and drop in a single action. However, in some
+situations it may be necessary to move the mouse over a different object
+before the drop can take place. In such cases the test code would look
+something like this:
+</p><pre class="programlisting">
+startDrag(<span class="emphasis"><em>sourceObject</em></span>, <span class="emphasis"><em>sx</em></span>, <span class="emphasis"><em>sy</em></span>)
+mouseMove(<span class="emphasis"><em>otherObject</em></span>, <span class="emphasis"><em>x</em></span>, <span class="emphasis"><em>y</em></span>)
+dropOn(<span class="emphasis"><em>targetObject</em></span>, <span class="emphasis"><em>tx</em></span>, <span class="emphasis"><em>ty</em></span>, <span class="emphasis"><em>operation</em></span>)
+</pre><div class="funcsynopsis"><a id="java-type-function"></a><p><code class="funcdef"><b class="fsfunc">type</b>(</code><var class="pdparam">objectOrName</var>, <var class="pdparam">text</var><code>)</code>;</p></div><p>
+This function types the specified <em class="parameter"><code>text</code></em> (as if the
+user had used the keyboard) into the <em class="parameter"><code>objectOrName</code></em>
+editable widget. If the text is surrounded by angle brackets (&lt;&gt;),
+it is interpreted as a key combination, e.g
+<code class="code">"&lt;Ctrl+Return&gt;"</code>. The input is case-sensitive, so
+<code class="code">type(<span class="emphasis"><em>object</em></span>, "R")</code> is different from
+<code class="code">type(<span class="emphasis"><em>object</em></span>, "r")</code>. (For a list of the
+supported special keys see the <a class="xref" href="rgs-squish.html#nativeType-function"><code class="function">nativeType</code></a>
+function's documentation.)
+</p><div class="funcsynopsis"><a id="java-uninstallEventHandler-function"></a><p><code class="funcdef"><b class="fsfunc">uninstallEventHandler</b>(</code><var class="pdparam">eventName</var>, <var class="pdparam">handlerFunctionNameOrReference</var><code>)</code>;</p></div><p>
+This function uninstalls an event handler that has been previously
+installed using <a class="xref" href="rgs-javaconvenience.html#java-installEventHandler-function"><code class="function">installEventHandler</code></a>.
+</p><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="native.java.arrays"></a>6.7.1. Native Java Arrays</h3></div></div></div><p>
+In addition to the functions described above, test scripts can create
+native <span class="trademark">Java</span>™ arrays, and insert and retrieve objects stored in the
+arrays. (For examples of use see <a class="xref" href="ugs-javaapi.html#creating.and.using.javaarrays" title="5.4.5.2. Creating and Using JavaArrays">Creating and Using JavaArrays (Section 5.4.5.2)</a>.)
+</p><div class="funcsynopsis"><a id="java-JavaArray-function"></a><p><code class="funcdef">Array <b class="fsfunc">JavaArray</b>(</code><var class="pdparam">size</var><code>)</code>;</p></div><div class="funcsynopsis"><p><code class="funcdef">Array <b class="fsfunc">JavaArray</b>(</code><var class="pdparam">size</var>, <var class="pdparam">nameOfType</var><code>)</code>;</p></div><p>
+This is a constructor function for creating native Java arrays. The
+<em class="parameter"><code>size</code></em> specifies how many objects it may contain
+(indexed from 0, so the last valid index is <em class="parameter"><code>size</code></em>
+<code class="code">- 1</code>). If the optional <em class="parameter"><code>nameOfType</code></em>
+string is omitted, the function will return an array of type
+<code class="code">java.lang.Object[<em class="parameter"><code>size</code></em>]</code>; otherwise
+the array will be of type
+<code class="code"><em class="parameter"><code>nameOfType</code></em>[<em class="parameter"><code>size</code></em>]</code>.
+The <em class="parameter"><code>nameOfType</code></em> is a string that can specify a
+non-object type such as <code class="code">"int"</code>, or an object type such as
+<code class="code">"java.lang.String"</code>.
+</p><p>
+<code class="code">JavaArray</code>s have two functions and one property.
+</p><div class="funcsynopsis"><a id="java-JavaArray.at-function"></a><p><code class="funcdef">Object <b class="fsfunc">JavaArray.at</b>(</code><var class="pdparam">index</var><code>)</code>;</p></div><p>
+This function returns the object at position
+<em class="parameter"><code>index</code></em> in the array. If the
+<em class="parameter"><code>index</code></em> is out of bounds a catchable exception is
+raised.
+</p><a id="java-JavaArray.length-property"></a>int
+<span class="property">javaArray.length</span><p>
+This read-only property holds the number of positions in the array. The
+first item is at position 0 and the last item is at postion
+<code class="code">javaArray.length - 1</code>.
+</p><div class="funcsynopsis"><a id="java-JavaArray.set-function"></a><p><code class="funcdef">Object <b class="fsfunc">JavaArray.set</b>(</code><var class="pdparam">index</var>, <var class="pdparam">object</var><code>)</code>;</p></div><p>
+This function sets the item at position <em class="parameter"><code>index</code></em> in
+the array to the given <em class="parameter"><code>object</code></em>. If the
+<em class="parameter"><code>index</code></em> is out of bounds or if the
+<em class="parameter"><code>object</code></em> is of an invalid type (e.g., a string when
+the JavaArray holds integers), a catchable exception is raised.
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="java-GestureBuilder-class"></a>6.7.2. GestureBuilder</h3></div></div></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><span class="section"><a href="rgs-javaconvenience.html#java-GestureBuilder-create-functions">6.7.2.1. Gesture creation</a></span></dt><dt><span class="section"><a href="rgs-javaconvenience.html#java-GestureBuilder-manipulate-functions">6.7.2.2. Gesture manipulation</a></span></dt></dl></div><p>
+Objects of this type hold the touch strokes information needed to
+replay <a class="xref" href="rgs-javaconvenience.html#java-gesture-function"><code class="function">gesture</code></a>.
+An instance of this class is returned by
+<a class="xref" href="rgs-javaconvenience.html#java-readGesture-function"><code class="function">readGesture</code></a>. Strokes are defined by JavaFX
+<span class="emphasis"><em>scene</em></span> coordinates points.
+</p><p>
+For examples of how <code class="code">GestureBuilder</code> objects can be used to
+manipulate the gesture information, see <a class="xref" href="ugs-javaapi.html#ug-how.to.use.the.java.GestureBuilder" title="5.4.7. How to Use the GestureBuilder class">How to Use the GestureBuilder class (Section 5.4.7)</a>.
+</p><a id="java-GestureBuilder-areaWidth-property"></a>int
+<span class="property">GestureBuilder.areaWidth</span><p>
+The width of the area in which this gesture is defined. This will be
+the <span class="emphasis"><em>scene</em></span> width.
+</p><a id="java-GestureBuilder-areaHeight-property"></a>int
+<span class="property">GestureBuilder.areaHeight</span><p>
+The height of the area in which this gesture is defined. This will be
+the <span class="emphasis"><em>scene</em></span> height.
+</p><p>
+All <a class="xref" href="rgs-javaconvenience.html#java-GestureBuilder-class" title="6.7.2. GestureBuilder">GestureBuilder</a> methods listed in the
+<a class="xref" href="rgs-javaconvenience.html#java-GestureBuilder-create-functions" title="6.7.2.1. Gesture creation">Gesture creation (Section 6.7.2.1)</a> and
+<a class="xref" href="rgs-javaconvenience.html#java-GestureBuilder-manipulate-functions" title="6.7.2.2. Gesture manipulation">Gesture manipulation (Section 6.7.2.2)</a> section,
+return the <a class="xref" href="rgs-javaconvenience.html#java-GestureBuilder-class" title="6.7.2. GestureBuilder">GestureBuilder</a> object
+itself, unless specified differently.
+</p><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="java-GestureBuilder-create-functions"></a>6.7.2.1. Gesture creation</h4></div></div></div><p>
+This section lists the methods for manually creating a
+<a class="xref" href="rgs-javaconvenience.html#java-GestureBuilder-class" title="6.7.2. GestureBuilder">GestureBuilder</a> object.
+</p><div class="funcsynopsis"><p><code class="funcdef"><b class="fsfunc">GestureBuilder</b>(</code><var class="pdparam">width</var>, <var class="pdparam">height</var>, <var class="pdparam">unit</var><code>)</code>;</p></div><div class="funcsynopsis"><p><code class="funcdef"><b class="fsfunc">GestureBuilder</b>(</code><var class="pdparam">xml</var><code>)</code>;</p></div><p>
+Two constructor functions for creating a
+<a class="xref" href="rgs-javaconvenience.html#java-GestureBuilder-class" title="6.7.2. GestureBuilder">GestureBuilder</a> object. The
+<em class="parameter"><code>width</code></em> and <em class="parameter"><code>height</code></em> are
+the target <span class="emphasis"><em>scene</em></span> sizes. The <em class="parameter"><code>unit</code></em>
+can be either 0 or 1, meaning respectively in pixels or millimeters. The
+constants <code class="constant">GestureBuilder.Pixel</code> and
+<code class="constant">GestureBuilder.MilliMeter</code> can be used as well.
+</p><p>
+The second constructor function constructs a
+<a class="xref" href="rgs-javaconvenience.html#java-GestureBuilder-class" title="6.7.2. GestureBuilder">GestureBuilder</a> object by passing a
+string containing <acronym class="acronym">XML</acronym>, which should be in the same
+format as the recorded gesture files.
+</p><div class="funcsynopsis"><p><code class="funcdef">Object <b class="fsfunc">GestureBuilder.addStroke</b>(</code><var class="pdparam">x</var>, <var class="pdparam">y</var><code>)</code>;</p></div><div class="funcsynopsis"><p><code class="funcdef">Object <b class="fsfunc">GestureBuilder.addStroke</b>(</code><var class="pdparam">startTime</var>, <var class="pdparam">x</var>, <var class="pdparam">y</var><code>)</code>;</p></div><p>
+Starts a new stroke. The whole movement of one finger or pen from
+touch down to releasing the screen is called a stroke. The touch down
+coordinate is (<em class="parameter"><code>x</code></em>, <em class="parameter"><code>y</code></em>).
+For the non-first stroke, a time offset can be specified in milliseconds using
+the <em class="parameter"><code>startTime</code></em> argument. Strokes cannot be disjointed
+in time, at least one finger or pen has to be down during the whole gesture.
+The maximum simultaneous touches is device dependent.
+</p><div class="funcsynopsis"><p><code class="funcdef">Object <b class="fsfunc">GestureBuilder.curveTo</b>(</code><var class="pdparam">duration</var>, <var class="pdparam">controlX</var>, <var class="pdparam">controlY</var>, <var class="pdparam">endX</var>, <var class="pdparam">endy</var><code>)</code>;</p></div><div class="funcsynopsis"><p><code class="funcdef">Object <b class="fsfunc">GestureBuilder.curveTo</b>(</code><var class="pdparam">duration</var>, <var class="pdparam">control1X</var>, <var class="pdparam">control1Y</var>, <var class="pdparam">control2X</var>, <var class="pdparam">control2Y</var>, <var class="pdparam">endX</var>, <var class="pdparam">endy</var><code>)</code>;</p></div><p>
+Adds a bézier curve movement to the latest added stroke in
+<em class="parameter"><code>duration</code></em> milliseconds.
+The curve starts with the end coordinate of the last added movement or, if
+none added to the stroke, the stroke touch down coordinate. The end coordinate
+is specified with <em class="parameter"><code>endX</code></em> and <em class="parameter"><code>endY</code></em>.
+One or two so called control points can be used.
+</p><div class="funcsynopsis"><p><code class="funcdef">Object <b class="fsfunc">GestureBuilder.lineTo</b>(</code><var class="pdparam">duration</var>, <var class="pdparam">endX</var>, <var class="pdparam">endy</var><code>)</code>;</p></div><p>
+Adds a line movement to the latest added stroke in
+<em class="parameter"><code>duration</code></em> milliseconds.
+The line starts with the end coordinate of the last added movement or, if none
+added to the stroke, the stroke touch down coordinate. The end coordinate is
+specified with <em class="parameter"><code>endX</code></em> and <em class="parameter"><code>endY</code></em>.
+</p><div class="funcsynopsis"><p><code class="funcdef">Object <b class="fsfunc">GestureBuilder.build</b>(</code><code>)</code>;</p></div><p>
+Creates the gesture from the added strokes and movements. After calling this
+method, no strokes or movements can be added.
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="java-GestureBuilder-manipulate-functions"></a>6.7.2.2. Gesture manipulation</h4></div></div></div><div class="funcsynopsis"><p><code class="funcdef">Object <b class="fsfunc">GestureBuilder.accelerate</b>(</code><var class="pdparam">factor</var><code>)</code>;</p></div><p>
+Changes stroke speed given a factor. A factor between 0.0 and 1.0
+slows down the gesture, above 1.0 will speed it up.
+</p><div class="funcsynopsis"><p><code class="funcdef">Object <b class="fsfunc">GestureBuilder.rotate</b>(</code><var class="pdparam">degrees</var><code>)</code>;</p></div><div class="funcsynopsis"><p><code class="funcdef">Object <b class="fsfunc">GestureBuilder.rotate</b>(</code><var class="pdparam">degrees</var>, <var class="pdparam">originX</var>, <var class="pdparam">originY</var><code>)</code>;</p></div><p>
+Rotates the strokes. The <em class="parameter"><code>degrees</code></em>
+is the agle in degrees in a counter clockwise direction.
+The <em class="parameter"><code>originX</code></em> and <em class="parameter"><code>originY</code></em> define
+the origin of the rotate operation. If omitted, the area center is
+taken as origin.
+</p><div class="funcsynopsis"><p><code class="funcdef">Object <b class="fsfunc">GestureBuilder.scale</b>(</code><var class="pdparam">scale</var><code>)</code>;</p></div><div class="funcsynopsis"><p><code class="funcdef">Object <b class="fsfunc">GestureBuilder.scale</b>(</code><var class="pdparam">scaleX</var>, <var class="pdparam">scaleY</var><code>)</code>;</p></div><div class="funcsynopsis"><a id="java-GestureBuilder.scale-function"></a><p><code class="funcdef">Object <b class="fsfunc">GestureBuilder.scale</b>(</code><var class="pdparam">scaleX</var>, <var class="pdparam">scaleY</var>, <var class="pdparam">originX</var>, <var class="pdparam">originY</var><code>)</code>;</p></div><p>
+Changes the size of the strokes. The <em class="parameter"><code>scaleX</code></em>
+is the scale factor in the horizontal direction and
+<em class="parameter"><code>scaleY</code></em> in the vertical direction.
+The <em class="parameter"><code>originX</code></em> and <em class="parameter"><code>originY</code></em> define
+the origin of the scale operation. If omitted, the area center is
+taken as origin. When also <em class="parameter"><code>scaleY</code></em> is omitted, then
+the scaling is homogeneous in both directions.
+</p><div class="funcsynopsis"><a id="java-GestureBuilder.translate-function"></a><p><code class="funcdef">Object <b class="fsfunc">GestureBuilder.translate</b>(</code><var class="pdparam">x</var>, <var class="pdparam">y</var><code>)</code>;</p></div><p>
+Moves the strokes. The <em class="parameter"><code>x</code></em> and
+<em class="parameter"><code>y</code></em> specifies the movement. A positive value for
+<em class="parameter"><code>x</code></em> moves the strokes to the right and a positive
+value for <em class="parameter"><code>y</code></em> moves the strokes downwards.
+</p></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="rgs-javasyntheticproperties"></a>6.7.3. <span class="trademark">Java</span>™ Hardcoded Synthetic Properties</h3></div></div></div><p>
+In addition to the public <span class="trademark">Java</span>™ class fields, and synthetic properties
+generated from <code class="function">get*</code> and
+<code class="function">is*</code> functions, <span class="emphasis"><em>Squish</em></span> provides some additional
+properties to make it easier to identify objects. (See <a class="xref" href="rg-namingconfig.html#rg-namingconfig-how" title="7.12.2. Defining Property Sets">Defining Property Sets (Section 7.12.2)</a> for more details.)
+</p><p>
+These properties can only be used with the object name. And are not visible
+in the object properties list.
+</p><div class="informaltable"><table border="1"><colgroup><col></col><col></col><col></col></colgroup><thead><tr><th>Property</th><th>Type</th><th>Description</th></tr></thead><tbody><tr><td><span class="property">aboveWidget</span></td><td><span class="type">Object</span></td><td><p>Holds the object above this widget in the same
+logical parent <span class="type">Container</span> or <span class="type">Composite</span>. This
+should be used for objects that don't have a caption but often come with
+an accompanying widget. For example, edit boxes have no caption but
+might have a label above them.</p>
+</td></tr><tr><td><span class="property">arrowDirection</span></td><td><span class="type">String</span></td><td><p>Holds the direction of <acronym class="acronym">SWT</acronym> buttons that
+have the arrow style enabled.</p>
+</td></tr><tr><td><span class="property">buttonType</span></td><td><span class="type">String</span></td><td><p>Holds the type of <acronym class="acronym">SWT</acronym> buttons. This
+property is useful for identifying buttons with arrows.
+</p></td></tr><tr><td><span class="property">caption</span></td><td><span class="type">String</span></td><td><p>Holds the object's title, caption, or text, if this object
+typically has such text to display.</p>
+</td></tr><tr><td><span class="property">container</span></td><td><span class="type">Object</span></td><td><p>Holds the parent <span class="type">Container</span> or
+<span class="type">Composite</span> that contains this object. These are typically
+tab pages or the menu bar.</p></td></tr><tr><td><span class="property">firstItemText</span></td><td><span class="type">String</span></td><td><p>Holds the first text to be found for child
+<acronym class="acronym">SWT</acronym> <span class="type">ToolItem</span> objects. If no text is
+found, then the tooltip text is used. This property's value could be the
+empty string if no text is found and no tooltip text is set.
+</p>
+</td></tr><tr><td><span class="property">firstTabCaption</span></td><td><span class="type">String</span></td><td><p>Holds the caption of the first <span class="type">CTabItem</span> of
+a <span class="type">CTabFolder</span>. This property's value could be the empty
+string if no text is found.
+</p>
+</td></tr><tr><td><span class="property">leftWidget</span></td><td><span class="type">Object</span></td><td><p>Holds the object to the left of this widget in the same
+logical parent <span class="type">Container</span> or <span class="type">Composite</span>. This
+should be used for objects that don't have a caption but often come with
+an accompanying widget. For example, edit boxes have no caption but
+often have a label on their left.</p>
+</td></tr><tr><td><span class="property">menuStyle</span></td><td><span class="type">String</span></td><td><p>Holds the style of <acronym class="acronym">SWT</acronym> menu—this
+indicates whether the menu is a menu bar, a popup menu, or a pull-down
+menu.
+</p>
+</td></tr><tr><td><span class="property">type</span></td><td><span class="type">String</span></td><td><p>Holds the object's class name—but with any periods
+in the name replaced with underscores.</p></td></tr><tr><td><span class="property">window</span></td><td><span class="type">Object</span></td><td><p>Holds the top-level window that contains this object.</p></td></tr></tbody></table></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="api-javaextapi"></a>6.7.4. Java Extension API for Custom Widgets</h3></div></div></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><span class="section"><a href="rgs-javaconvenience.html#api.javaext.introduction">6.7.4.1. Introduction</a></span></dt><dt><span class="section"><a href="rgs-javaconvenience.html#api.javaext.custom.canvas.example">6.7.4.2. Custom canvas Example</a></span></dt><dt><span class="section"><a href="rgs-javaconvenience.html#java-extension-apiref">6.7.4.3. Java Extension API Reference</a></span></dt></dl></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="api.javaext.introduction"></a>6.7.4.1. Introduction</h4></div></div></div><p>
+<span class="emphasis"><em>Squish</em></span> can work with all the standard AWT/SWT widgets out of the box.
+However, some custom widgets may represent their child components in a
+non-standard way, that is, not as AWT/SWT components. For example, a
+canvas might use normal Java objects to represent the items it displays.
+Or a Gantt diagram component might render its own contents, taking its
+data from a model. <span class="emphasis"><em>Squish</em></span>'s Java extension API makes it possible to
+extend <span class="emphasis"><em>Squish</em></span> so that non-standard components in AWT and SWT
+applications can expose their APIs so that they become accessible to
+<span class="emphasis"><em>Squish</em></span> and can therefore be accessed in test scripts just like any other
+component.
+</p><p>
+In order to tell <span class="emphasis"><em>Squish</em></span> what functionality to expose, we introduce the
+concept of an Inspectable class. An Inspectable class is one that can
+respond to <span class="emphasis"><em>Squish</em></span>'s queries about objects of a particular type. For
+example, an Inspectable could handle canvas item types, and provide an
+API that can give <span class="emphasis"><em>Squish</em></span> the canvas's bounds or its parent, or that
+returns all of its child items. The precise APIs are listed in the
+Inspectable interface; see <a class="xref" href="rgs-javaconvenience.html#java-extension-apiref" title="6.7.4.3. Java Extension API Reference">The Java Extension API</a>.
+</p><p>
+Once the Inspectables are registered, whenever <span class="emphasis"><em>Squish</em></span> encounters an
+object, <span class="emphasis"><em>Squish</em></span> queries each Inspectable to see if the Inspectable can
+handle the object (i.e., objects of the object's type). If one of the
+Inspectables reports that it recognizes the type as one it can handle,
+<span class="emphasis"><em>Squish</em></span> uses that Inspectable's interface to interact with the object.
+This allows <span class="emphasis"><em>Squish</em></span> to treat the object just like any of the standard
+AWT/SWT types that it supports out of the box—for example,
+<span class="emphasis"><em>Squish</em></span> can query the Inspectable to see if the object has received a
+mouse click.
+</p><p>
+All the Inspectables for the types you want to <span class="emphasis"><em>Squish</em></span> to be able to
+handle are placed together in a “<span class="quote">wrapper</span>” library. A clean
+way to do this is to put all the Inspectables classes in their own jar,
+although it is also possible to add them to the application's existing
+jar. The <span class="application">canvastest</span> example shows how to put
+the Inspectables into their own jar.
+</p><p>
+Using the Java Extension API and a suitable wrapper, it is possible to
+support non-AWT/SWT components alongside standard AWT/SWT components so
+that <span class="emphasis"><em>Squish</em></span> can:
+</p><div class="itemizedlist"><ul type="disc"><li><p>
+Identify both AWT/SWT and non-AWT/SWT components in test scripts.
+</p></li><li><p>
+Use verification points on both AWT/SWT and non-AWT/SWT components.
+</p></li><li><p>
+Show both AWT/SWT and non-AWT/SWT components in the overall Spy hierarchy.
+</p></li><li><p>
+Pick both AWT/SWT and non-AWT/SWT components using the object picker.
+</p></li></ul></div><p>
+See also, <a class="xref" href="rg-autsettings.html#rgas-javawrapping" title="7.3.8.2. Wrapping custom Java™ classes">Wrapping custom <span class="trademark">Java</span>™ classes (Section 7.3.8.2)</a>
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="api.javaext.custom.canvas.example"></a>6.7.4.2. Custom canvas Example</h4></div></div></div><p>
+To show how a wrapper to extend an existing AWT application works, we
+will use the <span class="application">canvastest</span> example which is
+shipped together with <span class="emphasis"><em>Squish</em></span> for Java. You can find the source code in
+<code class="filename">SQUISHDIR/examples/java/canvastest</code>. (We could just as
+easily have extended an SWT application using exactly the same
+approach.)
+</p><p>
+The application's source files are
+<code class="filename">CanvasTest.java</code>,
+<code class="filename">MyCanvas.java</code>,
+<code class="filename">MyCanvasItem.java</code>,
+<code class="filename">MyCanvasGroup.java</code>,
+<code class="filename">MyCanvasShape.java</code>,
+<code class="filename">MyRectCanvasItem.java</code>,
+<code class="filename">MyCircleCanvasItem.java</code>,
+and together they comprise
+an AWT application that provides a simple canvas with multiple items.
+</p><p>
+We want test scripts that test the <span class="application">canvastest</span>
+application to be able to query the application's <code class="code">MyCanvas</code>
+objects—to retrieve a <code class="code">MyCanvas</code>, to get a
+<code class="code">MyCanvas</code>'s parent object, to get the canvas's bounding
+rectangle, and to get the <code class="code">MyCanvasItem</code> item at a particular
+point, or all of the canvas's <code class="code">MyCanvasItem</code> items. In
+addition, we want to be able to query <code class="code">MyCanvasItem</code> objects,
+to get their bounding rectangles, and so on. To do all this we must
+create suitable Inspectable Java classes that <span class="emphasis"><em>Squish</em></span> can query to get
+interfaces through which it can query the application's canvas and
+canvas items as if they were standard AWT/SWT objects.
+</p><p>
+We have put the Inspectable classes in the
+<code class="filename">MyCanvasFactory.java</code> file in the same directory as
+the application's other Java files. The Squish Java extension API classes
+are contained in the file <code class="filename">SQUISHDIR/lib/squishjava.jar</code>,
+and so this file must be in the class path to be able to compile
+<code class="filename">MyCanvasFactory.java</code>.
+</p><p>
+See <a class="xref" href="rgs-javaconvenience.html#java-extension-apiref" title="6.7.4.3. Java Extension API Reference">The Java Extension API</a> for information about the
+extension API.
+</p><p>
+Once the Inspectable classes have been created, <span class="emphasis"><em>Squish</em></span> must be
+informed that they exist so that it can make use of them. All that is
+required to do this is to tell <span class="emphasis"><em>Squish</em></span> which application the wrapper
+should be used for and where the wrapper is located. This is done by
+setting a configuration on the <span class="application">squishserver</span>:
+</p><pre class="programlisting">
+squishserver --config setConfig CanvasTest.jar \
+$SQUISHDIR/examples/canvastest/Extension.ini
+</pre><p>
+Here we have used a Unix-style path and assumed that the environment
+variable <code class="envar">SQUISHDIR</code> has <span class="emphasis"><em>Squish</em></span>'s installation directory.
+It doesn't matter what the path used actually is (so long as it is an
+absolute path, and the correct one for the
+<code class="filename">Extension.ini</code> file).
+</p><p>
+The <code class="filename">Extension.ini</code> file must list the directory where
+the extension is located. A relative path is possible and should be relative
+to the working directory of the application.
+Here's the <span class="application">canvastest</span>'s
+<code class="filename">Extension.ini</code> file's contents:
+
+</p><pre class="programlisting">
+[general]
+JavaExtensionDir="."
+</pre><p>
+
+If you are using Windows you should either use forward slashes or escape
+the backslash by writing the directory to the ini file.
+</p><p>
+To demonstrate testing the AUT with the wrapper we have provided a
+very basic test suite in
+<code class="filename">SQUISHDIR/examples/java/suite_canvastest_js</code>.
+</p><p>
+Sometimes the application provided objects aren't suitable because they
+don't provide parent/child relationship. In that case, a helper class can
+be used. This class must be added to the extension.jar.
+</p><p>
+For example, take a popularity component, that draws five stars and
+the coloring shows the percentage. In such a case, a helper class with
+the component and index represents one star. The component children are
+five of such helper class instances. For each instance, the component is
+the parent.
+</p><p>
+Thus the Inspectable for the component creates helper objects in getChildren
+and getChildAt when at a star. An additional Inspectable for the helper
+objects makes them visible to Squish. Add public getter functions for any
+properties that you may need, e.g. a getIndex and getFill.
+</p><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Note"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/note.png"></img></td><th align="left">Note</th></tr><tr><td align="left" valign="top"><p>
+Make sure that helper classes override the java Object equals and hashCode
+methods, such that equals returns true when the fields are equal and
+hashCode is a value distinguishing the equality. In above example, the
+following code is required.
+
+</p><pre class="programlisting">
+public boolean equals(Object obj) {
+    if ( obj == null || !( obj instanceof StarHelper))
+        return false;
+    StarHelper other = (StarHelper)obj;
+    return other.index == index &amp;&amp; other.component.equals( component);
+}
+public int hashCode() {
+    return component.hashCode() + index + /*some random number*/ 43;
+}
+</pre><p>
+
+</p></td></tr></table></div><div class="section" lang="en"><div class="titlepage"><div><div><h5 class="title"><a id="api.javaext.custom.create.jar"></a>6.7.4.2.1. Creating the jar file</h5></div></div></div><p>
+The manifest file must contain an <code class="code">Extension</code> entry that has
+as its value the class which has the <code class="code">public static void
+init(InspectableRegistry registry)</code> method. This function is the
+entry point for the extension and should register the factory class in
+the <code class="code">registry</code>.
+</p><p>
+For applications that load their classes with one or more class loaders
+that differ from the system class loader, an entry
+<code class="code">LoadAtClass</code> must be added. All <acronym class="acronym">RCP</acronym> fall
+in this category.
+</p><p>
+The value of this entry is the class that will trigger the extension
+registration, as soon as that class gets loaded by a class loader. This
+may require some trial and error, because all the fields of the factory
+classes that get registered must already be known to the class loader.
+</p><p>
+For this example, <code class="code">LoadAtClass</code> is set to the <code class="code">Canvas</code>
+class. Here the manifest file for the extension jar.
+</p><pre class="programlisting">
+Extension: MyCanvasFactory
+LoadAtClass: MyCanvas
+</pre><p>
+</p></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="java-extension-apiref"></a>6.7.4.3. Java Extension API Reference</h4></div><div><p class="copyright">Copyright © 2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022 The Qt Company Ltd.</p></div><div><div class="legalnotice"><a id="idp50377672"></a><p>The Qt Company Ltd.. All rights reserved</p></div></div><div><div class="abstract"><p class="title"><b>Abstract</b></p><p>This reference documents the <span class="emphasis"><em>Squish</em></span> extension API for testing custom <span class="trademark">Java</span>™ components.</p></div></div></div></div><div class="index"><div class="titlepage"><div><div><h5 class="title"><a id="idp51040576"></a>Index</h5></div></div></div><div class="index"><div class="indexdiv"><h3>C</h3><dl><dt>Classes</dt><dd><dl><dt>Color, <a class="indexterm" href="class-com.froglogic.squish.extension.Color.html">Class Color</a></dt><dt>InspectableAdapter, <a class="indexterm" href="class-com.froglogic.squish.extension.InspectableAdapter.html">Class InspectableAdapter</a></dt><dt>InspectableRegistry, <a class="indexterm" href="class-com.froglogic.squish.extension.InspectableRegistry.html">Class InspectableRegistry</a></dt><dt>Point, <a class="indexterm" href="class-com.froglogic.squish.extension.Point.html">Class Point</a></dt><dt>Rect, <a class="indexterm" href="class-com.froglogic.squish.extension.Rect.html">Class Rect</a></dt></dl></dd><dt>Color, <a class="indexterm" href="class-com.froglogic.squish.extension.Color.html">Class Color</a></dt></dl></div><div class="indexdiv"><h3>E</h3><dl><dt>Event
+Compression</dt><dd><dl><dt>disableEventCompression, <a class="indexterm" href="ide.dialogs.html#the.squish.pane.s.child.panes">Squish Preferences Child Panes</a></dt></dl></dd></dl></div><div class="indexdiv"><h3>F</h3><dl><dt>Fields</dt><dd><dl><dt>MAX_PRIORITY, <a class="indexterm" href="class-com.froglogic.squish.extension.InspectableFactory.html#field-com.froglogic.squish.extension.InspectableFactory.MAX_PRIORITY">MAX_PRIORITY</a></dt><dt>MIN_PRIORITY, <a class="indexterm" href="class-com.froglogic.squish.extension.InspectableFactory.html#field-com.froglogic.squish.extension.InspectableFactory.MIN_PRIORITY">MIN_PRIORITY</a></dt><dt>NORM_PRIORITY, <a class="indexterm" href="class-com.froglogic.squish.extension.InspectableFactory.html#field-com.froglogic.squish.extension.InspectableFactory.NORM_PRIORITY">NORM_PRIORITY</a></dt></dl></dd><dt>findObjects, <a class="indexterm" href="class-com.froglogic.squish.extension.Inspectable.html#method-com.froglogic.squish.extension.Inspectable.findObjects-com.froglogic.squish.extension.ObjectQuery-int-java.util.AbstractList">findObjects(ObjectQuery, int, AbstractList)</a>, <a class="indexterm" href="class-com.froglogic.squish.extension.Inspectable.html#method-com.froglogic.squish.extension.Inspectable.findObjects-com.froglogic.squish.extension.ObjectQuery-java.lang.Object-java.util.AbstractList">findObjects(ObjectQuery, Object, AbstractList)</a>, <a class="indexterm" href="class-com.froglogic.squish.extension.InspectableAdapter.html#idp50591344">findObjects(ObjectQuery, int, AbstractList)</a>, <a class="indexterm" href="class-com.froglogic.squish.extension.InspectableAdapter.html#method-com.froglogic.squish.extension.InspectableAdapter.findObjects-com.froglogic.squish.extension.ObjectQuery-int-java.lang.Object-java.util.AbstractList">findObjects(ObjectQuery, int, Object, AbstractList)</a>, <a class="indexterm" href="class-com.froglogic.squish.extension.InspectableAdapter.html#idp50615760">findObjects(ObjectQuery, Object, AbstractList)</a></dt></dl></div><div class="indexdiv"><h3>G</h3><dl><dt>getChildAt, <a class="indexterm" href="class-com.froglogic.squish.extension.Inspectable.html#method-com.froglogic.squish.extension.Inspectable.getChildAt-com.froglogic.squish.extension.Point">getChildAt(Point)</a>, <a class="indexterm" href="class-com.froglogic.squish.extension.InspectableAdapter.html#idp50631192">getChildAt(Point)</a></dt><dt>getChildren, <a class="indexterm" href="class-com.froglogic.squish.extension.Inspectable.html#method-com.froglogic.squish.extension.Inspectable.getChildren">getChildren()</a>, <a class="indexterm" href="class-com.froglogic.squish.extension.InspectableAdapter.html#idp50642472">getChildren()</a></dt><dt>getGlobalBounds, <a class="indexterm" href="class-com.froglogic.squish.extension.Inspectable.html#method-com.froglogic.squish.extension.Inspectable.getGlobalBounds">getGlobalBounds()</a>, <a class="indexterm" href="class-com.froglogic.squish.extension.InspectableAdapter.html#idp50651672">getGlobalBounds()</a></dt><dt>getInspectable, <a class="indexterm" href="class-com.froglogic.squish.extension.InspectableRegistry.html#method-com.froglogic.squish.extension.InspectableRegistry.getInspectable-java.lang.Object">getInspectable(Object)</a></dt><dt>getIntProperty, <a class="indexterm" href="class-com.froglogic.squish.extension.ObjectQuery.html#method-com.froglogic.squish.extension.ObjectQuery.getIntProperty-java.lang.String">getIntProperty(String)</a></dt><dt>getName, <a class="indexterm" href="class-com.froglogic.squish.extension.Inspectable.html#method-com.froglogic.squish.extension.Inspectable.getName">getName()</a>, <a class="indexterm" href="class-com.froglogic.squish.extension.InspectableAdapter.html#idp50661056">getName()</a></dt><dt>getObject, <a class="indexterm" href="class-com.froglogic.squish.extension.Inspectable.html#method-com.froglogic.squish.extension.Inspectable.getObject">getObject()</a></dt><dt>getObjectFromItem, <a class="indexterm" href="class-com.froglogic.squish.extension.ItemExtension.html#method-com.froglogic.squish.extension.ItemExtension.getObjectFromItem-java.lang.String">getObjectFromItem(String)</a></dt><dt>getObjectProperty, <a class="indexterm" href="class-com.froglogic.squish.extension.ObjectQuery.html#method-com.froglogic.squish.extension.ObjectQuery.getObjectProperty-java.lang.String">getObjectProperty(String)</a></dt><dt>getParent, <a class="indexterm" href="class-com.froglogic.squish.extension.Inspectable.html#method-com.froglogic.squish.extension.Inspectable.getParent">getParent()</a></dt><dt>getPropertyValue, <a class="indexterm" href="class-com.froglogic.squish.extension.Inspectable.html#method-com.froglogic.squish.extension.Inspectable.getPropertyValue-java.lang.String">getPropertyValue(String)</a>, <a class="indexterm" href="class-com.froglogic.squish.extension.InspectableAdapter.html#idp50670096">getPropertyValue(String)</a></dt><dt>getRegistry, <a class="indexterm" href="class-com.froglogic.squish.extension.InspectableRegistry.html#method-com.froglogic.squish.extension.InspectableRegistry.getRegistry">getRegistry()</a></dt><dt>getStringProperty, <a class="indexterm" href="class-com.froglogic.squish.extension.ObjectQuery.html#method-com.froglogic.squish.extension.ObjectQuery.getStringProperty-java.lang.String">getStringProperty(String)</a></dt><dt>getTarget, <a class="indexterm" href="class-com.froglogic.squish.extension.TargetExtension.html#method-com.froglogic.squish.extension.TargetExtension.getTarget-java.lang.StringBuffer">getTarget(StringBuffer)</a></dt></dl></div><div class="indexdiv"><h3>H</h3><dl><dt>hasProperty, <a class="indexterm" href="class-com.froglogic.squish.extension.ObjectQuery.html#method-com.froglogic.squish.extension.ObjectQuery.hasProperty-java.lang.String">hasProperty(String)</a></dt></dl></div><div class="indexdiv"><h3>I</h3><dl><dt>Inspectable, <a class="indexterm" href="class-com.froglogic.squish.extension.Inspectable.html">Interface Inspectable</a></dt><dt>InspectableAdapter, <a class="indexterm" href="class-com.froglogic.squish.extension.InspectableAdapter.html">Class InspectableAdapter</a></dt><dt>InspectableFactory, <a class="indexterm" href="class-com.froglogic.squish.extension.InspectableFactory.html">Interface InspectableFactory</a></dt><dt>InspectableRegistry, <a class="indexterm" href="class-com.froglogic.squish.extension.InspectableRegistry.html">Class InspectableRegistry</a></dt><dt>Interfaces</dt><dd><dl><dt>Inspectable, <a class="indexterm" href="class-com.froglogic.squish.extension.Inspectable.html">Interface Inspectable</a></dt><dt>InspectableFactory, <a class="indexterm" href="class-com.froglogic.squish.extension.InspectableFactory.html">Interface InspectableFactory</a></dt><dt>ItemExtension, <a class="indexterm" href="class-com.froglogic.squish.extension.ItemExtension.html">Interface ItemExtension</a></dt><dt>ObjectQuery, <a class="indexterm" href="class-com.froglogic.squish.extension.ObjectQuery.html">Interface ObjectQuery</a></dt><dt>TableExtension, <a class="indexterm" href="class-com.froglogic.squish.extension.TableExtension.html">Interface TableExtension</a></dt><dt>TargetExtension, <a class="indexterm" href="class-com.froglogic.squish.extension.TargetExtension.html">Interface TargetExtension</a></dt><dt>ViewportExtension, <a class="indexterm" href="class-com.froglogic.squish.extension.ViewportExtension.html">Interface ViewportExtension</a></dt></dl></dd><dt>inView, <a class="indexterm" href="class-com.froglogic.squish.extension.ViewportExtension.html#method-com.froglogic.squish.extension.ViewportExtension.inView-com.froglogic.squish.extension.Point">inView(Point)</a></dt><dt>isObjectReady, <a class="indexterm" href="class-com.froglogic.squish.extension.Inspectable.html#method-com.froglogic.squish.extension.Inspectable.isObjectReady">isObjectReady()</a>, <a class="indexterm" href="class-com.froglogic.squish.extension.InspectableAdapter.html#idp50681384">isObjectReady()</a></dt><dt>ItemExtension, <a class="indexterm" href="class-com.froglogic.squish.extension.ItemExtension.html">Interface ItemExtension</a></dt></dl></div><div class="indexdiv"><h3>M</h3><dl><dt>mapFromGlobal, <a class="indexterm" href="class-com.froglogic.squish.extension.Inspectable.html#method-com.froglogic.squish.extension.Inspectable.mapFromGlobal-com.froglogic.squish.extension.Point">mapFromGlobal(Point)</a>, <a class="indexterm" href="class-com.froglogic.squish.extension.InspectableAdapter.html#idp50686880">mapFromGlobal(Point)</a></dt><dt>mapToGlobal, <a class="indexterm" href="class-com.froglogic.squish.extension.Inspectable.html#method-com.froglogic.squish.extension.Inspectable.mapToGlobal-com.froglogic.squish.extension.Point">mapToGlobal(Point)</a>, <a class="indexterm" href="class-com.froglogic.squish.extension.InspectableAdapter.html#idp50698016">mapToGlobal(Point)</a></dt><dt>match, <a class="indexterm" href="class-com.froglogic.squish.extension.ObjectQuery.html#method-com.froglogic.squish.extension.ObjectQuery.match-java.lang.Object">match(Object)</a></dt><dt>matchProperty, <a class="indexterm" href="class-com.froglogic.squish.extension.ObjectQuery.html#method-com.froglogic.squish.extension.ObjectQuery.matchProperty-java.lang.String-java.lang.String">matchProperty(String, String)</a></dt><dt>MAX_PRIORITY, <a class="indexterm" href="class-com.froglogic.squish.extension.InspectableFactory.html#field-com.froglogic.squish.extension.InspectableFactory.MAX_PRIORITY">MAX_PRIORITY</a></dt><dt>Methods</dt><dd><dl><dt>findObjects, <a class="indexterm" href="class-com.froglogic.squish.extension.Inspectable.html#method-com.froglogic.squish.extension.Inspectable.findObjects-com.froglogic.squish.extension.ObjectQuery-int-java.util.AbstractList">findObjects(ObjectQuery, int, AbstractList)</a>, <a class="indexterm" href="class-com.froglogic.squish.extension.Inspectable.html#method-com.froglogic.squish.extension.Inspectable.findObjects-com.froglogic.squish.extension.ObjectQuery-java.lang.Object-java.util.AbstractList">findObjects(ObjectQuery, Object, AbstractList)</a>, <a class="indexterm" href="class-com.froglogic.squish.extension.InspectableAdapter.html#idp50591344">findObjects(ObjectQuery, int, AbstractList)</a>, <a class="indexterm" href="class-com.froglogic.squish.extension.InspectableAdapter.html#method-com.froglogic.squish.extension.InspectableAdapter.findObjects-com.froglogic.squish.extension.ObjectQuery-int-java.lang.Object-java.util.AbstractList">findObjects(ObjectQuery, int, Object, AbstractList)</a>, <a class="indexterm" href="class-com.froglogic.squish.extension.InspectableAdapter.html#idp50615760">findObjects(ObjectQuery, Object, AbstractList)</a></dt><dt>getChildAt, <a class="indexterm" href="class-com.froglogic.squish.extension.Inspectable.html#method-com.froglogic.squish.extension.Inspectable.getChildAt-com.froglogic.squish.extension.Point">getChildAt(Point)</a>, <a class="indexterm" href="class-com.froglogic.squish.extension.InspectableAdapter.html#idp50631192">getChildAt(Point)</a></dt><dt>getChildren, <a class="indexterm" href="class-com.froglogic.squish.extension.Inspectable.html#method-com.froglogic.squish.extension.Inspectable.getChildren">getChildren()</a>, <a class="indexterm" href="class-com.froglogic.squish.extension.InspectableAdapter.html#idp50642472">getChildren()</a></dt><dt>getGlobalBounds, <a class="indexterm" href="class-com.froglogic.squish.extension.Inspectable.html#method-com.froglogic.squish.extension.Inspectable.getGlobalBounds">getGlobalBounds()</a>, <a class="indexterm" href="class-com.froglogic.squish.extension.InspectableAdapter.html#idp50651672">getGlobalBounds()</a></dt><dt>getInspectable, <a class="indexterm" href="class-com.froglogic.squish.extension.InspectableRegistry.html#method-com.froglogic.squish.extension.InspectableRegistry.getInspectable-java.lang.Object">getInspectable(Object)</a></dt><dt>getIntProperty, <a class="indexterm" href="class-com.froglogic.squish.extension.ObjectQuery.html#method-com.froglogic.squish.extension.ObjectQuery.getIntProperty-java.lang.String">getIntProperty(String)</a></dt><dt>getName, <a class="indexterm" href="class-com.froglogic.squish.extension.Inspectable.html#method-com.froglogic.squish.extension.Inspectable.getName">getName()</a>, <a class="indexterm" href="class-com.froglogic.squish.extension.InspectableAdapter.html#idp50661056">getName()</a></dt><dt>getObject, <a class="indexterm" href="class-com.froglogic.squish.extension.Inspectable.html#method-com.froglogic.squish.extension.Inspectable.getObject">getObject()</a></dt><dt>getObjectFromItem, <a class="indexterm" href="class-com.froglogic.squish.extension.ItemExtension.html#method-com.froglogic.squish.extension.ItemExtension.getObjectFromItem-java.lang.String">getObjectFromItem(String)</a></dt><dt>getObjectProperty, <a class="indexterm" href="class-com.froglogic.squish.extension.ObjectQuery.html#method-com.froglogic.squish.extension.ObjectQuery.getObjectProperty-java.lang.String">getObjectProperty(String)</a></dt><dt>getParent, <a class="indexterm" href="class-com.froglogic.squish.extension.Inspectable.html#method-com.froglogic.squish.extension.Inspectable.getParent">getParent()</a></dt><dt>getPropertyValue, <a class="indexterm" href="class-com.froglogic.squish.extension.Inspectable.html#method-com.froglogic.squish.extension.Inspectable.getPropertyValue-java.lang.String">getPropertyValue(String)</a>, <a class="indexterm" href="class-com.froglogic.squish.extension.InspectableAdapter.html#idp50670096">getPropertyValue(String)</a></dt><dt>getRegistry, <a class="indexterm" href="class-com.froglogic.squish.extension.InspectableRegistry.html#method-com.froglogic.squish.extension.InspectableRegistry.getRegistry">getRegistry()</a></dt><dt>getStringProperty, <a class="indexterm" href="class-com.froglogic.squish.extension.ObjectQuery.html#method-com.froglogic.squish.extension.ObjectQuery.getStringProperty-java.lang.String">getStringProperty(String)</a></dt><dt>getTarget, <a class="indexterm" href="class-com.froglogic.squish.extension.TargetExtension.html#method-com.froglogic.squish.extension.TargetExtension.getTarget-java.lang.StringBuffer">getTarget(StringBuffer)</a></dt><dt>hasProperty, <a class="indexterm" href="class-com.froglogic.squish.extension.ObjectQuery.html#method-com.froglogic.squish.extension.ObjectQuery.hasProperty-java.lang.String">hasProperty(String)</a></dt><dt>inView, <a class="indexterm" href="class-com.froglogic.squish.extension.ViewportExtension.html#method-com.froglogic.squish.extension.ViewportExtension.inView-com.froglogic.squish.extension.Point">inView(Point)</a></dt><dt>isObjectReady, <a class="indexterm" href="class-com.froglogic.squish.extension.Inspectable.html#method-com.froglogic.squish.extension.Inspectable.isObjectReady">isObjectReady()</a>, <a class="indexterm" href="class-com.froglogic.squish.extension.InspectableAdapter.html#idp50681384">isObjectReady()</a></dt><dt>mapFromGlobal, <a class="indexterm" href="class-com.froglogic.squish.extension.Inspectable.html#method-com.froglogic.squish.extension.Inspectable.mapFromGlobal-com.froglogic.squish.extension.Point">mapFromGlobal(Point)</a>, <a class="indexterm" href="class-com.froglogic.squish.extension.InspectableAdapter.html#idp50686880">mapFromGlobal(Point)</a></dt><dt>mapToGlobal, <a class="indexterm" href="class-com.froglogic.squish.extension.Inspectable.html#method-com.froglogic.squish.extension.Inspectable.mapToGlobal-com.froglogic.squish.extension.Point">mapToGlobal(Point)</a>, <a class="indexterm" href="class-com.froglogic.squish.extension.InspectableAdapter.html#idp50698016">mapToGlobal(Point)</a></dt><dt>match, <a class="indexterm" href="class-com.froglogic.squish.extension.ObjectQuery.html#method-com.froglogic.squish.extension.ObjectQuery.match-java.lang.Object">match(Object)</a></dt><dt>matchProperty, <a class="indexterm" href="class-com.froglogic.squish.extension.ObjectQuery.html#method-com.froglogic.squish.extension.ObjectQuery.matchProperty-java.lang.String-java.lang.String">matchProperty(String, String)</a></dt><dt>Point, <a class="indexterm" href="class-com.froglogic.squish.extension.Point.html#constructor-com.froglogic.squish.extension.Point">Point()</a>, <a class="indexterm" href="class-com.froglogic.squish.extension.Point.html#constructor-com.froglogic.squish.extension.Point-int-int">Point(int, int)</a></dt><dt>priority, <a class="indexterm" href="class-com.froglogic.squish.extension.InspectableFactory.html#method-com.froglogic.squish.extension.InspectableFactory.priority">priority()</a></dt><dt>query, <a class="indexterm" href="class-com.froglogic.squish.extension.InspectableFactory.html#method-com.froglogic.squish.extension.InspectableFactory.query-java.lang.Object">query(Object)</a></dt><dt>Rect, <a class="indexterm" href="class-com.froglogic.squish.extension.Rect.html#constructor-com.froglogic.squish.extension.Rect">Rect()</a>, <a class="indexterm" href="class-com.froglogic.squish.extension.Rect.html#constructor-com.froglogic.squish.extension.Rect-int-int-int-int">Rect(int, int, int, int)</a></dt><dt>register, <a class="indexterm" href="class-com.froglogic.squish.extension.InspectableRegistry.html#method-com.froglogic.squish.extension.InspectableRegistry.register-com.froglogic.squish.extension.InspectableFactory">register(InspectableFactory)</a></dt><dt>setRegistry, <a class="indexterm" href="class-com.froglogic.squish.extension.InspectableRegistry.html#method-com.froglogic.squish.extension.InspectableRegistry.setRegistry-com.froglogic.squish.extension.InspectableRegistry">setRegistry(InspectableRegistry)</a></dt></dl></dd><dt>MIN_PRIORITY, <a class="indexterm" href="class-com.froglogic.squish.extension.InspectableFactory.html#field-com.froglogic.squish.extension.InspectableFactory.MIN_PRIORITY">MIN_PRIORITY</a></dt></dl></div><div class="indexdiv"><h3>N</h3><dl><dt>NORM_PRIORITY, <a class="indexterm" href="class-com.froglogic.squish.extension.InspectableFactory.html#field-com.froglogic.squish.extension.InspectableFactory.NORM_PRIORITY">NORM_PRIORITY</a></dt></dl></div><div class="indexdiv"><h3>O</h3><dl><dt>ObjectQuery, <a class="indexterm" href="class-com.froglogic.squish.extension.ObjectQuery.html">Interface ObjectQuery</a></dt><dt>OCR Preferences, <a class="indexterm" href="ide.dialogs.html#the.squish.pane.s.child.panes">Squish Preferences Child Panes</a></dt></dl></div><div class="indexdiv"><h3>P</h3><dl><dt>Playback Preferences, <a class="indexterm" href="ide.dialogs.html#the.squish.pane.s.child.panes">Squish Preferences Child Panes</a></dt><dt>Point, <a class="indexterm" href="class-com.froglogic.squish.extension.Point.html">Class Point</a>, <a class="indexterm" href="class-com.froglogic.squish.extension.Point.html#constructor-com.froglogic.squish.extension.Point">Point()</a>, <a class="indexterm" href="class-com.froglogic.squish.extension.Point.html#constructor-com.froglogic.squish.extension.Point-int-int">Point(int, int)</a></dt><dt>priority, <a class="indexterm" href="class-com.froglogic.squish.extension.InspectableFactory.html#method-com.froglogic.squish.extension.InspectableFactory.priority">priority()</a></dt></dl></div><div class="indexdiv"><h3>Q</h3><dl><dt>query, <a class="indexterm" href="class-com.froglogic.squish.extension.InspectableFactory.html#method-com.froglogic.squish.extension.InspectableFactory.query-java.lang.Object">query(Object)</a></dt></dl></div><div class="indexdiv"><h3>R</h3><dl><dt>Recording Preferences</dt><dd><dl><dt>
+, <a class="indexterm" href="ide.dialogs.html#the.squish.pane.s.child.panes">Squish Preferences Child Panes</a></dt></dl></dd><dt>Rect, <a class="indexterm" href="class-com.froglogic.squish.extension.Rect.html">Class Rect</a>, <a class="indexterm" href="class-com.froglogic.squish.extension.Rect.html#constructor-com.froglogic.squish.extension.Rect">Rect()</a>, <a class="indexterm" href="class-com.froglogic.squish.extension.Rect.html#constructor-com.froglogic.squish.extension.Rect-int-int-int-int">Rect(int, int, int, int)</a></dt><dt>register, <a class="indexterm" href="class-com.froglogic.squish.extension.InspectableRegistry.html#method-com.froglogic.squish.extension.InspectableRegistry.register-com.froglogic.squish.extension.InspectableFactory">register(InspectableFactory)</a></dt></dl></div><div class="indexdiv"><h3>S</h3><dl><dt> Screenshot </dt><dd><dl><dt> grabWidget()
+function, <a class="indexterm" href="rgs-qtconvenience.html">Qt Convenience API</a></dt></dl></dd><dt>screenshot</dt><dd><dl><dt>grabWidget() function, <a class="indexterm" href="rgs-tkconvenience.html">Tk Convenience API</a>, <a class="indexterm" href="rgs-macconvenience.html">macOS Convenience API</a>, <a class="indexterm" href="rgs-webconvenience.html">Web Object API</a></dt></dl></dd><dt>screenshots</dt><dd><dl><dt>QImage Objects, <a class="indexterm" href="rgs-squish.html#rgss-image-object">QImage Object</a></dt></dl></dd><dt>setRegistry, <a class="indexterm" href="class-com.froglogic.squish.extension.InspectableRegistry.html#method-com.froglogic.squish.extension.InspectableRegistry.setRegistry-com.froglogic.squish.extension.InspectableRegistry">setRegistry(InspectableRegistry)</a></dt><dt> Settings Directory </dt><dd><dl><dt> User Settings Directory , <a class="indexterm" href="install.html">How to Install Squish</a>, <a class="indexterm" href="rg-envvars.html">Environment Variables</a></dt></dl></dd><dt>Snooze</dt><dd><dl><dt>Factor, <a class="indexterm" href="ide.dialogs.html#the.squish.pane.s.child.panes">Squish Preferences Child Panes</a></dt></dl></dd><dt> SQUISH_USER_SETTINGS_DIR , <a class="indexterm" href="rg-envvars.html">Environment Variables</a></dt></dl></div><div class="indexdiv"><h3>T</h3><dl><dt>TableExtension, <a class="indexterm" href="class-com.froglogic.squish.extension.TableExtension.html">Interface TableExtension</a></dt><dt>TargetExtension, <a class="indexterm" href="class-com.froglogic.squish.extension.TargetExtension.html">Interface TargetExtension</a></dt><dt>Tesseract</dt><dd><dl><dt>Path, <a class="indexterm" href="ide.dialogs.html#the.squish.pane.s.child.panes">Squish Preferences Child Panes</a></dt></dl></dd></dl></div><div class="indexdiv"><h3>V</h3><dl><dt>ViewportExtension, <a class="indexterm" href="class-com.froglogic.squish.extension.ViewportExtension.html">Interface ViewportExtension</a></dt></dl></div></div></div></div></div></div><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" type="text/javascript" src="ScriptingLanguage.js"></script><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format">setScriptingLanguage();</script><div class="navfooter"><hr></hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="rgs-xvconvenience.html">Prev</a> </td><td width="20%" align="center"><a accesskey="u" href="api.man.html">Up</a></td><td width="40%" align="right"> <a accesskey="n" href="package-com.froglogic.squish.extension.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">6.6. XView Convenience API </td><td width="20%" align="center"><a accesskey="h" href="index-noframes.html">Home</a></td><td width="40%" align="right" valign="top"> Package com.­froglogic.­squish.­extension</td></tr></table></div></body>
+<!-- Mirrored from rgs-javaconvenience.html by HTTrack Website Copier/3.x [XR&CO'2013], Wed, 06 Jul 2022 13:29:00 GMT -->
+</html>

@@ -1,0 +1,134 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<!-- Mirrored from rel-422.html by HTTrack Website Copier/3.x [XR&CO'2013], Wed, 06 Jul 2022 13:28:56 GMT -->
+<head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><title>2.42. Version 4.2.2</title><link rel="stylesheet" href="manual.css" type="text/css"></link><meta name="generator" content="DocBook XSL Stylesheets V1.73.2"></meta><link rel="start" href="index-noframes.html" title="Squish Manual"></link><link rel="up" href="relnotes.html" title="Chapter 2. Release Notes—for Upgraders"></link><link rel="prev" href="rel-423.html" title="2.41. Version 4.2.3"></link><link rel="next" href="rel-421.html" title="2.43. Version 4.2.1"></link><style xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" type="text/css" media="screen">
+        div.toc * { margin-left: 6px; margin-right: auto; max-width: 75em; }
+        div.toc span { margin-left: 0px; }
+        * { margin-left: auto; margin-right: auto; max-width: 75em; }
+        body { margin-left: 6px; margin-right: 6px; }
+        table th { padding: .5ex }
+        table td { padding: .5ex }
+    </style><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format">
+        function keyPress() {
+            var e = window.event;
+            if ( e == undefined ) {
+                return;
+            }
+            /* ### does not properly scroll, yet
+            if ( e.keyCode == 32 ) {
+            var l = document.links;
+            for ( var i = 0; i < l.length; i++ ) {
+                if ( l[i].innerText == "Next" ) {
+                location.href = l[i].href;
+                }
+            }
+            } else
+                */
+                if ( e.keyCode == 0x08 ) {
+            var l = document.links;
+            for ( var i = 0; i < l.length; i++ ) {
+                if ( l[i].innerText == "Prev" ) {
+                location.href = l[i].href;
+                }
+            }
+            }
+        }
+        document.onkeypress = keyPress;
+    </script></head><body><div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="rel-422"></a>2.42. Version 4.2.2</h2></div></div></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><span class="section"><a href="rel-422.html#idp35813360">2.42.1. General</a></span></dt><dt><span class="section"><a href="rel-422.html#idp35819336">2.42.2. IDE</a></span></dt><dt><span class="section"><a href="rel-422.html#idp35832984">2.42.3. Qt-specific</a></span></dt><dt><span class="section"><a href="rel-422.html#idp35842088">2.42.4. <span class="trademark">Java</span>™-specific</a></span></dt><dt><span class="section"><a href="rel-422.html#idp35845664">2.42.5. Web-specific</a></span></dt><dt><span class="section"><a href="rel-422.html#idp35850920">2.42.6. Windows (native)-specific</a></span></dt><dt><span class="section"><a href="rel-422.html#idp35853416">2.42.7. macOS-specific (Cocoa/Carbon edition)</a></span></dt><dt><span class="section"><a href="rel-422.html#idp35855328">2.42.8. iOS-specific (iPhone/iPad edition)</a></span></dt><dt><span class="section"><a href="rel-422.html#idp35857520">2.42.9. Tk-specific</a></span></dt></dl></div><p><span class="emphasis"><em>Squish</em></span> 4.2.2 is a maintenance release containing various bug fixes
+and small improvements as described below:</p><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="idp35813360"></a>2.42.1. General</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Fixed an issue which caused <span class="application">squishserver</span> to be blocked by the
+local firewall if the <code class="option">--local</code> command line switch was
+used.</p></li><li><p>Python test scripts should now run significantly
+faster.</p></li><li><p>Fixed a problem which caused no 'main' function to be recorded
+in some cases when invoking <span class="application">squishrunner</span> on the command
+line.</p></li><li><p>Fixed a problem with recording test cases while using the
+<code class="option">--testcase</code> option with <span class="application">squishrunner</span>.</p></li><li><p>Improved handling of Excel spreadsheets with certain classes
+of Unicode characters.</p></li><li><p>Made executing test cases with a space in the name work in
+the legacy IDE and when calling <span class="application">squishrunner</span> on the command line with the
+<code class="option">--testsuite</code> switch.</p></li><li><p>The <a class="xref" href="rgs-squish.html#findObject-function"><code class="function">findObject</code></a> now fails more
+quickly in test suites with large object maps; it also generates more useful
+error messages.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="idp35819336"></a>2.42.2. IDE</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Fixed a problem which caused the <span class="guilabel">Environment
+Variables</span> to disappear from the test suite settings
+editor.</p></li><li><p>Integrating the Squish IDE plugins into an existing Eclipse
+setup is now more robust.</p></li><li><p>The <span class="guilabel">Use as Expected Result</span> feature should
+no longer overwrite the previously configured comparison
+mode.</p></li><li><p>Global test scripts can now be opened even if they are stored
+in a directory called <code class="filename">Squish Global
+Scripts</code>.</p></li><li><p>Old Java test suites created with the <acronym class="acronym">AWT</acronym> or
+<acronym class="acronym">SWT</acronym> toolkits are now correctly detected as Java test
+suites.</p></li><li><p>The <code class="filename">envvars</code> and
+<code class="filename">suite.conf</code> files can now be opened with the Eclipse
+Navigator when integrating into an existing Eclipse setup.</p></li><li><p>It is now possible to create test cases in other views than
+<span class="guilabel">Test Suites</span> when integrating into an existing Eclipse
+setup.</p></li><li><p>Resolved an issue with editing table cells in the test data
+editor in case they had no content.</p></li><li><p>A problem which caused Python scripts to be recorded which
+wouldn't replay anymore due to an incorrect indentation was
+resolved.</p></li><li><p>The selected test case is no longer changed when renaming a
+test case using the context menu.</p></li><li><p>The <span class="guilabel">Enable Test Case</span> context menu entry
+now works correctly even if multiple test cases are selected.</p></li><li><p>The <span class="guilabel">Properties</span> list shown in the spy is
+now sorted alphabetically.</p></li><li><p>There should no longer be duplicated <span class="application">squishrunner</span> processes
+When spying after hitting a breakpoint with multiple applications being
+active.</p></li><li><p>The context menu for folders in the <span class="guilabel">Test
+Suites</span> view now contains <span class="guilabel">Delete</span> and
+<span class="guilabel">Rename</span> actions.</p></li><li><p>Files which don't belong to <span class="emphasis"><em>Squish</em></span> can now be renamed via the
+<span class="guilabel">Test Suites</span> view.</p></li><li><p>The <span class="guilabel">Test Results</span> view now shows detailed
+information for each results in the toplevel items.</p></li><li><p>Fixed parsing of test suite configuration fields that start
+with empty lines or contain comments.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="idp35832984"></a>2.42.3. Qt-specific</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>The <a class="xref" href="rgs-squish.html#waitForObjectItem-function"><code class="function">waitForObjectItem</code></a> function
+can now be used with QComboBox (Qt 3) and Q3ComboBox (Qt 4) controls when
+using the Motif style.</p></li><li><p>QML items on a QGraphicsView object are supported
+now.</p></li><li><p>Fixed a problem with generating the real name of Qt widgets
+which were embedded into a QGraphicsView.</p></li><li><p><a class="xref" href="rgs-qtconvenience.html#qt-openContextMenu-function"><code class="function">openContextMenu</code></a> can now be
+used on QModelIndex objects.</p></li><li><p><a class="xref" href="rgs-qtconvenience.html#qt-mouseClick-function"><code class="function">mouseClick</code></a> can now be
+used on Qt3 QMenuItem objects.</p></li><li><p>Fixed a problem which broke resolving objects using
+multi-property names when the test suite defaults to hierarchical
+names.</p></li><li><p>Added basic support for calling slots of custom QObject
+subclasses.</p></li><li><p>Improved detection for QGraphicsItem and QGraphicsObject
+objects contained in a QDeclarativeItem or QDeclarativeView. Such objects
+are now visible in the spy and can be iterated using the
+<a class="xref" href="rgs-squish.html#object.children-function"><code class="function">object.children</code></a> function.</p></li><li><p>Fixed a crash which could have triggered when spying the
+application after attaching to it.</p></li><li><p>Replaying Qt tests on Windows should no longer show
+message boxes about <code class="filename">QtDeclarative4.dll</code>,
+<code class="filename">QtWebKit4.dll</code> and other additional Qt
+libraries missing (these message boxes didn't actually indicate
+a problem).</p></li><li><p>Fixed a problem which occasionally caused replaying actions on
+popup menus in Qt 4 applications to get stuck on Mac OS X.</p></li><li><p>Resolved an issue with recording text input on QComboBox
+objects (the last character was not recorded in some cases).</p></li><li><p>It's now possible to reference QGraphicsItem objects via
+their x/y coordinates by using object names like
+<code class="code">{type='QGraphicsItemRect' x='120' y='50'}</code>.</p></li><li><p>Fixed a crash which was sometimes triggered when calling
+the <a class="xref" href="rgs-qtconvenience.html#qt-clickItem-function"><code class="function">clickItem</code></a> function with an invalid item
+name.</p></li><li><p>Made accessing properties which contain a hyphen work in
+QtWebkit.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="idp35842088"></a>2.42.4. <span class="trademark">Java</span>™-specific</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Resolved an issue which sometimes caused replaying a
+right-click to not open a context menu in SWT applications running on
+Unix.</p></li><li><p>Fixed a problem which might have caused a
+'Failed to scroll' error when replaying a test script.</p></li><li><p>Added support for JRE 7.05 or newer on
+Windows.</p></li><li><p>SWT 3.100 (used in Eclipse 4.2) is supported
+now.</p></li><li><p>Fixed a problem which caused some
+<acronym class="acronym">URL</acronym> to be not loaded correctly when using Java
+web start.</p></li><li><p>Fixed a problem with replaying <a class="xref" href="rgs-javaconvenience.html#java-mouseClick-function"><code class="function">mouseClick</code></a> on AWT/Swing based
+applets.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="idp35845664"></a>2.42.5. Web-specific</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Fixed executing the <a class="xref" href="rgs-webconvenience.html#web-typeText-function"><code class="function">typeText</code></a>
+function with Firefox 12 and newer.</p></li><li><p>Resolved an issue with replaying double clicks on SmartGWT
+items.</p></li><li><p>Fixed a problem which caused replaying a test script get
+stuck when the website being tested shows an alert() message box very early
+(while loading).</p></li><li><p>The <a class="xref" href="rgs-webconvenience.html#web-loadUrl-function"><code class="function">loadUrl</code></a> function now works
+more reliably with web sites which load additional data via a
+timer.</p></li><li><p><a class="xref" href="rgs-webconvenience.html#web-waitForContextExists-function"><code class="function">waitForContextExists</code></a> now works
+with context names containing non-alphanumeric characters.</p></li><li><p>The <a class="xref" href="rgs-webconvenience.html#web-selectOption-function"><code class="function">selectOption</code></a> will not block
+test execution anymore for web sites which show a native dialog when accessing
+the select-element.</p></li><li><p>Made accessing properties which contain a hyphen work in
+Safari.</p></li><li><p>The raiseBrowser function is now supported for
+Safari.</p></li><li><p>Firefox is now started correctly when selecting its
+application bundle in the setup program on Mac OS X.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="idp35850920"></a>2.42.6. Windows (native)-specific</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Improved handling of .NET properties which are of
+type System.Double or System.Single.</p></li><li><p>The <a class="xref" href="rgs-windowsconvenienceapi.html#win-clickItem-function"><code class="function">clickItem</code></a> function
+can now be used for selecting ListBox items in WPF
+applications.</p></li><li><p>Fixed an issue which broke replaying text input for
+.NET input fields.</p></li><li><p>Made 'End Recording' work properly when working
+with attachable applications, so multiple consecutive recording
+sessions should work better.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="idp35853416"></a>2.42.7. macOS-specific (Cocoa/Carbon edition)</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Added support for taking screenshots of NSWindow
+objects.</p></li><li><p>Made mouseMove() and <a class="xref" href="rgs-squish.html#mousePress-function"><code class="function">mousePress</code></a> work
+with objects which don't subclass NSView (such as items in a NSOutlineView
+control).</p></li><li><p>Added support for NSRange objects.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="idp35855328"></a>2.42.8. iOS-specific (iPhone/iPad edition)</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>iOS 6 is now supported.</p></li><li><p>Fixed a memory leak when replaying tests.</p></li><li><p>Fixed playback of test scripts while having
+UIGestureRecognizers disabled.</p></li><li><p>Made starting the iPhone simulator while executing a batch
+of testcases more robust.</p></li><li><p>Added support for NSRange objects.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="idp35857520"></a>2.42.9. Tk-specific</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Hooking into Tcl applications which load Tk via
+<code class="code">package require Tk</code> and then spin the event loop manually
+instead of using <code class="code">Tk_MainLoop</code> is supported now.</p></li></ul></div></div></div><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" type="text/javascript" src="ScriptingLanguage.js"></script><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format">setScriptingLanguage();</script><div class="navfooter"><hr></hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="rel-423.html">Prev</a> </td><td width="20%" align="center"><a accesskey="u" href="relnotes.html">Up</a></td><td width="40%" align="right"> <a accesskey="n" href="rel-421.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">2.41. Version 4.2.3 </td><td width="20%" align="center"><a accesskey="h" href="index-noframes.html">Home</a></td><td width="40%" align="right" valign="top"> 2.43. Version 4.2.1</td></tr></table></div></body>
+<!-- Mirrored from rel-422.html by HTTrack Website Copier/3.x [XR&CO'2013], Wed, 06 Jul 2022 13:28:56 GMT -->
+</html>

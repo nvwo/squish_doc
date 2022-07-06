@@ -1,0 +1,241 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<!-- Mirrored from rel-510.html by HTTrack Website Copier/3.x [XR&CO'2013], Wed, 06 Jul 2022 13:28:56 GMT -->
+<head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><title>2.35. Version 5.1.0</title><link rel="stylesheet" href="manual.css" type="text/css"></link><meta name="generator" content="DocBook XSL Stylesheets V1.73.2"></meta><link rel="start" href="index-noframes.html" title="Squish Manual"></link><link rel="up" href="relnotes.html" title="Chapter 2. Release Notes—for Upgraders"></link><link rel="prev" href="rel-511.html" title="2.34. Version 5.1.1"></link><link rel="next" href="rel-504.html" title="2.36. Version 5.0.4"></link><style xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" type="text/css" media="screen">
+        div.toc * { margin-left: 6px; margin-right: auto; max-width: 75em; }
+        div.toc span { margin-left: 0px; }
+        * { margin-left: auto; margin-right: auto; max-width: 75em; }
+        body { margin-left: 6px; margin-right: 6px; }
+        table th { padding: .5ex }
+        table td { padding: .5ex }
+    </style><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format">
+        function keyPress() {
+            var e = window.event;
+            if ( e == undefined ) {
+                return;
+            }
+            /* ### does not properly scroll, yet
+            if ( e.keyCode == 32 ) {
+            var l = document.links;
+            for ( var i = 0; i < l.length; i++ ) {
+                if ( l[i].innerText == "Next" ) {
+                location.href = l[i].href;
+                }
+            }
+            } else
+                */
+                if ( e.keyCode == 0x08 ) {
+            var l = document.links;
+            for ( var i = 0; i < l.length; i++ ) {
+                if ( l[i].innerText == "Prev" ) {
+                location.href = l[i].href;
+                }
+            }
+            }
+        }
+        document.onkeypress = keyPress;
+    </script></head><body><div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="rel-510"></a>2.35. Version 5.1.0</h2></div></div></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><span class="section"><a href="rel-510.html#idp35611608">2.35.1. General</a></span></dt><dt><span class="section"><a href="rel-510.html#idp35621760">2.35.2. Squish IDE</a></span></dt><dt><span class="section"><a href="rel-510.html#idp35638424">2.35.3. Scripting</a></span></dt><dt><span class="section"><a href="rel-510.html#idp35647816">2.35.4. Qt-specific</a></span></dt><dt><span class="section"><a href="rel-510.html#idp35662072">2.35.5. <span class="trademark">Java</span>™-specific</a></span></dt><dt><span class="section"><a href="rel-510.html#idp35671112">2.35.6. Web-specific</a></span></dt><dt><span class="section"><a href="rel-510.html#idp35680920">2.35.7. Windows (native)-specific</a></span></dt><dt><span class="section"><a href="rel-510.html#idp35688176">2.35.8. macOS-specific (Cocoa/Carbon edition)</a></span></dt><dt><span class="section"><a href="rel-510.html#idp35691472">2.35.9. iOS-specific (iPhone/iPad edition)</a></span></dt><dt><span class="section"><a href="rel-510.html#idp35693552">2.35.10. Android-specific</a></span></dt><dt><span class="section"><a href="rel-510.html#idp35697008">2.35.11. Tk-specific</a></span></dt><dt><span class="section"><a href="rel-510.html#idp35698256">2.35.12. Add-Ons</a></span></dt><dt><span class="section"><a href="rel-510.html#idp35701240">2.35.13. Documentation</a></span></dt><dt><span class="section"><a href="rel-510.html#idp35703328">2.35.14. Qt-specific Source Packages</a></span></dt></dl></div><p><span class="emphasis"><em>Squish</em></span> 5.1 is a major new release with many new features and
+bug fixes. Here is a selected summary of the release's
+highlights—a detailed list of all the main changes is given in the
+sections that follow.</p><div class="itemizedlist"><ul type="disc"><li><p>The Android, iOS and Qt editions of Squish now have full
+support for automating tests on touch-devices, including full support for
+multi-touch gestures. Gestures can be recorded and replayed from test scripts
+and a convenient editor is provided for editing recorded
+gestures.</p></li><li><p>Major improvements to the handling of "Object Not Found" errors
+when replaying tests. The test execution will suspend and a dialog is shown
+which allows the user to select an alternative object, to edit the object map
+and more.</p></li><li><p>New integration plugins for Atlassian Bamboo and
+JetBrains TeamCity have been added.</p></li><li><p>A command line tool for importing test results
+into Atlassian JIRA has been added.</p></li><li><p>Web tests performed with Chrome no longer require the
+use of a proxy server.</p></li><li><p>QNX, Android and VxWorks have been added to list of
+target platforms for testing of Qt applications. This has been
+achieved through the addition of an optional Embedded SDK that also
+streamlines builds for embedded Linux and Windows
+CE.</p></li><li><p>The Python editor used by the <span class="application">Squish IDE</span> will do more extensive Code
+Analysis on the test scripts. This enables better code completion including the
+functions and modules provided by <span class="emphasis"><em>Squish</em></span>. If the test scripts use the
+standard Python import mechanism to include shared scripts the editor's code
+completion will also include functions and classes from those imported
+scripts.</p></li></ul></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="idp35611608"></a>2.35.1. General</h3></div></div></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><span class="section"><a href="rel-510.html#idp35611944">2.35.1.1. Bug Fixes</a></span></dt><dt><span class="section"><a href="rel-510.html#idp35616672">2.35.1.2. Features</a></span></dt></dl></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="idp35611944"></a>2.35.1.1. Bug Fixes</h4></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Various stability improvements for the <a class="xref" href="rg-cmdline.html#rg-squishrunner-cli" title="7.4.3. squishrunner">squishrunner (Section 7.4.3)</a> program in case the AUT terminates
+unexpectedly.</p></li><li><p>Fixed a problem which broke the replay order of test
+scripts with Unicode characters in the file path.</p></li><li><p>When running Squish on Windows, special "dump files" will be
+generated more often in case a problem occurs to improve the interaction with
+<span class="emphasis"><em>froglogic</em></span> technical support.</p></li><li><p>Creating screenshot verification points on Windows now handles
+transparent windows correctly.</p></li><li><p>The <code class="filename">setup</code> window is no longer fixed in
+size.</p></li><li><p>The <code class="filename">setup</code> program now performs sanity checks
+on the selected JRE to detect architecture mismatches.</p></li><li><p>Various stability improvements for the <code class="code">squishtest</code>
+Python module.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="idp35616672"></a>2.35.1.2. Features</h4></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>The overall performance of accessing the AUT (calling methods,
+getting/setting properties etc.) has been improved.</p></li><li><p>A new <a class="xref" href="rg-cmdline.html#rgc-xml2jira" title="7.4.11. xml2jira"><span class="application">xml2jira</span> (Section 7.4.11)</a> tool is now included with
+<span class="emphasis"><em>Squish</em></span>, it allows creating and updating JIRA tickets based on <span class="emphasis"><em>Squish</em></span> test
+reports.</p></li><li><p><a class="xref" href="rg-cmdline.html#rg-squishrunner-cli" title="7.4.3. squishrunner">squishrunner (Section 7.4.3)</a> gained a new command line
+option <code class="literal">--exitCodeOnFail</code> which can be used to define a custom
+exit code which squishrunner should return in case a fatal error is encountered
+while executing a test.</p></li><li><p>A standalone JavaScript interpreter <code class="filename">squishjs</code>
+has been added.</p></li><li><p>The standalone <code class="code">squishtest</code> Python module can
+now be used with the <a class="ulink" href="https://pytools.codeplex.com/" target="_blank">Python Tools
+for Visual Studio</a> integration as well as other third-party Python
+debuggers.</p></li></ul></div></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="idp35621760"></a>2.35.2. Squish IDE</h3></div></div></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><span class="section"><a href="rel-510.html#idp35622096">2.35.2.1. Bug Fixes</a></span></dt><dt><span class="section"><a href="rel-510.html#idp35630400">2.35.2.2. Features</a></span></dt></dl></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="idp35622096"></a>2.35.2.1. Bug Fixes</h4></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Clicking the Pause button in the control bar no longer suspends
+test execution in all running instances of the <span class="application">Squish IDE</span>.</p></li><li><p>Fixed various usability issues with the environment table in
+the test suite settings.</p></li><li><p>Fixed various usability issues when editing real names in the
+object map editor.</p></li><li><p>Resolved an issue related to selecting multiple real-name
+entries in the object map editor.</p></li><li><p>The <span class="application">Squish IDE</span> no longer "stalls" when launching the image
+verification point editor or the setup program.</p></li><li><p>Fixed a bug related to test cases and test suites with certain
+characters (<code class="literal">&amp;</code>, <code class="literal">#</code> and certain
+non-ASCII characters) in their names.</p></li><li><p>Improved layouting of the <span class="application">Squish IDE</span> to avoid that the Test Suite view
+gets too small in certain cases.</p></li><li><p>Silenced a <span class="guilabel">External Modification Detected</span>
+dialog triggered when creating a test case while the test suite settings are
+opened with unsaved changes.</p></li><li><p>Corrected window focusing when external editors (such as the
+image verification point editor or the gesture editor) are
+launched.</p></li><li><p>Fixed a bug which caused incorrect code to be generated when
+creating verifications of certain properties (such as <code class="code">class</code>) in
+Ruby test suites.</p></li><li><p>Fixed various cases in which dialogs wouldn't get hidden when
+the control bar is shown.</p></li><li><p>The Pause button in the control bar is no longer enabled when
+picking an object (the pause button used to be enabled, but clicking it had no
+effect).</p></li><li><p>Resolved various issues due to which error messages related to
+Python were shown when opening multiple Python test suites
+simultaneously.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="idp35630400"></a>2.35.2.2. Features</h4></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Added a new <span class="guilabel">Close All Test suites</span>
+button.</p></li><li><p>The Integration package now supports integration into Eclipse
+4.</p></li><li><p>Added support for DLTK5/PyDev 3.</p></li><li><p>Major improvements to code analysis and code completion
+features for Python tests.</p></li><li><p>The <span class="guilabel">Manage AUTs</span> dialogs can now be opened
+directly via the test suite settings editor.</p></li><li><p>Starting a second <span class="application">Squish IDE</span> will now show a dialog offering to
+terminate the existing <span class="application">Squish IDE</span> in order to re-use the workspace of the existing
+<span class="application">Squish IDE</span>.</p></li><li><p>Added support for managing, viewing and editing
+gestures.</p></li><li><p>The <span class="guilabel">What's New</span> page will now show the
+<span class="emphasis"><em>froglogic</em></span> RSS feed.</p></li><li><p>The tools-selection dialog now offers collecting technical
+information for submission to <span class="emphasis"><em>froglogic</em></span> technical support to simplify debugging
+issues caused by broken installations.</p></li><li><p>The working directory behavior of <a class="xref" href="rg-cmdline.html#rgc-squishserver" title="7.4.4. squishserver">squishserver (Section 7.4.4)</a> can now be changed such that it uses the working
+directory of the <span class="application">Squish IDE</span>.</p></li></ul></div></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="idp35638424"></a>2.35.3. Scripting</h3></div></div></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><span class="section"><a href="rel-510.html#idp35638760">2.35.3.1. Bug Fixes</a></span></dt><dt><span class="section"><a href="rel-510.html#idp35642120">2.35.3.2. Features</a></span></dt></dl></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="idp35638760"></a>2.35.3.1. Bug Fixes</h4></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>JavaScript tests can now use the <a class="xref" href="rgs-js.html#sql-object" title="6.16.8.1. SQL Object">SQL Object (Section 6.16.8.1)</a>
+to connect to SQLite, PostgreSQL as well as MySQL databases.</p></li><li><p>Improved output of <a class="xref" href="rgs-squish.html#test.compare-function"><code class="function">test.compare</code></a> for
+Python and Ruby scripts to include the type of the compared
+values.</p></li><li><p>JavaScript <code class="code">RegExp</code> objects now support Unicode
+characters.</p></li><li><p>The JavaScript <a class="xref" href="rgs-js.html#sqlresult-object" title="6.16.8.3. SQLResult Object">SQLResult Object (Section 6.16.8.3)</a> properties
+no longer clash with field names in SQL search results.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="idp35642120"></a>2.35.3.2. Features</h4></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>A new <code class="code">GestureBuilder</code> API is available for creating
+gestures programmatically in test scripts.</p></li><li><p>A new <a class="xref" href="rgs-squish.html#applicationContext.totalTime-property">ApplicationContext.totalTime</a>
+property has been introduced which returns the CPU time used by the
+AUT.</p></li><li><p>The JavaScript <a class="xref" href="rgs-js.html#xml-object" title="6.16.7. XML Object">XML Object (Section 6.16.7)</a> now features a new
+<code class="code">getElementsByTagName</code> method which yields a list of elements with
+a given tag name.</p></li><li><p>Added a new <a class="xref" href="rgs-squish.html#testSettings.logScreenshotOnPass-property">testSettings.logScreenshotOnPass</a> property which can be
+used to automatically create screenshots in case a verification
+passes.</p></li><li><p>Extended JavaScript <code class="code">Array</code> objects with various new
+methods: <code class="code">map()</code>, <code class="code">filter()</code>, <code class="code">indexOf()</code>,
+<code class="code">lastIndexOf()</code>, <code class="code">forEach()</code>, <code class="code">some()</code> and
+<code class="code">every()</code>.</p></li></ul></div></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="idp35647816"></a>2.35.4. Qt-specific</h3></div></div></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><span class="section"><a href="rel-510.html#idp35648152">2.35.4.1. Bug Fixes</a></span></dt><dt><span class="section"><a href="rel-510.html#idp35652448">2.35.4.2. Features</a></span></dt></dl></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="idp35648152"></a>2.35.4.1. Bug Fixes</h4></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>The <code class="filename">setup</code> program now defaults to locating
+the Qt library used by the AUT automatically, except for tests executed on
+macOS (which still requires specifying the path to the
+library).</p></li><li><p>The <code class="code">openContextMenu()</code> function is
+now recorded correctly when clicking <code class="code">QGraphicsItem</code>
+objects.</p></li><li><p>Example programs for Qt5 now include the required Qt libraries
+to make them usable out of the box.</p></li><li><p>Optimized accessing web objects in embedded web controls when
+using hierarchical names.</p></li><li><p>Correctly expose <code class="code">QObject</code> properties with custom
+<code class="code">QObject</code>-based types in Qt 5 applications. Users who
+resorted to accessing built-in properties via function calls
+like <code class="code">QQuickItem::parent()</code> should now simply use
+the <code class="code">.parent</code> property.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="idp35652448"></a>2.35.4.2. Features</h4></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Added support for Qt 5.2.</p></li><li><p>Added dedicated support for QtQuick controls</p></li><li><p>Added support for Visual Studio 2013 builds.</p></li><li><p>It's now possible to record and replay touch events as well as
+multi-touch gestures.</p></li><li><p>Major improvements to the diagnostic output generated by <span class="emphasis"><em>Squish</em></span>
+in case hooking into a Qt application fails.</p></li><li><p>Support for scripts calling methods with return type
+<code class="code">QList&lt;QObject*&gt;</code>.</p></li><li><p><code class="code">uninstallEventHandler()</code> function
+added to allow uninstalling event handlers.</p></li><li><p>Support calling slots from test scripts with
+<code class="code">qint16</code>, <code class="code">quint16</code>,
+<code class="code">quint32</code>, <code class="code">qreal&gt;</code> or
+<code class="code">ushort</code> parameters or return values.</p></li><li><p>QPixmap sub-properties (such as <code class="code">width</code>,
+<code class="code">height</code> or <code class="code">depth</code>) are now accessible from test scripts
+and shown in the <span class="application">Squish IDE</span>.</p></li><li><p>Added support for recording and replaying <code class="code">QWindow</code>
+resizes, moves and state changes (minimizing/maximizing/etc.).</p></li><li><p>Added support for <code class="code">QWebView</code> controls when running
+tests on Solaris.</p></li><li><p>On touch-enabled devices, objects can now be picked by
+tapping the screen.</p></li><li><p>Support for single-touch tap recording on QWidgets and QtQuick
+controls added.</p></li><li><p>Support for single-touch drag recording on QtQuick controls
+added.</p></li><li><p>Support for (multi-)touch gesture recording and replay on
+QWidgets and QtQuick controls added.</p></li><li><p>It's now possible to use wildcards for the <code class="code">text</code>
+property for multi-property <code class="code">QListViewItem</code> object
+names.</p></li></ul></div></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="idp35662072"></a>2.35.5. <span class="trademark">Java</span>™-specific</h3></div></div></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><span class="section"><a href="rel-510.html#idp35662776">2.35.5.1. Bug Fixes</a></span></dt><dt><span class="section"><a href="rel-510.html#idp35668168">2.35.5.2. Features</a></span></dt></dl></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="idp35662776"></a>2.35.5.1. Bug Fixes</h4></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Fixed crash during hookup on Windows 8 using
+the AMD64 Java edition.</p></li><li><p>Fixed crash when creating a string representation of a
+self-referencing nested Java array.</p></li><li><p>The <span class="application">Spy</span> tool now works correctly for JavaFX applications
+containing more than one Stage object.</p></li><li><p>Simplified deployment of example applications; each example is
+now bundled into a single <code class="filename">.jar</code> archive.</p></li><li><p>Fixed accessing multi-dimensional Java arrays from test
+scripts.</p></li><li><p>Corrected super-class of <code class="code">JavaArray</code> class, which is
+now a sub-class of <code class="code">java.lang.Object</code>.</p></li><li><p>Corrected handling of JFace <code class="code">ControlDecoration</code>
+objects.</p></li><li><p>Fixed an issue related to the "chevron" object of <code class="code">CTabFolder</code>
+controls in recent SWT versions.</p></li><li><p>Resolved a bug which made scrolling to table cells fail when
+replaying a test script.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="idp35668168"></a>2.35.5.2. Features</h4></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Added support for Java 8.</p></li><li><p>Dedicated support for <a class="ulink" href="https://www.eclipse.org/nebula/widgets/grid/grid.php" target="_blank">Nebula Grid</a>
+and <a class="ulink" href="http://www.eclipse.org/nattable/" target="_blank">Nebula NatTable</a>
+added.</p></li><li><p>Added dedicated support for HTML objects contained in
+<code class="code">WebView</code> controls in JavaFX applications.</p></li><li><p>Test scripts can now access invisible items in JavaFX lists,
+tables and trees.</p></li></ul></div></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="idp35671112"></a>2.35.6. Web-specific</h3></div></div></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><span class="section"><a href="rel-510.html#idp35671456">2.35.6.1. Bug Fixes</a></span></dt><dt><span class="section"><a href="rel-510.html#idp35676336">2.35.6.2. Features</a></span></dt></dl></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="idp35671456"></a>2.35.6.1. Bug Fixes</h4></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Improved compatibility with touch-enabled devices by replaying
+clicks using touch events.</p></li><li><p>Firefox versions older than 4.0 are no longer
+supported.</p></li><li><p>Fixed a bug in <code class="code">closePrompt()</code> function which
+occasionally caused it to not cancel prompt dialogs
+correctly.</p></li><li><p>Corrected coordinates for elements contained in dialogs shown
+by Internet Explorer.</p></li><li><p>Improved robustness of hooking into
+<code class="literal">&lt;iframe&gt;</code> elements.</p></li><li><p>The Internet Explorer window is no longer closed when a test
+finished if <span class="emphasis"><em>Squish</em></span> attached to a running IE instance.</p></li><li><p>Improved support for stripped-down SmartGWT
+applications.</p></li><li><p>Fixed a problem related to loading URLs without a scheme when
+replaying tests with Chrome.</p></li><li><p>Fixed a rare crash triggered when closing Internet Explorer
+windows.</p></li><li><p>Made it possible to run the addressbook example with Internet
+Explorer 8.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="idp35676336"></a>2.35.6.2. Features</h4></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>It's now possible to pick links of buttons without triggering
+the associated actions (for browsers other than Internet
+Explorer).</p></li><li><p>Added support for automating alert/confirm/prompt dialogs shown
+by embedded web controls.</p></li><li><p>Extended Chrome support by removing limitations imposed by
+proxy-based testing. Chrome is now accessed using a Chrome
+extension.</p></li><li><p><code class="code">visible</code> property now takes CSS-defined visibility
+into account.</p></li><li><p>A new <code class="code">BodyUnloaded</code> event has been added to allow test
+scripts to react to the current page being unloaded.</p></li><li><p>The <code class="code">selectOption()</code> function can now be called with
+a list of strings to simplify selecting multiple entries in a multi-select
+field.</p></li><li><p>The <code class="code">selectOption()</code> function now supports selecting
+items based on their <code class="code">value</code> property instead of the user-visible
+string.</p></li><li><p>Added support for running tests with Firefox on
+Solaris.</p></li></ul></div></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="idp35680920"></a>2.35.7. Windows (native)-specific</h3></div></div></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><span class="section"><a href="rel-510.html#idp35681272">2.35.7.1. Bug Fixes</a></span></dt><dt><span class="section"><a href="rel-510.html#idp35684792">2.35.7.2. Features</a></span></dt></dl></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="idp35681272"></a>2.35.7.1. Bug Fixes</h4></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>WPF <code class="code">DatePicker</code> controls now expose the nested edit
+control to make replaying text input to date pickers work
+correctly.</p></li><li><p>Fixed a bug which occasionally kept <span class="emphasis"><em>Squish</em></span> from hooking into
+.NET applications.</p></li><li><p>Resolved an issue which sometimes made replaying test scripts
+on MFC list view items trigger a high CPU load.</p></li><li><p>Fixed a resource leak which might cause the system to run
+out of memory if <span class="emphasis"><em>Squish</em></span> repeatedly attaches to and detaches from an application.
+</p></li><li><p>Greatly improved accuracy of determining which WPF control (if
+any) is beneath the mouse cursor, this fixes various issues related to
+recording actions on WPF controls and picking them.</p></li><li><p>Resolved a potential crash when replaying tests on Windows
+Forms applications.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="idp35684792"></a>2.35.7.2. Features</h4></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Added dedicated support for <a class="ulink" href="https://www.devexpress.com/Products/NET/Controls/WPF/" target="_blank">DevExpress WPF
+controls</a>.</p></li><li><p><span class="emphasis"><em>Squish</em></span> now tries to make use of the Microsoft UI Automation
+framework for accessing GUI controls before falling back to generic
+<code class="code">WindowsControl</code>-based automation.</p></li><li><p>The names of objects shown in the <span class="application">Spy</span> are now much more
+descriptive.</p></li><li><p>MFC menu items now expose an <code class="code">id</code> property.</p></li></ul></div></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="idp35688176"></a>2.35.8. macOS-specific (Cocoa/Carbon edition)</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>It's now possible to create screenshot verification points for
+web objects in embedded web controls.</p></li><li><p><span class="emphasis"><em>Squish</em></span> packages are now "universal builds", both 32-bit as
+well as 64-bit applications can be tested with a single <span class="emphasis"><em>Squish</em></span>
+package.</p></li><li><p>The <code class="literal">injectMacWrapper</code> example script no
+longer requires modifications to be usable.</p></li><li><p>The <code class="code">selectOption()</code> can now be used with
+<code class="code">WebView</code> controls embedded into OS X
+applications.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="idp35691472"></a>2.35.9. iOS-specific (iPhone/iPad edition)</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Support for recording and replaying multi-touch
+gestures.</p></li><li><p>Added support for building with Xcode 5.1 and
+iOS 7.1.</p></li><li><p>The <code class="code">selectOption()</code> can now be used with
+<code class="code">WebView</code> controls embedded into iOS apps.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="idp35693552"></a>2.35.10. Android-specific</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Added support for recording and replaying multi-touch
+gestures.</p></li><li><p>An experimental alternative hooking method with greatly
+improved performance has been added.</p></li><li><p><code class="code">Native.java.lang.Class.forName("package.Class")</code>
+can now be used to access all native classes without any further
+steps.</p></li><li><p>The <code class="code">tapMenuItem()</code> function now correctly raises an
+exception when the menu item is not found.</p></li><li><p>Fixed recording of keyboard input on WebView HTML objects for
+Android 4.0 ("Ice Cream Sandwich").</p></li><li><p>It is now possible to specify TCP device strings when calling
+<a class="xref" href="rgs-squish.html#startApplication-function"><code class="function">startApplication</code></a> to launch Android
+apps.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="idp35697008"></a>2.35.11. Tk-specific</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Added support for applications using a renamed Tk library (only
+on Linux).</p></li><li><p>Added support for Perl/Tk applications (only on
+Linux).</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="idp35698256"></a>2.35.12. Add-Ons</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>The Ant integration now supports running multiple test cases of
+a given test suite.</p></li><li><p>The Jenkins integration plugin now supports setting <a class="xref" href="rg-cmdline.html#rgc-squishserver" title="7.4.4. squishserver">squishserver (Section 7.4.4)</a> options.</p></li><li><p>The Jenkins integration now allows running multiple <span class="emphasis"><em>Squish</em></span>
+test cases in a single build step.</p></li><li><p>The settings entered for a Jenkins <span class="guilabel">Squish</span>
+build step are now verified more diligently.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="idp35701240"></a>2.35.13. Documentation</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>The algorithm used by Squish/Web for generating object names is
+now documented.</p></li><li><p>The <span class="guilabel">Search</span> feature of the HTML help has been
+reworked to yield better results. Also, the results are grouped by
+topic.</p></li><li><p>The instructions for creating partial builds (for Qt test) have
+been simplified.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="idp35703328"></a>2.35.14. Qt-specific Source Packages</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>A newly added Embedded SDK provides support for QNX
+(using the qcc compiler frontend), Android, VxWorks and a simplified
+configuration for embedded Linux. Customers with existing support
+contracts for cross-compilation builds will be receive a free upgrade
+for their target platform.</p></li><li><p>Make the code compile with Qt 5.3 (still in
+beta).</p></li><li><p>The <a class="xref" href="rg-cmdline.html#rgc-squishidl" title="7.4.5. squishidl">squishidl (Section 7.4.5)</a> utility is now shipped with
+<span class="emphasis"><em>Squish</em></span> binary packages to simplify doing partial builds.</p></li><li><p>Squish source builds can now make use of an existing
+<code class="filename">squishidl</code> binary (useful for embedded
+builds).</p></li><li><p>The <code class="filename">configure</code> program now queries an
+optional Qt namespace name as well as a library infix from qmake (when using
+qmake).</p></li><li><p>The <code class="filename">configure</code> program can optionally query
+<code class="filename">qmake</code> for compiler and linker flags to
+use.</p></li><li><p>An <code class="literal">install</code> target has been added to simplify
+distribution to remote &amp; embedded systems (currently unsupported on
+macOS).</p></li></ul></div></div></div><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" type="text/javascript" src="ScriptingLanguage.js"></script><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format">setScriptingLanguage();</script><div class="navfooter"><hr></hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="rel-511.html">Prev</a> </td><td width="20%" align="center"><a accesskey="u" href="relnotes.html">Up</a></td><td width="40%" align="right"> <a accesskey="n" href="rel-504.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">2.34. Version 5.1.1 </td><td width="20%" align="center"><a accesskey="h" href="index-noframes.html">Home</a></td><td width="40%" align="right" valign="top"> 2.36. Version 5.0.4</td></tr></table></div></body>
+<!-- Mirrored from rel-510.html by HTTrack Website Copier/3.x [XR&CO'2013], Wed, 06 Jul 2022 13:28:56 GMT -->
+</html>

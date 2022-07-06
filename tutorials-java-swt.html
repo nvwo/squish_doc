@@ -1,0 +1,1796 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<!-- Mirrored from tutorials-java-swt.html by HTTrack Website Copier/3.x [XR&CO'2013], Wed, 06 Jul 2022 13:28:58 GMT -->
+<head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><title>4.3. Squish for Java (SWT) Tutorials</title><link rel="stylesheet" href="manual.css" type="text/css"></link><meta name="generator" content="DocBook XSL Stylesheets V1.73.2"></meta><link rel="start" href="index-noframes.html" title="Squish Manual"></link><link rel="up" href="tutorials.html" title="Chapter 4. Tutorials"></link><link rel="prev" href="tutorials-java-awt.html" title="4.2. Squish for Java (AWT/Swing) Tutorials"></link><link rel="next" href="tutorials-java-fx.html" title="4.4. Squish for JavaFX Tutorials"></link><style xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" type="text/css" media="screen">
+        div.toc * { margin-left: 6px; margin-right: auto; max-width: 75em; }
+        div.toc span { margin-left: 0px; }
+        * { margin-left: auto; margin-right: auto; max-width: 75em; }
+        body { margin-left: 6px; margin-right: 6px; }
+        table th { padding: .5ex }
+        table td { padding: .5ex }
+    </style><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format">
+        function keyPress() {
+            var e = window.event;
+            if ( e == undefined ) {
+                return;
+            }
+            /* ### does not properly scroll, yet
+            if ( e.keyCode == 32 ) {
+            var l = document.links;
+            for ( var i = 0; i < l.length; i++ ) {
+                if ( l[i].innerText == "Next" ) {
+                location.href = l[i].href;
+                }
+            }
+            } else
+                */
+                if ( e.keyCode == 0x08 ) {
+            var l = document.links;
+            for ( var i = 0; i < l.length; i++ ) {
+                if ( l[i].innerText == "Prev" ) {
+                location.href = l[i].href;
+                }
+            }
+            }
+        }
+        document.onkeypress = keyPress;
+    </script></head><body><div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="tutorials-java-swt"></a>4.3. Squish for Java (SWT) Tutorials</h2></div></div></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><span class="section"><a href="tutorials-java-swt.html#tutorial-getting-started-java_swt">4.3.1. Tutorial: Starting to Test <span class="trademark">Java</span>™ SWT Applications</a></span></dt></dl></div><p>
+	Learn how to test applications which are based on SWT.
+	</p><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="tutorial-getting-started-java_swt"></a>4.3.1. Tutorial: Starting to Test <span class="trademark">Java</span>™ SWT Applications</h3></div></div></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><span class="section"><a href="tutorials-java-swt.html#tgs-concepts-java-swt">4.3.1.1. Squish Concepts</a></span></dt><dt><span class="section"><a href="tutorials-java-swt.html#tut-java-swt-creating-a-test-suite">4.3.1.2. Creating a Test Suite</a></span></dt><dt><span class="section"><a href="tutorials-java-swt.html#tut-java-swt-recording-tests">4.3.1.3. Recording Tests and Verification Points</a></span></dt><dt><span class="section"><a href="tutorials-java-swt.html#tut-java-swt-verification-points">4.3.1.4. Inserting Additional Verification Points</a></span></dt><dt><span class="section"><a href="tutorials-java-swt.html#tut-java-swt-creating-manual-tests">4.3.1.5. Creating Tests by Hand</a></span></dt><dt><span class="section"><a href="tutorials-java-swt.html#tut-java-swt-learning-more">4.3.1.6. Learning More</a></span></dt></dl></div><p>
+This tutorial will show you how to create, run, and modify tests for an
+example Java SWT application. In the process you will learn about
+<span class="emphasis"><em>Squish</em></span>'s most frequently used features so that by the end of the
+tutorial you will be able to start writing your own tests for your own
+applications. (If you want to test Java AWT/Swing applications, you
+might prefer to read, <a class="xref" href="tutorials-java-awt.html#tutorial-getting-started-java" title="4.2.1. Tutorial: Starting to Test Java™ AWT/Swing Applications">Tutorial: Starting to Test <span class="trademark">Java</span>™ AWT/Swing Applications (Section 4.2.1)</a>.)
+</p><p>
+This chapter presents most of the major concepts behind <span class="emphasis"><em>Squish</em></span> and
+provides the information you need to get started using <span class="emphasis"><em>Squish</em></span> for
+testing your own applications. This tutorial does not discuss all
+of <span class="emphasis"><em>Squish</em></span>'s features, and those that it does cover are not covered in
+full detail. After reading this tutorial we recommend reading the
+<a class="xref" href="users-guide.html" title="Chapter 5. User Guide">User Guide (Chapter 5)</a>, and at least skimming the
+<a class="xref" href="api.man.html" title="Chapter 6. API Reference Manual">API Reference Manual (Chapter 6)</a> and the
+<a class="xref" href="ref.man.html" title="Chapter 7. Tools Reference Manual">Tools Reference Manual (Chapter 7)</a>, so that you are familiar with all the
+features that <span class="emphasis"><em>Squish</em></span> has to offer, even if you don't need to use them
+all straight away.
+</p><p>
+This tutorial is divided into several sections. If you are new to
+<span class="emphasis"><em>Squish</em></span>, it is best to read all of them.
+If you are already using <span class="emphasis"><em>Squish</em></span> you might want to
+just skim the tutorial, stopping only to read those sections that cover
+any new features that you haven't used before—or you could just
+skip straight to the <a class="xref" href="users-guide.html" title="Chapter 5. User Guide">User Guide (Chapter 5)</a>.
+</p><p>
+Whenever we show how to achieve something using the IDE, we will always
+follow with an explanation of how to do the same thing using the command
+line tools. Using an IDE is the easiest and best way to start, but once
+you build up lots of tests, you will want to automate them, (e.g., doing
+nightly runs of your regression test suite), so it is worth knowing how
+to use the command line tools since they can be run from batch files or
+shell scripts.
+</p><p>
+The application we will test is a very simple Address Book application.
+Users can add new addresses via a dialog, edit addresses in-place, and
+remove addresses. They can also open and save address book data files.
+Although the application is very simple it has all the standard features
+that you are likely to want to use in your own tests, including menus, a
+table, and a pop-up dialog with line edits and buttons. Once you
+know how to test any of these user interface elements you will be able to
+apply the same principles to testing elements present in your own
+applications that are not used in the tutorial, such as tree views and
+number and date/time editors. (The <a class="xref" href="users-guide.html" title="Chapter 5. User Guide">User Guide (Chapter 5)</a> has
+more comprehensive examples that show how to test lists, tables, and
+trees, and also the most common widgets, including date/time editors.)
+</p><p>
+The screenshot shows the application in action with a user adding a new
+name and address.
+</p><div class="screenshot"><div class="mediaobject" align="center"><img src="images/tut-addressbook_swt-java-swt.png" align="middle"></img><div class="caption"><p>The Java SWT <code class="code">addressbook_swt</code> example.
+</p></div></div></div><p>
+The application sourcecode, as well as a packaged
+<code class="filename">AddressBookSWT.jar</code>, and also a <code class="filename">.bat</code>
+file for starting it, can be found with <span class="emphasis"><em>Squish</em></span>'s examples in
+<code class="filename">SQUISHDIR/examples/java/addressbook_swt/</code>.
+The tests that we will discuss in the following sections are in
+sub-folders, for example, the versions of the tests using the Python
+language are in
+<code class="filename">SQUISHDIR/examples/java/addressbook_swt/suite_py</code>, with the
+tests written in other languages in similarly named sub-folders.
+</p><p>
+In principle, testing Java SWT and Java AWT/Swing applications works the
+same, so all the practices described in this tutorial can be applied to
+either. The only significant differences are that both of these toolkits
+use their own distinct set of widgets with different APIs (Application
+Programming Interfaces), and so our tests must of course access the
+toolkit-specific widgets and use the toolkit-specific APIs when we want
+to interact with them—for example, when checking that a particular
+widget's property holds a particular value.
+</p><p>
+One important difference between testing Java AWT/Swing
+applications and Java SWT applications: for SWT we must ensure that
+<span class="trademark">Java</span>™ knows where to find the <code class="filename">swt.jar</code> file. This
+can easily be achieved by adding the file to the <code class="code">CLASSPATH</code>
+environment variable. (See <a class="xref" href="rg-autsettings.html#rgas-java-aut-settings" title="7.3.1. AUT Class Name and Classpath for Java™">AUT Class Name and Classpath for <span class="trademark">Java</span>™ (Section 7.3.1)</a>.)
+However, it is just as easy to create a shell script or Windows
+batch file that sets up the environment correctly. A third option could be
+to package the contents of the <code class="filename">swt.jar</code> along with your
+application in a single <code class="filename">.jar</code> similar to how our AddressBook
+example is packaged.
+</p><p> As a consequence to this, another important difference is caused by the
+fact that <code class="filename">swt.jar</code> is built for a specific architecture and
+word-size, so mismatches between the <code class="filename">swt.jar</code> and <span class="emphasis"><em>Squish</em></span>
+(or the JRE) will cause problems for Squish when starting or attaching to AUTs.
+</p><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Note: Using the Examples"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/note.png"></img></td><th align="left">Using the Examples</th></tr><tr><td align="left" valign="top"><p> For Java AUTs, you can use a <code class="filename">.jar</code> file (containing a
+class with a <code class="function">public static void main()</code>),
+a <code class="filename">.class</code> file (also containing a
+<code class="function">main()</code> function), a batch
+file, or a shell script. Some executable launchers even work too.</p><p>
+The first time you try running a test for one of the example AUTs
+you might get a fatal error that begins “<span class="quote">Squish couldn't find
+the AUT to start...</span>”. If this occurs, click the <span class="guibutton">Test
+Suite Settings</span> toolbar button, and in the
+<span class="guilabel">Application Under Test (AUT)</span> section choose the
+AUT from the combobox if it is available, or click the
+<span class="guibutton">Browse...</span> button and navigate to the AUT via the file
+open dialog that pops up. This only needs to be done
+once per example AUT. (This doesn't arise when testing your own AUTs.)
+</p></td></tr></table></div><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Note: macOS-specific"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/note.png"></img></td><th align="left">macOS-specific</th></tr><tr><td align="left" valign="top"><p>
+For <span class="emphasis"><em>Squish</em></span> to operate correctly on macOS when testing Java
+SWT AUTs, the environment variable <code class="envar">SQUISH_USE_SWT</code>
+can be set to <code class="code">1</code>, so that the required <span class="trademark">Java</span>™ VM option
+-XstartOnFirstThread is set. (Recent Eclipse/RCP do not need this, this
+option is already set in <code class="filename">eclipse.ini</code>.)
+This can be done as follows:
+</p><pre class="screen">
+export SQUISH_USE_SWT=1
+open SQUISHDIR/squishide.app
+</pre><p>
+It is probably most convenient to set the environment variable in your
+login shell script or to create a shell script that sets the variable
+just before running <span class="emphasis"><em>Squish</em></span>.
+</p></td></tr></table></div><p>
+In the following sections we will create a test suite and then create
+some tests, but first we will very briefly review some key <span class="emphasis"><em>Squish</em></span>
+concepts.
+</p><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="tgs-concepts-java-swt"></a>4.3.1.1. Squish Concepts</h4></div></div></div><p>
+To perform testing, two things are required:
+</p><div class="orderedlist"><ol type="1"><li><p>
+an application to test—known as the Application
+Under Test (AUT), and
+</p></li><li><p>
+a test script that exercises the AUT.
+</p></li></ol></div><p>
+One fundamental aspect of <span class="emphasis"><em>Squish</em></span>'s approach is that the AUT and the
+test script that exercises it are always executed in two separate
+processes. This ensures that even if the AUT crashes, it should not
+crash <span class="emphasis"><em>Squish</em></span>. (In such cases the test script will fail gracefully and
+log an error message.) In addition to insulating <span class="emphasis"><em>Squish</em></span> and test
+scripts from AUT crashes, running the AUT and the test script in
+separate processes brings other benefits. For example, it makes it
+easier to store the test scripts in a central location, and it also
+makes it possible to perform remote testing on different machines and
+platforms. The ability to do remote testing is particularly useful for
+testing AUTs that run on multiple platforms, and also when testing AUTs
+that run on embedded devices.
+</p><p>
+<span class="emphasis"><em>Squish</em></span> runs a small server (<span class="application">squishserver</span>) that handles the
+communication between the AUT and the test script. The test script is
+executed by the <span class="application">squishrunner</span> tool, which in turn connects to the
+<span class="application">squishserver</span>. The <span class="application">squishserver</span> starts the AUT and injects the
+<span class="emphasis"><em>Squish</em></span> hook into it. The hook is a small library that makes the AUT's
+live running objects accessible and that can communicate with the
+<span class="application">squishserver</span>. With the hook in place, the <span class="application">squishserver</span> can query AUT
+objects regarding their state and can execute commands—all on
+behalf of the <span class="application">squishrunner</span>. And the <span class="application">squishrunner</span> itself requests
+that the AUT performs whatever actions the test script specifies. All
+the communication takes place using network sockets which means that
+everything can be done on a single machine, or the test script can be
+executed on one machine and the AUT can be tested over the network on
+another machine.
+</p><p>
+The following diagram illustrates how the individual <span class="emphasis"><em>Squish</em></span> tools work
+together.
+</p><div class="mediaobject" align="center"><img src="images/design_network.png" align="middle"></img></div><p>
+From the test engineer's perspective this separation is not noticeable,
+since all the communication is handled transparently behind the scenes.
+</p><p>
+Tests can be written and executed using the <span class="application">Squish IDE</span>, in which case the
+<span class="application">squishserver</span> is started and stopped automatically, and the test
+results are displayed in the <span class="application">Squish IDE</span>'s <a class="xref" href="ide.views.html#ide.the-test-results.view" title="8.2.18. Test Results view">Test Results view (Section 8.2.18)</a>. The following diagram illustrates
+what happens behind the scenes when the <span class="application">Squish IDE</span> is used.
+</p><div class="mediaobject" align="center"><img src="images/design_ide.png" align="middle"></img></div><p>
+The <span class="emphasis"><em>Squish</em></span> tools can also be used from the command line without the
+<span class="application">Squish IDE</span>—this is useful for those testers who prefer to use their own
+tools (for example, their favorite editor), and also for performing
+automatic batch testing (for example, when running regression tests
+overnight). In these cases, the <span class="application">squishserver</span> must be started manually,
+and stopped when all the testing is complete (or, if preferred, started
+and stopped for each test).
+</p><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Note: Terminology"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/note.png"></img></td><th align="left">Terminology</th></tr><tr><td align="left" valign="top"><p>
+The <span class="emphasis"><em>Squish</em></span> documentation mostly uses the term
+<span class="emphasis"><em>widget</em></span> when referring to GUI objects (i.e.,
+buttons, menus, menu items, labels, table controls, etc). Windows users
+might be more familiar with the terms <span class="emphasis"><em>control</em></span> and
+<span class="emphasis"><em>container</em></span>, but here we use the term widget for
+both. Similarly, macOS users may be used to the term
+<span class="emphasis"><em>view</em></span>; again, we use the term widget for this
+concept.
+</p></td></tr></table></div><div class="section" lang="en"><div class="titlepage"><div><div><h5 class="title"><a id="tgsc_apptestable-java-swt"></a>4.3.1.1.1. Making an Application Testable</h5></div></div></div><p>
+In most cases, nothing special needs to be done to make an application
+testable, since the toolkit's API (e.g., SWT) provides enough
+functionality to implement and record test scripts. The connection to
+the <span class="application">squishserver</span> is also established automatically, when the <span class="application">Squish IDE</span>
+starts the AUT.
+</p><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Note: The Squish Directory"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/note.png"></img></td><th align="left">The <span class="emphasis"><em>Squish</em></span> Directory</th></tr><tr><td align="left" valign="top"><p>
+Throughout the manual, we often refer to the <code class="filename">SQUISHDIR</code>
+directory. This means the directory where <span class="emphasis"><em>Squish</em></span> is installed, which
+might be <code class="filename">C:\Squish</code>,
+<code class="filename">/usr/local/squish</code>,
+<code class="filename">/opt/local/squish</code>, or somewhere else, depending on
+where you installed it. The exact location doesn't matter, so long as
+you mentally translate the <code class="filename">SQUISHDIR</code> directory to
+whatever the directory really is when you see paths and filenames in
+this manual.
+</p></td></tr></table></div></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="tut-java-swt-creating-a-test-suite"></a>4.3.1.2. Creating a Test Suite</h4></div></div></div><p>
+A test suite is a collection of one or more test cases
+(<span class="emphasis"><em>tests</em></span>).
+Using a test suite is convenient since it makes it easy to share tests
+scripts and test data between a group of related tests.
+</p><p>
+Here, and throughout the tutorial, we will start by describing how to do
+things using the IDE, with the information for command line users
+following.
+</p><p>
+To begin with start up the <span class="application">Squish IDE</span>, either by clicking or double-clicking
+the <span class="application">squishide</span> icon, or by launching <span class="application">squishide</span> from the taskbar menu
+or by executing <span class="application">squishide</span> on the command line—whichever you
+prefer and that is suitable for the platform you are using. Once
+<span class="emphasis"><em>Squish</em></span> starts up you might be greeted with a <span class="emphasis"><em>Welcome Page</em></span>
+in case you're starting the <span class="application">squishide</span> for the first time. Click the
+<span class="emphasis"><em>Workbench</em></span> button in the upper right to dismiss it. Then, the
+<span class="application">squishide</span> will look <span class="emphasis"><em>similar</em></span> to the screenshot—but probably
+slightly different depending on the windowing system, colors, fonts, and
+theme that you use, and so on.
+</p><div class="screenshot"><div class="mediaobject" align="center"><img src="images/tut-squish1.png" align="middle"></img><div class="caption">The Squish IDE with no Test Suites
+</div></div></div><p>
+Once <span class="emphasis"><em>Squish</em></span> has started click
+<span class="guimenu">File</span>|<span class="guimenuitem">New Test
+Suite...</span> to
+pop-up the New Test Suite wizard shown below.
+</p><div class="screenshot"><div class="mediaobject" align="center"><img src="images/tut-squish-newtestsuite1-swt.png" align="middle"></img><div class="caption">The New Test Suite wizard's Name &amp; Directory page
+</div></div></div><p>
+Enter a name for your test suite and choose the folder where you want
+the test suite to be stored. In the screenshot we have called the test
+suite <code class="filename">suite_py</code> and will put it inside the
+<code class="filename">addressbook_swt</code> folder. (For your own tests you might
+use a more meaningful name such as "suite_addressbook"; we chose
+"suite_py" because for the sake of the tutorial we will create several
+suites, one for each scripting language that <span class="emphasis"><em>Squish</em></span> supports.)
+Naturally, you can choose whatever name and folder you prefer. Once the
+details are complete, click <span class="guibutton">Next</span> to go on to the
+Toolkit (or Scripting Language) page.
+</p><div class="screenshot"><div class="mediaobject" align="center"><img src="images/tut-squish-newtestsuite2.png" align="middle"></img><div class="caption">The New Test Suite wizard's Toolkit page
+</div></div></div><p>
+If you get this wizard page, click the toolkit your AUT uses. For this
+example, we must click Java since we are testing a Java
+application—it doesn't matter whether the AUT is SWT or
+AWT/Swing-based, the Java option covers both. Then click
+<span class="guibutton">Next</span> to go to the Scripting Language page.
+</p><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Note: Scripting Languages"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/note.png"></img></td><th align="left">Scripting Languages</th></tr><tr><td align="left" valign="top"><p>
+<span class="emphasis"><em>Squish</em></span> supports several different scripting languages, and different
+installations may include support for some or all of these—so the
+scripting languages shown in the screenshot may be different from those
+shown by your version of <span class="emphasis"><em>Squish</em></span>.
+</p></td></tr></table></div><div class="screenshot"><div class="mediaobject" align="center"><img src="images/tut-squish-newtestsuite3.png" align="middle"></img><div class="caption">The New Test Suite wizard's Scripting Language page
+</div></div></div><p>
+Choose whichever scripting language you want—the only constraint
+is that you can only use one scripting language per test suite. (So if
+you want to use multiple scripting languages, just create multiple test
+suites, one for each scripting language you want to use.) The
+functionality offered by <span class="emphasis"><em>Squish</em></span> is the same for all languages. Having
+chosen a scripting language, click <span class="guibutton">Next</span> once more
+to get to the wizard's last page.
+</p><div class="screenshot"><div class="mediaobject" align="center"><img src="images/tut-squish-newtestsuite4-swt.png" align="middle"></img><div class="caption">The New Test Suite wizard's AUT page
+</div></div></div><p>
+If you are creating a new test suite for an AUT that <span class="emphasis"><em>Squish</em></span> already
+knows about, simply click the combobox to pop-down the list of AUTs and
+choose the one you want. If the combobox is empty or your AUT isn't
+listed, click the <span class="guibutton">Browse</span> button to the right
+of the combobox and navigate to the AUT:
+<code class="filename">SQUISHDIR/examples/java/addressbook_swt/AddressBookSWT.jar</code>.
+Once you have selected the AUT, click <span class="guibutton">Finish</span> and <span class="emphasis"><em>Squish</em></span>
+will create a sub-folder with the same name as the test suite, and will create a
+file inside that folder called <code class="filename">suite.conf</code> that contains the
+test suite's configuration details. <span class="emphasis"><em>Squish</em></span> will also register the AUT with the
+<span class="application">squishserver</span>. The wizard will then close and <span class="emphasis"><em>Squish</em></span>'s IDE will look similar
+to the screenshot below.
+</p><div class="screenshot"><div class="mediaobject" align="center"><img src="images/tut-squish2.png" align="middle"></img><div class="caption">The Squish IDE with the suite_py test suite
+</div></div></div><p>
+We are now ready to start creating tests. Read on to learn how to create
+test suites without using the IDE, or skip ahead to <a class="xref" href="tutorials-java-swt.html#tut-java-swt-recording-tests" title="4.3.1.3. Recording Tests and Verification Points">Recording Tests and Verification Points (Section 4.3.1.3)</a> if you prefer.
+</p><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Note: For command-line users"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/note.png"></img></td><th align="left"><span class="emphasis"><em>For command-line users</em></span></th></tr><tr><td align="left" valign="top"><p>
+To create a new test suite from the command line, three steps are
+necessary: first, create a directory for the test suite; second, register the
+AUT with <span class="application">squishserver</span>; and third, create a test suite configuration file.
+</p><div class="orderedlist"><ol type="1"><li><p>
+Create a new directory to hold the test suite—the directory's name
+should begin with <code class="code">suite</code>. In this example we have created
+the <code class="filename">SQUISHDIR/examples/java/addressbook_swt/suite_py</code>
+directory for Python tests. (We also have similar subdirectories for
+other languages but this is purely for the sake of example, since
+normally we only use one language for all our tests.)
+</p></li><li><p>
+Register the AUT with the <span class="application">squishserver</span>.
+<sup>[<a id="idp39189600" href="#ftn.idp39189600" class="footnote">5</a>]</sup>
+This is done by executing the <span class="application">squishserver</span> on the command line with
+the <code class="code">--config</code> option and the <code class="code">addAUT</code>
+command. For example, assuming we are in the <code class="filename">SQUISHDIR</code>
+directory on Linux:
+</p><pre class="screen">
+squishserver --config addAUT AddressBookSWT.jar \
+SQUISHDIR/examples/java/addressbook_swt
+</pre><p>
+Naturally Windows users would use \ instead of / as their directory
+separator.
+</p><p>
+We must give the <code class="code">addAUT</code> command the name of the AUT's
+executable and—separately—the AUT's path. In this case
+the path is to the <code class="code">.jar</code> file that was added as the AUT in
+the test suite configuration file. (For more
+information about application paths, see <a class="xref" href="rg-autsettings.html" title="7.3. AUTs and Settings">AUTs and Settings (Section 7.3)</a> in the <a class="xref" href="users-guide.html" title="Chapter 5. User Guide">User Guide (Chapter 5)</a>.)
+</p></li><li><p>
+Create a plain text file (ASCII or UTF-8 encoding) called
+<code class="filename">suite.conf</code> in the suite subdirectory. This is the
+test suite's configuration file, and at the minimum it must identify the
+AUT, the scripting language used for the tests, and the wrappers (i.e.,
+the GUI toolkit or library) that the AUT uses. The format of the file is
+<span class="emphasis"><em><code class="code">key</code></em></span> <code class="code">=</code>
+<span class="emphasis"><em><code class="code">value</code></em></span>, with one
+<span class="emphasis"><em>key–value</em></span> pair per line. For example:
+</p><pre class="screen">
+AUT            = AddressBookSWT.jar
+LANGUAGE       = Python
+WRAPPERS       = Java
+OBJECTMAPSTYLE = script
+</pre><p>
+The AUT for Java programs is the <code class="code">.jar</code> file that contains
+the AUT classes and can be run by double clicking it. The LANGUAGE can be set
+to whichever one you prefer—currently <span class="emphasis"><em>Squish</em></span> is capable of supporting
+JavaScript, Python, Perl, Ruby, and Tcl, but the precise availability
+may be different depending on how <span class="emphasis"><em>Squish</em></span> was installed.  For both Java
+AWT/Swing and Java SWT programs, setting WRAPPERS to Java is sufficient.
+</p></li></ol></div></td></tr></table></div><p>
+We are now ready to record our first test.
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="tut-java-swt-recording-tests"></a>4.3.1.3. Recording Tests and Verification Points</h4></div></div></div><p>
+<span class="emphasis"><em>Squish</em></span> records tests using the scripting language that was specified
+for the test suite. Once a test has been recorded,
+we can <span class="emphasis"><em>run</em></span> the test and
+<span class="emphasis"><em>Squish</em></span> will faithfully repeat all the actions that we performed when
+recording the test, but without all the pauses that humans are prone to
+but which computers don't need. It is also possible—and very
+common—to edit recorded tests, or to copy parts of recorded tests
+into manually created tests, as we will see later on in the tutorial.
+</p><p>
+Recordings are made into existing test cases. We begin by
+creating a <span class="guilabel">New Script Test Case</span>.
+There are two ways we can do this. One way
+is to click <span class="guimenu">File</span>|<span class="guimenuitem">New Test
+Case...</span>. This will pop up the <a class="xref" href="ide.dialogs.html#ide.new.squish.test.case.wizard" title="8.3.10. New Squish Test Case wizard">New Squish Test Case wizard (Section 8.3.10)</a>—simply enter the name
+for the test case and then click <span class="guibutton">Finish</span>. Another
+way is to click the <span class="guibutton">New Script Test Case</span> (<span class="guiicon"><img src="images/ide/new_test_case.png"></img></span>) toolbar button (to
+the right of the <span class="guilabel">Test Cases</span> label in the
+<span class="guilabel">Test Suites</span> view); this will create a new test
+case with a default name (which you can easily change). Use one of these
+methods and give the new test case the name “<span class="quote">tst_general</span>”.
+<span class="emphasis"><em>Squish</em></span> automatically creates a sub-folder inside the test suite's
+folder with this name and also a test file, for example
+<code class="filename">test.py</code>. (If we had chosen JavaScript as our
+scripting language the file would be called
+<code class="filename">test.js</code>, and correspondingly for Perl, Ruby, or Tcl.)
+</p><div class="screenshot"><div class="mediaobject" align="center"><img src="images/tut-squish3.png" align="middle"></img><div class="caption">The Squish IDE with the tst_general test case
+</div></div></div><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Note"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/note.png"></img></td><th align="left">Note</th></tr><tr><td align="left" valign="top"><div class="mediaobject" align="right"><img src="images/tut-squish-testcase-type.png" align="right"></img></div><p>
+If you get a sample <code class="filename">.feature</code> file instead of a "Hello
+World" script, then click on the arrow left of the <span class="guibutton">Run Test Suite</span> (<span class="guiicon"><img src="images/ide/run_test_suite.png"></img></span>)
+and select <span class="guibutton">New Script Test Case</span> (<span class="guiicon"><img src="images/ide/new_test_case.png"></img></span>).
+</p></td></tr></table></div><p>
+To make the test script file (e.g., <code class="filename">test.js</code>) appear
+in an <a class="xref" href="ide.views.html#ide.the-editor.view" title="8.2.6. Editor view">Editor view (Section 8.2.6)</a>, click—or double-click
+depending on the <span class="guimenuitem">Preferences</span>|<span class="guimenuitem">General</span>|<span class="guimenuitem">Open mode</span>
+setting—the test case. This selects the Script as the active one
+and makes visible its corresponding <span class="guibutton">Record</span> (<span class="guiicon"><img src="images/ide/record.png"></img></span>) and <span class="guibutton">Run Test</span> (<span class="guiicon"><img src="images/ide/run.png"></img></span>) buttons.
+</p><p>
+The checkboxes are used to control which test cases are
+run when the <span class="guibutton">Run Test Suite</span> (<span class="guiicon"><img src="images/ide/run_test_suite.png"></img></span>) toolbar button is clicked; we can also run
+a single test case by clicking its <span class="guibutton">Run Test</span> (<span class="guiicon"><img src="images/ide/run.png"></img></span>) button. If the test case is not
+currently active, the button may be invisible until the mouse is hovered over
+it.
+</p><p> Initially, the
+script's <code class="function">main()</code> logs "Hello World" to the test results. If
+we were to create a test manually (as we will do later on in the tutorial), we
+<span class="emphasis"><em>must</em></span> create a <code class="function">main</code> function, and we
+should import the same imports at the top.
+The name "main" is special to <span class="emphasis"><em>Squish</em></span>. Tests may contain as many functions
+and other code as we like (providing it is legal for the scripting language), but when the
+test is executed (i.e., run), <span class="emphasis"><em>Squish</em></span> always executes the
+<code class="function">main</code> function. It is also possible to share commonly used code
+between test scripts—this is covered in the <a class="xref" href="users-guide.html" title="Chapter 5. User Guide">User Guide (Chapter 5)</a>. (In fact, two other function names are special
+to <span class="emphasis"><em>Squish</em></span>, <code class="function">cleanup</code> and <code class="function">init</code>; see <a class="xref" href="api.special.functions.html" title="6.1. Tester-Created Special Functions">Tester-Created Special Functions (Section 6.1)</a> for details.)
+</p><p>
+Once the new test case has been created, we are free to write
+test code manually, or to record a test. Clicking on the test case's
+<span class="guibutton">Record</span> (<span class="guiicon"><img src="images/ide/record.png"></img></span>) replaces the test's code with a new recording.
+It is also possible to record snippets and insert them into existing test
+cases, covered in Users Guide and not in this tutorial.
+</p><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Note: For command-line users"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/note.png"></img></td><th align="left"><span class="emphasis"><em>For command-line users</em></span></th></tr><tr><td align="left" valign="top"><p>
+Creating a new test case from the command line is an easy two-step
+process: first, create a test case directory; and second, create an
+new script test case file.
+</p><div class="orderedlist"><ol type="1"><li><p>
+Create a new subdirectory inside the test suite directory. For example,
+inside the
+<code class="filename">SQUISHDIR/examples/java/addressbook_swt/suite_py</code>
+directory, create the <code class="filename">tst_general</code> directory.
+</p></li><li><p>
+Inside the test case's directory create a file called
+<code class="filename">test.py</code> (or <code class="filename">test.js</code> if you are
+using the JavaScript scripting language, and similarly for the other
+languages).
+</p></li></ol></div></td></tr></table></div><p>
+Before we dive into recording let's briefly review our very simple test scenario:
+</p><div class="orderedlist"><ol type="1"><li><p>
+Open the <code class="filename">MyAddresses.adr</code> address file.
+</p></li><li><p>
+Navigate to the second address and then add a new name and address.
+</p></li><li><p>
+Navigate to the fourth address (that was the third address) and change
+the surname field.
+</p></li><li><p>
+Navigate to the first address and remove it.
+</p></li><li><p>
+Verify that the first address is now the new one that was added.
+</p></li></ol></div><p>
+We are now ready to record our first test. Click the <span class="guibutton">Record</span> (<span class="guiicon"><img src="images/ide/record.png"></img></span>)
+to the right of the <code class="code">tst_general</code> test case shown in the <a class="xref" href="ide.views.html#ide.the-test-suites.view" title="8.2.19. Test Suites view">Test Suites view (Section 8.2.19)</a>'s Test Cases list. This will cause
+<span class="emphasis"><em>Squish</em></span> to run the AUT so that we can interact with it. Once the AUT is
+running perform the following actions—and don't worry about how
+long it takes since <span class="emphasis"><em>Squish</em></span> doesn't record idle time:
+</p><div class="orderedlist"><ol type="1"><li><p>
+Click
+<span class="guimenu">File</span>|<span class="guimenuitem">Open</span>,
+and once the file dialog appears, select
+<code class="filename">MyAddresses.adr</code>, then click the <span class="guibutton">Open</span>
+button.
+</p></li><li><p>
+Click the second row, then click
+<span class="guimenu">Edit</span>|<span class="guimenuitem">Add...</span>
+</p></li><li><p> A dialog will pop up, and you enter the values
+  "Jane", "Doe", "jane.doe@nowhere.com" and a phone number of "555 123 4567".
+  </p><p> Note: Do not use clipboard operations (copy/paste) for entering data
+  from another window; the clipboard contents are not recorded in your script.
+  </p><p> Don't worry about typing mistakes—just
+  backspace delete as normal and fix them. </p></li><li><p> Click the
+  <span class="guibutton">OK</span> button. There should now be a new
+  address with the details you typed in.
+</p></li><li><p>
+Click the fourth row's second (surname) column, delete its text and
+replace it with "Doe".
+Then press <span class="keysym">Enter</span> to confirm your edit.
+</p></li><li><p>
+Now click the first row, then click
+<span class="guimenu">Edit</span>|<span class="guimenuitem">Remove...</span>,
+and then click the <span class="guibutton">Yes</span> button in the message box.
+The first row should be gone, so your "Jane Doe" entry should now be
+the first one.
+</p></li><li><p>
+Click the <span class="guibutton">Verify</span> toolbar button in
+the <span class="emphasis"><em>Squish</em></span> <a class="xref" href="ide.main.window.html#ide-the-controlbar-window" title="8.1.3. Control Bar Window">Control Bar Window (Section 8.1.3)</a> (the second
+button from the left) and select <span class="guibutton">Properties</span>.
+This will make the <span class="application">Squish IDE</span> appear.
+
+</p><div class="mediaobject"><img src="images/controlbar-verify-props.png"></img></div><p>
+</p></li><li><p>
+In the <span class="guilabel">Application Objects</span> view, expand the
+<code class="code">Address Book</code> object, and then the <code class="code">Table</code> object. Now
+expand the <code class="code">row_0</code> object.
+Click the <code class="code">column_0</code> object to make its properties appear in
+the <a class="xref" href="ide.views.html#ide.the-properties.view" title="8.2.12. Properties view">Properties view (Section 8.2.12)</a>, and then check the
+<code class="code">text</code> property's checkbox. </p></li><li><p> Now click the
+<code class="code">column_1</code> object and check its <code class="code">text</code> property. </p><div class="screenshot"><div class="mediaobject" align="center"><img src="images/java-swt-tut-squishgui16.png" align="middle"></img><div class="caption">The Squish IDE showing two verification points about to be inserted
+</div></div></div></li><li><p> Click the <span class="guibutton">Save and Insert Verifications</span>
+button (at the bottom of the <a class="xref" href="ide.views.html#ide.verification.point.creator.view" title="8.2.22. Verification Point Creator view">Verification Point Creator view (Section 8.2.22)</a>) to
+have the forename and surname verifications for the first row inserted
+into the recorded test script. (See the screenshot below.) Once the
+verification points are inserted the <span class="application">Squish IDE</span>'s window will be hidden again
+and the Control Bar window and the AUT will be back in view.
+</p></li><li><p>
+We've now completed the test, so in the AUT click
+<span class="guimenu">File</span>|<span class="guimenuitem">Quit</span>,
+then click <span class="guibutton">No</span> in the message box, since we don't
+want to save any changes.
+</p></li></ol></div><p>
+Once we quit the AUT, the recorded test will appear in <span class="emphasis"><em>Squish</em></span>'s IDE as
+the screenshot illustrates. (Note that the exact code that is recorded
+will vary depending on how you interact. For example, you might invoke
+menu options by clicking them or by using key sequences—it doesn't
+matter which you use, but since they are different, <span class="emphasis"><em>Squish</em></span> will record
+them differently.)
+</p><div class="screenshot"><div class="mediaobject" align="center"><img src="images/tut-squish4-swt.png" align="middle"></img><div class="caption">The Squish IDE showing the recorded tst_general test
+</div></div></div><p>
+If the recorded test doesn't appear, click (or double-click depending on
+your platform and settings) the <code class="filename">tst_general</code> test
+case; this will make <span class="emphasis"><em>Squish</em></span> show the test's
+<code class="filename">test.py</code> file in an editor window as shown in the
+screenshot.
+</p><p>
+The SWT-specific <a class="xref" href="rgs-javaconvenience.html#java-chooseFile-function"><code class="function">chooseFile</code></a> function
+takes a filename as if the user had interacted with a standard
+windowing-system supplied file open dialog. <span class="emphasis"><em>Squish</em></span> records the
+absolute path of the file to ensure reliability when running tests, but
+for this tutorial we have used scripting language facilities to provide
+a filename that will work wherever the example is installed.
+</p><p>
+Now that we've recorded the test we are able to play it back, i.e.,
+run it. This in itself is useful in that if the play back failed it
+might mean that the application has been broken. Furthermore, the two
+verifications we put in will be checked on play back as the screenshot
+shows.
+</p><p>
+Inserting verification points during test recording is very convenient.
+Here we inserted two in one go, but we can insert as many as we like as
+often as we like during the test recording process. However, sometimes
+we might forget to insert a verification, or later on we might want to
+insert a new verification. We can easily insert additional verifications
+into a recorded test script as we will see in the next section, <a class="xref" href="tutorials-java-swt.html#tut-java-swt-verification-points" title="4.3.1.4. Inserting Additional Verification Points">Inserting Additional Verification Points (Section 4.3.1.4)</a>.
+</p><p>
+Before going further we will look at how to record a test from the
+command line. Then we will see how to run a test, and we will also
+look at some of the code that <span class="emphasis"><em>Squish</em></span> generated to record the test and
+discuss some of its features.
+</p><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Note: For command-line users"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/note.png"></img></td><th align="left"><span class="emphasis"><em>For command-line users</em></span></th></tr><tr><td align="left" valign="top"><p>
+First and foremost, the <span class="application">squishserver</span> must always be running when
+recording or running a test. This is handled automatically by the <span class="application">Squish IDE</span>,
+but for command line users the <span class="application">squishserver</span> must be started manually.
+(See <a class="xref" href="rg-cmdline.html#rgc-squishserver" title="7.4.4. squishserver">squishserver (Section 7.4.4)</a> for further details.)
+</p><p>
+To record a test from the command line we execute the <span class="application">squishrunner</span>
+program and specify the test suite we want to record inside and the name
+we want to give to the test case. For example (assuming we are in the
+directory that contains the test suite's directory):
+</p><pre class="screen">
+squishrunner --testsuite suite_py --record tst_general --useWaitFor
+</pre><p>
+It is always best to record using the <code class="option">--useWaitFor</code>
+option since this records calls to the <a class="xref" href="rgs-squish.html#waitForObject-function"><code class="function">waitForObject</code></a> function which is more reliable
+than using the <a class="xref" href="rgs-squish.html#snooze-function"><code class="function">snooze</code></a> function which for
+historical reasons is the default. (Note that the <span class="application">Squish IDE</span> automatically
+uses the <a class="xref" href="rgs-squish.html#waitForObject-function"><code class="function">waitForObject</code></a> function.)
+</p></td></tr></table></div><h5><a id="idp39270896"></a> Running the Test </h5><p>
+To run a test case in the IDE just click the <span class="guibutton">Run Test</span> (<span class="guiicon"><img src="images/ide/run.png"></img></span>) that appears
+when the test case is hovered or selected in the <a class="xref" href="ide.views.html#ide.the-test-suites.view" title="8.2.19. Test Suites view">Test Suites view (Section 8.2.19)</a>.
+When we have two or more test cases, we can run them all, one after another,
+(or only those that are checked) by clicking <span class="guibutton">Run Test Suite</span> (<span class="guiicon"><img src="images/ide/run_test_suite.png"></img></span>).
+</p><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Note: For command-line users"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/note.png"></img></td><th align="left"><span class="emphasis"><em>For command-line users</em></span></th></tr><tr><td align="left" valign="top"><p>
+As noted earlier, the <span class="application">squishserver</span> must always be running when
+recording or running a test, or the <code class="code">--local</code> option
+be provided to <span class="application">squishrunner</span>. (See <a class="xref" href="rg-cmdline.html#rgc-squishserver" title="7.4.4. squishserver">squishserver (Section 7.4.4)</a>
+for further details.)
+</p><p>
+To play back a recorded test from the command line we execute the
+<span class="application">squishrunner</span> program and specify the test suite our recorded script is
+in and the test case we want to play. For example (assuming we are in
+the directory that contains the test suite's directory):
+</p><pre class="screen">
+squishrunner --testsuite suite_py --testcase tst_general --local
+</pre></td></tr></table></div><p>
+In some cases it is possible that running the test will fail with an
+error message similar to this:
+
+</p><pre class="screen">
+ERROR     	Mon Mar 23 15:41:12 2009	test.py:31: Script Error
+    Error in closeWindow() invocation: null object
+</pre><p>
+
+This sometimes happens if a dialog is <code class="code">dispose()</code>d too quickly.
+Simply go to the offending line and comment out the
+<code class="code">closeWindow()</code> call (which is on line 18 in this case) and
+re-run the test. The test should now work fine.
+</p><p>
+If you look at the code in the screenshot (or the code snippet shown
+below) you will see that it consists of lots of <a class="xref" href="rgs-squish.html#waitForObject-function"><code class="function">waitForObject</code></a> calls as parameters to various
+other calls such as <a class="xref" href="rgs-javaconvenience.html#java-activateItem-function"><code class="function">activateItem</code></a>,
+<a class="xref" href="rgs-javaconvenience.html#java-clickButton-function"><code class="function">clickButton</code></a>, <a class="xref" href="rgs-javaconvenience.html#java-mouseClick-function"><code class="function">mouseClick</code></a>, and <a class="xref" href="rgs-javaconvenience.html#java-type-function"><code class="function">type</code></a>. The <a class="xref" href="rgs-squish.html#waitForObject-function"><code class="function">waitForObject</code></a> function waits until a GUI object
+is ready to be interacted with (i.e., becomes visible and enabled), and
+is then followed by some function that interacts with the object. The
+typical interactions are activate (pop-up) a menu, click a menu option
+or a button, or type in some text. (For a complete overview of
+<span class="emphasis"><em>Squish</em></span>'s script commands see the <a class="xref" href="users-guide.html" title="Chapter 5. User Guide">User Guide (Chapter 5)</a>, the
+<a class="xref" href="api.man.html" title="Chapter 6. API Reference Manual">API Reference Manual (Chapter 6)</a>, and the <a class="xref" href="ref.man.html" title="Chapter 7. Tools Reference Manual">Tools Reference Manual (Chapter 7)</a>. Objects are
+identified by names that <span class="emphasis"><em>Squish</em></span> generates. (See <a class="xref" href="ug-accessing-objects.html" title="5.1. How to Identify and Access Objects">How to Identify and Access Objects (Section 5.1)</a> for full details.)
+</p><p>
+The generated code is about 30 lines of code. Here's an extract that
+just shows how <span class="emphasis"><em>Squish</em></span> records clicking the Edit menu's Add option,
+typing in Jane Doe's details into the Add dialog, and clicking OK at the
+end to close the dialog and update the table.
+</p><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Note: Scripting Language Support"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/note.png"></img></td><th align="left">Scripting Language Support</th></tr><tr><td align="left" valign="top"><p>
+Although the screenshots only show the Python test suite in action, for
+the code snippets quoted here and throughout the tutorial, we show the
+code for all the scripting languages that <span class="emphasis"><em>Squish</em></span> supports. In practice
+you would normally only use one of them of course, so feel free to just
+look at the snippets in the language you are interested in and skip the
+others. (In the HTML version of this manual you can use the combobox at
+the top of the page to select the language you use—this will hide
+the code snippets in other languages.)
+</p></td></tr></table></div><div xmlns="" class="scriptlang"><form><select name="scriptlangcombo" onchange="javascript:changeScriptingLanguage(this)" onclick="javascript:changeScriptingLanguage(this)"><option value="all" selected>Show All</option><option value="JavaScript">Show JavaScript</option><option value="Perl">Show Perl</option><option value="Python">Show Python</option><option value="Ruby">Show Ruby</option><option value="Tcl">Show Tcl</option></select></form></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Python</span><pre class="programlisting">
+
+    activateItem(waitForObjectItem(names.address_Book_MyAddresses_adr_Menu, "Edit"))
+    activateItem(waitForObjectItem(names.edit_Menu, "Add..."))
+    type(waitForObject(names.address_Book_Add_Forename_Text), "Jane")
+    type(waitForObject(names.address_Book_Add_Surname_Text), "Doe")
+    type(waitForObject(names.address_Book_Add_Email_Text), "jane.doe@nowhere.com")
+    type(waitForObject(names.address_Book_Add_Phone_Text), "123 555 1212")
+    clickButton(waitForObject(names.address_Book_Add_OK_Button))
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">JavaScript</span><pre class="programlisting">
+
+    activateItem(waitForObjectItem(names.addressBookMyAddressesAdrMenu, "Edit"));
+    activateItem(waitForObjectItem(names.editMenu, "Add..."));
+    type(waitForObject(names.addressBookAddForenameText), "Jane");
+    type(waitForObject(names.addressBookAddSurnameText), "Doe");
+    type(waitForObject(names.addressBookAddEmailText), "jane.doe@nowhere.com");
+    type(waitForObject(names.addressBookAddPhoneText), "123 555 1212");
+    clickButton(waitForObject(names.addressBookAddOKButton));
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Perl</span><pre class="programlisting">
+
+    activateItem(waitForObjectItem($Names::address_book_myaddresses_adr_menu, "Edit"));
+    activateItem(waitForObjectItem($Names::edit_menu, "Add..."));
+    type(waitForObject($Names::address_book_add_forename_text), "Jane");
+    type(waitForObject($Names::address_book_add_surname_text), "Doe");
+    type(waitForObject($Names::address_book_add_email_text), "jane.doe\@nowhere.com");
+    type(waitForObject($Names::address_book_add_phone_text), "123 555 1212");
+    clickButton(waitForObject($Names::address_book_add_ok_button));
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Ruby</span><pre class="programlisting">
+
+    activateItem(waitForObjectItem(Names::Address_Book_MyAddresses_adr_Menu, "Edit"))
+    activateItem(waitForObjectItem(Names::Edit_Menu, "Add..."))
+    type(waitForObject(Names::Address_Book_Add_Forename_Text), "Jane")
+    type(waitForObject(Names::Address_Book_Add_Surname_Text), "Doe")
+    type(waitForObject(Names::Address_Book_Add_Email_Text), "jane.doe@nowhere.com")
+    type(waitForObject(Names::Address_Book_Add_Phone_Text), "123 555 1212")
+    clickButton(waitForObject(Names::Address_Book_Add_OK_Button))
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Tcl</span><pre class="programlisting">
+
+    invoke activateItem [waitForObjectItem $names::Address_Book_MyAddresses_adr_Menu "Edit"]
+    invoke activateItem [waitForObjectItem $names::Edit_Menu "Add..."]
+    invoke type [waitForObject $names::Address_Book_Add_Forename_Text] "Jane"
+    invoke type [waitForObject $names::Address_Book_Add_Surname_Text] "Doe"
+    invoke type [waitForObject $names::Address_Book_Add_Email_Text] "jane.doe@nowhere.com"
+    invoke type [waitForObject $names::Address_Book_Add_Phone_Text] "123 555 1212"
+    invoke clickButton [waitForObject $names::Address_Book_Add_OK_Button]
+</pre></div><p>
+During recording, the tester used the keyboard to tab from one text field
+to another, but we removed them for brevity and because they were not needed.
+If the tester had moved the focus by clicking the mouse and clicked the OK button by
+tabbing to it and pressing Spacebar, or any other combination of
+interactions, the outcome would be the same, but of course <span class="emphasis"><em>Squish</em></span> will
+have recorded the actual actions that were taken.
+</p><p>
+Notice in the code snippet that there are no explicit delays. (It is
+possible to force a delay using <span class="emphasis"><em>Squish</em></span>'s <a class="xref" href="rgs-squish.html#snooze-function"><code class="function">snooze</code></a> function.) This is because the <a class="xref" href="rgs-squish.html#waitForObject-function"><code class="function">waitForObject</code></a> function delays until the object it
+is given is ready—thus allowing <span class="emphasis"><em>Squish</em></span> to run as fast as the GUI
+toolkit can cope with, but no faster.
+</p><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Note:  Object Names "><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/note.png"></img></td><th align="left"> Object Names </th></tr><tr><td align="left" valign="top"><p>
+Squish recordings refer to objects using variables that begin with a
+<code class="code">names.</code> prefix.
+This identifies them as <em class="firstterm">Symbolic Names</em>.
+Each variable contains, as a value, the corresponding
+<em class="firstterm">Real Name</em>, which can be string-based, or
+implemented as a key-value mapping of properties to values. <span class="emphasis"><em>Squish</em></span> supports
+several naming schemes, all of which can be used—and mixed—in
+scripts. The advantage of using Symbolic Names is that if the application
+changes in a way that results in different names being needed, we can simply
+update <span class="emphasis"><em>Squish</em></span>'s Object Map (which relates symbolic names to real
+names), and thereby avoid the need to change our test scripts. (See the
+<a class="xref" href="rg-objectmap.html" title="7.11. Object Map">Object Map (Section 7.11)</a> and the <a class="xref" href="ide.views.html#ide.the-object-map.view" title="8.2.10. Object Map view">Object Map view (Section 8.2.10)</a> for more about the Object Map.)
+</p></td></tr></table></div><div class="tip" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Tip:  Editor Context Menu "><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Tip]" src="images/tip.png"></img></td><th align="left"> Editor Context Menu </th></tr><tr><td align="left" valign="top"><p> When a Symbolic Name is under the cursor, the editor's context menu
+allows you to <span class="guimenuitem">Open Symbolic Name</span>, showing its
+entry in the <span class="guilabel">Object Map</span>, or <span class="guimenuitem">Convert to Real
+Name</span>, which places its inline key-value representation in your
+desired script language at the cursor, allowing you to hand-edit the values and
+properties in your script.
+</p></td></tr></table></div><p>
+Now that we have seen how to record and play back a test and have seen
+the code that <span class="emphasis"><em>Squish</em></span> generates, let's go a step further and make sure
+that at particular points in the test's execution certain conditions hold.
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="tut-java-swt-verification-points"></a>4.3.1.4. Inserting Additional Verification Points</h4></div></div></div><p>
+In the previous section we saw how easy it is to insert verification
+points during the recording of test scripts. Verification points can
+also be inserted into existing test scripts, either by setting a
+breakpoint and using the <span class="application">Squish IDE</span>, or simply by editing a test script and
+putting in calls to <span class="emphasis"><em>Squish</em></span>'s test functions such as <a class="xref" href="rgs-squish.html#test.compare-function"><code class="function">test.compare</code></a> and <a class="xref" href="rgs-squish.html#test.verify-function"><code class="function">test.verify</code></a>.
+</p><p>
+<span class="emphasis"><em>Squish</em></span> supports many kinds of verification points: those that verify
+that object properties have particular values—known as "Object Property
+Verifications"; those that verify that an entire table has the contents
+we expect—known as "Table Verifications"; those that verify
+that two images match—known as "Screenshot Verifications"; and
+a hybrid verification type that includes properties and screenshots
+from multiple objects, known as "Visual Verifications".
+In addition, it is possible to verify that a search image exists somewhere
+on the screen, or that certain text is found by OCR.
+The most commonly used kind is object property verifications, and it is
+these that we will cover in the tutorial. For further reading, see <a class="xref" href="ug-vps.html" title="5.22. How to Create and Use Verification Points">How to Create and Use Verification Points (Section 5.22)</a>).
+</p><p>
+<span class="emphasis"><em>Regular</em></span> (non-scriptified) property
+verification points are stored as XML files in the test case or test suite
+resources, and contain the value(s) that need to be passed to
+<code class="code">test.compare()</code>. These verification points can be reused across test
+cases, and can verify many values in a single line of script code. </p><p> <span class="emphasis"><em>Scriptified</em></span> property verification points are direct
+calls to the <a class="xref" href="rgs-squish.html#test.compare-function"><code class="function">test.compare</code></a> function, with two
+arguments—the value of a particular property for a particular
+object, and an expected value. We can manually insert calls to the <a class="xref" href="rgs-squish.html#test.compare-function"><code class="function">test.compare</code></a> function in a recorded or hand
+written script, or we can get <span class="emphasis"><em>Squish</em></span> to insert them for us using scriptified
+verification points. In the previous section we showed how to use the <span class="application">Squish IDE</span> to insert
+verifications during recording. Here we will first show how to use the
+<span class="application">Squish IDE</span> to insert verifications into an existing test script, and then we
+will show how to insert a verification by hand.
+</p><p>
+Before asking <span class="emphasis"><em>Squish</em></span> to insert verification points, it is best to make
+sure that we have a list of what we want to verify and when. There are many
+potential verifications we could add to the <code class="code">tst_general</code>
+test case, but since our concern here is simply to show how to do it, we
+will only do two—we will verify that the "Jane Doe"
+entry's email address and phone number match the ones entered, and put
+the verifications immediately after the ones we inserted during
+recording.
+</p><p>
+To insert a verification point using the IDE we start by putting a break
+point in the script (whether recorded or manually written—it
+does not matter to <span class="emphasis"><em>Squish</em></span>), at the point where we want to verify.
+</p><div class="screenshot"><div class="mediaobject" align="center"><img src="images/tut-squish5-swt.png" align="middle"></img><div class="caption"><p>The <span class="application">Squish IDE</span> showing the tst_general test case with a breakpoint
+</p></div></div></div><p>
+As the above screenshot shows, we have set a breakpoint at line 27.
+This is done simply by double-clicking, or right-clicking in the gutter (next to
+the line number in the editor) and selecting the
+<span class="guimenuitem">Add Breakpoint</span> context menu item.
+We chose this line because it follows the script lines
+where the first address is removed, so at this point (just before
+invoking the File menu to close the application), the first address
+should be that of "Jane Doe". The screenshot shows the verifications
+that were entered using the <span class="application">Squish IDE</span> during recording. Our additional
+verifications will follow them. (Note that your line number may be
+different if you recorded the test in a different way, for example,
+using keyboard shortcuts rather than clicking menu items.)
+</p><p>
+Having set the breakpoint, we now run the test as usual by clicking the
+<span class="guibutton">Run Test</span> (<span class="guiicon"><img src="images/ide/run.png"></img></span>) button, or by clicking the
+<span class="guimenu">Run</span>|<span class="guimenuitem">Run Test Case
+</span> menu option. Unlike a normal test run the
+test will stop when the breakpoint is reached (i.e., at line 30, or at
+whatever line you set), and <span class="emphasis"><em>Squish</em></span>'s main window will reappear (which
+will probably obscure the AUT). At this point the <span class="application">Squish IDE</span> will
+automatically switch to the <a class="xref" href="ide.main.window.html#ide.squish.test.debugging.perspective" title="8.1.2.3. Squish Test Debugging Perspective">Squish Test Debugging Perspective (Section 8.1.2.3)</a>.
+</p><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Note: Perspectives and Views"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/note.png"></img></td><th align="left">Perspectives and Views</th></tr><tr><td align="left" valign="top"><p>
+The <span class="application">Squish IDE</span> works just like the <a class="ulink" href="https://en.wikipedia.org/wiki/Eclipse_(software)" target="_blank">
+Eclipse IDE</a>. If you aren't used to
+Eclipse it is crucial to understand one key concept:
+<span class="emphasis"><em>Views</em></span> and <span class="emphasis"><em>Perspectives</em></span>. In
+Eclipse (and therefore in the <span class="application">Squish IDE</span>), a
+<span class="emphasis"><em>View</em></span> is essentially a child window (perhaps a dock
+window, or a tab in an existing window). And a
+<span class="emphasis"><em>Perspective</em></span> is a collection of Views arranged
+together. Both are accessible through the
+<span class="guimenuitem">Window</span> menu.
+</p><p>
+The <span class="application">Squish IDE</span> is supplied with three Perspectives—the <a class="xref" href="ide.main.window.html#ide.squish.test.management.perspective" title="8.1.2.2. Squish Test Management Perspective">Squish Test Management Perspective (Section 8.1.2.2)</a> (which is the
+Perspective that the <span class="application">Squish IDE</span> starts with, and the one we have seen in all
+previous screenshots), <a class="xref" href="ide.main.window.html#ide.squish.test.debugging.perspective" title="8.1.2.3. Squish Test Debugging Perspective">Squish Test Debugging Perspective (Section 8.1.2.3)</a>, and <a class="xref" href="ide.main.window.html#ide.squish.spy.perspective" title="8.1.2.1. Squish Spy Perspective">Squish Spy Perspective (Section 8.1.2.1)</a>. You can change these
+Perspectives to include additional Views (or to get rid of any Views
+that you don't want), and you can create your own Perspectives with
+exactly the Views you want. So if your windows change dramatically it
+just means that the Perspective changed; you can always use the
+<span class="guimenuitem">Window</span> menu to change back to the Perspective
+you want. In practice, <span class="emphasis"><em>Squish</em></span> will automatically change perspective to
+reflect the current situation, so it isn't really necessary to change
+perspective manually.
+</p></td></tr></table></div><p>
+As the screenshot below shows, when <span class="emphasis"><em>Squish</em></span> stops at a breakpoint
+the <span class="application">Squish IDE</span> automatically changes to the <a class="xref" href="ide.main.window.html#ide.squish.test.debugging.perspective" title="8.1.2.3. Squish Test Debugging Perspective">Squish Test Debugging Perspective (Section 8.1.2.3)</a>. The perspective shows
+the <a class="xref" href="ide.views.html#ide.the-variables.view" title="8.2.21. Variables view">Variables view (Section 8.2.21)</a>, the <a class="xref" href="ide.views.html#ide.the-editor.view" title="8.2.6. Editor view">Editor view (Section 8.2.6)</a>, the <a class="xref" href="ide.views.html#ide.the-debug.view" title="8.2.5. Debug view">Debug view (Section 8.2.5)</a>, the <a class="xref" href="ide.views.html#ide.the-application-objects.view" title="8.2.1. Application Objects view">Application Objects view (Section 8.2.1)</a>, and the <a class="xref" href="ide.views.html#ide.the-properties.view" title="8.2.12. Properties view">Properties view (Section 8.2.12)</a>, <a class="xref" href="ide.views.html#ide.the-methods.view" title="8.2.9. Methods view">Methods view (Section 8.2.9)</a>, and <a class="xref" href="ide.views.html#ide.the-test-results.view" title="8.2.18. Test Results view">Test Results view (Section 8.2.18)</a>.
+</p><p>
+To insert a verification point we can expand items in the
+<span class="guilabel">Application Objects</span> view until we find the object we want
+to verify. In this example we want to verify the <code class="classname">Table</code>'s
+first row's texts, so we expand the
+<code class="classname">Address Book</code> item, and its child items
+until we find the <code class="classname">Table</code>, and within that the row and column we are
+interested in. Once we click the column object its properties are shown
+in the <a class="xref" href="ide.views.html#ide.the-properties.view" title="8.2.12. Properties view">Properties view (Section 8.2.12)</a> as the screenshot shows.
+</p><div class="screenshot"><div class="mediaobject" align="center"><img src="images/tut-squish-vp1-swt.png" align="middle"></img><div class="caption">Picking an object to verify in the Application Objects view
+</div></div></div><p>
+The normal <a class="xref" href="ide.main.window.html#ide.squish.test.management.perspective" title="8.1.2.2. Squish Test Management Perspective">Squish Test Management Perspective (Section 8.1.2.2)</a> can
+be returned to at any time by choosing it from the
+<span class="guimenuitem">Window</span> menu (or by clicking its toolbar
+button), although the <span class="application">Squish IDE</span> will automatically return to it if you stop
+the script or run it to completion.
+</p><p>
+Here, we can see that the <span class="property">text</span> property of the item in row
+1 and column 0 has the value “<span class="quote">Jane</span>”; we already have a verification for
+this that we inserted during recording. Scroll down so that you can see
+the item in row 1 column 2: this is the email address. To make sure that
+this is verified every time the test is run, click the
+<code class="code">column_2</code> item in the <a class="xref" href="ide.views.html#ide.the-application-objects.view" title="8.2.1. Application Objects view">Application Objects view (Section 8.2.1)</a> to make its properties
+appear, and then click the <code class="code">text</code> property to check its check
+box. When we check it the <a class="xref" href="ide.views.html#ide.verification.point.creator.view" title="8.2.22. Verification Point Creator view">Verification Point Creator view (Section 8.2.22)</a> appears as shown in the
+screenshot.
+</p><div class="screenshot"><div class="mediaobject" align="center"><img src="images/tut-squish-vp2-swt.png" align="middle"></img><div class="caption">Choosing a property value to verify
+</div></div></div><p>
+At this point the verification point has <span class="emphasis"><em>not</em></span> been
+added to the test script. We could easily add it by clicking the
+<span class="guibutton">Save and Insert Verifications</span> button.
+But before doing that we'll add one more thing to be
+verified.
+</p><p>
+Scroll down and click the <code class="code">column_3</code> item in the
+<a class="xref" href="ide.views.html#ide.the-application-objects.view" title="8.2.1. Application Objects view">Application Objects view (Section 8.2.1)</a>; then click its
+<code class="code">text</code> property. Now both verifications will appear in the
+<a class="xref" href="ide.views.html#ide.verification.point.creator.view" title="8.2.22. Verification Point Creator view">Verification Point Creator view (Section 8.2.22)</a> as the screenshot shows.
+</p><div class="screenshot"><div class="mediaobject" align="center"><img src="images/tut-squish-vp3-swt.png" align="middle"></img><div class="caption">Choosing several property values to verify
+</div></div></div><p>
+We have now said that we expect these properties to have the values
+shown, that is, an email address of “<span class="quote">jane.doe@nowhere.com</span>”
+and phone number of “<span class="quote">555 123 4567</span>”. We
+<span class="emphasis"><em>must</em></span> click the <span class="guibutton">Insert</span> button
+to actually insert the verification point, so do that now.
+</p><p>
+We don't need to continue running the test now, so we can either stop
+running the test at this point (by clicking the
+<span class="guibutton">Stop</span> toolbar button), or we can continue (by
+clicking the <span class="guibutton">Resume</span> button).
+</p><p>
+Once we have finished inserting verifications and stopped or finished
+running the test we should now disable the break point. Just right click
+the break point and click the <span class="guimenuitem">Disable
+Breakpoint</span> menu option in the context menu. We are now
+ready to run the test without any breakpoints but with the verification
+points in place. Click the <span class="guibutton">Run Test</span> (<span class="guiicon"><img src="images/ide/run.png"></img></span>) button. This
+time we will get some additional test results—as the screenshot
+shows—one of which we have expanded to show its details. (We have
+also selected the lines of code that <span class="emphasis"><em>Squish</em></span> inserted to perform the
+verifications—notice that the code is structurally identical to
+the code inserted during recording.)
+</p><div class="screenshot"><div class="mediaobject" align="center"><img src="images/tut-squish6-swt.png" align="middle"></img><div class="caption">The newly inserted verification points in action
+</div></div></div><p>
+These particular verification points generate four tests comparing
+the forename, surname, email, and phone number of the newly inserted
+entry.
+</p><p>
+Another way to insert verification points is to insert them in code
+form. In theory we can just add our own calls to <span class="emphasis"><em>Squish</em></span>'s test
+functions such as <a class="xref" href="rgs-squish.html#test.compare-function"><code class="function">test.compare</code></a> and <a class="xref" href="rgs-squish.html#test.verify-function"><code class="function">test.verify</code></a> anywhere we like in an existing
+script. In practice it is best to make sure that <span class="emphasis"><em>Squish</em></span> knows about
+the objects we want to verify first so that it can find them when the
+test is run. This involves a very similar procedure to inserting them using the <span class="application">Squish IDE</span>.
+First we set a breakpoint where we intend adding our verifications. Then
+we run the test script until it stops. Next we navigate in the
+<a class="xref" href="ide.views.html#ide.the-application-objects.view" title="8.2.1. Application Objects view">Application Objects view (Section 8.2.1)</a> until we find the
+object we want to verify. At this point it is wise to right-click the
+object we are interested in and click the <span class="guimenuitem">Add to Object
+Map</span> context menu option. This will ensure that <span class="emphasis"><em>Squish</em></span>
+can access the object. Then right click again and click the
+<span class="guimenuitem">Copy Symbolic Name</span> context
+menu option—this gives us the name of the object that <span class="emphasis"><em>Squish</em></span>
+will use to identify it. Now we can edit the test script to add in our
+own verification and finish or stop the execution. (Don't forget to
+disable the break point once it isn't needed any more.)
+</p><p>
+Although we can write our test script code to be exactly the same style
+as the automatically generated code, it is usually clearer and easier to
+do things in a slightly different style, as we will explain in a moment.
+</p><p>
+For our manual verifications we want to check the number of addresses
+present in the Table after reading in the
+<code class="filename">MyAddresses.adr</code> file, then after the new address is
+added, and finally after the first address is removed. The screenshot
+shows two of the lines of code we entered to get one of these three
+verifications, plus the results of running the test script.
+</p><div class="screenshot"><div class="mediaobject" align="center"><img src="images/tut-squish7-swt.png" align="middle"></img><div class="caption">Manually entered verification points in action
+</div></div></div><p>
+When writing scripts by hand, we use <span class="emphasis"><em>Squish</em></span>'s <code class="code">test</code>
+module's functions to verify conditions at certain points during our
+test script's execution. As the screenshot (and the code snippets below)
+show, we begin by retrieving a reference to the object we are interested
+in. Using the <a class="xref" href="rgs-squish.html#waitForObject-function"><code class="function">waitForObject</code></a> function is
+standard practice for manually written test scripts. This function waits
+for the object to be available (i.e., visible and enabled), and then
+returns a reference to it. (Otherwise it times out and raises a
+catchable exception.) We then use this reference to access the item's
+properties—in this case the Table's
+row count—and verify that the value is what
+we expect it to be using the <a class="xref" href="rgs-squish.html#test.verify-function"><code class="function">test.verify</code></a>
+function. (Incidentally, we got the name for the object from the
+previous line so we didn't need to set a breakpoint and manually add the
+table's name to the Object Map to ensure that <span class="emphasis"><em>Squish</em></span> would remember it
+in this particular case because <span class="emphasis"><em>Squish</em></span> had already added it during the
+test recording.)
+</p><p>
+Here is the code we entered manually for the first verification for all
+the scripting languages that <span class="emphasis"><em>Squish</em></span> supports. Naturally, you only need
+to look at the code for the language that you will be using for your own
+tests.
+</p><div xmlns="" class="scriptlang"><form><select name="scriptlangcombo" onchange="javascript:changeScriptingLanguage(this)" onclick="javascript:changeScriptingLanguage(this)"><option value="all" selected>Show All</option><option value="JavaScript">Show JavaScript</option><option value="Perl">Show Perl</option><option value="Python">Show Python</option><option value="Ruby">Show Ruby</option><option value="Tcl">Show Tcl</option></select></form></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Python</span><pre class="programlisting">
+
+    table = waitForObject(names.address_Book_MyAddresses_adr_Table)
+    test.compare(table.getItemCount(), 125)
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">JavaScript</span><pre class="programlisting">
+
+    var table = waitForObject(names.addressBookMyAddressesAdrTable);
+    test.compare(table.getItemCount(), 125);
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Perl</span><pre class="programlisting">
+
+    my $table = waitForObject($Names::address_book_myaddresses_adr_table);
+    test::compare($table-&gt;getItemCount(), 125);
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Ruby</span><pre class="programlisting">
+
+    table = waitForObject(Names::Address_Book_MyAddresses_adr_Table)
+    Test.compare(table.getItemCount(), 125)
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Tcl</span><pre class="programlisting">
+
+    set table [waitForObject $names::Address_Book_MyAddresses_adr_Table]
+    test compare [invoke $table getItemCount] 125
+</pre></div><p>
+The coding pattern is very simple: we retrieve a reference to the object
+we are interested in and then verify its properties using one of
+<span class="emphasis"><em>Squish</em></span>'s verification functions. And we can, of course, call methods
+on the object to interact with it if we wish.
+</p><p>
+We will see more examples of manually written code shortly, in the
+<a class="xref" href="tutorials-java-awt.html#tut-java-awt-creating-manual-tests" title="4.2.1.5. Creating Tests by Hand">Creating Tests by Hand (Section 4.2.1.5)</a> section, and
+further examples are in the <a class="xref" href="users-guide.html" title="Chapter 5. User Guide">User Guide (Chapter 5)</a>.
+</p><p>
+For complete coverage of verification points, see <a class="xref" href="ug-vps.html" title="5.22. How to Create and Use Verification Points">How to Create and Use Verification Points (Section 5.22)</a> in the <a class="xref" href="users-guide.html" title="Chapter 5. User Guide">User Guide (Chapter 5)</a>.
+</p><div class="section" lang="en"><div class="titlepage"><div><div><h5 class="title"><a id="test-results.1"></a>4.3.1.4.1. Test Results</h5></div></div></div><p>
+After each test run finishes, the test results—including those
+for the verification points—are shown in the Test Results view at
+the bottom of the <span class="application">Squish IDE</span>.
+</p><p>
+This is a detailed report of the test run and would also contain details
+of any failures or errors, etc. If you click on a Test Results item, the
+<span class="application">Squish IDE</span> highlights the script line which generated the test result. And if
+you expand a Test Results item, you can see additional details of the
+test.
+</p><div class="sidebar"><p class="title"><b>Processing Test Results</b></p><p>
+<span class="emphasis"><em>Squish</em></span>'s interface for test results is very flexible. By implementing
+custom report generators it is possible to process test results in many
+different ways, for example to store them in a database, or to output
+them as HTML files. The default report generator simply prints the
+results to <code class="filename">stdout</code> when <span class="emphasis"><em>Squish</em></span> is run from the
+command line, or to the Test Results view when <span class="emphasis"><em>Squish</em></span>'s IDE is being
+used. You can save the test results from the <span class="emphasis"><em>Squish</em></span> IDE as XML by
+right clicking on the Test Results and choosing the <span class="guimenuitem">Export
+Results...</span> menu option. For a list of report generators,
+see <a class="xref" href="rg-cmdline.html#rg-squishrunner-report-generators" title="7.4.3.6.  squishrunner --reportgen: Generating Reports"> <code class="option">squishrunner --reportgen</code>: Generating Reports (Section 7.4.3.6)</a>. It is also possible to
+log test results directly to a database; see <a class="xref" href="how.to.access.databases.from.squish.test.scripts.html" title="5.18. How to Access Databases from Squish Test Scripts">How to Access Databases from Squish Test Scripts (Section 5.18)</a>.
+</p><p>
+If you run tests on the command line using <span class="application">squishrunner</span>, you can also
+export the results in different formats and save them to files. See the
+sections <a class="xref" href="rg-regressiontesting.html#rgr-processresults" title="7.1.3. Processing Test Results">Processing Test Results (Section 7.1.3)</a> and <a class="xref" href="ugs-teststatements.html" title="5.9. How to Use Test Statements">How to Use Test Statements (Section 5.9)</a> in the <a class="xref" href="users-guide.html" title="Chapter 5. User Guide">User Guide (Chapter 5)</a> for
+more information.
+</p></div></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="tut-java-swt-creating-manual-tests"></a>4.3.1.5. Creating Tests by Hand</h4></div></div></div><p>
+Now that we have seen how to record a test and modify it by inserting
+verification points, we are ready to see how to create tests manually.
+The easiest way to do this is to modify and refactor recorded tests,
+although it is also perfectly possible to create manual tests from
+scratch.
+</p><p>
+Potentially the most challenging part of writing manual tests is to use
+the right object names, but in practice, this is rarely a problem. We
+can either copy the symbolic names that <span class="emphasis"><em>Squish</em></span> has already added to
+the Object Map when recording previous tests, or we can copy object
+names directly from recorded tests. And if we haven't recorded any tests
+and are starting from scratch we can use the <span class="application">Spy</span>. We do this by
+clicking the <span class="guibutton">Launch AUT</span> toolbar button. This
+starts the AUT and switches to the <a class="xref" href="ide.main.window.html#ide.squish.spy.perspective" title="8.1.2.1. Squish Spy Perspective">Squish Spy Perspective (Section 8.1.2.1)</a>. We can then interact with the
+AUT until the object we are interested in is visible. Then, inside the
+<span class="application">Squish IDE</span> we can navigate to the object in the Application Objects view and
+use the context menu to both add the object to the Object Map (so that
+<span class="emphasis"><em>Squish</em></span> will remember it) and to the clipboard (so that we can paste it
+into our test script). And at the end we can click the <span class="guibutton">Quit
+AUT</span> toolbar button to terminate the AUT and return <span class="emphasis"><em>Squish</em></span>
+to the <a class="xref" href="ide.main.window.html#ide.squish.test.management.perspective" title="8.1.2.2. Squish Test Management Perspective">Squish Test Management Perspective (Section 8.1.2.2)</a>. (See
+<a class="xref" href="ug-editdebug.html#uged-spy" title="5.21.3. How to Use the Spy">How to Use the Spy (Section 5.21.3)</a> in the <a class="xref" href="users-guide.html" title="Chapter 5. User Guide">User Guide (Chapter 5)</a> for more
+details on using the <span class="application">Spy</span>.)
+</p><p>
+We can view the Object Map by clicking the <span class="guibutton">Object
+Map</span> toolbar button (see also, the <a class="xref" href="ide.views.html#ide.the-object-map.view" title="8.2.10. Object Map view">Object Map view (Section 8.2.10)</a>). Every application object that
+<span class="emphasis"><em>Squish</em></span> interacts with is listed here, either as a top-level object, or
+as a child object (the view is a tree view). We can retrieve the
+symbolic name used by <span class="emphasis"><em>Squish</em></span> in recorded scripts by right-clicking the
+object we are interested in and then clicking the context menu's
+<span class="guilabel">Copy</span> item. This is useful for when we want to modify
+existing test scripts or when we want to create test scripts from scratch, as we
+will see later on in the tutorial.
+</p><div class="screenshot"><div class="mediaobject" align="center"><img src="images/tut-squish-omap-java-swt.png" align="middle"></img><div class="caption"><p><span class="emphasis"><em>Squish</em></span>'s Object Map
+</p></div></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h5 class="title"><a id="tut-swt-modifying-and-refactoring-recorded-tests"></a>4.3.1.5.1. Modifying and Refactoring Recorded Tests</h5></div></div></div><p>
+Suppose we want to test the AUT's Add functionality by adding three new
+names and addresses. We could of course record such a test but it is
+just as easy to do everything in code. The steps we need the test script
+to do are, click <span class="guimenu">File|New</span> to create a new address book, and
+then, for each new name and address:
+
+</p><div class="orderedlist"><ol type="1"><li><p> <span class="guimenuitem">Edit|Add</span> </p></li><li><p> fill in the contact details </p></li><li><p> Click <span class="guibutton">OK</span> </p></li></ol></div><p>
+
+Finally, click <span class="guimenuitem">File|Quit</span> without saving. </p><p> We also want to verify at the start that there are no rows of data and at
+the end that there are three rows. We will also refactor as we go, to make our
+code as neat and modular as possible.
+</p><p>
+First we must create a new script test case. Click
+<span class="guimenu">File</span>|<span class="guimenuitem">New Test
+Case...</span> and set the test case's name to be
+<code class="filename">tst_adding</code>. <span class="emphasis"><em>Squish</em></span> will automatically create a
+<code class="filename">test.py</code> (or <code class="filename">test.js</code>, and
+so on) file.
+</p><p>
+Command line users can simply create a <code class="filename">tst_adding</code>
+directory inside the test suite's directory and create and edit the
+<code class="filename">test.py</code> file (or <code class="filename">test.js</code> and
+so on) within that directory.
+</p><p>
+The first thing we need is a way to start the AUT and then invoke a menu
+option. Here are the first few lines from the
+<span class="emphasis"><em>recorded</em></span> <code class="filename">tst_general</code> script:
+</p><div xmlns="" class="scriptlang"><form><select name="scriptlangcombo" onchange="javascript:changeScriptingLanguage(this)" onclick="javascript:changeScriptingLanguage(this)"><option value="all" selected>Show All</option><option value="JavaScript">Show JavaScript</option><option value="Perl">Show Perl</option><option value="Python">Show Python</option><option value="Ruby">Show Ruby</option><option value="Tcl">Show Tcl</option></select></form></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Python</span><pre class="programlisting">
+
+import names
+import os
+
+def main():
+    fn = os.path.join(os.getenv("SQUISH_PREFIX"), 
+        "examples/java/addressbook_swt/AddressBookSWT.jar")
+    startApplication('"{}"'.format(fn))
+    activateItem(waitForObjectItem(names.address_Book_Menu, "File"))
+    activateItem(waitForObjectItem(names.file_Menu, "Open..."))
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">JavaScript</span><pre class="programlisting">
+
+import * as names from 'names.js';
+
+function main() {
+    startApplication('"' + OS.getenv("SQUISH_PREFIX") +
+        '/examples/java/addressbook_swt/AddressBookSWT.jar"');
+    activateItem(waitForObjectItem(names.addressBookMenu, "File"));
+    activateItem(waitForObjectItem(names.fileMenu, "Open..."));
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Perl</span><pre class="programlisting">
+
+require 'names.pl';
+
+sub main
+{
+    startApplication("\"$ENV{'SQUISH_PREFIX'}/examples/java/addressbook_swt/AddressBookSWT.jar\"");
+    activateItem(waitForObjectItem($Names::address_book_menu, "File"));
+    activateItem(waitForObjectItem($Names::file_menu, "Open..."));
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Ruby</span><pre class="programlisting">
+
+require 'squish'
+require 'names'
+
+include Squish
+
+def main
+    fn = File.join(ENV['SQUISH_PREFIX'], "examples/java/addressbook_swt/AddressBookSWT.jar")
+    startApplication('"' + fn + '"');
+    activateItem(waitForObjectItem(Names::Address_Book_Menu, "File"))
+    activateItem(waitForObjectItem(Names::File_Menu, "Open..."))
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Tcl</span><pre class="programlisting">
+
+source [findFile "scripts" "names.tcl"]
+
+proc main {} {
+    startApplication "\"$::env(SQUISH_PREFIX)/examples/java/addressbook_swt/AddressBookSWT.jar\""
+    invoke activateItem [waitForObjectItem $names::Address_Book_Menu "File"]
+    invoke activateItem [waitForObjectItem $names::File_Menu "Open..."]
+</pre></div><p>
+Notice that the pattern in the code is simple: start the AUT, then wait
+for the menu bar, then activate the menu bar; wait for the menu item,
+then activate the menu item. In both cases we have used the
+<a class="xref" href="rgs-squish.html#waitForObjectItem-function"><code class="function">waitForObjectItem</code></a> function. This function
+is used for a multi-valued objects (such as lists, tables,
+trees—or in this case, a menubar and a menu), and allows us to
+access the object's items (which are themselves objects of course), by
+passing the name of the object containing the item and the item's text
+as arguments.
+</p><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Note"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/note.png"></img></td><th align="left">Note</th></tr><tr><td align="left" valign="top"><p>
+It may seem a waste to put our functions in
+<code class="filename">tst_adding</code> because we could also use them in
+<code class="filename">tst_general</code> and in other test cases. However, to
+keep the tutorial simple we will put the code in the
+<code class="filename">tst_adding</code> test case. It is of course very easy to
+create shared scripts, but we defer coverage of that to the user guide.
+(See <a class="xref" href="ug-shareddata.html" title="5.23. How to Create and Use Shared Data and Shared Scripts">How to Create and Use Shared Data and Shared Scripts (Section 5.23)</a> for how to share scripts.)
+</p></td></tr></table></div><p>
+Sometimes the AUT will appear to freeze during test execution.
+When this happens, just wait for <span class="emphasis"><em>Squish</em></span> to time out the AUT
+(about 20 seconds), and then it will pop up an
+<a class="xref" href="ide.dialogs.html#ide.object.not.found.dialog" title="8.3.14. Object Not Found dialog">Object Not Found dialog (Section 8.3.14)</a>, indicating an
+error like this:
+
+</p><div class="screenshot"><div class="mediaobject" align="center"><img src="images/javaswt-tut-object-not-found.png" align="middle"></img><div class="caption"><p>Object Not Found Dialog
+</p></div></div></div><p>
+
+don't worry! It just means that <span class="emphasis"><em>Squish</em></span> doesn't have an object with the
+given name in the Object Map. From here, we can
+<span class="guibutton">Pick New Object</span>, <span class="guibutton">Debug</span>
+<span class="guibutton">Throw Error</span>, or after picking a new object,
+<span class="guibutton">Retry</span>. Picking a new object will update the object
+map entry for the symbolic name.
+In addition to the <a class="xref" href="ide.views.html#object-picker">Object Picker</a> (<span class="guiicon"><img src="images/ide/pick-application-object.png"></img></span>), we can also use the <span class="application">Spy</span>'s <a class="xref" href="ide.views.html#ide.the-application-objects.view" title="8.2.1. Application Objects view">Application Objects view (Section 8.2.1)</a> to locate the objects we
+are interested in and use the context menu to access real or symbolic names
+of them.
+</p><p>
+We've spent a bit of time on the issue of naming since it is probably
+the part of writing scripts that leads to the most error messages
+(usually of the "object ... not found" kind shown above.) Once we have
+identified the objects we are going to access in our tests, writing test
+scripts using <span class="emphasis"><em>Squish</em></span> is very straightforward. And of course you can
+almost certainly use the scripting language you are most familiar with
+since <span class="emphasis"><em>Squish</em></span> supports the most popular ones available.
+</p><p>
+We are now almost ready to write our own test script. It is probably
+easiest to begin by recording a dummy test. So click
+<span class="guimenu">File</span>|<span class="guimenuitem">New Test
+Case...</span> and set the test case's name to be
+<code class="filename">tst_dummy</code>. Then click the dummy test case's
+<span class="guibutton">Record Test Case</span> toolbar button
+(<span class="guiicon"><img src="images/ide/record.png"></img></span>).
+Once the AUT starts, click File|New, then click the (empty) table, then
+click Edit|Add and add an item, then press Return or click OK. Finally,
+click File|Quit to finish, and say No to saving changes. Then replay
+this test just to confirm that everything works okay. The sole purpose
+of this is to make sure that <span class="emphasis"><em>Squish</em></span> adds the necessary names to the
+Object Map since it is probably quicker to do it this way than to use
+the <span class="application">Spy</span> for every object of interest. After replaying the dummy test
+you can delete it if you want to.
+</p><p>
+With all the object names we need in the Object Map, we can now write our
+own test script completely from scratch. We will start with the
+<code class="function">main</code> function, and then we will look at the supporting
+functions that the <code class="function">main</code> function uses.
+</p><div xmlns="" class="scriptlang"><form><select name="scriptlangcombo" onchange="javascript:changeScriptingLanguage(this)" onclick="javascript:changeScriptingLanguage(this)"><option value="all" selected>Show All</option><option value="JavaScript">Show JavaScript</option><option value="Perl">Show Perl</option><option value="Python">Show Python</option><option value="Ruby">Show Ruby</option><option value="Tcl">Show Tcl</option></select></form></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Python</span><pre class="programlisting">
+
+import names
+import os
+
+def main():
+    fn = os.path.join(os.getenv("SQUISH_PREFIX"), "examples/java/addressbook_swt/AddressBookSWT.jar")
+    startApplication('"{}"'.format(fn));
+    invokeMenuItem("File", "New...")
+    table = waitForObject({"type": "org.eclipse.swt.widgets.Table"})
+    test.compare(table.getItemCount(), 0)
+    data = [("Andy", "Beach", "andy.beach@nowhere.com", "555 123 6786"),
+            ("Candy", "Deane", "candy.deane@nowhere.com", "555 234 8765"),
+            ("Ed", "Fernleaf", "ed.fernleaf@nowhere.com", "555 876 4654")]
+    for details in data:
+        addNameAndAddress(details)
+    test.compare(table.getItemCount(), 3)
+    closeWithoutSaving()
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">JavaScript</span><pre class="programlisting">
+
+import * as names from 'names.js';
+
+function main() {
+    startApplication('"' + OS.getenv("SQUISH_PREFIX") + 
+        '/examples/java/addressbook_swt/AddressBookSWT.jar"');
+    invokeMenuItem("File", "New...");
+    var table = findObject({"type": "org.eclipse.swt.widgets.Table"});
+    test.verify(table.itemcount == 0);
+    var data = [
+    ["Andy", "Beach", "andy.beach@nowhere.com", "555 123 6786"],
+    ["Candy", "Deane", "candy.deane@nowhere.com", "555 234 8765"],
+    ["Ed", "Fernleaf", "ed.fernleaf@nowhere.com", "555 876 4654"]];
+    for (var row = 0; row &lt; data.length; ++row)
+        addNameAndAddress(data[row]);
+    test.compare(table.itemcount, 3);
+    closeWithoutSaving();
+}
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Perl</span><pre class="programlisting">
+
+require 'names.pl';
+
+sub main
+{
+    startApplication("\"$ENV{'SQUISH_PREFIX'}/examples/java/addressbook_swt/AddressBookSWT.jar\"");
+    invokeMenuItem("File", "New...");
+    my $table = waitForObject({"type" =&gt; "org.eclipse.swt.widgets.Table"});
+    test::compare($table-&gt;getItemCount(), 0);
+    my @data = (["Andy", "Beach", "andy.beach\@nowhere.com", "555 123 6786"],
+                ["Candy", "Deane", "candy.deane\@nowhere.com", "555 234 8765"],
+                ["Ed", "Fernleaf", "ed.fernleaf\@nowhere.com", "555 876 4654"]);
+    foreach my $details (@data) {
+        addNameAndAddress(@{$details});
+    }
+    test::compare($table-&gt;getItemCount(), 3);
+    closeWithoutSaving();
+}
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Ruby</span><pre class="programlisting">
+
+require 'squish'
+require 'names'
+include Squish
+
+def main
+    fn = File.join(ENV['SQUISH_PREFIX'], "examples/java/addressbook_swt/AddressBookSWT.jar")
+    startApplication('"' + fn + '"');
+    invokeMenuItem("File", "New...")
+    table = waitForObject({:isvisible =&gt; true, :type =&gt; "org.eclipse.swt.widgets.Table"})
+    Test.verify(table.getItemCount() == 0)
+    data = [["Andy", "Beach", "andy.beach@nowhere.com", "555 123 6786"],
+          ["Candy", "Deane", "candy.deane@nowhere.com", "555 234 8765"],
+          ["Ed", "Fernleaf", "ed.fernleaf@nowhere.com", "555 876 4654"]]
+    data.each do |oneNameAndAddress|
+        addNameAndAddress(oneNameAndAddress)
+    end
+    Test.compare(table.getItemCount(), data.length)
+    closeWithoutSaving
+end
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Tcl</span><pre class="programlisting">
+
+source [findFile "scripts" "names.tcl"]
+
+proc main {} {
+    startApplication "\"$::env(SQUISH_PREFIX)/examples/java/addressbook_swt/AddressBookSWT.jar\""
+    invokeMenuItem "File" "New..."
+    set table [waitForObject [::Squish::ObjectName type org.eclipse.swt.widgets.Table]]
+    test compare [invoke $table getItemCount] 0
+    set data [list \
+        [list "Andy" "Beach" "andy.beach@nowhere.com" "555 123 6786"] \
+        [list "Candy" "Deane" "candy.deane@nowhere.com" "555 234 8765"] \
+        [list "Ed" "Fernleaf" "ed.fernleaf@nowhere.com" "555 876 4654"] ]
+    for {set i 0} {$i &lt; [llength $data]} {incr i} {
+        addNameAndAddress [lindex $data $i]
+    }
+    test compare [invoke $table getItemCount] 3
+    closeWithoutSaving
+}
+</pre></div><p>
+We begin by starting the application with a call to the <a class="xref" href="rgs-squish.html#startApplication-function"><code class="function">startApplication</code></a> function. The name we pass as a
+string is the name registered with <span class="emphasis"><em>Squish</em></span> (normally the name of the
+<code class="filename">.jar</code> file containing the application code or the
+<code class="filename">.class</code> file that has the class which contains the
+<code class="code">main</code> method). The <a class="xref" href="rgs-squish.html#waitForObject-function"><code class="function">waitForObject</code></a>
+function waits until an object is ready (visible and enabled) and
+returns a reference to it—or it times out and raises a catchable
+exception. We have used a <span class="emphasis"><em>Real Name</em></span> to access
+the table. This is a key-value mapping of properties to values, which
+we obtained by selecting and right-clicking on a symbolic name, and then
+invoking <span class="guimenuitem">Convert to Real Name</span>).
+We then removed the properties that were not relevant in this situation.
+The <code class="code">table</code> variable can be used to access any
+of the <code class="classname">Table</code>'s public methods and properties.
+</p><p>
+The <code class="function">invokeMenuItem</code> function is one we have created
+specially for this test. It takes a menu name and a menu option name and
+invokes the menu option. After using the <code class="function">invokeMenuItem</code>
+function to do
+<span class="guimenuitem">File|New</span>, we verify that the table's row count is 0. The <a class="xref" href="rgs-squish.html#test.verify-function"><code class="function">test.verify</code></a> function is useful when we simply
+want to verify that a condition is true rather than compare two
+different values. (For Tcl we usually use the <a class="xref" href="rgs-squish.html#test.compare-function"><code class="function">test.compare</code></a> function rather than the <a class="xref" href="rgs-squish.html#test.verify-function"><code class="function">test.verify</code></a> function simply because it is
+slightly simpler to use in Tcl.)
+</p><p>
+Next, we create some sample data and call a custom
+<code class="function">addNameAndAddress</code> function to populate the table with the
+data using the AUT's Add dialog. Then we again compare the table's row
+count, this time to the number of rows in our sample data. And finally
+we call a custom <code class="function">closeWithoutSaving</code> function to terminate
+the application.
+</p><p>
+We will now review each of the three supporting functions, so as to
+cover all the code in the <code class="filename">tst_adding</code> test case,
+starting with the <code class="function">invokeMenuItem</code> function.
+</p><div xmlns="" class="scriptlang"><form><select name="scriptlangcombo" onchange="javascript:changeScriptingLanguage(this)" onclick="javascript:changeScriptingLanguage(this)"><option value="all" selected>Show All</option><option value="JavaScript">Show JavaScript</option><option value="Perl">Show Perl</option><option value="Python">Show Python</option><option value="Ruby">Show Ruby</option><option value="Tcl">Show Tcl</option></select></form></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Python</span><pre class="programlisting">
+
+def invokeMenuItem(menu, item):
+    mouseClick(waitForObjectItem({"menuStyle": "SWT.BAR", "type": "org.eclipse.swt.widgets.Menu"}, menu))
+    mouseClick(waitForObjectItem({"caption": menu, "menuStyle": "SWT.DROP_DOWN", "type": "org.eclipse.swt.widgets.Menu"}, item))
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">JavaScript</span><pre class="programlisting">
+
+function invokeMenuItem(menu, item)
+{
+    activateItem(waitForObjectItem({"menuStyle": "SWT.BAR", "type": "org.eclipse.swt.widgets.Menu"}, menu));
+    activateItem(waitForObjectItem({"caption": menu, "menuStyle": "SWT.DROP_DOWN", "type": "org.eclipse.swt.widgets.Menu"}, item));
+}
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Perl</span><pre class="programlisting">
+
+sub invokeMenuItem
+{
+    my($menu, $item) = @_;
+    activateItem(waitForObjectItem({"menuStyle" =&gt; "SWT.BAR", "type" =&gt; "org.eclipse.swt.widgets.Menu"}, $menu));
+    activateItem(waitForObjectItem({"caption" =&gt; $menu, "type" =&gt; "org.eclipse.swt.widgets.Menu"} , $item));
+}
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Ruby</span><pre class="programlisting">
+
+def invokeMenuItem(menu, item)
+    activateItem(waitForObjectItem(
+        {:menuStyle =&gt; "SWT.BAR", :type =&gt; "org.eclipse.swt.widgets.Menu"}, menu))
+    activateItem(waitForObjectItem(
+        {:caption =&gt; menu, :type =&gt; "org.eclipse.swt.widgets.Menu"}, item))
+end
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Tcl</span><pre class="programlisting">
+
+proc invokeMenuItem {menu item} {
+    invoke activateItem [waitForObjectItem [::Squish::ObjectName menuStyle SWT.BAR type org.eclipse.swt.widgets.Menu] $menu]
+    invoke activateItem [waitForObjectItem [::Squish::ObjectName caption $menu type org.eclipse.swt.widgets.Menu] $item]
+}
+</pre></div><p>
+As we mentioned earlier, the symbolic names <span class="emphasis"><em>Squish</em></span> uses for menus and
+menu items (and other objects) can vary depending on the context, and
+often with the start of the name derived from the window's title. For
+applications that put the current filename in the title—such as
+the Address Book example—names will include the filename, and we
+must account for this.
+</p><p>
+In the case of the Address Book example, the main window's title is
+“<span class="quote">Address Book</span>” (at startup), or “<span class="quote">Address Book -
+Unnamed</span>” (after File|New, but before File|Save or File|Save As),
+or “<span class="quote">Address Book - <span class="emphasis"><em>filename</em></span></span>” where the
+<span class="emphasis"><em>filename</em></span> can of course vary. Our code accounts for
+all these cases by making use of real (multi-property) names.
+</p><p>
+Symbolic names are script-based variables with a <code class="code">names</code> prefix.
+The variable names embed various bits of information about an object and its type.
+Real names are represented by key-value map in the script language.
+Every real name must specify the <span class="property">type</span> property and usually at least
+one other property. Here we've used the <span class="property">type</span> property
+to uniquely identify the menubar, and
+the <span class="property">type</span> and <span class="property">caption</span> properties to uniquely
+identify the menu.
+</p><p>
+Once we have identified the object we want to interact with, we use the
+<a class="xref" href="rgs-squish.html#waitForObjectItem-function"><code class="function">waitForObjectItem</code></a> function to retrieve a
+reference to it and in this case we then apply the
+<a class="xref" href="rgs-squish.html#mouseClick-function"><code class="function">mouseClick</code></a> function to it. The <a class="xref" href="rgs-squish.html#waitForObjectItem-function"><code class="function">waitForObjectItem</code></a> function pauses <span class="emphasis"><em>Squish</em></span> until
+the specified object and its item are visible and enabled. So, here, we
+waited for the menu bar and one of its menu bar items, and then we
+waited for a menu's drop-down menu item. And as soon as the
+waiting is over, each time we activate the object and its item using the
+<a class="xref" href="rgs-squish.html#mouseClick-function"><code class="function">mouseClick</code></a> function.
+</p><div xmlns="" class="scriptlang"><form><select name="scriptlangcombo" onchange="javascript:changeScriptingLanguage(this)" onclick="javascript:changeScriptingLanguage(this)"><option value="all" selected>Show All</option><option value="JavaScript">Show JavaScript</option><option value="Perl">Show Perl</option><option value="Python">Show Python</option><option value="Ruby">Show Ruby</option><option value="Tcl">Show Tcl</option></select></form></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Python</span><pre class="programlisting">
+
+def addNameAndAddress(fields):
+    invokeMenuItem("Edit", "Add...")
+    type(waitForObject(names.address_Book_Add_Forename_Text), fields[0])
+    type(waitForObject(names.address_Book_Add_Surname_Text), fields[1])
+    type(waitForObject(names.address_Book_Add_Email_Text), fields[2])
+    type(waitForObject(names.address_Book_Add_Phone_Text), fields[3])
+    clickButton(waitForObject(names.address_Book_Add_OK_Button))
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">JavaScript</span><pre class="programlisting">
+
+function addNameAndAddress(details)
+{
+    invokeMenuItem("Edit", "Add...");
+    type(waitForObject(names.addressBookAddForenameText), details[0]);
+    type(waitForObject(names.addressBookAddSurnameText), details[1]);
+    type(waitForObject(names.addressBookAddEmailText), details[2]);
+    type(waitForObject(names.addressBookAddPhoneText), details[3]);
+    clickButton(waitForObject(names.addressBookAddOKButton));
+    snooze(0.5);
+}
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Perl</span><pre class="programlisting">
+
+sub addNameAndAddress
+{
+    my($details) = @_;
+    invokeMenuItem("Edit", "Add...");
+    type(waitForObject($Names::address_book_add_forename_text), $_[0]);
+    type(waitForObject($Names::address_book_add_surname_text), $_[1]);
+    type(waitForObject($Names::address_book_add_email_text), $_[2]);
+    type(waitForObject($Names::address_book_add_phone_text), $_[3]);
+    clickButton(waitForObject($Names::address_book_add_ok_button));
+    snooze(0.5);
+}
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Ruby</span><pre class="programlisting">
+
+def addNameAndAddress(oneNameAndAddress)
+    invokeMenuItem("Edit", "Add...")
+    type(waitForObject(Names::Address_Book_Add_Forename_Text), oneNameAndAddress[0])
+    type(waitForObject(Names::Address_Book_Add_Surname_Text), oneNameAndAddress[1])
+    type(waitForObject(Names::Address_Book_Add_Email_Text), oneNameAndAddress[2])
+    type(waitForObject(Names::Address_Book_Add_Phone_Text), oneNameAndAddress[3])
+    clickButton(waitForObject(Names::Address_Book_Add_OK_Button))
+    snooze(0.5)
+end
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Tcl</span><pre class="programlisting">
+
+proc addNameAndAddress {details} {
+    invokeMenuItem "Edit" "Add..."
+    invoke type [waitForObject $names::Address_Book_Add_Forename_Text] [lindex $details 0]
+    invoke type [waitForObject $names::Address_Book_Add_Surname_Text] [lindex $details 1]
+    invoke type [waitForObject $names::Address_Book_Add_Email_Text] [lindex $details 2]
+    invoke type [waitForObject $names::Address_Book_Add_Phone_Text] [lindex $details 3]
+    invoke clickButton [waitForObject $names::Address_Book_Add_OK_Button]
+    snooze 0.5
+}
+</pre></div><p>
+For each set of name and address data we invoke the <span class="guimenu">Edit|Add</span>
+menu option to pop up the Add dialog. Then for each value received we populate the
+appropriate field by waiting for the relevant Text to be ready and
+then typing in the text using the <a class="xref" href="rgs-javaconvenience.html#java-type-function"><code class="function">type</code></a>
+function.
+At the end we click the dialog's <span class="guilabel">OK</span> button. We got the line at the
+heart of the function by copying it from the recorded
+<code class="filename">tst_general</code> test and simply parametrizing it by
+the field name and text. Similarly, we copied the code for clicking the
+OK button from the <code class="filename">tst_general</code> test case's code.
+</p><div xmlns="" class="scriptlang"><form><select name="scriptlangcombo" onchange="javascript:changeScriptingLanguage(this)" onclick="javascript:changeScriptingLanguage(this)"><option value="all" selected>Show All</option><option value="JavaScript">Show JavaScript</option><option value="Perl">Show Perl</option><option value="Python">Show Python</option><option value="Ruby">Show Ruby</option><option value="Tcl">Show Tcl</option></select></form></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Python</span><pre class="programlisting">
+
+def closeWithoutSaving():
+    invokeMenuItem("File", "Quit")
+    closeMessageBox(waitForObject(names.sWT), SWT.NO)
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">JavaScript</span><pre class="programlisting">
+
+function closeWithoutSaving()
+{
+    invokeMenuItem("File", "Quit");
+    closeMessageBox(waitForObject(names.sWT), SWT.NO);
+}
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Perl</span><pre class="programlisting">
+
+sub closeWithoutSaving
+{
+    invokeMenuItem("File", "Quit");
+    closeMessageBox(waitForObject($Names::swt), SWT-&gt;NO);
+}
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Ruby</span><pre class="programlisting">
+
+def closeWithoutSaving
+    invokeMenuItem("File", "Quit")
+    closeMessageBox(waitForObject(Names::SWT), SWT::NO)
+end
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Tcl</span><pre class="programlisting">
+
+proc closeWithoutSaving {} {
+    invokeMenuItem "File" "Quit"
+    invoke closeMessageBox [waitForObject $names::SWT] [enum SWT NO]
+}
+</pre></div><p>
+Here we use the <code class="function">invokeMenuItem</code> function to do
+<span class="guimenu">File|Quit</span>, and then click the "save unsaved changes" dialog's
+<span class="guibutton">No</span> button. The last
+line was copied from the recorded test, but with the filename changed
+from <code class="filename">MyAddresses.adr</code> to <code class="filename">Unnamed</code> since
+in the course of the test we invoked <span class="guimenu">File|New</span> but never saved
+the file. (An alternative would have been to use a real (multi-property) name to
+identify the unsaved changes dialog's No button.)
+</p><p>
+The entire test is under 30 lines of code—and would be even less
+if we put some of the common functions (such as
+<code class="function">invokeMenuItem</code> and <code class="function">closeWithoutSaving</code>) in
+a shared script. And much of the code was copied directly from the
+recorded test, and in some cases parametrized.
+</p><p>
+This should be sufficient to give a flavor of writing test scripts for
+an AUT. Keep in mind that <span class="emphasis"><em>Squish</em></span> provides far more functionality than
+we used here, (all of which is covered in the <a class="xref" href="api.man.html" title="Chapter 6. API Reference Manual">API Reference Manual (Chapter 6)</a> and the <a class="xref" href="ref.man.html" title="Chapter 7. Tools Reference Manual">Tools Reference Manual (Chapter 7)</a>). And
+<span class="emphasis"><em>Squish</em></span> also provides access to the entire public APIs of the AUT's
+objects.
+</p><p>
+However, one aspect of the test case is not very satisfactory. Although
+embedding test data as we did here is sensible for small amounts, it is
+rather limiting, especially when we want to use a lot of test data.
+Also, we didn't test any of the data that was added to see if it
+correctly ended up in the Table. In the next section we will create a
+new version of this test, only this time we will pull in the data from
+an external data source, and check that the data in the Table is correct.
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h5 class="title"><a id="creating-data-driven-tests"></a>4.3.1.5.2. Creating Data Driven Tests</h5></div></div></div><p>
+In the previous section we put three hard-coded names and addresses in
+our test. But what if we want to test <span class="emphasis"><em>lots</em></span> of data?
+One approach is to import a dataset into <span class="emphasis"><em>Squish</em></span> and use the dataset as
+the source of the values we insert into our tests. <span class="emphasis"><em>Squish</em></span> can import
+data in
+<code class="filename">.tsv</code> (tab-separated values format),
+<code class="filename">.csv</code> (comma-separated values format),
+<code class="filename">.xls</code>, or <code class="filename">.xlsx</code>
+(<span class="trademark">Microsoft</span>® <span class="trademark">Excel</span>™ spreadsheet formats).
+<sup>[<a id="idp39483720" href="#ftn.idp39483720" class="footnote">6</a>]</sup>
+</p><p>
+Test data can either be imported using the <span class="application">Squish IDE</span>, or manually using a
+file manager or console commands. We will describe both approaches,
+starting with using the <span class="application">Squish IDE</span>.
+</p><p>
+For the <span class="application">addressbook_swt</span> application we want to
+import the <code class="filename">MyAddresses.tsv</code> data file. To do this we
+must start by clicking
+<span class="guimenu">File</span>|<span class="guimenuitem">Import Test
+Resource</span> to pop-up the <a class="xref" href="ide.dialogs.html#ide.import.squish.resource.dialog" title="8.3.7. Import Squish Resource dialog">Import Squish Resource dialog (Section 8.3.7)</a>. Inside the dialog click
+the <span class="guibutton">Browse</span> button to choose the file to
+import—in this case <code class="filename">MyAddresses.tsv</code>. Make
+sure that the <span class="guilabel">Import As</span> combobox is set to
+“<span class="quote">TestData</span>”. By default the <span class="application">Squish IDE</span> will import the test data
+just for the current test case, but we want the test data to be
+available to all the test suite's test cases: to do this check the
+<span class="guibutton">Copy to Test Suite for Sharing</span> radio button. Now
+click the <span class="guibutton">Finish</span> button. You can now see the file
+listed in the Test Suite Resources view (in the Test Data tab), and if
+you click the file's name it will be shown in an <a class="xref" href="ide.views.html#ide.the-editor.view" title="8.2.6. Editor view">Editor view (Section 8.2.6)</a>. The screenshot shows <span class="emphasis"><em>Squish</em></span> after the
+test data has been added.
+</p><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Note: For command-line users"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/note.png"></img></td><th align="left"><span class="emphasis"><em>For command-line users</em></span></th></tr><tr><td align="left" valign="top"><p>
+It is also possible to import test data outside the <span class="application">Squish IDE</span> using a file
+manager (such as File Explorer) or console commands. To do this, create
+a directory inside the test suite's directory called
+<code class="filename">shared</code>. Now make a directory inside the
+<code class="filename">shared</code> directory called
+<code class="filename">testdata</code>. Now copy the data file (in this example,
+<code class="filename">MyAddresses.tsv</code>) into the
+<code class="filename">shared\testdata</code> directory. Now quit the <span class="application">Squish IDE</span> if it
+is running and start it up again. If you click the Test Suite Resources
+view's Test Data tab you should see the data file. Click the file's name
+to see it in an <a class="xref" href="ide.views.html#ide.the-editor.view" title="8.2.6. Editor view">Editor view (Section 8.2.6)</a>.
+</p></td></tr></table></div><div class="screenshot"><div class="mediaobject" align="center"><img src="images/tut-squish8.png" align="middle"></img><div class="caption"><p><span class="emphasis"><em>Squish</em></span> with some imported test data
+</p></div></div></div><p>
+Although in real life we would modify our
+<code class="filename">tst_adding</code> test case to use the test data, for the
+purpose of the tutorial we will make a new test case called
+<code class="filename">tst_adding_data</code> that is a copy of
+<code class="filename">tst_adding</code> and which we will modify to make use of
+the test data.
+</p><p>
+The only function we have to change is <code class="function">main</code>, where
+instead of iterating over hard-coded items of data, we iterate over all
+the records in the dataset. We also need to update the expected row
+count at the end since we are adding a lot more records now, and we will
+also add a function to verify each record that's added.
+</p><div xmlns="" class="scriptlang"><form><select name="scriptlangcombo" onchange="javascript:changeScriptingLanguage(this)" onclick="javascript:changeScriptingLanguage(this)"><option value="all" selected>Show All</option><option value="JavaScript">Show JavaScript</option><option value="Perl">Show Perl</option><option value="Python">Show Python</option><option value="Ruby">Show Ruby</option><option value="Tcl">Show Tcl</option></select></form></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Python</span><pre class="programlisting">
+
+import names
+import os
+
+def main():
+    fn = os.path.join(os.getenv("SQUISH_PREFIX"), "examples/java/addressbook_swt/AddressBookSWT.jar")
+    startApplication('"{}"'.format(fn))
+    invokeMenuItem("File", "New...")
+    table = waitForObject({"type": "org.eclipse.swt.widgets.Table"})
+    test.verify(table.getItemCount() == 0)
+    limit = 10 # To avoid testing 100s of rows since that would be boring
+    for row, record in enumerate(testData.dataset("MyAddresses.tsv")):
+        forename = testData.field(record, "Forename")
+        surname = testData.field(record, "Surname")
+        email = testData.field(record, "Email")
+        phone = testData.field(record, "Phone")
+        addNameAndAddress((forename, surname, email, phone)) # pass as a single tuple
+        checkNameAndAddress(table, record)
+        if row &gt; limit:
+            break
+    waitForObject(table)
+    test.compare(table.getItemCount(), row + 1)
+    closeWithoutSaving()
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">JavaScript</span><pre class="programlisting">
+
+import * as names from 'names.js';
+
+function main()
+{
+    startApplication('"' + OS.getenv("SQUISH_PREFIX") + 
+        '/examples/java/addressbook_swt/AddressBookSWT.jar"');
+    invokeMenuItem("File", "New...");
+    var table = findObject({"type": "org.eclipse.swt.widgets.Table"});
+    test.verify(table.itemcount == 0);
+    var limit = 10; // To avoid testing 100s of rows since that would be boring
+    var records = testData.dataset("MyAddresses.tsv");
+    var row = 0;
+    for (; row &lt; records.length; ++row) {
+        var record = records[row];
+        var forename = testData.field(record, "Forename");
+        var surname = testData.field(record, "Surname");
+        var email = testData.field(record, "Email");
+        var phone = testData.field(record, "Phone");
+        addNameAndAddress([forename, surname, email, phone]);
+        checkNameAndAddress(table, record);
+        if (row &gt; limit)
+            break;
+    }
+    test.compare(table.itemcount, row + 1);
+    closeWithoutSaving();
+}
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Perl</span><pre class="programlisting">
+
+require 'names.pl';
+
+sub main
+{
+    startApplication("\"$ENV{'SQUISH_PREFIX'}/examples/java/addressbook_swt/AddressBookSWT.jar\"");
+    invokeMenuItem("File", "New...");
+    my $table = waitForObject({"type" =&gt; "org.eclipse.swt.widgets.Table"});
+    test::compare($table-&gt;getItemCount(), 0);
+    my $limit = 10; # To avoid testing 100s of rows since that would be boring
+    my @records = testData::dataset("MyAddresses.tsv");
+    my $row = 0;
+    for (; $row &lt; scalar(@records); $row++) {
+        my $record = $records[$row];
+        my $forename = testData::field($record, "Forename");
+        my $surname = testData::field($record, "Surname");
+        my $email = testData::field($record, "Email");
+        my $phone = testData::field($record, "Phone");
+        addNameAndAddress($forename, $surname, $email, $phone);
+        checkNameAndAddress($table, $record);
+        if ($row &gt; $limit) {
+            last;
+        }
+    }
+    test::compare($table-&gt;getItemCount(), $row + 1);
+    closeWithoutSaving();
+}
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Ruby</span><pre class="programlisting">
+
+require 'names'
+include Squish
+
+def main
+    fn = File.join(ENV['SQUISH_PREFIX'], "examples/java/addressbook_swt/AddressBookSWT.jar")
+    startApplication('"' + fn + '"');
+    invokeMenuItem("File", "New...")
+    table = waitForObject({:type =&gt; "org.eclipse.swt.widgets.Table"})
+    Test.verify(table.getItemCount() == 0)
+    limit = 10 # To avoid testing 100s of rows since that would be boring
+    rows = 0
+    TestData.dataset("MyAddresses.tsv").each_with_index do
+        |record, row|
+        forename = TestData.field(record, "Forename")
+        surname = TestData.field(record, "Surname")
+        email = TestData.field(record, "Email")
+        phone = TestData.field(record, "Phone")
+        addNameAndAddress([forename, surname, email, phone]) # pass as a single Array
+        checkNameAndAddress(table, record)
+        break if row &gt; limit
+        rows += 1
+    end
+    Test.compare(table.getItemCount(), rows + 1)
+    closeWithoutSaving
+end
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Tcl</span><pre class="programlisting">
+
+source [findFile "scripts" "names.tcl"]
+
+proc main {} {
+    startApplication "\"$::env(SQUISH_PREFIX)/examples/java/addressbook_swt/AddressBookSWT.jar\""
+    invokeMenuItem "File" "New..."
+    set table [waitForObject [::Squish::ObjectName type org.eclipse.swt.widgets.Table]]
+    test compare [invoke $table getItemCount] 0
+    set limit 10
+    set data [testData dataset "MyAddresses.tsv"]
+    set columns [llength [testData fieldNames [lindex $data 0]]]
+    set row 0
+    for {} {$row &lt; [llength $data]} {incr row} {
+        set record [lindex $data $row]
+        set forename [testData field $record "Forename"]
+        set surname [testData field $record "Surname"]
+        set email [testData field $record "Email"]
+        set phone [testData field $record "Phone"]
+        set details [list $forename $surname $email $phone]
+        addNameAndAddress $details
+        checkNameAndAddress $table $record
+        if {$row &gt; $limit} {
+            break
+        }
+    }
+    test compare [invoke $table getItemCount] [expr $row + 1]
+    closeWithoutSaving
+}
+</pre></div><p>
+<span class="emphasis"><em>Squish</em></span> provides access to test data through its <code class="code">testData</code>
+module's functions—here we used the <a class="xref" href="rgs-squish.html#testData.dataset-function"><code class="function">testData.dataset</code></a> function to access the data file
+and make its records available, and the <a class="xref" href="rgs-squish.html#testData.field-function"><code class="function">testData.field</code></a> function to retrieve each record's
+individual fields.
+</p><p>
+Having used the test data to populate the Table we want to be confident
+that the data in the table is the same as what we have added, so that's
+why we added the <code class="function">checkNameAndAddress</code> function. We also added a limit to
+how many records we would compare, just to make the test run faster.
+</p><div xmlns="" class="scriptlang"><form><select name="scriptlangcombo" onchange="javascript:changeScriptingLanguage(this)" onclick="javascript:changeScriptingLanguage(this)"><option value="all" selected>Show All</option><option value="JavaScript">Show JavaScript</option><option value="Perl">Show Perl</option><option value="Python">Show Python</option><option value="Ruby">Show Ruby</option><option value="Tcl">Show Tcl</option></select></form></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Python</span><pre class="programlisting">
+
+def checkNameAndAddress(table, record):
+    item = table.getItem(0) # new rows are always inserted at row 0
+    for column in range(len(testData.fieldNames(record))):
+        value = item.getText(column)
+        test.compare(value, testData.field(record, column))
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">JavaScript</span><pre class="programlisting">
+
+function checkNameAndAddress(table, record)
+{
+    var item = table.getItem(0); // new rows are always inserted at row 0
+    for (var column = 0; column &lt; testData.fieldNames(record).length; ++column) {
+        var value = item.getText(column);
+        test.compare(value, testData.field(record, column));
+    }
+}
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Perl</span><pre class="programlisting">
+
+sub checkNameAndAddress
+{
+    my($table, $record) = @_;
+    waitForObject($table);
+    my $item = $table-&gt;getItem(0); # new rows are always inserted at row 0
+    my @columnNames = testData::fieldNames($record);
+    for (my $column = 0; $column &lt; scalar(@columnNames); $column++) {
+        my $value = $item-&gt;getText($column);
+        test::compare($value, testData::field($record, $column));
+    }
+}
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Ruby</span><pre class="programlisting">
+
+def checkNameAndAddress(table, record)
+  item = table.getItem(0) # new rows are always inserted at row 0
+  for column in 0...TestData.fieldNames(record).length
+      Test.compare(item.getText(column), TestData.field(record, column))
+  end
+end
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Tcl</span><pre class="programlisting">
+
+proc checkNameAndAddress {table record} {
+    set item [invoke $table getItem 0]
+    set columns [llength [testData fieldNames $record]]
+    for {set column 0} {$column &lt; $columns} {incr column} {
+        set value [invoke $item getText $column]
+        test compare $value [testData field $record $column]
+    }
+}
+</pre></div><p>
+This function accesses individual items in the <code class="classname">Table</code>.
+We then use <span class="emphasis"><em>Squish</em></span>'s <a class="xref" href="rgs-squish.html#test.compare-function"><code class="function">test.compare</code></a> function to check that the value in
+the cell is the same as the value in the test data we used. Note that
+this particular AUT always adds a new row before the current row (or as
+the first row if there are no rows yet), and always makes the added row
+the current row. The effect of this is that every new name and address
+is always added as the first row, and this is why we hard-coded the row
+to be 0.
+</p><p>
+The screenshot shows <span class="emphasis"><em>Squish</em></span>'s Test Summary log
+after the data-driven tests have been run.
+</p><div class="screenshot"><div class="mediaobject" align="center"><img src="images/tut-squish11-swt.png" align="middle"></img><div class="caption"><p><span class="emphasis"><em>Squish</em></span> after a successful data-driven test run
+</p></div></div></div><p>
+<span class="emphasis"><em>Squish</em></span> can also do keyword-driven testing. This is a bit more
+sophisticated than data-driven testing. See <a class="xref" href="how.to.do.keyword.driven.testing.html" title="5.16. How to Do Keyword-Driven Testing">How to Do Keyword-Driven Testing (Section 5.16)</a>.
+</p></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="tut-java-swt-learning-more"></a>4.3.1.6. Learning More</h4></div></div></div><p>
+We have now completed the tutorial! <span class="emphasis"><em>Squish</em></span> can of course do
+<span class="emphasis"><em>much</em></span> more than we have shown here, but the aim has
+been to get you started with basic testing as quickly and easily as
+possible. The <a class="xref" href="users-guide.html" title="Chapter 5. User Guide">User Guide (Chapter 5)</a> provides many more examples,
+including those that show how tests can interact with particular widgets
+such as spinners, comboboxes, and line editors, and of course with
+view widgets and their underlying models.
+</p><p>
+The <a class="xref" href="api.man.html" title="Chapter 6. API Reference Manual">API Reference Manual (Chapter 6)</a> and <a class="xref" href="ref.man.html" title="Chapter 7. Tools Reference Manual">Tools Reference Manual (Chapter 7)</a> give full
+details of <span class="emphasis"><em>Squish</em></span>'s testing API and the numerous functions it offers
+to make testing as easy and efficient as possible. It is well worth
+reading the <a class="xref" href="users-guide.html" title="Chapter 5. User Guide">User Guide (Chapter 5)</a> and at least skimming the
+<a class="xref" href="api.man.html" title="Chapter 6. API Reference Manual">API Reference Manual (Chapter 6)</a> and <a class="xref" href="ref.man.html" title="Chapter 7. Tools Reference Manual">Tools Reference Manual (Chapter 7)</a>—especially
+since the time invested will be repaid because you'll know what
+functionality <span class="emphasis"><em>Squish</em></span> provides out of the box and can avoid reinventing
+things that are already available.
+</p><p>
+The key Java SWT examples with links to the places they are used
+are given below.
+</p><div class="itemizedlist"><ul type="disc"><li><p>
+The <span class="emphasis"><em>Payment Form example</em></span>
+(<a class="xref" href="ugs-javaapi.html#ugjava-swt-paymentform-example" title="5.4.6.2.1. How to Test Stateful and Single-Valued Widgets (Java™/SWT)">How to Test Stateful and Single-Valued Widgets (<span class="trademark">Java</span>™/SWT) (Section 5.4.6.2.1)</a>)
+ shows how to test single-valued Java widgets such as:
+<code class="code">Button</code>, <code class="code">Combo</code>, <code class="code">DateTime</code>,
+<code class="code">TabFolder</code>, and <code class="code">Text</code>.
+</p></li><li><p>
+The <span class="emphasis"><em>Item Views example</em></span>
+(<a class="xref" href="ugs-javaapi.html#ug-testing-lists-tables-and-trees-swt" title="5.4.6.2.2. How to Test List, Table, and Tree widgets (Java™/SWT)">How to Test List, Table, and Tree widgets (<span class="trademark">Java</span>™/SWT) (Section 5.4.6.2.2)</a>)
+ shows how to test Java's multi-item widgets, including:
+ List, Table, and Tree.
+</p></li><li><p>
+The <span class="emphasis"><em>CsvTable example</em></span>
+(<a class="xref" href="ugs-javaapi.html#ug-testing-table-using-external-data" title="5.4.6.2.3. How to Test the Table Widget and Use External Data Files (Java/SWT)">How to Test the Table Widget and Use External Data Files
+(Java/SWT) (Section 5.4.6.2.3)</a>)
+ shows how to do data-driven testing using external data files.
+</p></li></ul></div></div></div><div class="footnotes"><br></br><hr width="100" align="left"></hr><div class="footnote"><p><sup>[<a id="ftn.idp39189600" href="#idp39189600" class="para">5</a>] </sup>
+Each AUT must be registered with the <span class="application">squishserver</span> so that test scripts
+do not need to include the AUT's path, thus making the tests
+platform-independent. Another benefit of registering is that AUTs can be
+tested without the <span class="application">Squish IDE</span>—for example, when doing regression
+testing.
+</p></div><div class="footnote"><p><sup>[<a id="ftn.idp39483720" href="#idp39483720" class="para">6</a>] </sup>
+Both <code class="filename">.csv</code> and <code class="filename">.tsv</code> files are
+assumed to use the Unicode UTF-8 encoding—the same encoding used
+for all test scripts.
+</p></div></div></div><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" type="text/javascript" src="ScriptingLanguage.js"></script><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format">setScriptingLanguage();</script><div class="navfooter"><hr></hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="tutorials-java-awt.html">Prev</a> </td><td width="20%" align="center"><a accesskey="u" href="tutorials.html">Up</a></td><td width="40%" align="right"> <a accesskey="n" href="tutorials-java-fx.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">4.2. Squish for Java (AWT/Swing) Tutorials </td><td width="20%" align="center"><a accesskey="h" href="index-noframes.html">Home</a></td><td width="40%" align="right" valign="top"> 4.4. Squish for JavaFX Tutorials</td></tr></table></div></body>
+<!-- Mirrored from tutorials-java-swt.html by HTTrack Website Copier/3.x [XR&CO'2013], Wed, 06 Jul 2022 13:28:58 GMT -->
+</html>

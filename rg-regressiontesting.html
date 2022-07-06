@@ -1,0 +1,464 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<!-- Mirrored from rg-regressiontesting.html by HTTrack Website Copier/3.x [XR&CO'2013], Wed, 06 Jul 2022 13:29:00 GMT -->
+<head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><title>7.1. Automated Batch Testing</title><link rel="stylesheet" href="manual.css" type="text/css"></link><meta name="generator" content="DocBook XSL Stylesheets V1.73.2"></meta><link rel="start" href="index-noframes.html" title="Squish Manual"></link><link rel="up" href="ref.man.html" title="Chapter 7. Tools Reference Manual"></link><link rel="prev" href="ref.man.html" title="Chapter 7. Tools Reference Manual"></link><link rel="next" href="rg-bindings.html" title="7.2. AUT Script Bindings—Creating and Accessing"></link><style xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" type="text/css" media="screen">
+        div.toc * { margin-left: 6px; margin-right: auto; max-width: 75em; }
+        div.toc span { margin-left: 0px; }
+        * { margin-left: auto; margin-right: auto; max-width: 75em; }
+        body { margin-left: 6px; margin-right: 6px; }
+        table th { padding: .5ex }
+        table td { padding: .5ex }
+    </style><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format">
+        function keyPress() {
+            var e = window.event;
+            if ( e == undefined ) {
+                return;
+            }
+            /* ### does not properly scroll, yet
+            if ( e.keyCode == 32 ) {
+            var l = document.links;
+            for ( var i = 0; i < l.length; i++ ) {
+                if ( l[i].innerText == "Next" ) {
+                location.href = l[i].href;
+                }
+            }
+            } else
+                */
+                if ( e.keyCode == 0x08 ) {
+            var l = document.links;
+            for ( var i = 0; i < l.length; i++ ) {
+                if ( l[i].innerText == "Prev" ) {
+                location.href = l[i].href;
+                }
+            }
+            }
+        }
+        document.onkeypress = keyPress;
+    </script></head><body><div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="rg-regressiontesting"></a>7.1. Automated Batch Testing</h2></div></div></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><span class="section"><a href="rg-regressiontesting.html#rgr-autotests">7.1.1. Automated Test Runs</a></span></dt><dt><span class="section"><a href="rg-regressiontesting.html#rgr-disttesting">7.1.2. Distributed Tests</a></span></dt><dt><span class="section"><a href="rg-regressiontesting.html#rgr-processresults">7.1.3. Processing Test Results</a></span></dt></dl></div><p>
+This chapter discusses all aspects of automating testing, also known as
+batch testing. The coverage includes automatically executing tests,
+distributing tests to different machines, and processing the results
+produced by the test runs. (See also, <a class="xref" href="ug-batchtesting.html" title="5.26. How to Do Automated Batch Testing">How to Do Automated Batch Testing (Section 5.26)</a>.)
+</p><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="rgr-autotests"></a>7.1.1. Automated Test Runs</h3></div></div></div><p>
+<span class="emphasis"><em>Squish</em></span> provides command line tools that make it possible to completely
+automate the running of tests. The tool for executing tests is
+<span class="application">squishrunner</span>, but for it to work properly a <span class="application">squishserver</span> must also be
+running—the <span class="application">squishrunner</span> makes use of the <span class="application">squishserver</span> to
+start AUTs and communicate with them.
+</p><p>
+Automated batch tests can be created on any of the platforms that
+<span class="emphasis"><em>Squish</em></span> supports, including Windows and Unix-like platforms.
+</p><p>
+For example, here is a simple Unix shell script to execute the complete
+test suite <code class="filename">~/suite_myapp</code> and save the
+results to <code class="filename">~/squish-results-`date`</code>:
+</p><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage"></span><pre class="programlisting">
+#!/bin/bash
+# add Squish to PATH
+export SQUISH_PREFIX=/path/to/squish
+export PATH=$SQUISH_PREFIX/bin:$PATH
+
+# Dated directory to store report results:
+LOGDIRECTORY=~/squish-results-`date -I`
+
+# Execute the test suite with a local squishserver:
+squishrunner --testsuite ~/suite_myapp --local --reportgen xml3.5,$LOGDIRECTORY
+</pre></div><p> Since we are using <code class="option">--local</code>, it is not necessary to
+start a separate <span class="application">squishserver</span> process in the background from our script. </p><p> We are using <code class="option">--reportgen</code> to specify the kind of output
+to generate. For a list of all report-generator formats, see
+<a class="xref" href="rg-cmdline.html#rg-squishrunner-report-generators" title="7.4.3.6.  squishrunner --reportgen: Generating Reports"> <code class="option">squishrunner --reportgen</code>: Generating Reports (Section 7.4.3.6)</a>. </p><p>
+Here is a similar example, written for Windows using the standard
+<code class="filename">cmd.exe</code> shell. Because the Windows variable,
+<code class="varname">%DATE%</code> sometimes uses a period and other
+times a dash or some other character to separate the numbers, it
+can't be used in some locales to form a directory name.
+</p><pre class="programlisting">
+REM add Squish to PATH
+set SQUISH_PREFIX=C:\path\to\squish
+set PATH=%SQUISH_PREFIX%\bin;%PATH%
+
+REM The Log Directory does not (but perhaps should) have today's date in it:
+set LOGDIRECTORY=%USERPROFILE%\squish-results
+
+REM Execute the test suite with a --local squishserver:
+squishrunner --testsuite %USERPROFILE%\suite_myapp --local --reportgen "xml3.5,%LOGDIRECTORY%"
+</pre><p>
+One disadvantage of using shell scripts and batch files like this is
+that for cross-platform testing we must maintain separate scripts
+for each platform.
+We can avoid this problem by using a cross-platform scripting
+language which would allow us to write one script and run it on all
+platforms we were interested in.
+Here is an example of such a script written in Python, which you can find in
+<code class="filename">SQUISHDIR/examples/regressiontesting/squishruntests-simple.py</code>.
+</p><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Python</span><pre class="programlisting">
+
+#!/usr/bin/env python
+# -*- encoding=utf8 -*-
+# Copyright (C) 2018 - 2021 froglogic GmbH.
+# Copyright (C) 2022 The Qt Company Ltd.
+# All rights reserved.
+#
+# This file is part of an example program for Squish---it may be used,
+# distributed, and modified, without limitation.
+#
+# For a script with more options and configurability, see 'squish6runtests.py'
+# This script assumes squishrunner and squishserver are both in your PATH
+
+import os
+import sys
+import subprocess
+import time
+
+
+def is_windows():
+    platform = sys.platform.lower()
+    return platform.startswith("win") or platform.startswith("microsoft")
+
+
+# Create a dated directory for the test results:
+LOGDIRECTORY = os.path.normpath(
+    os.path.expanduser("~/results-%s" % time.strftime("%Y-%m-%d"))
+)
+
+if not os.path.exists(LOGDIRECTORY):
+    os.makedirs(LOGDIRECTORY)
+
+# execute the test suite (and wait for it to finish):
+exitcode = subprocess.call(
+    [
+        "squishrunner",
+        "--testsuite",
+        os.path.normpath(os.path.expanduser("~/suite_myapp")),
+        "--local",
+        "--reportgen",
+        "xml3.5,%s" % LOGDIRECTORY,
+    ],
+    shell=is_windows(),
+)
+if exitcode != 0:
+    print("ERROR: abnormal squishrunner exit. code: %d" % exitcode)
+
+
+
+</pre></div><p>
+This script does the same job as the Unix shell script and Windows batch
+file shown earlier, and makes the assumption that <span class="application">squishrunner</span>
+and <span class="application">squishserver</span> are in the <code class="envar">PATH</code>. It should run on
+Windows, macOS and other Unix-like systems without needing
+any changes. It also checks the return code of
+<span class="application">squishrunner</span> for abnormal termination.
+</p><p>
+<span class="application">squishrunner</span> will run the specified test with all the required
+initializations and cleanups. The resulting report can then be
+post-processed as necessary—see <a class="xref" href="rg-regressiontesting.html#rgr-processresults" title="7.1.3. Processing Test Results">Processing Test Results (Section 7.1.3)</a> for details.
+</p><p>
+Once we have the script running on all desired platforms, we must ensure that
+it can be run automatically, say once a day. How to do this is beyond the scope of
+this manual, but if you require help you can always contact
+<span class="emphasis"><em>froglogic</em></span>'s commercial support to assist you. If you would rather try
+to set it up on your own first, there is a lot of information on the
+Internet—for Unix it is a matter of setting up a
+<code class="filename">cron</code> job.
+(Since Windows Services don't support a display for running GUI
+applications, it is not possible to execute the <span class="application">squishserver</span> as a
+Windows Service.)
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="rgr-disttesting"></a>7.1.2. Distributed Tests</h3></div></div></div><p>
+Throughout the manual it is generally assumed that all testing takes
+place locally. This means that the <span class="application">squishserver</span>, <span class="application">squishrunner</span>, and
+the AUT, are all running on the same machine. This scenario is not the
+only one that is possible, and in this section we will see how to
+remotely run tests on a different machine. For example, let's assume
+that we work and test on computer A, and that we want to test an AUT
+located on computer B.
+</p><p>
+The first step is to install <span class="emphasis"><em>Squish</em></span> and the AUT on the target computer
+(computer B). Note though, that we do <span class="emphasis"><em>not</em></span> need to
+do this step for <span class="emphasis"><em>Squish</em></span> for Web. Now—except if we are using
+Squish for Web on computer B—we must tell the <span class="application">squishserver</span> the
+name of the AUT's executable and where the executable is located. This
+is achieved by running the following command:
+</p><pre class="screen">
+squishserver --config addAUT &lt;name_of_aut&gt; &lt;path_to_aut&gt;
+</pre><p>
+Later we will connect from computer A to the <span class="application">squishserver</span> on
+computer B. By default the <span class="application">squishserver</span> only accepts connections
+from the local machine, since accepting arbitrary connections from
+elsewhere might compromise security. So if we want to connect to the
+<span class="application">squishserver</span> from another machine we must first register the machine
+which will try to establish a connection for executing the tests
+(computer A in this example), with the machine running the AUT and
+<span class="application">squishserver</span> (computer B). Doing this ensures that only trusted
+machines can communicate with each other using the
+<span class="application">squishserver</span>.
+</p><p>
+To perform the registration, on the AUT's machine (computer B) we create
+a plain text file in ASCII encoding called <code class="filename">/etc/squishserverrc</code>
+(on Unix or Mac) or <code class="filename">c:\squishserverrc</code> (on Windows). If
+you don't have write permissions to <code class="filename">/etc</code> or
+<code class="filename">c:\</code>, you can also put this file into
+<code class="filename">SQUISH_ROOT/etc/squishserverrc</code> on either platform.
+(And on Windows the file can be called
+<code class="filename">squishserverrc</code> or
+<code class="filename">squishserverrc.txt</code> at your option.)
+The file should have the following contents:
+</p><pre class="screen">
+ALLOWED_HOSTS = &lt;ip_addr_of_computer_A&gt;
+</pre><p>
+&lt;ip_addr_of_computer_A&gt; must be the IP address of computer A. (An
+actual IP address is required; using a hostname won't work.) For
+example, on our network the line is:
+</p><pre class="screen">
+ALLOWED_HOSTS = 192.168.0.3
+</pre><p>
+This will almost certainly be different on your network.
+</p><p>
+If you want to specify the IP addresses of several machines which should
+be allowed to connect to the <span class="application">squishserver</span>, you can put as many IP
+addresses on the <code class="filename">ALLOWED_HOSTS</code> line as you like,
+separated by spaces. And if you want to allow a whole group of machines
+which have similar IP addresses, you can use wildcards.
+For example, to allow all those machines which have IP addresses that
+start with 192.168.0, to connect to this <span class="application">squishserver</span>, you can specify
+an IP address of 192.168.0.*.
+</p><p>
+Once we have registered computer A, we can run the <span class="application">squishserver</span> on
+computer B, ready to listen to connections, which can now come from
+computer B itself or from any of the allowed hosts, for example, from
+computer A.
+</p><p>
+We are now ready to create test cases on computer A and have them
+executed on computer B. First, we must start <span class="application">squishserver</span> on computer B
+(calling it with the default options starts it on port 4322—see <a class="xref" href="rg-cmdline.html#rgc-squishserver" title="7.4.4. squishserver">squishserver (Section 7.4.4)</a> for a list of available options):
+</p><pre class="screen">
+squishserver
+</pre><p>
+For convenience, by default, the <span class="application">Squish IDE</span> starts <span class="application">squishserver</span> locally on
+startup and connects to this local <span class="application">squishserver</span> to execute the tests.
+But it is also possible to connect to a <span class="application">squishserver</span> on a remote
+machine, such as computer B, from within the <span class="application">Squish IDE</span>. We can control this
+behavior through the preferences dialog. Click
+<span class="guimenu">Edit</span>|<span class="guimenuitem">Preferences</span> to invoke the
+<a class="xref" href="ide.dialogs.html#ide.preferences.dialog" title="8.3.17. Pref­er­ences dialog">Pref­er­ences dialog (Section 8.3.17)</a>, then click
+<span class="guilabel">Squish</span> in the tree of preferences and choose the
+<span class="guilabel">Remote Testing</span> item to show the Remote Testing
+preferences page. Uncheck the <span class="guibutton">Start local Squish server
+automatically</span> checkbox, and enter the IP address of the
+machine running the remote <span class="application">squishserver</span> (computer B) in the
+squishserver host line edit. The port number should only be changed if
+the <span class="application">squishserver</span> is started with a non-standard port number, in which
+case the port number should be set to match whichever one is used on the
+remote machine (computer B).
+</p><div class="screenshot"><div class="mediaobject" align="center"><img src="images/preferences_general.png" align="middle"></img><div class="caption"><p>The <span class="application">Squish IDE</span>'s Preferences Dialog
+</p></div></div></div><p>
+Now we can execute the test suite as usual. One immediately noticeable
+difference is that the AUT is not started locally, but on computer B
+instead. After the test has finished, the results become visible in the
+<span class="application">Squish IDE</span> on computer A as usual.
+</p><p>
+It is also possible to do remote testing using the command line. The
+command is the same as described earlier, only this time we must also
+specify a host name using the <code class="code">--host</code> option:
+</p><pre class="screen">
+squishrunner --host computerB.froglogic.com --testsuite suite_addressbook
+</pre><p>
+The host can be specified as an IP address or as a name.
+</p><p>
+This makes it possible to create, edit, and run tests on a remote
+machine via the <span class="application">Squish IDE</span>. And by adding the <code class="code">--host</code> option to
+the shell script, batch file, or other script file used to automatically
+run tests,
+it is possible to automate the testing of
+applications located on different machines and platforms as we saw
+earlier—<a class="xref" href="rg-regressiontesting.html#rgr-autotests" title="7.1.1. Automated Test Runs">Automated Test Runs (Section 7.1.1)</a>.
+</p><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Note: Squish License Key"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/note.png"></img></td><th align="left"><span class="emphasis"><em>Squish</em></span> License Key</th></tr><tr><td align="left" valign="top"><p>
+When <span class="emphasis"><em>Squish</em></span> tools are executed they always check their license key.
+This shouldn't matter when using a single machine, but might cause
+problems when using multiple machines. If the default license key
+directory is not convenient for using with automated tests it can be
+changed by setting the <code class="envar">SQUISH_LICENSEKEY_DIR</code> environment
+variable to a directory of your choice—and this can of course be
+done in a shell script or batch file. (See <a class="xref" href="rg-envvars.html" title="7.5. Environment Variables">Environment Variables (Section 7.5)</a>.)
+</p></td></tr></table></div><p>
+See also, the <a class="xref" href="ide.dialogs.html#the.squish.pane.s.child.panes" title="8.3.17.7.1. Squish Preferences Child Panes">Squish Preferences Child Panes (Section 8.3.17.7.1)</a>'s Remote
+Testing pane.
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="rgr-processresults"></a>7.1.3. Processing Test Results</h3></div></div></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><span class="section"><a href="rg-regressiontesting.html#rgr-processresults-xml">7.1.3.1. The <code class="code">xml</code> Report Format</a></span></dt></dl></div><p>
+In the previous section we saw how to execute an AUT and run its tests
+on a target machine under the control of a separate machine, and we also
+saw how to automatically execute test runs using scripts and batch
+files. In this section we will look at processing the test results from
+automatic test runs by uploading <acronym class="acronym">XML</acronym> reports to <span class="application">Squish Test Center</span>.
+</p><p>
+By default, <span class="application">squishrunner</span> prints test results to
+<code class="filename">stdout</code> as plain text.
+To make <span class="application">squishrunner</span> use the <acronym class="acronym">XML</acronym> report generator,
+specify <code class="option">--reportgen xml3.5</code> on the command line. If you
+want to get the <acronym class="acronym">XML</acronym> output written into a file instead of
+<code class="filename">stdout</code>, specify <code class="option">--reportgen
+xml3.5,&lt;directorypath&gt;</code>, <abbr class="abbrev">e.g.</abbr>:
+</p><pre class="screen">
+squishrunner <code class="option">--host computerB.froglogic.com</code> <code class="option">--testsuite suite_addressbook_py</code> <code class="option">--reportgen xml3.5,/tmp/results</code>
+</pre><p>
+The <acronym class="acronym">XML</acronym> report will be written into the directory
+<code class="filename">/tmp/results</code>.
+</p><p> Next, we can upload the report to <span class="application">Squish Test Center</span> for further analysis,
+using the <span class="application">testcentercmd</span> command-line tool.
+</p><pre class="screen">
+testcentercmd <code class="option">--url=http://localhost:8800 --token=MyToken upload AddressBook /tmp/results --label=MyLabelKey1=MyLabelValue1 --label=OS=Linux --batch=MyBatch</code>
+</pre><p> The command above has the following options. </p><div class="itemizedlist"><ul type="disc"><li><p> The URL of a running instance of <span class="application">Squish Test Center</span> <code class="literal">http://localhost:8800</code>. </p></li><li><p> An upload token, <code class="literal">MyToken</code>. See <a class="ulink" href="https://doc.froglogic.com/squish-testcenter/latest/ug-user-management.html#upload-token" target="_blank">
+Creating and Managing Upload Tokens</a> for more details. </p></li><li><p> A command, <code class="literal">upload</code>. </p></li><li><p> A <em class="firstterm">project</em> name, in this case <code class="literal">AddressBook</code>.
+</p></li><li><p> A directory (or a zip file) of XML test results to upload
+</p></li><li><p> 0 or more <em class="firstterm">labels</em>, or key=value pairs for
+tagging the result in the database </p></li><li><p> An optional <em class="firstterm">batch</em> name, <code class="literal">MyBatch</code>, also for
+the purposes of organizing in the <span class="application">Squish Test Center</span> database. </p></li></ul></div><p> Project Names, Batches and Labels are concepts used to organize and
+select test reports in the web interface, and are <a class="ulink" href="https://doc.froglogic.com/squish-testcenter/latest/testcenter-introduction.html" target="_blank">
+explained in more detail here</a>. </p><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="rgr-processresults-xml"></a>7.1.3.1. The <code class="code">xml</code> Report Format</h4></div></div></div><p>
+The document starts with the <code class="literal">&lt;?xml?&gt;</code> tag which
+identifies the file as an XML file and specifies the encoding as UTF-8.
+Next comes the <span class="emphasis"><em>Squish</em></span>-specific content, starting with the
+<code class="literal">SquishReport</code> tag which in <span class="emphasis"><em>Squish</em></span> 6.6,
+has a version attribute set to <code class="literal">3.4</code>. This tag may
+contain one or more <code class="literal">test</code> tags. The
+<code class="literal">test</code> tags themselves may be nested—i.e., there can
+be tests within tests—but in practice <span class="emphasis"><em>Squish</em></span> uses top-level
+<code class="literal">test</code> tags for test suites, and nested
+<code class="literal">test</code> tags for test cases within test suites. (If we
+export the results from the <a class="xref" href="ide.views.html#ide.the-test-results.view" title="8.2.18. Test Results view">Test Results view (Section 8.2.18)</a>
+there will be no outer <code class="literal">test</code> tag for the test suite,
+but instead a sequence of <code class="literal">test</code> tags, one per test
+case that was executed.)
+</p><p>
+The <code class="literal">test</code> tag has a <code class="literal">type</code> attribute
+used to store the type of the test. Every
+<code class="literal">test</code> tag <span class="emphasis"><em>must</em></span> contain a
+<code class="literal">prolog</code> tag as its first child with a
+<code class="literal">time</code> attribute set to the time the test execution
+started in ISO 8601 format, and <span class="emphasis"><em>must</em></span> contain
+an <code class="literal">epilog</code> tag as its last child with a
+<code class="literal">time</code> attribute set to the time the test execution
+finished, again in ISO 8601 format. In between the
+<code class="literal">prolog</code> and <code class="literal">epilog</code> there must be at
+least one <code class="literal">verification</code> tag, and there may be any
+number of <code class="literal">message</code> tags (including none).
+</p><p>
+Every <code class="literal">verification</code> tag may contains several sub elements.
+</p><p>
+The <code class="literal">uri</code> tag contains the relative path and filename
+of the test script or verification point that was executed, and the <code class="literal">lineNo</code>
+tab contains the number of the line in the file where the
+verification was executed. If <code class="literal">uri</code> starts with <code class="literal">x-testsuite:</code>
+or <code class="literal">x-testcase:</code> or <code class="literal">x-results:</code>
+the path is relative to respectively the test suite, test case or results directories.
+If file path is outside of the mentioned directories, the <code class="literal">uri</code>
+tag will contain the abosulute file path.
+</p><p>
+The <code class="literal">scriptedVerificationResult</code> tag is used to specify the
+verification point type. There are other possible types too:
+<code class="literal">screenshotVerificationResult</code>,
+<code class="literal">propertyVerificationResult</code> or
+<code class="literal">tableVerificationResult</code>.
+</p><p>
+The <code class="literal">screenshotVerificationResult</code> is for
+screenshot verifications or “<span class="quote">propertyVerificationResult</span>” for property
+verifications (e.g. calls to the <a class="xref" href="rgs-squish.html#test.vp-function"><code class="function">test.vp</code></a>
+function) or an empty string for any other kind of verification (such as
+calls to the <a class="xref" href="rgs-squish.html#test.verify-function"><code class="function">test.verify</code></a> function), and
+<code class="literal">tableVerificationResult</code> is for table verification points results.
+</p><p>
+Every verificaton point's result tag has two attributes: a
+<code class="literal">time</code> attribute set to the time the result was
+generated in ISO 8601 format, and a <code class="literal">type</code>
+attribute whose value is one of
+<code class="literal">PASS</code>,
+<code class="literal">FAIL</code>,
+<code class="literal">XPASS</code>,
+<code class="literal">XFAIL</code>,
+<code class="literal">FATAL</code>, or
+<code class="literal">ERROR</code>. In addition the <code class="literal">scriptedVerificationResult</code> tag
+should contain at least one <code class="literal">detail</code> tag whose
+text describes the result. Normally, two tags <code class="literal">text</code> and <code class="literal">detail</code>
+are present, one that describes the result and the other whose text gives a more detailed description
+of the result. For screenshot verifications there will be additional
+tags, one <code class="literal">objectName</code> whose content is the
+symbolic name of the relevant GUI object, and one
+<code class="literal">failedImage</code> whose content is either the text
+“<span class="quote">Screenshots are considered identical</span>” (for passes), or the
+URI of the actual image (for fails, i.e., where the actual image
+is different from the expected image).
+</p><p>
+In addition to <code class="literal">verification</code> tags, and at the same
+level (i.e., as children of a <code class="literal">test</code> tag), there can be
+zero or more <code class="literal">message</code> tags. These tags have two
+attributes, a
+<code class="literal">time</code> attribute set to the time the message was
+generated in ISO 8601 format, and a <code class="literal">type</code>
+attribute whose value is one of
+<code class="literal">LOG</code>,
+<code class="literal">WARNING</code>, or
+<code class="literal">FATAL</code>. The <code class="literal">message</code> tag's text
+contains the message itself.
+</p><p>
+Here is an example report of a test suite run. This test suite had just
+one test case, and one of the screenshot verifications failed. We have
+changed the line-wrapping and indentation for better reproduction in the
+manual.
+</p><pre class="programlisting">
+&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;SquishReport version="3.4" xmlns="http://www.froglogic.com/resources/schemas/xml3"&gt;
+    &lt;test type="testsuite"&gt;
+        &lt;prolog time="2015-06-19T11:22:27+02:00"&gt;
+            &lt;name&gt;&lt;![CDATA[suite_test]]&gt;&lt;/name&gt;
+            &lt;location&gt;
+                &lt;uri&gt;&lt;![CDATA[file:///D:/downloads/simple]]&gt;&lt;/uri&gt;
+            &lt;/location&gt;
+        &lt;/prolog&gt;
+        &lt;test type="testcase"&gt;
+            &lt;prolog time="2015-06-19T11:22:27+02:00"&gt;
+                &lt;name&gt;&lt;![CDATA[tst_case1]]&gt;&lt;/name&gt;
+                &lt;location&gt;
+                    &lt;uri&gt;&lt;![CDATA[x-testsuite:/tst_case1]]&gt;&lt;/uri&gt;
+                &lt;/location&gt;
+            &lt;/prolog&gt;
+            &lt;verification&gt;
+                &lt;location&gt;
+                    &lt;uri&gt;&lt;![CDATA[x-testcase:/test.py]]&gt;&lt;/uri&gt;
+                    &lt;lineNo&gt;&lt;![CDATA[2]]&gt;&lt;/lineNo&gt;
+                &lt;/location&gt;
+                &lt;scriptedVerificationResult time="2015-06-19T11:22:27+02:00" type="PASS"&gt;
+                    &lt;scriptedLocation&gt;
+                        &lt;uri&gt;&lt;![CDATA[x-testcase:/test.py]]&gt;&lt;/uri&gt;
+                        &lt;lineNo&gt;&lt;![CDATA[2]]&gt;&lt;/lineNo&gt;
+                    &lt;/scriptedLocation&gt;
+                    &lt;text&gt;&lt;![CDATA[Verified]]&gt;&lt;/text&gt;
+                    &lt;detail&gt;&lt;![CDATA[True expression]]&gt;&lt;/detail&gt;
+                &lt;/scriptedVerificationResult&gt;
+            &lt;/verification&gt;
+            &lt;verification&gt;
+                &lt;location&gt;
+                    &lt;uri&gt;&lt;![CDATA[x-testcase:/test.py]]&gt;&lt;/uri&gt;
+                    &lt;lineNo&gt;&lt;![CDATA[3]]&gt;&lt;/lineNo&gt;
+                &lt;/location&gt;
+                &lt;scriptedVerificationResult time="2015-06-19T11:22:27+02:00" type="FAIL"&gt;
+                    &lt;scriptedLocation&gt;
+                        &lt;uri&gt;&lt;![CDATA[x-testcase:/test.py]]&gt;&lt;/uri&gt;
+                        &lt;lineNo&gt;&lt;![CDATA[3]]&gt;&lt;/lineNo&gt;
+                    &lt;/scriptedLocation&gt;
+                    &lt;text&gt;&lt;![CDATA[Comparison]]&gt;&lt;/text&gt;
+                    &lt;detail&gt;&lt;![CDATA['foo' and 'goo' are not equal]]&gt;&lt;/detail&gt;
+                &lt;/scriptedVerificationResult&gt;
+            &lt;/verification&gt;
+            &lt;epilog time="2015-06-19T11:22:27+02:00"/&gt;
+        &lt;/test&gt;
+        &lt;epilog time="2015-06-19T11:22:27+02:00"/&gt;
+    &lt;/test&gt;
+&lt;/SquishReport&gt;
+</pre><p>
+In <code class="filename">examples/regressiontesting</code> you
+can find some example scripts which execute the addressbook test suite
+on different machines and present the daily output on a Web page by post
+processing the <acronym class="acronym">XML</acronym> and generating HTML. The <a class="xref" href="ug-batchtesting.html" title="5.26. How to Do Automated Batch Testing">How to Do Automated Batch Testing (Section 5.26)</a> section explains how to automate test runs
+and process the test results to produce HTML that can be viewed in any
+web browser.
+</p></div></div></div><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" type="text/javascript" src="ScriptingLanguage.js"></script><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format">setScriptingLanguage();</script><div class="navfooter"><hr></hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="ref.man.html">Prev</a> </td><td width="20%" align="center"><a accesskey="u" href="ref.man.html">Up</a></td><td width="40%" align="right"> <a accesskey="n" href="rg-bindings.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">Chapter 7. Tools Reference Manual </td><td width="20%" align="center"><a accesskey="h" href="index-noframes.html">Home</a></td><td width="40%" align="right" valign="top"> 7.2. AUT Script Bindings—Creating and Accessing </td></tr></table></div></body>
+<!-- Mirrored from rg-regressiontesting.html by HTTrack Website Copier/3.x [XR&CO'2013], Wed, 06 Jul 2022 13:29:00 GMT -->
+</html>

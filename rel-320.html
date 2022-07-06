@@ -1,0 +1,71 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<!-- Mirrored from rel-320.html by HTTrack Website Copier/3.x [XR&CO'2013], Wed, 06 Jul 2022 13:29:03 GMT -->
+<head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><title>2.68. Version 3.2</title><link rel="stylesheet" href="manual.css" type="text/css"></link><meta name="generator" content="DocBook XSL Stylesheets V1.73.2"></meta><link rel="start" href="index-noframes.html" title="Squish Manual"></link><link rel="up" href="relnotes.html" title="Chapter 2. Release Notes—for Upgraders"></link><link rel="prev" href="rel-mac-beta1.html" title="2.67. Squish for macOS, Beta 1"></link><link rel="next" href="rel-312.html" title="2.69. Version 3.1.2"></link><style xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" type="text/css" media="screen">
+        div.toc * { margin-left: 6px; margin-right: auto; max-width: 75em; }
+        div.toc span { margin-left: 0px; }
+        * { margin-left: auto; margin-right: auto; max-width: 75em; }
+        body { margin-left: 6px; margin-right: 6px; }
+        table th { padding: .5ex }
+        table td { padding: .5ex }
+    </style><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format">
+        function keyPress() {
+            var e = window.event;
+            if ( e == undefined ) {
+                return;
+            }
+            /* ### does not properly scroll, yet
+            if ( e.keyCode == 32 ) {
+            var l = document.links;
+            for ( var i = 0; i < l.length; i++ ) {
+                if ( l[i].innerText == "Next" ) {
+                location.href = l[i].href;
+                }
+            }
+            } else
+                */
+                if ( e.keyCode == 0x08 ) {
+            var l = document.links;
+            for ( var i = 0; i < l.length; i++ ) {
+                if ( l[i].innerText == "Prev" ) {
+                location.href = l[i].href;
+                }
+            }
+            }
+        }
+        document.onkeypress = keyPress;
+    </script></head><body><div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="rel-320"></a>2.68. Version 3.2</h2></div></div></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><span class="section"><a href="rel-320.html#general.10">2.68.1. General</a></span></dt><dt><span class="section"><a href="rel-320.html#qt">2.68.2. Qt</a></span></dt><dt><span class="section"><a href="rel-320.html#web">2.68.3. Web</a></span></dt><dt><span class="section"><a href="rel-320.html#java">2.68.4. Java</a></span></dt><dt><span class="section"><a href="rel-320.html#tk">2.68.5. Tk</a></span></dt></dl></div><p>Squish 3.2 is a minor release that brings new features,
+improvements for all editions. New features and some of the
+improvements are listed below. See the <code class="filename">ChangeLog</code>
+file in the package for a complete list.</p><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="general.10"></a>2.68.1. General</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Property name matching supports regular expressions
+and wildcards. This allows for dynamic property values to be
+identified.</p></li><li><p>References to other objects are possible in
+multi-property names to avoid repeating redundant
+information.</p></li><li><p>The list of properties used for object identification
+is configurable.</p></li><li><p>Improved documentation with more examples, in-depth
+information and tutorials</p></li><li><p>Improved usablity of the [Test Suite|Record] sequence
+in the IDE.</p></li><li><p>Implemented source() function for Perl script
+bindings.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="qt"></a>2.68.2. Qt</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Generated multi-property names now reference
+container, window, buddy, leftWidget, aboveWidget, parentWidget by
+name and not using a set of identifying properties. This makes the
+names carry less redundant information and better
+maintainable.</p></li><li><p>Use Qt's translator mechanism to do property value
+matching in object names and matching of item texts in functions such
+as activateItem() so test scripts can run on internationalized
+applications with no modifications.</p></li><li><p>New Qt 4.3 classes like QWizard are
+wrapped.</p></li><li><p>Support Qt 3.3.8 by working around a regression that
+broke the debugger on Windows.</p></li><li><p>Support Q3ListBox and Q3ComboBox</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="web"></a>2.68.3. Web</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Support record and replay of interactions with
+FileUpload form elements.</p></li><li><p>The Spy can be used without a running test</p></li><li><p>Added a waitForContextExists() function and record
+that instead of setContext().</p></li><li><p>Much improved Spy object picker.</p></li><li><p>Screenshots can now be taken of individual elements in
+the page and not only of the whole page (as it was the case in
+previous versions)</p></li><li><p>Added new event types AlertOpened, PromptOpened and
+ConfirmOpened than can be handled in the test script.</p></li><li><p>Added a JavaScript extension API that allows
+user-defined support for custom AJAX widgets. That includes custom
+object identification for record and replay and property
+definitions.</p></li><li><p>Added support for Firefox on Mac OS X.</p></li><li><p>Fixed various errors in the interaction with Internet
+Explorer 7</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="java"></a>2.68.4. Java</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>More properties and relative widgets (buddies, etc.)
+are used in object names when recording to generate more robust names.</p></li><li><p>Fixed script replay actions ignoring the return value
+whether the action succeeded or not.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="tk"></a>2.68.5. Tk</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Added support for testing Tk-inter applications
+(e.g. PyTk)</p></li></ul></div></div></div><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" type="text/javascript" src="ScriptingLanguage.js"></script><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format">setScriptingLanguage();</script><div class="navfooter"><hr></hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="rel-mac-beta1.html">Prev</a> </td><td width="20%" align="center"><a accesskey="u" href="relnotes.html">Up</a></td><td width="40%" align="right"> <a accesskey="n" href="rel-312.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">2.67. Squish for macOS, Beta 1 </td><td width="20%" align="center"><a accesskey="h" href="index-noframes.html">Home</a></td><td width="40%" align="right" valign="top"> 2.69. Version 3.1.2</td></tr></table></div></body>
+<!-- Mirrored from rel-320.html by HTTrack Website Copier/3.x [XR&CO'2013], Wed, 06 Jul 2022 13:29:03 GMT -->
+</html>

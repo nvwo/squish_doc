@@ -1,0 +1,283 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<!-- Mirrored from rel-700.html by HTTrack Website Copier/3.x [XR&CO'2013], Wed, 06 Jul 2022 13:28:55 GMT -->
+<head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><title>2.2. Version 7.0</title><link rel="stylesheet" href="manual.css" type="text/css"></link><meta name="generator" content="DocBook XSL Stylesheets V1.73.2"></meta><link rel="start" href="index-noframes.html" title="Squish Manual"></link><link rel="up" href="relnotes.html" title="Chapter 2. Release Notes—for Upgraders"></link><link rel="prev" href="rel-701.html" title="2.1. Version 7.0.1"></link><link rel="next" href="rel-672.html" title="2.3. Version 6.7.2"></link><style xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" type="text/css" media="screen">
+        div.toc * { margin-left: 6px; margin-right: auto; max-width: 75em; }
+        div.toc span { margin-left: 0px; }
+        * { margin-left: auto; margin-right: auto; max-width: 75em; }
+        body { margin-left: 6px; margin-right: 6px; }
+        table th { padding: .5ex }
+        table td { padding: .5ex }
+    </style><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format">
+        function keyPress() {
+            var e = window.event;
+            if ( e == undefined ) {
+                return;
+            }
+            /* ### does not properly scroll, yet
+            if ( e.keyCode == 32 ) {
+            var l = document.links;
+            for ( var i = 0; i < l.length; i++ ) {
+                if ( l[i].innerText == "Next" ) {
+                location.href = l[i].href;
+                }
+            }
+            } else
+                */
+                if ( e.keyCode == 0x08 ) {
+            var l = document.links;
+            for ( var i = 0; i < l.length; i++ ) {
+                if ( l[i].innerText == "Prev" ) {
+                location.href = l[i].href;
+                }
+            }
+            }
+        }
+        document.onkeypress = keyPress;
+    </script></head><body><div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="rel-700"></a>2.2. Version 7.0</h2></div></div></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><span class="section"><a href="rel-700.html#rel-700-video-capture">2.2.1. Video Capture</a></span></dt><dt><span class="section"><a href="rel-700.html#rel-700-improved-license-server">2.2.2. Improved License Server</a></span></dt><dt><span class="section"><a href="rel-700.html#rel-700-mouse-wheel-support">2.2.3. Mouse wheel support</a></span></dt><dt><span class="section"><a href="rel-700.html#rel-700-improved-css-access">2.2.4. Improved access to CSS properties</a></span></dt><dt><span class="section"><a href="rel-700.html#rel-700-javascript">2.2.5. Enhancements to the JavaScript Engine</a></span></dt><dt><span class="section"><a href="rel-700.html#rel-700-general">2.2.6. General</a></span></dt><dt><span class="section"><a href="rel-700.html#rel-700-ide">2.2.7. Squish IDE</a></span></dt><dt><span class="section"><a href="rel-700.html#rel-700-scripting">2.2.8. Scripting</a></span></dt><dt><span class="section"><a href="rel-700.html#rel-700-installer">2.2.9. Installer</a></span></dt><dt><span class="section"><a href="rel-700.html#rel-700-qt">2.2.10. Qt</a></span></dt><dt><span class="section"><a href="rel-700.html#rel-700-server">2.2.11. Server</a></span></dt><dt><span class="section"><a href="rel-700.html#rel-700-web">2.2.12. Web</a></span></dt><dt><span class="section"><a href="rel-700.html#rel-700-android">2.2.13. Android</a></span></dt><dt><span class="section"><a href="rel-700.html#rel-700-future-platform-changes">2.2.14. Future Platform Changes</a></span></dt><dt><span class="section"><a href="rel-700.html#rel-700-win">2.2.15. Native Windows</a></span></dt><dt><span class="section"><a href="rel-700.html#rel-700-mac">2.2.16. macOS</a></span></dt><dt><span class="section"><a href="rel-700.html#rel-700-ios">2.2.17. iOS</a></span></dt><dt><span class="section"><a href="rel-700.html#rel-700-tk">2.2.18. Tk</a></span></dt><dt><span class="section"><a href="rel-700.html#rel-700-src">2.2.19. Source Packages</a></span></dt></dl></div><p><span class="emphasis"><em>Squish</em></span> 7.0 is a feature release which delivers new features, bug
+  fixes and usability improvements to all editions of the product.</p><p>Noteworthy highlights of this release include:</p><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="rel-700-video-capture"></a>2.2.1. Video Capture</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>
+          Squish can now capture videos of test executions. Upon
+          replay, the video will be kept in sync with corresponding
+          test results.
+        </p></li><li><p>
+          The capturing can be started and stopped from the test
+          script with
+          <a class="xref" href="rgs-squish.html#test.startVideoCapture-function"><code class="function">test.startVideoCapture</code></a>and
+          <a class="xref" href="rgs-squish.html#test.stopVideoCapture-function"><code class="function">test.stopVideoCapture</code></a>, from the
+          Control Bar within <span class="application">Squish IDE</span> and with squishrunner's
+          <a class="xref" href="rg-cmdline.html#rg-squishrunner-cli-playback--enable-video-capture" title="7.4.3.8. Playback option --enable-video-capture">Playback option <code class="option">--enable-video-capture</code> (Section 7.4.3.8)</a>.
+        </p></li><li><p>
+          The video is stored as an MPEG-4 file attachment in the test
+          results and can be played within the <span class="application">Squish IDE</span>
+          or <a class="ulink" href="https://www.froglogic.com/testcenter/" target="_blank">Squish
+          Test Center</a>.
+        </p></li><li><p>
+          Note that MPEG-4 contains patented technologies. Two notices
+          pointing out the possible need to obtain your own licenses
+          have been added to the bottom of <a class="xref" href="book-ack.html" title="Appendix A. Third-Party Software">Appendix A, <i>Third-Party Software</i></a>.
+        </p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="rel-700-improved-license-server"></a>2.2.2. Improved License Server</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>
+          The current status of floating licenses served by the Squish license server can
+          be queried with HTTP requests using a <a class="xref" href="rg-licenseserver.html#rg-licenseserver-rest-api" title="7.16.3. REST API">REST API</a>.
+        </p></li><li><p>
+          Legacy license keys are not compatible with Squish 7. Please
+          contact your sales representative for an upgrade.
+        </p></li><li><p>
+          The Squish license server is now offering an improved installer which registers
+          the server as a system-wide service on Linux, macOS and Windows.
+        </p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="rel-700-mouse-wheel-support"></a>2.2.3. Mouse wheel support</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>
+          Squish for Windows does support recording and replaying of scrolling with the mouse wheel
+          by introducing the function <code class="code">mouseWheel</code>.
+        </p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="rel-700-improved-css-access"></a>2.2.4. Improved access to CSS properties</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>
+          Provide access to the CSS attributes of HTML objects via the properties system
+          of Squish. All HTML objects have a new 'css' property which contains
+          all currently known CSS properties as sub-properties.
+        </p><p>
+          This is accessible in the script as well as through the Properties view in the <span class="application">Squish IDE</span>,
+          making it easy to create verifications. Color-related CSS properties are provided
+          as a new dedicated type which makes it seamless to verify individual properties
+          (red, green, blue, alpha) of the color.
+          </p><p>
+          More details can be found in the documentation of
+          <a class="xref" href="rgs-webconvenience.html#web-HTML_Object.css-property">HTML_Object.css</a>.
+        </p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="rel-700-javascript"></a>2.2.5. Enhancements to the JavaScript Engine</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>
+          Added new null coalescing operators and others from ECMAScript 2021:
+          <code class="code">??, ??=, &amp;&amp;=</code> and <code class="code">||=</code>
+        </p></li><li><p>
+          Added <code class="code">Object.seal()</code> and <code class="code">Object.isSealed()</code> as well as
+          <code class="code">Object.freeze()</code> and <code class="code">Object.isFrozen()</code>.
+        </p></li><li><p>
+          Adapted behavior of <code class="code">Object.preventExtensions()</code> and <code class="code">Object.isExtendible()</code>
+          to ECMAScript 2015. Both functions will not throw an error on non-object type arguments anymore.
+        </p></li><li><p>
+          Support <code class="code">export class</code> statements in modules.
+        </p></li><li><p>
+          Added additional object literal types: Next to <code class="code">{a: b, c: d}</code> that is:
+          <code class="code">{x}, {a: b,}, {[expr]: value}, {f() { return 1;}}, {get x() { })</code> and
+          <code class="code">{set x(v) { }}</code>.
+        </p></li><li><p>
+        Support the spread operator for function call arguments <code class="code">(foo(...args))</code>,
+        array literals <code class="code">[...e]</code> and object literals <code class="code">{...x}</code>.
+        </p></li><li><p>
+        Support 'deferred' default exports from modules. The syntax
+        for exporting <code class="code">x</code> as a default after its
+        declaration is: <code class="code">export { x as default };</code>.
+        </p></li><li><p>
+        Fixed <code class="code">this</code> value in function called via a <code class="code">super</code> reference.
+        </p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="rel-700-general"></a>2.2.6. General</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>
+          The time precision of all events in the XML Report (starting with version 3.5) got increased to
+          contain milliseconds. The format complies with ISO 8601 and reads like this for example:
+          <code class="code">2020-10-05T10:20:30.005+01:00</code>.
+        </p></li><li><p>
+          The value for squishrunners <code class="option">--exitCodeOnFail</code> option is now limited between
+          0 and 255 for all operating systems for better portability.
+        </p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="rel-700-ide"></a>2.2.7. Squish IDE</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>
+          Some of the dependencies of the <span class="application">Squish IDE</span> had to be updated which causes a change in
+          the minimum system requirements for running the <span class="application">Squish IDE</span>. In particular the <span class="application">Squish IDE</span> is
+          now working with Java 11, Eclipse 2020-12 (4.18) and Open JavaFX 16.
+        </p><div class="tabularx"><table width="100%" border="1"><colgroup><col></col><col></col></colgroup><tbody valign="top"><tr><td align="left" valign="top"><p><span class="bold"><strong>Linux</strong></span></p></td><td align="left" valign="top">
+                  <div class="itemizedlist"><ul type="circle"><li><p>CentOS 7.5, RHEL 7.5, SLES 15, Ubuntu 18.04 and comparable distributions</p></li><li><p><span class="application">Squish IDE</span> is available only for 64-bit systems, 32-bit Linux packages of Squish ship without the <span class="application">Squish IDE</span></p></li><li><p>The platform has to provide at least GTK 3.20 for the <span class="application">Squish IDE</span> to function</p></li><li><p>
+                      Older versions of the mentioned Linux distributions may also work as long as they
+                      provide the necessary minimum version of GTK.
+                    </p></li></ul></div>
+                </td></tr><tr><td align="left" valign="top"><p><span class="bold"><strong>macOS</strong></span></p></td><td align="left" valign="top"><p>macOS 10.13</p></td></tr><tr><td align="left" valign="top"><p><span class="bold"><strong>Windows</strong></span></p></td><td align="left" valign="top"><p>Windows 7</p></td></tr></tbody></table></div><p>
+        In addition, the new Video Playback feature of the <span class="application">Squish IDE</span> requires a system
+        installation of FFmpeg libraries on Linux systems and supports several different
+        versions of FFmpeg: 56, 57 and 58.
+        </p><p>
+        Some of these changes also apply to the Eclipse Squish Integration that can be
+        installed into Eclipse. You can still use an older version of Eclipse, but it
+        will have to run with Java 11 and Open JavaFX 16 may also need relatively
+        recent versions of GTK.
+        </p></li><li><p>
+          Comments in BDD spanning multiple lines can be conveniently toggled now in
+          the <span class="application">Squish IDE</span>.
+        </p></li><li><p>
+          Re-enabled Eclipse-provided configuration for "Web Browser" behavior
+          (under Preferences -&gt; General) when links are being opened in the <span class="application">Squish IDE</span>.
+        </p><p>
+          The configured browser is being used for example when opening the online manual or
+          when opening URLs inside script editors after hovering over URLs while pressing
+          <span class="keycap"><strong>Ctrl/Cmd</strong></span>.
+        </p><p>
+          The configuration allows to override the default behavior of Eclipse when opening a
+          URL in an external browser – in particular allowing to ensure that a browser
+          is being used and not some other application.
+        </p><p>
+          Note that this configuration entry <span class="emphasis"><em>is not related to</em></span> the browser
+          used by Squish for Web to run tests. The browser used for testing is still being configured through
+          the Server Settings dialog.
+        </p></li><li><p>
+        The Python editor (Pydev) used by the <span class="application">Squish IDE</span> has been updated to version 9.1.0,
+        improving support for newer versions of Python.
+        </p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="rel-700-scripting"></a>2.2.8. Scripting</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>
+        The bundled Perl interpreter was updated to version 5.34.
+        </p></li><li><p>
+          When calls to <code class="code">installEventHandler</code> had a missing
+          or invalid event handler function the error in the Squish
+          report now includes a code location for Python, too.
+        </p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="rel-700-installer"></a>2.2.9. Installer</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>
+        Python 3 is selected for installation by default, Python 2 is still optionally available.
+        </p></li><li><p>
+        The installer for Squish for Mac, Squish for Java and Squish for Qt (6.2 or newer) is
+        providing universal packages for installations on macOS.
+        </p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="rel-700-qt"></a>2.2.10. Qt</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>
+          Added support for Qt 6.2.x. Packages for Qt 6.3 will become
+          available after its release.
+        </p></li><li><p>
+        Images captured with the <code class="code">grabWidget()</code> API while testing embedded devices can be
+        un-rotated with the setting <code class="code">DisplayRotation</code> in <code class="filename">etc/qtwrapper.ini</code>
+        to improve working with screenshot verification.
+        </p></li><li><p>
+          The <code class="code">RecordNativeMouseCommands</code> setting
+          (from <code class="filename">qtwrapper.ini</code>) has been dropped
+          because it relied on script functions that have meanwhile
+          been superseded by generic variants
+          of <code class="code">mousePress</code> and other functions.
+        </p></li><li><p>
+          Fixed initialization of extensions for the Qt Toolkit Support when Squish is
+          included into a statically linked Qt AUT. Customers who use static Qt and a
+          build-system other than qmake may have to adapt their build rules according
+          to changes in <code class="filename">qtbuiltinhook.pri</code>.
+        </p></li><li><p>
+          Added embedded package for Qt 5.15 or newer running in the iOS Simulator.
+        </p></li><li><p>
+          Fixed loading of the support for QWebEngineView on Qt 6.2 and newer.
+        </p></li><li><p>
+          Fixed issues with loading Qt Wrapper via built-in hook in secure mode
+          (eg. <code class="code">setuid</code>) Linux applications.
+        </p></li><li><p>
+          Native test script functions like <code class="code">mousePress()</code>
+          are working now when Qt and its XCB platform plugin has been
+          built without Xlib-support.
+        </p></li><li><p>
+          Support for Carbon-based menus in Qt applications on macOS
+          was dropped.
+        </p><p>
+          The macOS Carbon framework had been discontinued in 2007 and
+          only ever was available as a 32-bit library. Modern 64-bit
+          applications do not use it anymore, therefore any support is
+          dropped.
+        </p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="rel-700-server"></a>2.2.11. Server</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>
+          Modified the behavior of squishserver and startaut to ensure that AUTs
+          supporting the ARM64 architecture are always being started in that architecture
+          when running on an ARM64-based macOS system and the Squish edition supports
+          this as well. This affects Squish for Qt, Squish for Java and Squish for macOS.
+        </p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="rel-700-web"></a>2.2.12. Web</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>
+          If there is no default browser configured in Squish for Web, the fallback Internet
+          Explorer (for Windows 10 or older) is saved as the default browser in the
+          <code class="filename">server.ini</code> file.
+        </p></li><li><p>
+          The default browser for Squish for Web is changed from Internet Explorer to Edge
+          on Windows 11 or newer.
+        </p></li><li><p>
+          Enable automation of websites that use Content-Security-Policy with Squish for
+          Web when using Google Chrome. No additional third party extension is needed for
+          that anymore.
+        </p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="rel-700-android"></a>2.2.13. Android</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>
+          Respect the z-order of GUI elements when
+          recording <code class="code">tapObject</code> calls. This became relevant
+          as of Android API level 21.
+        </p></li><li><p>
+          Packages builds have been upgraded to Android SDK 31 and
+          usage of the optimized <code class="filename">d8</code> Dalvik
+          compiler.
+        </p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="rel-700-future-platform-changes"></a>2.2.14. Future Platform Changes</h3></div></div></div><p>
+    In order to allow us to keep supporting newer compilers and platforms it is
+    going to be necessary to drop support for some older compilers and platforms.
+    This is planned to happen for the <span class="emphasis"><em>next feature release after 7.0</em></span>
+    (i.e. 7.1 or 8 whichever comes first), but we wanted to announce this plan early on so that
+    customers can prepare themselves or reach out to us to learn more about this plan via
+    our support channel.
+  </p><p>
+    The main impact of this change will be on the Squish for Qt edition, both
+    affecting binary package and source package users. Our plans for source packages
+    can be found in <a class="link" href="rel-700.html#rel-700-src-cpp11">the source packages release
+    note entry</a>. We plan to <span class="emphasis"><em>drop</em></span> the following binary packages
+    of Squish for Qt:
+    </p><div class="itemizedlist"><ul type="disc"><li><p>
+          packages using MSVC &lt; 14 (Visual Studio 2015)
+        </p></li><li><p>
+          packages using MinGW &lt; 4.8
+        </p></li><li><p>
+          packages for Windows CE &lt; 8
+        </p></li></ul></div><p>
+  </p><p>
+    The binary packages of the other Squish editions will not be affected as much. We may
+    need to require CentOS 7 (or comparable) Linux distributions when the change is
+    implemented however we do not expect any changes on binary packages for the Windows or
+    macOS platforms. We will reflect the changed requirements in <a class="xref" href="ins-commandline-tools-server-ide.html#ins-binary-platforms" title="3.1.1.1. Minimum System Requirements for Binary Packages">Minimum System Requirements for Binary Packages (Section 3.1.1.1)</a> accordingly.
+  </p></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="rel-700-win"></a>2.2.15. Native Windows</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>
+          First testing on Windows 11, .NET 6 and on ARM64 hardware
+          (in emulated mode) revealed good results.
+        </p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="rel-700-mac"></a>2.2.16. macOS</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>
+          The Squish for Mac packages have been prepared to also
+          support M1 machines, i.e. macOS running on ARM64 hardware.
+        </p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="rel-700-ios"></a>2.2.17. iOS</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>
+          Squish now supports iOS simulators from Xcode 13 and up. Older Squish
+          releases failed to find simulated devices after upgrading from Xcode 12
+          to 13.
+        </p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="rel-700-tk"></a>2.2.18. Tk</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>
+          Fixed a problem with <code class="code">tcleval</code> sometimes raising script errors for successful
+          evaluation of Tcl code in the AUT.
+        </p></li><li><p>
+          Improved error reporting when reading a property of a Tk widget failed.
+        </p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="rel-700-src"></a>2.2.19. Source Packages</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>
+          <code class="code">configure</code> now detects q++ from QNX 7.0 or newer as a valid C++ compiler.
+        </p></li><li><p>
+          Fixed build problems (especially for cross-compilation) caused by an explicit runtime
+          library path. Build environments that require their Qt to be found via the runtime
+          library path now need to set this up before a Squish build.
+        </p></li><li><p>
+          Building squishrunner and ide-utils with Qt 6.0 or newer is now supported.
+        </p></li><li><p>
+          Squish for Qt can now be built without QtWidgets and can reduce memory footprints
+          especially on embedded devices.
+        </p></li><li><p><a id="rel-700-src-cpp11"></a>
+          For the next feature release after 7.0 we will be requiring C++11 and thus a C++11
+           compatible compiler for all source packages. This change will drop support for
+          the following compilers and platforms. Please also see
+          <a class="xref" href="rel-700.html#rel-700-future-platform-changes" title="2.2.14. Future Platform Changes">Future Platform Changes (Section 2.2.14)</a>.
+          </p><div class="itemizedlist"><ul type="circle"><li><p>MSVC7 (Visual Studio 2005) up to and including MSVC12 (Visual Studio 2013), none of them fully supports C++11</p></li><li><p>GCC &lt; 4.8 (Linux and MinGW)</p></li><li><p>QNX &lt; 7.0</p></li><li><p>Windows CE &lt; 8</p></li><li><p>Solaris (no Qt version available that works with a C++11-compiler)</p></li></ul></div><p>
+        </p></li></ul></div></div></div><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" type="text/javascript" src="ScriptingLanguage.js"></script><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format">setScriptingLanguage();</script><div class="navfooter"><hr></hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="rel-701.html">Prev</a> </td><td width="20%" align="center"><a accesskey="u" href="relnotes.html">Up</a></td><td width="40%" align="right"> <a accesskey="n" href="rel-672.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">2.1. Version 7.0.1 </td><td width="20%" align="center"><a accesskey="h" href="index-noframes.html">Home</a></td><td width="40%" align="right" valign="top"> 2.3. Version 6.7.2</td></tr></table></div></body>
+<!-- Mirrored from rel-700.html by HTTrack Website Copier/3.x [XR&CO'2013], Wed, 06 Jul 2022 13:28:55 GMT -->
+</html>

@@ -1,0 +1,62 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<!-- Mirrored from rel-630beta.html by HTTrack Website Copier/3.x [XR&CO'2013], Wed, 06 Jul 2022 13:28:55 GMT -->
+<head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><title>2.20. Version 6.3 Beta</title><link rel="stylesheet" href="manual.css" type="text/css"></link><meta name="generator" content="DocBook XSL Stylesheets V1.73.2"></meta><link rel="start" href="index-noframes.html" title="Squish Manual"></link><link rel="up" href="relnotes.html" title="Chapter 2. Release Notes—for Upgraders"></link><link rel="prev" href="rel-630.html" title="2.19. Version 6.3"></link><link rel="next" href="rel-620.html" title="2.21. Version 6.2"></link><style xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" type="text/css" media="screen">
+        div.toc * { margin-left: 6px; margin-right: auto; max-width: 75em; }
+        div.toc span { margin-left: 0px; }
+        * { margin-left: auto; margin-right: auto; max-width: 75em; }
+        body { margin-left: 6px; margin-right: 6px; }
+        table th { padding: .5ex }
+        table td { padding: .5ex }
+    </style><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format">
+        function keyPress() {
+            var e = window.event;
+            if ( e == undefined ) {
+                return;
+            }
+            /* ### does not properly scroll, yet
+            if ( e.keyCode == 32 ) {
+            var l = document.links;
+            for ( var i = 0; i < l.length; i++ ) {
+                if ( l[i].innerText == "Next" ) {
+                location.href = l[i].href;
+                }
+            }
+            } else
+                */
+                if ( e.keyCode == 0x08 ) {
+            var l = document.links;
+            for ( var i = 0; i < l.length; i++ ) {
+                if ( l[i].innerText == "Prev" ) {
+                location.href = l[i].href;
+                }
+            }
+            }
+        }
+        document.onkeypress = keyPress;
+    </script></head><body><div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="rel-630beta"></a>2.20. Version 6.3 Beta</h2></div></div></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><span class="section"><a href="rel-630beta.html#rel-630-image-search">2.20.1. Image Search</a></span></dt><dt><span class="section"><a href="rel-630beta.html#rel-630-comparisons">2.20.2. Comparison of Text and XML Files</a></span></dt></dl></div><p><span class="emphasis"><em>Squish</em></span> 6.3 Beta is a preview release showcasing the addition
+  of an Image Search extension and other new features
+  applicable to all editions of the product. </p><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="rel-630-image-search"></a>2.20.1. Image Search</h3></div></div></div><p>As a supplement to the main property-based object identification,
+  elements can be located on the screen based on their visual appearance. This
+  enables interactions with custom elements, controls from unknown
+  toolkits, and controls from outside of the main application.
+  </p><p>The <span class="application">Squish IDE</span> now features the insertion of user interactions
+  like <code class="code">mouseClick()</code> and <code class="code">tapObject()</code> based on
+  images. The search is performed through a newly added
+  <a class="xref" href="rgs-squish.html#waitForImage-function"><code class="function">waitForImage</code></a> function. The algorithm
+  employed is still quite simple, but future versions will provide more
+  sophisticated look-up options that can deal with color and resolution
+  differences. See <a class="xref" href="ug-imagebasedtesting.html" title="5.24. How to Do Image-Based Testing">How to Do Image-Based Testing (Section 5.24)</a> for an
+  example automating a chess application.</p><p>Once the extension leaves its beta state it will require an
+  additional license. At that point a time-limited free upgrade option
+  will be available for all existing customers.</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="rel-630-comparisons"></a>2.20.2. Comparison of Text and XML Files</h3></div></div></div><p>The new functions
+      <a class="xref" href="rgs-squish.html#test.compareTextFiles-function"><code class="function">test.compareTextFiles</code></a> and
+      <a class="xref" href="rgs-squish.html#test.compareXMLFiles-function"><code class="function">test.compareXMLFiles</code></a> compare the
+      content of two text and XML files, respectively. Instead of
+      performing a plain, byte-by-byte comparison, possible differences
+      are reported for individual lines and elements. Several configuration
+      options exist to allow for acceptable differences in content and
+      formatting.
+  </p></div></div><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" type="text/javascript" src="ScriptingLanguage.js"></script><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format">setScriptingLanguage();</script><div class="navfooter"><hr></hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="rel-630.html">Prev</a> </td><td width="20%" align="center"><a accesskey="u" href="relnotes.html">Up</a></td><td width="40%" align="right"> <a accesskey="n" href="rel-620.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">2.19. Version 6.3 </td><td width="20%" align="center"><a accesskey="h" href="index-noframes.html">Home</a></td><td width="40%" align="right" valign="top"> 2.21. Version 6.2</td></tr></table></div></body>
+<!-- Mirrored from rel-630beta.html by HTTrack Website Copier/3.x [XR&CO'2013], Wed, 06 Jul 2022 13:28:55 GMT -->
+</html>

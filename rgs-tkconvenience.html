@@ -1,0 +1,249 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<!-- Mirrored from rgs-tkconvenience.html by HTTrack Website Copier/3.x [XR&CO'2013], Wed, 06 Jul 2022 13:29:00 GMT -->
+<head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><title>6.5. Tk Convenience API</title><link rel="stylesheet" href="manual.css" type="text/css"></link><meta name="generator" content="DocBook XSL Stylesheets V1.73.2"></meta><link rel="start" href="index-noframes.html" title="Squish Manual"></link><link rel="up" href="api.man.html" title="Chapter 6. API Reference Manual"></link><link rel="prev" href="rgs-qtconvenience.html" title="6.4. Qt Convenience API"></link><link rel="next" href="rgs-xvconvenience.html" title="6.6. XView Convenience API"></link><style xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" type="text/css" media="screen">
+        div.toc * { margin-left: 6px; margin-right: auto; max-width: 75em; }
+        div.toc span { margin-left: 0px; }
+        * { margin-left: auto; margin-right: auto; max-width: 75em; }
+        body { margin-left: 6px; margin-right: 6px; }
+        table th { padding: .5ex }
+        table td { padding: .5ex }
+    </style><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format">
+        function keyPress() {
+            var e = window.event;
+            if ( e == undefined ) {
+                return;
+            }
+            /* ### does not properly scroll, yet
+            if ( e.keyCode == 32 ) {
+            var l = document.links;
+            for ( var i = 0; i < l.length; i++ ) {
+                if ( l[i].innerText == "Next" ) {
+                location.href = l[i].href;
+                }
+            }
+            } else
+                */
+                if ( e.keyCode == 0x08 ) {
+            var l = document.links;
+            for ( var i = 0; i < l.length; i++ ) {
+                if ( l[i].innerText == "Prev" ) {
+                location.href = l[i].href;
+                }
+            }
+            }
+        }
+        document.onkeypress = keyPress;
+    </script></head><body><div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="rgs-tkconvenience"></a>6.5. Tk Convenience API</h2></div></div></div><div class="important" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Important: Tk-specific"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Important]" src="images/important.png"></img></td><th align="left">Tk-specific</th></tr><tr><td align="left" valign="top"><p>
+The Tk Convenience API is <span class="emphasis"><em>only</em></span> available for
+the Squish for Tk editions.
+</p></td></tr></table></div><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Note: Tk Convenience Function Parameters"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/note.png"></img></td><th align="left"><a id="tk-convenience.function.parameters"></a>Tk Convenience Function Parameters</th></tr><tr><td align="left" valign="top"><p>
+Some of Tk's convenience functions can take a
+<em class="parameter"><code>modifierState</code></em> argument which indicates which
+special keys are pressed at the time of a mouse click and a
+<em class="parameter"><code>button</code></em> argument which indicates which mouse
+button was clicked.
+</p><p>
+The <em class="parameter"><code>modifierState</code></em> is used to indicate whether the
+<span class="keysym">Control</span>, <span class="keysym">Shift</span>, and similar keys are
+pressed. The value is passed as an integer and is normally 0 (meaning
+none are pressed). The precise numbers to use depend on the underlying
+Tk implementation—look in the <code class="filename">X.h</code> file for
+<code class="code">ControlMask</code>, <code class="code">ShiftMask</code> and so on, or ask
+froglogic support for help.
+</p><p>
+The <em class="parameter"><code>button</code></em> is used to indicate which mouse button
+is pressed. The values are normally, 1 (left button), 2 (middle button),
+and 3 (right buttton)—but these values can vary between systems.
+</p></td></tr></table></div><p>
+Here are some quick links to the Tk Convenience API's functions:
+</p><div class="informaltable"><table border="0"><colgroup><col></col><col></col><col></col></colgroup><tbody><tr valign="top"><td valign="top">
+<div class="itemizedlist"><ul type="disc" compact><li><p><a class="xref" href="rgs-tkconvenience.html#tk-activateItem-function"><code class="function">activateItem</code></a></p></li><li><p><a class="xref" href="rgs-tkconvenience.html#tk-asyncClickItem-function"><code class="function">asyncClickItem</code></a></p></li><li><p><a class="xref" href="rgs-tkconvenience.html#tk-asyncDoubleClickItem-function"><code class="function">asyncDoubleClickItem</code></a></p></li><li><p><a class="xref" href="rgs-tkconvenience.html#tk-asyncMouseClick-function"><code class="function">asyncMouseClick</code></a></p></li><li><p><a class="xref" href="rgs-tkconvenience.html#tk-asyncType-function"><code class="function">asyncType</code></a></p></li><li><p><a class="xref" href="rgs-tkconvenience.html#tk-clickButton-function"><code class="function">clickButton</code></a></p></li><li><p><a class="xref" href="rgs-tkconvenience.html#tk-clickItem-function"><code class="function">clickItem</code></a></p></li></ul></div>
+</td><td valign="top">
+<div class="itemizedlist"><ul type="disc" compact><li><p><a class="xref" href="rgs-tkconvenience.html#tk-closeWindow-function"><code class="function">closeWindow</code></a></p></li><li><p><a class="xref" href="rgs-tkconvenience.html#tk-doubleClick-function"><code class="function">doubleClick</code></a></p></li><li><p><a class="xref" href="rgs-tkconvenience.html#tk-doubleClickItem-function"><code class="function">doubleClickItem</code></a></p></li><li><p><a class="xref" href="rgs-tkconvenience.html#tk-dragAndDrop-function"><code class="function">dragAndDrop</code></a></p></li><li><p><a class="xref" href="rgs-tkconvenience.html#tk-grabWidget-function"><code class="function">grabWidget</code></a></p></li><li><p><a class="xref" href="rgs-tkconvenience.html#tk-installEventHandler-function"><code class="function">installEventHandler</code></a></p></li><li><p><a class="xref" href="rgs-tkconvenience.html#tk-mouseClick-function"><code class="function">mouseClick</code></a></p></li></ul></div>
+</td><td valign="top">
+<div class="itemizedlist"><ul type="disc" compact><li><p><a class="xref" href="rgs-tkconvenience.html#tk-scrollTo-function"><code class="function">scrollTo</code></a></p></li><li><p><a class="xref" href="rgs-tkconvenience.html#tk-sendEvent-function"><code class="function">sendEvent</code></a></p></li><li><p><a class="xref" href="rgs-tkconvenience.html#tk-tcleval-function"><code class="function">tcleval</code></a></p></li><li><p><a class="xref" href="rgs-tkconvenience.html#tk-type-function"><code class="function">type</code></a></p></li><li><p><a class="xref" href="rgs-tkconvenience.html#tk-uninstallEventHandler-function"><code class="function">uninstallEventHandler</code></a></p></li></ul></div>
+</td></tr></tbody></table></div><div class="funcsynopsis"><a id="tk-activateItem-function"></a><p><code class="funcdef"><b class="fsfunc">activateItem</b>(</code><var class="pdparam">objectName</var>, <var class="pdparam">itemText</var><code>)</code>;</p></div><div class="funcsynopsis"><p><code class="funcdef"><b class="fsfunc">activateItem</b>(</code><var class="pdparam">objectName</var>, <var class="pdparam">itemText</var>, <var class="pdparam">itemImageName</var><code>)</code>;</p></div><div class="funcsynopsis"><p><code class="funcdef"><b class="fsfunc">activateItem</b>(</code><var class="pdparam">objectName</var>, <var class="pdparam">itemText</var>, <var class="pdparam">itemImageName</var>, <var class="pdparam">itemFileName</var><code>)</code>;</p></div><p>
+This function activates the menu item with the specified
+<em class="parameter"><code>itemText</code></em> in the <em class="parameter"><code>objectName</code></em>
+menu, context menu, or menu bar.
+</p><p>
+As an alternative, the item can be identified by its
+<em class="parameter"><code>itemImageName</code></em> (i.e., the AUT's internal name for
+the menu item's image), in which case the
+<em class="parameter"><code>itemText</code></em> can be passed the corresponding text or
+an empty string. Similarly, the  item can be identified by its
+<em class="parameter"><code>itemFileName</code></em> (i.e., the filename of the menu
+item's image), in which case the <em class="parameter"><code>itemText</code></em> and
+<em class="parameter"><code>itemImageName</code></em> can be passed their corresponding
+texts or empty strings.
+</p><div class="funcsynopsis"><a id="tk-asyncClickItem-function"></a><p><code class="funcdef"><b class="fsfunc">asyncClickItem</b>(</code><var class="pdparam">objectName</var>, <var class="pdparam">itemIdentifier</var>, <var class="pdparam">x</var>, <var class="pdparam">y</var>, <var class="pdparam">modifierState</var>, <var class="pdparam">button</var><code>)</code>;</p></div><p>
+This function works similar to the normal <a class="xref" href="rgs-tkconvenience.html#tk-clickItem-function"><code class="function">clickItem</code></a> function,
+but can avoid hanging test executions in cases where the click triggers opening a modal
+dialog. A modal dialog normally blocks the final step of emulating a click, which causes the
+normal <a class="xref" href="rgs-tkconvenience.html#tk-clickItem-function"><code class="function">clickItem</code></a> function to not return until the dialog has
+been closed. In order to avoid this, the emulation of the click is slightly delayed and the
+function returns immediately before the emulation has finished. This has no noticeable effect
+on the test script.
+</p><p>
+For details on the parameters and their usage please look at the normal
+<a class="xref" href="rgs-tkconvenience.html#tk-clickItem-function"><code class="function">clickItem</code></a> function.
+</p><div class="funcsynopsis"><a id="tk-asyncDoubleClickItem-function"></a><p><code class="funcdef"><b class="fsfunc">asyncDoubleClickItem</b>(</code><var class="pdparam">objectName</var>, <var class="pdparam">itemIdentifier</var>, <var class="pdparam">x</var>, <var class="pdparam">y</var>, <var class="pdparam">modifierState</var>, <var class="pdparam">button</var><code>)</code>;</p></div><p>
+This function works similar to the normal <a class="xref" href="rgs-tkconvenience.html#tk-doubleClickItem-function"><code class="function">doubleClickItem</code></a> function,
+but can avoid hanging test executions in cases where the double click triggers opening a modal
+dialog. A modal dialog normally blocks the final step of emulating a click, which causes the
+normal <a class="xref" href="rgs-tkconvenience.html#tk-doubleClickItem-function"><code class="function">doubleClickItem</code></a> function to not return until the dialog has
+been closed. In order to avoid this the emulation of the click is slightly delayed and the
+function returns immediately before the emulation has finished. This has no noticeable effect
+on the test script.
+</p><p>
+For details on the parameters and their usage please look at the normal
+<a class="xref" href="rgs-tkconvenience.html#tk-doubleClickItem-function"><code class="function">doubleClickItem</code></a> function.
+</p><div class="funcsynopsis"><a id="tk-asyncMouseClick-function"></a><p><code class="funcdef"><b class="fsfunc">asyncMouseClick</b>(</code><var class="pdparam">objectName</var>, <var class="pdparam">x</var>, <var class="pdparam">y</var>, <var class="pdparam">modifierState</var>, <var class="pdparam">button</var><code>)</code>;</p></div><p>
+This function works similar to the normal <a class="xref" href="rgs-tkconvenience.html#tk-mouseClick-function"><code class="function">mouseClick</code></a> function,
+but can avoid hanging test executions in cases where the click triggers opening a modal
+dialog. A modal dialog normally blocks the final step of emulating a click, which causes the
+normal <a class="xref" href="rgs-tkconvenience.html#tk-mouseClick-function"><code class="function">mouseClick</code></a> function to not return until the dialog has
+been closed. In order to avoid this the emulation of the click is slightly delayed and the
+function returns immediately before the emulation has finished. This has no noticeable effect
+on the test script.
+</p><p>
+For details on the parameters and their usage please look at the normal
+<a class="xref" href="rgs-tkconvenience.html#tk-mouseClick-function"><code class="function">mouseClick</code></a> function.
+</p><div class="funcsynopsis"><a id="tk-asyncType-function"></a><p><code class="funcdef"><b class="fsfunc">asyncType</b>(</code><var class="pdparam">objectName</var>, <var class="pdparam">text</var><code>)</code>;</p></div><p>
+This function works similar to the normal <a class="xref" href="rgs-tkconvenience.html#tk-type-function"><code class="function">type</code></a> function,
+but can avoid hanging test executions in cases where the text input triggers opening a modal
+dialog. A modal dialog normally blocks the final step of emulating the text input, which causes the
+normal <a class="xref" href="rgs-tkconvenience.html#tk-type-function"><code class="function">type</code></a> function to not return until the dialog has
+been closed. In order to avoid this the emulation of the text input is slightly delayed and the
+function returns immediately before the emulation has finished. This has no noticeable effect
+on the test script.
+</p><p>
+For details on the parameters and their usage please look at the normal
+<a class="xref" href="rgs-tkconvenience.html#tk-type-function"><code class="function">type</code></a> function.
+</p><div class="funcsynopsis"><a id="tk-clickButton-function"></a><p><code class="funcdef"><b class="fsfunc">clickButton</b>(</code><var class="pdparam">objectName</var><code>)</code>;</p></div><p>
+This function clicks the <em class="parameter"><code>objectName</code></em> button.
+</p><div class="funcsynopsis"><a id="tk-clickItem-function"></a><p><code class="funcdef"><b class="fsfunc">clickItem</b>(</code><var class="pdparam">objectName</var>, <var class="pdparam">itemIdentifier</var>, <var class="pdparam">x</var>, <var class="pdparam">y</var>, <var class="pdparam">modifierState</var>, <var class="pdparam">button</var><code>)</code>;</p></div><p>
+This function clicks the mouse on the item with the specified
+<em class="parameter"><code>itemIdentifier</code></em> inside the given
+<em class="parameter"><code>objectName</code></em> view widget. This function is
+typically used to access items inside views such as lists, tables,
+and trees. For tables the <em class="parameter"><code>itemIdentifier</code></em>
+is a string with the format <span class="emphasis"><em>row/column</em></span>, e.g.,
+<code class="code">"4/21"</code>; for other views it is the relevant item's text.
+</p><p>
+The click is made at position <em class="parameter"><code>x</code></em> and
+<em class="parameter"><code>y</code></em> (in the <em class="parameter"><code>itemText</code></em> item's
+coordinates) using the specified <em class="parameter"><code>button</code></em> and with
+the <em class="parameter"><code>modifierState</code></em> modifier state.
+</p><p>
+See <a class="xref" href="rgs-tkconvenience.html#tk-convenience.function.parameters" title="Tk Convenience Function Parameters">Tk Convenience Function Parameters</a> for which
+values are valid for the <em class="parameter"><code>modifierState</code></em> and
+<em class="parameter"><code>button</code></em> arguments.
+</p><div class="funcsynopsis"><a id="tk-closeWindow-function"></a><p><code class="funcdef"><b class="fsfunc">closeWindow</b>(</code><var class="pdparam">objectName</var><code>)</code>;</p></div><p>
+This function closes the <em class="parameter"><code>objectName</code></em> window.
+</p><div class="funcsynopsis"><a id="tk-doubleClick-function"></a><p><code class="funcdef"><b class="fsfunc">doubleClick</b>(</code><var class="pdparam">objectName</var>, <var class="pdparam">x</var>, <var class="pdparam">y</var>, <var class="pdparam">modifierState</var>, <var class="pdparam">button</var><code>)</code>;</p></div><p>
+This function double-clicks the mouse on the
+<em class="parameter"><code>objectName</code></em> widget at position
+<em class="parameter"><code>x</code></em> and <em class="parameter"><code>y</code></em> (in the
+<em class="parameter"><code>objectName</code></em> widget's coordinates) using the
+specified <em class="parameter"><code>button</code></em> and the
+<em class="parameter"><code>modifierState</code></em> modifier.
+</p><p>
+See <a class="xref" href="rgs-tkconvenience.html#tk-convenience.function.parameters" title="Tk Convenience Function Parameters">Tk Convenience Function Parameters</a> for which
+values are valid for the <em class="parameter"><code>modifierState</code></em> and
+<em class="parameter"><code>button</code></em> arguments.
+</p><div class="funcsynopsis"><a id="tk-doubleClickItem-function"></a><p><code class="funcdef"><b class="fsfunc">doubleClickItem</b>(</code><var class="pdparam">objectName</var>, <var class="pdparam">itemText</var>, <var class="pdparam">x</var>, <var class="pdparam">y</var>, <var class="pdparam">modifierState</var>, <var class="pdparam">button</var><code>)</code>;</p></div><p>
+This function double-clicks the mouse on the item with the specified
+<em class="parameter"><code>itemText</code></em> inside the given
+<em class="parameter"><code>objectName</code></em> view widget. The click is made at
+position <em class="parameter"><code>x</code></em> and <em class="parameter"><code>y</code></em> (in the
+<em class="parameter"><code>itemText</code></em> item's coordinates) using the specified
+<em class="parameter"><code>button</code></em> and with the
+<em class="parameter"><code>modifierState</code></em> modifier state.
+</p><p>
+See <a class="xref" href="rgs-tkconvenience.html#tk-convenience.function.parameters" title="Tk Convenience Function Parameters">Tk Convenience Function Parameters</a> for which
+values are valid for the <em class="parameter"><code>modifierState</code></em> and
+<em class="parameter"><code>button</code></em> arguments.
+</p><div class="funcsynopsis"><a id="tk-installEventHandler-function"></a><p><code class="funcdef"><b class="fsfunc">installEventHandler</b>(</code><var class="pdparam">eventName</var>, <var class="pdparam">handlerFunctionNameOrReference</var><code>)</code>;</p></div><p>
+This function installs a global event handler. The script function
+named or referenced in <em class="parameter"><code>handlerFunctionNameOrReference</code></em>,
+will be called when an event
+of the <em class="parameter"><code>eventName</code></em> type occurs.
+</p><p>
+The <em class="parameter"><code>eventName</code></em> can be the name of any of the
+following event types:
+</p><div class="itemizedlist"><ul type="disc" compact><li><p>"Crash" – occurs if the AUT crashes</p></li><li><p>"Timeout" – occurs when the <span class="emphasis"><em>Squish</em></span> response timeout is
+reached</p></li></ul></div><p>
+The function named in <em class="parameter"><code>handlerFunctionName</code></em>
+(which must be passed as a string, not as a function reference,
+except for Python, which supports passing a function reference, too)
+is called with a single argument—the object on which the event
+occurred.
+</p><p>
+For examples see <a class="xref" href="ugs-eventhandlers.html" title="5.10. How to Use Event Handlers">How to Use Event Handlers (Section 5.10)</a>.
+</p><div class="important" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Important: The AUT Must be Running"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Important]" src="images/important.png"></img></td><th align="left">The AUT Must be Running</th></tr><tr><td align="left" valign="top"><p>
+The <code class="code">installEventHandler</code> function will only work if it is
+called <span class="emphasis"><em>after</em></span> the AUT has been started (e.g., using
+the <a class="xref" href="rgs-squish.html#startApplication-function"><code class="function">startApplication</code></a> function).
+</p></td></tr></table></div><div class="funcsynopsis"><a id="tk-grabWidget-function"></a><p><code class="funcdef">QImage <b class="fsfunc">grabWidget</b>(</code><var class="pdparam">object</var><code>)</code>;</p></div><a id="idp49841664" class="indexterm"></a><p>
+This function takes a screenshot of the <em class="parameter"><code>object</code></em>
+window (or widget) and returns it as an <a class="xref" href="rgs-squish.html#rgss-image-object" title="6.3.13. QImage Object"><code class="code">QImage</code> Object (Section 6.3.13)</a>.
+</p><p>
+See the <a class="xref" href="rgs-squish.html#waitForObject-function"><code class="function">waitForObject</code></a> and <a class="xref" href="rgs-squish.html#findObject-function"><code class="function">findObject</code></a> functions for how to get an object
+reference to a window or widget.
+</p><div class="funcsynopsis"><a id="tk-mouseClick-function"></a><p><code class="funcdef"><b class="fsfunc">mouseClick</b>(</code><var class="pdparam">objectName</var>, <var class="pdparam">x</var>, <var class="pdparam">y</var>, <var class="pdparam">modifierState</var>, <var class="pdparam">button</var><code>)</code>;</p></div><p>
+This function clicks the mouse on the specified
+<em class="parameter"><code>objectName</code></em> widget. The click is made at
+position <em class="parameter"><code>x</code></em> and <em class="parameter"><code>y</code></em> (in the
+<em class="parameter"><code>objectName</code></em> widget's coordinates) using the
+specified <em class="parameter"><code>button</code></em> and with the
+<em class="parameter"><code>modifierState</code></em> modifier state.
+</p><p>
+See <a class="xref" href="rgs-tkconvenience.html#tk-convenience.function.parameters" title="Tk Convenience Function Parameters">Tk Convenience Function Parameters</a> for which
+values are valid for the <em class="parameter"><code>modifierState</code></em> and
+<em class="parameter"><code>button</code></em> arguments.
+</p><div class="funcsynopsis"><a id="tk-scrollTo-function"></a><p><code class="funcdef"><b class="fsfunc">scrollTo</b>(</code><var class="pdparam">objectName</var>, <var class="pdparam">position</var><code>)</code>;</p></div><p>
+This function scrolls the <em class="parameter"><code>objectName</code></em> widget to
+the given <em class="parameter"><code>position</code></em>. The
+<em class="parameter"><code>position</code></em> is an absolute value (i.e., a pixel
+offset).
+</p><div class="funcsynopsis"><a id="tk-sendEvent-function"></a><p><code class="funcdef"><b class="fsfunc">sendEvent</b>(</code><var class="pdparam">eventName</var>, <var class="pdparam">objectOrName</var>, <var class="pdparam">...</var><code>)</code>;</p></div><p>
+This function sends an event of type <em class="parameter"><code>eventName</code></em> to
+the <em class="parameter"><code>objectOrName</code></em> widget. All the other arguments
+(<em class="parameter"><code>...</code></em>) are passed on to the event
+constructor—they are typically coordinates, button states, and
+similar.
+</p><p>
+The <em class="parameter"><code>eventName</code></em> may be any of the following:
+</p><div class="itemizedlist"><ul type="disc" compact><li><p><code class="code">"ButtonEvent"</code></p></li><li><p><code class="code">"KeyEvent"</code></p></li><li><p><code class="code">"MotionEvent"</code></p></li></ul></div><div class="funcsynopsis"><a id="tk-tcleval-function"></a><p><code class="funcdef">String <b class="fsfunc">tcleval</b>(</code><var class="pdparam">code</var><code>)</code>;</p></div><p>
+This function evaluates the given <em class="parameter"><code>code</code></em> in the
+AUT's Tcl interpreter and returns the result. (For an example see <a class="xref" href="ugs-tkapi.html#ugstk-tcleval" title="5.6.3. How to Use tcleval">How to Use tcleval (Section 5.6.3)</a>.)
+</p><div class="funcsynopsis"><a id="tk-type-function"></a><p><code class="funcdef"><b class="fsfunc">type</b>(</code><var class="pdparam">objectName</var>, <var class="pdparam">text</var><code>)</code>;</p></div><div class="funcsynopsis"><p><code class="funcdef"><b class="fsfunc">type</b>(</code><var class="pdparam">objectName</var>, <var class="pdparam">text</var>, <var class="pdparam">modifierState</var><code>)</code>;</p></div><p>
+This function types the specified <em class="parameter"><code>text</code></em> (as if the
+user had used the keyboard) into the <em class="parameter"><code>objectName</code></em>
+editable widget. If the text is surrounded by angle brackets (&lt;&gt;),
+it is interpreted as a key combination, e.g
+<code class="code">"&lt;Ctrl+Return&gt;"</code>. The input is case-sensitive, so
+<code class="code">type <span class="emphasis"><em>object</em></span> "R"</code> is different from
+<code class="code">type <span class="emphasis"><em>object</em></span> "r"</code>. (For a list of the
+supported special keys see the <a class="xref" href="rgs-squish.html#nativeType-function"><code class="function">nativeType</code></a>
+function's documentation.)
+</p><p>
+The <em class="parameter"><code>modifierState</code></em> is optional and defaults to 0
+(no modifier keys are pressed).
+See <a class="xref" href="rgs-tkconvenience.html#tk-convenience.function.parameters" title="Tk Convenience Function Parameters">Tk Convenience Function Parameters</a> for which
+values are valid for the <em class="parameter"><code>modifierState</code></em>.
+</p><div class="funcsynopsis"><a id="tk-dragAndDrop-function"></a><p><code class="funcdef"><b class="fsfunc">dragAndDrop</b>(</code><var class="pdparam">sourceObjectName</var>, <var class="pdparam">sourcex</var>, <var class="pdparam">sourcey</var>, <var class="pdparam">targetObjectName</var>, <var class="pdparam">targetx</var>, <var class="pdparam">targety</var><code>)</code>;</p></div><p>
+This function executes a drag and drop operation. The drag is started
+from the <em class="parameter"><code>sourceObjectName</code></em> widget at the given
+relative coordinates <em class="parameter"><code>sourcex</code></em> and
+<em class="parameter"><code>sourcey</code></em>. The dragged object is dropped onto the
+<em class="parameter"><code>targetObjectName</code></em> widget at the given relative
+coordinates <em class="parameter"><code>targetx</code></em> and <em class="parameter"><code>targety</code></em>.
+</p><div class="funcsynopsis"><a id="tk-uninstallEventHandler-function"></a><p><code class="funcdef"><b class="fsfunc">uninstallEventHandler</b>(</code><var class="pdparam">eventName</var>, <var class="pdparam">handlerFunctionNameOrReference</var><code>)</code>;</p></div><p>
+This function uninstalls an event handler that has been previously
+installed using <a class="xref" href="rgs-tkconvenience.html#tk-installEventHandler-function"><code class="function">installEventHandler</code></a>.
+</p></div><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" type="text/javascript" src="ScriptingLanguage.js"></script><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format">setScriptingLanguage();</script><div class="navfooter"><hr></hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="rgs-qtconvenience.html">Prev</a> </td><td width="20%" align="center"><a accesskey="u" href="api.man.html">Up</a></td><td width="40%" align="right"> <a accesskey="n" href="rgs-xvconvenience.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">6.4. Qt Convenience API </td><td width="20%" align="center"><a accesskey="h" href="index-noframes.html">Home</a></td><td width="40%" align="right" valign="top"> 6.6. XView Convenience API</td></tr></table></div></body>
+<!-- Mirrored from rgs-tkconvenience.html by HTTrack Website Copier/3.x [XR&CO'2013], Wed, 06 Jul 2022 13:29:00 GMT -->
+</html>

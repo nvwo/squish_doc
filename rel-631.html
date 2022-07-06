@@ -1,0 +1,89 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<!-- Mirrored from rel-631.html by HTTrack Website Copier/3.x [XR&CO'2013], Wed, 06 Jul 2022 13:28:55 GMT -->
+<head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><title>2.18. Version 6.3.1</title><link rel="stylesheet" href="manual.css" type="text/css"></link><meta name="generator" content="DocBook XSL Stylesheets V1.73.2"></meta><link rel="start" href="index-noframes.html" title="Squish Manual"></link><link rel="up" href="relnotes.html" title="Chapter 2. Release Notes—for Upgraders"></link><link rel="prev" href="rel-632.html" title="2.17. Version 6.3.2"></link><link rel="next" href="rel-630.html" title="2.19. Version 6.3"></link><style xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" type="text/css" media="screen">
+        div.toc * { margin-left: 6px; margin-right: auto; max-width: 75em; }
+        div.toc span { margin-left: 0px; }
+        * { margin-left: auto; margin-right: auto; max-width: 75em; }
+        body { margin-left: 6px; margin-right: 6px; }
+        table th { padding: .5ex }
+        table td { padding: .5ex }
+    </style><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format">
+        function keyPress() {
+            var e = window.event;
+            if ( e == undefined ) {
+                return;
+            }
+            /* ### does not properly scroll, yet
+            if ( e.keyCode == 32 ) {
+            var l = document.links;
+            for ( var i = 0; i < l.length; i++ ) {
+                if ( l[i].innerText == "Next" ) {
+                location.href = l[i].href;
+                }
+            }
+            } else
+                */
+                if ( e.keyCode == 0x08 ) {
+            var l = document.links;
+            for ( var i = 0; i < l.length; i++ ) {
+                if ( l[i].innerText == "Prev" ) {
+                location.href = l[i].href;
+                }
+            }
+            }
+        }
+        document.onkeypress = keyPress;
+    </script></head><body><div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="rel-631"></a>2.18. Version 6.3.1</h2></div></div></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><span class="section"><a href="rel-631.html#rel-631-ide">2.18.1. Squish IDE-specific</a></span></dt><dt><span class="section"><a href="rel-631.html#rel-631-scripting">2.18.2. Scripting</a></span></dt><dt><span class="section"><a href="rel-631.html#rel-631-qt">2.18.3. Qt-specific</a></span></dt><dt><span class="section"><a href="rel-631.html#rel-631-java">2.18.4. <span class="trademark">Java</span>™-specific</a></span></dt><dt><span class="section"><a href="rel-631.html#rel-631-web">2.18.5. Web-specific</a></span></dt><dt><span class="section"><a href="rel-631.html#rel-631-windows">2.18.6. Windows (native)-specific</a></span></dt><dt><span class="section"><a href="rel-631.html#rel-631-mac">2.18.7. macOS-specific (Cocoa/Carbon edition)</a></span></dt><dt><span class="section"><a href="rel-631.html#rel-631-ios">2.18.8. iOS-specific (iPhone/iPad edition)</a></span></dt><dt><span class="section"><a href="rel-631.html#rel-631-source">2.18.9. Source Packages</a></span></dt></dl></div><p><span class="emphasis"><em>Squish</em></span> 6.3.1 is a maintenance release containing bug fixes for all
+  editions of the product. See the following sections for a detailed list of
+  all changes.</p><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="rel-631-ide"></a>2.18.1. Squish IDE-specific</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Fixed a problem causing the <span class="application">Squish IDE</span> not to start when using
+      Perl suites.</p></li><li><p>Fixed a regression causing the user interface to hang for
+      several seconds when trying to <span class="keycap"><strong>Ctrl</strong></span>+Click identifiers in
+      the JavaScript editor.</p></li><li><p>Fixed a problem viewing differences of failed
+      verification points on Windows when the filename contained a percent
+      (<code class="literal">%</code>) character.</p></li><li><p>Fixed a problem with providing auto-completion of <a class="xref" href="rgs-squish.html#test.vpWithObject-function"><code class="function">test.vpWithObject</code></a> in Python and JavaScript
+      editors.</p></li><li><p>Fixed a problem causing feature file colorization after
+      executing a test to colorize steps with a failed visual verification as
+      green instead of red.</p></li><li><p>Fixed counting of test results/passes/fails in the summary
+      view when the test uses visual verification points.</p></li><li><p>Add JSDoc annotation to the
+      <code class="code">collectStepDefinitions</code> and <code class="code">setupHooks</code> exposed
+      by the <code class="filename">bdd.js</code> script to avoid that warning markers
+      are added to <code class="filename">test.js</code> files using these functions in
+      the JavaScript editor.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="rel-631-scripting"></a>2.18.2. Scripting</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Fixed two issues with <a class="xref" href="rgs-squish.html#test.compareXMLFiles-function"><code class="function">test.compareXMLFiles</code></a> and the
+      <code class="code">filteredElements</code> option which would lead to false negative
+      results.</p></li><li><p>Fixed errors in <acronym class="acronym">BDD</acronym> hooks being logged
+      as verification failures instead of errors.</p></li><li><p>Fixed a problem causing masks specified in the image
+      verification point file to be ignored when the verification is done using
+      the strict comparison mode.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="rel-631-qt"></a>2.18.3. Qt-specific</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Fixed a crash when automating menu items in the menu bar on
+      macOS with Qt 5 if the actions for the menu bar items include separator
+      items as well.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="rel-631-java"></a>2.18.4. <span class="trademark">Java</span>™-specific</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Added initial support for Java 9.</p></li><li><p>Added support for <acronym class="acronym">SWT</acronym> version
+      4.7.</p></li><li><p>Improved support for automating <acronym class="acronym">SWT</acronym>
+      applications on Linux systems using HiDPI displays.</p></li><li><p>Fixed replaying mouse clicks when running
+      <acronym class="acronym">SWT</acronym> applications using GTK3.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="rel-631-web"></a>2.18.5. Web-specific</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Add support for testing with Firefox 57 and
+      newer.</p></li><li><p>Renamed <code class="code">FilterIdPropertyFromGeneratedNames</code>
+      to <code class="code">IncludeIdPropertyInGeneratedNames</code> in
+      <code class="filename">webwrapper.ini</code> and inverted the meaning of the
+      setting.</p></li><li><p>Fixed a problem with detecting the Firefox version on
+      macOS.</p></li><li><p>Fixed a crash when using <span class="guilabel">Launch AUT</span>
+      or recording with Firefox 57.</p></li><li><p>Fixed a problem with installation of the <span class="emphasis"><em>Squish</em></span> <span class="application">Firefox</span>
+      extension causing the process to be reported as “<span class="quote">not finished within 300
+      seconds</span>” after just five seconds.</p></li><li><p>Fixed lookup of <code class="filename">application.ini</code> file
+      from <span class="application">Firefox</span> on RedHat systems.</p></li><li><p>Disable smooth-scrolling when bringing an object into
+      view, whenever possible (<span class="application">Firefox</span> version 36 and newer,
+      <span class="application">Chrome</span> version 61 and newer) This improves
+      stability of subsequent actions, for example grabbing a screenshot of the
+      object that has been scrolled.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="rel-631-windows"></a>2.18.6. Windows (native)-specific</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Fixed crash when trying to access status bar properties on
+      some WxWidgets applications.</p></li><li><p>Fixed <a class="xref" href="rgs-squish.html#waitForObject-function"><code class="function">waitForObject</code></a> such that
+      it correctly waits for Windows Forms menu and toolbar items to become
+      ready for user interaction.</p></li><li><p>Fixed replaying touch events using the <a class="xref" href="rgs-squish.html#tapObject-function"><code class="function">tapObject</code></a> function.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="rel-631-mac"></a>2.18.7. macOS-specific (Cocoa/Carbon edition)</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Support playback of <a class="xref" href="rgs-squish.html#doubleClick-function"><code class="function">doubleClick</code></a> for <acronym class="acronym">HTML</acronym> objects in
+      an embedded <code class="code">WebView</code> or
+      <code class="code">WKWebView</code>.</p></li><li><p>Respect mouse cursor animation setting when playing back
+      <a class="xref" href="rgs-squish.html#mouseClick-function"><code class="function">mouseClick</code></a> with an image
+      lookup.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="rel-631-ios"></a>2.18.8. iOS-specific (iPhone/iPad edition)</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Support playback of <a class="xref" href="rgs-iphoneconvenience.html#iphone-tapObject-function"><code class="function">tapObject</code></a> for <acronym class="acronym">HTML</acronym> objects
+      in an embedded <code class="code">UIWebView</code> or
+      <code class="code">WKWebView</code> (this results in the same events as when invoking
+      <a class="xref" href="rgs-iphoneconvenience.html#iphone-clickObject-function"><code class="function">clickObject</code></a>).</p></li><li><p>Support playback of <a class="xref" href="rgs-iphoneconvenience.html#iphone-doubleTap-function"><code class="function">doubleTap</code></a> for <acronym class="acronym">HTML</acronym> objects
+      in an embedded <code class="code">UIWebView</code> or
+      <code class="code">WKWebView</code>.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="rel-631-source"></a>2.18.9. Source Packages</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Support building against Qt 5.10.0 beta</p></li></ul></div></div></div><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" type="text/javascript" src="ScriptingLanguage.js"></script><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format">setScriptingLanguage();</script><div class="navfooter"><hr></hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="rel-632.html">Prev</a> </td><td width="20%" align="center"><a accesskey="u" href="relnotes.html">Up</a></td><td width="40%" align="right"> <a accesskey="n" href="rel-630.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">2.17. Version 6.3.2 </td><td width="20%" align="center"><a accesskey="h" href="index-noframes.html">Home</a></td><td width="40%" align="right" valign="top"> 2.19. Version 6.3</td></tr></table></div></body>
+<!-- Mirrored from rel-631.html by HTTrack Website Copier/3.x [XR&CO'2013], Wed, 06 Jul 2022 13:28:55 GMT -->
+</html>

@@ -1,0 +1,125 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<!-- Mirrored from rel-511.html by HTTrack Website Copier/3.x [XR&CO'2013], Wed, 06 Jul 2022 13:28:56 GMT -->
+<head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><title>2.34. Version 5.1.1</title><link rel="stylesheet" href="manual.css" type="text/css"></link><meta name="generator" content="DocBook XSL Stylesheets V1.73.2"></meta><link rel="start" href="index-noframes.html" title="Squish Manual"></link><link rel="up" href="relnotes.html" title="Chapter 2. Release Notes—for Upgraders"></link><link rel="prev" href="rel-512.html" title="2.33. Version 5.1.2"></link><link rel="next" href="rel-510.html" title="2.35. Version 5.1.0"></link><style xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" type="text/css" media="screen">
+        div.toc * { margin-left: 6px; margin-right: auto; max-width: 75em; }
+        div.toc span { margin-left: 0px; }
+        * { margin-left: auto; margin-right: auto; max-width: 75em; }
+        body { margin-left: 6px; margin-right: 6px; }
+        table th { padding: .5ex }
+        table td { padding: .5ex }
+    </style><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format">
+        function keyPress() {
+            var e = window.event;
+            if ( e == undefined ) {
+                return;
+            }
+            /* ### does not properly scroll, yet
+            if ( e.keyCode == 32 ) {
+            var l = document.links;
+            for ( var i = 0; i < l.length; i++ ) {
+                if ( l[i].innerText == "Next" ) {
+                location.href = l[i].href;
+                }
+            }
+            } else
+                */
+                if ( e.keyCode == 0x08 ) {
+            var l = document.links;
+            for ( var i = 0; i < l.length; i++ ) {
+                if ( l[i].innerText == "Prev" ) {
+                location.href = l[i].href;
+                }
+            }
+            }
+        }
+        document.onkeypress = keyPress;
+    </script></head><body><div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="rel-511"></a>2.34. Version 5.1.1</h2></div></div></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><span class="section"><a href="rel-511.html#idp35560448">2.34.1. General</a></span></dt><dt><span class="section"><a href="rel-511.html#idp35563376">2.34.2. Squish IDE</a></span></dt><dt><span class="section"><a href="rel-511.html#idp35572744">2.34.3. Scripting</a></span></dt><dt><span class="section"><a href="rel-511.html#idp35577168">2.34.4. Qt-specific</a></span></dt><dt><span class="section"><a href="rel-511.html#idp35585944">2.34.5. <span class="trademark">Java</span>™-specific</a></span></dt><dt><span class="section"><a href="rel-511.html#idp35589240">2.34.6. Web-specific</a></span></dt><dt><span class="section"><a href="rel-511.html#idp35595136">2.34.7. Windows (native)-specific</a></span></dt><dt><span class="section"><a href="rel-511.html#idp35598944">2.34.8. macOS-specific (Cocoa/Carbon edition)</a></span></dt><dt><span class="section"><a href="rel-511.html#idp35600368">2.34.9. iOS-specific (iPhone/iPad edition)</a></span></dt><dt><span class="section"><a href="rel-511.html#idp35601736">2.34.10. Android-specific</a></span></dt><dt><span class="section"><a href="rel-511.html#idp35603016">2.34.11. Add-Ons &amp; Integrations</a></span></dt><dt><span class="section"><a href="rel-511.html#idp35604744">2.34.12. Source Packages</a></span></dt></dl></div><p><span class="emphasis"><em>Squish</em></span> 5.1.1 is a maintenance release containing various bug fixes
+and small improvements as described below:</p><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="idp35560448"></a>2.34.1. General</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>A performance bottleneck in <span class="application">squishrunner</span> driving
+remote tests from a Windows machine got resolved.</p></li><li><p>A problem was fixed which caused recording &amp; replaying
+tests to fail after running the setup program twice.</p></li><li><p>A bug which caused <a class="xref" href="rg-cmdline.html#rg-squishrunner-cli" title="7.4.3. squishrunner">squishrunner (Section 7.4.3)</a> to get
+stuck when the <acronym class="acronym">AUT</acronym> gets terminated unexpectedly was
+fixed.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="idp35563376"></a>2.34.2. Squish IDE</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>A few issues were resolved which caused some of the views
+in the <span class="application">Squish IDE</span> to get resized to inappropiate sizes.</p></li><li><p>When starting a second <span class="application">Squish IDE</span> instance, avoid waiting up to 20
+seconds to wait for the existing instance to be terminated (if requested).
+Instead, the existing instance is terminated immediately.</p></li><li><p>The <span class="guilabel">Collect Support Information</span> facility
+no longer shows an error message in case any of the files to be collected
+can't be read.</p></li><li><p>Fixed a bug which caused the IDE to ask for a license key even
+though a valid license key was installed and registered using the
+<code class="envar">SQUISH_LICENSEKEY_DIR</code> environment variable.</p></li><li><p>When selecting the browser to use for automating Web tests, it
+is now possible to select batch (<code class="filename">bat</code>)
+files on Windows.</p></li><li><p>An issue was fixed which caused an error message to be
+displayed when trying to edit the object map of a closed test
+suite.</p></li><li><p>The <span class="guilabel">Retry</span> button of the <span class="guilabel"> Object
+Not Found</span> dialog now works correctly even if no new object was
+selected, i.e. it was pressed to check whether the requested object became
+available.</p></li><li><p>The contrast in the <span class="guilabel">Object Not Found</span>
+dialog was increased to improve readability.</p></li><li><p>The <span class="application">Squish IDE</span> can now auto-complete the script
+<acronym class="acronym">API</acronym> provided by the JavaScript objects <code class="code">OS</code>,
+<code class="code">File</code>, <code class="code">SQL</code> and <code class="code">Socket</code>.</p></li><li><p>Error messages generated while comparing actual screenshots
+with expected screenshots are no longer silently dropped.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="idp35572744"></a>2.34.3. Scripting</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Recorded Perl scripts no longer use <code class="code">true</code> or
+<code class="code">false</code> to denote boolean values because they are not standard Perl
+identifiers. Instead, <code class="code">1</code> and <code class="code">0</code> are
+used.</p></li><li><p>A problem with the <code class="code">installEventHandler</code> function
+was fixed in Ruby test scripts which caused the argument to the callback
+function for events like <code class="literal">DialogOpened</code> to become invalid.
+</p></li><li><p>Script errors raised when executing Python test scripts which
+were included via the <a class="xref" href="rgs-squish.html#source-function"><code class="function">source</code></a> function now have the
+correct source file and line number associated with them.</p></li><li><p><a class="xref" href="rgs-squish.html#test.vp-function"><code class="function">test.vp</code></a> now accepts an optional
+argument which can be used to pass a message describing the verification. This
+message will be appended to the verification result message.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="idp35577168"></a>2.34.4. Qt-specific</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Pre-built packages for Qt 5.3 available for
+download.</p></li><li><p>Replaying tests now emits proper time stamps for
+<code class="code">QInputEvent</code> objects such that applications which e.g. do manual
+single- vs. double-click detection behave as expected.</p></li><li><p>The pressure of single-touch interactions is now replayed
+correctly.</p></li><li><p>The replay of pinch/zoom gestures was improved such that e.g.
+the zoom factor is the same as it was when the test was
+recorded.</p></li><li><p>It is now possible to call the <code class="code">gesture</code> function
+with an object name - in the past, it was only possible to call it with an
+object as returned by e.g. <a class="xref" href="rgs-squish.html#waitForObject-function"><code class="function">waitForObject</code></a>.</p></li><li><p>Fixed a bug which caused some older screenshot verification
+points to fail with <span class="emphasis"><em>Squish</em></span> 5.1.0.</p></li><li><p>A problem was fixed which caused ignoring processes by adding them
+to the <code class="filename">blacklistedauts.txt</code> to fail in case they link against
+the QtCore library.</p></li><li><p><span class="emphasis"><em>Squish</em></span> now correctly clicks on <code class="code">QTreeView</code> items
+whose text ends in dots (e.g. <span class="guilabel">More...</span>) or which have an
+empty text.</p></li><li><p>It's now possible to automate <code class="code">QWindow</code> controls
+embedded in <code class="code">QWidget</code> controls.</p></li><li><p>Optimized generating object names for <code class="code">QQuickItem</code>
+and <code class="code">QDeclarativeItem</code> objects as well as for deeply nested
+hierarchies of <code class="code">QGraphicsObject</code> objects. This makes recording tests
+on such objects work more smoothly.</p></li><li><p>It's now possible to use the return value of Qt methods which
+yield a pointer to a class derived from <code class="code">QObject</code>.</p></li><li><p>Fixed taking screenshots for Qt applications which do not use
+<code class="code">QApplication</code>.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="idp35585944"></a>2.34.5. <span class="trademark">Java</span>™-specific</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>The geometry of JavaFX components embedded into
+<acronym class="acronym">SWT</acronym> controls is now computed correctly.</p></li><li><p>It's now possible to pick <acronym class="acronym">HTML</acronym>objects
+embedded in JavaFX controls.</p></li><li><p>A problem was fixed which cased replaying text input of certain
+non-english characters to fail with Swing applications.</p></li><li><p>A bug was fixed which caused object lookups to raise an error
+in case the object name included the <code class="literal">basetype</code>
+property and the NatTable extension was being used.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="idp35589240"></a>2.34.6. Web-specific</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Fixed executing the <code class="code">typeText</code> function with Google
+Chrome.</p></li><li><p>Performing object lookups with object names which have line
+breaks in their properties now works correctly.</p></li><li><p><span class="emphasis"><em>Squish</em></span> now calculates coordinates of web elements contained
+within frames correctly when using Google Chrome.</p></li><li><p>User actions on <acronym class="acronym">SWT</acronym> controls embedded in
+web pages are now recorded correctly.</p></li><li><p>An issue was fixed which broke replaying or recording tests
+with <span class="application">Microsoft Internet Explorer</span> in case a <code class="literal">file://</code> <acronym class="acronym">URL</acronym> was
+used.</p></li><li><p>Detecting the Firefox version is now more
+robust.</p></li><li><p>Recording and replaying user actions in secondary
+Firefox/Chrome windows now works correctly even if those windows show content
+from the same domain as the initial window.</p></li><li><p>An issue was resolved which caused the <code class="code">selectOption</code>
+to not work correctly on SmartGWT select boxes implemented through plain HTML
+<code class="code">&lt;select&gt;</code> elements.</p></li><li><p>Entering text into SmartGWT select boxes is now recorded
+correctly.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="idp35595136"></a>2.34.7. Windows (native)-specific</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>The main window is no longer activated automatically when
+replaying mouse clicks on <acronym class="acronym">WPF</acronym> menu items.</p></li><li><p>A problem which caused <span class="emphasis"><em>Squish</em></span> to not replay tests on
+<acronym class="acronym">MFC</acronym> applications correctly with <span class="emphasis"><em>Squish</em></span> 5.1.0 was
+fixed.</p></li><li><p>Resolved an issue which caused replaying text input via the
+<code class="code">type()</code> function to fail when automating Windows Forms,
+Infragistics or Telerik controls.</p></li><li><p><span class="emphasis"><em>Squish</em></span> now features dedicated support for Windows
+Forms <code class="code">DataGrid</code> controls (in addition to the existing support
+for <code class="code">DataGridView</code> controls).</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="idp35598944"></a>2.34.8. macOS-specific (Cocoa/Carbon edition)</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Fixed a problem which caused object names with invalid
+occurrence values to match toplevel objects like <code class="code">NSWindow</code> or
+<code class="code">NSPanel</code>.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="idp35600368"></a>2.34.9. iOS-specific (iPhone/iPad edition)</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Support more device-family identifiers (for the different
+iPhone sizes and retina versions) with Xcode 5.0 and later.</p></li><li><p>Improved gesture recording for iOS (better detection of
+gestures and support for one-finger gestures).</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="idp35601736"></a>2.34.10. Android-specific</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Gestures replaying now also implemented for Gingerbread,
+was IceCreamSandwich or higher only.</p></li><li><p>Fix an UnknownHostException during hookup on some devices.
+</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="idp35603016"></a>2.34.11. Add-Ons &amp; Integrations</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>The JUnit output format now includes information on the time
+needed to execute a test or perform a verification.</p></li><li><p>The <a class="xref" href="rg-cmdline.html#rgc-xml2jira" title="7.4.11. xml2jira"><span class="application">xml2jira</span> (Section 7.4.11)</a> utility now supports
+connecting to JIRA servers via proxy servers.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="idp35604744"></a>2.34.12. Source Packages</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p><span class="emphasis"><em>Squish</em></span> can now be built from sources even if JavaScript
+and TSL have been disabled while running configure.</p></li><li><p>An issue which caused the configure program to not detect the
+.NET version correctly in some cases was resolved.</p></li></ul></div></div></div><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" type="text/javascript" src="ScriptingLanguage.js"></script><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format">setScriptingLanguage();</script><div class="navfooter"><hr></hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="rel-512.html">Prev</a> </td><td width="20%" align="center"><a accesskey="u" href="relnotes.html">Up</a></td><td width="40%" align="right"> <a accesskey="n" href="rel-510.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">2.33. Version 5.1.2 </td><td width="20%" align="center"><a accesskey="h" href="index-noframes.html">Home</a></td><td width="40%" align="right" valign="top"> 2.35. Version 5.1.0</td></tr></table></div></body>
+<!-- Mirrored from rel-511.html by HTTrack Website Copier/3.x [XR&CO'2013], Wed, 06 Jul 2022 13:28:56 GMT -->
+</html>

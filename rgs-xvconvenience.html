@@ -1,0 +1,120 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<!-- Mirrored from rgs-xvconvenience.html by HTTrack Website Copier/3.x [XR&CO'2013], Wed, 06 Jul 2022 13:29:00 GMT -->
+<head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><title>6.6. XView Convenience API</title><link rel="stylesheet" href="manual.css" type="text/css"></link><meta name="generator" content="DocBook XSL Stylesheets V1.73.2"></meta><link rel="start" href="index-noframes.html" title="Squish Manual"></link><link rel="up" href="api.man.html" title="Chapter 6. API Reference Manual"></link><link rel="prev" href="rgs-tkconvenience.html" title="6.5. Tk Convenience API"></link><link rel="next" href="rgs-javaconvenience.html" title="6.7. Java™ Convenience API"></link><style xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" type="text/css" media="screen">
+        div.toc * { margin-left: 6px; margin-right: auto; max-width: 75em; }
+        div.toc span { margin-left: 0px; }
+        * { margin-left: auto; margin-right: auto; max-width: 75em; }
+        body { margin-left: 6px; margin-right: 6px; }
+        table th { padding: .5ex }
+        table td { padding: .5ex }
+    </style><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format">
+        function keyPress() {
+            var e = window.event;
+            if ( e == undefined ) {
+                return;
+            }
+            /* ### does not properly scroll, yet
+            if ( e.keyCode == 32 ) {
+            var l = document.links;
+            for ( var i = 0; i < l.length; i++ ) {
+                if ( l[i].innerText == "Next" ) {
+                location.href = l[i].href;
+                }
+            }
+            } else
+                */
+                if ( e.keyCode == 0x08 ) {
+            var l = document.links;
+            for ( var i = 0; i < l.length; i++ ) {
+                if ( l[i].innerText == "Prev" ) {
+                location.href = l[i].href;
+                }
+            }
+            }
+        }
+        document.onkeypress = keyPress;
+    </script></head><body><div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="rgs-xvconvenience"></a>6.6. XView Convenience API</h2></div></div></div><div class="important" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Important: XView-specific"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Important]" src="images/important.png"></img></td><th align="left">XView-specific</th></tr><tr><td align="left" valign="top"><p>
+The XView Convenience API is <span class="emphasis"><em>only</em></span> available for
+the Squish for XView editions.
+</p></td></tr></table></div><p>
+Here are some quick links to the XView Convenience API's functions:
+</p><div class="informaltable"><table border="0"><colgroup><col></col><col></col><col></col></colgroup><tbody><tr valign="top"><td valign="top">
+<div class="itemizedlist"><ul type="disc" compact><li><p><a class="xref" href="rgs-xvconvenience.html#xview-activateItem-function"><code class="function">activateItem</code></a></p></li><li><p><a class="xref" href="rgs-xvconvenience.html#xview-clickItem-function"><code class="function">clickItem</code></a></p></li><li><p><a class="xref" href="rgs-xvconvenience.html#xview-closeFrame-function"><code class="function">closeFrame</code></a></p></li><li><p><a class="xref" href="rgs-xvconvenience.html#xview-closeNotice-function"><code class="function">closeNotice</code></a></p></li></ul></div>
+</td><td valign="top">
+<div class="itemizedlist"><ul type="disc" compact><li><p><a class="xref" href="rgs-xvconvenience.html#xview-findItem-function"><code class="function">findItem</code></a></p></li><li><p><a class="xref" href="rgs-xvconvenience.html#xview-installEventHandler-function"><code class="function">installEventHandler</code></a></p></li><li><p><a class="xref" href="rgs-xvconvenience.html#xview-isNoticeOpen-function"><code class="function">isNoticeOpen</code></a></p></li><li><p><a class="xref" href="rgs-xvconvenience.html#xview-lastNoticeMessage-function"><code class="function">lastNoticeMessage</code></a></p></li></ul></div>
+</td><td valign="top">
+<div class="itemizedlist"><ul type="disc" compact><li><p><a class="xref" href="rgs-xvconvenience.html#xview-openFrame-function"><code class="function">openFrame</code></a></p></li><li><p><a class="xref" href="rgs-xvconvenience.html#xview-sendEvent-function"><code class="function">sendEvent</code></a></p></li><li><p><a class="xref" href="rgs-xvconvenience.html#xview-type-function"><code class="function">type</code></a></p></li><li><p><a class="xref" href="rgs-xvconvenience.html#xview-uninstallEventHandler-function"><code class="function">uninstallEventHandler</code></a></p></li></ul></div>
+</td></tr></tbody></table></div><div class="funcsynopsis"><a id="xview-activateItem-function"></a><p><code class="funcdef"><b class="fsfunc">activateItem</b>(</code><var class="pdparam">objectName</var>, <var class="pdparam">itemText</var><code>)</code>;</p></div><p>
+This function activates the menu item with the specified
+<em class="parameter"><code>itemText</code></em> in the menu identified by the given
+<em class="parameter"><code>objectName</code></em>.
+</p><div class="funcsynopsis"><a id="xview-clickItem-function"></a><p><code class="funcdef"><b class="fsfunc">clickItem</b>(</code><var class="pdparam">object</var>, <var class="pdparam">x</var>, <var class="pdparam">y</var>, <var class="pdparam">state</var>, <var class="pdparam">button</var>, <var class="pdparam">action</var><code>)</code>;</p></div><p>
+This function sends a mouse click at position <em class="parameter"><code>x</code></em>
+and <em class="parameter"><code>y</code></em> (in the <em class="parameter"><code>object</code></em>
+item's coordinates) to the panel item (such as a button, choice item,
+etc.) with the button <em class="parameter"><code>button</code></em>, modifier state
+<em class="parameter"><code>state</code></em> and action <em class="parameter"><code>action</code></em> of
+the panel referenced by the <em class="parameter"><code>object</code></em>.
+</p><div class="funcsynopsis"><a id="xview-closeFrame-function"></a><p><code class="funcdef"><b class="fsfunc">closeFrame</b>(</code><var class="pdparam">frame</var><code>)</code>;</p></div><p>
+This function closes (hides) the frame called
+<em class="parameter"><code>frame</code></em>.
+</p><div class="funcsynopsis"><a id="xview-closeNotice-function"></a><p><code class="funcdef"><b class="fsfunc">closeNotice</b>(</code><var class="pdparam">button</var>, <var class="pdparam">result</var><code>)</code>;</p></div><p>
+This function closes the currently open notice (if one is open) using
+the specified <em class="parameter"><code>button</code></em> so that it returns the
+specified <em class="parameter"><code>result</code></em>.
+</p><div class="funcsynopsis"><a id="xview-findItem-function"></a><p><code class="funcdef">Object <b class="fsfunc">findItem</b>(</code><var class="pdparam">itemName</var><code>)</code>;</p></div><p>
+This function finds and returns a reference to a panel item given its
+fully qualified name <em class="parameter"><code>itemName</code></em>.
+</p><div class="funcsynopsis"><a id="xview-installEventHandler-function"></a><p><code class="funcdef"><b class="fsfunc">installEventHandler</b>(</code><var class="pdparam">eventName</var>, <var class="pdparam">handlerFunctionNameOrReference</var><code>)</code>;</p></div><p>
+This function installs a global event handler. The script function
+named or referenced in <em class="parameter"><code>handlerFunctionNameOrReference</code></em>,
+will be called when an event
+of the <em class="parameter"><code>eventName</code></em> type occurs.
+</p><p>
+The <em class="parameter"><code>eventName</code></em> can be any of the following event
+types:
+</p><div class="itemizedlist"><ul type="disc" compact><li><p>"Crash" – occurs if the AUT
+crashes</p></li><li><p>"NoticeOpened" – occurs
+when a notice window is opened</p></li><li><p>"Timeout" –
+occurs when the <span class="emphasis"><em>Squish</em></span> response timeout is reached</p></li></ul></div><p>
+The function name passed as the
+<em class="parameter"><code>handlerFunctionName</code></em> is called with a single
+argument—the object on which the event occurred.
+</p><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Note: Python-specific"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/note.png"></img></td><th align="left">Python-specific</th></tr><tr><td align="left" valign="top"><p>
+In Python scripts, you can specify the callback function to invoke by
+passing an actual function or a lambda function.
+</p></td></tr></table></div><p>
+For examples see <a class="xref" href="ugs-eventhandlers.html" title="5.10. How to Use Event Handlers">How to Use Event Handlers (Section 5.10)</a>.
+</p><div class="important" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Important: The AUT Must be Running"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Important]" src="images/important.png"></img></td><th align="left">The AUT Must be Running</th></tr><tr><td align="left" valign="top"><p>
+The <code class="code">installEventHandler</code> function will only work if it is
+called <span class="emphasis"><em>after</em></span> the AUT has been started (e.g., using
+the <a class="xref" href="rgs-squish.html#startApplication-function"><code class="function">startApplication</code></a> function).
+</p></td></tr></table></div><div class="funcsynopsis"><a id="xview-isNoticeOpen-function"></a><p><code class="funcdef">Boolean <b class="fsfunc">isNoticeOpen</b>(</code><code>)</code>;</p></div><p>
+This function returns a true value if a notice is currently open;
+otherwise it returns a false value.
+</p><div class="funcsynopsis"><a id="xview-lastNoticeMessage-function"></a><p><code class="funcdef">String <b class="fsfunc">lastNoticeMessage</b>(</code><code>)</code>;</p></div><p>
+This function returns the text of the last opened message.
+</p><div class="funcsynopsis"><a id="xview-openFrame-function"></a><p><code class="funcdef"><b class="fsfunc">openFrame</b>(</code><var class="pdparam">frame</var><code>)</code>;</p></div><p>
+This function opens (shows) the frame called <em class="parameter"><code>frame</code></em>.
+</p><div class="funcsynopsis"><a id="xview-sendEvent-function"></a><p><code class="funcdef"><b class="fsfunc">sendEvent</b>(</code><var class="pdparam">eventName</var>, <var class="pdparam">receiverObjectOrName</var>, <var class="pdparam">...</var><code>)</code>;</p></div><p>
+This function sends an event of type <em class="parameter"><code>eventName</code></em> to
+the <em class="parameter"><code>receiverObjectOrName</code></em> (i.e., to the given
+object or to the object identified by the given name). Any additional
+arguments are used to initialize the event that is sent (e.g.,
+coordinates, button states, etc).
+</p><p>
+The following <em class="parameter"><code>eventName</code></em>s are supported:
+</p><div class="itemizedlist"><ul type="disc" compact><li><p>"ButtonEvent"</p></li><li><p>"KeyEvent"</p></li><li><p>"WindowEvent"</p></li><li><p>"ResizeEvent"</p></li><li><p>"DestroyEvent"</p></li></ul></div><div class="funcsynopsis"><a id="xview-type-function"></a><p><code class="funcdef"><b class="fsfunc">type</b>(</code><var class="pdparam">object</var>, <var class="pdparam">text</var><code>)</code>;</p></div><p>
+This function sends key events to the editable panel item
+<em class="parameter"><code>object</code></em> to enter the given
+<em class="parameter"><code>text</code></em> as if the user had typed the text at the
+keyboard. The input is case-sensitive, so
+<code class="code">type(<span class="emphasis"><em>object</em></span>, "R")</code> is different from
+<code class="code">type(<span class="emphasis"><em>object</em></span>, "r")</code>.
+</p><div class="funcsynopsis"><a id="xview-uninstallEventHandler-function"></a><p><code class="funcdef"><b class="fsfunc">uninstallEventHandler</b>(</code><var class="pdparam">eventName</var>, <var class="pdparam">handlerFunctionNameOrReference</var><code>)</code>;</p></div><p>
+This function uninstalls an event handler that has been previously
+installed using <a class="xref" href="rgs-xvconvenience.html#xview-installEventHandler-function"><code class="function">installEventHandler</code></a>.
+</p></div><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" type="text/javascript" src="ScriptingLanguage.js"></script><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format">setScriptingLanguage();</script><div class="navfooter"><hr></hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="rgs-tkconvenience.html">Prev</a> </td><td width="20%" align="center"><a accesskey="u" href="api.man.html">Up</a></td><td width="40%" align="right"> <a accesskey="n" href="rgs-javaconvenience.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">6.5. Tk Convenience API </td><td width="20%" align="center"><a accesskey="h" href="index-noframes.html">Home</a></td><td width="40%" align="right" valign="top"> 6.7. <span class="trademark">Java</span>™ Convenience API</td></tr></table></div></body>
+<!-- Mirrored from rgs-xvconvenience.html by HTTrack Website Copier/3.x [XR&CO'2013], Wed, 06 Jul 2022 13:29:00 GMT -->
+</html>

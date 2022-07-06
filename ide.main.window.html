@@ -1,0 +1,1272 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<!-- Mirrored from ide.main.window.html by HTTrack Website Copier/3.x [XR&CO'2013], Wed, 06 Jul 2022 13:29:01 GMT -->
+<head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><title>8.1. Main Window</title><link rel="stylesheet" href="manual.css" type="text/css"></link><meta name="generator" content="DocBook XSL Stylesheets V1.73.2"></meta><link rel="start" href="https://index-noframes.html" title="Squish Manual"></link><link rel="up" href="https://ide.ref.man.html" title="Chapter 8. IDE Reference Manual"></link><link rel="prev" href="https://ide.ref.man.html" title="Chapter 8. IDE Reference Manual"></link><link rel="next" href="https://ide.views.html" title="8.2. Views"></link><style xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" type="text/css" media="screen">
+        div.toc * { margin-left: 6px; margin-right: auto; max-width: 75em; }
+        div.toc span { margin-left: 0px; }
+        * { margin-left: auto; margin-right: auto; max-width: 75em; }
+        body { margin-left: 6px; margin-right: 6px; }
+        table th { padding: .5ex }
+        table td { padding: .5ex }
+    </style><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format">
+        function keyPress() {
+            var e = window.event;
+            if ( e == undefined ) {
+                return;
+            }
+            /* ### does not properly scroll, yet
+            if ( e.keyCode == 32 ) {
+            var l = document.links;
+            for ( var i = 0; i < l.length; i++ ) {
+                if ( l[i].innerText == "Next" ) {
+                location.href = l[i].href;
+                }
+            }
+            } else
+                */
+                if ( e.keyCode == 0x08 ) {
+            var l = document.links;
+            for ( var i = 0; i < l.length; i++ ) {
+                if ( l[i].innerText == "Prev" ) {
+                location.href = l[i].href;
+                }
+            }
+            }
+        }
+        document.onkeypress = keyPress;
+    </script></head><body><div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="ide.main.window"></a>8.1. Main Window</h2></div></div></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><span class="section"><a href="https://ide.main.window.html#ide.main.window.s.actions">8.1.1. Main Window Actions</a></span></dt><dt><span class="section"><a href="https://ide.main.window.html#ide.perspectives">8.1.2. Perspectives</a></span></dt><dt><span class="section"><a href="https://ide.main.window.html#ide-the-controlbar-window">8.1.3. Control Bar Window</a></span></dt></dl></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="ide.main.window.s.actions"></a>8.1.1. Main Window Actions</h3></div></div></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><span class="section"><a href="https://ide.main.window.html#ide.add.symbolic.name.action">8.1.1.1. Add Symbolic Name action</a></span></dt><dt><span class="section"><a href="https://ide.main.window.html#ide.activate.editor.action">8.1.1.2. <span class="guiicon">Activate Editor</span> action</a></span></dt><dt><span class="section"><a href="https://ide.main.window.html#ide.check.object.existence.action">8.1.1.3. <span class="guiicon">Check Object Existence</span> action</a></span></dt><dt><span class="section"><a href="https://ide.main.window.html#ide.close.action">8.1.1.4. <span class="guiicon">Close</span> action</a></span></dt><dt><span class="section"><a href="https://ide.main.window.html#ide.close.all.action">8.1.1.5. <span class="guiicon">Close All</span> action</a></span></dt><dt><span class="section"><a href="https://ide.main.window.html#ide.close.perspective.action">8.1.1.6. <span class="guiicon">Close Perspective</span> action</a></span></dt><dt><span class="section"><a href="https://ide.main.window.html#ide.close.all.perspectives.action">8.1.1.7. <span class="guiicon">Close All Perspectives</span> action</a></span></dt><dt><span class="section"><a href="https://ide.main.window.html#ide.content.assist.action">8.1.1.8. <span class="guiicon">Content Assist</span> action</a></span></dt><dt><span class="section"><a href="https://ide.main.window.html#ide.convert.line.delimiters.to.action">8.1.1.9. <span class="guiicon">Convert Line Delimiters To</span> action</a></span></dt><dt><span class="section"><a href="https://ide.main.window.html#ide.copy.action">8.1.1.10. <span class="guiicon">Copy</span> action</a></span></dt><dt><span class="section"><a href="https://ide.main.window.html#ide.customize.perspective.action">8.1.1.11. <span class="guiicon">Customize Perspective</span> action</a></span></dt><dt><span class="section"><a href="https://ide.main.window.html#ide.cut.action">8.1.1.12. <span class="guiicon">Cut</span> action</a></span></dt><dt><span class="section"><a href="https://ide.main.window.html#ide.delete.action">8.1.1.13. <span class="guiicon">Delete</span> action</a></span></dt><dt><span class="section"><a href="https://ide.main.window.html#ide.delete.test.suite.action">8.1.1.14. <span class="guiicon">Delete Test Suite</span> action</a></span></dt><dt><span class="section"><a href="https://ide.main.window.html#ide.file.action">8.1.1.15. <span class="guiicon">File</span> action</a></span></dt><dt><span class="section"><a href="https://ide.main.window.html#ide.find.and.replace.action">8.1.1.16. <span class="guiicon">Find and Replace</span> action</a></span></dt><dt><span class="section"><a href="https://ide.main.window.html#ide.find.next.action">8.1.1.17. <span class="guiicon">Find Next</span> action</a></span></dt><dt><span class="section"><a href="https://ide.main.window.html#ide.find.previous.action">8.1.1.18. <span class="guiicon">Find Previous</span> action</a></span></dt><dt><span class="section"><a href="https://ide.main.window.html#ide.import.test.resource.action">8.1.1.19. <span class="guiicon">Import Test Resource</span> action</a></span></dt><dt><span class="section"><a href="https://ide.main.window.html#ide.key.assist.action">8.1.1.20. <span class="guiicon">Key Assist</span> action</a></span></dt><dt><span class="section"><a href="https://ide.main.window.html#ide.last.edit.location.action">8.1.1.21. <span class="guiicon">Last Edit Location</span> action</a></span></dt><dt><span class="section"><a href="https://ide.main.window.html#ide.launch.aut.action">8.1.1.22. <span class="guiicon">Launch AUT</span> action</a></span></dt><dt><span class="section"><a href="https://ide.main.window.html#ide.maximize.active.view.or.editor.action">8.1.1.23. <span class="guiicon">Maximize Active View or Editor</span> action</a></span></dt><dt><span class="section"><a href="https://ide.main.window.html#ide.minimize.active.view.or.editor.action">8.1.1.24. <span class="guiicon">Minimize Active View or Editor</span> action</a></span></dt><dt><span class="section"><a href="https://ide.main.window.html#ide.move.action">8.1.1.25. <span class="guiicon">Move</span> action</a></span></dt><dt><span class="section"><a href="https://ide.main.window.html#ide.new.action">8.1.1.26. <span class="guiicon">New</span> action</a></span></dt><dt><span class="section"><a href="https://ide.main.window.html#ide.new.test.case.action">8.1.1.27. <span class="guiicon">New Test Case</span> action</a></span></dt><dt><span class="section"><a href="https://ide.main.window.html#ide.new.test.suite.action">8.1.1.28. <span class="guiicon">New Test Suite</span> action</a></span></dt><dt><span class="section"><a href="https://ide.main.window.html#ide.next.annotation.action">8.1.1.29. <span class="guiicon">Next Annotation</span> action</a></span></dt><dt><span class="section"><a href="https://ide.main.window.html#ide.next.editor.action">8.1.1.30. <span class="guiicon">Next Editor</span> action</a></span></dt><dt><span class="section"><a href="https://ide.main.window.html#ide.next.perspective.action">8.1.1.31. <span class="guiicon">Next Perspective</span> action</a></span></dt><dt><span class="section"><a href="https://ide.main.window.html#ide.next.view.action">8.1.1.32. <span class="guiicon">Next View</span> action</a></span></dt><dt><span class="section"><a href="https://ide.main.window.html#ide.open.file.action">8.1.1.33. <span class="guiicon">Open File</span> action</a></span></dt><dt><span class="section"><a href="https://ide.main.window.html#ide.open.test.suite.action">8.1.1.34. <span class="guiicon">Open Test Suite</span> action</a></span></dt><dt><span class="section"><a href="https://ide.main.window.html#ide.open.perspective.action">8.1.1.35. <span class="guiicon">Open Perspective</span> action</a></span></dt><dt><span class="section"><a href="https://ide.main.window.html#ide.paste.action">8.1.1.36. <span class="guiicon">Paste</span> action</a></span></dt><dt><span class="section"><a href="https://ide.main.window.html#ide.preferences.action">8.1.1.37. <span class="guiicon">Preferences</span> action</a></span></dt><dt><span class="section"><a href="https://ide.main.window.html#ide.previous.annotation.action">8.1.1.38. <span class="guiicon">Prev­ious An­no­ta­tion</span> action</a></span></dt><dt><span class="section"><a href="https://ide.main.window.html#ide.previous.editor.action">8.1.1.39. <span class="guiicon">Previous Editor</span> action</a></span></dt><dt><span class="section"><a href="https://ide.main.window.html#ide.previous.perspective.action">8.1.1.40. <span class="guiicon">Previous Perspective</span> action</a></span></dt><dt><span class="section"><a href="https://ide.main.window.html#ide.previous.view.action">8.1.1.41. <span class="guiicon">Previous View</span> action</a></span></dt><dt><span class="section"><a href="https://ide.main.window.html#ide.project.action">8.1.1.42. <span class="guiicon">Project</span> action</a></span></dt><dt><span class="section"><a href="https://ide.main.window.html#ide.properties.action">8.1.1.43. <span class="guiicon">Properties</span> action</a></span></dt><dt><span class="section"><a href="https://ide.main.window.html#ide.quick.access.action">8.1.1.44. <span class="guiicon">Quick Access</span> action</a></span></dt><dt><span class="section"><a href="https://ide.main.window.html#ide.quit.aut.action">8.1.1.45. <span class="guiicon">Quit AUT</span> action</a></span></dt><dt><span class="section"><a href="https://ide.main.window.html#ide.record.snippet.action">8.1.1.46. <span class="guiicon">Re­cord Snip­pet</span> action</a></span></dt><dt><span class="section"><a href="https://ide.main.window.html#ide.record.test.case.action">8.1.1.47. <span class="guiicon">Record Test Case</span> action</a></span></dt><dt><span class="section"><a href="https://ide.main.window.html#ide.redo.action">8.1.1.48. <span class="guiicon">Redo</span> action</a></span></dt><dt><span class="section"><a href="https://ide.main.window.html#ide.refresh.action">8.1.1.49. <span class="guiicon">Refresh</span> action</a></span></dt><dt><span class="section"><a href="https://ide.main.window.html#ide.remote.control.action">8.1.1.50. <span class="guiicon">Remote Control</span> action</a></span></dt><dt><span class="section"><a href="https://ide.main.window.html#remove.all.breakpoints.action">8.1.1.51. <span class="guiicon">Remove All Breakpoints</span> action</a></span></dt><dt><span class="section"><a href="https://ide.main.window.html#ide.rename.action">8.1.1.52. <span class="guiicon">Rename</span> action</a></span></dt><dt><span class="section"><a href="https://ide.main.window.html#ide.reset.perspective.action">8.1.1.53. <span class="guiicon">Reset Perspective</span> action</a></span></dt><dt><span class="section"><a href="https://ide.main.window.html#ide.resume.action">8.1.1.54. <span class="guiicon">Resume</span> action</a></span></dt><dt><span class="section"><a href="https://ide.main.window.html#ide.run.test.case.action">8.1.1.55. <span class="guiicon">Run Test Case</span> action</a></span></dt><dt><span class="section"><a href="https://ide.main.window.html#ide.save.action">8.1.1.56. <span class="guiicon">Save</span> action</a></span></dt><dt><span class="section"><a href="https://ide.main.window.html#ide.save.all.action">8.1.1.57. <span class="guiicon">Save All</span> action</a></span></dt><dt><span class="section"><a href="https://ide.main.window.html#ide.save.perspective.as.action">8.1.1.58. <span class="guiicon">Save Perspective As</span> action</a></span></dt><dt><span class="section"><a href="https://ide.main.window.html#ide.search.action">8.1.1.59. <span class="guiicon">Search</span> action</a></span></dt><dt><span class="section"><a href="https://ide.main.window.html#ide.select.all.action">8.1.1.60. <span class="guiicon">Select All</span> action</a></span></dt><dt><span class="section"><a href="https://ide.main.window.html#ide.show.system.menu.action">8.1.1.61. <span class="guiicon">Show System Menu</span> action</a></span></dt><dt><span class="section"><a href="https://ide.main.window.html#ide.show.view.action">8.1.1.62. <span class="guiicon">Show View</span> action</a></span></dt><dt><span class="section"><a href="https://ide.main.window.html#ide.show.view.menu.action">8.1.1.63. <span class="guiicon">Show View Menu</span> action</a></span></dt><dt><span class="section"><a href="https://ide.main.window.html#ide.show.whitespace.characters.action">8.1.1.64. <span class="guiicon">Show Whitespace Characters</span> action</a></span></dt><dt><span class="section"><a href="https://ide.main.window.html#skip.all.breakpoints.action">8.1.1.65. <span class="guiicon">Skip All Breakpoints</span> action</a></span></dt><dt><span class="section"><a href="https://ide.main.window.html#ide.squish.server.settings">8.1.1.66. Squish Server Settings</a></span></dt><dt><span class="section"><a href="https://ide.main.window.html#ide.squish.spy.perspective.action">8.1.1.67. <span class="guiicon">Squish Spy Perspective</span> action</a></span></dt><dt><span class="section"><a href="https://ide.main.window.html#ide.squish.test.debugging.perspective.action">8.1.1.68. <span class="guiicon">Squish Test De­bug­ging Per­spec­tive</span> action</a></span></dt><dt><span class="section"><a href="https://ide.main.window.html#ide.squish.test.management.perspective.action">8.1.1.69. <span class="guiicon">Squish Test Management Perspective</span> action</a></span></dt><dt><span class="section"><a href="https://ide.main.window.html#ide.step.into.action">8.1.1.70. <span class="guiicon">Step Into</span> action</a></span></dt><dt><span class="section"><a href="https://ide.main.window.html#ide.step.over.action">8.1.1.71. <span class="guiicon">Step Over</span> action</a></span></dt><dt><span class="section"><a href="https://ide.main.window.html#ide.step.return.action">8.1.1.72. <span class="guiicon">Step Return</span> action</a></span></dt><dt><span class="section"><a href="https://ide.main.window.html#ide.suspend.action">8.1.1.73. <span class="guiicon">Suspend</span> action</a></span></dt><dt><span class="section"><a href="https://ide.main.window.html#ide.switch.to.editor.action">8.1.1.74. <span class="guiicon">Switch to Editor</span> action</a></span></dt><dt><span class="section"><a href="https://ide.main.window.html#ide.terminate.action">8.1.1.75. <span class="guiicon">Terminate</span> action</a></span></dt><dt><span class="section"><a href="https://ide.main.window.html#ide.toggle.block.selection.mode.action">8.1.1.76. <span class="guiicon">Toggle Block Selection Mode</span> action</a></span></dt><dt><span class="section"><a href="https://ide.main.window.html#toggle.breakpoint.action">8.1.1.77. <span class="guiicon">Toggle Breakpoint</span> action</a></span></dt><dt><span class="section"><a href="https://ide.main.window.html#toggle.line.breakpoint.action">8.1.1.78. <span class="guiicon">Toggle Line Breakpoint</span> action</a></span></dt><dt><span class="section"><a href="https://ide.main.window.html#toggle.method.breakpoint.action">8.1.1.79. <span class="guiicon">Toggle Method Breakpoint</span> action</a></span></dt><dt><span class="section"><a href="https://ide.main.window.html#toggle.watchpoint.action">8.1.1.80. <span class="guiicon">Toggle Watchpoint</span> action</a></span></dt><dt><span class="section"><a href="https://ide.main.window.html#ide.undo.action">8.1.1.81. <span class="guiicon">Undo</span> action</a></span></dt><dt><span class="section"><a href="https://ide.main.window.html#use.step.filters.action">8.1.1.82. <span class="guiicon">Use Step Filters</span> action</a></span></dt><dt><span class="section"><a href="https://ide.main.window.html#ide.working.set.action">8.1.1.83. <span class="guiicon">Working Set</span> action</a></span></dt><dt><span class="section"><a href="https://ide.main.window.html#ide.workspace.action">8.1.1.84. <span class="guiicon">Workspace</span> action</a></span></dt></dl></div><p>
+The <span class="application">Squish IDE</span>'s Main Window provides a conventional menu bar through which
+all the actions and dialogs offered by the <span class="application">Squish IDE</span> in the current context
+are accessible.
+</p><div class="screenshot"><div class="mediaobject" align="center"><img src="https://images/squish-main-menu.png" align="middle"></img><div class="caption">The Main Window's Menu Bar
+</div></div></div><p>
+The Main Window also provides a toolbar for instant access to a number
+of the <span class="application">Squish IDE</span>'s actions.
+</p><div class="screenshot"><div class="mediaobject" align="center"><img src="https://images/squish-main-toolbar.png" align="middle"></img><div class="caption">The Main Window's Toolbar
+</div></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="ide.add.symbolic.name.action"></a>8.1.1.1. Add Symbolic Name action</h4></div></div></div><p>
+The <span class="guiicon">Add Symbolic Name</span> action is used to add a new symbolic name to the
+<a class="xref" href="https://rg-objectmap.html" title="7.11. Object Map">Object Map (Section 7.11)</a>. This action can only be used when the
+<a class="xref" href="https://ide.views.html#ide.the-object-map.view" title="8.2.10. Object Map view">Object Map view (Section 8.2.10)</a> is visible. It can be invoked
+by clicking the
+Object Map view's top-most <span class="guibutton">New</span> button. The
+bottom-most <span class="guibutton">New</span> button can then be used to add
+one or more properties that <span class="emphasis"><em>Squish</em></span> should use to match the new
+symbolic name, as discussed in the <a class="xref" href="https://ide.views.html#ide.the-object-map.view" title="8.2.10. Object Map view">Object Map view (Section 8.2.10)</a> section. (See also <a class="xref" href="https://rg-objectmap.html#rgos-edit" title="7.11.3. Editing an Object Map">Editing an Object Map (Section 7.11.3)</a>.)
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="ide.activate.editor.action"></a>8.1.1.2. <span class="guiicon">Activate Editor</span> action</h4></div></div></div><p>
+The <span class="guiicon">Activate Editor</span> action switches the focus to the last active
+editable view or does nothing if there isn't one. (The <span class="application">Squish IDE</span>'s editable
+views include <a class="xref" href="https://ide.views.html#ide.the-editor.view" title="8.2.6. Editor view">Editor view (Section 8.2.6)</a>s, the <a class="xref" href="https://ide.views.html#ide.the-object-map.view" title="8.2.10. Object Map view">Object Map view (Section 8.2.10)</a> , and the <a class="xref" href="https://ide.views.html#ide.the-settings.view" title="8.2.16. Test Suite Settings view">Test Suite Settings view (Section 8.2.16)</a>.) The action can be invoked by
+clicking
+<span class="guimenu">Window</span>|<span class="guimenuitem">Navigation</span>|<span class="guimenuitem">Activate Editor</span> or by pressing
+<span class="keycap"><strong>F12</strong></span>.
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="ide.check.object.existence.action"></a>8.1.1.3. <span class="guiicon">Check Object Existence</span> action</h4></div></div></div><p>
+The <span class="guiicon">Check Object Existence</span> action marks items in the <a class="xref" href="https://ide.views.html#ide.the-object-map.view" title="8.2.10. Object Map view">Object Map view (Section 8.2.10)</a> as being absent
+(<span class="guiicon"><img src="https://images/ide/objectnotfound.png"></img></span>) or present
+(<span class="guiicon"><img src="https://images/ide/objectfound.png"></img></span>).
+The action is only enabled if the <span class="application">Squish IDE</span> is spying—for example,
+stopped at a breakpoint or when the AUT is running as a result of
+invoking the <a class="xref" href="https://ide.main.window.html#ide.launch.aut.action" title="8.1.1.22. Launch AUT action"><span class="guiicon">Launch AUT</span> action (Section 8.1.1.22)</a>—and when an
+item in the <a class="xref" href="https://rg-objectmap.html" title="7.11. Object Map">Object Map (Section 7.11)</a> is selected. The action can
+be invoked by clicking
+<span class="guibutton">Check Object Existence</span> toolbar button.
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="ide.close.action"></a>8.1.1.4. <span class="guiicon">Close</span> action</h4></div></div></div><p>
+The <span class="guiicon">Close</span> action closes the last active editable view or does nothing if
+there isn't one. (The <span class="application">Squish IDE</span>'s editable views include <a class="xref" href="https://ide.views.html#ide.the-editor.view" title="8.2.6. Editor view">Editor view (Section 8.2.6)</a>s, the
+<a class="xref" href="https://ide.views.html#ide.the-object-map.view" title="8.2.10. Object Map view">Object Map view (Section 8.2.10)</a>, and the <a class="xref" href="https://ide.views.html#ide.the-settings.view" title="8.2.16. Test Suite Settings view">Test Suite Settings view (Section 8.2.16)</a>.) The action can be invoked by clicking
+<span class="guimenu">File</span>|<span class="guimenuitem">Close</span>
+or by pressing
+<span class="keycap"><strong>Ctrl</strong></span>+<span class="keycap"><strong>W</strong></span>.
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="ide.close.all.action"></a>8.1.1.5. <span class="guiicon">Close All</span> action</h4></div></div></div><p>
+The <span class="guiicon">Close All</span> action closes all the editable views or does nothing if
+there aren't any. (The <span class="application">Squish IDE</span>'s editable views include <a class="xref" href="https://ide.views.html#ide.the-editor.view" title="8.2.6. Editor view">Editor view (Section 8.2.6)</a>s, the
+<a class="xref" href="https://ide.views.html#ide.the-object-map.view" title="8.2.10. Object Map view">Object Map view (Section 8.2.10)</a>, and the <a class="xref" href="https://ide.views.html#ide.the-settings.view" title="8.2.16. Test Suite Settings view">Test Suite Settings view (Section 8.2.16)</a>.) The action can be invoked by clicking
+<span class="guimenu">File</span>|<span class="guimenuitem">Close
+All</span> or by pressing
+<span class="keycap"><strong>Shift</strong></span>+<span class="keycap"><strong>Ctrl</strong></span>+<span class="keycap"><strong>W</strong></span>.
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="ide.close.perspective.action"></a>8.1.1.6. <span class="guiicon">Close Perspective</span> action</h4></div></div></div><p>
+The <span class="guiicon">Close Perspective</span> action closes the active perspective or does
+nothing if there isn't one. (The <span class="application">Squish IDE</span> provides some standard
+perspectives; see <a class="xref" href="https://ide.main.window.html#ide.perspectives" title="8.1.2. Perspectives">Perspectives (Section 8.1.2)</a>.) If there is
+another perspective available (i.e., in the perspectives toolbar), then
+it will be made the active one. The <span class="guiicon">Close Perspective</span> action can be
+invoked by clicking
+<span class="guimenu">Window</span>|<span class="guimenuitem">Close
+Perspective</span>. (See also, the <a class="xref" href="https://ide.main.window.html#ide.close.all.perspectives.action" title="8.1.1.7. Close All Perspectives action"><span class="guiicon">Close All Perspectives</span> action (Section 8.1.1.7)</a>.)
+</p><p>
+<span class="emphasis"><em>If the standard perspectives are used this action is unlikely
+to be needed since the <span class="application">Squish IDE</span> automatically switches between perspectives
+as necessary.</em></span>
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="ide.close.all.perspectives.action"></a>8.1.1.7. <span class="guiicon">Close All Perspectives</span> action</h4></div></div></div><p>
+The <span class="guiicon">Close All Perspectives</span> action closes all the perspectives or does
+nothing if there aren't any. (The <span class="application">Squish IDE</span> provides some standard
+perspectives; see <a class="xref" href="https://ide.main.window.html#ide.perspectives" title="8.1.2. Perspectives">Perspectives (Section 8.1.2)</a>.) The "Close All
+Perspectives" action can be invoked by clicking
+<span class="guimenu">Window</span>|<span class="guimenuitem">Close All
+Perspectives</span>.
+</p><p>
+<span class="emphasis"><em>If the standard perspectives are used this action is unlikely
+to be needed since the <span class="application">Squish IDE</span> automatically switches between perspectives
+as necessary.</em></span>
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="ide.content.assist.action"></a>8.1.1.8. <span class="guiicon">Content Assist</span> action</h4></div></div></div><p>
+The <span class="guiicon">Content Assist</span> action provides code completion and can be invoked
+by clicking <span class="guimenu">Edit</span>|<span class="guimenuitem">Content
+Assist</span> or by pressing
+<span class="keycap"><strong>Ctrl</strong></span>+<span class="keycap"><strong>Space</strong></span>. If a
+completion is available it is inserted; otherwise the message “<span class="quote">No
+completion available</span>” is briefly shown in the status bar. Note
+that completion can be attempted mid-way through typing a word or when
+there is no word (in which case a list of possible completion words is
+popped up).
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="ide.convert.line.delimiters.to.action"></a>8.1.1.9. <span class="guiicon">Convert Line Delimiters To</span> action</h4></div></div></div><p>
+The <span class="guiicon">Convert Line Delimiters To</span> action pops up a submenu of plain text
+file line ending conventions. It is possible to change the line ending
+conventions of the active <a class="xref" href="https://ide.views.html#ide.the-editor.view" title="8.2.6. Editor view">Editor view (Section 8.2.6)</a>'s contents using this submenu.
+However, we do <span class="bold"><strong>not</strong></span> recommend using this
+option. The <span class="application">Squish IDE</span> is perfectly capable of detecting and handling
+different line ending conventions automatically, so performing manual
+changes should never be necessary. (And if you want to force a particular
+line ending convention to be used regardless of platform this can be
+done through the <a class="xref" href="https://ide.dialogs.html#ide.preferences.dialog" title="8.3.17. Pref­er­ences dialog">Pref­er­ences dialog (Section 8.3.17)</a>; see the General
+item's Workspace item's "New text file delimiter" options.)
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="ide.copy.action"></a>8.1.1.10. <span class="guiicon">Copy</span> action</h4></div></div></div><p>
+The <span class="guiicon">Copy</span> action (<span class="guiicon"><img src="https://images/ide/cmd_Copy.png"></img></span>) copies any selected text
+(e.g., in an editable view) to the clipboard. The <span class="guiicon">Copy</span> action can be
+invoked by clicking <span class="guimenu">Edit</span>|<span class="guimenuitem">Copy</span> or by pressing
+<span class="keycap"><strong>Ctrl</strong></span>+<span class="keycap"><strong>C</strong></span> or by
+invoking a context menu and clicking the <span class="guibutton">Copy</span>
+option for those views that have a context menu. (See also the <a class="xref" href="https://ide.main.window.html#ide.cut.action" title="8.1.1.12. Cut action"><span class="guiicon">Cut</span> action (Section 8.1.1.12)</a>, the <a class="xref" href="https://ide.main.window.html#ide.paste.action" title="8.1.1.36. Paste action"><span class="guiicon">Paste</span> action (Section 8.1.1.36)</a>, and
+the <a class="xref" href="https://ide.main.window.html#ide.select.all.action" title="8.1.1.60. Select All action"><span class="guiicon">Select All</span> action (Section 8.1.1.60)</a>.)
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="ide.customize.perspective.action"></a>8.1.1.11. <span class="guiicon">Customize Perspective</span> action</h4></div></div></div><p>
+The <span class="guiicon">Customize Perspective</span> action is used to pop up the <a class="xref" href="https://ide.dialogs.html#ide.customize.perspective.dialog" title="8.3.2. Customize Perspective dialog">Customize Perspective dialog (Section 8.3.2)</a>. This dialog is used to
+customize a predefined or custom perspective—for example,
+customizing some of the toolbars, menus, and submenus that are visible
+when the perspective is shown.
+(To change the views shown in a perspective simply close any you don't
+want and add new ones using the <a class="xref" href="https://ide.main.window.html#ide.show.view.action" title="8.1.1.62. Show View action"><span class="guiicon">Show View</span> action (Section 8.1.1.62)</a>.)
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="ide.cut.action"></a>8.1.1.12. <span class="guiicon">Cut</span> action</h4></div></div></div><p>
+The <span class="guiicon">Cut</span> action (<span class="guiicon"><img src="https://images/ide/cmd_Cut.png"></img></span>) copies any selected text
+(e.g., in an editable view) to the clipboard and then
+<span class="emphasis"><em>deletes</em></span> the selected text from the view. The "Cut"
+action can be invoked by clicking
+<span class="guimenu">Edit</span>|<span class="guimenuitem">Cut</span>
+or by pressing
+<span class="keycap"><strong>Ctrl</strong></span>+<span class="keycap"><strong>X</strong></span> or by
+invoking a context menu and clicking the <span class="guibutton">Cut</span>
+option for those views that have a context menu with this option. (See
+also the <a class="xref" href="https://ide.main.window.html#ide.copy.action" title="8.1.1.10. Copy action"><span class="guiicon">Copy</span> action (Section 8.1.1.10)</a>, the <a class="xref" href="https://ide.main.window.html#ide.delete.action" title="8.1.1.13. Delete action"><span class="guiicon">Delete</span> action (Section 8.1.1.13)</a>, the <a class="xref" href="https://ide.main.window.html#ide.paste.action" title="8.1.1.36. Paste action"><span class="guiicon">Paste</span> action (Section 8.1.1.36)</a>,
+and the <a class="xref" href="https://ide.main.window.html#ide.select.all.action" title="8.1.1.60. Select All action"><span class="guiicon">Select All</span> action (Section 8.1.1.60)</a>.)
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="ide.delete.action"></a>8.1.1.13. <span class="guiicon">Delete</span> action</h4></div></div></div><p>
+The <span class="guiicon">Delete</span> action (<span class="guiicon"><img src="https://images/ide/cmd_Delete.png"></img></span>) is used to delete the
+selected item (e.g., a test case) or the selected text (e.g., in an
+editable view). The <span class="guiicon">Delete</span> action can be invoked by clicking
+<span class="guimenu">Edit</span>|<span class="guimenuitem">Delete</span>
+or by pressing the <span class="keycap"><strong>Delete</strong></span> key or by invoking a context
+menu and clicking the <span class="guibutton">Delete</span> option for those
+views that have a context menu with this option. (See also the <a class="xref" href="https://ide.main.window.html#ide.copy.action" title="8.1.1.10. Copy action"><span class="guiicon">Copy</span> action (Section 8.1.1.10)</a> and the <a class="xref" href="https://ide.main.window.html#ide.cut.action" title="8.1.1.12. Cut action"><span class="guiicon">Cut</span> action (Section 8.1.1.12)</a>.)
+</p><p>
+If the deletion can be undone using the <a class="xref" href="https://ide.main.window.html#ide.undo.action" title="8.1.1.81. Undo action"><span class="guiicon">Undo</span> action (Section 8.1.1.81)</a> the deletion is performed immediately. If
+the deletion is irreversible (e.g., deleting a test case) a Yes/No
+confirmation dialog is popped up.
+</p><p>
+Inside a <a class="xref" href="https://ide.views.html#ide.the-search.view" title="8.2.15. Search view">Search view (Section 8.2.15)</a> this action removes any
+selected matches from the view.
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="ide.delete.test.suite.action"></a>8.1.1.14. <span class="guiicon">Delete Test Suite</span> action</h4></div></div></div><p>
+The <span class="guiicon">Delete Test Suite</span> action is used to remove a test suite from the
+<span class="application">Squish IDE</span>'s workspace—and optionally to permanently delete the entire
+test suite from disk. This action is invoked by clicking
+<span class="guimenu">File</span>|<span class="guimenuitem">Delete Test
+Suite</span> which results in a confirmation dialog
+being popped up. Click the <span class="guibutton">No</span> button to cancel
+the operation. If the <span class="guibutton">Delete Test Suite on Disk</span>
+checkbox is <span class="emphasis"><em>unchecked</em></span> (which is the default), it is
+safe to click the <span class="guibutton">Yes</span> button—all that will
+happen is that the test suite will be removed from the workspace and any
+of its associated views will be closed. You can always add the test
+suite to the workspace afterwards by using the <a class="xref" href="https://ide.main.window.html#ide.open.test.suite.action" title="8.1.1.34. Open Test Suite action"><span class="guiicon">Open Test Suite</span> action (Section 8.1.1.34)</a>.
+</p><p>
+If you really want to delete the entire test suite, that is both remove
+it from the <span class="application">Squish IDE</span>'s workspace and delete the test suite and all its
+associated test cases, test data, etc., from disk, then check the
+<span class="guibutton">Delete Test Suite on Disk</span> checkbox and click the
+<span class="guibutton">Yes</span> button. This action cannot be undone, so use
+with care.
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="ide.file.action"></a>8.1.1.15. <span class="guiicon">File</span> action</h4></div></div></div><p>
+The <span class="application">Squish IDE</span> provides two different <span class="guiicon">File</span> actions.
+</p><p>
+The first <span class="guiicon">File</span> action (<span class="guiicon"><img src="https://images/ide/search_file.png"></img></span>) invokes the <a class="xref" href="https://ide.dialogs.html#ide.search.dialog" title="8.3.20. Search dialog">Search dialog (Section 8.3.20)</a> which is used for searching for text
+inside files, and forces the <span class="guilabel">File Search</span> tab to be the
+active tab. This action can be invoked by clicking
+<span class="guimenu">Search</span>|<span class="guimenuitem">File</span>.
+(See also the <a class="xref" href="https://ide.main.window.html#ide.search.action" title="8.1.1.59. Search action"><span class="guiicon">Search</span> action (Section 8.1.1.59)</a>.)
+</p><p>
+The second <span class="guiicon">File</span> action performs a search in the current file for the
+selected text—or if no text is selected for the word containing the
+cursor—and presents the search results in a <a class="xref" href="https://ide.views.html#ide.the-search.view" title="8.2.15. Search view">Search view (Section 8.2.15)</a>, showing the view if it isn't currently
+visible. This action can be invoked by clicking
+<span class="guimenu">Search</span>|<span class="guimenuitem">Text</span>|<span class="guimenuitem">File</span>.
+(See also the <a class="xref" href="https://ide.main.window.html#ide.project.action" title="8.1.1.42. Project action"><span class="guiicon">Project</span> action (Section 8.1.1.42)</a>, the <a class="xref" href="https://ide.main.window.html#ide.working.set.action" title="8.1.1.83. Working Set action"><span class="guiicon">Working Set</span> action (Section 8.1.1.83)</a>, and the <a class="xref" href="https://ide.main.window.html#ide.workspace.action" title="8.1.1.84. Workspace action"><span class="guiicon">Workspace</span> action (Section 8.1.1.84)</a>.)
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="ide.find.and.replace.action"></a>8.1.1.16. <span class="guiicon">Find and Replace</span> action</h4></div></div></div><p>
+The <span class="guiicon">Find and Replace</span> action is used for finding and optionally
+replacing text in the active editable view. This action can be invoked by
+clicking
+<span class="guimenu">Edit</span>|<span class="guimenuitem">Find and Replace</span>
+or by pressing
+<span class="keycap"><strong>Ctrl</strong></span>+<span class="keycap"><strong>F</strong></span> and causes
+the <a class="xref" href="https://ide.dialogs.html#ide.find.and.replace.dialog" title="8.3.3. Find/Replace dialog">Find/Replace dialog (Section 8.3.3)</a> to pop up.
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="ide.find.next.action"></a>8.1.1.17. <span class="guiicon">Find Next</span> action</h4></div></div></div><p>
+The <span class="guiicon">Find Next</span> action is used for finding the next occurrence of the
+selected text or the text that was last searched for (e.g., using the
+<a class="xref" href="https://ide.main.window.html#ide.find.and.replace.action" title="8.1.1.16. Find and Replace action"><span class="guiicon">Find and Replace</span> action (Section 8.1.1.16)</a>). This action can be
+invoked by clicking
+<span class="guimenu">Edit</span>|<span class="guimenuitem">Find Next</span>
+or by pressing
+<span class="keycap"><strong>Ctrl</strong></span>+<span class="keycap"><strong>K</strong></span>.
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="ide.find.previous.action"></a>8.1.1.18. <span class="guiicon">Find Previous</span> action</h4></div></div></div><p>
+The <span class="guiicon">Find Previous</span> action is used for finding the previous occurrence
+of the selected text or the text that was last searched for (e.g., using
+the <a class="xref" href="https://ide.main.window.html#ide.find.and.replace.action" title="8.1.1.16. Find and Replace action"><span class="guiicon">Find and Replace</span> action (Section 8.1.1.16)</a>). This action can be
+invoked by clicking <span class="guimenu">Edit</span>|<span class="guimenuitem">Find
+Previous</span> or by pressing
+<span class="keycap"><strong>Shift</strong></span>+<span class="keycap"><strong>Ctrl</strong></span>+<span class="keycap"><strong>K</strong></span>.
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="ide.import.test.resource.action"></a>8.1.1.19. <span class="guiicon">Import Test Resource</span> action</h4></div></div></div><p>
+The <span class="guiicon">Import Test Resource</span> action (<span class="guiicon"><img src="https://images/ide/squish_icon.png"></img></span>) invokes the <a class="xref" href="https://ide.dialogs.html#ide.import.squish.resource.dialog" title="8.3.7. Import Squish Resource dialog">Import Squish Resource dialog (Section 8.3.7)</a> which is used to import
+scripts, test data, and verification points into a test case or a test
+suite. The action is invoked by clicking
+<span class="guimenu">File</span>|<span class="guimenuitem">Import Test
+Resource</span>. (See also the <a class="xref" href="https://ide.dialogs.html#ide.new.squish.test.data.dialog" title="8.3.11. New Squish Test Data dialog">New Squish Test Data dialog (Section 8.3.11)</a> and <a class="xref" href="https://ide.dialogs.html#ide.new.squish.test.script.dialog" title="8.3.12. New Squish Test Script dialog">New Squish Test Script dialog (Section 8.3.12)</a>.)
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="ide.key.assist.action"></a>8.1.1.20. <span class="guiicon">Key Assist</span> action</h4></div></div></div><p>
+The <span class="guiicon">Key Assist</span> action pops up a window showing the <span class="application">Squish IDE</span>'s currently
+active keyboard shortcuts. This action can be
+invoked by clicking <span class="guimenu">Help</span>|<span class="guimenuitem">Key
+Assist</span> or by pressing
+<span class="keycap"><strong>Shift</strong></span>+<span class="keycap"><strong>Ctrl</strong></span>+<span class="keycap"><strong>L</strong></span>.
+
+</p><div class="screenshot"><div class="mediaobject" align="center"><img src="https://images/ide-ref-key-assist-popup.png" align="middle"></img><div class="caption">The "Key Assist" popup window
+</div></div></div><p>
+Notice that when the popup window is visible pressing
+<span class="keycap"><strong>Shift</strong></span>+<span class="keycap"><strong>Ctrl</strong></span>+<span class="keycap"><strong>L</strong></span>
+invokes the <a class="xref" href="https://ide.dialogs.html#ide.preferences.dialog" title="8.3.17. Pref­er­ences dialog">Pref­er­ences dialog (Section 8.3.17)</a> at the General
+item's Keys item.
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="ide.last.edit.location.action"></a>8.1.1.21. <span class="guiicon">Last Edit Location</span> action</h4></div></div></div><p>
+The <span class="guiicon">Last Edit Location</span> action (<span class="guiicon"><img src="https://images/ide/last_edit_pos.png"></img></span>) moves the cursor to
+the position it had when the file being edited was last saved. This
+action can be invoked by clicking the <span class="guibutton">Last Edit
+Location</span> toolbar button or by pressing
+<span class="keycap"><strong>Ctrl</strong></span>+<span class="keycap"><strong>Q</strong></span>.
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="ide.launch.aut.action"></a>8.1.1.22. <span class="guiicon">Launch AUT</span> action</h4></div></div></div><p>
+The <span class="guiicon">Launch AUT</span> action (<span class="guiicon"><img src="https://images/ide/launch_aut.png"></img></span>) runs the AUT without
+doing any recording, and changes the <span class="application">Squish IDE</span>'s perspective to the <a class="xref" href="https://ide.main.window.html#ide.squish.spy.perspective" title="8.1.2.1. Squish Spy Perspective">Squish Spy Perspective (Section 8.1.2.1)</a>. This means that it is possible
+to interact with the AUT and examine the state of its internal objects.
+This action can be invoked by clicking
+<span class="guimenu">Run</span>|<span class="guimenuitem">Launch
+AUT</span> or by pressing the <span class="guibutton">Launch
+AUT</span> toolbar button.
+</p><p>
+The AUT can be terminated either normally—for example, by clicking
+its close button—or by invoking the <a class="xref" href="https://ide.main.window.html#ide.quit.aut.action" title="8.1.1.45. Quit AUT action"><span class="guiicon">Quit AUT</span> action (Section 8.1.1.45)</a>. Once the AUT has terminated, the <span class="application">Squish IDE</span>
+returns to the <a class="xref" href="https://ide.main.window.html#ide.squish.test.management.perspective" title="8.1.2.2. Squish Test Management Perspective">Squish Test Management Perspective (Section 8.1.2.2)</a>.
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="ide.maximize.active.view.or.editor.action"></a>8.1.1.23. <span class="guiicon">Maximize Active View or Editor</span> action</h4></div></div></div><p>
+The <span class="guiicon">Maximize Active View or Editor</span> action is a toggle action. If the
+active view (e.g., an <a class="xref" href="https://ide.views.html#ide.the-editor.view" title="8.2.6. Editor view">Editor view (Section 8.2.6)</a>) is not maximized, this action
+maximizes the active view, i.e., makes the view occupy as much of the
+<span class="application">Squish IDE</span>'s central area as possible, and at the same time hides all the
+other views. If the active view is already maximized, this action
+reverses the effect, i.e., restores the maximized view and all the other
+views that were affected to their previous sizes and positions.
+</p><p>
+When a view is maximized the <span class="application">Squish IDE</span> shows at least one
+<span class="guibutton">Restore</span> toolbar
+button (<span class="guiicon"><img src="https://images/ide/restore.png"></img></span>), plus toolbar buttons for
+all the other views that were visible but which have now been hidden.
+Clicking the <span class="guibutton">Restore</span> button has the same effect
+as toggling the action again. Clicking any of the toolbar buttons
+representing one of the views makes that view visible again, with the
+maximized view reducing in size to accommodate the newly visible view.
+</p><p>
+The <span class="guiicon">Maximize Active View or Editor</span> action can be toggled by clicking
+<span class="guimenu">Window</span>|<span class="guimenuitem">Navigation</span>|<span class="guimenuitem">Maximize
+Active View or Editor</span> or by pressing
+<span class="keycap"><strong>Ctrl</strong></span>+<span class="keycap"><strong>M</strong></span> or by
+clicking the view window's
+<span class="guibutton">Maximize</span>
+(<span class="guiicon"><img src="https://images/ide/max_view.png"></img></span>)/<span class="guibutton">Restore</span>
+(<span class="guiicon"><img src="https://images/ide/restore.png"></img></span>) button.
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="ide.minimize.active.view.or.editor.action"></a>8.1.1.24. <span class="guiicon">Minimize Active View or Editor</span> action</h4></div></div></div><p>
+The <span class="guiicon">Minimize Active View or Editor</span> action minimizes the view it is
+invoked on, i.e., it hides the view and adds a toolbar button representing
+the view to the <span class="application">Squish IDE</span>, and also adds a <span class="guibutton">Restore</span>
+toolbar button (<span class="guiicon"><img src="https://images/ide/restore.png"></img></span>) to the <span class="application">Squish IDE</span> if there
+isn't one present already.
+This action can be invoked by clicking
+<span class="guimenu">Window</span>|<span class="guimenuitem">Navigation</span>|<span class="guimenuitem">Minimize
+Active View or Editor</span> or by pressing the
+view's <span class="guibutton">Minimize</span> button (<span class="guiicon"><img src="https://images/ide/min_view.png"></img></span>).
+</p><p>
+This effect of this action can be reversed either by clicking the
+toolbar button that represents the minimized view or by clicking the
+<span class="guibutton">Restore</span> toolbar button (<span class="guiicon"><img src="https://images/ide/restore.png"></img></span>).
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="ide.move.action"></a>8.1.1.25. <span class="guiicon">Move</span> action</h4></div></div></div><p>
+The <span class="guiicon">Move</span> action (invoked by clicking
+<span class="guimenu">File</span>|<span class="guimenuitem">Move</span>),
+is inherited from the Eclipse IDE; <span class="emphasis"><em>it is not functional in the
+<span class="application">Squish IDE</span></em></span>.
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="ide.new.action"></a>8.1.1.26. <span class="guiicon">New</span> action</h4></div></div></div><p>
+The <span class="guiicon">New</span> action provides a means of creating new test cases and test
+suites and of importing shared test scripts and test data. The <span class="application">Squish IDE</span>
+provides a menu of "New" actions and a <span class="guiicon">New</span> action itself.
+</p><p>
+The <span class="guiicon">New</span> action pops up the <a class="xref" href="https://ide.dialogs.html#ide.new.dialog" title="8.3.9. New dialog">New dialog (Section 8.3.9)</a>. This
+action can be invoked by clicking the <span class="guibutton">New</span> toolbar
+button (but not its menu indicator), or by clicking
+<span class="guimenu">File</span>|<span class="guimenuitem">New...</span>|<span class="guimenuitem">Other...</span>,
+or by pressing
+<span class="keycap"><strong>Ctrl</strong></span>+<span class="keycap"><strong>N</strong></span>.
+</p><p>
+The "New" actions menu can be invoked by clicking the
+<span class="guibutton">New</span> toolbar button's menu indicator or by
+clicking
+<span class="guimenu">File</span>|<span class="guimenuitem">New...</span>
+or by pressing
+<span class="keycap"><strong>Shift</strong></span>+<span class="keycap"><strong>Alt</strong></span>+<span class="keycap"><strong>N</strong></span>.
+</p><div class="screenshot"><div class="mediaobject" align="center"><img src="https://images/ide-ref-new-toolbutton-menu.png" align="middle"></img><div class="caption">The "New" actions menu
+</div></div></div><p>
+If the New Test Suite menu option is invoked the New Test Suite wizard
+is started. This wizard is described in the tutorials. Similarly, if the
+Project option is invoked the New Project dialog is popped up—this
+has a single option “<span class="quote">Squish Test Suite</span>” which if chosen
+again leads to the New Test Suite wizard.
+</p><p>
+If the Squish Test Case option is invoked the <a class="xref" href="https://ide.dialogs.html#ide.new.squish.test.case.wizard" title="8.3.10. New Squish Test Case wizard">New Squish Test Case wizard (Section 8.3.10)</a> will pop up. Enter a test
+case name and click the <span class="guibutton">Finish</span> button to create a
+new empty test case. (The same thing can be achieved by clicking the
+Test Suite's view's <span class="guibutton">New Test Case</span> action, the
+only difference being that this way a default test name is created and
+is ready to be overwritten with a name of your choice.)
+</p><p>
+If the Squish Test Data File option is invoked the <a class="xref" href="https://ide.dialogs.html#ide.new.squish.test.data.dialog" title="8.3.11. New Squish Test Data dialog">New Squish Test Data dialog (Section 8.3.11)</a> is popped up. Similarly, if the
+Squish Script File option is invoked the <a class="xref" href="https://ide.dialogs.html#ide.new.squish.test.script.dialog" title="8.3.12. New Squish Test Script dialog">New Squish Test Script dialog (Section 8.3.12)</a> is popped up.
+</p><p>
+If the Other option is invoked, the <a class="xref" href="https://ide.dialogs.html#ide.new.dialog" title="8.3.9. New dialog">New dialog (Section 8.3.9)</a>
+is popped up, exactly the same as if the <span class="guiicon">New</span> action had been invoked
+directly.
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="ide.new.test.case.action"></a>8.1.1.27. <span class="guiicon">New Test Case</span> action</h4></div></div></div><p>
+The <span class="guibutton">New Script Test Case</span> (<span class="guiicon"><img src="https://images/ide/new_test_case.png"></img></span>) button is used to create a
+new empty test case. This action can be invoked in different ways,
+and each way has its own slightly different behavior.
+</p><p>
+The quickest and easiest way to invoke this action is to click the
+<a class="xref" href="https://ide.views.html#ide.the-test-suites.view" title="8.2.19. Test Suites view">Test Suites view (Section 8.2.19)</a>'s <span class="guibutton">New Test
+Case</span> toolbar button. This will create a test case item in
+the <a class="xref" href="https://ide.views.html#ide.the-test-suites.view" title="8.2.19. Test Suites view">Test Suites view (Section 8.2.19)</a>'s Test Cases list with the
+name <code class="filename">tst_case1</code> (or <code class="filename">tst_case2</code>
+and so on if earlier numbered test cases already exist). The name will
+be selected for editing, so the test case can be immediately renamed to
+a name of your choice simply by typing in the new name. Once the empty
+test case exists it can be written either manually by typing in a script
+or by recording a script (which can of course be edited).
+</p><p>
+The action can also be invoked by clicking
+<span class="guimenu">File</span>|<span class="guimenuitem">New Test
+Case</span> or <span class="guimenu">File</span>|<span class="guimenuitem">New</span>|<span class="guimenuitem">New Test
+Case</span>. Both of these cause the
+<a class="xref" href="https://ide.dialogs.html#ide.new.squish.test.case.wizard" title="8.3.10. New Squish Test Case wizard">New Squish Test Case wizard (Section 8.3.10)</a> to pop up.
+Another way to pop up this wizard is to click
+<span class="guimenu">File</span>|<span class="guimenuitem">New</span>|<span class="guimenuitem">Other</span>
+(or press
+<span class="keycap"><strong>Ctrl</strong></span>+<span class="keycap"><strong>N</strong></span>),
+and then in the <a class="xref" href="https://ide.dialogs.html#ide.new.dialog" title="8.3.9. New dialog">New dialog (Section 8.3.9)</a> that this invokes,
+click the “<span class="quote">New Test Case</span>” item, then click the
+<span class="guibutton">Next</span> button.
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="ide.new.test.suite.action"></a>8.1.1.28. <span class="guiicon">New Test Suite</span> action</h4></div></div></div><p>
+The <span class="guiicon">New Test Suite</span> action (<span class="guiicon"><img src="https://images/ide/new_test_suite.png"></img></span>)
+is used to create a new test suite. This action can be invoked in
+different ways, and each way has its own slightly different behavior.
+</p><p>
+The quickest and easiest way to invoke this action is to click the <a class="xref" href="https://ide.views.html#ide.the-test-suites.view" title="8.2.19. Test Suites view">Test Suites view (Section 8.2.19)</a>'s <span class="guibutton">New Test
+Suite</span> toolbar button. This will invoke the <a class="xref" href="https://ide.dialogs.html#ide.new.squish.test.suite.wizard" title="8.3.13. New Squish Test Suite wizard">New Squish Test Suite wizard (Section 8.3.13)</a>. This wizard can also be
+invoked by clicking <span class="guimenu">File</span>|<span class="guimenuitem">New
+Test Suite</span> or
+<span class="guimenu">File</span>|<span class="guimenuitem">New</span>|<span class="guimenuitem">New
+Test Suite</span>.
+</p><p>
+Another way to pop up this wizard is to click
+<span class="guimenu">File</span>|<span class="guimenuitem">New</span>|<span class="guimenuitem">Other</span>
+(or press
+<span class="keycap"><strong>Ctrl</strong></span>+<span class="keycap"><strong>N</strong></span>),
+and then in the <a class="xref" href="https://ide.dialogs.html#ide.new.dialog" title="8.3.9. New dialog">New dialog (Section 8.3.9)</a> that this invokes,
+click the “<span class="quote">New Test Suite</span>” item, then click the
+<span class="guibutton">Next</span> button.
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="ide.next.annotation.action"></a>8.1.1.29. <span class="guiicon">Next Annotation</span> action</h4></div></div></div><p>
+The <span class="guiicon">Next Annotation</span> action (<span class="guiicon"><img src="https://images/ide/next_annotation.png"></img></span>) moves the text
+cursor to the next <span class="emphasis"><em>annotation</em></span> in the active <a class="xref" href="https://ide.views.html#ide.the-editor.view" title="8.2.6. Editor view">Editor view (Section 8.2.6)</a>. In this context an annotation means a
+marker associated with a line in a test script file. For example, if a
+test script has a syntax error or a breakpoint the <span class="application">Squish IDE</span> will mark the
+affected lines by putting a suitable little icon to the left of the line
+numbers shown in the <a class="xref" href="https://ide.views.html#ide.the-editor.view" title="8.2.6. Editor view">Editor view (Section 8.2.6)</a>. This action
+can be invoked by clicking the <span class="guibutton">Next Annotation</span>
+toolbar button or by pressing
+<span class="keycap"><strong>Ctrl</strong></span>+<span class="keycap"><strong>.</strong></span>.
+If no annotation can be found the text cursor is not moved.
+(Note that this key combination invokes the Show Next Match action if
+done when a <a class="xref" href="https://ide.views.html#ide.the-search.view" title="8.2.15. Search view">Search view (Section 8.2.15)</a> is active.)
+</p><p>
+By default the next annotation to be moved to is an error or warning,
+but the kinds of annotations to move to can be selected by invoking the
+toobar button's menu and checking and unchecking the available
+annotations to suit your needs.
+</p><p>
+See also, the <a class="xref" href="https://ide.main.window.html#ide.previous.annotation.action" title="8.1.1.38. Prev­ious An­no­ta­tion action"><span class="guiicon">Prev­ious An­no­ta­tion</span> action (Section 8.1.1.38)</a>.
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="ide.next.editor.action"></a>8.1.1.30. <span class="guiicon">Next Editor</span> action</h4></div></div></div><p>
+The <span class="guiicon">Next Editor</span> action pops up an Editor list which can be navigated
+by pressing
+<span class="keycap"><strong>Ctrl</strong></span>+<span class="keycap"><strong>F6</strong></span> (next) and
+<span class="keycap"><strong>Shift</strong></span>+<span class="keycap"><strong>Ctrl</strong></span>+<span class="keycap"><strong>F6</strong></span>
+(previous): once the <span class="keycap"><strong>Ctrl</strong></span> key is released the selected
+<a class="xref" href="https://ide.views.html#ide.the-editor.view" title="8.2.6. Editor view">Editor view (Section 8.2.6)</a> is made active.
+</p><p>
+The <span class="guiicon">Next Editor</span> action is invoked by clicking
+<span class="guimenu">Window</span>|<span class="guimenuitem">Navigation</span>|<span class="guimenuitem">Next
+Editor</span> or by pressing
+<span class="keycap"><strong>Ctrl</strong></span>+<span class="keycap"><strong>F6</strong></span>.
+</p><p>
+See also the <a class="xref" href="https://ide.main.window.html#ide.previous.editor.action" title="8.1.1.39. Previous Editor action"><span class="guiicon">Previous Editor</span> action (Section 8.1.1.39)</a>. Note that it
+is almost always more convenient to use the <a class="xref" href="https://ide.main.window.html#ide.switch.to.editor.action" title="8.1.1.74. Switch to Editor action"><span class="guiicon">Switch to Editor</span> action (Section 8.1.1.74)</a> (invoked with
+<span class="keycap"><strong>Shift</strong></span>+<span class="keycap"><strong>Ctrl</strong></span>+<span class="keycap"><strong>E</strong></span>)
+since that pops up a much more convenient <a class="xref" href="https://ide.dialogs.html#ide.switch.to.editor.dialog" title="8.3.24. Switch to Editor dialog">Switch to Editor dialog (Section 8.3.24)</a>.
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="ide.next.perspective.action"></a>8.1.1.31. <span class="guiicon">Next Perspective</span> action</h4></div></div></div><p>
+The <span class="guiicon">Next Perspective</span> action pops up a Perspectives list which can be
+navigated by pressing
+<span class="keycap"><strong>Ctrl</strong></span>+<span class="keycap"><strong>F8</strong></span> (next) and
+<span class="keycap"><strong>Shift</strong></span>+<span class="keycap"><strong>Ctrl</strong></span>+<span class="keycap"><strong>F8</strong></span>
+(previous): once the <span class="keycap"><strong>Ctrl</strong></span> key is released the selected
+perspective is made active.
+</p><p>
+The <span class="guiicon">Next Perspective</span> action is invoked by clicking
+<span class="guimenu">Window</span>|<span class="guimenuitem">Navigation</span>|<span class="guimenuitem">Next
+Perspective</span> or by pressing
+<span class="keycap"><strong>Ctrl</strong></span>+<span class="keycap"><strong>F8</strong></span>.
+(See also, the <a class="xref" href="https://ide.main.window.html#ide.previous.perspective.action" title="8.1.1.40. Previous Perspective action"><span class="guiicon">Previous Perspective</span> action (Section 8.1.1.40)</a>.)
+</p><p>
+It is possible to switch directly to another perspective by clicking its
+toolbar button, or to choose from the available perspectives by clicking
+the Open Perspective toolbar button (<span class="guiicon"><img src="https://images/ide/new_persp.png"></img></span>) and choosing a
+perspective from the list that pops up, or by clicking
+<span class="guimenu">Window</span>|<span class="guimenuitem">Open
+Perspective</span> and choosing a perspective from
+those listed in the submenu.
+</p><p>
+In practice it is rarely necessary to manually change between the
+standard <span class="emphasis"><em>Squish</em></span> perspectives since the <span class="application">Squish IDE</span> switches between them
+automatically depending on context.
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="ide.next.view.action"></a>8.1.1.32. <span class="guiicon">Next View</span> action</h4></div></div></div><p>
+The <span class="guiicon">Next View</span> action pops up a Views list which can be
+navigated by pressing
+<span class="keycap"><strong>Ctrl</strong></span>+<span class="keycap"><strong>F7</strong></span> (next) and
+<span class="keycap"><strong>Shift</strong></span>+<span class="keycap"><strong>Ctrl</strong></span>+<span class="keycap"><strong>F7</strong></span>
+(previous): once the <span class="keycap"><strong>Ctrl</strong></span> key is released the selected
+view is made active.
+</p><p>
+The <span class="guiicon">Next View</span> action is invoked by clicking
+<span class="guimenu">Window</span>|<span class="guimenuitem">Navigation</span>|<span class="guimenuitem">Next
+View</span> or by pressing
+<span class="keycap"><strong>Ctrl</strong></span>+<span class="keycap"><strong>F7</strong></span>.
+(See also, the <a class="xref" href="https://ide.main.window.html#ide.previous.view.action" title="8.1.1.41. Previous View action"><span class="guiicon">Previous View</span> action (Section 8.1.1.41)</a>.)
+</p><p>
+It is possible to switch directly to another (visible) view simply by
+clicking it, or to choose from the available views by clicking
+<span class="guimenu">Window</span>|<span class="guimenuitem">Show
+View</span> and choosing a view from those
+listed in the submenu, or by clicking the
+<span class="guimenuitem">Other</span> submenu item and choosing a view from
+the <a class="xref" href="https://ide.dialogs.html#ide.show.view.dialog" title="8.3.21. Show View dialog">Show View dialog (Section 8.3.21)</a>.
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="ide.open.file.action"></a>8.1.1.33. <span class="guiicon">Open File</span> action</h4></div></div></div><p>
+The <span class="guiicon">Open File</span> action pops up an Open File dialog from which a file can
+be chosen. If the file is of a type recognized by <span class="emphasis"><em>Squish</em></span> it is opened
+inside the <span class="application">Squish IDE</span>; otherwise the Squish IDE tries to open the file via the
+operating system—for example, using the file association on
+Windows and macOS to invoke an appropriate application to open the
+file. This action is invoked by clicking
+<span class="guimenu">File</span>|<span class="guimenuitem">Open File</span>.
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="ide.open.test.suite.action"></a>8.1.1.34. <span class="guiicon">Open Test Suite</span> action</h4></div></div></div><p>
+The <span class="guiicon">Open Test Suite</span> action (<span class="guiicon"><img src="https://images/ide/open_test_suite.png"></img></span>) pops up the  Open
+Test Suite dialog. This dialog presents a directory tree
+view—navigate to the test suite you want to open and once it is
+selected click the <span class="guibutton">OK</span> button to open it. This
+action is invoked by clicking
+<span class="guimenu">File</span>|<span class="guimenuitem">Open Test
+Suite</span>.
+</p><p>
+The <span class="application">Squish IDE</span> can hold any number of test suites. The current one is shown
+in the <a class="xref" href="https://ide.views.html#ide.the-test-suites.view" title="8.2.19. Test Suites view">Test Suites view (Section 8.2.19)</a>'s combobox (which can
+also be used to change the current test suite.)
+To remove a test suite from the <span class="application">Squish IDE</span>'s workspace use the <a class="xref" href="https://ide.main.window.html#ide.delete.test.suite.action" title="8.1.1.14. Delete Test Suite action"><span class="guiicon">Delete Test Suite</span> action (Section 8.1.1.14)</a>.
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="ide.open.perspective.action"></a>8.1.1.35. <span class="guiicon">Open Perspective</span> action</h4></div></div></div><p>
+The <span class="guiicon">Open Perspective</span> action (<span class="guiicon"><img src="https://images/ide/new_persp.png"></img></span>) is used to open (i.e.,
+change to) a perspective. The action is invoked by clicking
+<span class="guimenu">Window</span>|<span class="guimenuitem">Open
+Perspective</span> and choosing a perspective from
+the submenu, or by clicking the
+<span class="guimenuitem">Other</span> submenu item and choosing a perspective
+from the <a class="xref" href="https://ide.dialogs.html#ide.open.perspective.dialog" title="8.3.16. Open Perspective dialog">Open Perspective dialog (Section 8.3.16)</a>.
+</p><p>
+It is possible to switch directly to another perspective by clicking its
+toolbar button, or to choose from the available perspectives by clicking
+the Open Perspective toolbar button (<span class="guiicon"><img src="https://images/ide/new_persp.png"></img></span>) and choosing a
+perspective from the list that pops up.
+</p><p>
+In practice it is rarely necessary to manually change between the
+standard <span class="emphasis"><em>Squish</em></span> perspectives since the <span class="application">Squish IDE</span> switches between them
+automatically depending on context.
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="ide.paste.action"></a>8.1.1.36. <span class="guiicon">Paste</span> action</h4></div></div></div><p>
+The <span class="guiicon">Paste</span> action (<span class="guiicon"><img src="https://images/ide/cmd_Paste.png"></img></span>) inserts any text that is
+in the clipboard into the active <a class="xref" href="https://ide.views.html#ide.the-editor.view" title="8.2.6. Editor view">Editor view (Section 8.2.6)</a> at the current cursor
+position. The <span class="guiicon">Paste</span> action can be invoked by clicking
+<span class="guimenu">Edit</span>|<span class="guimenuitem">Paste</span>
+or by pressing
+<span class="keycap"><strong>Ctrl</strong></span>+<span class="keycap"><strong>V</strong></span> or by
+invoking a context menu and clicking the <span class="guibutton">Paste</span>
+option for those views that have a context menu. (See also the <a class="xref" href="https://ide.main.window.html#ide.copy.action" title="8.1.1.10. Copy action"><span class="guiicon">Copy</span> action (Section 8.1.1.10)</a> and the <a class="xref" href="https://ide.main.window.html#ide.cut.action" title="8.1.1.12. Cut action"><span class="guiicon">Cut</span> action (Section 8.1.1.12)</a>.)
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="ide.preferences.action"></a>8.1.1.37. <span class="guiicon">Preferences</span> action</h4></div></div></div><p>
+The <span class="guiicon">Preferences</span> action invokes the <a class="xref" href="https://ide.dialogs.html#ide.preferences.dialog" title="8.3.17. Pref­er­ences dialog">Pref­er­ences dialog (Section 8.3.17)</a> through which much of the <span class="application">Squish IDE</span>'s
+behavior can be customized. This action can be invoked by clicking
+<span class="guimenuitem">Preferences</span>.
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="ide.previous.annotation.action"></a>8.1.1.38. <span class="guiicon">Prev­ious An­no­ta­tion</span> action</h4></div></div></div><p>
+The <span class="guiicon">Previous Annotation</span> action (<span class="guiicon"><img src="https://images/ide/previous_annotation.png"></img></span>) moves the text
+cursor to the previous <span class="emphasis"><em>annotation</em></span> in the active <a class="xref" href="https://ide.views.html#ide.the-editor.view" title="8.2.6. Editor view">Editor view (Section 8.2.6)</a>. In this context an annotation means a
+marker associated with a line in a test script file. For example, if a
+test script has a syntax error or a breakpoint the <span class="application">Squish IDE</span> will mark the
+affected lines by putting a suitable little icon to the left of the line
+numbers shown in the <a class="xref" href="https://ide.views.html#ide.the-editor.view" title="8.2.6. Editor view">Editor view (Section 8.2.6)</a>. This action
+can be invoked by clicking the <span class="guibutton">Previous Annotation</span>
+toolbar button or by pressing
+<span class="keycap"><strong>Ctrl</strong></span>+<span class="keycap"><strong>,</strong></span>.
+If no annotation can be found the text cursor is not moved.
+(Note that this key combination invokes the Show Previous Match action if
+done when a <a class="xref" href="https://ide.views.html#ide.the-search.view" title="8.2.15. Search view">Search view (Section 8.2.15)</a> is active.)
+</p><p>
+By default the next annotation to be moved to is an error or warning,
+but the kinds of annotations to move to can be selected by invoking the
+toobar button's menu and checking and unchecking the available
+annotations to suit your needs.
+</p><p>
+See also, the <a class="xref" href="https://ide.main.window.html#ide.next.annotation.action" title="8.1.1.29. Next Annotation action"><span class="guiicon">Next Annotation</span> action (Section 8.1.1.29)</a>.
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="ide.previous.editor.action"></a>8.1.1.39. <span class="guiicon">Previous Editor</span> action</h4></div></div></div><p>
+The <span class="guiicon">Previous Editor</span> action pops up an Editor list which can be navigated
+by pressing
+<span class="keycap"><strong>Ctrl</strong></span>+<span class="keycap"><strong>F6</strong></span> (next) and
+<span class="keycap"><strong>Shift</strong></span>+<span class="keycap"><strong>Ctrl</strong></span>+<span class="keycap"><strong>F6</strong></span>
+(previous): once the <span class="keycap"><strong>Ctrl</strong></span> key is released the selected
+editor view is made active.
+</p><p>
+The <span class="guiicon">Previous Editor</span> action is invoked by clicking
+<span class="guimenu">Window</span>|<span class="guimenuitem">Navigation</span>|<span class="guimenuitem">Previous
+Editor</span> or by pressing
+<span class="keycap"><strong>Shift</strong></span>+<span class="keycap"><strong>Ctrl</strong></span>+<span class="keycap"><strong>F6</strong></span>.
+</p><p>
+See also the <a class="xref" href="https://ide.main.window.html#ide.next.editor.action" title="8.1.1.30. Next Editor action"><span class="guiicon">Next Editor</span> action (Section 8.1.1.30)</a>. Note that it
+is almost always more convenient to use the <a class="xref" href="https://ide.main.window.html#ide.switch.to.editor.action" title="8.1.1.74. Switch to Editor action"><span class="guiicon">Switch to Editor</span> action (Section 8.1.1.74)</a> (invoked with
+<span class="keycap"><strong>Shift</strong></span>+<span class="keycap"><strong>Ctrl</strong></span>+<span class="keycap"><strong>E</strong></span>)
+since that pops up a much more convenient <a class="xref" href="https://ide.dialogs.html#ide.switch.to.editor.dialog" title="8.3.24. Switch to Editor dialog">Switch to Editor dialog (Section 8.3.24)</a>.
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="ide.previous.perspective.action"></a>8.1.1.40. <span class="guiicon">Previous Perspective</span> action</h4></div></div></div><p>
+The <span class="guiicon">Previous Perspective</span> action pops up a Perspectives list which can be
+navigated by pressing
+<span class="keycap"><strong>Ctrl</strong></span>+<span class="keycap"><strong>F8</strong></span> (next) and
+<span class="keycap"><strong>Shift</strong></span>+<span class="keycap"><strong>Ctrl</strong></span>+<span class="keycap"><strong>F8</strong></span>
+(previous): once the <span class="keycap"><strong>Ctrl</strong></span> key is released the selected
+perspective is made active.
+</p><p>
+The <span class="guiicon">Previous Perspective</span> action is invoked by clicking
+<span class="guimenu">Window</span>|<span class="guimenuitem">Navigation</span>|<span class="guimenuitem">Previous
+Perspective</span> or by pressing
+<span class="keycap"><strong>Shift</strong></span>+<span class="keycap"><strong>Ctrl</strong></span>+<span class="keycap"><strong>F8</strong></span>.
+(See also, the <a class="xref" href="https://ide.main.window.html#ide.next.perspective.action" title="8.1.1.31. Next Perspective action"><span class="guiicon">Next Perspective</span> action (Section 8.1.1.31)</a>.)
+</p><p>
+It is possible to switch directly to another perspective by clicking its
+toolbar button, or to choose from the available perspectives by clicking
+the Open Perspective toolbar button (<span class="guiicon"><img src="https://images/ide/new_persp.png"></img></span>) and choosing a
+perspective from the list that pops up, or by clicking
+<span class="guimenu">Window</span>|<span class="guimenuitem">Open
+Perspective</span> and choosing a perspective from
+those listed in the submenu.
+</p><p>
+In practice it is rarely necessary to manually change between the
+standard <span class="emphasis"><em>Squish</em></span> perspectives since the <span class="application">Squish IDE</span> switches between them
+automatically depending on context.
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="ide.previous.view.action"></a>8.1.1.41. <span class="guiicon">Previous View</span> action</h4></div></div></div><p>
+The <span class="guiicon">Previous View</span> action pops up a Views list which can be
+navigated by pressing
+<span class="keycap"><strong>Ctrl</strong></span>+<span class="keycap"><strong>F7</strong></span> (next) and
+<span class="keycap"><strong>Shift</strong></span>+<span class="keycap"><strong>Ctrl</strong></span>+<span class="keycap"><strong>F7</strong></span>
+(previous): once the <span class="keycap"><strong>Ctrl</strong></span> key is released the selected
+view is made active.
+</p><p>
+The <span class="guiicon">Previous View</span> action is invoked by clicking
+<span class="guimenu">Window</span>|<span class="guimenuitem">Navigation</span>|<span class="guimenuitem">Previous
+View</span> or by pressing
+<span class="keycap"><strong>Shift</strong></span>+<span class="keycap"><strong>Ctrl</strong></span>+<span class="keycap"><strong>F7</strong></span>.
+(See also, the <a class="xref" href="https://ide.main.window.html#ide.next.view.action" title="8.1.1.32. Next View action"><span class="guiicon">Next View</span> action (Section 8.1.1.32)</a>.)
+</p><p>
+It is possible to switch directly to another (visible) view simply by
+clicking it, or to choose from the available views by clicking
+<span class="guimenu">Window</span>|<span class="guimenuitem">Show
+View</span> and choosing a view from those
+listed in the submenu, or by clicking the
+<span class="guimenuitem">Other</span> submenu item and choosing a view from
+the <a class="xref" href="https://ide.dialogs.html#ide.show.view.dialog" title="8.3.21. Show View dialog">Show View dialog (Section 8.3.21)</a>.
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="ide.project.action"></a>8.1.1.42. <span class="guiicon">Project</span> action</h4></div></div></div><p>
+The <span class="guiicon">Project</span> action performs a search in the current project's files
+for the selected text—or if no text is selected for the word
+containing the cursor—and presents the search results in a <a class="xref" href="https://ide.views.html#ide.the-search.view" title="8.2.15. Search view">Search view (Section 8.2.15)</a>, showing the view if it isn't currently
+visible. This action can be invoked by clicking
+<span class="guimenu">Search</span>|<span class="guimenuitem">Text</span>|<span class="guimenuitem">Project</span>.
+(See also the <a class="xref" href="https://ide.main.window.html#ide.file.action" title="8.1.1.15. File action"><span class="guiicon">File</span> action (Section 8.1.1.15)</a>, the <a class="xref" href="https://ide.main.window.html#ide.working.set.action" title="8.1.1.83. Working Set action"><span class="guiicon">Working Set</span> action (Section 8.1.1.83)</a>, and the <a class="xref" href="https://ide.main.window.html#ide.workspace.action" title="8.1.1.84. Workspace action"><span class="guiicon">Workspace</span> action (Section 8.1.1.84)</a>.)
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="ide.properties.action"></a>8.1.1.43. <span class="guiicon">Properties</span> action</h4></div></div></div><p>
+The <span class="guiicon">Properties</span> action invokes a Properties dialog which shows the file
+properties—including the path, size, and permissions—of the
+file shown in the active editor. This action is invoked by clicking
+<span class="guimenu">File</span>|<span class="guimenuitem">Properties</span>
+or by pressing
+<span class="keycap"><strong>Alt</strong></span>+<span class="keycap"><strong>Enter</strong></span>.
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="ide.quick.access.action"></a>8.1.1.44. <span class="guiicon">Quick Access</span> action</h4></div></div></div><p>
+The <span class="guiicon">Quick Access</span> action pops up a search dialog for finding actions,
+perspectives, and views in the <span class="application">Squish IDE</span>. Once the dialog is visible simply
+start typing the name of the action, perspective, or view you want and a
+list of matches (if any) will be shown. You can then use the up and down
+arrow keys to select a choice and press <span class="keycap"><strong>Enter</strong></span> to choose
+it—or press <span class="keycap"><strong>Esc</strong></span> to cancel. This action is invoked
+by clicking
+<span class="guimenu">Window</span>|<span class="guimenuitem">Navigation</span>|<span class="guimenuitem">Quick
+Access</span>
+or by pressing
+<span class="keycap"><strong>Ctrl</strong></span>+<span class="keycap"><strong>3</strong></span>.
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="ide.quit.aut.action"></a>8.1.1.45. <span class="guiicon">Quit AUT</span> action</h4></div></div></div><p>
+The <span class="guiicon">Quit AUT</span> action (<span class="guiicon"><img src="https://images/ide/quit_aut.png"></img></span>) is used to terminate an
+AUT that has been launched using the <a class="xref" href="https://ide.main.window.html#ide.launch.aut.action" title="8.1.1.22. Launch AUT action"><span class="guiicon">Launch AUT</span> action (Section 8.1.1.22)</a>. This action can be invoked by
+clicking <span class="guimenu">Run</span>|<span class="guimenuitem">Quit
+AUT</span> or by pressing the <span class="guibutton">Quit
+AUT</span> toolbar button. Once the AUT has terminated, the <span class="application">Squish IDE</span>
+returns to the <a class="xref" href="https://ide.main.window.html#ide.squish.test.management.perspective" title="8.1.2.2. Squish Test Management Perspective">Squish Test Management Perspective (Section 8.1.2.2)</a>.
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="ide.record.snippet.action"></a>8.1.1.46. <span class="guiicon">Re­cord Snip­pet</span> action</h4></div></div></div><p>
+The <span class="guiicon">Record Snippet</span> action (<span class="guiicon"><img src="https://images/ide/record.png"></img></span>) causes <span class="emphasis"><em>Squish</em></span> to launch
+the AUT and begin recording a snippet into the active test case. To finish
+recording press the <a class="xref" href="https://ide.main.window.html#ide-the-controlbar-window" title="8.1.3. Control Bar Window">Control Bar Window (Section 8.1.3)</a>'s
+<span class="guibutton">Stop Recording</span> button. Once the recording is
+stopped the recorded script is inserted into the active editor's text at
+the current cursor position. Note that the recording will begin with a
+call to the <a class="xref" href="https://rgs-squish.html#startApplication-function"><code class="function">startApplication</code></a> function; it
+is best to delete this line if the script already contains this call
+earlier on. (To <span class="emphasis"><em>cancel</em></span> recording press the <a class="xref" href="https://ide.main.window.html#ide-the-controlbar-window" title="8.1.3. Control Bar Window">Control Bar Window (Section 8.1.3)</a>'s <span class="guibutton">Cancel</span>
+button—in this case the test case is left unchanged.)
+</p><p>
+The <span class="guiicon">Record Snippet</span> action can be invoked by clicking
+<span class="guimenu">Run</span>|<span class="guimenuitem">Record
+Snippet</span>. Do <span class="emphasis"><em>not</em></span> click
+the <span class="guibutton">Record Test Case</span> button
+(<span class="guiicon"><img src="https://images/ide/record.png"></img></span>) in
+the <a class="xref" href="https://ide.views.html#ide.the-test-suites.view" title="8.2.19. Test Suites view">Test Suites view (Section 8.2.19)</a>'s Test Cases list to
+insert a snippet since this will replace the entire test case's script
+with the recorded snippet. (If you do this by mistake, immediately
+invoke the <a class="xref" href="https://ide.main.window.html#ide.undo.action" title="8.1.1.81. Undo action"><span class="guiicon">Undo</span> action (Section 8.1.1.81)</a> to restore the original
+test case's script.)
+</p><p>
+See also, <a class="xref" href="https://ug-editdebug.html" title="5.21. How to Edit and Debug Test Scripts">How to Edit and Debug Test Scripts (Section 5.21)</a>.
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="ide.record.test.case.action"></a>8.1.1.47. <span class="guiicon">Record Test Case</span> action</h4></div></div></div><p>
+The <span class="guiicon">Record Test Case</span> action (<span class="guiicon"><img src="https://images/ide/record.png"></img></span>) causes <span class="emphasis"><em>Squish</em></span> to launch
+the AUT and begin recording a new test script in the active test case.
+If the test case already has a test script the newly recorded script
+will completely replace the original, so it is normal to only use this
+action when you have created a new <span class="emphasis"><em>empty</em></span> test case.
+(If you start recording a new test script on a non-empty test case by
+mistake click the <a class="xref" href="https://ide.main.window.html#ide-the-controlbar-window" title="8.1.3. Control Bar Window">Control Bar Window (Section 8.1.3)</a>'s
+<span class="guibutton">Cancel</span> button to stop the recording—in this
+case the test case is left unchanged. If you completed the recording and
+overwrote a non-empty test case by mistake, immediately invoke the <a class="xref" href="https://ide.main.window.html#ide.undo.action" title="8.1.1.81. Undo action"><span class="guiicon">Undo</span> action (Section 8.1.1.81)</a> to restore the original test case's script.)
+</p><p>
+The <span class="guiicon">Record Test Case</span> action can be invoked by clicking the
+<span class="guibutton">Record Test Case</span> button
+(<span class="guiicon"><img src="https://images/ide/record.png"></img></span>)
+that's to the right of the test case listed in
+the <a class="xref" href="https://ide.views.html#ide.the-test-suites.view" title="8.2.19. Test Suites view">Test Suites view (Section 8.2.19)</a>'s Test Cases list, or by
+clicking <span class="guimenu">Run</span>|<span class="guimenuitem">Record
+Test Case</span>.
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="ide.redo.action"></a>8.1.1.48. <span class="guiicon">Redo</span> action</h4></div></div></div><p>
+The <span class="guiicon">Redo</span> action (<span class="guiicon"><img src="https://images/ide/redo_edit.png"></img></span>) redoes the action that
+was previously undone with the <a class="xref" href="https://ide.main.window.html#ide.undo.action" title="8.1.1.81. Undo action"><span class="guiicon">Undo</span> action (Section 8.1.1.81)</a> if
+there was one. This action can be invoked repeatedly to redo each action
+that was undone, one at a time. This action can be invoked by clicking
+<span class="guimenu">Edit</span>|<span class="guimenuitem">Redo</span>
+or by pressing
+<span class="keycap"><strong>Ctrl</strong></span>+<span class="keycap"><strong>Y</strong></span>.
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="ide.refresh.action"></a>8.1.1.49. <span class="guiicon">Refresh</span> action</h4></div></div></div><p>
+The <span class="guiicon">Refresh</span> action (<span class="guiicon"><img src="https://images/ide/refresh_nav.png"></img></span>) reloads a file (e.g.,
+in an editor view) that has been changed outside the <span class="application">Squish IDE</span>—or does
+nothing if no external changes have been made. This action can be
+invoked by clicking
+<span class="guimenu">File</span>|<span class="guimenuitem">Refresh</span>
+or by pressing <span class="keycap"><strong>F5</strong></span>. (Externally
+editing files that are shown in the <span class="application">Squish IDE</span> is not recommended. It is best
+to at least close the relevant editor view before doing an external
+edit.)
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="ide.remote.control.action"></a>8.1.1.50. <span class="guiicon">Remote Control</span> action</h4></div></div></div><p>
+The <span class="guiicon">Remote Control</span> action (<span class="guiicon"><img src="https://images/ide/remote_control.png"></img></span>) causes <span class="emphasis"><em>Squish</em></span> to
+open the <a class="xref" href="https://ide.dialogs.html#ide.remote.control.dialog" title="8.3.18. Remote Control dialog">Remote Control dialog (Section 8.3.18)</a>. It allows you to
+control remote test systems directly from within Squish IDE.
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="remove.all.breakpoints.action"></a>8.1.1.51. <span class="guiicon">Remove All Breakpoints</span> action</h4></div></div></div><p>
+The <span class="guiicon">Remove All Breakpoints</span> action (<span class="guiicon"><img src="https://images/ide/progress_remall.png"></img></span>) removes all the
+breakpoints. This means that if the test is resumed (using the <a class="xref" href="https://ide.main.window.html#ide.resume.action" title="8.1.1.54. Resume action"><span class="guiicon">Resume</span> action (Section 8.1.1.54)</a>) it will run to completion (or to an error
+if there is one); and will do so in future unless one or more new
+breakpoints are added. This action can be invoked by clicking
+<span class="guimenu">Run</span>|<span class="guimenuitem">Remove All
+Breakpoints</span>. (See also, the <a class="xref" href="https://ide.main.window.html#toggle.breakpoint.action" title="8.1.1.77. Toggle Breakpoint action"><span class="guiicon">Toggle Breakpoint</span> action (Section 8.1.1.77)</a> which is used to add breakpoints.)
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="ide.rename.action"></a>8.1.1.52. <span class="guiicon">Rename</span> action</h4></div></div></div><p>
+The <span class="guiicon">Rename</span> action (invoked by clicking
+<span class="guimenu">File</span>|<span class="guimenuitem">Rename</span>),
+is inherited from the Eclipse IDE; <span class="emphasis"><em>it is not functional in the
+<span class="application">Squish IDE</span></em></span>.
+
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="ide.reset.perspective.action"></a>8.1.1.53. <span class="guiicon">Reset Perspective</span> action</h4></div></div></div><p>
+The <span class="guiicon">Reset Perspective</span> action pops up a Reset Perspective OK/Cancel
+dialog. If you click the <span class="guibutton">OK</span> button the current
+perspective will be reset to its default settings. This action can be in
+voked by clicking
+<span class="guimenu">Window</span>|<span class="guimenuitem">Reset
+Perspective</span>.
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="ide.resume.action"></a>8.1.1.54. <span class="guiicon">Resume</span> action</h4></div></div></div><p>
+The <span class="guiicon">Resume</span> action (<span class="guiicon"><img src="https://images/ide/resume_co.png"></img></span>) resumes the execution of a
+test case that has stopped at a breakpoint. This action can be invoked
+by clicking
+<span class="guimenu">Run</span>|<span class="guimenuitem">Resume</span>,
+or by pressing <span class="keycap"><strong>F8</strong></span>, or by clicking
+the  <a class="xref" href="https://ide.views.html#ide.the-debug.view" title="8.2.5. Debug view">Debug view (Section 8.2.5)</a>'s
+<span class="guibutton">Resume</span> toolbar button (<span class="guiicon"><img src="https://images/ide/resume_co.png"></img></span>). (See also, the <a class="xref" href="https://ide.main.window.html#ide.terminate.action" title="8.1.1.75. Terminate action"><span class="guiicon">Terminate</span> action (Section 8.1.1.75)</a>, the <a class="xref" href="https://ide.main.window.html#ide.step.over.action" title="8.1.1.71. Step Over action"><span class="guiicon">Step Over</span> action (Section 8.1.1.71)</a>, the <a class="xref" href="https://ide.main.window.html#ide.squish.test.debugging.perspective" title="8.1.2.3. Squish Test Debugging Perspective">Squish Test Debugging Perspective (Section 8.1.2.3)</a>,
+and <a class="xref" href="https://ug-editdebug.html" title="5.21. How to Edit and Debug Test Scripts">How to Edit and Debug Test Scripts (Section 5.21)</a>.)
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="ide.run.test.case.action"></a>8.1.1.55. <span class="guiicon">Run Test Case</span> action</h4></div></div></div><p>
+The <span class="guiicon">Run Test Case</span> action (<span class="guiicon"><img src="https://images/ide/run.png"></img></span>) runs (replays) the selected
+test case. This action can be invoked by clicking the <span class="guibutton">Run
+Test Case</span> button that's to the right of the test case listed
+in the <a class="xref" href="https://ide.views.html#ide.the-test-suites.view" title="8.2.19. Test Suites view">Test Suites view (Section 8.2.19)</a>'s Test Cases list, or
+by clicking <span class="guimenu">Run</span>|<span class="guimenuitem">Run
+Test Case</span>.
+</p><p>
+It is also possible to run all of a test suite's test cases by clicking
+the <span class="guibutton">Run Test Suite</span> toolbar button
+(<span class="guiicon"><img src="https://images/ide/run_test_suite.png"></img></span>).
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="ide.save.action"></a>8.1.1.56. <span class="guiicon">Save</span> action</h4></div></div></div><p>
+The <span class="guiicon">Save</span> action (<span class="guiicon"><img src="https://images/ide/save_edit.png"></img></span>) saves any unsaved
+changes in the active editable view. (The <span class="application">Squish IDE</span>'s editable views include
+editor views, the <a class="xref" href="https://ide.views.html#ide.the-object-map.view" title="8.2.10. Object Map view">Object Map view (Section 8.2.10)</a>, and <a class="xref" href="https://ide.views.html#ide.the-settings.view" title="8.2.16. Test Suite Settings view">Test Suite Settings view (Section 8.2.16)</a>.) The <span class="guiicon">Save</span> action can be invoked by
+clicking the <span class="guibutton">Save</span> toolbar button or by clicking
+<span class="guimenu">File</span>|<span class="guimenuitem">Save</span>
+or by pressing
+<span class="keycap"><strong>Ctrl</strong></span>+<span class="keycap"><strong>S</strong></span>. (See also
+<a class="xref" href="https://ide.main.window.html#ide.save.all.action" title="8.1.1.57. Save All action"><span class="guiicon">Save All</span> action (Section 8.1.1.57)</a>.)
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="ide.save.all.action"></a>8.1.1.57. <span class="guiicon">Save All</span> action</h4></div></div></div><p>
+The <span class="guiicon">Save All</span> action (<span class="guiicon"><img src="https://images/ide/saveall_edit.png"></img></span>) saves any unsaved
+changes in all the editable views. (The <span class="application">Squish IDE</span>'s editable views include
+editor views, the <a class="xref" href="https://ide.views.html#ide.the-object-map.view" title="8.2.10. Object Map view">Object Map view (Section 8.2.10)</a>, and <a class="xref" href="https://ide.views.html#ide.the-settings.view" title="8.2.16. Test Suite Settings view">Test Suite Settings view (Section 8.2.16)</a>.) The <span class="guiicon">Save All</span> action can be invoked by
+clicking <span class="guimenu">File</span>|<span class="guimenuitem">Save
+All</span> or by pressing
+<span class="keycap"><strong>Shift</strong></span>+<span class="keycap"><strong>Ctrl</strong></span>+<span class="keycap"><strong>S</strong></span>.
+</p><p>
+By default the <span class="application">Squish IDE</span> will always prompt to save unsaved changes when
+terminated. Also the <span class="application">Squish IDE</span> is normally set to automatically save unsaved
+changes every five minutes. (These settings can be changed using the
+<a class="xref" href="https://ide.dialogs.html#ide.preferences.dialog" title="8.3.17. Pref­er­ences dialog">Pref­er­ences dialog (Section 8.3.17)</a>; see the General item's Workspace
+item's "Workspace save interval" option.)
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="ide.save.perspective.as.action"></a>8.1.1.58. <span class="guiicon">Save Perspective As</span> action</h4></div></div></div><p>
+The <span class="guiicon">Save Perspective As</span> action pops up a Save Perspective As dialog.
+You can enter a perspective name of your choice and if you then click
+the <span class="guibutton">OK</span> button, a new perspective will be saved
+under the name you specified and with all the current perspective's
+views and their positions and sizes.
+</p><p>
+If you want to delete a perspective you no longer need, use the <a class="xref" href="https://ide.main.window.html#ide.preferences.action" title="8.1.1.37. Preferences action"><span class="guiicon">Preferences</span> action (Section 8.1.1.37)</a> to open the <a class="xref" href="https://ide.dialogs.html#ide.preferences.dialog" title="8.3.17. Pref­er­ences dialog">Pref­er­ences dialog (Section 8.3.17)</a>, and navigate to the General item's
+Perspectives item. Then click the perspective you want to delete and
+click the <span class="guibutton">Delete</span> button. The <span class="application">Squish IDE</span> depends on the
+availability of the <a class="xref" href="https://ide.main.window.html#ide.squish.test.management.perspective" title="8.1.2.2. Squish Test Management Perspective">Squish Test Management Perspective (Section 8.1.2.2)</a>, the <a class="xref" href="https://ide.main.window.html#ide.squish.test.debugging.perspective" title="8.1.2.3. Squish Test Debugging Perspective">Squish Test Debugging Perspective (Section 8.1.2.3)</a>, and the <a class="xref" href="https://ide.main.window.html#ide.squish.spy.perspective" title="8.1.2.1. Squish Spy Perspective">Squish Spy Perspective (Section 8.1.2.1)</a>, so please don't delete any of
+these.
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="ide.search.action"></a>8.1.1.59. <span class="guiicon">Search</span> action</h4></div></div></div><p>
+The <span class="guiicon">Search</span> action (<span class="guiicon"><img src="https://images/ide/search.png"></img></span>) invokes the <a class="xref" href="https://ide.dialogs.html#ide.search.dialog" title="8.3.20. Search dialog">Search dialog (Section 8.3.20)</a> which is used for searching for text
+inside files. The action can be invoked by clicking
+<span class="guimenu">Search</span>|<span class="guimenuitem">Search</span>
+or by pressing
+<span class="keycap"><strong>Ctrl</strong></span>+<span class="keycap"><strong>H</strong></span>.
+(See also the <a class="xref" href="https://ide.main.window.html#ide.file.action" title="8.1.1.15. File action"><span class="guiicon">File</span> action (Section 8.1.1.15)</a>.)
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="ide.select.all.action"></a>8.1.1.60. <span class="guiicon">Select All</span> action</h4></div></div></div><p>
+The <span class="guiicon">Select All</span> action selects all the text in the active view for
+those views that support the operation (e.g., editor views, the
+<a class="xref" href="https://ide.views.html#ide.the-test-results.view" title="8.2.18. Test Results view">Test Results view (Section 8.2.18)</a>, the
+<a class="xref" href="https://ide.views.html#ide.the-test-summary.view" title="8.2.20. Test Summary view">Test Summary view (Section 8.2.20)</a>, and the
+<a class="xref" href="https://ide.views.html#ide.runner.server.log.view" title="8.2.13. Runner/Server Log view">Runner/Server Log view (Section 8.2.13)</a>.
+Once selected the text can be copied to the clipboard using the
+<a class="xref" href="https://ide.main.window.html#ide.copy.action" title="8.1.1.10. Copy action"><span class="guiicon">Copy</span> action (Section 8.1.1.10)</a>. (Note that when performing this
+action in the <a class="xref" href="https://ide.views.html#ide.the-test-results.view" title="8.2.18. Test Results view">Test Results view (Section 8.2.18)</a> only the
+<span class="emphasis"><em>visible</em></span> text is copied—so make sure you
+expand any results for which you want to copy the details before
+selecting.)
+</p><p>
+The <span class="guiicon">Select All</span> action can be invoked by clicking
+<span class="guimenu">Edit</span>|<span class="guimenuitem">Select
+All</span> or by pressing
+<span class="keycap"><strong>Ctrl</strong></span>+<span class="keycap"><strong>A</strong></span> or by
+invoking a context menu and clicking the <span class="guibutton">Select
+All</span> option for those views that have a context menu.
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="ide.show.system.menu.action"></a>8.1.1.61. <span class="guiicon">Show System Menu</span> action</h4></div></div></div><p>
+The <span class="guiicon">Show System Menu</span> action pops up the active view's system menu.
+This menu normally offers options to close, minimize (iconize), and
+maximize the view, and in some cases, view-type-specific options. This
+action is invoked by clicking
+<span class="guimenu">Window</span>|<span class="guimenuitem">Navigation</span>|<span class="guimenuitem">Show
+System Menu</span> or by pressing
+<span class="keycap"><strong>Alt</strong></span>+<span class="keycap"><strong>-</strong></span>.
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="ide.show.view.action"></a>8.1.1.62. <span class="guiicon">Show View</span> action</h4></div></div></div><p>
+The <span class="guiicon">Show View</span> action is used to open a view that isn't already open.
+The action can be invoked in different ways, and each way has its own
+slightly different behavior.
+</p><p>
+One way to open a view is by clicking
+<span class="guimenu">Window</span>|<span class="guimenuitem">Show
+View</span> and choosing a view from those listed in
+the submenu. If the desired view is not listed click the
+<span class="guimenuitem">Other</span> option to pop up the <a class="xref" href="https://ide.dialogs.html#ide.show.view.dialog" title="8.3.21. Show View dialog">Show View dialog (Section 8.3.21)</a>.
+</p><p>
+Another way to open a view is by pressing
+<span class="keycap"><strong>Shift</strong></span>+<span class="keycap"><strong>Alt</strong></span>+<span class="keycap"><strong>Q</strong></span>,
+<span class="keycap"><strong>Q</strong></span>—this will pop up the <a class="xref" href="https://ide.dialogs.html#ide.show.view.dialog" title="8.3.21. Show View dialog">Show View dialog (Section 8.3.21)</a>.
+</p><p>
+The last way to open a view is by pressing
+<span class="keycap"><strong>Shift</strong></span>+<span class="keycap"><strong>Alt</strong></span>+<span class="keycap"><strong>Q</strong></span>
+and waiting a moment. A list of Show View commands will pop up; choose
+the first one (Show View) to pop up the
+<a class="xref" href="https://ide.dialogs.html#ide.show.view.dialog" title="8.3.21. Show View dialog">Show View dialog (Section 8.3.21)</a>; or choose any of the others to
+open the specified view. All of the views listed can also be opened
+directly by using the keyboard shortcut shown besides their names in the
+pop up list (and listed in the <a class="xref" href="https://ide.keyboard.shortcuts.html" title="8.4. Keyboard Shortcuts">Keyboard Shortcuts (Section 8.4)</a>
+section)—they all have the form
+<span class="keycap"><strong>Shift</strong></span>+<span class="keycap"><strong>Alt</strong></span>+<span class="keycap"><strong>Q</strong></span>,
+<span class="emphasis"><em>letter</em></span>.
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="ide.show.view.menu.action"></a>8.1.1.63. <span class="guiicon">Show View Menu</span> action</h4></div></div></div><p>
+The <span class="guiicon">Show View Menu</span> action pops up the current view's view menu (if it
+has one). This action can be invoked by clicking
+<span class="guimenu">Window</span>|<span class="guimenuitem">Navigation</span>|<span class="guimenuitem">Show
+View Menu</span> or by pressing
+<span class="keycap"><strong>Ctrl</strong></span>+<span class="keycap"><strong>F10</strong></span>.
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="ide.show.whitespace.characters.action"></a>8.1.1.64. <span class="guiicon">Show Whitespace Characters</span> action</h4></div></div></div><p>
+The <span class="guiicon">Show Whitespace Characters</span> action (<span class="guiicon"><img src="https://images/ide/show_whitespace_chars.png"></img></span>) toggles the
+display of whitespace characters in editor views. When active, spaces
+ares shown as cdots (vertically centered periods), tabs are shown as
+right-pointing chevrons, and newlines are shown as paragraph marks. This
+action can be toggled on or off by clicking the <span class="guibutton">Show
+Whitespace Characters</span> toolbar button (<span class="guiicon"><img src="https://images/ide/show_whitespace_chars.png"></img></span>).
+
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="skip.all.breakpoints.action"></a>8.1.1.65. <span class="guiicon">Skip All Breakpoints</span> action</h4></div></div></div><p>
+The <span class="guiicon">Skip All Breakpoints</span> action marks all the breakpoints so that they
+will be skipped if the test is resumed (using the <a class="xref" href="https://ide.main.window.html#ide.resume.action" title="8.1.1.54. Resume action"><span class="guiicon">Resume</span> action (Section 8.1.1.54)</a>). This means that the test will run to
+completion (or to an error if there is one). This action can be invoked
+by clicking <span class="guimenu">Run</span>|<span class="guimenuitem">Skip All
+Breakpoints</span>. <span class="emphasis"><em>(Note that this action
+is not functional in the <span class="application">Squish IDE</span> versions 4.0.0 and 4.0.1.)</em></span>
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="ide.squish.server.settings"></a>8.1.1.66. Squish Server Settings</h4></div></div></div><p>
+The <span class="guiicon">Squish Server Settings</span> action invokes the
+<a class="xref" href="https://ide.dialogs.html#ide.squish.server.settings.dialog" title="8.3.22. Squish Server Settings dialog">Squish Server Settings dialog (Section 8.3.22)</a>. This dialog can be
+used to control various aspects of the <span class="application">squishserver</span> that the <span class="application">Squish IDE</span>
+uses when recording and playing back tests.
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="ide.squish.spy.perspective.action"></a>8.1.1.67. <span class="guiicon">Squish Spy Perspective</span> action</h4></div></div></div><p>
+The <span class="guiicon">Squish Spy Perspective</span> action (<span class="guiicon"><img src="https://images/ide/persp_tab.png"></img></span>) changes the current
+perspective to the <a class="xref" href="https://ide.main.window.html#ide.squish.spy.perspective" title="8.1.2.1. Squish Spy Perspective">Squish Spy Perspective (Section 8.1.2.1)</a>. In
+practice this is rarely ever necessary since the <span class="application">Squish IDE</span> automatically
+switches to the appropriate perspective depending on the context. This
+action can be invoked by clicking
+<span class="guimenu">Window</span>|<span class="guimenuitem">Open
+Perspective</span>|<span class="guimenuitem">Squish
+Spy</span> or by pressing the <span class="guibutton">Squish Spy
+perspective</span> toolbar button. (A more long-winded way of
+changing to this perspective is to click <span class="guimenu">Window</span>|<span class="guimenuitem">Open
+Perspective</span>|<span class="guimenuitem">Other</span>,
+to pop up the Open Perspective dialog, then click the perspective you
+want then click the <span class="guibutton">OK</span> button.)
+</p><p>
+(See also, <a class="xref" href="https://ug-editdebug.html#uged-spy" title="5.21.3. How to Use the Spy">How to Use the Spy (Section 5.21.3)</a>.)
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="ide.squish.test.debugging.perspective.action"></a>8.1.1.68. <span class="guiicon">Squish Test De­bug­ging Per­spec­tive</span> action</h4></div></div></div><p>
+The <span class="guiicon">Squish Test Debugging Perspective</span> action (<span class="guiicon"><img src="https://images/ide/persp_tab.png"></img></span>) changes the current
+perspective to the <a class="xref" href="https://ide.main.window.html#ide.squish.test.debugging.perspective" title="8.1.2.3. Squish Test Debugging Perspective">Squish Test Debugging Perspective (Section 8.1.2.3)</a>. In practice this is
+rarely ever necessary since the <span class="application">Squish IDE</span> automatically switches to the
+appropriate perspective depending on the context. This action can be
+invoked by clicking
+<span class="guimenu">Window</span>|<span class="guimenuitem">Open
+Perspective</span>|<span class="guimenuitem">Squish Test
+Debugging</span> or by pressing the
+<span class="guibutton">Squish Test Debugging perspective</span> toolbar button.
+(A more long-winded way of changing to this perspective is to click
+<span class="guimenu">Window</span>|<span class="guimenuitem">Open
+Perspective</span>|<span class="guimenuitem">Other</span>,
+to pop up the Open Perspective dialog, then click the perspective you
+want then click the <span class="guibutton">OK</span> button.)
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="ide.squish.test.management.perspective.action"></a>8.1.1.69. <span class="guiicon">Squish Test Management Perspective</span> action</h4></div></div></div><p>
+The <span class="guiicon">Squish Test Management Perspective</span> action (<span class="guiicon"><img src="https://images/ide/persp_tab.png"></img></span>)
+changes the current perspective to the <a class="xref" href="https://ide.main.window.html#ide.squish.test.management.perspective" title="8.1.2.2. Squish Test Management Perspective">Squish Test Management Perspective (Section 8.1.2.2)</a>. (This is the default
+perspective, although the default can be changed by going to the <a class="xref" href="https://ide.dialogs.html#ide.preferences.dialog" title="8.3.17. Pref­er­ences dialog">Pref­er­ences dialog (Section 8.3.17)</a>, then navigating to the Perpectives
+item and setting a different default.) In practice this is
+rarely ever necessary since the <span class="application">Squish IDE</span> automatically switches to the
+appropriate perspective depending on the context. This action can be
+invoked by clicking
+<span class="guimenu">Window</span>|<span class="guimenuitem">Open
+Perspective</span>|<span class="guimenuitem">Squish Test
+Management</span> or by pressing the
+<span class="guibutton">Squish Test Management perspective</span> toolbar button.
+(A more long-winded way of changing to this perspective is to click
+<span class="guimenu">Window</span>|<span class="guimenuitem">Open
+Perspective</span>|<span class="guimenuitem">Other</span>,
+to pop up the Open Perspective dialog, then click the perspective you
+want then click the <span class="guibutton">OK</span> button.)
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="ide.step.into.action"></a>8.1.1.70. <span class="guiicon">Step Into</span> action</h4></div></div></div><p>
+The <span class="guiicon">Step Into</span> action (<span class="guiicon"><img src="https://images/ide/stepinto_co.png"></img></span>) continues the
+execution of a test case that has been stopped—for
+example, at a breakpoint. If the statement to execute is a function
+call, this action steps into the function and execute's the function's
+first statement. This action can be invoked by clicking
+<span class="guimenu">Run</span>|<span class="guimenuitem">Step
+Into</span>, or by pressing
+<span class="keycap"><strong>F5</strong></span>, or by clicking the  <a class="xref" href="https://ide.views.html#ide.the-debug.view" title="8.2.5. Debug view">Debug view (Section 8.2.5)</a>'s <span class="guibutton">Step Into</span>
+toolbar button (<span class="guiicon"><img src="https://images/ide/stepinto_co.png"></img></span>). (See also, the <a class="xref" href="https://ide.main.window.html#ide.step.over.action" title="8.1.1.71. Step Over action"><span class="guiicon">Step Over</span> action (Section 8.1.1.71)</a>, the <a class="xref" href="https://ide.main.window.html#ide.step.return.action" title="8.1.1.72. Step Return action"><span class="guiicon">Step Return</span> action (Section 8.1.1.72)</a>, the <a class="xref" href="https://ide.main.window.html#ide.resume.action" title="8.1.1.54. Resume action"><span class="guiicon">Resume</span> action (Section 8.1.1.54)</a>, the <a class="xref" href="https://ide.main.window.html#ide.squish.test.debugging.perspective" title="8.1.2.3. Squish Test Debugging Perspective">Squish Test Debugging Perspective (Section 8.1.2.3)</a>, and <a class="xref" href="https://ug-editdebug.html" title="5.21. How to Edit and Debug Test Scripts">How to Edit and Debug Test Scripts (Section 5.21)</a>.)
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="ide.step.over.action"></a>8.1.1.71. <span class="guiicon">Step Over</span> action</h4></div></div></div><p>
+The <span class="guiicon">Step Over</span> action (<span class="guiicon"><img src="https://images/ide/stepover_co.png"></img></span>) continues the execution
+of a test case that has been stopped—for example, at a
+breakpoint. If the statement to execute is a function call, this action
+executes the call (without stepping into the called function) ready to
+continue from the statement that follows the call.
+This action can be invoked by clicking
+<span class="guimenu">Run</span>|<span class="guimenuitem">Step
+Over</span>, or by pressing
+<span class="keycap"><strong>F6</strong></span>, or by clicking the  <a class="xref" href="https://ide.views.html#ide.the-debug.view" title="8.2.5. Debug view">Debug view (Section 8.2.5)</a>'s <span class="guibutton">Step Over</span>
+toolbar button (<span class="guiicon"><img src="https://images/ide/stepover_co.png"></img></span>). (See also, the <a class="xref" href="https://ide.main.window.html#ide.step.into.action" title="8.1.1.70. Step Into action"><span class="guiicon">Step Into</span> action (Section 8.1.1.70)</a>, the <a class="xref" href="https://ide.main.window.html#ide.step.return.action" title="8.1.1.72. Step Return action"><span class="guiicon">Step Return</span> action (Section 8.1.1.72)</a>, the <a class="xref" href="https://ide.main.window.html#ide.resume.action" title="8.1.1.54. Resume action"><span class="guiicon">Resume</span> action (Section 8.1.1.54)</a>, the <a class="xref" href="https://ide.main.window.html#ide.squish.test.debugging.perspective" title="8.1.2.3. Squish Test Debugging Perspective">Squish Test Debugging Perspective (Section 8.1.2.3)</a>, and <a class="xref" href="https://ug-editdebug.html" title="5.21. How to Edit and Debug Test Scripts">How to Edit and Debug Test Scripts (Section 5.21)</a>.)
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="ide.step.return.action"></a>8.1.1.72. <span class="guiicon">Step Return</span> action</h4></div></div></div><p>
+The <span class="guiicon">Step Return</span> action (<span class="guiicon"><img src="https://images/ide/stepreturn_co.png"></img></span>) continues the execution
+of a test case that has been stopped—for example, at a
+breakpoint. If the statement to execute is inside a function call (e.g.,
+as the result of invoking the <a class="xref" href="https://ide.main.window.html#ide.step.over.action" title="8.1.1.71. Step Over action"><span class="guiicon">Step Over</span> action (Section 8.1.1.71)</a>
+earlier), this action immediately completes the
+execution of the function, ready to
+continue from the statement that follows the call to the function that
+has just been finished.
+This action can be invoked by clicking
+<span class="guimenu">Run</span>|<span class="guimenuitem">Step
+Return</span>, or by pressing
+<span class="keycap"><strong>F7</strong></span>, or by clicking the  <a class="xref" href="https://ide.views.html#ide.the-debug.view" title="8.2.5. Debug view">Debug view (Section 8.2.5)</a>'s <span class="guibutton">Step Return</span>
+toolbar button (<span class="guiicon"><img src="https://images/ide/stepreturn_co.png"></img></span>). (See also, the <a class="xref" href="https://ide.main.window.html#ide.step.into.action" title="8.1.1.70. Step Into action"><span class="guiicon">Step Into</span> action (Section 8.1.1.70)</a>, the <a class="xref" href="https://ide.main.window.html#ide.step.over.action" title="8.1.1.71. Step Over action"><span class="guiicon">Step Over</span> action (Section 8.1.1.71)</a>, the <a class="xref" href="https://ide.main.window.html#ide.resume.action" title="8.1.1.54. Resume action"><span class="guiicon">Resume</span> action (Section 8.1.1.54)</a>, and the <a class="xref" href="https://ide.main.window.html#ide.squish.test.debugging.perspective" title="8.1.2.3. Squish Test Debugging Perspective">Squish Test Debugging Perspective (Section 8.1.2.3)</a>.)
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="ide.suspend.action"></a>8.1.1.73. <span class="guiicon">Suspend</span> action</h4></div></div></div><p>
+The <span class="guiicon">Suspend</span> action (invoked by clicking
+<span class="guimenu">Run</span>|<span class="guimenuitem">Suspend</span>),
+is inherited from the Eclipse IDE; <span class="emphasis"><em>it is not needed or
+functional in the <span class="application">Squish IDE</span></em></span>.
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="ide.switch.to.editor.action"></a>8.1.1.74. <span class="guiicon">Switch to Editor</span> action</h4></div></div></div><p>
+The <span class="guiicon">Switch to Editor</span> action pops up the <a class="xref" href="https://ide.dialogs.html#ide.switch.to.editor.dialog" title="8.3.24. Switch to Editor dialog">Switch to Editor dialog (Section 8.3.24)</a> through which it is possible to
+choose an editor to make active from those that are currently open. This
+action can be invoked by clicking
+<span class="guimenu">Window</span>|<span class="guimenuitem">Navigation</span>|<span class="guimenuitem">Switch
+to Editor</span> or by pressing
+<span class="keycap"><strong>Shift</strong></span>+<span class="keycap"><strong>Ctrl</strong></span>+<span class="keycap"><strong>E</strong></span>.
+If you don't have many <a class="xref" href="https://ide.views.html#ide.the-editor.view" title="8.2.6. Editor view">Editor view (Section 8.2.6)</a>s open it is
+usually quicker and easier to simply click the relevant tab.
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="ide.terminate.action"></a>8.1.1.75. <span class="guiicon">Terminate</span> action</h4></div></div></div><p>
+The <span class="guiicon">Terminate</span> action (<span class="guiicon"><img src="https://images/ide/stop.png"></img></span>) terminates the execution of a test case that has
+stopped at a breakpoint. This action can be invoked by clicking
+<span class="guimenu">Run</span>|<span class="guimenuitem">Terminate</span>,
+or by pressing
+<span class="keycap"><strong>Ctrl</strong></span>+<span class="keycap"><strong>F2</strong></span>, or by
+clicking the  <a class="xref" href="https://ide.views.html#ide.the-debug.view" title="8.2.5. Debug view">Debug view (Section 8.2.5)</a>'s
+<span class="guibutton">Terminate</span> toolbar button (<span class="guiicon"><img src="https://images/ide/stop.png"></img></span>). (See also, the <a class="xref" href="https://ide.main.window.html#ide.resume.action" title="8.1.1.54. Resume action"><span class="guiicon">Resume</span> action (Section 8.1.1.54)</a> the <a class="xref" href="https://ide.main.window.html#ide.squish.test.debugging.perspective" title="8.1.2.3. Squish Test Debugging Perspective">Squish Test Debugging Perspective (Section 8.1.2.3)</a>, and <a class="xref" href="https://ug-editdebug.html" title="5.21. How to Edit and Debug Test Scripts">How to Edit and Debug Test Scripts (Section 5.21)</a>.)
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="ide.toggle.block.selection.mode.action"></a>8.1.1.76. <span class="guiicon">Toggle Block Selection Mode</span> action</h4></div></div></div><p>
+The <span class="guiicon">Toggle Block Selection Mode</span> action (<span class="guiicon"><img src="https://images/ide/toggle_block_selection_mode.png"></img></span>)
+toggles between the standard and block selection modes. In standard mode
+text is selected linearly (i.e., as if the entire file was a single very
+long string of text) from the cursor position to the position dragged to
+by the mouse or selected to by keyboard navigation (with the
+<span class="keycap"><strong>Shift</strong></span> key held down). In block mode text is selected as
+a rectangle with the cursor position marking one corner and the position
+dragged to by the mouse or selected to by keyboard navigation (with the
+<span class="keycap"><strong>Shift</strong></span> key held down) marking the diagonally opposite
+corner. The selection mode defaults to standard mode and can be toggled
+between standard and block mode by pressing the <span class="guibutton">Toggle Block
+Selection Mode</span> toolbar button (<span class="guiicon"><img src="https://images/ide/toggle_block_selection_mode.png"></img></span>) or by
+pressing
+<span class="keycap"><strong>Shift</strong></span>+<span class="keycap"><strong>Alt</strong></span>+<span class="keycap"><strong>A</strong></span>.
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="toggle.breakpoint.action"></a>8.1.1.77. <span class="guiicon">Toggle Breakpoint</span> action</h4></div></div></div><p>
+The <span class="guiicon">Toggle Breakpoint</span> action (<span class="guiicon"><img src="https://images/ide/brkp_obj.png"></img></span>) toggles between a
+breakpoint being present or absent in the line containing the cursor.
+Breakpoints can be added or removed using this action when editing a
+test script or when a test run has been stopped (i.e., at a breakpoint).
+This action can be invoked by clicking
+<span class="guimenu">Run</span>|<span class="guimenuitem">Toggle
+Breakpoint</span> or by pressing
+<span class="keycap"><strong>Shift</strong></span>+<span class="keycap"><strong>Ctrl</strong></span>+<span class="keycap"><strong>B</strong></span>.
+
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="toggle.line.breakpoint.action"></a>8.1.1.78. <span class="guiicon">Toggle Line Breakpoint</span> action</h4></div></div></div><p>
+The <span class="guiicon">Toggle Line Breakpoint</span> action (<span class="guiicon"><img src="https://images/ide/brkp_obj.png"></img></span>) toggles between a
+breakpoint being present or absent in the line containing the cursor.
+This action can be invoked by clicking
+<span class="guimenu">Run</span>|<span class="guimenuitem">Toggle Line
+Breakpoint</span>. It is almost always more
+convenient to use the <a class="xref" href="https://ide.main.window.html#toggle.breakpoint.action" title="8.1.1.77. Toggle Breakpoint action"><span class="guiicon">Toggle Breakpoint</span> action (Section 8.1.1.77)</a>
+instead.
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="toggle.method.breakpoint.action"></a>8.1.1.79. <span class="guiicon">Toggle Method Breakpoint</span> action</h4></div></div></div><p>
+The <span class="guiicon">Toggle Method Breakpoint</span> action (<span class="guiicon"><img src="https://images/ide/brkp_obj.png"></img></span>; invoked by clicking
+<span class="guimenu">Run</span>|<span class="guimenuitem">Toggle Method
+Breakpoint</span>) is inherited from the Eclipse
+IDE; <span class="emphasis"><em>it is not functional in the <span class="application">Squish IDE</span></em></span>.
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="toggle.watchpoint.action"></a>8.1.1.80. <span class="guiicon">Toggle Watchpoint</span> action</h4></div></div></div><p>
+The <span class="guiicon">Toggle Watchpoint</span> action (<span class="guiicon"><img src="https://images/ide/readwrite_obj.png"></img></span>; invoked by clicking
+<span class="guimenu">Run</span>|<span class="guimenuitem">Toggle
+Watchpoint</span>) is inherited from the Eclipse
+IDE; <span class="emphasis"><em>it is not functional in the <span class="application">Squish IDE</span></em></span>.
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="ide.undo.action"></a>8.1.1.81. <span class="guiicon">Undo</span> action</h4></div></div></div><p>
+The <span class="guiicon">Undo</span> action (<span class="guiicon"><img src="https://images/ide/undo_edit.png"></img></span>) undoes the action that
+was just done (or redone with the <a class="xref" href="https://ide.main.window.html#ide.redo.action" title="8.1.1.48. Redo action"><span class="guiicon">Redo</span> action (Section 8.1.1.48)</a>) if
+there was one. This action can be invoked repeatedly to undo each action
+that was done, one at a time. This action can be invoked by clicking
+<span class="guimenu">Edit</span>|<span class="guimenuitem">Undo</span>
+or by pressing
+<span class="keycap"><strong>Ctrl</strong></span>+<span class="keycap"><strong>Z</strong></span>.
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="use.step.filters.action"></a>8.1.1.82. <span class="guiicon">Use Step Filters</span> action</h4></div></div></div><p>
+The "Use Step Filters" toggle action (<span class="guiicon"><img src="https://images/ide/use-step-filters.png"></img></span>; invoked by clicking
+<span class="guimenu">Run</span>|<span class="guimenuitem">Use Step
+Filters</span>, or by pressing
+<span class="keycap"><strong>Shift</strong></span>+<span class="keycap"><strong>F5</strong></span>), is
+inherited from the Eclipse IDE; <span class="emphasis"><em>it is not functional in the
+<span class="application">Squish IDE</span></em></span>.
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="ide.working.set.action"></a>8.1.1.83. <span class="guiicon">Working Set</span> action</h4></div></div></div><p>
+The <span class="guiicon">Working Set</span> action pops up the Select Working Sets dialog. Once a
+working set is chosen or created, if you then click the
+<span class="guibutton">OK</span> button, the action then goes on to
+perform a search in the working set's files. The search is
+for the selected text—or if no text is selected for the word
+containing the cursor—and the search results are presented in a <a class="xref" href="https://ide.views.html#ide.the-search.view" title="8.2.15. Search view">Search view (Section 8.2.15)</a>, showing the view if it isn't currently
+visible.
+This action can be invoked by clicking
+<span class="guimenu">Search</span>|<span class="guimenuitem">Text</span>|<span class="guimenuitem">Working
+Set</span>.
+(See also the <a class="xref" href="https://ide.main.window.html#ide.file.action" title="8.1.1.15. File action"><span class="guiicon">File</span> action (Section 8.1.1.15)</a>, the <a class="xref" href="https://ide.main.window.html#ide.project.action" title="8.1.1.42. Project action"><span class="guiicon">Project</span> action (Section 8.1.1.42)</a>, and the <a class="xref" href="https://ide.main.window.html#ide.workspace.action" title="8.1.1.84. Workspace action"><span class="guiicon">Workspace</span> action (Section 8.1.1.84)</a>.)
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="ide.workspace.action"></a>8.1.1.84. <span class="guiicon">Workspace</span> action</h4></div></div></div><p>
+The <span class="guiicon">Workspace</span> action performs a search in the current workspace's files
+for the selected text—or if no text is selected for the word
+containing the cursor—and presents the search results in a <a class="xref" href="https://ide.views.html#ide.the-search.view" title="8.2.15. Search view">Search view (Section 8.2.15)</a>, showing the view if it isn't currently
+visible. This action can be invoked by clicking
+<span class="guimenu">Search</span>|<span class="guimenuitem">Text</span>|<span class="guimenuitem">Workspace</span>
+or by pressing
+<span class="keycap"><strong>Ctrl</strong></span>+<span class="keycap"><strong>Alt</strong></span>+<span class="keycap"><strong>G</strong></span>.
+(See also the <a class="xref" href="https://ide.main.window.html#ide.file.action" title="8.1.1.15. File action"><span class="guiicon">File</span> action (Section 8.1.1.15)</a>, the <a class="xref" href="https://ide.main.window.html#ide.project.action" title="8.1.1.42. Project action"><span class="guiicon">Project</span> action (Section 8.1.1.42)</a>, and the <a class="xref" href="https://ide.main.window.html#ide.working.set.action" title="8.1.1.83. Working Set action"><span class="guiicon">Working Set</span> action (Section 8.1.1.83)</a>.)
+</p></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="ide.perspectives"></a>8.1.2. Perspectives</h3></div></div></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><span class="section"><a href="https://ide.main.window.html#ide.squish.spy.perspective">8.1.2.1. Squish Spy Perspective</a></span></dt><dt><span class="section"><a href="https://ide.main.window.html#ide.squish.test.management.perspective">8.1.2.2. Squish Test Management Perspective</a></span></dt><dt><span class="section"><a href="https://ide.main.window.html#ide.squish.test.debugging.perspective">8.1.2.3. Squish Test Debugging Perspective</a></span></dt></dl></div><p>
+The <span class="application">Squish IDE</span> provides three default perspectives which provide all the
+necessary functionality. It is also possible to create custom
+perspectives—either from scratch or based on any of the <span class="emphasis"><em>Squish</em></span>
+perspectives—but this isn't often needed since the <span class="application">Squish IDE</span> remembers
+any changes made to the default perspectives and applies them whenever
+one of the perspectives is opened.
+</p><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="ide.squish.spy.perspective"></a>8.1.2.1. Squish Spy Perspective</h4></div></div></div><p>
+The Squish Spy Perspective is automatically switched to by the <span class="application">Squish IDE</span>
+when the <a class="xref" href="https://ide.main.window.html#ide.launch.aut.action" title="8.1.1.22. Launch AUT action"><span class="guiicon">Launch AUT</span> action (Section 8.1.1.22)</a> is invoked. This
+perspective shows the <a class="xref" href="https://ide.views.html#ide.the-application-objects.view" title="8.2.1. Application Objects view">Application Objects view (Section 8.2.1)</a>, the <a class="xref" href="https://ide.views.html#ide.the-properties.view" title="8.2.12. Properties view">Properties view (Section 8.2.12)</a>, and the <a class="xref" href="https://ide.views.html#ide.the-methods.view" title="8.2.9. Methods view">Methods view (Section 8.2.9)</a>, in addition to views already present
+such as the <a class="xref" href="https://ide.views.html#ide.the-test-suites.view" title="8.2.19. Test Suites view">Test Suites view (Section 8.2.19)</a> and any open
+<a class="xref" href="https://ide.views.html#ide.the-editor.view" title="8.2.6. Editor view">Editor view (Section 8.2.6)</a>s. (This perspective can also be
+switched to using by clicking the <span class="guibutton">Squish Spy
+Perspective</span> toolbar button, but this is rarely useful.)
+</p><div class="screenshot"><div class="mediaobject" align="center"><img src="https://images/ide/spy-perspective.png" align="middle"></img><div class="caption">The Squish Spy Perspective
+</div></div></div><p>
+To return to the default perspective (normally the <a class="xref" href="https://ide.main.window.html#ide.squish.test.management.perspective" title="8.1.2.2. Squish Test Management Perspective">Squish Test Management Perspective (Section 8.1.2.2)</a>), invoke the <a class="xref" href="https://ide.main.window.html#ide.quit.aut.action" title="8.1.1.45. Quit AUT action"><span class="guiicon">Quit AUT</span> action (Section 8.1.1.45)</a>.
+</p><p>
+See the documentation for the individual views for further details, and
+also <a class="xref" href="https://ug-editdebug.html#uged-spy" title="5.21.3. How to Use the Spy">How to Use the Spy (Section 5.21.3)</a>.
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="ide.squish.test.management.perspective"></a>8.1.2.2. Squish Test Management Perspective</h4></div></div></div><p>
+The Squish Test Management Perspective is the default
+perspective—the <span class="application">Squish IDE</span> starts with this perspective and this
+perspective is automatically switched to by the <span class="application">Squish IDE</span> when one of the
+other perspectives is closed. This perspective shows the <a class="xref" href="https://ide.views.html#ide.the-test-suites.view" title="8.2.19. Test Suites view">Test Suites view (Section 8.2.19)</a>, the <a class="xref" href="https://ide.views.html#ide.the-test-results.view" title="8.2.18. Test Results view">Test Results view (Section 8.2.18)</a>, and the <a class="xref" href="https://ide.views.html#ide.the-test-summary.view" title="8.2.20. Test Summary view">Test Summary view (Section 8.2.20)</a>, in addition to any open <a class="xref" href="https://ide.views.html#ide.the-editor.view" title="8.2.6. Editor view">Editor view (Section 8.2.6)</a>s. (This perspective can also be switched
+to using by clicking the <span class="guibutton">Squish Test Management
+Perspective</span> toolbar button.)
+</p><div class="screenshot"><div class="mediaobject" align="center"><img src="https://images/ide/test-management-perspective.png" align="middle"></img><div class="caption">The Squish Test Management Perspective
+</div></div></div><p>
+If the <a class="xref" href="https://ide.views.html#ide.runner.server.log.view" title="8.2.13. Runner/Server Log view">Runner/Server Log view (Section 8.2.13)</a> is opened—see the
+<a class="xref" href="https://ide.main.window.html#ide.show.view.action" title="8.1.1.62. Show View action"><span class="guiicon">Show View</span> action (Section 8.1.1.62)</a>—it is shown in this
+perspective.
+</p><p>
+See the documentation for the individual views for further details.
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="ide.squish.test.debugging.perspective"></a>8.1.2.3. Squish Test Debugging Perspective</h4></div></div></div><p>
+The Squish Test Debugging Perspective is automatically switched to by
+the <span class="application">Squish IDE</span> when a breakpoint is reached. This perspective shows the <a class="xref" href="https://ide.views.html#ide.the-application-objects.view" title="8.2.1. Application Objects view">Application Objects view (Section 8.2.1)</a>, the <a class="xref" href="https://ide.views.html#ide.the-properties.view" title="8.2.12. Properties view">Properties view (Section 8.2.12)</a>, the <a class="xref" href="https://ide.views.html#ide.the-methods.view" title="8.2.9. Methods view">Methods view (Section 8.2.9)</a>, the
+<a class="xref" href="https://ide.views.html#ide.the-debug.view" title="8.2.5. Debug view">Debug view (Section 8.2.5)</a>, the
+<a class="xref" href="https://ide.views.html#ide.the-console.view" title="8.2.3. Console view">Console view (Section 8.2.3)</a>, and the
+<a class="xref" href="https://ide.views.html#ide.the-variables.view" title="8.2.21. Variables view">Variables view (Section 8.2.21)</a>,
+in addition to any open
+<a class="xref" href="https://ide.views.html#ide.the-editor.view" title="8.2.6. Editor view">Editor view (Section 8.2.6)</a>s. (This perspective can also be
+switched to using by clicking the <span class="guibutton">Squish Test Debugging
+Perspective</span> toolbar button, but this is rarely useful.)
+</p><div class="screenshot"><div class="mediaobject" align="center"><img src="https://images/ide/test-debugging-perspective.png" align="middle"></img><div class="caption">The Squish Test Debugging Perspective
+</div></div></div><p>
+To return to the default perspective (normally the <a class="xref" href="https://ide.main.window.html#ide.squish.test.management.perspective" title="8.1.2.2. Squish Test Management Perspective">Squish Test Management Perspective (Section 8.1.2.2)</a>), either complete the
+test run by invoking the <a class="xref" href="https://ide.main.window.html#ide.resume.action" title="8.1.1.54. Resume action"><span class="guiicon">Resume</span> action (Section 8.1.1.54)</a>, or cancel
+the test run by invoking the <a class="xref" href="https://ide.main.window.html#ide.terminate.action" title="8.1.1.75. Terminate action"><span class="guiicon">Terminate</span> action (Section 8.1.1.75)</a>.
+</p><p>
+See the documentation for the individual views for further details.
+</p></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="ide-the-controlbar-window"></a>8.1.3. Control Bar Window</h3></div></div></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><span class="section"><a href="https://ide.main.window.html#ide.stop.recording.action">8.1.3.1. <span class="guiicon">Stop Recording</span> action</a></span></dt><dt><span class="section"><a href="https://ide.main.window.html#ide.insert.object.properties.verification.point.action">8.1.3.2. <span class="guiicon">Verify &gt; Properties</span> action</a></span></dt><dt><span class="section"><a href="https://ide.main.window.html#ide.insert.screenshot.verification.point.action">8.1.3.3. <span class="guiicon">Verify &gt; Screenshot</span> action</a></span></dt><dt><span class="section"><a href="https://ide.main.window.html#ide.insert.table.verification.point.action">8.1.3.4. <span class="guiicon">Verify &gt; Table</span> action</a></span></dt><dt><span class="section"><a href="https://ide.main.window.html#ide.insert.visual.verification.point.action">8.1.3.5. <span class="guiicon">Verify &gt; Visual</span> action</a></span></dt><dt><span class="section"><a href="https://ide.main.window.html#ide.insert.image.verification.action">8.1.3.6. <span class="guiicon">Verify &gt; Search Image</span> action</a></span></dt><dt><span class="section"><a href="https://ide.main.window.html#ide.insert.ocr.verification.action">8.1.3.7. <span class="guiicon">Verify &gt; OCR Text</span> action</a></span></dt><dt><span class="section"><a href="https://ide.main.window.html#ide.insert.mouseclick.action">8.1.3.8. <span class="guiicon">Insert &gt; mouseClick(&lt;Image&gt;)</span> action</a></span></dt><dt><span class="section"><a href="https://ide.main.window.html#ide.insert.doubleclick.action">8.1.3.9. <span class="guiicon">Insert &gt; doubleClick(&lt;Image&gt;)</span> action</a></span></dt><dt><span class="section"><a href="https://ide.main.window.html#ide.insert.tapobject.action">8.1.3.10. <span class="guiicon">Insert &gt; tapObject(&lt;Image&gt;)</span> action</a></span></dt><dt><span class="section"><a href="https://ide.main.window.html#ide.insert.mouseclick.ocr.action">8.1.3.11. <span class="guiicon">Insert &gt; mouseClick(&lt;OCR&gt;)</span> action</a></span></dt><dt><span class="section"><a href="https://ide.main.window.html#ide.insert.doubleclick.ocr.action">8.1.3.12. <span class="guiicon">Insert &gt; doubleClick(&lt;OCR&gt;)</span> action</a></span></dt><dt><span class="section"><a href="https://ide.main.window.html#ide.insert.tapobject.ocr.action">8.1.3.13. <span class="guiicon">Insert &gt; tapObject(&lt;OCR&gt;)</span> action</a></span></dt><dt><span class="section"><a href="https://ide.main.window.html#ide.insert.startVideoCapture.action">8.1.3.14. <span class="guiicon">Insert &gt; Start Video Capture</span> action</a></span></dt><dt><span class="section"><a href="https://ide.main.window.html#ide.insert.stopVideoCapture.action">8.1.3.15. <span class="guiicon">Insert &gt; Stop Video Capture</span> action</a></span></dt><dt><span class="section"><a href="https://ide.main.window.html#ide.insert.comment.action">8.1.3.16. <span class="guiicon">Insert &gt; Comment</span> action</a></span></dt><dt><span class="section"><a href="https://ide.main.window.html#ide.controlbar.pause.action">8.1.3.17. <span class="guibutton">Pause</span> </a></span></dt><dt><span class="section"><a href="https://ide.main.window.html#ide.controlbar.remotecontrol.action">8.1.3.18. <span class="guiicon">Remote Control</span> action</a></span></dt><dt><span class="section"><a href="https://ide.main.window.html#ide.record.or.replay.cancel.action">8.1.3.19. <span class="guiicon">Cancel</span> action</a></span></dt></dl></div><p>
+When a test or test snippet is recorded, or when a test is run, the
+Control Bar Window is made visible and the <span class="application">Squish IDE</span>'s main window is hidden.
+Once the test run or recording is completed (or canceled), the Control
+Bar Window is hidden and the <span class="application">Squish IDE</span>'s main window is made visible.
+</p><div class="screenshot"><div class="mediaobject" align="center"><img src="https://images/controlbar.png" align="middle"></img><div class="caption">The Control Bar Window
+</div></div></div><p>
+The Control Bar Window has some toolbar buttons and a line of status
+text. Each toolbar's action is described below.
+</p><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="ide.stop.recording.action"></a>8.1.3.1. <span class="guiicon">Stop Recording</span> action</h4></div></div></div><p>
+The <span class="guiicon">Stop Recording</span> action (<span class="guiicon"><img src="https://images/ide/stop-recording.png"></img></span>) is only enabled
+during recording. Its main purpose is to finish the recording of a
+snippet into an existing test. But it can also be used if you want to
+finish recording a test but want to leave <span class="emphasis"><em>Squish</em></span> to actually close the
+AUT. And it can also be used if a mistake is made and you would rather
+abandon and start again. (See also, <a class="xref" href="https://ug-editdebug.html" title="5.21. How to Edit and Debug Test Scripts">How to Edit and Debug Test Scripts (Section 5.21)</a>.)
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="ide.insert.object.properties.verification.point.action"></a>8.1.3.2. <span class="guiicon">Verify &gt; Properties</span> action</h4></div></div></div><p>
+The <span class="guiicon">Verify &gt; Properties</span> action
+(<span class="guiicon"><img src="https://images/ide/insert-vp.png"></img></span>)
+is only enabled during recording. If clicked the Control Bar Window is
+hidden and the <span class="application">Squish IDE</span>'s main window is made visible (possibly obscuring
+the AUT). The <span class="application">Squish IDE</span> will automatically be switched to the <a class="xref" href="https://ide.main.window.html#ide.squish.spy.perspective" title="8.1.2.1. Squish Spy Perspective">Squish Spy Perspective (Section 8.1.2.1)</a> with the <a class="xref" href="https://ide.views.html#ide.verification.point.creator.view" title="8.2.22. Verification Point Creator view">Verification Point Creator view (Section 8.2.22)</a> visible, ready for
+verifications to be inserted. After inserting one or more verification
+points the <span class="application">Squish IDE</span>'s main window will again be hidden and the Control Bar
+Window made visible so that recording can continue. (You can also resume
+recording without inserting any verifications by closing the <a class="xref" href="https://ide.views.html#ide.verification.point.creator.view" title="8.2.22. Verification Point Creator view">Verification Point Creator view (Section 8.2.22)</a>.)
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="ide.insert.screenshot.verification.point.action"></a>8.1.3.3. <span class="guiicon">Verify &gt; Screenshot</span> action</h4></div></div></div><p>
+The <span class="guiicon">Verify &gt; Screenshot</span> action (<span class="guiicon"><img src="https://images/ide/insert-screenshot-vp.png"></img></span>) is
+only enabled during recording. If clicked the Control Bar Window is
+hidden and the <span class="application">Squish IDE</span>'s main window is made visible (possibly obscuring
+the AUT). The <span class="application">Squish IDE</span> will automatically be switched to the <a class="xref" href="https://ide.main.window.html#ide.squish.spy.perspective" title="8.1.2.1. Squish Spy Perspective">Squish Spy Perspective (Section 8.1.2.1)</a> with the <a class="xref" href="https://ide.views.html#ide.verification.point.creator.view" title="8.2.22. Verification Point Creator view">Verification Point Creator view (Section 8.2.22)</a> visible, ready for
+verifications to be inserted. After inserting one or more verification
+points the <span class="application">Squish IDE</span>'s main window will again be hidden and the Control Bar
+Window made visible so that recording can continue. (You can also resume
+recording without inserting any verifications by closing the <a class="xref" href="https://ide.views.html#ide.verification.point.creator.view" title="8.2.22. Verification Point Creator view">Verification Point Creator view (Section 8.2.22)</a>.)
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="ide.insert.table.verification.point.action"></a>8.1.3.4. <span class="guiicon">Verify &gt; Table</span> action</h4></div></div></div><p>
+The <span class="guiicon">Verify &gt; Table</span> action (<span class="guiicon"><img src="https://images/ide/insert_vp_table.png"></img></span>) is
+only enabled during recording. If clicked the Control Bar Window is
+hidden and the <span class="application">Squish IDE</span>'s main window is made visible (possibly obscuring
+the AUT). The <span class="application">Squish IDE</span> will automatically be switched to the <a class="xref" href="https://ide.main.window.html#ide.squish.spy.perspective" title="8.1.2.1. Squish Spy Perspective">Squish Spy Perspective (Section 8.1.2.1)</a> with the <a class="xref" href="https://ide.views.html#ide.verification.point.creator.view" title="8.2.22. Verification Point Creator view">Verification Point Creator view (Section 8.2.22)</a> visible, ready for
+verifications to be inserted. After inserting one or more verification
+points the <span class="application">Squish IDE</span>'s main window will again be hidden and the Control Bar
+Window made visible so that recording can continue. (You can also resume
+recording without inserting any verifications by closing the <a class="xref" href="https://ide.views.html#ide.verification.point.creator.view" title="8.2.22. Verification Point Creator view">Verification Point Creator view (Section 8.2.22)</a>.)
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="ide.insert.visual.verification.point.action"></a>8.1.3.5. <span class="guiicon">Verify &gt; Visual</span> action</h4></div></div></div><p>
+The <span class="guiicon">Verify &gt; Visual</span> action (<span class="guiicon"><img src="https://images/ide/insert_vp_titan.png"></img></span>) is
+only enabled during recording. If clicked the Control Bar Window is
+hidden and the <span class="application">Squish IDE</span>'s main window is made visible (possibly obscuring
+the AUT). The <span class="application">Squish IDE</span> will automatically be switched to the <a class="xref" href="https://ide.main.window.html#ide.squish.spy.perspective" title="8.1.2.1. Squish Spy Perspective">Squish Spy Perspective (Section 8.1.2.1)</a> with the <a class="xref" href="https://ide.views.html#ide.verification.point.creator.view" title="8.2.22. Verification Point Creator view">Verification Point Creator view (Section 8.2.22)</a> visible, ready for
+verifications to be inserted. After inserting one or more verification
+points the <span class="application">Squish IDE</span>'s main window will again be hidden and the Control Bar
+Window made visible so that recording can continue. (You can also resume
+recording without inserting any verifications by closing the <a class="xref" href="https://ide.views.html#ide.verification.point.creator.view" title="8.2.22. Verification Point Creator view">Verification Point Creator view (Section 8.2.22)</a>.)
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="ide.insert.image.verification.action"></a>8.1.3.6. <span class="guiicon">Verify &gt; Search Image</span> action</h4></div></div></div><p>
+The <span class="guiicon">Verify &gt; Search Image</span> action
+(<span class="guiicon"><img src="https://images/ide/image_verify.png"></img></span>)
+is only enabled during recording. If clicked the <span class="application">Squish IDE</span> will switch into
+a mode featuring the insertion of a
+<a class="xref" href="https://rgs-squish.html#test.imagePresent-function"><code class="function">test.imagePresent</code></a> function call into the test
+script.
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="ide.insert.ocr.verification.action"></a>8.1.3.7. <span class="guiicon">Verify &gt; OCR Text</span> action</h4></div></div></div><p>
+The <span class="guiicon">Verify &gt; OCR Text</span> action
+(<span class="guiicon"><img src="https://images/ide/ocr_verify.png"></img></span>)
+is only enabled during recording. If clicked the <span class="application">Squish IDE</span> will switch into
+a mode featuring the insertion of a
+<a class="xref" href="https://rgs-squish.html#test.ocrTextPresent-function"><code class="function">test.ocrTextPresent</code></a> function call into the test
+script.
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="ide.insert.mouseclick.action"></a>8.1.3.8. <span class="guiicon">Insert &gt; mouseClick(&lt;Image&gt;)</span> action</h4></div></div></div><p>
+The <span class="guiicon">Insert &gt; mouseClick(&lt;Image&gt;)</span> action
+(<span class="guiicon"><img src="https://images/ide/image_click.png"></img></span>)
+is only enabled during recording. If clicked the <span class="application">Squish IDE</span> will switch
+into a mode featuring the insertion of a
+<a class="xref" href="https://rgs-squish.html#mouseClick-function"><code class="function">mouseClick</code></a> function operating based on the location of an image on the screen.
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="ide.insert.doubleclick.action"></a>8.1.3.9. <span class="guiicon">Insert &gt; doubleClick(&lt;Image&gt;)</span> action</h4></div></div></div><p>
+The <span class="guiicon">Insert &gt; doubleClick(&lt;Image&gt;)</span> action
+(<span class="guiicon"><img src="https://images/ide/image_doubleclick.png"></img></span>)
+is only enabled during recording. If clicked the <span class="application">Squish IDE</span> will switch
+into a mode featuring the insertion of
+a <a class="xref" href="https://rgs-squish.html#doubleClick-function"><code class="function">doubleClick</code></a> function operating based on the
+location of an image on the screen.
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="ide.insert.tapobject.action"></a>8.1.3.10. <span class="guiicon">Insert &gt; tapObject(&lt;Image&gt;)</span> action</h4></div></div></div><p>
+The <span class="guiicon">Insert &gt; tapObject(&lt;Image&gt;)</span> action
+(<span class="guiicon"><img src="https://images/ide/image_tap.png"></img></span>)
+is only enabled during recording. If clicked the <span class="application">Squish IDE</span> will switch
+into a mode featuring the insertion of a
+<a class="xref" href="https://rgs-squish.html#tapObject-function"><code class="function">tapObject</code></a> touch function operating based on the location of an image on the screen.
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="ide.insert.mouseclick.ocr.action"></a>8.1.3.11. <span class="guiicon">Insert &gt; mouseClick(&lt;OCR&gt;)</span> action</h4></div></div></div><p>
+The <span class="guiicon">Insert &gt; mouseClick(&lt;OCR&gt;)</span> action
+(<span class="guiicon"><img src="https://images/ide/ocr_click.png"></img></span>)
+is only enabled during recording. If clicked the <span class="application">Squish IDE</span> will switch
+into a mode featuring the insertion of a
+<a class="xref" href="https://rgs-squish.html#mouseClick-function"><code class="function">mouseClick</code></a> function operating based on the
+location of a specified text.
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="ide.insert.doubleclick.ocr.action"></a>8.1.3.12. <span class="guiicon">Insert &gt; doubleClick(&lt;OCR&gt;)</span> action</h4></div></div></div><p>
+The <span class="guiicon">Insert &gt; doubleClick(&lt;OCR&gt;)</span> action
+(<span class="guiicon"><img src="https://images/ide/ocr_doubleclick.png"></img></span>)
+is only enabled during recording. If clicked the <span class="application">Squish IDE</span> will switch
+into a mode featuring the insertion of
+a <a class="xref" href="https://rgs-squish.html#doubleClick-function"><code class="function">doubleClick</code></a> function operating based on the
+location of a specified text.
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="ide.insert.tapobject.ocr.action"></a>8.1.3.13. <span class="guiicon">Insert &gt; tapObject(&lt;OCR&gt;)</span> action</h4></div></div></div><p>
+The <span class="guiicon">Insert &gt; tapObject(&lt;OCR&gt;)</span> action
+(<span class="guiicon"><img src="https://images/ide/ocr_tap.png"></img></span>)
+is only enabled during recording. If clicked the <span class="application">Squish IDE</span> will switch
+into a mode featuring the insertion of a
+<a class="xref" href="https://rgs-squish.html#tapObject-function"><code class="function">tapObject</code></a> touch function operating based on the
+location of a specified text.
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="ide.insert.startVideoCapture.action"></a>8.1.3.14. <span class="guiicon">Insert &gt; Start Video Capture</span> action</h4></div></div></div><p>
+    The <span class="guiicon">Insert &gt; Start Video Capture</span> action
+    (<span class="guiicon"><img src="https://images/ide/vidcapture_start.png"></img></span>)
+    is only enabled during recording. If clicked, a <a class="xref" href="https://rgs-squish.html#test.startVideoCapture-function"><code class="function">test.startVideoCapture</code></a>
+    invocation will be inserted into the test script. The inserted script statement does not pass any
+    arguments to the function, so the invocation will use the default message and the current application
+    context. After the insertion, the recording can continue.</p><p>
+        When recording a scripted test case, this action will be disabled after it has been clicked
+        and the  <a class="xref" href="https://ide.main.window.html#ide.insert.stopVideoCapture.action" title="8.1.3.15. Insert &gt; Stop Video Capture action"><span class="guiicon">Insert &gt; Stop Video Capture</span> action (Section 8.1.3.15)</a> action will be enabled.
+    </p><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Note: When recording snippets"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/note.png"></img></td><th align="left">When recording snippets</th></tr><tr><td align="left" valign="top"><p>
+        During snippet recording the IDE cannot determine whether a video capture would be active
+        at the point where the recorded snippet is inserted. Thus the action is always enabled and it
+        may happen that the generated script code throws an exception when being run - in case the
+        <code class="function">test.startVideoCapture</code> is invoked twice with the same application context.
+    </p></td></tr></table></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="ide.insert.stopVideoCapture.action"></a>8.1.3.15. <span class="guiicon">Insert &gt; Stop Video Capture</span> action</h4></div></div></div><p>
+    The <span class="guiicon">Insert &gt; Stop Video Capture</span> action
+    (<span class="guiicon"><img src="https://images/ide/vidcapture_stop.png"></img></span>)
+    is only enabled during recording and initially disabled until the <a class="xref" href="https://ide.main.window.html#ide.insert.startVideoCapture.action" title="8.1.3.14. Insert &gt; Start Video Capture action"><span class="guiicon">Insert &gt; Start Video Capture</span> action (Section 8.1.3.14)</a>
+    action has been used. If clicked, a <a class="xref" href="https://rgs-squish.html#test.stopVideoCapture-function"><code class="function">test.stopVideoCapture</code></a>
+    invocation will be inserted into the test script. The inserted script statement does not pass any
+    arguments to the function, so the invocation will use the default message and the
+    current application context. After the insertion, the recording can continue.</p><p>
+        When recording a scripted test case, this action will be disabled ater being clicked and the
+        <a class="xref" href="https://ide.main.window.html#ide.insert.startVideoCapture.action" title="8.1.3.14. Insert &gt; Start Video Capture action"><span class="guiicon">Insert &gt; Start Video Capture</span> action (Section 8.1.3.14)</a> action will be enabled.
+    </p><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Note: When recording snippets"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/note.png"></img></td><th align="left">When recording snippets</th></tr><tr><td align="left" valign="top"><p>
+        During snippet recording the IDE cannot determine whether a video capture would be active
+        at the point where the recorded snippet is inserted. Thus the action is always enabled and it
+        may happen that the generated script code throws an exception when being run - in case the
+        <code class="function">test.stopVideoCapture</code> is invoked twice with the same application context.
+    </p></td></tr></table></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="ide.insert.comment.action"></a>8.1.3.16. <span class="guiicon">Insert &gt; Comment</span> action</h4></div></div></div><p>
+The <span class="guiicon">Insert &gt; Comment</span> action
+(<span class="guiicon"><img src="https://images/ide/insertcomment.png"></img></span>)
+is only enabled during recording. If clicked an <span class="guilabel">Insert
+Comment</span> dialog will open and offer the insertion of a
+free-form comment into the test script. After the insertion the
+recording can continue.</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="ide.controlbar.pause.action"></a>8.1.3.17. <span class="guibutton">Pause</span> </h4></div></div></div><p>
+The <span class="guibutton">Pause</span> button is enabled during playback only, not
+record time. Pressing this button during playback is like setting a breakpoint
+to "now". It hides the Control Bar, switches <span class="application">Squish IDE</span> to Debug Perspective,
+and brings the main window back to a visible state, allowing you to step through
+lines of code and inspect variables.
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="ide.controlbar.remotecontrol.action"></a>8.1.3.18. <span class="guiicon">Remote Control</span> action</h4></div></div></div><p>
+The <span class="guiicon">Remote Control</span> action (<span class="guiicon">
+<img src="https://images/ide/remote_control.png"></img></span>)
+is always enabled. It opens the <a class="xref" href="https://ide.dialogs.html#ide.remote.control.dialog" title="8.3.18. Remote Control dialog">Remote Control dialog (Section 8.3.18)</a>,
+which allows viewing and controlling the remote test system from the <span class="application">Squish IDE</span>.
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="ide.record.or.replay.cancel.action"></a>8.1.3.19. <span class="guiicon">Cancel</span> action</h4></div></div></div><p>
+The <span class="guiicon">Cancel</span> action (<span class="guiicon"><img src="https://images/ide/close.png"></img></span>) is always enabled. If
+clicked, the test or snippet being recorded or the test replay will be
+cancelled. In the case of recording, no recorded test script lines will
+be inserted into the test case. In the case of a test replay, any test
+results that have been logged so far are retained, but the replay is
+canceled, so no more test results are logged.
+</p></div></div></div><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" type="text/javascript" src="ScriptingLanguage.js"></script><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format">setScriptingLanguage();</script><div class="navfooter"><hr></hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="https://ide.ref.man.html">Prev</a> </td><td width="20%" align="center"><a accesskey="u" href="https://ide.ref.man.html">Up</a></td><td width="40%" align="right"> <a accesskey="n" href="https://ide.views.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">Chapter 8. IDE Reference Manual </td><td width="20%" align="center"><a accesskey="h" href="https://index-noframes.html">Home</a></td><td width="40%" align="right" valign="top"> 8.2. Views</td></tr></table></div></body>
+<!-- Mirrored from ide.main.window.html by HTTrack Website Copier/3.x [XR&CO'2013], Wed, 06 Jul 2022 13:29:01 GMT -->
+</html>

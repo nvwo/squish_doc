@@ -1,0 +1,381 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<!-- Mirrored from ugs-eventhandlers.html by HTTrack Website Copier/3.x [XR&CO'2013], Wed, 06 Jul 2022 13:28:59 GMT -->
+<head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><title>5.10. How to Use Event Handlers</title><link rel="stylesheet" href="manual.css" type="text/css"></link><meta name="generator" content="DocBook XSL Stylesheets V1.73.2"></meta><link rel="start" href="index-noframes.html" title="Squish Manual"></link><link rel="up" href="users-guide.html" title="Chapter 5. User Guide"></link><link rel="prev" href="ugs-teststatements.html" title="5.9. How to Use Test Statements"></link><link rel="next" href="ugs-synchpoints.html" title="5.11. How to Create and Use Synchronization Points"></link><style xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" type="text/css" media="screen">
+        div.toc * { margin-left: 6px; margin-right: auto; max-width: 75em; }
+        div.toc span { margin-left: 0px; }
+        * { margin-left: auto; margin-right: auto; max-width: 75em; }
+        body { margin-left: 6px; margin-right: 6px; }
+        table th { padding: .5ex }
+        table td { padding: .5ex }
+    </style><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format">
+        function keyPress() {
+            var e = window.event;
+            if ( e == undefined ) {
+                return;
+            }
+            /* ### does not properly scroll, yet
+            if ( e.keyCode == 32 ) {
+            var l = document.links;
+            for ( var i = 0; i < l.length; i++ ) {
+                if ( l[i].innerText == "Next" ) {
+                location.href = l[i].href;
+                }
+            }
+            } else
+                */
+                if ( e.keyCode == 0x08 ) {
+            var l = document.links;
+            for ( var i = 0; i < l.length; i++ ) {
+                if ( l[i].innerText == "Prev" ) {
+                location.href = l[i].href;
+                }
+            }
+            }
+        }
+        document.onkeypress = keyPress;
+    </script></head><body><div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="ugs-eventhandlers"></a>5.10. How to Use Event Handlers</h2></div></div></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><span class="section"><a href="ugs-eventhandlers.html#ugseh-global">5.10.1. Global Event Handlers</a></span></dt><dt><span class="section"><a href="ugs-eventhandlers.html#ugseh-class">5.10.2. Event Handlers for All Objects of a Specified Type</a></span></dt><dt><span class="section"><a href="ugs-eventhandlers.html#ugseh-object">5.10.3. Event Handlers for Specific Objects</a></span></dt></dl></div><p>
+In <span class="emphasis"><em>Squish</em></span> test scripts it is possible to react to events that occur
+inside the AUT. This can be useful, for example, to provide a test
+script response for when a dialog appears unexpectedly, such as an error
+message box. This can be done by registering an event handler function
+for a particular event and that should be called when that event occurs
+on a specified object, or on an object of a specified type, or for any
+object.
+</p><p>
+Event handler functions are registered by calling an <a class="xref" href="rgs-qtconvenience.html#qt-installEventHandler-function"><code class="function">installEventHandler</code></a> function. For a handler that
+should apply to all the AUT's objects—that is, a global event
+handler—just the event type and the handler function are passed as
+arguments. For a handler that should apply to a particular object or to
+all objects of a particular type, the object or type is passed as the
+first argument, followed by the event type and the handler function. In
+addition to standard toolkit events (such as Qt's
+<code class="code">QKeyEvent</code>), some <span class="emphasis"><em>Squish</em></span>- and toolkit-specific generic
+events are supported such as <code class="code">MessageBoxOpened</code> and
+<code class="code">Crash</code>.
+</p><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Note: Squish for Web-specific"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/note.png"></img></td><th align="left"><span class="emphasis"><em>Squish</em></span> for Web-specific</th></tr><tr><td align="left" valign="top"><p>
+For <span class="emphasis"><em>Squish</em></span> for Web, event handler functions are always called with
+<span class="emphasis"><em>no</em></span> argument, rather than passed an object
+(typically the object the event happened to). It is still possible to
+access objects inside <span class="emphasis"><em>Squish</em></span> for Web event handlers, but we must obtain
+references to the objects ourselves, for example, using the <a class="xref" href="rgs-squish.html#waitForObject-function"><code class="function">waitForObject</code></a> function.
+</p></td></tr></table></div><p>
+In the following subsections we will look at example event handlers for
+all three cases.
+</p><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="ugseh-global"></a>5.10.1. Global Event Handlers</h3></div></div></div><p>
+When a message box pops up the <code class="code">MessageBoxOpened</code> event
+occurs. (In fact, the <code class="code">MessageBoxOpened</code> event only applies
+to the <span class="emphasis"><em>Squish</em></span> for <span class="trademark">Java</span>™, <span class="emphasis"><em>Squish</em></span> for Qt, and <span class="emphasis"><em>Squish</em></span> for Windows
+editions; however, there are similar events for the other toolkits.)
+Like all such events the test script will ignore the event, but we can
+register an event handler function to be called whenever such events
+occur. It doesn't really make sense to associate a global event like
+this with a particular object or type, so it is usually handled by a
+global event handler.
+</p><p>
+Here we will look at an example of creating and installing a handler for
+message boxes.
+</p><div xmlns="" class="scriptlang"><form><select name="scriptlangcombo" onchange="javascript:changeScriptingLanguage(this)" onclick="javascript:changeScriptingLanguage(this)"><option value="all" selected>Show All</option><option value="JavaScript">Show JavaScript</option><option value="Perl">Show Perl</option><option value="Python">Show Python</option><option value="Ruby">Show Ruby</option><option value="Tcl">Show Tcl</option></select></form></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Python</span><pre class="programlisting">
+def handleMessageBox(messageBox):
+    test.log("MessageBox opened: '%s' - '%s'" % (
+        messageBox.windowText, messageBox.text))
+    messageBox.close()
+
+def main():
+    startApplication("myapp")
+    installEventHandler("MessageBoxOpened", "handleMessageBox")
+    ...
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">JavaScript</span><pre class="programlisting">
+function handleMessageBox(messageBox)
+{
+    test.log("MessageBox opened: '" + messageBox.windowText +
+        "' - '" + messageBox.text + "'");
+    messageBox.close();
+}
+
+function main()
+{
+    startApplication("myapp");
+    installEventHandler("MessageBoxOpened", "handleMessageBox");
+    // ...
+}
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Perl</span><pre class="programlisting">
+sub handleMessageBox
+{
+    my $messageBox = shift @_;
+    test::log("MessageBox opened: '" . $messageBox-&gt;windowText .
+        "' - '" . $messageBox-&gt;text + "'");
+    $messageBox-&gt;close();
+}
+
+sub main
+{
+    startApplication("myapp");
+    installEventHandler("MessageBoxOpened", "handleMessageBox");
+    # ...
+}
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Ruby</span><pre class="programlisting">
+# encoding: UTF-8
+require 'squish'
+include Squish
+
+def HandleMessageBox(messageBox)
+    Test.log("MessageBox opened: '%s' - '%s'" % [
+        messageBox.windowText, messageBox.text])
+    messageBox.close
+end
+
+def main
+    startApplication("myapp")
+    installEventHandler("MessageBoxOpened", "HandleMessageBox")
+    ...
+end
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Tcl</span><pre class="programlisting">
+proc handleMessageBox {messageBox} {
+    test log [concat "MessageBox opened: '" \
+        [property get $messageBox windowText] "' - '" \
+        [property get $messageBox text]  "'"]
+    invoke $messageBox close
+}
+
+proc main {} {
+    invoke startApplication "myapp"
+    installEventHandler "MessageBoxOpened" "handleMessageBox"
+    # ...
+}
+</pre></div><p>
+Note that if we were using a similar <span class="emphasis"><em>Squish</em></span> for Web event (e.g.,
+<code class="code">ModalDialogOpened</code>), the dialog would
+<span class="emphasis"><em>not</em></span> be passed as an argument, because <span class="emphasis"><em>Squish</em></span> for Web
+event handlers receive no arguments.
+</p><p>
+Another special event is <code class="code">Crash</code>. This is useful when we want
+to install an event handler to be called when the AUT crashes—for
+example, to do cleanups or to restart the AUT. (The <code class="code">Crash</code>
+event is supported by all <span class="emphasis"><em>Squish</em></span> versions, except for <span class="emphasis"><em>Squish</em></span> for Web.)
+Here's an example:
+</p><div xmlns="" class="scriptlang"><form><select name="scriptlangcombo" onchange="javascript:changeScriptingLanguage(this)" onclick="javascript:changeScriptingLanguage(this)"><option value="all" selected>Show All</option><option value="JavaScript">Show JavaScript</option><option value="Perl">Show Perl</option><option value="Python">Show Python</option><option value="Ruby">Show Ruby</option><option value="Tcl">Show Tcl</option></select></form></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Python</span><pre class="programlisting">
+def crashHandler():
+    test.log("Deleting lock files after AUT crash")
+    deleteLockFiles()
+
+def main():
+    startApplication("myapp")
+    installEventHandler("Crash", "crashHandler")
+    ...
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">JavaScript</span><pre class="programlisting">
+function crashHandler()
+{
+    test.log("Deleting lock files after AUT crash");
+    deleteLockFiles();
+}
+
+function main()
+{
+    startApplication("myapp");
+    installEventHandler("Crash", "crashHandler");
+    // ...
+}
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Perl</span><pre class="programlisting">
+sub crashHandler
+{
+    test::log("Deleting lock files after AUT crash");
+    deleteLockFiles();
+}
+
+sub main
+{
+    startApplication("myapp");
+    installEventHandler("Crash", "crashHandler");
+    # ...
+}
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Ruby</span><pre class="programlisting">
+# encoding: UTF-8
+require 'squish'
+include Squish
+
+def crashHandler
+    Test.log("Deleting lock files after AUT crash")
+    deleteLockFiles
+end
+
+def main
+    startApplication("myapp")
+    installEventHandler("Crash", "crashHandler")
+    ...
+end
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Tcl</span><pre class="programlisting">
+proc crashHandler {} {
+    test log "Deleting lock files after AUT crash"
+    deleteLockFiles
+}
+
+proc main {} {
+    invoke startApplication "myapp"
+    installEventHandler "Crash" "crashHandler"
+    # ...
+}
+</pre></div><p>
+A third kind of special event is the <code class="code">Timeout</code> event. These
+events are triggered whenever the AUT fails to respond to some <span class="emphasis"><em>Squish</em></span>
+command within five minutes. This can happen if the application got
+stuck in an endless loop, or if there is some other reason that keeps
+it from being able to respond. You can install an event handler for this
+event so that your tests can handle such situations gracefully.
+The timeout time can be changed by using the <span class="application">squishrunner</span>'s or
+<span class="application">squishserver</span>'s
+<code class="option">setResponseTimeout</code> option (see <a class="xref" href="rg-cmdline.html#rg-squishrunner-cli--config" title="7.4.3.27. Configuring squishrunner">Configuring <span class="application">squishrunner</span> (Section 7.4.3.27)</a> or <a class="xref" href="rg-cmdline.html#rg-squishserver--config" title="7.4.4.3. Configuring squishserver">Configuring <span class="application">squishserver</span> (Section 7.4.4.3)</a>), or using the <span class="application">Squish IDE</span> (see <a class="xref" href="ide.dialogs.html#the.squish.pane.s.child.panes" title="8.3.17.7.1. Squish Preferences Child Panes">Squish Preferences Child Panes (Section 8.3.17.7.1)</a>.)
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="ugseh-class"></a>5.10.2. Event Handlers for All Objects of a Specified Type</h3></div></div></div><p>
+It is possible to set up an event handler that will respond to
+particular types of events for all objects of a specified type.
+Only the Qt version <a class="xref" href="rgs-qtconvenience.html#qt-installEventHandler-function"><code class="function">installEventHandler</code></a> supports this kind of
+usage currently. For example, we can install an event handler which is
+always called when a <code class="code">QMouseEvent</code> occurs on a
+<code class="code">QCheckBox</code>. This means that every time the event occurs,
+that is, whenever any of the AUT's checkboxes is clicked, the event
+handler is called. Here's an example:
+</p><div xmlns="" class="scriptlang"><form><select name="scriptlangcombo" onchange="javascript:changeScriptingLanguage(this)" onclick="javascript:changeScriptingLanguage(this)"><option value="all" selected>Show All</option><option value="JavaScript">Show JavaScript</option><option value="Perl">Show Perl</option><option value="Python">Show Python</option><option value="Ruby">Show Ruby</option><option value="Tcl">Show Tcl</option></select></form></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Python</span><pre class="programlisting">
+def handleCheckBox(obj):
+    test.log("QCheckBox '%s' clicked" % objectName(obj))
+
+def main():
+    startApplication("myapp")
+    installEventHandler("QCheckBox", "QMouseEvent", "handleCheckBox")
+    ...
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">JavaScript</span><pre class="programlisting">
+function handleCheckBox(obj) {
+    test.log("QCheckBox '" + objectName(obj) + "' clicked");
+}
+
+function main() {
+    startApplication("myapp");
+    installEventHandler("QCheckBox", "QMouseEvent", "handleCheckBox");
+    // ...
+}
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Perl</span><pre class="programlisting">
+sub handleCheckBox
+{
+    my $obj = shift @_;
+    test::log("QCheckBox '" . objectName($obj) . "' clicked");
+}
+
+sub main
+{
+    startApplication("myapp");
+    installEventHandler("QCheckBox", "QMouseEvent", "handleCheckBox");
+    # ...
+}
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Ruby</span><pre class="programlisting">
+# encoding: UTF-8
+require 'squish'
+include Squish
+
+def handleCheckBox(obj)
+    Test.log("QCheckBox '%s' clicked" % [objectName(obj)])
+end
+
+def main
+    startApplication("myapp")
+    installEventHandler("QCheckBox", "QMouseEvent", "handleCheckBox")
+    ...
+end
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Tcl</span><pre class="programlisting">
+proc handleCheckBox {obj} {
+    test log [concat "QCheckBox '" [objectName $obj] "' clicked"]
+}
+
+proc main {} {
+    invoke startApplication "myapp"
+    installEventHandler "QCheckBox" "QMouseEvent" "handleCheckBox"
+    # ...
+}
+</pre></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="ugseh-object"></a>5.10.3. Event Handlers for Specific Objects</h3></div></div></div><p>
+The third kind of event handling that <span class="emphasis"><em>Squish</em></span> supports is for events
+that occur to particular objects. The only toolkit that supports this
+currently is the Qt toolkit. We can install an event handler that is called
+every time a line editor receives a <code class="code">QKeyEvent</code>, so the event handler
+would be called every time some text is typed into the line editor. Here's an
+example:
+</p><div xmlns="" class="scriptlang"><form><select name="scriptlangcombo" onchange="javascript:changeScriptingLanguage(this)" onclick="javascript:changeScriptingLanguage(this)"><option value="all" selected>Show All</option><option value="JavaScript">Show JavaScript</option><option value="Perl">Show Perl</option><option value="Python">Show Python</option><option value="Ruby">Show Ruby</option><option value="Tcl">Show Tcl</option></select></form></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Python</span><pre class="programlisting">
+def handleDescriptionLineEdit(obj):
+    lineEdit = cast(obj, QLineEdit)
+    test.log("QLineEdit '%s' text changed: %s" % (
+        objectName(obj), lineEdit.text))
+
+def main():
+    startApplication("myapp")
+    lineEdit = waitForObject(":Description:_QLineEdit")
+    installEventHandler(lineEdit, "QKeyEvent",
+        "handleDescriptionLineEdit")
+    ...
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">JavaScript</span><pre class="programlisting">
+function handleDescriptionLineEdit(obj)
+{
+    var lineEdit = cast(obj, QLineEdit);
+    test.log("QLineEdit '" + objectName(obj) +
+        "' text changed: " + lineEdit.text)
+}
+
+function main()
+{
+    startApplication("myapp");
+    var lineEdit = waitForObject(":Description:_QLineEdit");
+    installEventHandler(lineEdit, "QKeyEvent",
+        "handleDescriptionLineEdit");
+    // ...
+}
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Perl</span><pre class="programlisting">
+sub handleDescriptionLineEdit
+{
+    my $obj = shift @_;
+    my $lineEdit = cast($obj, QLineEdit);
+    test::log("QLineEdit '" . objectName($obj) .
+        "' text changed: " . $lineEdit-&gt;text);
+}
+
+sub main
+{
+    startApplication("myapp");
+    my $lineEdit = waitForObject(":Description:_QLineEdit");
+    installEventHandler($lineEdit, "QKeyEvent",
+        "handleDescriptionLineEdit");
+    # ...
+}
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Ruby</span><pre class="programlisting">
+# encoding: UTF-8
+require 'squish'
+include Squish
+
+def handleDescriptionLineEdit(obj)
+    lineEdit = cast(obj, QLineEdit)
+    Test.log("QLineEdit '%s' text changed: %s" % [
+        objectName(obj), lineEdit.text])
+end
+
+def main
+    startApplication("myapp")
+    lineEdit = waitForObject(":Description:_QLineEdit")
+    installEventHandler(lineEdit, "QKeyEvent",
+        "handleDescriptionLineEdit")
+    ...
+end
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Tcl</span><pre class="programlisting">
+proc handleDescriptionLineEdit {obj} {
+    set lineEdit [cast $obj QLineEdit]
+    test log [concat "QLineEdit '" [objectName $obj] \
+        "' text changed: " [toString [property get $lineEdit text]]]
+}
+
+proc main {} {
+    invoke startApplication "myapp"
+    set lineEdit [waitForObject ":Description:_QLineEdit"]
+    installEventHandler $lineEdit "QKeyEvent" "handleDescriptionLineEdit"
+    # ...
+}
+</pre></div><p>
+The object passed as <code class="code">obj</code> is just a generic <span class="emphasis"><em>Squish</em></span> object;
+we must cast it to an object of the correct type using the <a class="xref" href="rgs-squish.html#cast-function"><code class="function">cast</code></a> function, to be able to access the object's
+methods and properties.
+</p></div></div><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" type="text/javascript" src="ScriptingLanguage.js"></script><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format">setScriptingLanguage();</script><div class="navfooter"><hr></hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="ugs-teststatements.html">Prev</a> </td><td width="20%" align="center"><a accesskey="u" href="users-guide.html">Up</a></td><td width="40%" align="right"> <a accesskey="n" href="ugs-synchpoints.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">5.9. How to Use Test Statements </td><td width="20%" align="center"><a accesskey="h" href="index-noframes.html">Home</a></td><td width="40%" align="right" valign="top"> 5.11. How to Create and Use Synchronization Points</td></tr></table></div></body>
+<!-- Mirrored from ugs-eventhandlers.html by HTTrack Website Copier/3.x [XR&CO'2013], Wed, 06 Jul 2022 13:28:59 GMT -->
+</html>

@@ -1,0 +1,97 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<!-- Mirrored from rel-342.html by HTTrack Website Copier/3.x [XR&CO'2013], Wed, 06 Jul 2022 13:28:57 GMT -->
+<head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><title>2.59. Version 3.4.2</title><link rel="stylesheet" href="manual.css" type="text/css"></link><meta name="generator" content="DocBook XSL Stylesheets V1.73.2"></meta><link rel="start" href="index-noframes.html" title="Squish Manual"></link><link rel="up" href="relnotes.html" title="Chapter 2. Release Notes—for Upgraders"></link><link rel="prev" href="rel-343.html" title="2.58. Version 3.4.3"></link><link rel="next" href="rel-341.html" title="2.60. Version 3.4.1"></link><style xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" type="text/css" media="screen">
+        div.toc * { margin-left: 6px; margin-right: auto; max-width: 75em; }
+        div.toc span { margin-left: 0px; }
+        * { margin-left: auto; margin-right: auto; max-width: 75em; }
+        body { margin-left: 6px; margin-right: 6px; }
+        table th { padding: .5ex }
+        table td { padding: .5ex }
+    </style><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format">
+        function keyPress() {
+            var e = window.event;
+            if ( e == undefined ) {
+                return;
+            }
+            /* ### does not properly scroll, yet
+            if ( e.keyCode == 32 ) {
+            var l = document.links;
+            for ( var i = 0; i < l.length; i++ ) {
+                if ( l[i].innerText == "Next" ) {
+                location.href = l[i].href;
+                }
+            }
+            } else
+                */
+                if ( e.keyCode == 0x08 ) {
+            var l = document.links;
+            for ( var i = 0; i < l.length; i++ ) {
+                if ( l[i].innerText == "Prev" ) {
+                location.href = l[i].href;
+                }
+            }
+            }
+        }
+        document.onkeypress = keyPress;
+    </script></head><body><div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="rel-342"></a>2.59. Version 3.4.2</h2></div></div></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><span class="section"><a href="rel-342.html#general.2">2.59.1. General</a></span></dt><dt><span class="section"><a href="rel-342.html#qt-specific.2">2.59.2. Qt-specific</a></span></dt><dt><span class="section"><a href="rel-342.html#java-specific.2">2.59.3. Java-specific</a></span></dt><dt><span class="section"><a href="rel-342.html#web-specific.2">2.59.4. Web-specific</a></span></dt><dt><span class="section"><a href="rel-342.html#tk-specific.2">2.59.5. Tk-specific</a></span></dt></dl></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="general.2"></a>2.59.1. General</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Fixed the variable watcher so that it shows the correct
+value for remote objects while stepping through a test
+script.</p></li><li><p>Fixed the recording of waitForApplicationLaunch() calls
+in some situations where multiple AUTs are used.</p></li><li><p>Made screenshot verifications work reliably in
+distributed tests.</p></li><li><p>Set the name property of the application context objects
+that belong to the subprocesses Squish has hooked
+into.</p></li><li><p>Fixed the recording of setApplicationContext() calls for
+Perl scripts.</p></li><li><p>Highlight the if, else and elsif keywords in Perl
+scripts.</p></li><li><p>Respect spaces in the suite.conf file's OBJECTMAP
+entry.</p></li><li><p>Fixed drag and drop replay on Mac OS
+X.</p></li><li><p>Empty entries like ";;" are no longer added
+to the AUT environment's PATH.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="qt-specific.2"></a>2.59.2. Qt-specific</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Ensured that a drag &amp; drop operation's source object
+is always correctly recorded.</p></li><li><p>Fixed the replaying of activateItem()
+statements on items which have backslashes or underscore characters in
+their text.</p></li><li><p>Qt 3 on Mac OS X 10.5: fixed a crash of the AUT on
+application exit.</p></li><li><p>Added a workaround for a Qt 4 bug that causes problems
+with clickItem() on Q3ScrollView when scrolling
+is needed to reach the item.</p></li><li><p>Made event handlers reliable when they are
+triggered multiple times by the same event.</p></li><li><p>Support compiling against custom Qt 4 installations
+that have QToolTip, QCursor, QTableView, QTableWidget, QMenu,
+QContextMenu, and QTabBar disabled.</p></li><li><p>Don't require otool to be installed on Mac OS X if you
+are testing a Qt application.</p></li><li><p>Made the spinUp() and spinDown() functions
+style-independent for Qt 4. Also made recording less time-sensitive,
+i.e., accept clicks that take a bit longer.</p></li><li><p>Prevented a crash when non-button objects are passed to
+the clickButton() function.</p></li><li><p>Wrapped the new Qt 4.4 QPlainTextEdit
+class</p></li><li><p>Fixed support for Q3ComboBox, both standalone and inside a
+Q3Table.</p></li><li><p>Show the text of QStrings in the variable watcher for
+Qt 4.x and Qt 3.0.x applications.</p></li><li><p>Fixed the replay of tests when using a statically linked
+Qt on Linux.</p></li><li><p>Respect the copy action for drag and drop
+operations.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="java-specific.2"></a>2.59.3. Java-specific</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Fixed the playback of special keys on
+JTextField.</p></li><li><p>Swing's JTabbedPane now also supports clickTab() with
+the extra x, y, key-state, and button arguments. This script function gets
+recorded when the tab is clicked with a key modifier pressed and/or
+any other button than the left mouse button.</p></li><li><p>Fixed screenshot verification points on Mac OS
+X.</p></li><li><p>Made the logScreenshotOnFail work on Mac OS
+X.</p></li><li><p>Added support to the extension API for RCP based
+applications. This requires JDK-1.5 or higher.</p></li><li><p>Fixed tree item selections for items that have
+non-string user objects.</p></li><li><p>Fixed JVM crash when querying the field or method list
+throws an exception.</p></li><li><p>Added support for recording the result of the
+ColorDialog (just like with the File and Directory dialogs). The script
+function is chooseColor().</p></li><li><p>Fixed the java.awt's Choice and List not sending an
+ItemEvent on selection change.</p></li><li><p>Added a mouseClick(obj, x, y, clicks, state, button)
+overload for AWT/Swing.</p></li><li><p>Fixed some corner-cases in the improved error reporting
+when object names were using a path instead of a
+description.</p></li><li><p>Fixed binding to SWT objects that are handled via the
+extension API: Inspectable.isObjectReady() was never called,
+Inspectable.mapFromGlobal() result was handled as canvas coordinates,
+better defaults for InspectableAdapter.map{To,From}Global, using the
+Inspectable.getGlobalBounds, JavaExtensionDir didn't handle factory
+classes with a package prefix.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="web-specific.2"></a>2.59.4. Web-specific</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Fixed the execution of the automateLogin() and
+isBrowserDialogOpen() functions when running Web tests with Firefox
+3.</p></li><li><p>Fixed a lot of potential crashes when invoking
+functions like grabWidget(), mouseClick(), clickItem(), and others, with
+null object arguments.</p></li><li><p>Fixed the 'Record Script and Insert Here' feature so
+that it works properly with Web test suites.</p></li><li><p>Fixed error findObject()'s error reporting for
+object names that don't use multiple properties.</p></li><li><p>Fixed replay of listbox selections for GWT by sending a
+real change event.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="tk-specific.2"></a>2.59.5. Tk-specific</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Fixed the emission of the "application started" event
+which is needed for script recording when there are multiple
+AUTs.</p></li></ul></div></div></div><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" type="text/javascript" src="ScriptingLanguage.js"></script><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format">setScriptingLanguage();</script><div class="navfooter"><hr></hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="rel-343.html">Prev</a> </td><td width="20%" align="center"><a accesskey="u" href="relnotes.html">Up</a></td><td width="40%" align="right"> <a accesskey="n" href="rel-341.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">2.58. Version 3.4.3 </td><td width="20%" align="center"><a accesskey="h" href="index-noframes.html">Home</a></td><td width="40%" align="right" valign="top"> 2.60. Version 3.4.1</td></tr></table></div></body>
+<!-- Mirrored from rel-342.html by HTTrack Website Copier/3.x [XR&CO'2013], Wed, 06 Jul 2022 13:28:57 GMT -->
+</html>

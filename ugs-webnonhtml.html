@@ -1,0 +1,278 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<!-- Mirrored from ugs-webnonhtml.html by HTTrack Website Copier/3.x [XR&CO'2013], Wed, 06 Jul 2022 13:28:59 GMT -->
+<head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><title>5.13. How to Automate Native Browser Dialogs, ActiveX, and more</title><link rel="stylesheet" href="manual.css" type="text/css"></link><meta name="generator" content="DocBook XSL Stylesheets V1.73.2"></meta><link rel="start" href="index-noframes.html" title="Squish Manual"></link><link rel="up" href="users-guide.html" title="Chapter 5. User Guide"></link><link rel="prev" href="ugs-appcontext.html" title="5.12. How to Test Multiple AUTs from a Single Test Script, Using ApplicationContext"></link><link rel="next" href="ugs-semiautomatic.html" title="5.14. How to Create Semi-Automatic Tests that Query for User Input"></link><style xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" type="text/css" media="screen">
+        div.toc * { margin-left: 6px; margin-right: auto; max-width: 75em; }
+        div.toc span { margin-left: 0px; }
+        * { margin-left: auto; margin-right: auto; max-width: 75em; }
+        body { margin-left: 6px; margin-right: 6px; }
+        table th { padding: .5ex }
+        table td { padding: .5ex }
+    </style><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format">
+        function keyPress() {
+            var e = window.event;
+            if ( e == undefined ) {
+                return;
+            }
+            /* ### does not properly scroll, yet
+            if ( e.keyCode == 32 ) {
+            var l = document.links;
+            for ( var i = 0; i < l.length; i++ ) {
+                if ( l[i].innerText == "Next" ) {
+                location.href = l[i].href;
+                }
+            }
+            } else
+                */
+                if ( e.keyCode == 0x08 ) {
+            var l = document.links;
+            for ( var i = 0; i < l.length; i++ ) {
+                if ( l[i].innerText == "Prev" ) {
+                location.href = l[i].href;
+                }
+            }
+            }
+        }
+        document.onkeypress = keyPress;
+    </script></head><body><div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="ugs-webnonhtml"></a>5.13. How to Automate Native Browser Dialogs, ActiveX, and more</h2></div></div></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><span class="section"><a href="ugs-webnonhtml.html#automating-native-browser-dialogs-login-certificates-etc">5.13.1. Automating native browser dialogs (login, certificates, etc.)</a></span></dt><dt><span class="section"><a href="ugs-webnonhtml.html#active-x">5.13.2. ActiveX</a></span></dt></dl></div><p>
+<span class="emphasis"><em>Squish</em></span> is primarily designed to support the automation of operations
+on web pages' DOM, DHTML, and HTML elements. But to completely test a
+web application, it is often necessary to automate operations on other
+kinds of component, and also on dialogs—this section shows the
+techniques used to perform such testing.
+</p><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="automating-native-browser-dialogs-login-certificates-etc"></a>5.13.1. Automating native browser dialogs (login, certificates, etc.)</h3></div></div></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><span class="section"><a href="ugs-webnonhtml.html#automating-a-native-login">5.13.1.1. Automating a native login</a></span></dt><dt><span class="section"><a href="ugs-webnonhtml.html#automating-accepting-certificates">5.13.1.2. Automating accepting certificates </a></span></dt></dl></div><p>
+Many web applications require a login using the browser's native
+authentication dialog, or the acceptance of certificates as part of
+the startup process. <span class="emphasis"><em>Squish</em></span> makes it is possible to automate logins
+and the acceptance of certificates as described below.
+</p><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="automating-a-native-login"></a>5.13.1.1. Automating a native login</h4></div></div></div><p>
+<span class="emphasis"><em>Squish</em></span> provides a function, <a class="xref" href="rgs-webconvenience.html#web-automateLogin-function"><code class="function">automateLogin</code></a>,
+that you can call from your test
+scripts to automate a login with the browser's native authentication
+dialog. The key to using it is to start the login process (typically by
+clicking a button or link), then wait for the login dialog to appear,
+and then enter the username and password. Here's an example snippet that
+shows how it might be done:
+</p><div xmlns="" class="scriptlang"><form><select name="scriptlangcombo" onchange="javascript:changeScriptingLanguage(this)" onclick="javascript:changeScriptingLanguage(this)"><option value="all" selected>Show All</option><option value="JavaScript">Show JavaScript</option><option value="Perl">Show Perl</option><option value="Python">Show Python</option><option value="Ruby">Show Ruby</option><option value="Tcl">Show Tcl</option></select></form></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Python</span><pre class="programlisting">
+clickLink(":Login_A")
+waitFor("isBrowserDialogOpen()")
+automateLogin(tester_username, tester_password)
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">JavaScript</span><pre class="programlisting">
+clickLink(":Login_A");
+waitFor("isBrowserDialogOpen()");
+automateLogin(tester_username, tester_password);
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Perl</span><pre class="programlisting">
+clickLink(":Login_A");
+waitFor("isBrowserDialogOpen()");
+automateLogin($tester_username, $tester_password);
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Ruby</span><pre class="programlisting">
+clickLink(":Login_A")
+waitFor("isBrowserDialogOpen()")
+automateLogin(tester_username, tester_password)
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Tcl</span><pre class="programlisting">
+invoke clickLink ":Login_A"
+invoke waitFor {invoke isBrowserDialogOpen}
+invoke automateLogin $tester_username $tester_password
+</pre></div><p>
+The snippet assumes that <code class="code">tester_username</code> and
+<code class="code">tester_password</code> are variables that hold the tester's
+username and password.
+</p><p>
+In some cases there is no such Login button or link, instead the login dialog
+is opened up automatically while the website starts to load. This use case
+needs a slightly different approach when this website is being loaded with the
+<a class="xref" href="rgs-webconvenience.html#web-startBrowser-function"><code class="function">startBrowser</code></a> function.
+</p><p>
+<span class="emphasis"><em>Squish</em></span> ensures the website given to the <code class="function">startBrowser</code>
+function is loaded before returning from it to the test script. While the
+browser shows the login dialog the loading of the website will be paused and not
+proceed until the dialog has received the proper login data. This is a problem since the
+automation of the login can only happen once the
+<code class="function">startBrowser</code> function has finished and the following
+<code class="function">automateLogin</code> invocation is being executed. So the
+test will eventually hang until <code class="function">startBrowser</code> runs into its
+timeout and generates an error.
+</p><p>
+In order to make this use case work, it is necessary to load an
+unprotected website first such that <code class="function">startBrowser</code> can
+finish successfully. Once <code class="function">startBrowser</code> is done you can
+set the <span class="property">url</span> property of
+<code class="function">activeBrowserTab</code> directly to load
+a different website. Setting the property returns
+immediately before the page is fully loaded even if the
+website opens the login dialog. The following snippet shows a small example
+code that handles this scenario:
+</p><div xmlns="" class="scriptlang"><form><select name="scriptlangcombo" onchange="javascript:changeScriptingLanguage(this)" onclick="javascript:changeScriptingLanguage(this)"><option value="all" selected>Show All</option><option value="JavaScript">Show JavaScript</option><option value="Perl">Show Perl</option><option value="Python">Show Python</option><option value="Ruby">Show Ruby</option><option value="Tcl">Show Tcl</option></select></form></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">JavaScript</span><pre class="programlisting">
+startBrowser("https://www.froglogic.com");
+activeBrowserTab().url = "http://secureweb.site";
+waitFor("isBrowserDialogOpen()");
+automateLogin(tester_username, tester_password);
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Python</span><pre class="programlisting">
+startBrowser("https://www.froglogic.com")
+activeBrowserTab().url = "http://secureweb.site"
+waitFor("isBrowserDialogOpen()")
+automateLogin(tester_username, tester_password)
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Perl</span><pre class="programlisting">
+startBrowser("https://www.froglogic.com");
+activeBrowserTab()-&gt;url("http://secureweb.site");
+waitFor("isBrowserDialogOpen()");
+automateLogin($tester_username, $tester_password);
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Ruby</span><pre class="programlisting">
+startBrowser("https://www.froglogic.com")
+activeBrowserTab().url = "http://secureweb.site"
+waitFor(isBrowserDialogOpen)
+automateLogin(tester_username, tester_password)
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Tcl</span><pre class="programlisting">
+invoke startBrowser "https://www.froglogic.com"
+property set [invoke activeBrowserTab] url "http://secureweb.site"
+invoke waitFor {invoke isBrowserDialogOpen}
+invoke automateLogin $tester_username $tester_password
+</pre></div><p>
+<span class="emphasis"><em>Squish</em></span>'s <a class="xref" href="rgs-webconvenience.html#web-automateLogin-function"><code class="function">automateLogin</code></a> function automates
+the native browser authentication dialog for any of <span class="emphasis"><em>Squish</em></span>'s supported
+browsers, so you don't have to make any allowances for browser
+differences yourself.
+</p><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Note: macOS-specific"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/note.png"></img></td><th align="left"><a id="macosx.universal.access.required"></a>macOS-specific</th></tr><tr><td align="left" valign="top"><p>
+On macOS you must turn on Universal Access in the System Preferences
+when you use the
+<a class="xref" href="rgs-webconvenience.html#web-automateLogin-function"><code class="function">automateLogin</code></a> function.
+</p></td></tr></table></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="automating-accepting-certificates"></a>5.13.1.2. Automating accepting certificates </h4></div></div></div><p>
+Automating the acceptance of a certificate depends on which web browser
+is used. This section explains what needs to be done for each of
+<span class="emphasis"><em>Squish</em></span>'s supported web browsers to automate this process.
+</p><div class="section" lang="en"><div class="titlepage"><div><div><h5 class="title"><a id="internet-explorer-6-and-later"></a>5.13.1.2.1. Internet Explorer 8 and later</h5></div></div></div><p>
+The only step necessary to automate accepting a certificate when running
+a test in Internet Explorer is to accept it once, permanently. This must
+be done manually. After this, <span class="emphasis"><em>Squish</em></span> will tell Internet Explorer to
+use the accepted certificate on each test run, and no further manual
+intervention is required.
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h5 class="title"><a id="mozilla-firefox"></a>5.13.1.2.2. Mozilla Firefox</h5></div></div></div><p>
+To accept a certificate in Firefox, you must add some code to your
+script that will automate the browser dialogs for accepting the
+certificate. In addition it is necessary to work around an issue in
+Firefox would make the test case hang. To do this, first a temporary
+site must be loaded, and then the real site can be loaded.
+</p><p>
+Here is an example that shows how to automate connecting to an HTTPS
+site and accepting the certificate.
+</p><div xmlns="" class="scriptlang"><form><select name="scriptlangcombo" onchange="javascript:changeScriptingLanguage(this)" onclick="javascript:changeScriptingLanguage(this)"><option value="all" selected>Show All</option><option value="JavaScript">Show JavaScript</option><option value="Perl">Show Perl</option><option value="Python">Show Python</option><option value="Ruby">Show Ruby</option><option value="Tcl">Show Tcl</option></select></form></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Python</span><pre class="programlisting">
+# Workaround: Load a temporary page first
+startBrowser("https://www.froglogic.com")
+# Now load the real page
+activeBrowserTab().url = "https://the.real.site.you.want.to.load"
+if Browser.type() == Browser.Firefox:
+    # Accept the certificate
+    waitFor("isBrowserDialogOpen()")
+    nativeType("&lt;Return&gt;")
+    snooze(1)
+    # Accept the second certificate dialog
+    nativeType("&lt;Left&gt;")
+    nativeType("&lt;Return&gt;")
+    waitFor("not isBrowserDialogOpen()")
+    rehook()
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">JavaScript</span><pre class="programlisting">
+// Workaround: Load a temporary page first
+startBrowser("https://www.froglogic.com");
+// Now load the real page
+activeBrowserTab().url = "https://the.real.site.you.want.to.load";
+if (Browser.type() == Browser.Firefox) {
+    // Accept the certificate
+    waitFor("isBrowserDialogOpen()");
+    nativeType("&lt;Return&gt;");
+    snooze(1);
+    // Accept the second certificate dialog
+    nativeType("&lt;Left&gt;");
+    nativeType("&lt;Return&gt;");
+    waitFor("!isBrowserDialogOpen()");
+    rehook();
+}
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Perl</span><pre class="programlisting">
+# Workaround: Load a temporary page first
+startBrowser("https://www.froglogic.com");
+# Now load the real page
+activeBrowserTab()-&gt;url("https://the.real.site.you.want.to.load");
+if (Browser.type() == Browser.Firefox) {
+    # Accept the certificate
+    waitFor("isBrowserDialogOpen()");
+    nativeType("&lt;Return&gt;");
+    snooze(1);
+    # Accept the second certificate dialog
+    nativeType("&lt;Left&gt;");
+    nativeType("&lt;Return&gt;");
+    waitFor("!isBrowserDialogOpen()");
+    rehook();
+}
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Ruby</span><pre class="programlisting">
+# Workaround: Load a temporary page first
+startBrowser("https://www.froglogic.com")
+# Now load the real page
+activeBrowserTab().url = "https://the.real.site.you.want.to.load"
+if Browser.type() == Browser.Firefox
+    # Accept the certificate
+    waitFor("isBrowserDialogOpen()")
+    nativeType("&lt;Return&gt;")
+    snooze(1)
+    # Accept the second certificate dialog
+    nativeType("&lt;Left&gt;")
+    nativeType("&lt;Return&gt;")
+    waitFor("!isBrowserDialogOpen()")
+    rehook()
+end
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Tcl</span><pre class="programlisting">
+# Workaround: Load a temporary page first
+invoke startBrowser "https://www.froglogic.com"
+# Now load the real page
+property set [invoke activeBrowserTab] url "https://the.real.site.you.want.to.load"
+if {[[invoke Browser type] == Browser.Firefox]} {
+    # Accept the certificate
+    waitFor {isBrowserDialogOpen}
+    invoke nativeType "&lt;Return&gt;"
+    snooze 1
+    # Accept the second certificate dialog
+    invoke nativeType "&lt;Left&gt;"
+    invoke nativeType "&lt;Return&gt;"
+    waitFor {expr ! [isBrowserDialogOpen]}
+    rehook
+}
+</pre></div><p>
+Loading the temporary page is just an unfortunate—but hardly
+noticeable—necessity. Once the page has loaded, Firefox uses two
+dialogs to complete the acceptance of a certificate, so we must
+interact with both of them to complete the acceptance. We use the <a class="xref" href="rgs-squish.html#nativeType-function"><code class="function">nativeType</code></a> function to simulate the keyboard
+interaction, where normally we'd use the <a class="xref" href="rgs-qtconvenience.html#qt-type-function"><code class="function">type</code></a> function. Also, after interacting with the
+dialogs we must call the <a class="xref" href="rgs-webconvenience.html#web-rehook-function"><code class="function">rehook</code></a> function to
+make <span class="emphasis"><em>Squish</em></span> do some reloading and reinitialization to account for the
+fact that the certificate has now been accepted and that as a result,
+the web page is in a different state.
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h5 class="title"><a id="certificate-accepting-chrome"></a>5.13.1.2.3. Google Chrome</h5></div></div></div><p>
+There is no configuraton or test script code needed with Google Chrome.
+<span class="emphasis"><em>Squish</em></span> starts Chrome such that it will allow access to websites using any kind
+of ssl-certificate, such that no acceptance has to be done.
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h5 class="title"><a id="safari"></a>5.13.1.2.4. Safari</h5></div></div></div><p>
+The only step necessary to automate accepting a certificate when running
+a test in Safari is to accept it once, permanently. This must be done
+manually: First, open the page with the certificate in Safari, then
+choose to view the details of the certificate in the sheet that pops up,
+then check the checkbox that tells Safari to always trust the
+certificate on reconnects. After this, <span class="emphasis"><em>Squish</em></span> will tell Safari to use
+the accepted certificate on each test run, and no further manual
+intervention is required.
+</p></div></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="active-x"></a>5.13.2. ActiveX</h3></div></div></div><p>
+<span class="emphasis"><em>Squish</em></span> supports automating interactions and testing non-HTML/DOM
+elements, that is, native objects, which are embedded in a web page.
+This is done at a fairly abstract level, which means that mouse and text
+input can be recorded and replayed. In addition it is possible to
+inspect embedded native objects with the <span class="application">Spy</span> tool and to insert
+verifications for these native objects. All of a native
+object's public properties can be accessed in test scripts.
+</p><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Note: Windows and
+Internet Explorer-specific: ActiveX"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/note.png"></img></td><th align="left"><a id="windows.and.internet.explorer.activex"></a>Windows and
+Internet Explorer-specific: ActiveX</th></tr><tr><td align="left" valign="top"><p>
+ActiveX is a Windows-specific technology, so there is no support for it
+on other platforms. <span class="emphasis"><em>Squish</em></span>'s Qt edition supports ActiveX, and so does
+<span class="emphasis"><em>Squish</em></span>'s Web edition —but in the latter case, only in Internet
+Explorer.
+</p></td></tr></table></div></div></div><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" type="text/javascript" src="ScriptingLanguage.js"></script><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format">setScriptingLanguage();</script><div class="navfooter"><hr></hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="ugs-appcontext.html">Prev</a> </td><td width="20%" align="center"><a accesskey="u" href="users-guide.html">Up</a></td><td width="40%" align="right"> <a accesskey="n" href="ugs-semiautomatic.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">5.12. How to Test Multiple AUTs from a Single Test Script, Using
+ApplicationContext </td><td width="20%" align="center"><a accesskey="h" href="index-noframes.html">Home</a></td><td width="40%" align="right" valign="top"> 5.14. How to Create Semi-Automatic Tests that Query for User Input</td></tr></table></div></body>
+<!-- Mirrored from ugs-webnonhtml.html by HTTrack Website Copier/3.x [XR&CO'2013], Wed, 06 Jul 2022 13:28:59 GMT -->
+</html>

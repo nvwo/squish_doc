@@ -1,0 +1,314 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<!-- Mirrored from rel-630.html by HTTrack Website Copier/3.x [XR&CO'2013], Wed, 06 Jul 2022 13:28:55 GMT -->
+<head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><title>2.19. Version 6.3</title><link rel="stylesheet" href="manual.css" type="text/css"></link><meta name="generator" content="DocBook XSL Stylesheets V1.73.2"></meta><link rel="start" href="index-noframes.html" title="Squish Manual"></link><link rel="up" href="relnotes.html" title="Chapter 2. Release Notes—for Upgraders"></link><link rel="prev" href="rel-631.html" title="2.18. Version 6.3.1"></link><link rel="next" href="rel-630beta.html" title="2.20. Version 6.3 Beta"></link><style xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" type="text/css" media="screen">
+        div.toc * { margin-left: 6px; margin-right: auto; max-width: 75em; }
+        div.toc span { margin-left: 0px; }
+        * { margin-left: auto; margin-right: auto; max-width: 75em; }
+        body { margin-left: 6px; margin-right: 6px; }
+        table th { padding: .5ex }
+        table td { padding: .5ex }
+    </style><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format">
+        function keyPress() {
+            var e = window.event;
+            if ( e == undefined ) {
+                return;
+            }
+            /* ### does not properly scroll, yet
+            if ( e.keyCode == 32 ) {
+            var l = document.links;
+            for ( var i = 0; i < l.length; i++ ) {
+                if ( l[i].innerText == "Next" ) {
+                location.href = l[i].href;
+                }
+            }
+            } else
+                */
+                if ( e.keyCode == 0x08 ) {
+            var l = document.links;
+            for ( var i = 0; i < l.length; i++ ) {
+                if ( l[i].innerText == "Prev" ) {
+                location.href = l[i].href;
+                }
+            }
+            }
+        }
+        document.onkeypress = keyPress;
+    </script></head><body><div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="rel-630"></a>2.19. Version 6.3</h2></div></div></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><span class="section"><a href="rel-630.html#rel-630ff-image-search">2.19.1. Image Search</a></span></dt><dt><span class="section"><a href="rel-630.html#rel-630ff-comparisons">2.19.2. Comparison of Text and XML Files</a></span></dt><dt><span class="section"><a href="rel-630.html#rel-630-general">2.19.3. General</a></span></dt><dt><span class="section"><a href="rel-630.html#rel-630-ide">2.19.4. Squish IDE-specific</a></span></dt><dt><span class="section"><a href="rel-630.html#rel-630-scripting">2.19.5. Scripting</a></span></dt><dt><span class="section"><a href="rel-630.html#rel-630-bdd">2.19.6. Behavior Driven Testing</a></span></dt><dt><span class="section"><a href="rel-630.html#rel-630-qt">2.19.7. Qt-specific</a></span></dt><dt><span class="section"><a href="rel-630.html#rel-630-java">2.19.8. <span class="trademark">Java</span>™-specific</a></span></dt><dt><span class="section"><a href="rel-630.html#rel-630-web">2.19.9. Web-specific</a></span></dt><dt><span class="section"><a href="rel-630.html#rel-630-windows">2.19.10. Windows (native)-specific</a></span></dt><dt><span class="section"><a href="rel-630.html#rel-630-mac">2.19.11. macOS-specific (Cocoa/Carbon edition)</a></span></dt><dt><span class="section"><a href="rel-630.html#rel-630-ios">2.19.12. iOS-specific (iPhone/iPad edition)</a></span></dt><dt><span class="section"><a href="rel-630.html#rel-630-android">2.19.13. Android-specific</a></span></dt><dt><span class="section"><a href="rel-630.html#rel-630-source">2.19.14. Source Packages</a></span></dt><dt><span class="section"><a href="rel-630.html#idp35079168">2.19.15. Documentation</a></span></dt><dt><span class="section"><a href="rel-630.html#idp35082624">2.19.16. Known Issues</a></span></dt></dl></div><p><span class="emphasis"><em>Squish</em></span> 6.3 is a feature release which delivers new features to all
+  editions of the product.</p><p>Furthermore, a lot of features and bug fixes were applied to individual
+  Squish editions since Squish 6.2; see the following sections for a detailed
+  list of all changes.</p><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="rel-630ff-image-search"></a>2.19.1. Image Search</h3></div></div></div><p>As a supplement to the main property-based object identification,
+  elements can be located on the screen based on their visual appearance. This
+  enables interactions with custom elements, controls from unknown
+  toolkits, and controls from outside of the main application.
+  </p><p>The <span class="application">Squish IDE</span> now features the insertion of user interactions
+  like <code class="code">mouseClick()</code> and <code class="code">tapObject()</code> based on
+  images. The search is performed through a newly added
+  <a class="xref" href="rgs-squish.html#waitForImage-function"><code class="function">waitForImage</code></a> function. The algorithm
+  employed is still quite simple, but future versions will provide more
+  sophisticated look-up options that can deal with color and resolution
+  differences. See <a class="xref" href="ug-imagebasedtesting.html" title="5.24. How to Do Image-Based Testing">How to Do Image-Based Testing (Section 5.24)</a> for an
+  example automating a chess application.</p><p>Once the extension leaves its beta state it will require an
+  additional license. At that point a time-limited free upgrade option
+  will be available for all existing customers.</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="rel-630ff-comparisons"></a>2.19.2. Comparison of Text and XML Files</h3></div></div></div><p>The new functions <a class="xref" href="rgs-squish.html#test.compareTextFiles-function"><code class="function">test.compareTextFiles</code></a>
+    and <a class="xref" href="rgs-squish.html#test.compareXMLFiles-function"><code class="function">test.compareXMLFiles</code></a> compare the content of
+    two text and XML files, respectively. Instead of performing a plain,
+    byte-by-byte comparison, possible differences are reported for individual
+    lines and elements. Several configuration options exist to allow for
+    acceptable differences in content and formatting.</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="rel-630-general"></a>2.19.3. General</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Significantly improved stability and resource usage of
+      <span class="application">squishserver</span>.</p></li><li><p>Fixed attaching to <acronym class="acronym">AUT</acronym>s from
+      <span class="application">squishserver</span> running on Solaris.</p></li><li><p>Fixed an issue due to which executing tests using
+      verification point files would not generate valid <acronym class="acronym">XML</acronym>
+      version 3.0 or 3.1 report files.</p></li><li><p>Fixed <span class="application">gem</span> utility
+      shipped with Ruby interpreter of Windows and macOS packages such that
+      it's possible to install additional Ruby gems.</p></li><li><p>Fixed an issue causing object lookups to fail in case a
+      property value contains the substring <code class="literal">}.</code></p></li><li><p>Improved detection of invalid command line arguments for
+      <span class="application">squishrunner</span> and <span class="application">squishserver</span>.</p></li><li><p>The <code class="option">--retry</code> parameter for <span class="application">squishrunner</span>
+      now works as intended for <acronym class="acronym">BDD</acronym>
+      scenarios.</p></li><li><p>New report generator versions: <code class="literal">xml3.2</code>
+      and <code class="literal">json1.2</code>. They include the retry count for a
+      retried test case resp. scenario.</p></li><li><p>The <a class="xref" href="rg-cmdline.html#rgc-xml2jira" title="7.4.11. xml2jira"><span class="application">xml2jira</span> (Section 7.4.11)</a> utility now allows creating
+      and updating JIRA tickets which ask for user-defined <code class="literal">CustomFields</code>
+      to be set.</p></li><li><p>The <a class="xref" href="rg-cmdline.html#rgc-xml2jira" title="7.4.11. xml2jira"><span class="application">xml2jira</span> (Section 7.4.11)</a> utility now supports
+      handling tickets in user-defined workflows involving custom ticket states
+      and custom ticket state transitions.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="rel-630-ide"></a>2.19.4. Squish IDE-specific</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Python Interpreter for PyDev is always automatically
+      configured based on the <code class="code">PythonHome</code> entry from the <span class="emphasis"><em>Squish</em></span>
+      installations <code class="filename">SQUISH_DIR/etc/paths.ini</code>
+      file.</p></li><li><p>Fixed a problem sometimes causing an error dialog to be
+      shown while looking at tooltips in the feature editor.</p></li><li><p>Enforce the <span class="guilabel">Test Suites</span> view to be
+      opened when the <span class="application">Squish IDE</span> starts as it is crucial for using the
+      <span class="guilabel">Management Perspective</span>.</p></li><li><p>Fixed a problem with activating the
+      <span class="guilabel">Scenarios</span> tab in the <span class="guilabel">Test
+      Suites</span> view when opening a test suite where the first test
+      case is a <acronym class="acronym">BDD</acronym> test.</p></li><li><p>Added option to disable generation of warnings for
+      missing step implementations in <acronym class="acronym">BDD</acronym> tests. See
+      Edit &gt; Preferences &gt; Squish &gt; BDD Support.</p></li><li><p>Support stepping out of a function to the caller (also
+      known as 'Step Return').</p></li><li><p>Fixed a problem in the context menu of the test data
+      editor causing all items there to be disabled.</p></li><li><p>Improved feature file editor performance when working
+      with test suites that contain many feature files and
+      scenarios.</p></li><li><p>Fixed a bug in the <span class="application">Squish IDE</span>'s test description editor
+      causing it to show the descriptions in a single line instead of multiple
+      ones.</p></li><li><p>When instrumenting Android applications, the <span class="application">Squish IDE</span> now
+      ensures that the <code class="filename">jarsigner</code> executable can be found
+      on the system before proceeding with instrumentation.</p></li><li><p>Support opening multiple testsuites through the
+      commandline invocation of the <span class="application">Squish IDE</span> by specifying the parent directory of
+      the test suites.</p></li><li><p>Improve handling of <a class="xref" href="rgs-squish.html#source-function"><code class="function">source</code></a>
+      and <a class="xref" href="rgs-squish.html#findFile-function"><code class="function">findFile</code></a> in JavaScript tests allowing
+      code-completion and <span class="guilabel">Go To Declaration</span> to work with
+      sourced scripts.</p></li><li><p>Improve auto-completion for <a class="link" href="rgs-squish.html#rgss-toplevelwindow-object" title="6.3.16. ToplevelWindow Object"><code class="code">ToplevelWindow</code></a>,
+      <acronym class="acronym">BDD</acronym> and <a class="link" href="rgs-squish.html#rgss-screen-object" title="6.3.15. Screen Object"><code class="code">Screen</code></a> modules in
+      JavaScript.</p></li><li><p>Save and Restore the selection states in the
+      <span class="guilabel">Test Suites</span> and <span class="guilabel">Global Scripts</span>
+      views between <span class="application">Squish IDE</span> sessions.</p></li><li><p>Support showing testcases, files and folders of the suite
+      in the System Explorer.</p></li><li><p>The <span class="application">Squish IDE</span> window is not deactivated as intended when
+      creating screenshots or visual verification points on macOS. This
+      avoids potential issues with different focus indicators when creating and
+      replaying tests.</p></li><li><p>The image viewer used for viewing image files is now
+      configurable in the <span class="guilabel">Preferences</span> dialog.</p></li><li><p>Screenshots taken for test failures can now be opened
+      using the internal image viewer of the <span class="application">Squish IDE</span>.</p></li><li><p>Fixed an issue causing an error message to be shown when
+      saving an object snapshot in the root directory of a Windows
+      drive.</p></li><li><p>Improved the visual appearance of the <span class="application">Squish IDE</span> when running
+      on Windows 8 and newer.</p></li><li><p>Improved the error message when attempting to open a test
+      data file that is neither in a test case nor in a test suite
+      directory.</p></li><li><p>When viewing the results of visual verification points,
+      the object hierarchy showing matched objects now works as
+      intended.</p></li><li><p>The <span class="guilabel">Run Scenario</span> and
+      <span class="guilabel">Record Scenario</span> in the context menu of the Gherkin
+      editor are now only available if it's actually possible to run resp.
+      record a scenario. They used to be enabled even if a scenario was
+      currently being executed or recorded, and clicking them would then
+      trigger an error.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="rel-630-scripting"></a>2.19.5. Scripting</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Improved performance of Ruby-based <acronym class="acronym">BDD</acronym>
+      tests with a lot of step definitions.</p></li><li><p>Improved stability of <acronym class="acronym">XML</acronym> module for
+      JavaScript tests.</p></li><li><p>Improved stability of Tcl scripts when using the <a class="xref" href="rgs-squish.html#source-function"><code class="function">source</code></a> command to load external Tcl files with
+      syntax errors.</p></li><li><p>The <a class="xref" href="rgs-squish.html#testData.put-function"><code class="function">testData.put</code></a> function now
+      allows copying empty files.</p></li><li><p>Made <a class="xref" href="rgs-squish.html#waitForObjectItem-function"><code class="function">waitForObjectItem</code></a>
+      work correctly when the item text is empty.</p></li><li><p>It is now possible to invoke static member functions on
+      null objects.</p></li><li><p>Using the <a class="xref" href="rgs-squish.html#rgs-remotesystem" title="6.3.20. RemoteSystem Object"><code class="code">RemoteSystem</code> Object (Section 6.3.20)</a> in Ruby test
+      scripts no longer requires issuing an <code class="code">include Squish</code>
+      statement first.</p></li><li><p>Fixed JavaScript <code class="code">Array.sort()</code> for strings
+      with different lengths.</p></li><li><p>Fixed invoking <code class="code">orientation</code> method on Tcl
+      <a class="xref" href="rgs-squish.html#rgss-screen-object" title="6.3.15. Screen Object"><code class="code">Screen</code> Object (Section 6.3.15)</a> when passing a screen index
+      value.</p></li><li><p>Fixed a bug in the <code class="code">squishtest</code> Python module
+      causing the <code class="code">setTestResult()</code> function to create too many
+      report generators; the function now throws an exception when called the
+      second time.</p></li><li><p>macOS only: Using the <code class="code">squishtest</code> Python
+      module no longer requires setting the <code class="envar">DYLD_LIBRARY_PATH</code>
+      environment variable and make it work with the system Python on macOS
+      10.11 and macOS 10.12.</p></li><li><p>Fixed a bug in the <code class="code">squishtest</code> Python module
+      which caused the test report to not get written out completely at the end
+      of a test execution.</p></li><li><p>Removed unneeded <code class="filename">SquishRunner.py</code>
+      convenience module to avoid confusion.</p></li><li><p>Fixed syntax for enum value recording in Perl to also work
+      when <code class="code">use strict;</code> is being used.</p></li><li><p>Fixed breakpoints in external source files in Perl.
+      </p></li><li><p>The default timeout for <code class="code">waitForObject</code> and
+      similar script functions can now be configured via
+      <a class="xref" href="rgs-squish.html#testSettings.waitForObjectTimeout-property">testSettings.waitForObjectTimeout</a>.</p></li><li><p>Improved memory usage of the JavaScript <a class="xref" href="rgs-js.html#xml-object" title="6.16.7. XML Object">XML Object (Section 6.16.7)</a>.</p></li><li><p>The Python <code class="code">import</code> statement now works for test
+      suite resources as an alternative to Squish's own <code class="code">source()</code>
+      function.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="rel-630-bdd"></a>2.19.6. Behavior Driven Testing</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Running a <acronym class="acronym">BDD</acronym> test with a filter,
+      skipped scenarios (and examples of a scenario outline) appear with a
+      <code class="literal">Skipped</code> test result now (in the past, nothing was
+      reported at all).</p></li><li><p>Running a <acronym class="acronym">BDD</acronym> test with a filter and
+      the filter causes no scenarios to be executed at all, the <a class="link" href="api.bdt.functions.html#api.bdt.functions.hooks" title="6.19.10. Performing Actions During Test Execution Via Hooks"><code class="code">OnFeatureStart</code></a> and
+      <a class="link" href="api.bdt.functions.html#api.bdt.functions.hooks" title="6.19.10. Performing Actions During Test Execution Via Hooks"><code class="code">OnFeatureEnd</code></a>
+      hooks are no longer executed.</p></li><li><p>It is now possible to specify textual descriptions for
+      Examples sections of scenario outlines, much like in Feature or Scenario
+      sections.</p></li><li><p>It is now possible to specify more than one Examples
+      section per scenario outline.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="rel-630-qt"></a>2.19.7. Qt-specific</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Added support Qt 5.8.0 and 5.9.0.</p></li><li><p>Added support for QVector2D, QVector3D and QVector4D
+      types.</p></li><li><p>Added support for displaying QPalette properties
+      including sub-properties in the IDE.</p></li><li><p>Fixed a possible crash of Squish for Qt on Android
+      packages using Qt 5.7.</p></li><li><p>Fixed <a class="xref" href="rgs-squish.html#nativeMouseClick-function"><code class="function">nativeMouseClick</code></a> replay
+      with non-primary mouse button.</p></li><li><p>Optimized object lookups based on the
+      <code class="literal">text</code> property</p></li><li><p>Optimized accessing <code class="code">QModelIndex</code> objects in
+      Qt models.</p></li><li><p>Fixed set of 'unmatched properties' reported for failing
+      object lookups when running tests on Windows.</p></li><li><p>Fixed object highlighter for Squish for Qt running on iOS
+      in landscape mode.</p></li><li><p>Fixed crash in keyboard input recording for QtQuick when
+      the mouse was moved at the same time.</p></li><li><p>Fixed object lookup for <code class="code">QObject</code> subclasses
+      that expose a custom property called
+      <code class="literal">name</code>.</p></li><li><p>Fixed object lookup for <code class="code">QObject</code> subclasses
+      where properties mentioned in the <span class="emphasis"><em>Squish</em></span> object name were skipped under
+      certain circumstances, causing unrelated objects to be returned instead.
+      If needed, the old behavior can be restored by changing the
+      <code class="code">QObjectLookupSkipMissingProperties</code> value in the
+      <code class="filename">SQUISH_DIR/etc/qtwrapper.ini</code> configuration file.
+      </p></li><li><p>Added support for desktop screenshots on platforms where
+      screen grabbing fails. As an approximation, the contents of the currently
+      maximized or fullscreen toplevel window will be grabbed if possible.
+      </p></li><li><p>Support for <code class="code">QWebEngineView</code> objects is only
+      loaded into <acronym class="acronym">AUT</acronym> processes that already have the
+      <code class="code">QtWebEngineWidgets</code> module loaded in order to avoid
+      <acronym class="acronym">AUT</acronym> freezes on startup.</p></li><li><p>Fixed a crash when invoking
+      <code class="code">QVariant::toMap()</code> in a test script.</p></li><li><p>Improved dependency footprint on Windows by respecting
+      the <code class="filename">etc\winwrapper.ini</code> configuration file to decide
+      whether to load code related to interacting with <acronym class="acronym">COM</acronym>
+      objects.</p></li><li><p>Added <code class="code">autoRaise</code>, <code class="code">defaultAction</code>
+      and <code class="code">menu</code> as readonly properties to QToolButton.</p></li><li><p>Fixed fetching children from <code class="code">QQuickWidget</code>,
+      also fixing support of <code class="code">QtQuickControls 2.x Popup</code> overlays
+      inside this view type.</p></li><li><p>Added support for testing PyQt applications using Qt 5 on
+      macOS.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="rel-630-java"></a>2.19.8. <span class="trademark">Java</span>™-specific</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Added <a class="xref" href="rgs-javaconvenience.html#java-mouseWheel-function"><code class="function">mouseWheel</code></a>
+      function.</p></li><li><p>Fixed <a class="xref" href="rgs-squish.html#waitForObjectItem-function"><code class="function">waitForObjectItem</code></a> such that it
+      correctly waits for a menu item to be ready.</p></li><li><p>Fixed possible hookup problems in <acronym class="acronym">SWT</acronym>
+      applications when using a modified <acronym class="acronym">SWT</acronym> <code class="filename">.jar</code> file.  </p></li><li><p>Accessing <code class="code">JTable</code> items now correctly scrolls
+      to the item.</p></li><li><p><code class="filename">startjavaaut</code> now waits for the
+      <acronym class="acronym">AUT</acronym> to be up and running before opening its listening
+      port.</p></li><li><p>Fixed a bug which caused hooking into JavaFx WebView
+      controls to only work shortly after a page load.</p></li><li><p>Improved stability of traversing <acronym class="acronym">HTML</acronym>
+      objects contained in a JavaFx WebView control.</p></li><li><p>Added full support for <acronym class="acronym">SWT</acronym> browser
+      controls, enabling dedicated recognition of <acronym class="acronym">HTML</acronym>
+      objects on all platforms and with all browser engines.</p></li><li><p>Added HiDPI support for <acronym class="acronym">SWT </acronym> version
+      4.6.</p></li><li><p>Fixed a potential issue with hooking into Java applications
+      running on macOS.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="rel-630-web"></a>2.19.9. Web-specific</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Added support for testing with
+      the <span class="application">Microsoft Edge</span>
+      browser.</p></li><li><p>Improve error handling when a user starts a testcase for
+      <span class="application">Firefox</span> or <span class="application">Chrome</span> without having the extension
+      installed or having an outdated extension installed. There will now be
+      checks done in the <span class="application">Squish IDE</span> before starting the test and as part of starting
+      the <code class="filename">webhook</code> helper process before starting the
+      browser. If the check fails an error is generated and the browser start
+      is aborted.</p></li><li><p>Improved browser extension installation procedure for
+      <span class="application">Firefox</span> and <span class="application">Chrome</span>. The <span class="application">Squish IDE</span> will trigger
+      this when recording/running a testcase (or launching the browser) and no
+      working extension could be detected. The extension installation is not
+      part of the <span class="emphasis"><em>Squish</em></span> <a class="link" href="ins-commandline-tools-server-ide.html#ins-binary" title="3.1.1. Installing from Binary Packages">installation
+      procedure</a> anymore.</p></li><li><p>Text input in web applications is being recorded into a
+      <a class="xref" href="rgs-webconvenience.html#web-typeText-function"><code class="function">typeText</code></a> command now instead of a <a class="xref" href="rgs-webconvenience.html#web-setText-function"><code class="function">setText</code></a> command.</p></li><li><p>Changed behavior of <a class="xref" href="rgs-webconvenience.html#web-typeText-function"><code class="function">typeText</code></a> to only click into the beginning of the
+      field if the field has no focus, so that subsequent <a class="xref" href="rgs-webconvenience.html#web-typeText-function"><code class="function">typeText</code></a> commands on the same field will append
+      to the field instead of prepending to it.</p></li><li><p>Improved execution speed of the <a class="xref" href="rgs-webconvenience.html#web-typeText-function"><code class="function">typeText</code></a> function by removing a fixed three
+      second delay and instead relying on the focus state of the object to be
+      typed into.</p></li><li><p>Added a <a class="link" href="rgs-webconvenience.html#web-HTML_TextBase.selectAll-function"><code class="code">selectAll</code></a>
+      method to <code class="code">HTML_TextBase</code> objects that selects all the text in
+      the field.</p></li><li><p>Added <a class="xref" href="rgs-webconvenience.html#web-chooseFile-function"><code class="function">chooseFile</code></a> function
+      to interact with file dialogs inside the browser.</p></li><li><p>Fixed set of 'unmatched properties' reported for failing
+      object lookups when running tests on Windows.</p></li><li><p>Support automation of Chromium-based desktop applications
+      (built for example using <acronym class="acronym">CEF</acronym>, Electron,
+       nw.js).</p></li><li><p>Support filtering of the <code class="literal">id</code> property
+      from names generated by Squish for Web. See
+      <code class="code">FilterIdPropertyFromGeneratedNames</code> in
+      <code class="filename">SQUISH_DIR/etc/webwrapper.ini</code> for more
+      information.</p></li><li><p>Make <a class="xref" href="rgs-squish.html#nativeMouseClick-function"><code class="function">nativeMouseClick</code></a> fail
+      when the bounding rectangle of the object to click on has no width or
+      height as this usually indicates that the screen coordinates calculated
+      are wrong as well and would just cause a click in the top-left
+      corner.</p></li><li><p>Make <a class="xref" href="rgs-squish.html#nativeMouseClick-function"><code class="function">nativeMouseClick</code></a> verify
+      that the final coordinates (element position + provided relative click
+      parameters) are within the bounding rectangle of the viewport of the
+      browser and fail with an error if the coordinates are outside. This is
+      another measure by <span class="emphasis"><em>Squish</em></span> to avoid clicking somewhere on the desktop
+      possibly bringing an automation system into an unusable
+      state.</p></li><li><p>The <span class="emphasis"><em>Squish</em></span> extension for <span class="application">Google
+      Chrome</span> is now being installed from the Chrome Store to
+      avoid developer-mode warning popups.</p></li><li><p>Fixed a crash happening sometimes with
+      <span class="application">Chrome</span> when the last tab is being
+      closed.</p></li><li><p>Fixed a crash happening with <span class="application">Microsoft Internet Explorer</span> when the test script
+      closes a tab and immediately starts looking for another browser tab
+      name.</p></li><li><p>Fixed a problem causing <a class="xref" href="rgs-webconvenience.html#web-waitForContextExists-function"><code class="function">waitForContextExists</code></a> to always wait for the
+      timeout (20 seconds by default).</p></li><li><p>Improved error reporting when using the function
+      <a class="xref" href="rgs-squish.html#ToplevelWindow.focused-function"><code class="function">ToplevelWindow.focused</code></a> of the <a class="xref" href="rgs-squish.html#rgss-toplevelwindow-object" title="6.3.16. ToplevelWindow Object"><code class="code">ToplevelWindow</code> Object (Section 6.3.16)</a></p></li><li><p>Fixed a regression that could lead to <span class="emphasis"><em>Squish</em></span> not being
+      able to access any elements in <span class="application">Microsoft Internet Explorer</span> 11 after a link click navigated to a
+      new page.</p></li><li><p>Fixed a crash happening when trying to access the title
+      of a browser tab object in <span class="application">Microsoft Internet Explorer</span> when a <acronym class="acronym">PDF</acronym> is shown
+      via an embedded viewer plugin in that browser tab.</p></li><li><p>Disallow usage of <span class="application">Firefox</span> 57 and newer with <span class="emphasis"><em>Squish</em></span> 6.3
+      as the extension being used by <span class="emphasis"><em>Squish</em></span> is not compatible with <span class="application">Firefox</span>
+      57.</p></li><li><p><a class="xref" href="rgs-webconvenience.html#web-nativeMouseClick-function"><code class="function">nativeMouseClick</code></a> and <a class="xref" href="rgs-webconvenience.html#web-typeText-function"><code class="function">typeText</code></a> will correctly signal an error now when
+      activating the tab corresponding to the <acronym class="acronym">HTML</acronym> object to
+      interact with fails.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="rel-630-windows"></a>2.19.10. Windows (native)-specific</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>A <acronym class="acronym">WPF</acronym> example program called
+      <span class="application">AddressbookWPF</span> is now included, showcasing the
+      support for <acronym class="acronym">WPF</acronym> controls such as
+      <code class="code">DataGrid</code>.</p></li><li><p>Fixed issue causing initial actions performed on .NET
+      applications to not get recorded sometimes.</p></li><li><p>Fixed potential resource leak when replaying tests on
+      .NET applications.</p></li><li><p>Handle vanishing objects more gracefully when replaying
+      tests on .NET applications.</p></li><li><p>Fixed problem causing accesses to the
+      <code class="literal">text</code> property of <acronym class="acronym">MFC</acronym> tree view
+      items to abort test execution in some cases.</p></li><li><p>Made <a class="xref" href="rg-cmdline.html#startwinaut" title="7.4.7.4. startwinaut">startwinaut (Section 7.4.7.4)</a> print status (and
+      error) messages when using the <code class="option">--port</code> switch to simplify
+      diagnosing issues related to attaching to applications.</p></li><li><p>Applications launched via Squish for Windows will no
+      longer show the standard <acronym class="acronym">WER</acronym> (Windows Error Reporting)
+    dialogs to avoid blocking test execution.</p></li><li><p>Script handlers for <code class="literal">Crash</code> events
+      installed using the <a class="xref" href="rgs-windowsconvenienceapi.html#win-installEventHandler-function"><code class="function">installEventHandler</code></a>
+      function will now get invoked as expected.</p></li><li><p>Fixed error message being shown when picking (or
+      recording clicks on) empty Infragistics <code class="code">UltraGrid</code>
+      controls.</p></li><li><p>Exposed new <code class="literal">text</code> property on
+      Infragistics menu items and toolbar buttons for
+      consistency.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="rel-630-mac"></a>2.19.11. macOS-specific (Cocoa/Carbon edition)</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Added support for function keys
+      (<span class="keycap"><strong>F1</strong></span>-<span class="keycap"><strong>F19</strong></span>) for recording and playback of
+      <a class="xref" href="rgs-macconvenience.html#mac-type-function"><code class="function">type</code></a>.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="rel-630-ios"></a>2.19.12. iOS-specific (iPhone/iPad edition)</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Added <a class="xref" href="rgs-iphoneconvenience.html#iphone-tapObject-function"><code class="function">tapObject</code></a>
+      function which is the same as <a class="xref" href="rgs-iphoneconvenience.html#iphone-clickObject-function"><code class="function">clickObject</code></a> and <a class="xref" href="rgs-iphoneconvenience.html#iphone-doubleTap-function"><code class="function">doubleTap</code></a> function which is the same as
+      <a class="xref" href="rgs-iphoneconvenience.html#iphone-doubleClick-function"><code class="function">doubleClick</code></a>. For consistency with
+      other <span class="emphasis"><em>Squish</em></span> editions, the <a class="xref" href="rgs-iphoneconvenience.html#iphone-tapObject-function"><code class="function">tapObject</code></a> function is recorded instead of
+      the <a class="xref" href="rgs-iphoneconvenience.html#iphone-clickObject-function"><code class="function">clickObject</code></a> function. The <a class="xref" href="rgs-iphoneconvenience.html#iphone-clickObject-function"><code class="function">clickObject</code></a> and <a class="xref" href="rgs-iphoneconvenience.html#iphone-doubleClick-function"><code class="function">doubleClick</code></a> functions are kept for
+      compatiblity with existing test scripts.</p></li><li><p>Fixed hanging and crashing during playback on a
+      <code class="code">WKWebView</code>.</p></li><li><p>Desktop screenshots are now taken in Retina resolution on
+      Retina devices. This affects the <a class="xref" href="rgs-squish.html#saveDesktopScreenshot-function"><code class="function">saveDesktopScreenshot</code></a> function and the <a class="xref" href="rgs-squish.html#testSettings.logScreenshotOnFail-property">testSettings.logScreenshotOnFail</a> setting. The
+      behavior of screenshots in verification points is not
+      changed.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="rel-630-android"></a>2.19.13. Android-specific</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Added <a class="xref" href="rgs-androidconvenience.html#android-WebView.evalJS-function"><code class="function">WebView.evalJS</code></a>
+      method to the <code class="code">WebView</code> object type.</p></li><li><p>Better native Java method exception description than
+      <code class="code">InvocationTargetException</code>.</p></li><li><p>Fixed regression from <span class="emphasis"><em>Squish</em></span> 6.2 that
+      prevented &lt;IP&gt;:&lt;port&gt;
+      network device strings from being recognized.</p></li><li><p>Fixed instrumentation of <acronym class="acronym">APK</acronym>s which
+      use the latest Android <acronym class="acronym">SDK</acronym>.</p></li><li><p>Improved recording of text input by no longer considering
+      text input on <code class="code">XWalkViewBridge</code> controls (or child controls
+      thereof).</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="rel-630-source"></a>2.19.14. Source Packages</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Support for building <span class="application">squishserver</span> with Visual Studio 6
+      has been dropped, customers building Squish/Qt from sources with that
+      compiler should use the <a class="xref" href="ins-commandline-tools-server-ide.html#ins-quick" title="3.1.2.1. Quick Install">Quick Install (Section 3.1.2.1)</a>
+      steps.</p></li><li><p>Fixed C++11 detection when building with Qt &gt;= 5.7.0.</p></li><li><p>Fixed building <span class="emphasis"><em>Squish</em></span> on macOS against a Qt build
+      which uses a library name infix.</p></li><li><p>Fixed <code class="filename">qtbuiltinhook.pri</code> for
+      including the Squish for Qt builtin-hook in
+      <span class="application">qmake</span> projects to work with recent
+      <span class="application">qmake</span> and <span class="application">Qt
+      Creator</span>
+      versions.</p></li><li><p>Added experimental support for building <a class="xref" href="rg-cmdline.html#rgc-squishidl" title="7.4.5. squishidl">squishidl (Section 7.4.5)</a> with
+      <span class="application">qmake</span>.</p></li><li><p>Improved performance for file copying during build,
+      most notably when using <strong class="userinput"><code>build install</code></strong>.</p></li><li><p>Added support for building <span class="application">squishrunner</span> and <span class="application">Squish IDE</span>
+      utilities with Qt 5.</p></li><li><p>Fixed failed assertion in
+      <code class="filename">doc/book/Buildsub</code> when building <span class="emphasis"><em>Squish</em></span> from
+      sources with separate source and build directories but not enabling the
+      documentation in the build.</p></li><li><p>Fixed several data files being marked as executable in
+      source packages.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="idp35079168"></a>2.19.15. Documentation</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Overhauled the <span class="emphasis"><em>Squish</em></span> for Web
+      tutorial.</p></li><li><p>The documentation of the <a class="xref" href="rgs-squish.html#attachToApplication-function"><code class="function">attachToApplication</code></a> is now included in all <span class="emphasis"><em>Squish</em></span>
+      packages. The function's documentation was also extended to document that
+      the timeout can be changed without specifying a host or port to connect
+      to.</p></li><li><p>Corrected the <span class="emphasis"><em>Squish</em></span> for Java tutorial such that it no
+      longer claims that <span class="emphasis"><em>Squish</em></span> needs to know the path to the
+      <code class="filename">swt.jar</code> file.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="idp35082624"></a>2.19.16. Known Issues</h3></div></div></div><p>For a list of noteworthy issues which were found after the release of
+  <span class="emphasis"><em>Squish</em></span> 6.3.0, please see the <a class="ulink" href="https://kb.froglogic.com/display/KB/Squish 6.3.0 Known Issues" target="_blank">Known
+  Issues page</a> on the froglogic Knowledge Base.</p></div></div><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" type="text/javascript" src="ScriptingLanguage.js"></script><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format">setScriptingLanguage();</script><div class="navfooter"><hr></hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="rel-631.html">Prev</a> </td><td width="20%" align="center"><a accesskey="u" href="relnotes.html">Up</a></td><td width="40%" align="right"> <a accesskey="n" href="rel-630beta.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">2.18. Version 6.3.1 </td><td width="20%" align="center"><a accesskey="h" href="index-noframes.html">Home</a></td><td width="40%" align="right" valign="top"> 2.20. Version 6.3 Beta</td></tr></table></div></body>
+<!-- Mirrored from rel-630.html by HTTrack Website Copier/3.x [XR&CO'2013], Wed, 06 Jul 2022 13:28:55 GMT -->
+</html>

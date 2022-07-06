@@ -1,0 +1,275 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<!-- Mirrored from ug-batchtesting.html by HTTrack Website Copier/3.x [XR&CO'2013], Wed, 06 Jul 2022 13:29:00 GMT -->
+<head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><title>5.26. How to Do Automated Batch Testing</title><link rel="stylesheet" href="manual.css" type="text/css"></link><meta name="generator" content="DocBook XSL Stylesheets V1.73.2"></meta><link rel="start" href="index-noframes.html" title="Squish Manual"></link><link rel="up" href="users-guide.html" title="Chapter 5. User Guide"></link><link rel="prev" href="ug-canbus-access.html" title="5.25. How to Communicate With CANbus Devices"></link><link rel="next" href="ug-appbindings.html" title="5.27. How to Create and Access Application Bindings"></link><style xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" type="text/css" media="screen">
+        div.toc * { margin-left: 6px; margin-right: auto; max-width: 75em; }
+        div.toc span { margin-left: 0px; }
+        * { margin-left: auto; margin-right: auto; max-width: 75em; }
+        body { margin-left: 6px; margin-right: 6px; }
+        table th { padding: .5ex }
+        table td { padding: .5ex }
+    </style><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format">
+        function keyPress() {
+            var e = window.event;
+            if ( e == undefined ) {
+                return;
+            }
+            /* ### does not properly scroll, yet
+            if ( e.keyCode == 32 ) {
+            var l = document.links;
+            for ( var i = 0; i < l.length; i++ ) {
+                if ( l[i].innerText == "Next" ) {
+                location.href = l[i].href;
+                }
+            }
+            } else
+                */
+                if ( e.keyCode == 0x08 ) {
+            var l = document.links;
+            for ( var i = 0; i < l.length; i++ ) {
+                if ( l[i].innerText == "Prev" ) {
+                location.href = l[i].href;
+                }
+            }
+            }
+        }
+        document.onkeypress = keyPress;
+    </script></head><body><div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="ug-batchtesting"></a>5.26. How to Do Automated Batch Testing</h2></div></div></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><span class="section"><a href="ug-batchtesting.html#tb-process">5.26.1. Processing Test Results</a></span></dt><dt><span class="section"><a href="ug-batchtesting.html#tb-autorun">5.26.2. Automatically Running Tests</a></span></dt><dt><span class="section"><a href="ug-batchtesting.html#tb-conclusion">5.26.3. Conclusion</a></span></dt></dl></div><p>
+This section shows different approaches to running
+automated tests and processing the results. The newer recommended
+approaches appear first, and the older approaches are included later for historical
+purposes. (See also, <a class="xref" href="rg-regressiontesting.html" title="7.1. Automated Batch Testing">Automated Batch Testing (Section 7.1)</a>.)
+</p><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="tb-process"></a>5.26.1. Processing Test Results</h3></div></div></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><span class="section"><a href="ug-batchtesting.html#ug-uploading-testcenter-results">5.26.1.1. Uploading results to <span class="application">Squish Test Center</span> </a></span></dt><dt><span class="section"><a href="ug-batchtesting.html#generating-html-test-results">5.26.1.2. Generating HTML Test Results</a></span></dt><dt><span class="section"><a href="ug-batchtesting.html#generating-xml-test-results">5.26.1.3. Generating XML Test Results</a></span></dt></dl></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="ug-uploading-testcenter-results"></a>5.26.1.1. Uploading results to <span class="application">Squish Test Center</span> </h4></div></div></div><p> This section shows how to use <span class="application">squishrunner</span>, the command-line program,
+to generate and upload <acronym class="acronym">XML</acronym> test results directly to <span class="application">Squish Test Center</span>. </p><p> For demonstration, we will look at the results produced by
+running the example <code class="filename">suite_addressbook_py</code> test suite we used before. The
+test case checks whether entering some data into a simple
+<code class="filename">addressbook</code> AUT works as expected. </p><p> When using the <code class="code">testcenter</code> report generator, we provide the
+URL of a running instance of <span class="application">Squish Test Center</span>. The <span class="application">squishserver</span> must be
+already running as well. </p><pre class="screen">
+squishrunner --testsuite suite_addressbook_py --reportgen testcenter,http://localhost:8800/project/MyProject?token=MyToken&amp;label=MyLabelKey1%3DMyLabelValue1&amp;label=OS%3DLinux&amp;batch=MyBatch
+</pre><p> The URL provided for <span class="application">Squish Test Center</span> contains additional information
+in its query string that determines how it is organized in the results
+database. </p><div class="itemizedlist"><ul type="disc"><li><p> A project name, <span class="emphasis"><em>MyProject</em></span> </p></li><li><p> Some form of authentication, which could be a
+username and password, or in this case, an upload token,
+<span class="emphasis"><em>MyToken</em></span>. See <a class="ulink" href="https://doc.froglogic.com/squish-testcenter/latest/ug-user-management.html#upload-token" target="_blank">
+Managing Upload Tokens</a> for details. </p></li><li><p> 0 or more <code class="literal">label=</code>, each can contain a
+key=value pair, where the = is URL-encoded as %3D. The labels encoded in the URL
+above are <code class="literal">MyLabelKey1=MyLabelValue1</code>, and
+<code class="literal">OS=Linux</code>. </p></li><li><p> A <em class="firstterm">batch</em> name, MyBatch, which can be an arbitrary
+string. Branch names or Version numbers are often used here.  </p></li></ul></div><p> Project Names, Batches and Labels are concepts used to organize and
+select test reports in the web interface, and are <a class="ulink" href="https://doc.froglogic.com/squish-testcenter/latest/testcenter-introduction.html" target="_blank">
+explained in more detail here</a>. </p><p> After the results are uploaded, an HTML report can be seen by navigation
+from a web browser to the URL of <span class="application">Squish Test Center</span>.
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="generating-html-test-results"></a>5.26.1.2. Generating HTML Test Results</h4></div></div></div><p>
+In this section we will demonstrate how to generate <span class="emphasis"><em>Squish</em></span>'s results
+directly to HTML format.
+</p><p>
+<span class="emphasis"><em>Squish</em></span>'s use of HTML means that test results can easily be processed
+and viewed in a web browser.
+</p><p>
+For demonstration we will look at HTML results produced by running the example
+<code class="filename">suite_addressbook_py</code> test suite we used before. The test case
+checks whether entering some data into a simple <code class="filename">addressbook</code>
+AUT works as expected.
+</p><p>
+To generate the HTML report, we run the test suite using
+<span class="application">squishrunner</span>—of course the <span class="application">squishserver</span> must already be
+running:
+</p><pre class="screen">
+squishrunner --testsuite suite_addressbook_py --reportgen html,/tmp/results
+</pre><p>
+As you problably noticed, we used <code class="option">--reportgen</code> option again
+and provided <code class="code">html</code> as a value. The syntax is the same as we
+used for other report types. Besides of mentioning the
+report type we also specified the results directory <code class="filename">/tmp/results</code>
+where the final data will end up. If the directory already exists and contains
+results from the previous executions, the new execution results will be appended
+to the existing ones and produce an aggregated report.
+</p><p>
+Since we specified <em class="parameter"><code>html</code></em> format, <span class="application">squishrunner</span>
+will generate the HTML report in the specified directory. You can open
+the <code class="filename">index.html</code> results file in any web browser for viewing
+and analyzing.
+</p><div class="screenshot"><div class="mediaobject" align="center"><img src="images/web-report.png" align="middle"></img><div class="caption"><p>
+Example Web Report generated by <span class="application">squishrunner</span> run with <code class="option">--reportgen</code> option
+</p></div></div></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="generating-xml-test-results"></a>5.26.1.3. Generating XML Test Results</h4></div></div></div><p>
+One important part of automating test runs is to present the test
+results in an accessible format so that the testing team can immediately
+spot any problems that have occurred. <span class="emphasis"><em>Squish</em></span> can save the results of
+tests in an XML format that is suitable for arbitrary processing. In this
+section we will present a Python script that converts results in
+<span class="emphasis"><em>Squish</em></span>'s XML output format to HTML.
+</p><p>
+<span class="emphasis"><em>Squish</em></span>'s use of XML means that test results can easily be processed
+into formats suitable for other tools to use. This makes it possible to
+integrate the results of <span class="emphasis"><em>Squish</em></span> test runs into a test management
+system. The processing needed to transform <span class="emphasis"><em>Squish</em></span>'s XML format data
+works the same way whether the output is HTML or some other format, so
+even though this section shows the transformation from XML to HTML, the
+concepts and approaches that are illustrated can be used for any other
+kind of transformation that you need.
+</p><p>
+In order to convert the <span class="emphasis"><em>Squish</em></span> results XML format, we must first
+understand its format; this is described in detail in the <a class="xref" href="rg-regressiontesting.html#rgr-processresults" title="7.1.3. Processing Test Results">Processing Test Results (Section 7.1.3)</a> section in the <a class="xref" href="users-guide.html" title="Chapter 5. User Guide">User Guide (Chapter 5)</a>.
+</p><p>
+To put things in concrete terms we will look at an XML test results file
+produced by running an example <code class="filename">suite_py</code> test suite
+that contains one test case. The test case checks whether entering some
+data into a simple <code class="filename">addressbook</code> AUT works as
+expected.
+</p><p>
+To generate the XML report, we run the test suite using
+<span class="application">squishrunner</span>—of course the <span class="application">squishserver</span> must already be
+running:
+</p><pre class="screen">
+squishrunner --testsuite suite_addressbook_py --reportgen xml3.5,/tmp/results
+</pre><p>
+The valid values for <code class="option">--reportgen</code> depend on the
+<span class="emphasis"><em>Squish</em></span> version, and are listed in <a class="xref" href="rg-cmdline.html#rg-squishrunner-report-generators" title="7.4.3.6.  squishrunner --reportgen: Generating Reports"> <code class="option">squishrunner --reportgen</code>: Generating Reports (Section 7.4.3.6)</a>.</p><p>
+Since we specified <em class="parameter"><code>xml3.5</code></em> format, we get an XML
+results file similar to the one shown below:
+</p><pre class="programlisting">
+&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;SquishReport version="3.4" xmlns="http://www.froglogic.com/resources/schemas/xml3"&gt;
+    &lt;test type="testsuite"&gt;
+        &lt;prolog time="2015-06-19T11:22:27+02:00"&gt;
+            &lt;name&gt;&lt;![CDATA[suite_test]]&gt;%lt;/name&gt;
+            &lt;location&gt;
+                &lt;uri&gt;&lt;![CDATA[file:///D:/downloads/simple]]&gt;%lt;/uri&gt;
+            &lt;/location&gt;
+        &lt;/prolog&gt;
+        &lt;test type="testcase"&gt;
+            &lt;prolog time="2015-06-19T11:22:27+02:00"&gt;
+                &lt;name&gt;&lt;![CDATA[tst_case1]]&gt;&lt;/name&gt;
+                &lt;location&gt;
+                    &lt;uri&gt;&lt;![CDATA[x-testsuite:/tst_case1]]&gt;%lt;/uri&gt;
+                &lt;/location&gt;
+            &lt;/prolog&gt;
+            &lt;verification&gt;
+                &lt;location&gt;
+                    &lt;uri&gt;&lt;![CDATA[x-testcase:/test.py]]&gt;&lt;/uri&gt;
+                    &lt;lineNo&gt;&lt;![CDATA[2]]&gt;&lt;/lineNo&gt;
+                &lt;/location&gt;
+                &lt;scriptedVerificationResult time="2015-06-19T11:22:27+02:00" type="PASS"&gt;
+                    &lt;scriptedLocation&gt;
+                        &lt;uri&gt;&lt;![CDATA[x-testcase:/test.py]]&gt;%lt;/uri&gt;
+                        &lt;lineNo&gt;&lt;![CDATA[2]]&gt;&lt;/lineNo&gt;
+                    &lt;/scriptedLocation&gt;
+                    &lt;text&gt;&lt;![CDATA[Verified]]&gt;&lt;/text&gt;
+                    &lt;detail&gt;&lt;![CDATA[True expression]]&gt;&lt;/detail&gt;
+                &lt;/scriptedVerificationResult&gt;
+            &lt;/verification&gt;
+            &lt;verification&gt;
+                &lt;location&gt;
+                    &lt;uri&gt;&lt;![CDATA[x-testcase:/test.py]]&gt;&lt;/uri&gt;
+                    &lt;lineNo&gt;&lt;![CDATA[3]]&gt;&lt;/lineNo&gt;
+                &lt;/location&gt;
+                &lt;scriptedVerificationResult time="2015-06-19T11:22:27+02:00" type="FAIL"&gt;
+                    &lt;scriptedLocation&gt;
+                        &lt;uri&gt;&lt;![CDATA[x-testcase:/test.py]]&gt;&lt;/uri&gt;
+                        &lt;lineNo&gt;&lt;![CDATA[3]]&gt;&lt;/lineNo&gt;
+                    &lt;/scriptedLocation&gt;
+                    &lt;text&gt;&lt;![CDATA[Comparison]]&gt;&lt;/text&gt;
+                    &lt;detail&gt;&lt;![CDATA['foo' and 'goo' are not equal]]&gt;&lt;/detail&gt;
+                &lt;/scriptedVerificationResult&gt;
+            &lt;/verification&gt;
+            &lt;epilog time="2015-06-19T11:22:27+02:00"/&gt;
+        &lt;/test&gt;
+        &lt;epilog time="2015-06-19T11:22:27+02:00"/&gt;
+    &lt;/test&gt;
+&lt;/SquishReport&gt;
+</pre><p>
+The <code class="code">xml3</code> <acronym class="acronym">XML</acronym> format is described in <a class="xref" href="rg-regressiontesting.html#rgr-processresults-xml" title="7.1.3.1. The xml Report Format">The <code class="code">xml</code> Report Format (Section 7.1.3.1)</a>.
+</p></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="tb-autorun"></a>5.26.2. Automatically Running Tests</h3></div></div></div><p>
+This section shows how to automate running the tests and calling
+the <span class="application">squishxml3html.py</span> script to convert the
+XML reports into HTML. It was written before Squish had an HTML report generator, or
+Jenkins integration, and is documented here for academic/historical
+purposes only.
+</p><p>
+Here is an example of using <span class="application">squishxml3html.py</span>
+directly in a shell or command prompt:
+</p><pre class="screen">
+cd squish_dir
+./python2/bin/python ./examples/regressiontesting/squishxml3html.py -d /home/myuser/squish_reports_html /home/myuser/squish_xml3_report/results.xml
+</pre><p>
+After executing this, the HTML report will be in <code class="filename">/home/myuser/squish_reports_html</code>.
+</p><p>
+For automating this, we just need to define a list of test suites and
+hosts and then, using a loop, the test suites are run on all hosts using
+<span class="application">squishrunner</span>. The resulting XML files are then automatically converted
+into HTML using the <span class="application">squishxml3html.py</span>
+program. The file names for the HTML result contain the date, test suite
+and host to ensure that they are unique.
+</p><p>
+The <span class="application">squishruntests.py</span> script provides the
+automation we need. It reads the information it requires from a simple
+<code class="filename">.ini</code> format file, by default
+<code class="filename">runtests.ini</code>, in the same directory as the
+<span class="application">squishruntests.py</span> script itself. (Another
+<code class="filename">.ini</code> file can be specified on the command line
+using the <code class="option">-i</code> or <code class="option">--ini</code> option). Here is
+an example <code class="filename">runtests.ini</code> file—only the
+<code class="code">SQUISHDIR</code> and <code class="code">SUITES</code> key–values are
+mandatory, so the others can be omitted:
+</p><pre class="screen">
+# Use ~ to stand for your HOME directory---on Windows or Unix
+SQUISHDIR = ~/opt/squish/bin
+SUITES = ~/testing/myapp/version1/suite_main \
+        ~/testing/myapp/version1.1/suite_main \
+        ~/testing/myapp/version1.1/suite_extra
+RESULTSDIR = ~/testing/myapp/results
+HOSTS = 127.0.0.1
+PRESERVE = 0
+ISO = 1
+</pre><p>
+The <code class="code">SQUISHDIR</code> key–value is mandatory and must be set
+to the path where the <span class="emphasis"><em>Squish</em></span> executables are found.
+The <code class="code">SUITES</code> key–value is mandatory and must be set
+to one or more space-separated suite paths (each path must contain a
+<code class="filename">suite.conf</code> file).
+The <code class="code">RESULTSDIR</code> key–value is optional and should be set
+to the path where the results XML files and HTML files must go. (This
+directory will be created if it doesn't exist; it defaults to the
+current directory).
+The <code class="code">HOSTS</code> key–value is optional and should be set
+to one or more space-separated host names or IP addresses—every
+test suite will be executed on every host. (It defaults to one host,
+127.0.0.1, the local machine and using <span class="emphasis"><em>Squish</em></span>'s default port number.)
+Each host name or IP may be followed by a colon and a port number, (e.g.,
+192.0.4.67:9812).
+The <code class="code">PRESERVE</code> key–value is optional and defaults to 0
+(don't preserve the formatting of messages). If set to 1, the format of
+log messages and similar is preserved in the resultant HTML files.
+The <code class="code">ISO</code> key–value is optional and defaults to 0 (use
+the locale-specific date/time format); set it to 1 to use ISO 8601
+date/time format.
+</p><p>
+As the example file illustrates, long lines can be split over multiple
+lines by escaping newlines. Also, <code class="code">~</code> can be used to stand
+for your home directory.
+</p><p>
+When running this script it is assumed that <span class="application">squishserver</span> is running on
+all the specified hosts, and that the AUT paths are set up so that the
+AUTs run by the test suites can be found.
+</p><p>
+The last step would be to have the <code class="filename">squishruntests.py</code>
+script run automatically—for example, once every night—to
+ensure that no regressions have been introduced into the AUT. On Unix
+this can be done by setting up a cron job which executes the script.
+(Since Windows Services don't support a display for running GUI
+applications, it is not possible to execute the <span class="application">squishserver</span> as a
+Windows Service.)
+</p><p>
+For detailed documentation about cron jobs, search for the relevant
+information on the Internet or contact <span class="emphasis"><em>froglogic</em></span>'s commercial support
+to assist you.
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="tb-conclusion"></a>5.26.3. Conclusion</h3></div></div></div><p>
+This section showed how to set up automated test runs using <span class="emphasis"><em>Squish</em></span>'s
+command line tools and different report generators. The approach that gives you the most
+flexibility is uploading results to <span class="application">Squish Test Center</span>, because from there it is
+easy to view the results in a web browser, or download the results to another
+<span class="application">Squish IDE</span>.
+</p></div></div><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" type="text/javascript" src="ScriptingLanguage.js"></script><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format">setScriptingLanguage();</script><div class="navfooter"><hr></hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="ug-canbus-access.html">Prev</a> </td><td width="20%" align="center"><a accesskey="u" href="users-guide.html">Up</a></td><td width="40%" align="right"> <a accesskey="n" href="ug-appbindings.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">5.25. How to Communicate With CANbus Devices </td><td width="20%" align="center"><a accesskey="h" href="index-noframes.html">Home</a></td><td width="40%" align="right" valign="top"> 5.27. How to Create and Access Application Bindings</td></tr></table></div></body>
+<!-- Mirrored from ug-batchtesting.html by HTTrack Website Copier/3.x [XR&CO'2013], Wed, 06 Jul 2022 13:29:00 GMT -->
+</html>

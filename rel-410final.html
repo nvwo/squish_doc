@@ -1,0 +1,192 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<!-- Mirrored from rel-410final.html by HTTrack Website Copier/3.x [XR&CO'2013], Wed, 06 Jul 2022 13:28:56 GMT -->
+<head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><title>2.46. Version 4.1.0 Final</title><link rel="stylesheet" href="manual.css" type="text/css"></link><meta name="generator" content="DocBook XSL Stylesheets V1.73.2"></meta><link rel="start" href="index-noframes.html" title="Squish Manual"></link><link rel="up" href="relnotes.html" title="Chapter 2. Release Notes—for Upgraders"></link><link rel="prev" href="rel-411.html" title="2.45. Version 4.1.1"></link><link rel="next" href="rel-410beta2.html" title="2.47. Version 4.1.0 Beta 2"></link><style xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" type="text/css" media="screen">
+        div.toc * { margin-left: 6px; margin-right: auto; max-width: 75em; }
+        div.toc span { margin-left: 0px; }
+        * { margin-left: auto; margin-right: auto; max-width: 75em; }
+        body { margin-left: 6px; margin-right: 6px; }
+        table th { padding: .5ex }
+        table td { padding: .5ex }
+    </style><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format">
+        function keyPress() {
+            var e = window.event;
+            if ( e == undefined ) {
+                return;
+            }
+            /* ### does not properly scroll, yet
+            if ( e.keyCode == 32 ) {
+            var l = document.links;
+            for ( var i = 0; i < l.length; i++ ) {
+                if ( l[i].innerText == "Next" ) {
+                location.href = l[i].href;
+                }
+            }
+            } else
+                */
+                if ( e.keyCode == 0x08 ) {
+            var l = document.links;
+            for ( var i = 0; i < l.length; i++ ) {
+                if ( l[i].innerText == "Prev" ) {
+                location.href = l[i].href;
+                }
+            }
+            }
+        }
+        document.onkeypress = keyPress;
+    </script></head><body><div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="rel-410final"></a>2.46. Version 4.1.0 Final</h2></div></div></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><span class="section"><a href="rel-410final.html#highlights">2.46.1. Highlights</a></span></dt><dt><span class="section"><a href="rel-410final.html#idp36077824">2.46.2. General</a></span></dt><dt><span class="section"><a href="rel-410final.html#idp36086376">2.46.3. New IDE</a></span></dt><dt><span class="section"><a href="rel-410final.html#idp36089432">2.46.4. Qt-specific</a></span></dt><dt><span class="section"><a href="rel-410final.html#idp36099056">2.46.5. <span class="trademark">Java</span>™-specific</a></span></dt><dt><span class="section"><a href="rel-410final.html#idp36103800">2.46.6. Web-specific</a></span></dt><dt><span class="section"><a href="rel-410final.html#idp36112616">2.46.7. Windows (native)-specific</a></span></dt><dt><span class="section"><a href="rel-410final.html#idp36119416">2.46.8. Mac-specific (Cocoa/Carbon edition)</a></span></dt><dt><span class="section"><a href="rel-410final.html#idp36122544">2.46.9. iPhone/iPad-specific</a></span></dt><dt><span class="section"><a href="rel-410final.html#idp36125336">2.46.10. Tk-specific</a></span></dt><dt><span class="section"><a href="rel-410final.html#idp36128216">2.46.11. HP Quality Center Plug-In</a></span></dt><dt><span class="section"><a href="rel-410final.html#idp36130608">2.46.12. Documentation</a></span></dt><dt><span class="section"><a href="rel-410final.html#idp36134120">2.46.13. Source Builds</a></span></dt></dl></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="highlights"></a>2.46.1. Highlights</h3></div></div></div><p>
+<span class="emphasis"><em>Squish</em></span> 4.1 is a major new release with many new features and, of
+course, many bug fixes. Here is a very short selected summary of the 4.1
+highlights (detailed lists of all the main changes follow).
+</p><div class="itemizedlist"><ul type="disc"><li><p><span class="emphasis"><em>Squish</em></span> is now packaged in a single
+<code class="filename">.zip</code> file that contains both the IDE and the
+tools.</p></li><li><p>Eclipse users can now integrate the <span class="emphasis"><em>Squish</em></span> IDE
+components into their existing Eclipse.</p></li><li><p>The support for image verifications has been greatly
+improved to allow for customizable “<span class="quote">fuzzy</span>” image matching
+(in addition to exact pixel by pixel matching).</p></li><li><p>Editing has been improved for all scripting languages,
+with code completion extended to support <span class="emphasis"><em>Squish</em></span>-specific features.</p></li><li><p><span class="emphasis"><em>Squish</em></span> scripts can now be shared globally (i.e.,
+available to any test case in any test suite).</p></li><li><p><span class="emphasis"><em>Squish</em></span> for Qt now supports:</p><div class="itemizedlist"><ul type="circle"><li><p>QML-specific support and a QML extension
+API;</p></li><li><p>listening to Qt signals;</p></li><li><p>testing 64-bit GUI AUTs on macOS;</p></li><li><p>testing on MeeGo with pre-built packages.</p></li></ul></div></li><li><p><span class="emphasis"><em>Squish</em></span> for Web now supports more browsers, including
+Chrome, Opera, and Safari. In addition, web browsers on mobile platforms
+are supported, for example, Safari on iOS. Firefox support has been
+extended to versions 4 and 5 and has also been successfully tested
+against a beta of version 6.</p></li><li><p><span class="emphasis"><em>Squish</em></span> for Windows now supports:</p><div class="itemizedlist"><ul type="circle"><li><p>access to native Windows Forms .NET properties and
+methods;</p></li><li><p>access to ActiveX controls' COM/ActiveX properties
+and methods;</p></li><li><p>Infragistics NetAdvantage controls, Exontrols and CA
+    Plex controls;</p></li><li><p>access to Visual Basic ID properties for object
+identification.</p></li></ul></div></li><li><p><span class="emphasis"><em>Squish</em></span> for macOS now supports testing 64-bit Cocoa
+AUTs.</p></li><li><p><span class="emphasis"><em>Squish</em></span> for iPhone now supports screenshot
+verifications and also features improved support for scrolling and for
+gestures.</p></li><li><p><span class="emphasis"><em>Squish</em></span> for Java now supports Eclipse Indigo, testing Cocoa SWT AUTs on
+macOS and also produces more portable test scripts.</p></li><li><p><span class="emphasis"><em>Squish</em></span> for Tk now supports 64-bit applications on
+Windows and the <code class="code">attachToApplication()</code>
+function.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="idp36077824"></a>2.46.2. General</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Added an <code class="code">OS.version.name</code> property to the
+JavaScript test script bindings.</p></li><li><p>The Tcl debugger no longer crashes when there are
+unbalanced return commands.</p></li><li><p>Some fixes have been made to the XML Schema Definition
+for <span class="emphasis"><em>Squish</em></span>'s XML 2.1 file format used for test
+results.</p></li><li><p>The Spy can now display the concrete (possibly derived)
+types of properties.</p></li><li><p>A new "post mortem" timeout setting is now available.
+The event recorder will wait for the specified time after the main AUT
+has exited. This is useful for AUTs invoked through launcher
+applications such as shell scripts or batch files.</p></li><li><p>Fixed a synchronization issue that affected the fast
+tuning of the image comparision algorithm.</p></li><li><p>Fixed some button logic and redrawing issues in the
+Image VP difference viewer.</p></li><li><p>Fixed an issue with <span class="emphasis"><em>Squish</em></span>'s
+<span class="application">setup</span> program when writing the license text
+file on systems with non-ASCII characters in the path
+name.</p></li><li><p>Prevented
+lingering <span class="application">_extrawindowwatcher.exe</span> processes
+on Windows.</p></li><li><p>Prevented infinite recursion when Spying certain kinds
+of complex object properties.</p></li><li><p>Fixed the incorrect reporting of the wrong Python script
+file in error messages and test results.</p></li><li><p>Fixed cases where <span class="application">squishrunner</span> processes failed to
+terminate after losing their connection to the <span class="application">squishserver</span> when
+running inside the IDE.</p></li><li><p>Added support for grabbing screenshots of
+<code class="code">QWebView</code> widgets.
+</p></li><li><p>Calls to the <code class="code">installEventHandler</code> function
+will now raise an error if no AUT is currently running.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="idp36086376"></a>2.46.3. New IDE</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>No list of web browsers is presented if Web testing is
+not enabled.</p></li><li><p>The IDE can now run even if it is in a path that has white
+space characters such as spaces.</p></li><li><p>Worked around a menu bug in Ubuntu 11.04.</p></li><li><p>Fixed breakpoints in file names that have different
+casing on macOS.</p></li><li><p>The IDE now times out if the grabbing of a
+screenshot fails; previously the IDE just hung.</p></li><li><p>Fixed the parsing of partial test results which could
+occur if the <span class="application">squishrunner</span> exited abnormally.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="idp36089432"></a>2.46.4. Qt-specific</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Provide packages built with
+<span class="application">gcc</span> support on Solaris.</p></li><li><p>Fixed the handling of references to deleted
+<code class="code">QAction</code>s.</p></li><li><p>Fixed the visibility of wrapper <code class="code">init</code>
+functions on MinGW. This makes the Wrapper Explorer tool work
+again.</p></li><li><p>Speeded up menu access on macOS.</p></li><li><p>Fixed a crash that could occur with 64-bit
+builds.</p></li><li><p>Fixed attaching to AUTs that have received connection
+attempts from other software such as port scanners.</p></li><li><p>Fixed problems relating to having large numbers of
+internal signal–slot connections.</p></li><li><p>Added a <code class="filename">SQUISH_DIR/etc/qtwrapper.ini</code>
+option called <code class="code">UseNativeMouseEvents</code> that
+changes how mouse actions are emulated.</p></li><li><p>Fixed problems with drag and drop that could occur with
+widgets inside a Qt item view such as those found
+in <span class="emphasis"><em>Qt Creator</em></span>.</p></li><li><p>Fixed menu playback for hidden
+items in Qt/Cocoa applications.</p></li><li><p>Fixed an error that could occur when setting a breakpoint
+after a script command that opens a dialog.</p></li><li><p>Added support for retrieving QML <code class="code">id</code>s from QML
+items.</p></li><li><p>Fixed a problem with parent items in generated names
+for QML items.</p></li><li><p>Prevented a cascading of relative paths in recorded QML
+URL properties.</p></li><li><p>Added support for future Qt 4.8 Lighthouse
+platforms.</p></li><li><p>Added an <code class="code">installLazySignalHandler</code> function
+that supports the watching of signals from <code class="code">QObject</code>s with
+unknown names.</p></li><li><p>Added support for calling methods on
+<code class="code">QWebView</code> objects without prior
+interaction.</p></li><li><p>Fixed the lookup of custom widget items in
+<code class="code">QTreeView</code> controls.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="idp36099056"></a>2.46.5. <span class="trademark">Java</span>™-specific</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Empty lines are no longer output in the Runner/Server log
+view.</p></li><li><p>Fixed a null pointer exception in SWT's event filtering
+code on Windows.</p></li><li><p>Fixed the detection of pick object mode.</p></li><li><p>Speeded up menu access on macOS.</p></li><li><p>Fixed the picking of extension objects in applications
+using the Gtk implementation of SWT.</p></li><li><p>Prevented exceptions from occurring when receiving
+events from SWT controls that have since been disposed.</p></li><li><p>Fixed the starting point when recording the
+<code class="code">dragItem</code> and <code class="code">mouseDrag</code> functions for AWT
+applications. </p></li><li><p>Added support for JRE 6.0.26.</p></li><li><p>Fixed issues with Eclipse Indigo's SWT implementation
+on macOS.</p></li><li><p>Fixed an occurrence problem when naming AWT and SWT
+objects that have a parent item property.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="idp36103800"></a>2.46.6. Web-specific</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Rewrote parts of the Safari module to support version
+5.1.</p></li><li><p>Added a simple Web-based addressbook
+example.</p></li><li><p>Prevented the raising of an exception when
+<span class="emphasis"><em>Squish</em></span> hooks into frames.</p></li><li><p>Added a workaround for IE 8 to get input focus into
+the document.</p></li><li><p>Fixed the detection of Firefox 4.0.1's version number.</p></li><li><p>WebKit TypeErrors are now always handled safely when
+querying information about child objects.</p></li><li><p>Fixed escaping in recorded multi-property
+names.</p></li><li><p>The object search now continues rather than aborting if
+it reaches a non-explorable frame.</p></li><li><p>Fixed the recording of buttons which trigger
+<code class="code">window.confirm</code> or <code class="code">prompt</code> calls.</p></li><li><p>Fixed the encoding of large property
+values.</p></li><li><p>Fixed the picking of plain images and other plain
+elements.</p></li><li><p>Fixed waiting for objects when one page is switched to
+another with the <code class="code">loadUrl</code> function.</p></li><li><p>Fixed an initial page loading problem that could occur
+when using the new proxy approach with Safari or
+Chrome.</p></li><li><p>Fixed the resetting of proxy-settings after running a
+test.</p></li><li><p>Fixed a problem with the installation of the plug-in used
+for testing of Mozilla-based browsers.</p></li><li><p>Improved the geometry of the picking highlighting
+rectangle.</p></li><li><p>Improved the performance of drawing the picking
+highlighting rectangle.</p></li><li><p>Fixed the playback of the <code class="code">closeConfirm</code>
+function with Safari 5.1</p></li><li><p>Increased the greatest supported Firefox version to
+6.0—this has only been tested with 6.0-<span class="emphasis"><em>beta</em></span>.
+</p></li><li><p>Added support for Firefox installations that have
+a non-default path on Windows.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="idp36112616"></a>2.46.7. Windows (native)-specific</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Completed work on Exontrol's COM components. Support for
+these is available on request.</p></li><li><p>Completed work on old-style Infragistics COM
+components. Support for these is available on request.</p></li><li><p>Access to ActiveX controls' COM/ActiveX properties and
+methods can now be activated using a <code class="filename">winwrapper.ini</code>
+settings file.
+</p></li><li><p>Made sure that any lingering internal
+<code class="filename">extrawwindowwatcher</code> processes are terminated when
+the IDE is shutdown.</p></li><li><p>Added a <code class="code">tb_select_treeentry_1</code> function to
+the GRIT extension.</p></li><li><p>Improved object lookup speed by recognizing VB forms
+as top-level Windows.</p></li><li><p>The MFC extension now attempts to detect MDI windows
+and treats them as object containers.</p></li><li><p>Fixed the lookup of scrollbars inside Windows Forms
+listbox objects.</p></li><li><p>Fixed the computation of the <code class="code">win_x</code> and
+<code class="code">win_y</code> properties for Windows controls.</p></li><li><p>Added support for the Visual Basic 6 SSTab
+control.</p></li><li><p>Added experimental code to recognize VB 6 text labels
+as distinct objects. Please contact technical support for
+information on how to enable this feature.</p></li><li><p>Provided an accessor function for .NET Collection
+objects. For example:
+<code class="code">findObject(":_ListView").nativeObject.Items.at(3)</code>.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="idp36119416"></a>2.46.8. Mac-specific (Cocoa/Carbon edition)</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Added the <code class="code">visible</code> property as an
+identifying property to use—if present—for automatic
+name generation.</p></li><li><p>Fixed the recording of
+<code class="code">NSPopUpButton</code>s.</p></li><li><p>Speeded up menu access on macOS.</p></li><li><p>Fixed a crash that could occur in Cocoa applications
+that use garbage collection.</p></li><li><p>Log a backtrace from AUT crashes occurring during
+recording.</p></li><li><p>Fixed the lookup of outline view items in
+macOS 10.5.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="idp36122544"></a>2.46.9. iPhone/iPad-specific</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Added the <code class="code">visible</code> property as an
+identifying property to use—if present—for automatic
+name generation.</p></li><li><p>Fixed how typing <span class="keysym">Backspace</span> in
+<code class="code">UITextField</code> and <code class="code">UITextView</code> objects is handled
+if the cursor is not at the end of the text.</p></li><li><p>Added a new <code class="code">AlertOpened</code> event handler.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="idp36125336"></a>2.46.10. Tk-specific</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Fixed a problem with the <code class="code">waitForObjectItem</code>
+function when used with menus.</p></li><li><p>Fixed calls to the <code class="code">activateItem</code> function
+with Tk menu paths on Windows.</p></li><li><p>Added support for grabbing screenshots on
+Windows.</p></li><li><p>Added support for auto-scroll-to-item for TkTreeCtl
+windows.</p></li><li><p>Fixed the replay of calls to the <code class="code">type</code>
+function with newer Tk versions (as of 8.5.9).</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="idp36128216"></a>2.46.11. HP Quality Center Plug-In</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Fixed a problem which caused the
+<span class="guimenuitem">Stop</span> button in Quality Center to be
+unreliable.</p></li><li><p>It is now possible for
+<span class="application">qcimporter</span> to use alternative paths by using a
+<code class="option">--path</code> command line switch.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="idp36130608"></a>2.46.12. Documentation</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Added a combobox to the HTML version of the manuals that
+allows the selection of all or just one scripting
+language and which remembers the setting across pages.</p></li><li><p>Replaced the old web tutorial with a completely new one
+that is as similar as possible to the tutorials for the other GUI
+toolkits.</p></li><li><p>Did a considerable amount of reorganization including
+separating out the <span class="emphasis"><em>Squish</em></span> APIs into a separate manual.</p></li><li><p>Edited and improved the manuals throughout.</p></li><li><p>Deprecated TPTP integration in favor of Eclipse-based
+IDE.</p></li><li><p>Added various missing example script
+files.</p></li><li><p>The <span class="emphasis"><em>Squish</em></span> Knowledge base is now publically available
+and contains many short items, tricks, and tips.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="idp36134120"></a>2.46.13. Source Builds</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>It is now possible to built against stripped-down Qt
+installations that have the classes <code class="code">QAction</code>,
+<code class="code">QMenu</code>, <code class="code">QMenuBar</code>,
+<code class="code">QAbstractItemView</code> (and subclasses),
+<code class="code">QGraphicsView</code> or <code class="code">QComboBox</code>
+disabled.</p></li></ul></div></div></div><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" type="text/javascript" src="ScriptingLanguage.js"></script><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format">setScriptingLanguage();</script><div class="navfooter"><hr></hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="rel-411.html">Prev</a> </td><td width="20%" align="center"><a accesskey="u" href="relnotes.html">Up</a></td><td width="40%" align="right"> <a accesskey="n" href="rel-410beta2.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">2.45. Version 4.1.1 </td><td width="20%" align="center"><a accesskey="h" href="index-noframes.html">Home</a></td><td width="40%" align="right" valign="top"> 2.47. Version 4.1.0 Beta 2</td></tr></table></div></body>
+<!-- Mirrored from rel-410final.html by HTTrack Website Copier/3.x [XR&CO'2013], Wed, 06 Jul 2022 13:28:56 GMT -->
+</html>

@@ -1,0 +1,472 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<!-- Mirrored from rgs-windowsconvenienceapi.html by HTTrack Website Copier/3.x [XR&CO'2013], Wed, 06 Jul 2022 13:29:00 GMT -->
+<head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><title>6.12. Windows Convenience API</title><link rel="stylesheet" href="manual.css" type="text/css"></link><meta name="generator" content="DocBook XSL Stylesheets V1.73.2"></meta><link rel="start" href="index-noframes.html" title="Squish Manual"></link><link rel="up" href="api.man.html" title="Chapter 6. API Reference Manual"></link><link rel="prev" href="rgs-flexobjectapi.html" title="6.11. Flex Object API"></link><link rel="next" href="rgs-androidconvenience.html" title="6.13. Android Convenience API"></link><style xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" type="text/css" media="screen">
+        div.toc * { margin-left: 6px; margin-right: auto; max-width: 75em; }
+        div.toc span { margin-left: 0px; }
+        * { margin-left: auto; margin-right: auto; max-width: 75em; }
+        body { margin-left: 6px; margin-right: 6px; }
+        table th { padding: .5ex }
+        table td { padding: .5ex }
+    </style><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format">
+        function keyPress() {
+            var e = window.event;
+            if ( e == undefined ) {
+                return;
+            }
+            /* ### does not properly scroll, yet
+            if ( e.keyCode == 32 ) {
+            var l = document.links;
+            for ( var i = 0; i < l.length; i++ ) {
+                if ( l[i].innerText == "Next" ) {
+                location.href = l[i].href;
+                }
+            }
+            } else
+                */
+                if ( e.keyCode == 0x08 ) {
+            var l = document.links;
+            for ( var i = 0; i < l.length; i++ ) {
+                if ( l[i].innerText == "Prev" ) {
+                location.href = l[i].href;
+                }
+            }
+            }
+        }
+        document.onkeypress = keyPress;
+    </script></head><body><div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="rgs-windowsconvenienceapi"></a>6.12. Windows Convenience API</h2></div></div></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><span class="section"><a href="rgs-windowsconvenienceapi.html#win-GestureBuilder-class">6.12.1. GestureBuilder</a></span></dt></dl></div><div class="important" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Important: Windows-specific"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Important]" src="images/important.png"></img></td><th align="left">Windows-specific</th></tr><tr><td align="left" valign="top"><p>
+The Windows Convenience API is <span class="emphasis"><em>only</em></span> available for
+the Squish for Windows editions.
+</p></td></tr></table></div><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Note: Terminology"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/note.png"></img></td><th align="left">Terminology</th></tr><tr><td align="left" valign="top"><p>
+The <span class="emphasis"><em>Squish</em></span> documentation uses the term <span class="emphasis"><em>widget</em></span>
+when referring to GUI objects. Windows developers may be more
+familiar with the terms <span class="emphasis"><em>control</em></span> and
+<span class="emphasis"><em>container</em></span>, both of which are covered by the term
+<span class="emphasis"><em>widget</em></span> in the <span class="emphasis"><em>Squish</em></span> documentation.
+</p></td></tr></table></div><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Note: Windows Convenience API Function Parameters"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/note.png"></img></td><th align="left"><a id="win-objectapi.function.parameters"></a>Windows Convenience API Function Parameters</th></tr><tr><td align="left" valign="top"><p>
+For all of the Windows Convenience API functions that take an
+<em class="parameter"><code>objectOrName</code></em> argument, this argument can be a
+reference to an object or the name of an object—the
+object <span class="emphasis"><em>must</em></span> be (or name) a native Windows object.
+</p><p>
+Some of the Windows Convenience API functions can take a
+<em class="parameter"><code>modifierState</code></em> argument which indicates which
+special keys are pressed at the time of a mouse click. And some of the
+functions can also take a <em class="parameter"><code>mouseButton</code></em> argument
+which indicates which mouse button was clicked.
+</p><p>
+The <em class="parameter"><code>modifierState</code></em> can be one or more of the
+following:
+<code class="code">Modifier.None</code>,
+<code class="code">Modifier.Alt</code>,
+<code class="code">Modifier.Control</code>,
+<code class="code">Modifier.Shift</code>.
+If more than one is used they must be
+<code class="code">OR</code>-d together, for example,
+<code class="code">Modifier.Alt|Modifier.Shift</code>. The form shown here works
+e.g., <code class="code">Modifier::Control</code>, and for Tcl use the
+<code class="code">enum</code> function, e.g., <code class="code">enum Modifier Control</code>.
+</p><p>
+The <em class="parameter"><code>mouseButton</code></em> can be any one of:
+<code class="code">MouseButton.None</code>,
+<code class="code">MouseButton.Wheel</code>,
+<code class="code">MouseButton.LeftButton</code>,
+<code class="code">MouseButton.MiddleButton</code>,
+<code class="code">MouseButton.RightButton</code>.
+<code class="code">MouseButton.XButton1</code>.
+<code class="code">MouseButton.XButton2</code>.
+</p><p>
+The form shown above works for Python and JavaScript.
+</p><p>
+For Perl use this: <code class="code">MouseButton::LeftButton</code>, etc.
+</p><p>
+For Ruby use this: <code class="code">MouseButton::LEFT_BUTTON</code>, etc.
+</p><p>
+For Tcl use this: <code class="code">enum MouseButton LeftButton</code>, etc.
+</p></td></tr></table></div><p>
+Here are some quick links to the Windows Convenience API's functions and
+properties:
+</p><div class="informaltable"><table border="0"><colgroup><col></col><col></col><col></col></colgroup><tbody><tr valign="top"><td valign="top">
+<div class="itemizedlist"><ul type="disc" compact><li><p><a class="xref" href="rgs-windowsconvenienceapi.html#win-chooseFile-function"><code class="function">chooseFile</code></a></p></li><li><p><a class="xref" href="rgs-windowsconvenienceapi.html#win-clickButton-function"><code class="function">clickButton</code></a></p></li><li><p><a class="xref" href="rgs-windowsconvenienceapi.html#win-clickItem-function"><code class="function">clickItem</code></a></p></li><li><p><a class="xref" href="rgs-windowsconvenienceapi.html#win-collapse-function"><code class="function">collapse</code></a></p></li><li><p><a class="xref" href="rgs-windowsconvenienceapi.html#win-collapseItem-function"><code class="function">collapseItem</code></a></p></li><li><p><a class="xref" href="rgs-windowsconvenienceapi.html#win-doubleClick-function"><code class="function">doubleClick</code></a></p></li><li><p><a class="xref" href="rgs-windowsconvenienceapi.html#win-doubleClickItem-function"><code class="function">doubleClickItem</code></a></p></li><li><p><a class="xref" href="rgs-windowsconvenienceapi.html#win-dragAndDrop-function"><code class="function">dragAndDrop</code></a></p></li><li><p><a class="xref" href="rgs-windowsconvenienceapi.html#win-expand-function"><code class="function">expand</code></a></p></li></ul></div>
+</td><td valign="top">
+<div class="itemizedlist"><ul type="disc" compact><li><p><a class="xref" href="rgs-windowsconvenienceapi.html#win-expandItem-function"><code class="function">expandItem</code></a></p></li><li><p><a class="xref" href="rgs-windowsconvenienceapi.html#win-gesture-function"><code class="function">gesture</code></a></p></li><li><p><a class="xref" href="rgs-windowsconvenienceapi.html#win-grabWidget-function"><code class="function">grabWidget</code></a></p></li><li><p><a class="xref" href="rgs-windowsconvenienceapi.html#win-focusedWindow-function"><code class="function">focusedWindow</code></a></p></li><li><p><a class="xref" href="rgs-windowsconvenienceapi.html#win-installEventHandler-function"><code class="function">installEventHandler</code></a></p></li><li><p><a class="xref" href="rgs-windowsconvenienceapi.html#win-mouseClick-function"><code class="function">mouseClick</code></a></p></li><li><p><a class="xref" href="rgs-windowsconvenienceapi.html#win-mouseDrag-function"><code class="function">mouseDrag</code></a></p></li><li><p><a class="xref" href="rgs-windowsconvenienceapi.html#win-mousePress-function"><code class="function">mousePress</code></a></p></li><li><p><a class="xref" href="rgs-windowsconvenienceapi.html#win-mouseRelease-function"><code class="function">mouseRelease</code></a></p></li></ul></div>
+</td><td valign="top">
+<div class="itemizedlist"><ul type="disc" compact><li><p><a class="xref" href="rgs-windowsconvenienceapi.html#win-mouseWheel-function"><code class="function">mouseWheel</code></a></p></li><li><p><a class="xref" href="rgs-windowsconvenienceapi.html#win-nativeObject-property">nativeObject</a></p></li><li><p><a class="xref" href="rgs-windowsconvenienceapi.html#win-readGesture-function"><code class="function">readGesture</code></a></p></li><li><p><a class="xref" href="rgs-windowsconvenienceapi.html#win-setForegroundWindow-function"><code class="function">setForegroundWindow</code></a></p></li><li><p><a class="xref" href="rgs-windowsconvenienceapi.html#win-setFocusedWindow-function"><code class="function">setFocusedWindow</code></a></p></li><li><p><a class="xref" href="rgs-windowsconvenienceapi.html#win-setValue-function"><code class="function">setValue</code></a></p></li><li><p><a class="xref" href="rgs-windowsconvenienceapi.html#win-type-function"><code class="function">type</code></a></p></li><li><p><a class="xref" href="rgs-windowsconvenienceapi.html#win-uninstallEventHandler-function"><code class="function">uninstallEventHandler</code></a></p></li></ul></div>
+</td></tr></tbody></table></div><div class="funcsynopsis"><a id="win-chooseFile-function"></a><p><code class="funcdef"><b class="fsfunc">chooseFile</b>(</code><var class="pdparam">path</var><code>)</code>;</p></div><p>
+This function automates a native file selection dialog. It assumes that a
+dialog was opened (or is about to open) and then automatically selects the file
+path specified by <em class="parameter"><code>path</code></em>. An empty string can be used
+to emulate that the file dialog is cancelled.
+</p><p>
+The function will wait for a dialog to open for at most 3 seconds. If no dialog
+is opened within 3 seconds, or if the specified path name is too long, an
+exception is raised.
+</p><p>
+The duration for which the function will wait for a dialog to open is
+configurable in the <code class="filename">etc\winwrapper.ini</code> configuration file.
+The setting <code class="literal">Native File Dialog Script Call Timeout (ms)</code> can
+be adjusted to a different threshold.
+</p><div class="funcsynopsis"><a id="win-clickButton-function"></a><p><code class="funcdef"><b class="fsfunc">clickButton</b>(</code><var class="pdparam">objectOrName</var><code>)</code>;</p></div><p>
+This function clicks the <em class="parameter"><code>objectOrName</code></em> widget
+which should be the name of a button or a reference to a button object.
+</p><div class="funcsynopsis"><a id="win-clickItem-function"></a><p><code class="funcdef"><b class="fsfunc">clickItem</b>(</code><var class="pdparam">objectOrName</var>, <var class="pdparam">itemText</var><code>)</code>;</p></div><div class="funcsynopsis"><p><code class="funcdef"><b class="fsfunc">clickItem</b>(</code><var class="pdparam">objectOrName</var>, <var class="pdparam">itemText</var>, <var class="pdparam">mouseButton</var><code>)</code>;</p></div><div class="funcsynopsis"><p><code class="funcdef"><b class="fsfunc">clickItem</b>(</code><var class="pdparam">objectOrName</var>, <var class="pdparam">itemText</var>, <var class="pdparam">mouseButton</var>, <var class="pdparam">modifierState</var><code>)</code>;</p></div><p>
+This function clicks the <em class="parameter"><code>objectOrName</code></em> widget's
+item that has the specified <em class="parameter"><code>itemText</code></em>. This will
+work for any widget that has a text property.
+</p><p>
+By default <code class="code">MouseButton.LeftButton</code> is used, but this can be
+changed by specifying the optional <em class="parameter"><code>mouseButton</code></em>
+argument. Similarly a default modifier state of
+<code class="code">Modifier.None</code> is used, but this can be changed by
+specifying the <em class="parameter"><code>modifierState</code></em> argument. Note that
+to specify the modifier, the button must also be specified. See <a class="xref" href="rgs-windowsconvenienceapi.html#win-objectapi.function.parameters" title="Windows Convenience API Function Parameters">Windows Convenience API Function Parameters</a> for which values are valid
+for the <em class="parameter"><code>mouseButton</code></em> argument and for the
+<em class="parameter"><code>modifierState</code></em> argument.
+</p><div class="funcsynopsis"><a id="win-collapse-function"></a><p><code class="funcdef"><b class="fsfunc">collapse</b>(</code><var class="pdparam">objectOrName</var><code>)</code>;</p></div><p>
+If the <em class="parameter"><code>objectOrName</code></em> is a tree or tree item, it is
+collapsed so that none of its child items (if it has any) are visible.
+If the <em class="parameter"><code>objectOrName</code></em> is a combobox, its pop-up
+list of items is hidden. (See also
+<a class="xref" href="rgs-windowsconvenienceapi.html#win-collapseItem-function"><code class="function">collapseItem</code></a>,
+<a class="xref" href="rgs-windowsconvenienceapi.html#win-expandItem-function"><code class="function">expandItem</code></a>, and
+<a class="xref" href="rgs-windowsconvenienceapi.html#win-expand-function"><code class="function">expand</code></a>.)
+</p><div class="funcsynopsis"><a id="win-collapseItem-function"></a><p><code class="funcdef"><b class="fsfunc">collapseItem</b>(</code><var class="pdparam">objectOrName</var>, <var class="pdparam">itemName</var><code>)</code>;</p></div><p>
+The <em class="parameter"><code>objectOrName</code></em> should be a tree or tree item.
+It is collapsed so that none of the child items of the item with the
+specified <em class="parameter"><code>itemText</code></em> are visible. (See also <a class="xref" href="rgs-windowsconvenienceapi.html#win-expandItem-function"><code class="function">expandItem</code></a> and <a class="xref" href="rgs-windowsconvenienceapi.html#win-expand-function"><code class="function">expand</code></a>.)
+</p><div class="funcsynopsis"><a id="win-doubleClick-function"></a><p><code class="funcdef"><b class="fsfunc">doubleClick</b>(</code><var class="pdparam">objectOrName</var><code>)</code>;</p></div><div class="funcsynopsis"><p><code class="funcdef"><b class="fsfunc">doubleClick</b>(</code><var class="pdparam">objectOrName</var>, <var class="pdparam">x</var>, <var class="pdparam">y</var><code>)</code>;</p></div><div class="funcsynopsis"><p><code class="funcdef"><b class="fsfunc">doubleClick</b>(</code><var class="pdparam">objectOrName</var>, <var class="pdparam">x</var>, <var class="pdparam">y</var>, <var class="pdparam">mouseButton</var><code>)</code>;</p></div><div class="funcsynopsis"><p><code class="funcdef"><b class="fsfunc">doubleClick</b>(</code><var class="pdparam">objectOrName</var>, <var class="pdparam">x</var>, <var class="pdparam">y</var>, <var class="pdparam">mouseButton</var>, <var class="pdparam">modifierState</var><code>)</code>;</p></div><p>
+This function double-clicks the <em class="parameter"><code>objectOrName</code></em>
+widget.
+</p><p>
+By default the widget is double-clicked in the middle, but this can be
+changed by passing widget-relative coordinates, <em class="parameter"><code>x</code></em>
+and <em class="parameter"><code>y</code></em>. By default
+<code class="code">MouseButton.LeftButton</code> is used, but this can be changed by
+specifying the optional <em class="parameter"><code>mouseButton</code></em> argument.
+Similarly a default modifier state of <code class="code">Modifier.None</code> is
+used, but this can be changed by specifying the
+<em class="parameter"><code>modifierState</code></em> argument. Note that to specify the
+button, the coordinates must also be specified; and to specify the modifier
+state, the coordinates and the button must also be specified. See <a class="xref" href="rgs-windowsconvenienceapi.html#win-objectapi.function.parameters" title="Windows Convenience API Function Parameters">Windows Convenience API Function Parameters</a> for which values are valid
+for the <em class="parameter"><code>mouseButton</code></em> argument and for the
+<em class="parameter"><code>modifierState</code></em> argument.
+</p><div class="funcsynopsis"><a id="win-doubleClickItem-function"></a><p><code class="funcdef"><b class="fsfunc">doubleClickItem</b>(</code><var class="pdparam">objectOrName</var>, <var class="pdparam">itemText</var><code>)</code>;</p></div><div class="funcsynopsis"><p><code class="funcdef"><b class="fsfunc">doubleClickItem</b>(</code><var class="pdparam">objectOrName</var>, <var class="pdparam">itemText</var>, <var class="pdparam">mouseButton</var><code>)</code>;</p></div><div class="funcsynopsis"><p><code class="funcdef"><b class="fsfunc">doubleClickItem</b>(</code><var class="pdparam">objectOrName</var>, <var class="pdparam">itemText</var>, <var class="pdparam">mouseButton</var>, <var class="pdparam">modifierState</var><code>)</code>;</p></div><p>
+This function double-clicks the <em class="parameter"><code>objectOrName</code></em>
+widget's item that has the specified <em class="parameter"><code>itemText</code></em>.
+This will work for any widget that has a text property.
+</p><p>
+By default <code class="code">MouseButton.LeftButton</code> is used, but this can be
+changed by specifying the optional <em class="parameter"><code>mouseButton</code></em>
+argument. Similarly a default modifier state of
+<code class="code">Modifier.None</code> is used, but this can be changed by
+specifying the <em class="parameter"><code>modifierState</code></em> argument. Note that
+to specify the modifier, the button must also be specified. See <a class="xref" href="rgs-windowsconvenienceapi.html#win-objectapi.function.parameters" title="Windows Convenience API Function Parameters">Windows Convenience API Function Parameters</a> for which values are valid
+for the <em class="parameter"><code>mouseButton</code></em> argument and for the
+<em class="parameter"><code>modifierState</code></em> argument.
+</p><div class="funcsynopsis"><a id="win-dragAndDrop-function"></a><p><code class="funcdef"><b class="fsfunc">dragAndDrop</b>(</code><var class="pdparam">source_objectOrName</var>, <var class="pdparam">target_objectOrName</var><code>)</code>;</p></div><div class="funcsynopsis"><p><code class="funcdef"><b class="fsfunc">dragAndDrop</b>(</code><var class="pdparam">source_objectOrName</var>, <var class="pdparam">sx</var>, <var class="pdparam">sy</var>, <var class="pdparam">target_objectOrName</var><code>)</code>;</p></div><div class="funcsynopsis"><p><code class="funcdef"><b class="fsfunc">dragAndDrop</b>(</code><var class="pdparam">source_objectOrName</var>, <var class="pdparam">target_objectOrName</var>, <var class="pdparam">tx</var>, <var class="pdparam">ty</var><code>)</code>;</p></div><div class="funcsynopsis"><p><code class="funcdef"><b class="fsfunc">dragAndDrop</b>(</code><var class="pdparam">source_objectOrName</var>, <var class="pdparam">sx</var>, <var class="pdparam">sy</var>, <var class="pdparam">target_objectOrName</var>, <var class="pdparam">tx</var>, <var class="pdparam">ty</var><code>)</code>;</p></div><p>
+This function performs a drag and drop operation. It begins by
+initiating a drag on the <em class="parameter"><code>source_objectOrName</code></em>
+widget and then it does the drop on the
+<em class="parameter"><code>target_objectOrName</code></em> widget.
+By default the drag is from the middle of the source object to the
+middle of the target object, unless specific coordinates are given, in
+which case the coordinates are honored.
+</p><p>
+Either, both, or neither sets of coordinates can be specified.
+If the source coordinates are given, the drag starts at position
+<em class="parameter"><code>sx</code></em> and <em class="parameter"><code>sy</code></em> (in the
+<em class="parameter"><code>source_objectOrName</code></em> widget's coordinates), and if
+the target coordinates are given the drop occurs at position
+<em class="parameter"><code>tx</code></em> and <em class="parameter"><code>ty</code></em> (in the
+<em class="parameter"><code>target_objectOrName</code></em> widget's coordinates).
+</p><div class="funcsynopsis"><a id="win-expand-function"></a><p><code class="funcdef"><b class="fsfunc">expand</b>(</code><var class="pdparam">objectOrName</var><code>)</code>;</p></div><p>
+If the <em class="parameter"><code>objectOrName</code></em> is a tree or tree item, it is
+expanded to show its child items (if it has any). If the
+<em class="parameter"><code>objectOrName</code></em> is a combobox, its pop-up list of
+items is shown. (See also
+<a class="xref" href="rgs-windowsconvenienceapi.html#win-expandItem-function"><code class="function">expandItem</code></a>,
+<a class="xref" href="rgs-windowsconvenienceapi.html#win-collapseItem-function"><code class="function">collapseItem</code></a>, and
+<a class="xref" href="rgs-windowsconvenienceapi.html#win-collapse-function"><code class="function">collapse</code></a>.)
+</p><div class="funcsynopsis"><a id="win-expandItem-function"></a><p><code class="funcdef"><b class="fsfunc">expandItem</b>(</code><var class="pdparam">objectOrName</var>, <var class="pdparam">itemText</var><code>)</code>;</p></div><p>
+The <em class="parameter"><code>objectOrName</code></em> should be a tree or tree item.
+It is expanded to show the item with the specified
+<em class="parameter"><code>itemText</code></em>, <span class="emphasis"><em>and</em></span> that item's
+child items (if it has any). (See also <a class="xref" href="rgs-windowsconvenienceapi.html#win-collapseItem-function"><code class="function">collapseItem</code></a> and <a class="xref" href="rgs-windowsconvenienceapi.html#win-collapse-function"><code class="function">collapse</code></a>.)
+</p><div class="funcsynopsis"><a id="win-grabWidget-function"></a><p><code class="funcdef">QImage <b class="fsfunc">grabWidget</b>(</code><var class="pdparam">object</var><code>)</code>;</p></div><p>
+This function takes a screenshot of the <em class="parameter"><code>object</code></em>
+window (or widget) and returns it as an <a class="xref" href="rgs-squish.html#rgss-image-object" title="6.3.13. QImage Object"><code class="code">QImage</code> Object (Section 6.3.13)</a>.
+</p><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Note: The Newer Way to Grab a Widget "><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/note.png"></img></td><th align="left">The Newer Way to Grab a Widget </th></tr><tr><td align="left" valign="top"><p> Instead of using <code class="function">grabWidget</code> to get an
+AUT-side QImage, it is easier to capture an <a class="xref" href="rgs-squish.html#script-image-object" title="6.3.14. Image Object">Image Object (Section 6.3.14)</a>
+using <a class="xref" href="rgs-squish.html#object.grabScreenshot-function"><code class="function">object.grabScreenshot</code></a>.
+The <a class="xref" href="rgs-squish.html#Image.save-function"><code class="function">Image.save</code></a> function allows you to save
+directly to a location on the <span class="application">squishrunner</span> host.
+</p></td></tr></table></div><p>
+See the <a class="xref" href="rgs-squish.html#waitForObject-function"><code class="function">waitForObject</code></a> and <a class="xref" href="rgs-squish.html#findObject-function"><code class="function">findObject</code></a> functions for how to get an object
+reference to a window or widget.
+</p><div class="funcsynopsis"><a id="win-gesture-function"></a><p><code class="funcdef"><b class="fsfunc">gesture</b>(</code><var class="pdparam">objectOrName</var>, <var class="pdparam">touches</var><code>)</code>;</p></div><p>
+This function plays a gesture. The specified
+<em class="parameter"><code>objectOrName</code></em> can refer to any object that is ready for
+user interaction. The gesture is replayed relative to the top-left corner of
+the specified object. The specified <em class="parameter"><code>touches</code></em> refers to a
+<a class="xref" href="rgs-windowsconvenienceapi.html#win-GestureBuilder-class" title="6.12.1. GestureBuilder">GestureBuilder</a> object.
+</p><div class="funcsynopsis"><a id="win-focusedWindow-function"></a><p><code class="funcdef"><b class="fsfunc">focusedWindow</b>(</code><var class="pdparam"></var><code>)</code>;</p></div><p>
+This function returns an object reference to the window that has the
+keyboard focus. (See also <a class="xref" href="rgs-windowsconvenienceapi.html#win-setFocusedWindow-function"><code class="function">setFocusedWindow</code></a>.)
+</p><div class="funcsynopsis"><a id="win-installEventHandler-function"></a><p><code class="funcdef"><b class="fsfunc">installEventHandler</b>(</code><var class="pdparam">eventName</var>, <var class="pdparam">handlerFunctionNameOrReference</var><code>)</code>;</p></div><p>
+This function installs a global event handler. The script function
+named or referenced in <em class="parameter"><code>handlerFunctionNameOrReference</code></em>,
+will be called when an event
+of the <em class="parameter"><code>eventName</code></em> type occurs.
+</p><p>
+The <em class="parameter"><code>eventName</code></em> can be the name of any of the
+following event types:
+</p><div class="variablelist"><dl><dt><span class="term"><code class="literal">Crash</code></span></dt><dd><p>This event occurs if the AUT crashes.</p></dd><dt><span class="term"><code class="literal">DialogOpened</code></span></dt><dd><p>This event occurs when a dialog window is opened; a "dialog window"
+  is a window with the (extended) styles <em class="parameter"><code>DS_MODALFRAME +
+  WS_EX_DLGMODALFRAME + WS_EX_WINDOWEDGE + WS_EX_CONTROLPARENT</code></em> or
+  <em class="parameter"><code>DS_SYSMODAL + DS_SETFOREGROUND + WS_EX_TOPMOST + WS_EX_WINDOWEDGE
+  + WS_EX_CONTROLPARENT</code></em> (styles can be checked with Microsoft's
+  Spy++ tool from Visual Studio).</p></dd><dt><span class="term"><code class="literal">MessageBoxOpened</code></span></dt><dd><p>This event is occurs when <span class="emphasis"><em>Squish</em></span> detects that a dialog window
+  was opened (i.e. the same requirements as given in the explanation of the
+  <code class="literal">DialogOpened</code> event apply), but the dialog window also
+  matches a certain structure. The exact structure depends on the particular
+  <acronym class="acronym">GUI</acronym> toolkit but it usually means that the dialog should
+  contain just text and some standard buttons like <span class="guilabel">OK</span> and
+  <span class="guilabel">Cancel</span>.</p></dd><dt><span class="term"><code class="literal">Timeout</code></span></dt><dd><p>This event occurs when the <span class="emphasis"><em>Squish</em></span> response timeout is reached.</p></dd></dl></div><p>
+The function named in <em class="parameter"><code>handlerFunctionName</code></em> is
+called with a single argument—the object on which the event
+occurred.
+</p><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Note: Python-specific"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/note.png"></img></td><th align="left">Python-specific</th></tr><tr><td align="left" valign="top"><p>
+In Python scripts, you can specify the callback function to invoke by
+passing an actual function or a lambda function.
+</p></td></tr></table></div><p>
+For examples see <a class="xref" href="ugs-eventhandlers.html" title="5.10. How to Use Event Handlers">How to Use Event Handlers (Section 5.10)</a>.
+</p><div class="important" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Important: The AUT Must be Running"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Important]" src="images/important.png"></img></td><th align="left">The AUT Must be Running</th></tr><tr><td align="left" valign="top"><p>
+The <code class="code">installEventHandler</code> function will only work if it is
+called <span class="emphasis"><em>after</em></span> the AUT has been started (e.g., using
+the <a class="xref" href="rgs-squish.html#startApplication-function"><code class="function">startApplication</code></a> function).
+</p></td></tr></table></div><div class="funcsynopsis"><a id="win-mouseClick-function"></a><p><code class="funcdef"><b class="fsfunc">mouseClick</b>(</code><var class="pdparam">objectOrName</var><code>)</code>;</p></div><div class="funcsynopsis"><p><code class="funcdef"><b class="fsfunc">mouseClick</b>(</code><var class="pdparam">objectOrName</var>, <var class="pdparam">mouseButton</var><code>)</code>;</p></div><div class="funcsynopsis"><p><code class="funcdef"><b class="fsfunc">mouseClick</b>(</code><var class="pdparam">objectOrName</var>, <var class="pdparam">mouseButton</var>, <var class="pdparam">modifierState</var><code>)</code>;</p></div><div class="funcsynopsis"><p><code class="funcdef"><b class="fsfunc">mouseClick</b>(</code><var class="pdparam">objectOrName</var>, <var class="pdparam">x</var>, <var class="pdparam">y</var>, <var class="pdparam">mouseButton</var><code>)</code>;</p></div><div class="funcsynopsis"><p><code class="funcdef"><b class="fsfunc">mouseClick</b>(</code><var class="pdparam">objectOrName</var>, <var class="pdparam">x</var>, <var class="pdparam">y</var>, <var class="pdparam">mouseButton</var>, <var class="pdparam">modifierState</var><code>)</code>;</p></div><p>
+This function clicks the mouse on the specified
+<em class="parameter"><code>objectOrName</code></em> widget.
+</p><p>
+If only the <em class="parameter"><code>objectOrName</code></em> is specified, then the
+object is clicked in the middle by the
+<code class="code">MouseButton.LeftButton</code>. All the other usages
+<span class="emphasis"><em>require</em></span> the <em class="parameter"><code>mouseButton</code></em> to
+be specified, optionally preceded by by object-relative coordinates,
+<em class="parameter"><code>x</code></em> and <em class="parameter"><code>y</code></em> which say where
+the click takes place, and optionally followed by a
+<em class="parameter"><code>modifierState</code></em> (which defaults to
+<code class="code">Modifier.None</code> if not specified).
+</p><p>
+See <a class="xref" href="rgs-windowsconvenienceapi.html#win-objectapi.function.parameters" title="Windows Convenience API Function Parameters">Windows Convenience API Function Parameters</a> for which values
+are valid for the <em class="parameter"><code>mouseButton</code></em> argument and for
+the <em class="parameter"><code>modifierState</code></em> argument.
+</p><div class="funcsynopsis"><a id="win-mouseDrag-function"></a><p><code class="funcdef"><b class="fsfunc">mouseDrag</b>(</code><var class="pdparam">objectOrName</var>, <var class="pdparam">dx</var>, <var class="pdparam">dy</var><code>)</code>;</p></div><div class="funcsynopsis"><p><code class="funcdef"><b class="fsfunc">mouseDrag</b>(</code><var class="pdparam">objectOrName</var>, <var class="pdparam">x</var>, <var class="pdparam">y</var>, <var class="pdparam">dx</var>, <var class="pdparam">dy</var><code>)</code>;</p></div><div class="funcsynopsis"><p><code class="funcdef"><b class="fsfunc">mouseDrag</b>(</code><var class="pdparam">objectOrName</var>, <var class="pdparam">x</var>, <var class="pdparam">y</var>, <var class="pdparam">dx</var>, <var class="pdparam">dy</var>, <var class="pdparam">mouseButton</var><code>)</code>;</p></div><div class="funcsynopsis"><p><code class="funcdef"><b class="fsfunc">mouseDrag</b>(</code><var class="pdparam">objectOrName</var>, <var class="pdparam">x</var>, <var class="pdparam">y</var>, <var class="pdparam">dx</var>, <var class="pdparam">dy</var>, <var class="pdparam">mouseButton</var>, <var class="pdparam">modifierState</var><code>)</code>;</p></div><p>
+This function performs a mouse drag from the
+<em class="parameter"><code>objectOrName</code></em> widget to a position that is
+horizontally offset by <em class="parameter"><code>dx</code></em> pixels and vertically
+offset by <em class="parameter"><code>dy</code></em> pixels from the object's center (or
+from position <em class="parameter"><code>x</code></em>, <em class="parameter"><code>y</code></em> in
+the <em class="parameter"><code>objectOrName</code></em> widget's coordinates if these
+are specified). If you need to specify the mouse button or modifier
+state but don't want to specify the origin (because the center of the
+object is sufficient), pass 0 for the <em class="parameter"><code>x</code></em>
+coordinate and for the <em class="parameter"><code>y</code></em> coordinate.
+</p><p>
+By default the mouse is dragged from the middle of the object, but this
+can be changed by passing object-relative coordinates,
+<em class="parameter"><code>x</code></em> and <em class="parameter"><code>y</code></em>. The amount to
+drag, <em class="parameter"><code>dx</code></em>, <em class="parameter"><code>dy</code></em>, must be
+specified. By default <code class="code">MouseButton.LeftButton</code> is used, but
+this can be changed by specifying the optional
+<em class="parameter"><code>mouseButton</code></em> argument. Similarly a default
+modifier state of <code class="code">Modifier.None</code> is used, but this can be
+changed by specifying the <em class="parameter"><code>modifierState</code></em> argument.
+Note that to specify the modifier, the button must also be specified.
+See <a class="xref" href="rgs-windowsconvenienceapi.html#win-objectapi.function.parameters" title="Windows Convenience API Function Parameters">Windows Convenience API Function Parameters</a> for which values
+are valid for the <em class="parameter"><code>mouseButton</code></em> argument and for
+the <em class="parameter"><code>modifierState</code></em> argument.
+</p><div class="funcsynopsis"><a id="win-mousePress-function"></a><p><code class="funcdef"><b class="fsfunc">mousePress</b>(</code><var class="pdparam"></var><code>)</code>;</p></div><div class="funcsynopsis"><p><code class="funcdef"><b class="fsfunc">mousePress</b>(</code><var class="pdparam">mouseButton</var><code>)</code>;</p></div><div class="funcsynopsis"><p><code class="funcdef"><b class="fsfunc">mousePress</b>(</code><var class="pdparam">mouseButton</var>, <var class="pdparam">modifierState</var><code>)</code>;</p></div><div class="funcsynopsis"><p><code class="funcdef"><b class="fsfunc">mousePress</b>(</code><var class="pdparam">x</var>, <var class="pdparam">y</var>, <var class="pdparam">mouseButton</var><code>)</code>;</p></div><div class="funcsynopsis"><p><code class="funcdef"><b class="fsfunc">mousePress</b>(</code><var class="pdparam">x</var>, <var class="pdparam">y</var>, <var class="pdparam">mouseButton</var>, <var class="pdparam">modifierState</var><code>)</code>;</p></div><div class="funcsynopsis"><p><code class="funcdef"><b class="fsfunc">mousePress</b>(</code><var class="pdparam">objectOrName</var><code>)</code>;</p></div><div class="funcsynopsis"><p><code class="funcdef"><b class="fsfunc">mousePress</b>(</code><var class="pdparam">objectOrName</var>, <var class="pdparam">mouseButton</var><code>)</code>;</p></div><div class="funcsynopsis"><p><code class="funcdef"><b class="fsfunc">mousePress</b>(</code><var class="pdparam">objectOrName</var>, <var class="pdparam">mouseButton</var>, <var class="pdparam">modifierState</var><code>)</code>;</p></div><div class="funcsynopsis"><p><code class="funcdef"><b class="fsfunc">mousePress</b>(</code><var class="pdparam">objectOrName</var>, <var class="pdparam">x</var>, <var class="pdparam">y</var>, <var class="pdparam">mouseButton</var><code>)</code>;</p></div><div class="funcsynopsis"><p><code class="funcdef"><b class="fsfunc">mousePress</b>(</code><var class="pdparam">objectOrName</var>, <var class="pdparam">x</var>, <var class="pdparam">y</var>, <var class="pdparam">mouseButton</var>, <var class="pdparam">modifierState</var><code>)</code>;</p></div><p>
+This function performs a mouse press. All the parameters are optional
+excepting that either both or neither of the coordinates must be present.
+</p><p>
+If <em class="parameter"><code>x</code></em> and <em class="parameter"><code>y</code></em> coordinates are
+given, the press takes place at those coordinates, either relative to the
+<em class="parameter"><code>objectOrName</code></em> object if one is specified, or
+relative to the current screen otherwise. If no coordinates are given
+the press takes place on the middle of the
+<em class="parameter"><code>objectOrName</code></em> object if one is specified, or
+wherever the mouse happens to be otherwise.
+</p><p>
+By default <code class="code">MouseButton.LeftButton</code> is used, but this can be
+changed by specifying the optional <em class="parameter"><code>mouseButton</code></em>
+argument. Similarly a default modifier state of no modifiers is used,
+but this can be changed by specifying the
+<em class="parameter"><code>modifierState</code></em> argument. See <a class="xref" href="rgs-windowsconvenienceapi.html#win-objectapi.function.parameters" title="Windows Convenience API Function Parameters">Windows Convenience API Function Parameters</a> for which values are valid
+for the <em class="parameter"><code>mouseButton</code></em> argument and for the
+<em class="parameter"><code>modifierState</code></em> argument.
+</p><div class="funcsynopsis"><a id="win-mouseRelease-function"></a><p><code class="funcdef"><b class="fsfunc">mouseRelease</b>(</code><var class="pdparam"></var><code>)</code>;</p></div><div class="funcsynopsis"><p><code class="funcdef"><b class="fsfunc">mouseRelease</b>(</code><var class="pdparam">mouseButton</var><code>)</code>;</p></div><div class="funcsynopsis"><p><code class="funcdef"><b class="fsfunc">mouseRelease</b>(</code><var class="pdparam">mouseButton</var>, <var class="pdparam">modifierState</var><code>)</code>;</p></div><div class="funcsynopsis"><p><code class="funcdef"><b class="fsfunc">mouseRelease</b>(</code><var class="pdparam">x</var>, <var class="pdparam">y</var>, <var class="pdparam">mouseButton</var><code>)</code>;</p></div><div class="funcsynopsis"><p><code class="funcdef"><b class="fsfunc">mouseRelease</b>(</code><var class="pdparam">x</var>, <var class="pdparam">y</var>, <var class="pdparam">mouseButton</var>, <var class="pdparam">modifierState</var><code>)</code>;</p></div><div class="funcsynopsis"><p><code class="funcdef"><b class="fsfunc">mouseRelease</b>(</code><var class="pdparam">objectOrName</var><code>)</code>;</p></div><div class="funcsynopsis"><p><code class="funcdef"><b class="fsfunc">mouseRelease</b>(</code><var class="pdparam">objectOrName</var>, <var class="pdparam">mouseButton</var><code>)</code>;</p></div><div class="funcsynopsis"><p><code class="funcdef"><b class="fsfunc">mouseRelease</b>(</code><var class="pdparam">objectOrName</var>, <var class="pdparam">mouseButton</var>, <var class="pdparam">modifierState</var><code>)</code>;</p></div><div class="funcsynopsis"><p><code class="funcdef"><b class="fsfunc">mouseRelease</b>(</code><var class="pdparam">objectOrName</var>, <var class="pdparam">x</var>, <var class="pdparam">y</var>, <var class="pdparam">mouseButton</var><code>)</code>;</p></div><div class="funcsynopsis"><p><code class="funcdef"><b class="fsfunc">mouseRelease</b>(</code><var class="pdparam">objectOrName</var>, <var class="pdparam">x</var>, <var class="pdparam">y</var>, <var class="pdparam">mouseButton</var>, <var class="pdparam">modifierState</var><code>)</code>;</p></div><p>
+This function performs a mouse release. All the parameters are optional
+excepting that either both or neither of the coordinates must be present.
+</p><p>
+If <em class="parameter"><code>x</code></em> and <em class="parameter"><code>y</code></em> coordinates are
+given, the release takes place at those coordinates, either relative to the
+<em class="parameter"><code>objectOrName</code></em> object if one is specified, or
+relative to the current screen otherwise. If no coordinates are given
+the release takes place on the middle of the
+<em class="parameter"><code>objectOrName</code></em> object if one is specified, or
+wherever the mouse happens to be otherwise.
+</p><p>
+By default <code class="code">MouseButton.LeftButton</code> is used, but this can be
+changed by specifying the optional <em class="parameter"><code>mouseButton</code></em>
+argument. Similarly a default modifier state of no modifiers is used,
+but this can be changed by specifying the
+<em class="parameter"><code>modifierState</code></em> argument. See <a class="xref" href="rgs-windowsconvenienceapi.html#win-objectapi.function.parameters" title="Windows Convenience API Function Parameters">Windows Convenience API Function Parameters</a> for which values are valid
+for the <em class="parameter"><code>mouseButton</code></em> argument and for the
+<em class="parameter"><code>modifierState</code></em> argument.
+</p><div class="funcsynopsis"><a id="win-mouseWheel-function"></a><p><code class="funcdef"><b class="fsfunc">mouseWheel</b>(</code><var class="pdparam">n</var><code>)</code>;</p></div><div class="funcsynopsis"><p><code class="funcdef"><b class="fsfunc">mouseWheel</b>(</code><var class="pdparam">n</var>, <var class="pdparam">modifierState</var><code>)</code>;</p></div><p>
+This function performs a mouse wheel operation, emulating rotation of the
+vertical wheel of a mouse. The operation happens over the current mouse
+location. To move the mouse to a desired location, please use the function
+<a class="xref" href="rgs-squish.html#mouseMove-function"><code class="function">mouseMove</code></a>.
+</p><p>
+The amount of wheel rotation is specified by the argument
+<em class="parameter"><code>n</code></em>. One n corresponds to one wheel notch which is
+about 15 degrees or 120 delta units of a mouse wheel event.
+The positive value of <em class="parameter"><code>n</code></em> rotates the wheel in an
+upward direction (away from the user) and the negative in a downward
+direction (toward the user).
+</p><p>
+The keyboard state during a mouse wheel can be specified by using the
+argument <em class="parameter"><code>modifierState</code></em>. See
+<a class="xref" href="rgs-windowsconvenienceapi.html#win-objectapi.function.parameters" title="Windows Convenience API Function Parameters">Windows Convenience API Function Parameters</a> for which values
+are valid for this argument.
+</p><a id="win-nativeObject-property"></a>Object
+<span class="property">nativeObject</span><p>
+<span class="emphasis"><em>Squish</em></span> automatically adds a property called <code class="code">nativeObject</code>
+to every Windows Object's list of properties. The native object provides
+access to all the underlying object's methods and properties.
+</p><p>
+For examples of how to use the <code class="code">nativeObject</code> see <a class="xref" href="ug-how.to.use.the.windows.nativeobject.html" title="5.5. How to Use the Windows nativeObject API">How to Use the Windows <code class="code">nativeObject</code> API (Section 5.5)</a>.
+
+</p><div class="funcsynopsis"><a id="win-readGesture-function"></a><p><code class="funcdef"><b class="fsfunc">readGesture</b>(</code><var class="pdparam">gesture-file</var><code>)</code>;</p></div><p>
+This function opens a gesture file from a test suite directory and returns
+a <a class="xref" href="rgs-windowsconvenienceapi.html#win-GestureBuilder-class" title="6.12.1. GestureBuilder">GestureBuilder</a> object.
+This can then be passed to <a class="xref" href="rgs-windowsconvenienceapi.html#win-gesture-function"><code class="function">gesture</code></a>.
+The specified <em class="parameter"><code>gesture-file</code></em> refers to the filename.
+</p><div class="funcsynopsis"><a id="win-setForegroundWindow-function"></a><p><code class="funcdef"><b class="fsfunc">setForegroundWindow</b>(</code><var class="pdparam">objectOrName</var><code>)</code>;</p></div><p>
+This function tries to bring the <em class="parameter"><code>objectOrName</code></em>
+window into the foreground, that is, raises it above any overlapping
+windows if possible.
+</p><div class="funcsynopsis"><a id="win-setFocusedWindow-function"></a><p><code class="funcdef"><b class="fsfunc">setFocusedWindow</b>(</code><var class="pdparam">objectOrName</var><code>)</code>;</p></div><p>
+This function gives the keyboard focus to the
+<em class="parameter"><code>objectOrName</code></em> window or to the window that
+contains the <em class="parameter"><code>objectOrName</code></em> widget. (See also <a class="xref" href="rgs-windowsconvenienceapi.html#win-focusedWindow-function"><code class="function">focusedWindow</code></a>.)
+</p><div class="funcsynopsis"><a id="win-setValue-function"></a><p><code class="funcdef"><b class="fsfunc">setValue</b>(</code><var class="pdparam">objectOrName</var>, <var class="pdparam">integer</var><code>)</code>;</p></div><p>
+This function sets the value of the, <em class="parameter"><code>objectOrName</code></em>
+editable widget to the given <em class="parameter"><code>integer</code></em> value.
+</p><p>
+This function can be used to set the numeric value in a spinbox, or to
+set the value of a TrackBar (a slider widget) or of a ScrollBar.
+
+</p><div class="funcsynopsis"><a id="win-type-function"></a><p><code class="funcdef"><b class="fsfunc">type</b>(</code><var class="pdparam">objectOrName</var>, <var class="pdparam">text</var><code>)</code>;</p></div><p>
+This function types the specified <em class="parameter"><code>text</code></em> (as if the
+user had used the keyboard) into the <em class="parameter"><code>objectOrName</code></em>
+editable widget. If the text is surrounded by angle brackets (&lt;&gt;),
+it is interpreted as a key combination, e.g
+<code class="code">"&lt;Ctrl+Return&gt;"</code>. The input is case-sensitive, so
+<code class="code">type(<span class="emphasis"><em>object</em></span>, "R")</code> is different from
+<code class="code">type(<span class="emphasis"><em>object</em></span>, "r")</code>. (For a list of the
+supported special keys see the <a class="xref" href="rgs-squish.html#nativeType-function"><code class="function">nativeType</code></a>
+function's documentation.)
+</p><div class="funcsynopsis"><a id="win-uninstallEventHandler-function"></a><p><code class="funcdef"><b class="fsfunc">uninstallEventHandler</b>(</code><var class="pdparam">eventName</var>, <var class="pdparam">handlerFunctionNameOrReference</var><code>)</code>;</p></div><p>
+This function uninstalls an event handler that has been previously
+installed using <a class="xref" href="rgs-windowsconvenienceapi.html#win-installEventHandler-function"><code class="function">installEventHandler</code></a>.
+</p><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="win-GestureBuilder-class"></a>6.12.1. GestureBuilder</h3></div></div></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><span class="section"><a href="rgs-windowsconvenienceapi.html#win-GestureBuilder-create-functions">6.12.1.1. Gesture creation</a></span></dt><dt><span class="section"><a href="rgs-windowsconvenienceapi.html#win-GestureBuilder-manipulate-functions">6.12.1.2. Gesture manipulation</a></span></dt></dl></div><p>
+Objects of this type hold the touch strokes information needed to replay <a class="xref" href="rgs-windowsconvenienceapi.html#win-gesture-function"><code class="function">gesture</code></a>.  An instance of this class is returned by
+<a class="xref" href="rgs-windowsconvenienceapi.html#win-readGesture-function"><code class="function">readGesture</code></a>.  Strokes are defined by screen
+coordinates points, pressure and touch size.
+</p><a id="win-GestureBuilder-areaWidth-property"></a>int
+<span class="property">GestureBuilder.areaWidth</span><p>
+The width of the area in which this gesture is defined. This will be
+the device or emulator screen width.
+</p><a id="win-GestureBuilder-areaHeight-property"></a>int
+<span class="property">GestureBuilder.areaHeight</span><p>
+The height of the area in which this gesture is defined. This will be
+the device or emulator screen height.
+</p><p>
+All <a class="xref" href="rgs-windowsconvenienceapi.html#win-GestureBuilder-class" title="6.12.1. GestureBuilder">GestureBuilder</a> methods listed in the
+<a class="xref" href="rgs-windowsconvenienceapi.html#win-GestureBuilder-create-functions" title="6.12.1.1. Gesture creation">Gesture creation (Section 6.12.1.1)</a> and
+<a class="xref" href="rgs-windowsconvenienceapi.html#win-GestureBuilder-manipulate-functions" title="6.12.1.2. Gesture manipulation">Gesture manipulation (Section 6.12.1.2)</a> section,
+return the <a class="xref" href="rgs-windowsconvenienceapi.html#win-GestureBuilder-class" title="6.12.1. GestureBuilder">GestureBuilder</a> object
+itself, unless specified differently.
+</p><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="win-GestureBuilder-create-functions"></a>6.12.1.1. Gesture creation</h4></div></div></div><p>
+This section lists the methods for manually creating a
+<a class="xref" href="rgs-windowsconvenienceapi.html#win-GestureBuilder-class" title="6.12.1. GestureBuilder">GestureBuilder</a> object.
+</p><div class="funcsynopsis"><p><code class="funcdef"><b class="fsfunc">GestureBuilder</b>(</code><var class="pdparam">width</var>, <var class="pdparam">height</var>, <var class="pdparam">unit</var><code>)</code>;</p></div><div class="funcsynopsis"><p><code class="funcdef"><b class="fsfunc">GestureBuilder</b>(</code><var class="pdparam">xml</var><code>)</code>;</p></div><p>
+Two constructor functions for creating a
+<a class="xref" href="rgs-windowsconvenienceapi.html#win-GestureBuilder-class" title="6.12.1. GestureBuilder">GestureBuilder</a> object. The
+<em class="parameter"><code>width</code></em> and <em class="parameter"><code>height</code></em> are
+the target screen size. The <em class="parameter"><code>unit</code></em> can be either
+0 or 1, meaning respectively in pixels or millimeters. The constants
+<code class="constant">GestureBuilder.Pixel</code> and
+<code class="constant">GestureBuilder.MilliMeter</code> can be used as well.
+</p><p>
+The second constructor function constructs a
+<a class="xref" href="rgs-windowsconvenienceapi.html#win-GestureBuilder-class" title="6.12.1. GestureBuilder">GestureBuilder</a> object by passing a
+string containing <acronym class="acronym">XML</acronym>, which should be in the same
+format as the recorded gesture files.
+</p><div class="funcsynopsis"><p><code class="funcdef">Object <b class="fsfunc">GestureBuilder.addStroke</b>(</code><var class="pdparam">x</var>, <var class="pdparam">y</var><code>)</code>;</p></div><div class="funcsynopsis"><p><code class="funcdef">Object <b class="fsfunc">GestureBuilder.addStroke</b>(</code><var class="pdparam">startTime</var>, <var class="pdparam">x</var>, <var class="pdparam">y</var><code>)</code>;</p></div><div class="funcsynopsis"><p><code class="funcdef">Object <b class="fsfunc">GestureBuilder.addStroke</b>(</code><var class="pdparam">startTime</var>, <var class="pdparam">x</var>, <var class="pdparam">y</var>, <var class="pdparam">pressure</var><code>)</code>;</p></div><div class="funcsynopsis"><p><code class="funcdef">Object <b class="fsfunc">GestureBuilder.addStroke</b>(</code><var class="pdparam">startTime</var>, <var class="pdparam">x</var>, <var class="pdparam">y</var>, <var class="pdparam">pressure</var>, <var class="pdparam">size</var><code>)</code>;</p></div><p>
+Starts a new stroke. The whole movement of one finger or pen from
+touch down to releasing the screen is called a stroke. The touch down
+coordinate is (<em class="parameter"><code>x</code></em>, <em class="parameter"><code>y</code></em>).
+For the non-first stroke, a time offset can be specified in milliseconds using
+the <em class="parameter"><code>startTime</code></em> argument. Strokes cannot be disjointed
+in time, at least one finger or pen has to be down during the whole gesture.
+The maximum simultaneous touches is 10.
+</p><p>
+Finally, the <em class="parameter"><code>pressure</code></em> and
+<em class="parameter"><code>size</code></em> are relative messure values for
+respectively pen or finger pressure and size. These should be between
+0.0 and 1.0 and when omitted defaults to 0.25.
+</p><div class="funcsynopsis"><p><code class="funcdef">Object <b class="fsfunc">GestureBuilder.curveTo</b>(</code><var class="pdparam">duration</var>, <var class="pdparam">controlX</var>, <var class="pdparam">controlY</var>, <var class="pdparam">endX</var>, <var class="pdparam">endy</var><code>)</code>;</p></div><div class="funcsynopsis"><p><code class="funcdef">Object <b class="fsfunc">GestureBuilder.curveTo</b>(</code><var class="pdparam">duration</var>, <var class="pdparam">control1X</var>, <var class="pdparam">control1Y</var>, <var class="pdparam">control2X</var>, <var class="pdparam">control2Y</var>, <var class="pdparam">endX</var>, <var class="pdparam">endy</var><code>)</code>;</p></div><p>
+Adds a bézier curve movement to the latest added stroke in
+<em class="parameter"><code>duration</code></em> milliseconds.
+The curve starts with the end coordinate of the last added movement or, if
+none added to the stroke, the stroke touch down coordinate. The end coordinate
+is specified with <em class="parameter"><code>endX</code></em> and <em class="parameter"><code>endY</code></em>.
+One or two so called control points can be used.
+</p><div class="funcsynopsis"><p><code class="funcdef">Object <b class="fsfunc">GestureBuilder.lineTo</b>(</code><var class="pdparam">duration</var>, <var class="pdparam">endX</var>, <var class="pdparam">endy</var><code>)</code>;</p></div><p>
+Adds a line movement to the latest added stroke in
+<em class="parameter"><code>duration</code></em> milliseconds.
+The line starts with the end coordinate of the last added movement or, if none
+added to the stroke, the stroke touch down coordinate. The end coordinate is
+specified with <em class="parameter"><code>endX</code></em> and <em class="parameter"><code>endY</code></em>.
+</p><div class="funcsynopsis"><p><code class="funcdef">Object <b class="fsfunc">GestureBuilder.build</b>(</code><code>)</code>;</p></div><p>
+Creates the gesture from the added strokes and movements. After calling this
+method, no strokes or movements can be added.
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="win-GestureBuilder-manipulate-functions"></a>6.12.1.2. Gesture manipulation</h4></div></div></div><div class="funcsynopsis"><p><code class="funcdef">Object <b class="fsfunc">GestureBuilder.accelerate</b>(</code><var class="pdparam">factor</var><code>)</code>;</p></div><p>
+Changes stroke speed given a factor. A factor between 0.0 and 1.0
+slows down the gesture, above 1.0 will speed it up.
+</p><div class="funcsynopsis"><p><code class="funcdef">Object <b class="fsfunc">GestureBuilder.rotate</b>(</code><var class="pdparam">degrees</var><code>)</code>;</p></div><div class="funcsynopsis"><p><code class="funcdef">Object <b class="fsfunc">GestureBuilder.rotate</b>(</code><var class="pdparam">degrees</var>, <var class="pdparam">originX</var>, <var class="pdparam">originY</var><code>)</code>;</p></div><p>
+Rotates the strokes. The <em class="parameter"><code>degrees</code></em>
+is the agle in degrees in a counter clockwise direction.
+The <em class="parameter"><code>originX</code></em> and <em class="parameter"><code>originY</code></em> define
+the origin of the rotate operation. If omitted, the area center is
+taken as origin.
+</p><div class="funcsynopsis"><p><code class="funcdef">Object <b class="fsfunc">GestureBuilder.scale</b>(</code><var class="pdparam">scale</var><code>)</code>;</p></div><div class="funcsynopsis"><p><code class="funcdef">Object <b class="fsfunc">GestureBuilder.scale</b>(</code><var class="pdparam">scaleX</var>, <var class="pdparam">scaleY</var><code>)</code>;</p></div><div class="funcsynopsis"><a id="win-GestureBuilder.scale-function"></a><p><code class="funcdef">Object <b class="fsfunc">GestureBuilder.scale</b>(</code><var class="pdparam">scaleX</var>, <var class="pdparam">scaleY</var>, <var class="pdparam">originX</var>, <var class="pdparam">originY</var><code>)</code>;</p></div><p>
+Changes the size of the strokes. The <em class="parameter"><code>scaleX</code></em>
+is the scale factor in the horizontal direction and
+<em class="parameter"><code>scaleY</code></em> in the vertical direction.
+The <em class="parameter"><code>originX</code></em> and <em class="parameter"><code>originY</code></em> define
+the origin of the scale operation. If omitted, the area center is
+taken as origin. When also <em class="parameter"><code>scaleY</code></em> is omitted, then
+the scaling is homogeneous in both directions.
+</p><div class="funcsynopsis"><a id="win-GestureBuilder.translate-function"></a><p><code class="funcdef">Object <b class="fsfunc">GestureBuilder.translate</b>(</code><var class="pdparam">x</var>, <var class="pdparam">y</var><code>)</code>;</p></div><p>
+Moves the strokes. The <em class="parameter"><code>x</code></em> and
+<em class="parameter"><code>y</code></em> specifies the movement. A positive value for
+<em class="parameter"><code>x</code></em> moves the strokes to the right and a positive
+value for <em class="parameter"><code>y</code></em> moves the strokes downwards.
+</p></div></div></div><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" type="text/javascript" src="ScriptingLanguage.js"></script><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format">setScriptingLanguage();</script><div class="navfooter"><hr></hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="rgs-flexobjectapi.html">Prev</a> </td><td width="20%" align="center"><a accesskey="u" href="api.man.html">Up</a></td><td width="40%" align="right"> <a accesskey="n" href="rgs-androidconvenience.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">6.11. Flex Object API </td><td width="20%" align="center"><a accesskey="h" href="index-noframes.html">Home</a></td><td width="40%" align="right" valign="top"> 6.13. Android Convenience API</td></tr></table></div></body>
+<!-- Mirrored from rgs-windowsconvenienceapi.html by HTTrack Website Copier/3.x [XR&CO'2013], Wed, 06 Jul 2022 13:29:00 GMT -->
+</html>

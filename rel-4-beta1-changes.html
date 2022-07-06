@@ -1,0 +1,181 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<!-- Mirrored from rel-4-beta1-changes.html by HTTrack Website Copier/3.x [XR&CO'2013], Wed, 06 Jul 2022 13:28:57 GMT -->
+<head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><title>2.55. Changes in 4.0 Beta 1</title><link rel="stylesheet" href="manual.css" type="text/css"></link><meta name="generator" content="DocBook XSL Stylesheets V1.73.2"></meta><link rel="start" href="index-noframes.html" title="Squish Manual"></link><link rel="up" href="relnotes.html" title="Chapter 2. Release Notes—for Upgraders"></link><link rel="prev" href="rel-4-beta2-changes.html" title="2.54. Changes in 4.0 Beta 2"></link><link rel="next" href="rel-345.html" title="2.56. Version 3.4.5"></link><style xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" type="text/css" media="screen">
+        div.toc * { margin-left: 6px; margin-right: auto; max-width: 75em; }
+        div.toc span { margin-left: 0px; }
+        * { margin-left: auto; margin-right: auto; max-width: 75em; }
+        body { margin-left: 6px; margin-right: 6px; }
+        table th { padding: .5ex }
+        table td { padding: .5ex }
+    </style><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format">
+        function keyPress() {
+            var e = window.event;
+            if ( e == undefined ) {
+                return;
+            }
+            /* ### does not properly scroll, yet
+            if ( e.keyCode == 32 ) {
+            var l = document.links;
+            for ( var i = 0; i < l.length; i++ ) {
+                if ( l[i].innerText == "Next" ) {
+                location.href = l[i].href;
+                }
+            }
+            } else
+                */
+                if ( e.keyCode == 0x08 ) {
+            var l = document.links;
+            for ( var i = 0; i < l.length; i++ ) {
+                if ( l[i].innerText == "Prev" ) {
+                location.href = l[i].href;
+                }
+            }
+            }
+        }
+        document.onkeypress = keyPress;
+    </script></head><body><div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="rel-4-beta1-changes"></a>2.55. Changes in 4.0 Beta 1</h2></div></div></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><span class="section"><a href="rel-4-beta1-changes.html#rel-4-changes-general">2.55.1. General</a></span></dt><dt><span class="section"><a href="rel-4-beta1-changes.html#rel-4-changes-scripting">2.55.2. Scripting</a></span></dt><dt><span class="section"><a href="rel-4-beta1-changes.html#rel-4-changes-web">2.55.3. Web-specific</a></span></dt><dt><span class="section"><a href="rel-4-beta1-changes.html#rel-4-changes-qt">2.55.4. Qt-specific</a></span></dt><dt><span class="section"><a href="rel-4-beta1-changes.html#rel-4-changes-java">2.55.5. Java-specific</a></span></dt><dt><span class="section"><a href="rel-4-beta1-changes.html#rel-4-changes-mac">2.55.6. Mac-specific</a></span></dt><dt><span class="section"><a href="rel-4-beta1-changes.html#rel-4-changes-classic-ide">2.55.7. Classic IDE</a></span></dt><dt><span class="section"><a href="rel-4-beta1-changes.html#rel-4-changes-build">2.55.8. Source builds</a></span></dt></dl></div><p>
+Here is a summary of the changes that have been made since the Technical
+Preview editions and which are incorporated in the new
+<span class="emphasis"><em>Squish</em></span> 4.0-beta1 editions.
+</p><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="rel-4-changes-general"></a>2.55.1. General</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>
+Added a new <span class="application">squishserver</span> <code class="option">--verbose</code> option to make it
+easier to debug connection problems involving remote hosts.
+</p></li><li><p>
+The <span class="application">Squish IDE</span> no longer crashes if it's asked to display a reference to a
+non-existent Perl function.
+</p></li><li><p>
+The <span class="application">Spy</span>'s tooltip colors no longer conflict with the AUT's palette.
+</p></li><li><p>
+The <span class="application">Squish IDE</span> is much more robust when property accesses to <code class="code">null</code>
+objects are attempted.
+</p></li><li><p>
+The <span class="application">Squish IDE</span> is no longer has startup errors if <code class="filename">.ini</code>
+configuration files are missing.
+</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="rel-4-changes-scripting"></a>2.55.2. Scripting</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>
+The <code class="code">waitForObject()</code> and
+<code class="code">waitForObjectItem()</code> functions can now accept
+an object name (as before) or an object reference (new) as their first
+argument.
+</p></li><li><p>
+The execution of <code class="code">waitForObject()</code> function calls
+has been speeded up by eliminating one call round-trip between
+<span class="application">squishrunner</span> and the AUT. (And newly recorded scripts are faster
+anyway.)
+</p></li><li><p>
+The <code class="code">waitForObjectItem()</code> function returns a
+reference to the item rather than the object that contains the
+item—for example, it returns the relevant table cell item rather
+than the table.
+</p></li><li><p>
+If the <code class="code">source()</code> function was used in Perl
+scripts that had one or more breakpoints, the filename and line number
+reported by the <span class="application">Squish IDE</span> could be wrong; these problems have now been
+fixed.
+</p></li><li><p>
+<span class="emphasis"><em>Squish</em></span> no longer crashes if the test script has incomplete or
+syntactically incorrect <code class="code">switch</code> statements.
+</p></li><li><p>
+<span class="emphasis"><em>Squish</em></span> no longer crashes if a JavaScript test script attempts to
+access results on a closed SQL query.
+</p></li><li><p>
+The JavaScript SQL result object's <code class="code">toFirst()</code>,
+<code class="code">toNext()</code>, and <code class="code">value()</code> methods no longer
+produce spurious warnings.
+</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="rel-4-changes-web"></a>2.55.3. Web-specific</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>
+The <code class="code">waitForObject()</code> function now uses an improved readiness
+check for Web objects.
+</p></li><li><p>
+JavaScript error reporting in Internet Explorer has been improved.
+</p></li><li><p>
+<span class="emphasis"><em>Squish</em></span> now provides access to the computed/cascaded style values in
+HTML elements' style properties. This ensures that the values retrieved
+correctly reflect the actual state of the elements in the web page.
+</p></li><li><p>
+Fixed a bug relating to <code class="code">setText()</code> calls on file upload
+elements on macOS (for Firefox 3 and Safari).
+</p></li><li><p>
+Fixed a bug with <span class="application">Spy</span> highlighting when using Firefox and Safari on
+macOS.
+</p></li><li><p>
+The setup program now enforces the selection of a usable Firefox version
+to work around problems with Firefox 3.5.2 and later.
+</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="rel-4-changes-qt"></a>2.55.4. Qt-specific</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>
+<code class="code">QIconView</code> items are now accessible as objects with
+properties and geometry.
+</p></li><li><p>
+The <code class="code">waitForObjectItem()</code> function when applied to a
+<code class="code">QTable</code> returns an object representing a particular
+cell item—or raises an exception if no cell item is matched.
+The cell item object can be used like any other object, for example, by
+passing it to the <code class="code">mouseClick()</code> function.
+
+</p></li><li><p>
+When the <code class="code">waitForObjectItem()</code> function is used on a menu it
+waits for the specified menu item to become available, i.e., visible and
+enabled.
+</p></li><li><p>
+If the <code class="code">activateItem()</code> function is called on a disabled
+item, an exception is thrown.
+</p></li><li><p>
+If the native GUI style requests that clicking a button should move the
+keyboard focus to the button, the <code class="code">clickButton()</code> function
+will honor this.
+</p></li><li><p>
+<span class="emphasis"><em>Squish</em></span> no longer crashes if a <code class="code">QLabel</code> had directly or
+indirectly set itself as its own buddy.
+</p></li><li><p>
+Conversions to and from the C++ Standard Library's
+<code class="code">std::string</code> type have been added.
+</p></li><li><p>
+Script bindings for Qt 4's <code class="code">QMovie</code> class have now been
+provided. (They were missing originally because of a function name
+conflict.)
+</p></li><li><p>
+<span class="emphasis"><em>Squish</em></span> no longer crashes if a non-<code class="code">QWidget</code> argument is
+passed to the <code class="code">waitForObjectItem()</code> function.
+</p></li><li><p>
+The RTTI (Run Time Type Information) of <code class="code">QListViewItem</code>s is
+now exposed as a <span class="application">Spy</span> property.
+</p></li><li><p>
+Replaced the new <code class="code">changeWindowState()</code> function that was
+introduced in the Technical Previews with a better
+<code class="code">setWindowState()</code> function which takes an object name or
+reference and an <code class="code">enum</code> (such as
+<code class="code">WindowState.Maximize</code>).
+</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="rel-4-changes-java"></a>2.55.5. Java-specific</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>
+Fixed a bug that occurred when hooking into Eclipse/RCP 3.5-based
+applications.
+</p></li><li><p>
+Fixed a bug in the <code class="code">dragAndDrop()</code> function where if the
+target was given as an object name rather than as a reference it could
+be incorrectly handled.
+</p></li><li><p>
+Fixed the recording of mouse clicks and double-clicks on SWT Tables,
+when the clicks were not on table cell items—for example, if the
+top-left corner of the Table was clicked.
+</p></li><li><p>
+Fixed a problem with text escaping that affected SWT Combo and List
+items.
+</p></li><li><p>
+Added <code class="code">MessageBoxOpened</code> as a possible option for the
+<code class="code">installEventHandler()</code> function. If this option is used, the
+event handler will be called when a native SWT message box is shown.
+</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="rel-4-changes-mac"></a>2.55.6. Mac-specific</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>
+The <code class="code">scrollToObject()</code> function now supports
+<code class="code">NSTableView</code> items.
+</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="rel-4-changes-classic-ide"></a>2.55.7. Classic IDE</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>
+Fixed a bug in the 'Use as expected image' feature on Windows.
+</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="rel-4-changes-build"></a>2.55.8. Source builds</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>
+<span class="emphasis"><em>Squish</em></span> now builds successfully with
+<span class="application">gcc</span> 4.4.
+</p></li><li><p>
+Support has been added for the <code class="option">--enable-64bit</code> configure
+option for <span class="application">gcc</span> on Linux and Solaris.
+</p></li><li><p>
+Eliminated <span class="application">squishidl</span>'s dependency on the <code class="filename">fkit</code>
+library. This simplifies cross-compilations since it avoids a possible
+conflict.
+</p></li></ul></div></div></div><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" type="text/javascript" src="ScriptingLanguage.js"></script><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format">setScriptingLanguage();</script><div class="navfooter"><hr></hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="rel-4-beta2-changes.html">Prev</a> </td><td width="20%" align="center"><a accesskey="u" href="relnotes.html">Up</a></td><td width="40%" align="right"> <a accesskey="n" href="rel-345.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">2.54. Changes in 4.0 Beta 2 </td><td width="20%" align="center"><a accesskey="h" href="index-noframes.html">Home</a></td><td width="40%" align="right" valign="top"> 2.56. Version 3.4.5</td></tr></table></div></body>
+<!-- Mirrored from rel-4-beta1-changes.html by HTTrack Website Copier/3.x [XR&CO'2013], Wed, 06 Jul 2022 13:28:57 GMT -->
+</html>

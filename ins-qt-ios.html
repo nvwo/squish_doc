@@ -1,0 +1,120 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<!-- Mirrored from ins-qt-ios.html by HTTrack Website Copier/3.x [XR&CO'2013], Wed, 06 Jul 2022 13:28:58 GMT -->
+<head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><title>3.4. Installing Squish for Qt for iOS testing</title><link rel="stylesheet" href="manual.css" type="text/css"></link><meta name="generator" content="DocBook XSL Stylesheets V1.73.2"></meta><link rel="start" href="index-noframes.html" title="Squish Manual"></link><link rel="up" href="install.html" title="Chapter 3. How to Install Squish"></link><link rel="prev" href="ins-source-embedded.html" title="3.3. Installing Squish for Qt from Embedded Source Packages"></link><link rel="next" href="ins-qt-android.html" title="3.5. Installing Squish for Qt for Android testing"></link><style xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" type="text/css" media="screen">
+        div.toc * { margin-left: 6px; margin-right: auto; max-width: 75em; }
+        div.toc span { margin-left: 0px; }
+        * { margin-left: auto; margin-right: auto; max-width: 75em; }
+        body { margin-left: 6px; margin-right: 6px; }
+        table th { padding: .5ex }
+        table td { padding: .5ex }
+    </style><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format">
+        function keyPress() {
+            var e = window.event;
+            if ( e == undefined ) {
+                return;
+            }
+            /* ### does not properly scroll, yet
+            if ( e.keyCode == 32 ) {
+            var l = document.links;
+            for ( var i = 0; i < l.length; i++ ) {
+                if ( l[i].innerText == "Next" ) {
+                location.href = l[i].href;
+                }
+            }
+            } else
+                */
+                if ( e.keyCode == 0x08 ) {
+            var l = document.links;
+            for ( var i = 0; i < l.length; i++ ) {
+                if ( l[i].innerText == "Prev" ) {
+                location.href = l[i].href;
+                }
+            }
+            }
+        }
+        document.onkeypress = keyPress;
+    </script></head><body><div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="ins-qt-ios"></a>3.4. Installing Squish for Qt for iOS testing</h2></div></div></div><p>
+The Squish for Qt for iOS testing package is suitable for building the iOS
+application for testing. You still need a Squish package for actually
+recording, managing and running the tests. Please see <a class="xref" href="ins-commandline-tools-server-ide.html#ins-binary" title="3.1.1. Installing from Binary Packages">Installing from Binary Packages (Section 3.1.1)</a> for details on installing such a package.
+</p><p>
+In order to build your application instrumented for using with Squish on
+iOS, you have to unpack the package and do a build of your application with
+Squish's wrapper included in the build. To include it, modify your
+applications <code class="filename">main.cpp</code> and <code class="filename">.pro</code> as
+follows:
+</p><div class="orderedlist"><ol type="1"><li><p>
+Add
+</p><div xmlns:fo="http://www.w3.org/1999/XSL/Format" xmlns="" class="programlistingcontainer"><span class="programlistinglanguage"></span><pre class="programlisting">
+#ifdef HAVE_SQUISH
+#  include &lt;qtbuiltinhook.h&gt;
+#endif
+</pre></div><p>
+to your includes in the file with your main function (typically
+<code class="filename">main.cpp</code>).
+</p><p>
+In the same file add
+</p><div xmlns:fo="http://www.w3.org/1999/XSL/Format" xmlns="" class="programlistingcontainer"><span class="programlistinglanguage"></span><pre class="programlisting">
+#ifdef HAVE_SQUISH
+    Squish::allowAttaching(11233);
+#endif
+</pre></div><p>
+after the QApplication constructor but before you enter the event loop.
+</p><p>
+So a typical <code class="code">main()</code> function might look like:
+</p><div xmlns:fo="http://www.w3.org/1999/XSL/Format" xmlns="" class="programlistingcontainer"><span class="programlistinglanguage"></span><pre class="programlisting">
+#include "mainwindow.h"
+#include &lt;QApplication&gt;
+#ifdef HAVE_SQUISH
+#  include &lt;qtbuiltinhook.h&gt;
+#endif
+
+int main(int argc, char *argv[])
+{
+    QApplication a(argc, argv);
+#ifdef HAVE_SQUISH
+    Squish::allowAttaching(11233);
+#endif
+    MainWindow w;
+    w.show();
+
+    return a.exec();
+}
+</pre></div><p>
+</p></li><li><p>
+Add
+</p><div xmlns:fo="http://www.w3.org/1999/XSL/Format" xmlns="" class="programlistingcontainer"><span class="programlistinglanguage"></span><pre class="programlisting">
+include(&lt;path-to-squish&gt;/qtbuiltinhook.pri)
+</pre></div><p>
+to your .pro file (replace <code class="code">&lt;path-to-squish&gt;</code> with the
+full path to the location where you unpacked Squish for Qt on iOS).
+</p></li><li><p>
+Now you can register an attachable application in Squish (with the IP
+address of the device and the port number 11233) and attach to it from a
+Squish running on the desktop. If you use a different port number in the
+<code class="code">Squish::allowAttaching()</code> call, you need to register the app
+with a different port number. See also <a class="xref" href="rg-cppapi.html#rgcppqti-attach" title="7.13.2.3. Attaching to a Running Application with the Built-in Hook">Attaching to a Running Application with the Built-in Hook (Section 7.13.2.3)</a>
+for more details on attachable applications.
+</p></li></ol></div><p>
+If you want to use Squish's Qt wrapper extensions, you have to set the
+<code class="code">SQUISH_WRAPPER_EXTENSIONS</code> variable before you include the
+<code class="filename">qtbuiltinhook.pri</code> in your <code class="filename">.pro</code>
+file.
+</p><p>
+Examples:
+</p><div class="itemizedlist"><ul type="disc" compact><li><p>
+If your application uses Qt Quick 1, you should add Squish's declarative extension like:
+</p><div xmlns:fo="http://www.w3.org/1999/XSL/Format" xmlns="" class="programlistingcontainer"><span class="programlistinglanguage"></span><pre class="programlisting">
+SQUISH_WRAPPER_EXTENSIONS = squishdeclarative
+include(&lt;path-to-squish&gt;/qtbuiltinhook.pri)
+</pre></div><p>
+</p></li><li><p>
+If your application uses Qt Quick 2, you should add Squish's Qt Quick extension like:
+</p><div xmlns:fo="http://www.w3.org/1999/XSL/Format" xmlns="" class="programlistingcontainer"><span class="programlistinglanguage"></span><pre class="programlisting">
+SQUISH_WRAPPER_EXTENSIONS = squishqtquick squishqtquicktypes
+include(&lt;path-to-squish&gt;/qtbuiltinhook.pri)
+</pre></div><p>
+</p></li></ul></div></div><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" type="text/javascript" src="ScriptingLanguage.js"></script><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format">setScriptingLanguage();</script><div class="navfooter"><hr></hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="ins-source-embedded.html">Prev</a> </td><td width="20%" align="center"><a accesskey="u" href="install.html">Up</a></td><td width="40%" align="right"> <a accesskey="n" href="ins-qt-android.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">3.3. Installing Squish for Qt from Embedded Source Packages </td><td width="20%" align="center"><a accesskey="h" href="index-noframes.html">Home</a></td><td width="40%" align="right" valign="top"> 3.5. Installing Squish for Qt for Android testing</td></tr></table></div></body>
+<!-- Mirrored from ins-qt-ios.html by HTTrack Website Copier/3.x [XR&CO'2013], Wed, 06 Jul 2022 13:28:58 GMT -->
+</html>

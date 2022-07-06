@@ -1,0 +1,1336 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<!-- Mirrored from ins-commandline-tools-server-ide.html by HTTrack Website Copier/3.x [XR&CO'2013], Wed, 06 Jul 2022 13:29:02 GMT -->
+<head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><title>3.1. Installing the Command Line Tools, Server, and IDEs</title><link rel="stylesheet" href="manual.css" type="text/css"></link><meta name="generator" content="DocBook XSL Stylesheets V1.73.2"></meta><link rel="start" href="index-noframes.html" title="Squish Manual"></link><link rel="up" href="install.html" title="Chapter 3. How to Install Squish"></link><link rel="prev" href="install.html" title="Chapter 3. How to Install Squish"></link><link rel="next" href="ins-floating-license-server.html" title="3.2. Setting up the Squish Floating License Server"></link><style xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" type="text/css" media="screen">
+        div.toc * { margin-left: 6px; margin-right: auto; max-width: 75em; }
+        div.toc span { margin-left: 0px; }
+        * { margin-left: auto; margin-right: auto; max-width: 75em; }
+        body { margin-left: 6px; margin-right: 6px; }
+        table th { padding: .5ex }
+        table td { padding: .5ex }
+    </style><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format">
+        function keyPress() {
+            var e = window.event;
+            if ( e == undefined ) {
+                return;
+            }
+            /* ### does not properly scroll, yet
+            if ( e.keyCode == 32 ) {
+            var l = document.links;
+            for ( var i = 0; i < l.length; i++ ) {
+                if ( l[i].innerText == "Next" ) {
+                location.href = l[i].href;
+                }
+            }
+            } else
+                */
+                if ( e.keyCode == 0x08 ) {
+            var l = document.links;
+            for ( var i = 0; i < l.length; i++ ) {
+                if ( l[i].innerText == "Prev" ) {
+                location.href = l[i].href;
+                }
+            }
+            }
+        }
+        document.onkeypress = keyPress;
+    </script></head><body><div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="ins-commandline-tools-server-ide"></a>3.1. Installing the Command Line Tools, Server, and IDEs</h2></div></div></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><span class="section"><a href="ins-commandline-tools-server-ide.html#ins-binary">3.1.1. Installing from Binary Packages</a></span></dt><dt><span class="section"><a href="ins-commandline-tools-server-ide.html#ins-source">3.1.2. Installing Squish for Qt from Desktop Source Packages</a></span></dt><dt><span class="section"><a href="ins-commandline-tools-server-ide.html#ins-renamedqt">3.1.3. Installation for testing with a renamed Qt library</a></span></dt><dt><span class="section"><a href="ins-commandline-tools-server-ide.html#ins-build-errors">3.1.4. Solving Build Errors</a></span></dt></dl></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="ins-binary"></a>3.1.1. Installing from Binary Packages</h3></div></div></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><span class="section"><a href="ins-commandline-tools-server-ide.html#ins-binary-platforms">3.1.1.1. Minimum System Requirements for Binary Packages</a></span></dt><dt><span class="section"><a href="ins-commandline-tools-server-ide.html#ins-binary-get">3.1.1.2. Choosing the Correct <span class="emphasis"><em>Squish</em></span> Package</a></span></dt><dt><span class="section"><a href="ins-commandline-tools-server-ide.html#ins-binary-config">3.1.1.3. Configuring the Package</a></span></dt><dt><span class="section"><a href="ins-commandline-tools-server-ide.html#ins-binary-unattended">3.1.1.4. Performing Unattended Installations</a></span></dt></dl></div><p>
+In most cases, <span class="emphasis"><em>Squish</em></span> can be installed from a binary package. These
+simply need to be unpacked and then configured to make <span class="emphasis"><em>Squish</em></span> ready
+for use.
+</p><p>
+Binary packages are available for <span class="trademark">Linux</span>®, <span class="trademark">macOS</span>®, and <span class="trademark">Microsoft</span>® <span class="trademark">Windows</span>®.
+Different versions of each <span class="emphasis"><em>Squish</em></span> edition are provided to ensure the
+tightest possible integration between <span class="emphasis"><em>Squish</em></span>, the operating system,
+and the applications or websites you want to test.
+</p><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="ins-binary-platforms"></a>3.1.1.1. Minimum System Requirements for Binary Packages</h4></div></div></div><p>
+Binary packages contain the <span class="application">Squish IDE</span> and the Squish Tools (<span class="application">squishrunner</span>,
+<span class="application">squishserver</span>, and others). They have different minimum system requirements.
+</p><div class="section" lang="en"><div class="titlepage"><div><div><h5 class="title"><a id="ins-binary-req-ide"></a>3.1.1.1.1. Minimum System Requirements for <span class="application">Squish IDE</span></h5></div></div></div><p>
+The <span class="application">Squish IDE</span> can be installed on the following platforms:
+</p><div class="itemizedlist"><ul type="disc" compact><li><p>Microsoft Windows:</p><div class="itemizedlist"><ul type="circle" compact><li><p>64-bit Windows 7 SP1 or newer 64-bit versions</p></li></ul></div></li><li><p>GNU/Linux:</p><div class="itemizedlist"><ul type="circle" compact><li><p>64-bit CentOS 7.5 or newer 64-bit versions</p></li><li><p>64-bit Red Hat Enterprise 7.5 or newer 64-bit versions</p></li><li><p>64-bit SUSE Linux Enterprise Server 15 or newer 64-bit versions</p></li><li><p>other 64-bit distributions which provide GTK 3.20 or newer</p></li></ul></div></li><li><p>Apple macOS:</p><div class="itemizedlist"><ul type="circle" compact><li><p>macOS 10.14 Mojave or newer</p></li></ul></div></li></ul></div><p>
+Please note that Squish binary packages can be still installed on older
+platforms, but the <span class="application">Squish IDE</span> will not be available. For those requirements,
+please see the section below.
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h5 class="title"><a id="ins-binary-req-tools"></a>3.1.1.1.2. Minimum System Requirements for Squish Tools</h5></div></div></div><p>
+The Squish command-line Tools (<span class="application">squishrunner</span>, <span class="application">squishserver</span>, and others) can
+be installed on the following platforms:
+</p><div class="itemizedlist"><ul type="disc" compact><li><p>Microsoft Windows:</p><div class="itemizedlist"><ul type="circle" compact><li><p>Windows 7 SP1 or newer</p></li></ul></div></li><li><p>GNU/Linux:</p><div class="itemizedlist"><ul type="circle" compact><li><p>CentOS 6 or newer</p></li><li><p>Debian 7 or newer</p></li><li><p>Ubuntu 14.04 or newer</p></li><li><p>other distributions which provide glibc 2.12 and libstdc++ 4.4 or newer</p></li></ul></div><p>
+            Squish binary packages for Qt 5.8 and higher (like Qt 5.9, Qt 6.0, Qt 6.1, etc)
+            have the same requirements as their matching Qt libraries.
+            For example, Squish for Qt 5.9 binary packages have the same requirements as
+            Qt 5.9 binary packages.
+        </p></li><li><p>Apple macOS</p><div class="itemizedlist"><ul type="circle" compact><li><p>macOS 10.14 Mojave or newer</p></li></ul></div></li></ul></div><p>
+
+Please note that the Squish Tools (<span class="application">squishrunner</span>, <span class="application">squishserver</span>, and others) can
+also run on other platforms (like embedded Linux, or older versions of the platforms
+above), but they have to be built from sources, and remote testing has to be used.
+
+</p></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="ins-binary-get"></a>3.1.1.2. Choosing the Correct <span class="emphasis"><em>Squish</em></span> Package</h4></div></div></div><p>
+The binary <span class="emphasis"><em>Squish</em></span> packages are available in your Customer Download Area on the
+<a class="ulink" href="https://www.froglogic.com/" target="_blank"><span class="emphasis"><em>froglogic</em></span> website</a>. To find out which package you need, the first thing you need
+to know is what toolkit is used to build the applications you are going
+to test. The toolkit could be <span class="trademark">Qt</span>®, <span class="trademark">Java</span>™, native Windows (e.g., MFC or
+.NET), macOS (i.e., Cocoa), Web, and so on. You also need to know
+which operating system you are going to use to test the applications,
+e.g., Linux, macOS, or <span class="trademark">Microsoft</span>® Windows.
+</p><p>
+If you will be testing Qt applications, you need to collect some
+additional technical information in order to choose the correct package:
+</p><div class="orderedlist"><ol type="1"><li><p>Which version of Qt is used by the application
+you want to test?</p></li><li><p>Which compiler (and which version of the compiler)
+was used to compile the Qt library (and the application which you
+want to test)?</p></li></ol></div><p>
+If you don't know this information, you'll need to ask one of the application's
+developers. Once you know the operating system, <span class="emphasis"><em>Squish</em></span> edition, toolkit
+version, and the compiler name and version, you can identify the correct
+<span class="emphasis"><em>Squish</em></span> package as follows: Every <span class="emphasis"><em>Squish</em></span> package name is of the form
+<code class="code">squish-<span class="emphasis"><em>&lt;squishVersion&gt;</em></span>-toolkit<span class="emphasis"><em>&lt;toolkitVersion&gt;</em></span>-<span class="emphasis"><em>&lt;platform&gt;</em></span>-<span class="emphasis"><em>&lt;compiler&gt;</em></span></code>
+and ending with <code class="filename">.exe</code> (on Windows),
+<code class="filename">.run</code> (on Linux) or <code class="filename">.dmg</code> (on macOS).  Some package names don't
+specify the <code class="code"><span class="emphasis"><em>&lt;toolkitVersion&gt;</em></span></code>, in which
+case the package can be used with any version of the toolkit; others have an
+<span class="emphasis"><em>x</em></span> in the toolkit version, in which case they can be used
+with a version of the toolkit that has any digit in that position—so
+<code class="code">qt43x</code> means any Qt 4.3 version, Qt 4.3.0, Qt 4.3.1,
+and so on. Some packages don't specify the
+<code class="code"><span class="emphasis"><em>&lt;compiler&gt;</em></span></code>, in which case they can be
+used with any compiler that runs on the platform. Some examples are shown in
+the table below.
+</p><p>
+<span class="emphasis"><em>Squish</em></span> packages for macOS
+machines—and that are processor-dependent—embed a processor
+identifier in their name, e.g., <code class="filename">macppc</code> for PowerPC
+processors and <code class="filename">i386</code> for Intel processors.
+Similarly, some <span class="trademark">Java</span>™ packages specify whether they are for 32-bit or
+64-bit machines (e.g., using <code class="filename">java-win32</code> or
+<code class="filename">java-win64</code> in their names). Yet in some cases the
+architecture of the machine doesn't matter. For example, <span class="emphasis"><em>Squish</em></span> for
+Windows (i.e., for applications using the native MFC or .NET toolkit) is
+designed to work with all Windows compilers and with both 32-bit and
+64-bit versions of Windows—so in this case the package names just
+have the <span class="emphasis"><em>Squish</em></span> version, e.g.,
+<code class="filename">squish-6.6.1-windows.exe</code>.
+</p><div class="table"><a id="idp36947208"></a><p class="title"><b>Table 3.1. A Cut-Down List of Example Package Names</b></p><div class="table-contents"><table summary="A Cut-Down List of Example Package Names" border="1"><colgroup><col></col><col></col></colgroup><thead><tr><th>Example Package Name</th><th>Description</th></tr></thead><tbody><tr><td><code class="code">squish-6.6.1-qt47x-linux64.run</code></td><td><span class="emphasis"><em>Squish</em></span> 6.6.1 for 64-bit AUTs running on Linux and built with Qt
+4.7.<span class="emphasis"><em>x</em></span> and using any compiler.
+</td></tr><tr><td><code class="code">squish-6.6.0-qt59x-win32-msvc14.exe</code></td><td><span class="emphasis"><em>Squish</em></span> 6.6.1 for 32-bit AUTs running on Windows and built with
+Qt 5.9.<span class="emphasis"><em>x</em></span> using the MSVC 14 (VS 2015) compiler.
+</td></tr><tr><td><code class="code">squish-6.6.0-qt514x-win64-msvc141.exe</code></td><td><span class="emphasis"><em>Squish</em></span> 6.6.1 for 64-bit AUTs running on Windows and built with
+Qt 5.14.<span class="emphasis"><em>x</em></span> using the MSVC 14.1 (VS 2017) compiler.
+</td></tr><tr><td><code class="code">squish-6.6.0-qt56x-macx86_64.dmg</code></td><td><span class="emphasis"><em>Squish</em></span> 6.6.1 for AUTs running on 64-bit Intel macOS machines and
+built with Qt 5.6.<span class="emphasis"><em>x</em></span> using the standard compiler.
+</td></tr><tr><td><code class="code">squish-6.6.1-web-windows.exe</code></td><td><span class="emphasis"><em>Squish</em></span> 6.6.1 for Web using any browser on Windows.
+</td></tr><tr><td><code class="code">squish-6.6.1-web-linux64.run</code></td><td><span class="emphasis"><em>Squish</em></span> 6.6.1 for Web using a 64-bit browser on Linux.
+</td></tr><tr><td><code class="code">squish-6.6.1-web-mac.dmg</code></td><td><span class="emphasis"><em>Squish</em></span> 6.6.1 for Web using any browser on macOS.
+</td></tr><tr><td><code class="code">squish-6.6.1-java-win32.exe</code></td><td><span class="emphasis"><em>Squish</em></span> 6.6.1 for Java—all 32-bit versions from 1.4 using
+AWT/Swing or SWT—running on Windows.
+</td></tr><tr><td><code class="code">squish-6.6.1-java-win64.exe</code></td><td><span class="emphasis"><em>Squish</em></span> 6.6.1 for Java—all 64-bit versions from 1.4 using
+AWT/Swing or SWT—running on Windows.
+</td></tr></tbody></table></div></div><br class="table-break"></br><p>
+If you cannot find a <span class="emphasis"><em>Squish</em></span> package in your customer area that
+matches your information, it is best that you build <span class="emphasis"><em>Squish</em></span> from
+source. This will ensure that <span class="emphasis"><em>Squish</em></span> integrates correctly with your
+local software configuration. Building <span class="emphasis"><em>Squish</em></span> from source is described
+in <a class="xref" href="ins-commandline-tools-server-ide.html#ins-source" title="3.1.2. Installing Squish for Qt from Desktop Source Packages">Installing Squish for Qt from Desktop Source Packages (Section 3.1.2)</a>.
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="ins-binary-config"></a>3.1.1.3. Configuring the Package</h4></div></div></div><p>
+After you have decided which <span class="emphasis"><em>Squish</em></span> package you need, download
+it from your customer area onto your computer, and execute it.
+</p><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Note: On Linux"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/note.png"></img></td><th align="left">On Linux</th></tr><tr><td align="left" valign="top"><p>
+On Linux, you need to make the <code class="filename">.run</code> file which you downloaded
+executable first. Popular desktop environments allow this by right-clicking the
+file and enabling the <code class="literal">Execute</code> permission. You can however also
+make the installer executable on the command line by executing:
+</p><pre class="screen"><code class="prompt">$ </code><span class="application">chmod</span> <code class="option">a+x</code> <code class="option">&lt;packagename&gt;</code></pre></td></tr></table></div><p>
+The installation program will guide you through the configuration process
+by presenting multiple pages.
+</p><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Note: On Solaris &amp; AIX"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/note.png"></img></td><th align="left">On Solaris &amp; AIX</th></tr><tr><td align="left" valign="top"><p>
+The following instructions depicting the installation procedure using the
+graphical installer only apply to Windows, Linux and macOS. For other
+platforms, such as Solaris or AIX, the <span class="emphasis"><em>Squish</em></span> package is a plain ZIP archive.
+After uncompressing it, the installation is performed in text mode by running
+the <a class="xref" href="rg-cmdline.html#rg-squishconfig" title="7.4.2. squishconfig">squishconfig (Section 7.4.2)</a> program.
+</p></td></tr></table></div><div class="screenshot"><div class="mediaobject" align="center"><img src="images/installer-welcome.png" align="middle" alt="The Squish setup program in action."></img></div></div><p>
+The installation program is shown running in the
+screenshot above (and in several screenshots that follow). However, the
+list of configuration steps varies depending on which edition of
+<span class="emphasis"><em>Squish</em></span> you are installing, so don't be concerned if one or more of the
+configuration pages mentioned below is not presented to you, or
+if additional pages are shown.
+</p><div class="tip" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Tip: Changing Configuration Settings"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Tip]" src="images/tip.png"></img></td><th align="left">Changing Configuration Settings</th></tr><tr><td align="left" valign="top"><p>
+Once you start the installation program, if you want to go back
+and change a setting you made during the configuration, you can use the
+<span class="guilabel">Back</span> button to go back to the relevant page, change
+the configuration setting, and then move forward again using the
+<span class="guilabel">Next</span> button.
+</p></td></tr></table></div><div class="section" lang="en"><div class="titlepage"><div><div><h5 class="title"><a id="ins-binary-config-licensekey"></a>3.1.1.3.1. Entering a License Key</h5></div></div></div><div class="screenshot"><div class="mediaobject" align="center"><img src="images/installer-licensekey.png" align="middle" alt="The Squish setup program in action."></img></div></div><p>
+After acknowledging the welcome page by pressing the
+<span class="guilabel">Next</span> button at the bottom of the setup program's
+window, the next page will request you to enter the <span class="emphasis"><em>Squish</em></span> license
+key, activation code, or address to a Floating License Server.
+If you have a 19-character license key to enter, this section is for you.
+If you want to enter a hostname:port of a Floating License Server, see
+<a class="xref" href="ins-commandline-tools-server-ide.html#ins-binary-config-license-server" title="3.1.1.3.2. Entering a Floating License Server Address">Entering a Floating License Server Address (Section 3.1.1.3.2)</a>.</p><p>
+If you already have a previous <span class="emphasis"><em>Squish</em></span> installation on your
+computer—perhaps an evaluation version—or if you have
+already copied the license file to your <code class="envar">HOME</code> directory,
+and renamed it to start with a period, the license key will be shown in
+the input field. If there is no license shown, or if you want to use a
+different one, enter your license here exactly as it appears in the
+<code class="filename">Squish License Key</code> that is available in your
+download area, including any dashes.
+</p><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Note: License File Location"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/note.png"></img></td><th align="left">License File Location</th></tr><tr><td align="left" valign="top"><p>
+</p><div class="tabularx"><table width="100%" border="1"><colgroup><col align="left"></col><col align="left"></col></colgroup><tbody valign="top"><tr><td align="left" valign="top"><p><span class="bold"><strong>Windows</strong></span></p></td><td align="left" valign="top"><p>
+    <code class="filename">%<code class="envar">HOMEDRIVE</code>%%<code class="envar">HOMEPATH</code>%\.squish-license</code>
+    </p></td></tr><tr><td align="left" valign="top"><p><span class="bold"><strong>Linux/Unix/macOS</strong></span></p></td><td align="left" valign="top"><p>
+        <code class="filename">$<code class="envar">HOME</code>/.squish-license</code>
+    </p></td></tr></tbody></table></div><p>
+</p><p>
+To use a license key file stored somewhere else, set the
+<code class="envar">SQUISH_LICENSEKEY_DIR</code> environment variable to the desired
+location. (See <a class="xref" href="rg-envvars.html" title="7.5. Environment Variables">Environment Variables (Section 7.5)</a>.)
+</p></td></tr></table></div><p>
+Click the <span class="guilabel">Next</span> button to advance to the next step
+in the configuration process. If there are any problems with the license
+(for example, if it has expired or you mistyped it) then a message box
+will be shown, explaining the problem; you can then have another try.
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h5 class="title"><a id="ins-binary-config-license-server"></a>3.1.1.3.2. Entering a Floating License Server Address</h5></div></div></div><p> Select the corresponding section to use a floating license with Squish.
+The installer will try to discover license servers on the network and populate
+the drop down menu with them.
+If the license server you plan to use is not listed, you may enter a server
+address manually in the form of (hostname_or_IP_address:port). When a valid
+server address is selected the <span class="guibutton">Next</span> button will be
+enabled.
+</p><div class="screenshot"><div class="mediaobject" align="center"><img src="images/installer-floating-license-server.png" align="middle" alt='The Squish setup program with license type set to "floating license".'></img></div></div><p>
+Click <span class="guilabel">Next</span> to advance to the next step
+in the configuration process. If there are any problems with the license
+server or its license (for example, the server is not reachable or its
+license doesn't include the required Squish editions) then a message box
+will be shown, explaining the problem; you can then have another try.
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h5 class="title"><a id="ins-binary-config-licensetext"></a>3.1.1.3.3. Acknowledging the Terms of Use</h5></div></div></div><div class="screenshot"><div class="mediaobject" align="center"><img src="images/installer-licensetext.png" align="middle" alt="A picture of the license text page from the froglogic Squish configuration program."></img></div></div><p>
+After entering your license key or server address, you will be presented with the license
+under which you are permitted to use your copy of <span class="emphasis"><em>Squish</em></span>. Please read
+the entire license text carefully before proceeding. Click one of the two radio
+buttons (<span class="guibutton">I accept the license.</span> or <span class="guibutton">I do not
+accept the license.</span>), that appear below the license text, to
+indicate whether you agree or disagree with the terms. If you disagree, then
+you cannot install or use <span class="emphasis"><em>Squish</em></span> so you should click the
+<span class="guibutton">Cancel</span> button (or close the window) to terminate the
+installation.
+</p><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Note: License Text Differences"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/note.png"></img></td><th align="left">License Text Differences</th></tr><tr><td align="left" valign="top"><p>
+The license text varies depending on the license key—for example,
+the terms are different for evaluation versions than for paid for
+versions.
+</p></td></tr></table></div><p>
+If you accept the license, the  <span class="guilabel">Next</span> button will
+become enabled, so you can proceed to the next step of the configuration
+process.
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h5 class="title"><a id="ins-binary-config-components"></a>3.1.1.3.4. Component Selection</h5></div></div></div><p>
+In this step, the installation of <span class="emphasis"><em>Squish</em></span> can be customized by (de-)selecting
+optional components.
+</p><div class="screenshot"><div class="mediaobject" align="center"><img src="images/installer-components.png" align="middle" alt="A picture of the target components page from the froglogic Squish setup program."></img></div></div><p>
+The basic <span class="guilabel">Squish Tools</span> (such as <span class="application">squishrunner</span> or
+<span class="application">squishserver</span>) are mandatory and thus are always selected. However, other
+components are optional:
+</p><div class="variablelist"><dl><dt><span class="term"><span class="guilabel">Squish IDE</span></span></dt><dd><p>
+You can choose to not install the <span class="application">Squish IDE</span> in order to save disk space. This can
+be useful in case the Squish installation is only meant to be used for
+automatic (e.g. nightly or CI-driven) test execution but not for test
+development.
+</p></dd><dt><span class="term"><span class="guilabel">Squish Test Center</span></span></dt><dd><p>
+The Squish Test Center is a separate component for aggregating and displaying
+<span class="emphasis"><em>Squish</em></span> test reports. This component is typically only installed on a single
+system and then shared across the network with other workstations.
+</p></dd></dl></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h5 class="title"><a id="ins-binary-config-languages"></a>3.1.1.3.5. Script Languages</h5></div></div></div><p>
+In this step, the script languages to use for test scripts can be configured.
+Furthermore, in case the <span class="emphasis"><em>Squish</em></span> package contains multiple versions of any
+given language, this page permits selecting the version to use for executing
+tests. Note that these settings can also be reconfigured later on by running
+the <a class="xref" href="rg-cmdline.html#rg-squishconfig" title="7.4.2. squishconfig">squishconfig (Section 7.4.2)</a> program.
+</p><p>
+This page is not displayed if a Squish package contains only a single version
+of each script language.
+</p><div class="screenshot"><div class="mediaobject" align="center"><img src="images/installer-script-languages.png" align="middle" alt="A picture of the script language selection page from the froglogic Squish setup program."></img></div></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h5 class="title"><a id="ins-binary-config-targetdir"></a>3.1.1.3.6. Installation Folder</h5></div></div></div><p>
+This step decides into which location on your system the <span class="emphasis"><em>Squish</em></span> package will
+be uncompressed.
+</p><div class="screenshot"><div class="mediaobject" align="center"><img src="images/installer-targetdir.png" align="middle" alt="A picture of the target selection page from the froglogic Squish setup program."></img></div></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h5 class="title"><a id="ins-binary-config-userqtpath"></a>3.1.1.3.7. Path to the Qt Library</h5></div></div></div><p>
+This step is only necessary if you are configuring a <span class="emphasis"><em>Squish</em></span> package set up
+for testing Qt applications on macOS, and if your license key entitles you
+to test Qt applications. If either of these conditions doesn't apply, this
+configuration page will not appear, in which case you can safely skip to the
+next section and continue from there.
+</p><div class="screenshot"><div class="mediaobject" align="center"><img src="images/installer-userqtpath.png" align="middle" alt="A picture of the page from the froglogic Squish configuration program where you configure which Qt library should be used for the tested application."></img></div></div><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Note: Locating the Qt library"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/note.png"></img></td><th align="left">Locating the Qt library</th></tr><tr><td align="left" valign="top"><p>
+Most Qt applications on the macOS contain Qt libraries in the application
+bundle. If this is the case for your AUT, then use the Finder to navigate to the
+AUT, right click on it and say <span class="guilabel">Show Package Contents</span>,
+then drill down to <code class="filename">Contents/Frameworks</code> to find
+<code class="filename">QtCore.framework</code>. To copy that path to the clipboard,
+<span class="guimenu">View</span> - <span class="guimenu">Show Path Bar</span>, right click on the
+<span class="guibutton">Frameworks</span> button in the bottom path bar,
+<span class="guilabel">Copy "Frameworks" as Pathname</span>, then paste it into the
+line edit in the installer dialog.
+</p></td></tr></table></div><p>After specifying the path to the requested Qt library, use the
+<span class="guilabel">Next</span> button to advance to the next step of the setup.</p><div class="tip" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Tip:  Changing the path to Qt libraries later "><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Tip]" src="images/tip.png"></img></td><th align="left"> Changing the path to Qt libraries later </th></tr><tr><td align="left" valign="top"><p>If later, you wish to change the location of the Qt library, without
+reinstalling Squish, you can issue the command:
+</p><pre class="programlisting">
+$ SQUISHDIR/bin/squishconfig --qt=/path/to/QtCore.framework
+</pre><p>
+</p></td></tr></table></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h5 class="title"><a id="ins-binary-config-userjavapath"></a>3.1.1.3.8. Paths for <span class="trademark">Java</span>™ Settings</h5></div></div></div><p>
+This step is only necessary if you are configuring a <span class="emphasis"><em>Squish</em></span> package set up
+for testing <span class="trademark">Java</span>™ applications or if you are configuring a <span class="emphasis"><em>Squish</em></span> package
+for testing Web applications and if your license key entitles you to test
+<span class="trademark">Java</span>™ or Web applications. If either of these conditions doesn't apply, this
+configuration page will not appear, in which case you can safely skip to the
+next section and continue from there.
+</p><div class="screenshot"><div class="mediaobject" align="center"><img src="images/installer-userjavapath.png" align="middle" alt="A picture of the page from the froglogic Squish configuration program where you configure the necessary Java paths."></img></div></div><p>
+In order to be able to test <span class="trademark">Java</span>™ applications, you need to tell
+<span class="emphasis"><em>Squish</em></span> where your <span class="trademark">Java</span>™ runtime libraries are installed. If
+you are using the <span class="trademark">Java</span>™ <acronym class="acronym">SDK</acronym> (Software Development
+Kit), then you must specify the runtime library
+directory—called <code class="filename">jre</code>—which is located
+inside the <acronym class="acronym">SDK</acronym>'s directory. If you only have the
+<acronym class="acronym">JRE</acronym> (<span class="trademark">Java</span>™ Runtime Environment) installed, then
+simply specify the <acronym class="acronym">JRE</acronym>'s directory (and
+<span class="emphasis"><em>not</em></span> a directory inside the <acronym class="acronym">JRE</acronym>).
+</p><p>
+After specifying the path to the <span class="trademark">Java</span>™ runtime library, use the
+<span class="guilabel">Next</span> button to advance to the next step of the
+setup.
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h5 class="title"><a id="ins-binary-config-review"></a>3.1.1.3.9. Ready to Install</h5></div></div></div><p>
+At this point all the configuration options have been set and the
+installation is ready to launch. A page is shown which displays the
+disk space required by the selected <span class="emphasis"><em>Squish</em></span> configuration.
+</p><div class="screenshot"><div class="mediaobject" align="center"><img src="images/installer-review.png" align="middle" alt="A picture of the configuration review page from the froglogic Squish configuration program."></img></div></div><p>
+When you press the <span class="guilabel">Next</span> button on this page it
+means that the configuration shown will be saved to disk and <span class="emphasis"><em>Squish</em></span>
+will use these settings from now on.
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h5 class="title"><a id="ins-binary-config-progress"></a>3.1.1.3.10. Executing the Installation</h5></div></div></div><p>The installation program now commences installing <span class="emphasis"><em>Squish</em></span> on your system.
+You can click the <span class="guilabel">Show Details</span> button to get a detailed list of
+actions performed as part of the installation.</p><div class="screenshot"><div class="mediaobject" align="center"><img src="images/installer-progress.png" align="middle" alt="A picture of the Squish setup program installating a package."></img></div></div><p>
+You can close the installer at any time, e.g. by closing the window or by
+pressing the <span class="guilabel">Cancel</span> button (only visible on platforms
+other than macOS). All changes done so far will be rolled back.
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h5 class="title"><a id="ins-binary-config-final"></a>3.1.1.3.11. Concluding the Configuration</h5></div></div></div><p>
+Congratulations! You have finished configuring <span class="emphasis"><em>Squish</em></span>, and all the
+settings have been saved successfully. This page concludes the setup of
+your <span class="emphasis"><em>Squish</em></span> binary package.
+</p><div class="screenshot"><div class="mediaobject" align="center"><img src="images/installer-finished.png" align="middle" alt="A picture of the final page from the froglogic Squish insatllation program."></img></div></div><p>
+You should now click the <span class="guilabel">Finish</span> button close the
+installation program. An option is presented which can be used to define
+whether the <span class="application">Squish IDE</span> should be launched after the installation finished.
+</p><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Note: Windows-specific"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/note.png"></img></td><th align="left">Windows-specific</th></tr><tr><td align="left" valign="top"><p>
+In some cases, a restart is required when installing <span class="emphasis"><em>Squish</em></span> on Windows. This
+is due to some reconfiguration required which only becomes effective when
+starting the operating system. Please make sure to restart your computer before
+using Squish to ensure that it operates properly.
+</p></td></tr></table></div><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Note: macOS-specific"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/note.png"></img></td><th align="left">macOS-specific</th></tr><tr><td align="left" valign="top"><p>
+On macOS Squish requires enabling Accessibility access for the Squish IDE or
+the <span class="application">Terminal</span> to be able to replay interactions in menus
+and use the <a class="xref" href="rgs-squish.html#nativeType-function"><code class="function">nativeType</code></a> or the <a class="xref" href="rgs-squish.html#nativeMouseClick-function"><code class="function">nativeMouseClick</code></a> function. Upon starting the Squish IDE
+or launching squishserver from the Terminal a dialog will pop up leading you
+through the process. For more details see the <a class="xref" href="rgs-macconvenience.html#macosx.universal.access" title="macOS Universal Access">macOS Universal Access</a>
+section.
+</p></td></tr></table></div></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="ins-binary-unattended"></a>3.1.1.4. Performing Unattended Installations</h4></div></div></div><p>
+It is possible to perform the installation of <span class="emphasis"><em>Squish</em></span> completely unattended,
+passing any required values up front. Unattended installation requires no user
+interactions whatsoever and is equivalent to manually interacting with the
+installer interface. To perform an unattended installation, invoke the <span class="emphasis"><em>Squish</em></span>
+installation program from the command line passing at least the argument
+<code class="code">unattended=1</code>:
+</p><pre class="screen">
+$ ./squish-6.6.1-windows unattended=1 &lt;more options...&gt;
+</pre><p>
+That argument will launch the installation without any graphical user
+interface.  Instead, progress information and potential error messages are
+written to the console.
+</p><p>
+In addition to the <code class="code">unattended=1</code> argument, you may want to specify
+further arguments to specify the target directory, the license key and further
+settings. Please see the <a class="link" href="rg-cmdline.html#rgc-installer" title="7.4.1. Installer">installer reference
+documentation</a> for a full list of recognised arguments.
+</p><p>
+In case any required values are missing, the installation will print a message
+and stop, e.g.:
+</p><pre class="screen">
+$ ./squish-6.6.1-windows unattended=1
+IFW Version: 2.0.81, built with Qt 5.5.0.
+Build date: Nov 30 2015
+Installer Framework SHA1: cf9e21b
+[0] Language: en
+[0] Arguments: ./squish-6.6.1-windows, unattended=1, targetdir=/tmp/foo
+[4] Operations sanity check succeeded.
+&lt;..&gt;
+[162] Cannot perform unattended installation; target directory not specified.
+[162] Please pass 'targetdir=&lt;PATH&gt;' on the command line.
+</pre><p>
+Omitting <span class="emphasis"><em>optional</em></span> arguments will make the installer pick a
+sensible default value. A message will be printed indicating this condition,
+and how to override it. For instance, here's the output generated while
+installing a <span class="emphasis"><em>Squish</em></span> for Web package on macOS:
+</p><pre class="screen">
+&lt;..&gt;
+[569] No Firefox executable specified, using auto-detected path '/Applications/Firefox.app'
+[569] Specify 'firefox=&lt;PATH&gt;' on the command line to override this.
+[569] No Chrome executable specified, using auto-detected path '/Applications/Google Chrome.app'
+[569] Specify 'chrome=&lt;PATH&gt;' on the command line to override this.
+&lt;..&gt;
+</pre></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="ins-source"></a>3.1.2. Installing Squish for Qt from Desktop Source Packages</h3></div></div></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><span class="section"><a href="ins-commandline-tools-server-ide.html#ins-quick">3.1.2.1. Quick Install</a></span></dt><dt><span class="section"><a href="ins-commandline-tools-server-ide.html#ins-detailed">3.1.2.2. Detailed Installation Instructions</a></span></dt><dt><span class="section"><a href="ins-commandline-tools-server-ide.html#ins-pure-qt4">3.1.2.3. Installation for Testing Pure Qt 4 Applications</a></span></dt><dt><span class="section"><a href="ins-commandline-tools-server-ide.html#ins-qt30">3.1.2.4. Installation for Testing Qt 3.x Applications</a></span></dt><dt><span class="section"><a href="ins-commandline-tools-server-ide.html#ins-singlethreaded">3.1.2.5. Installation for testing with a single-threaded Qt library</a></span></dt><dt><span class="section"><a href="ins-commandline-tools-server-ide.html#ins-staticqt">3.1.2.6. Statically-linked Qt libraries</a></span></dt></dl></div><p>
+In most situations <span class="emphasis"><em>Squish</em></span> can be quickly and easily installed using
+one of the binary packages (see <a class="xref" href="ins-commandline-tools-server-ide.html#ins-binary" title="3.1.1. Installing from Binary Packages">Installing from Binary Packages (Section 3.1.1)</a>). However,
+if you prefer to build it from source—or if you must build it from
+source because no suitable binary package is available, or because you
+need to use features that require a source build—this section
+explains how to build it.
+</p><p>
+Once <span class="emphasis"><em>Squish</em></span> is built, it can be distributed to different computers
+running the same operating system (see <a class="xref" href="ins-distributing.html" title="3.6. Distributing and Sharing an Installation">Distributing and Sharing an Installation (Section 3.6)</a>).
+</p><p>
+Note that for source builds <span class="emphasis"><em>Squish</em></span> is supplied as two separate
+packages—the <span class="emphasis"><em>Squish</em></span> <span class="emphasis"><em>tools</em></span> source package
+that must be built and the <span class="application">Squish IDE</span> package that just needs to be
+installed. The tools are supplied as a <code class="filename">.zip</code> file
+for Windows and as a <code class="filename">.tar.gz</code> file on Unix-like
+platforms. Once the tools have been built (as described here), you can
+then go on to install the <span class="application">Squish IDE</span> (see <a class="xref" href="ins-new-ide.html" title="3.10. Standalone Installation of the IDE">Standalone Installation of the IDE (Section 3.10)</a>).
+</p><p>
+In many common cases the build process can be done in just a few simple
+steps, as described in <a class="xref" href="ins-commandline-tools-server-ide.html#ins-quick" title="3.1.2.1. Quick Install">Quick Install (Section 3.1.2.1)</a>. If your setup does
+not meet the Quick Install requirements, you can still build <span class="emphasis"><em>Squish</em></span>
+from source, but you will need to follow one of the non-standard build
+processes that are documented after the Quick Install section.
+</p><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="ins-quick"></a>3.1.2.1. Quick Install</h4></div></div></div><p>
+This section covers the build of <span class="emphasis"><em>Squish</em></span> from sources for testing of
+Qt applications build with a native compiler. This scenario is
+normally best covered through the use of a prebuilt binary package. In
+the case of non-standard compiler options or a non-standard Qt
+configuration it's necessary to compile <span class="emphasis"><em>Squish</em></span> from sources using
+the very same compiler and Qt library that is being used for the
+appliction.
+</p><p>
+The most often found use case for such a minimal build is to create a
+custom build of those components that will have to match the
+environment of the tested application. The main influencing factors
+are the Qt libraries, compiler and hardware. Either of these may
+differ from the versions and configurations used for the pre-built
+binary packages.
+</p><p>
+The quickest route to such a customized installation
+</p><div class="itemizedlist"><ul type="disc"><li><p>limits the components to be build from sources to those
+interacting with the AUT directly, and </p></li><li><p>makes use of a prebuilt binary package for the standard
+functionality.</p></li></ul></div><p>
+</p><h5><a id="idp37068216"></a>Requirements</h5><p>
+For a build and installation, certain requirements must be
+met. Some of these requirements concern the Qt library that <span class="emphasis"><em>Squish</em></span>
+itself is built with, and some concern the tools used during the build.
+</p><div class="itemizedlist"><ul type="disc" compact><li><p>Qt 4.8 or greater must be available. See
+<a class="xref" href="ins-commandline-tools-server-ide.html#ins-detailed" title="3.1.2.2. Detailed Installation Instructions">Detailed Installation Instructions (Section 3.1.2.2)</a> for building Squish with older Qt
+versions.
+</p></li><li><p>A C++ compiler matching the version used for building
+Qt.
+</p></li></ul></div><p>
+The following minimal steps are based on a Linux/Unix system but will
+apply to other operating systems in a similar fashion.
+</p><p>
+It it assumed that a <span class="emphasis"><em>Squish</em></span> source package has been unpacked into
+the directory <code class="filename">C:\squish\</code> on Windows
+or <code class="filename">/usr/local/squish/</code> on Linux/Unix,
+respectively. It is also assumed that your Qt installation is found in
+the directory <code class="filename">C:\Qt</code>
+or <code class="filename">/usr/local/qt</code>, respectively.
+</p><p>
+Start by changing the current working directory into the unpacked <span class="emphasis"><em>Squish</em></span>
+source directory, and run the configuration script:
+</p><div class="tabularx"><table width="100%" border="1"><colgroup><col></col><col></col></colgroup><tbody valign="top"><tr><td align="left" valign="top"><p><span class="bold"><strong>Windows</strong></span></p></td><td align="left" valign="top"><p><code class="computeroutput">C:\squish&gt; configure --with-qmake=C:\Qt\bin\qmake --disable-all --enable-idl --enable-qt</code></p></td></tr><tr><td align="left" valign="top"><p><span class="bold"><strong>Linux/Unix/macOS</strong></span></p></td><td align="left" valign="top"><p><code class="computeroutput">$ ./configure --with-qmake=/usr/local/qt/bin/qmake --disable-all --enable-idl --enable-qt</code></p></td></tr></tbody></table></div><p>
+After the <span class="application">configure</span> run has finished start
+the build process:
+</p><div class="tabularx"><table width="100%" border="1"><colgroup><col></col><col></col></colgroup><tbody valign="top"><tr><td align="left" valign="top"><p><span class="bold"><strong>Windows</strong></span></p></td><td align="left" valign="top"><p><code class="computeroutput">C:\squish&gt; build</code></p></td></tr><tr><td align="left" valign="top"><p><span class="bold"><strong>Linux/Unix/macOS</strong></span></p></td><td align="left" valign="top"><p><code class="computeroutput">$ ./build</code></p></td></tr></tbody></table></div><h5><a id="ins-quick-setup"></a>Further setup</h5><p>
+The build instructions above take care of creating the components
+specific to your Qt installation. The other components like the <span class="application">Squish IDE</span>
+and <span class="application">squishrunner</span> can be taken from any <span class="emphasis"><em>Squish</em></span> package for Qt 4 or
+5 that matches the source packages version number. This would be
+<code class="filename">squish-5.1.0-qt50x-linux64.zip</code>
+or <code class="filename">squish-5.1.0-qt48x-win32-msvc10.zip </code> for
+<span class="emphasis"><em>Squish</em></span> 5.1.0 for example.
+</p><p>
+<span class="bold"><strong>Step 1 of 4</strong></span>
+</p><p>
+Install this package as if you would be testing an application build
+with a standard Qt library. To
+<code class="filename">C:\squish-5.1.0-qt48x-win32-msvc10\</code> on
+Windows and <code class="filename">/home/user/squish-5.1.0-qt50x-linux64</code>
+on Linux/Unix for example.
+</p><p>
+<span class="bold"><strong>Step 2 of 4</strong></span>
+</p><p>
+To prepare an existing Squish desktop installation for copying custom Qt
+support into it issue the following in your Squish desktop directory:
+</p><div class="tabularx"><table width="100%" border="1"><colgroup><col></col><col></col></colgroup><tbody valign="top"><tr><td align="left" valign="top">
+        <p><span class="bold"><strong>Windows</strong></span></p>
+    </td><td align="left" valign="top">
+        <p><code class="computeroutput">C:\squish-5.1.0-qt48x-win32-msvc10&gt; rd /q /s lib\extensions\qt</code></p>
+        <p><code class="computeroutput">C:\squish-5.1.0-qt48x-win32-msvc10&gt; del /q bin\winhook.dll bin\squishqt*.dll</code></p>
+        <p><code class="computeroutput">C:\squish-5.1.0-qt48x-win32-msvc10&gt; copy etc\paths.ini etc\paths.ini.bak</code></p>
+    </td></tr><tr><td align="left" valign="top">
+        <p><span class="bold"><strong>Linux/Unix/macOS</strong></span></p>
+    </td><td align="left" valign="top">
+        <p><code class="computeroutput">$ rm -r lib/extensions/qt</code></p>
+        <p><code class="computeroutput">$ rm lib/libsquishqt*</code></p>
+        <p><code class="computeroutput">$ cp etc/paths.ini etc/paths.ini.bak</code></p>
+    </td></tr></tbody></table></div><p>
+<span class="bold"><strong>Step 3 of 4</strong></span>
+</p><p>
+To install your custom Qt support into an existing Squish desktop installation,
+issue the following in your build directory:
+</p><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Note"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/note.png"></img></td><th align="left">Note</th></tr><tr><td align="left" valign="top"><p>
+The paths used below are just examples, please adjust them to your
+setup.
+</p></td></tr></table></div><div class="tabularx"><table width="100%" border="1"><colgroup><col></col><col></col></colgroup><tbody valign="top"><tr><td align="left" valign="top"><p><span class="bold"><strong>Windows</strong></span></p></td><td align="left" valign="top"><p><code class="computeroutput">C:\squish&gt; build install DESTDIR=c:\squish-5.1.0-qt48x-win32-msvc10</code></p></td></tr><tr><td align="left" valign="top"><p><span class="bold"><strong>Linux/Unix/macOS</strong></span></p></td><td align="left" valign="top"><p><code class="computeroutput">$ ./build install DESTDIR=/home/user/squish-5.1.0-qt50x-linux64</code></p></td></tr></tbody></table></div><p>
+<span class="bold"><strong>Step 4 of 4</strong></span>
+</p><p>
+To finish setup of the customized Squish desktop installation issue the
+following in your Squish desktop directory:
+</p><div class="tabularx"><table width="100%" border="1"><colgroup><col></col><col></col></colgroup><tbody valign="top"><tr><td align="left" valign="top"><p><span class="bold"><strong>Windows</strong></span></p></td><td align="left" valign="top"><p><code class="computeroutput">C:\squish-5.1.0-qt48x-win32-msvc10&gt; move /Y etc\paths.ini.bak etc\paths.ini</code></p></td></tr><tr><td align="left" valign="top"><p><span class="bold"><strong>Linux/Unix/macOS</strong></span></p></td><td align="left" valign="top"><p><code class="computeroutput">$ mv etc/paths.ini.bak etc/paths.ini</code></p></td></tr></tbody></table></div><p>
+At this point this modified Squish binary package should be ready
+for use with your application.
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="ins-detailed"></a>3.1.2.2. Detailed Installation Instructions</h4></div></div></div><p>
+This section describes how to perform a build and installation of
+<span class="emphasis"><em>Squish</em></span> including various configuration options.
+</p><h5><a id="idp37108656"></a>Requirements</h5><p>
+For a build and installation, certain requirements must be
+met. Some of these requirements concern the Qt library that <span class="emphasis"><em>Squish</em></span>
+itself is built with, and some concern the scripting languages you want
+to be able to use with <span class="emphasis"><em>Squish</em></span>. Note that the reason JavaScript isn't
+mentioned is that <span class="emphasis"><em>Squish</em></span> comes with its own built-in JavaScript
+interpreter and so does not depend on a third-party interpreter.
+</p><div class="itemizedlist"><ul type="disc" compact><li><p>Qt 3.2.0 or greater must be
+available.
+</p></li><li><p>Qt must be configured and built with support
+for threads. (This is the default as of Qt 4.).
+</p></li><li><p>Qt must be configured and built as a shared library.
+</p></li><li><p>If you want to use Python as a scripting language for
+test scripts, then you must have Python 2.6+ or Python 3.5+ already installed with
+development headers.
+</p></li><li><p>If you want to use Perl as a scripting language for
+test scripts, then you must have Perl 5.18 or any later
+5.<span class="emphasis"><em>x</em></span> version installed.
+</p></li><li><p>If you want to use Ruby as a scripting language for test
+scripts, then you must have Ruby 1.9.
+</p></li><li><p>If you want to use Tcl as a scripting language for test
+scripts, then you must have Tcl 8.4 or later installed.
+</p></li></ul></div><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Note: Qt 4-specific"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/note.png"></img></td><th align="left"><a id="qt.4.specific.qt3support"></a>Qt 4-specific</th></tr><tr><td align="left" valign="top"><p>
+If you want to use Qt 4, then you must either have built it with
+<code class="code">Qt3Support</code> enabled, or alternatively if you don't want to
+enable <code class="code">Qt3Support</code>, you must do a split build, in which
+case, see <a class="xref" href="ins-commandline-tools-server-ide.html#ins-pure-qt4" title="3.1.2.3. Installation for Testing Pure Qt 4 Applications">Installation for Testing Pure Qt 4 Applications (Section 3.1.2.3)</a>.
+</p></td></tr></table></div><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Note: macOS-specific—Xcode Required"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/note.png"></img></td><th align="left"><a id="macosx.specific.xcode.required"></a>macOS-specific—Xcode Required</th></tr><tr><td align="left" valign="top"><p>
+If you want to build <span class="emphasis"><em>Squish</em></span> on macOS you must install
+Xcode—this will provide the compiler and related development
+tools.
+</p></td></tr></table></div><p>
+Before building <span class="emphasis"><em>Squish</em></span> you must make sure that you have the scripting
+languages you want to use for your test scripts already installed. (This
+does not include JavaScript which is built into <span class="emphasis"><em>Squish</em></span>.)
+See the following tables regarding what you need to install and where to
+get it for your platform and scripting language.
+</p><div class="tabularx"><table width="100%" border="1"><colgroup><col></col><col></col></colgroup><tbody valign="top"><tr><td align="center" valign="top"><span class="emphasis"><em>Language</em></span></td><td align="center" valign="top"><span class="bold"><strong>Windows</strong></span></td></tr><tr><td align="center" valign="middle">Python</td><td align="left" valign="top">
+        We recommend installing the latest Python 2.x package available at
+        <a class="ulink" href="http://www.python.org/download/" target="_blank">http://www.python.org/download/</a>. Download the
+        “<span class="quote">Windows x86 MSI Installer</span>” or the
+        “<span class="quote">Windows x86-64 MSI Installer</span>” depending on whether your
+        compiler creates 32-bit or 64-bit Windows binaries.
+    </td></tr><tr><td align="center" valign="middle">Perl</td><td align="left" valign="top">We recommend installing ActiveState's Perl package. You can
+    download it from <a class="ulink" href="http://www.activestate.com/activeperl/downloads/" target="_blank">http://www.activestate.com/activeperl/downloads/</a>. It is supplied as
+    an MSI installer—with versions for 32-bit and 64-bit
+    processors. If you run the installer and accept all the default
+    settings it will be installed in <code class="filename">C:\Perl</code>.
+    </td></tr><tr><td align="center" valign="middle">Ruby</td><td align="left" valign="top">The official installation page for Ruby is
+    <a class="ulink" href="http://www.ruby-lang.org/en/downloads/" target="_blank">http://www.ruby-lang.org/en/downloads/</a>.
+Most Linux distributions will have it as a standard package.
+    </td></tr><tr><td align="center" valign="middle">Tcl</td><td align="left" valign="top">We recommend installing ActiveState's Tcl build. You can
+    download it from <a class="ulink" href="http://www.activestate.com/activetcl/downloads/" target="_blank">http://www.activestate.com/activetcl/downloads/</a>. It is supplied as a
+    Windows setup program. If you run this and accept all the default
+    settings it will be installed in <code class="filename">C:\Tcl</code>.
+    </td></tr><tr><td align="center" valign="top"><span class="emphasis"><em>Language</em></span></td><td align="center" valign="top"><span class="bold"><strong>Linux/Unix</strong></span></td></tr><tr><td align="center" valign="middle">Python</td><td align="left" valign="top">The Python interpreter executable must be in the
+    <code class="envar">PATH</code>. Most Unixes already have Python pre-installed,
+    but if it isn't, a package should be available from your system's
+    package management tool, or you can download a version from
+    <a class="ulink" href="http://www.python.org/download/" target="_blank">http://www.python.org/download/</a>. Note that if
+    you install a package, you must install the <code class="code">-dev</code> or
+    <code class="code">-devel</code> version, since
+    <span class="emphasis"><em>Squish</em></span> needs to access the header files when it is built.
+    </td></tr><tr><td align="center" valign="middle">Perl</td><td align="left" valign="top">The Perl interpreter executable must be in the
+    <code class="envar">PATH</code> unless you specify a location for it using the
+    <code class="option">--with-perl</code>
+    <span class="application">configure</span> switch.
+    Most Unixes already have Perl pre-installed,
+    but if it isn't, a package should be available from your system's
+    package management tool, or you can download a version from
+    <a class="ulink" href="http://www.activestate.com/activeperl/downloads/" target="_blank">http://www.activestate.com/activeperl/downloads/</a>. Note that if
+    you install a package, you must install the <code class="code">-dev</code> or
+    <code class="code">-devel</code> version, since
+    <span class="emphasis"><em>Squish</em></span> needs to access the header files when it is built.
+    </td></tr><tr><td align="center" valign="middle">Ruby</td><td align="left" valign="top">The Ruby interpreter executable must be in the
+    <code class="envar">PATH</code> unless you specify a location for it using the
+    <code class="option">--with-ruby</code>
+    <span class="application">configure</span> switch.
+    Most Unixes already have Ruby pre-installed,
+    but if it isn't (or is too old a version), a package should be available from your system's
+    package management tool, or you can download a version from
+    <a class="ulink" href="http://www.ruby-lang.org/en/downloads/" target="_blank">http://www.ruby-lang.org/en/downloads/</a>. Note that if
+    you install a package, you must install the <code class="code">-dev</code> or
+    <code class="code">-devel</code> version, since
+    <span class="emphasis"><em>Squish</em></span> needs to access the header files when it is built.
+    </td></tr><tr><td align="center" valign="middle">Tcl</td><td align="left" valign="top">Most Unixes already have Tcl installed,
+    but if it isn't, a package should be available from your system's
+    package management tool, or you can download a version from
+    <a class="ulink" href="http://www.activestate.com/activetcl/downloads/" target="_blank">http://www.activestate.com/activetcl/downloads/</a>. Note that if
+    you install a package, you must install the <code class="code">-dev</code> or
+    <code class="code">-devel</code> version, since
+    <span class="emphasis"><em>Squish</em></span> needs to access the header files when it is built.
+    </td></tr><tr><td align="center" valign="top"><span class="emphasis"><em>Language</em></span></td><td align="center" valign="top"><span class="bold"><strong>macOS</strong></span></td></tr><tr><td align="center" valign="middle">Python</td><td align="left" valign="top">A pre-installed version of Python is provided with
+    macOS—this includes the headers and is sufficient for
+    <span class="emphasis"><em>Squish</em></span>'s needs.
+    </td></tr><tr><td align="center" valign="middle">Perl</td><td align="left" valign="top">A pre-installed version of Perl is provided with
+    macOS—this includes the headers and should be sufficient for
+    <span class="emphasis"><em>Squish</em></span>'s needs.
+    </td></tr><tr><td align="center" valign="middle">Ruby</td><td align="left" valign="top">At the time of this writing Ruby 1.8 is the
+pre-installed version on macOS, and this is too old. To use Ruby on
+macOS you must build and install Ruby 1.9.
+    </td></tr><tr><td align="center" valign="middle">Tcl</td><td align="left" valign="top">A pre-installed version of Tcl is provided with
+    macOS—this includes the headers and is sufficient for
+    <span class="emphasis"><em>Squish</em></span>'s needs.
+    </td></tr></tbody></table></div><p>
+If you want to use <span class="emphasis"><em>Squish</em></span> to test Qt 3.x applications, see <a class="xref" href="ins-commandline-tools-server-ide.html#ins-qt30" title="3.1.2.4. Installation for Testing Qt 3.x Applications">Installation for Testing Qt 3.x Applications (Section 3.1.2.4)</a>. If you want to test embedded Qt applications, see
+<a class="xref" href="ins-source-embedded.html" title="3.3. Installing Squish for Qt from Embedded Source Packages">Installing Squish for Qt from Embedded Source Packages (Section 3.3)</a>.
+</p><p>
+Some of <span class="emphasis"><em>Squish</em></span>'s components must use the same Qt library as the
+application you want to test. If the Qt library your application uses
+does not fulfill the requirements above (i.e. it is not a shared,
+multi-threaded Qt library), you must do a split build of <span class="emphasis"><em>Squish</em></span> (see
+<a class="xref" href="ins-commandline-tools-server-ide.html#ins-singlethreaded" title="3.1.2.5. Installation for testing with a single-threaded Qt library">Installation for testing with a single-threaded Qt library (Section 3.1.2.5)</a>).
+</p><p>
+There are no additional requirements if you want to use JavaScript as a
+scripting language for test scripts: a small JavaScript interpreter is
+built into <span class="emphasis"><em>Squish</em></span>. The JavaScript interpreter is automatically built
+unless JavaScript support is switched off using the
+<span class="application">configure</span> program's
+<code class="option">--disable-js</code> switch; see <a class="xref" href="ins-commandline-tools-server-ide.html#ins-configSwitches" title="3.1.2.2.1. Configure Switches">Configure Switches (Section 3.1.2.2.1)</a>.
+</p><h5><a id="idp37150800"></a>Supported Compilers</h5><p>
+<span class="emphasis"><em>Squish</em></span> has been tested on a wide variety of Windows and Unix-like
+systems and with several different compilers. In the case of Windows,
+<span class="emphasis"><em>Squish</em></span> has been tested on all modern versions (Windows 7 and
+Windows 10), with <span class="trademark">Microsoft</span>® VC++ 2013 through 2019, and with
+Intel C++. For Unix-like systems, <span class="emphasis"><em>Squish</em></span> has been tested on all modern
+versions of macOS with gcc and clang; on AIX with xlC; on HP-UX 11.11
+with aCC and gcc; on IRIX 6.5 with gcc and MIPSPro C++; on Linux with gcc and
+Intel C++; on SUN Solaris 9 and 10 with gcc and SunCC; and on FreeBSD 6 with
+gcc.
+</p><p>
+The operating system versions and compiler versions mentioned here are
+not comprehensive, so if your particular setup isn't mentioned, <span class="emphasis"><em>Squish</em></span>
+may well run perfectly well on your system—you can always contact
+support to ask whether your particular operating system/compiler
+combination is supported.
+</p><p>
+For the C++ compiler requirements that should match Qt, please refer to
+the Supported Configurations section in the Qt Documentation.
+</p><div class="tabularx"><table width="100%" border="1"><colgroup><col></col><col></col><col></col></colgroup><tbody valign="top"><tr><td align="left" valign="top"><p><span class="bold"><strong>Windows</strong></span></p></td><td align="left" valign="top"><p><a class="ulink" href="https://doc.qt.io/qt-5/windows.html" target="_blank">Qt 5.x</a></p></td><td align="left" valign="top"><p><a class="ulink" href="https://doc.qt.io/qt-6/windows.html" target="_blank">Qt 6.x</a></p></td></tr><tr><td align="left" valign="top"><p><span class="bold"><strong>Linux</strong></span></p></td><td align="left" valign="top"><p><a class="ulink" href="https://doc.qt.io/qt-5/linux.html" target="_blank">Qt 5.x</a></p></td><td align="left" valign="top"><p><a class="ulink" href="https://doc.qt.io/qt-6/linux.html" target="_blank">Qt 6.x</a></p></td></tr><tr><td align="left" valign="top"><p><span class="bold"><strong>macOS</strong></span></p></td><td align="left" valign="top"><p><a class="ulink" href="https://doc.qt.io/qt-5/macos.html" target="_blank">Qt 5.x</a></p></td><td align="left" valign="top"><p><a class="ulink" href="https://doc.qt.io/qt-6/macos.html" target="_blank">Qt 6.x</a></p></td></tr></tbody></table></div><h5><a id="idp37160944"></a>Building <span class="emphasis"><em>Squish</em></span></h5><p>
+For ease of explanation, we will assume that you unpacked the <span class="emphasis"><em>Squish</em></span>
+source into one of the directories below, depending on the platform you
+are using.
+</p><div class="tabularx"><table width="100%" border="1"><colgroup><col></col><col></col></colgroup><tbody valign="top"><tr><td align="left" valign="top"><p><span class="bold"><strong>Windows</strong></span></p></td><td align="left" valign="top"><p><code class="filename">C:\squish</code></p></td></tr><tr><td align="left" valign="top"><p><span class="bold"><strong>Linux/Unix/macOS</strong></span></p></td><td align="left" valign="top"><p><code class="filename">/usr/local/squish</code></p></td></tr></tbody></table></div><p>
+You can install <span class="emphasis"><em>Squish</em></span> anywhere on your system, provided you have
+write permissions.
+If you wish to use another location, unpack the tarball to the
+desired location when following the install instructions.
+</p><p>
+The first step is to ensure that you have a license key. Download the
+file called <code class="filename">squish-3-license</code> from the download area
+where you obtained your <span class="emphasis"><em>Squish</em></span> package. (This key is valid for both
+<span class="emphasis"><em>Squish</em></span> 3 and <span class="emphasis"><em>Squish</em></span> 4.) Copy (and rename) this file as
+follows:
+</p><div class="tabularx"><table width="100%" border="1"><colgroup><col align="left"></col><col align="left"></col></colgroup><tbody valign="top"><tr><td align="left" valign="top"><p><span class="bold"><strong>Windows</strong></span></p></td><td align="left" valign="top"><p>
+    <code class="filename">%<code class="envar">HOMEDRIVE</code>%%<code class="envar">HOMEPATH</code>%\.squish-3-license</code>
+    </p></td></tr><tr><td align="left" valign="top"><p><span class="bold"><strong>Linux/Unix/macOS</strong></span></p></td><td align="left" valign="top"><p>
+        <code class="filename">$<code class="envar">HOME</code>/.squish-3-license</code>
+    </p></td></tr></tbody></table></div><p>
+To use a license key file stored somewhere else, set the
+<code class="envar">SQUISH_LICENSEKEY_DIR</code> environment variable to the desired
+location. (See <a class="xref" href="rg-envvars.html" title="7.5. Environment Variables">Environment Variables (Section 7.5)</a>.)
+</p><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Note: Building Squish for Other Users"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/note.png"></img></td><th align="left">Building <span class="emphasis"><em>Squish</em></span> for Other Users</th></tr><tr><td align="left" valign="top"><p>
+If you build <span class="emphasis"><em>Squish</em></span> for another user, you must make sure that each
+user has a valid license file located in their <span class="emphasis"><em>own</em></span>
+<code class="envar">HOME</code> directory.
+</p></td></tr></table></div><p>
+Now <span class="emphasis"><em>Squish</em></span> is ready to be configured according to your system's
+settings. On Windows you must be in a console window (sometimes call the
+Command Prompt or MS-DOS Prompt), on macOS in a
+<span class="application">Terminal.app</span> window, and on other Unix-like
+systems in a shell window such as an xterm. (Note that for Unix-like
+systems we show <code class="code">$</code> as the prompt; it may differ on your
+system, but that doesn't matter.)
+</p><p>
+Start by changing to <span class="emphasis"><em>Squish</em></span>'s installation directory.
+</p><div class="tabularx"><table width="100%" border="1"><colgroup><col></col><col></col></colgroup><tbody valign="top"><tr><td align="left" valign="top"><p><span class="bold"><strong>Windows</strong></span></p></td><td align="left" valign="top"><p><code class="computeroutput">C:\&gt; cd \squish</code></p></td></tr><tr><td align="left" valign="top"><p><span class="bold"><strong>Linux/Unix/macOS</strong></span></p></td><td align="left" valign="top"><p><code class="computeroutput">$ cd /usr/local/squish</code></p></td></tr></tbody></table></div><p>
+Now run the configuration script:
+</p><div class="tabularx"><table width="100%" border="1"><colgroup><col></col><col></col></colgroup><tbody valign="top"><tr><td align="left" valign="top"><p><span class="bold"><strong>Windows</strong></span></p></td><td align="left" valign="top"><p><code class="computeroutput">C:\squish&gt; configure</code></p></td></tr><tr><td align="left" valign="top"><p><span class="bold"><strong>Linux/Unix/macOS</strong></span></p></td><td align="left" valign="top"><p><code class="computeroutput">$ ./configure</code></p></td></tr></tbody></table></div><p>
+The <span class="application">configure</span> script searches for your C++
+compiler, the Qt libraries that <span class="emphasis"><em>Squish</em></span> depends on, the interpreters
+and header files for the third-party scripting languages <span class="emphasis"><em>Squish</em></span>
+supports—Python, Perl, Ruby, and Tcl—and other system
+components that <span class="emphasis"><em>Squish</em></span> may need, such as the Java runtime environment.
+The output indicates which compiler has been detected. If you are
+testing Qt applications, you should use the same compiler for <span class="emphasis"><em>Squish</em></span>
+that you used to build Qt (if you built it yourself), and for your
+applications. If you want to force <span class="application">configure</span>
+to use a different compiler from the one it detected, set the
+<code class="envar">CXX</code> environment variable to the executable of the
+compiler you want <span class="emphasis"><em>Squish</em></span> to use, as the following examples illustrate.
+</p><div class="tabularx"><table width="100%" border="1"><colgroup><col align="left"></col><col align="left"></col></colgroup><tbody valign="top"><tr><td align="left" valign="top"><p><span class="bold"><strong>Windows</strong></span></p></td><td align="left" valign="top"><p>
+    If <span class="application">configure</span> detected
+    <span class="application">MSVC++</span> but you want
+    to use <span class="application">Intel C++</span>, run configure like
+    this:</p> <p><code class="computeroutput">C:\squish&gt; set
+    CXX=icl</code></p> <p><code class="computeroutput">C:\squish&gt;
+    configure</code></p>
+    </td></tr><tr><td align="left" valign="top"><p><span class="bold"><strong>Linux/Unix</strong></span></p></td><td align="left" valign="top"><p>
+    If <span class="application">configure</span> detected
+    <span class="application">SunCC</span> on Solaris, but you want
+        to use <span class="application">gcc</span>, run
+        <span class="application">configure</span> like this:</p>
+        <p><code class="computeroutput">$ CXX=g++ ./configure</code></p>
+    </td></tr><tr><td align="left" valign="top"><p><span class="bold"><strong>macOS</strong></span></p></td><td align="left" valign="top"><p>
+    If <span class="application">configure</span> detected the default gcc
+    version, but you want to use <span class="application">gcc 3.3</span>, run
+        <span class="application">configure</span> like this:</p>
+        <p><code class="computeroutput">$ CXX=g++-3.3 ./configure</code></p>
+    </td></tr></tbody></table></div><p>
+Now <span class="application">configure</span> asks you to run the <span class="emphasis"><em>Squish</em></span>
+<span class="application">build</span> tool to compile <span class="emphasis"><em>Squish</em></span>.
+</p><div class="tabularx"><table width="100%" border="1"><colgroup><col></col><col></col></colgroup><tbody valign="top"><tr><td align="left" valign="top"><p><span class="bold"><strong>Windows</strong></span></p></td><td align="left" valign="top"><p><code class="computeroutput">C:\squish&gt; build</code></p></td></tr><tr><td align="left" valign="top"><p><span class="bold"><strong>Linux/Unix/macOS</strong></span></p></td><td align="left" valign="top"><p><code class="computeroutput">$ ./build</code></p></td></tr></tbody></table></div><p>
+Building <span class="emphasis"><em>Squish</em></span> can take quite a bit of time, since as part of the
+process the build tool also creates wrappers for the Qt library. As the
+build process progresses you will probably see a lot of warnings from
+the <a class="xref" href="rg-cmdline.html#rgc-squishidl" title="7.4.5. squishidl">squishidl (Section 7.4.5)</a> tool. It is safe to ignore these
+warnings.
+</p><p>
+Once the build process has finished, <span class="emphasis"><em>Squish</em></span> is installed. The binaries
+and libraries are in the following directories:
+</p><div class="tabularx"><table width="100%" border="1"><colgroup><col></col><col></col></colgroup><tbody valign="top"><tr><td align="left" valign="top"><p><span class="bold"><strong>Windows</strong></span></p></td><td align="left" valign="top"><p>
+        <code class="filename">C:\squish\bin</code></p><p>
+        <code class="filename">C:\squish\lib</code>
+    </p></td></tr><tr><td align="left" valign="top"><p><span class="bold"><strong>Linux/Unix/macOS</strong></span></p></td><td align="left" valign="top"><p>
+        <code class="filename">/usr/local/squish/bin</code></p><p>
+        <code class="filename">/usr/local/squish/lib</code>
+    </p></td></tr></tbody></table></div><p>
+You might want to add the <code class="filename">bin</code> directory to
+your <code class="envar">PATH</code> environment variable so you can invoke the
+<span class="emphasis"><em>Squish</em></span> tools without specifying their path. How this is achieved
+depends on the platform.
+</p><div class="tabularx"><table width="100%" border="1"><colgroup><col></col><col></col></colgroup><tbody valign="top"><tr><td align="left" valign="top"><p><span class="bold"><strong>Windows</strong></span></p></td><td align="left" valign="top"><p>Open the advanced system settings in the Windows
+control panel and append <code class="filename">;C:\Squish\bin</code> at the
+<span class="emphasis"><em>end</em></span> of the <code class="envar">PATH</code> environment value's
+text—notice the leading “<span class="quote">;</span>” to separate this path
+entry from the others.</p></td></tr><tr><td align="left" valign="top"><p><span class="bold"><strong>Linux/Unix</strong></span></p></td><td align="left" valign="top"><p>Edit <code class="filename">.bashrc</code> (or the appropriate
+file for the shell you are using) and extend the <code class="envar">PATH</code>,
+for example, by writing: <code class="code">export
+PATH=$PATH:/usr/local/squish/bin</code>, or if there is already a line
+like this simply by appending <code class="code">:/usr/local/squish/bin</code> to the
+end of the line. Alternatively, you may prefer to create symbolic links,
+in <code class="filename">/usr/local/bin</code>, to the executables in
+<code class="filename">/usr/local/squish/bin</code>.</p></td></tr><tr><td align="left" valign="top"><p><span class="bold"><strong>macOS</strong></span></p></td><td align="left" valign="top"><p>Edit <code class="filename">.bashrc</code> (or the appropriate
+file for the shell you are using) and extend the <code class="envar">PATH</code>,
+for example, by writing: <code class="code">export
+PATH=$PATH:/usr/local/squish/bin</code>, or if there is already a line
+like this simply by appending <code class="code">:/usr/local/squish/bin</code> to the
+end of the line. Alternatively, you may prefer to create symbolic links,
+in <code class="filename">/usr/local/bin</code>, to the executables in
+<code class="filename">/usr/local/squish/bin</code>. </p> </td></tr></tbody></table></div><div class="section" lang="en"><div class="titlepage"><div><div><h5 class="title"><a id="ins-configSwitches"></a>3.1.2.2.1. Configure Switches</h5></div></div></div><p>
+When invoked, <span class="application">configure</span> tries to
+automatically detect your system's configuration system and the optimal
+configuration for <span class="emphasis"><em>Squish</em></span>. In some cases, the results of the automatic
+detection or the defaults <span class="emphasis"><em>Squish</em></span> uses do not match what you want. In
+these situations it is possible to override the detected and default
+settings by passing various command line options to
+<span class="application">configure</span>.
+</p><p>
+Here are a few examples:
+</p><div class="tabularx"><table border="1"><colgroup><col></col><col></col></colgroup><tbody><tr><td><code class="option">--disable-examples</code></td><td><p>
+See <a class="xref" href="ins-commandline-tools-server-ide.html#ins-partialBuild" title="3.1.2.2.1. Partial Build">Partial Build</a> for a complete
+explanation
+</p></td></tr><tr><td>
+<code class="option">--with-tclconfig=/usr/lib/tcl8.3</code></td><td><p>
+Tells <span class="application">configure</span> which version of Tcl you want
+to use by specifying the path to the version-specific
+<code class="filename">tclConfig.sh</code> file.
+</p></td></tr><tr><td><code class="option">--with-pydir=C:\Python26</code></td><td><p>
+Tells <span class="application">configure</span> which directory contains the
+Python executable, e.g., on Windows, the directory containing
+<code class="filename">python.exe</code>
+</p></td></tr><tr><td><code class="option">--with-qtdir=C:\Qt\4.7.0</code></td><td><p>
+Tells <span class="application">configure</span> where the
+version of Qt you want to use is installed, overriding the
+<code class="envar">QTDIR</code> environment variable if it is set
+</p></td></tr><tr><td><code class="option">--enable-64bit</code></td><td><p>
+Forces a 64-bit build on platforms where this is supported
+</p></td></tr></tbody></table></div><p>
+For a complete list, execute <code class="filename">configure --help</code> on
+the command line or see <a class="xref" href="rg-cmdline.html#rgc-configure" title="7.4.13. configure">configure (Section 7.4.13)</a> in the reference
+manual.
+</p><h5><a id="ins-partialBuild"></a>Partial Build</h5><p>
+By default, <span class="application">configure</span> builds all the
+components that it can find. However, in some cases it may be desirable
+to only build those components that you actually need. You might want to
+minimize the components built because:
+</p><div class="itemizedlist"><ul type="disc"><li><p>
+you want to produce a distributable installation that requires a minimal
+runtime installation on the target machine, and only the essential
+execution tools, like <span class="application">squishrunner</span>, on the tester's machine;
+</p></li><li><p>
+you want to build with Qt libraries that have a different configuration
+from the Qt libraries needed by <span class="emphasis"><em>Squish</em></span> itself, such as the
+configuration described in <a class="xref" href="ins-commandline-tools-server-ide.html#ins-singlethreaded" title="3.1.2.5. Installation for testing with a single-threaded Qt library">Installation for testing with a single-threaded Qt library (Section 3.1.2.5)</a>.
+</p></li></ul></div><p>
+You can do a partial build by setting particular command line switches
+for <span class="application">configure</span> that can be used to exclude (or
+include) various <span class="emphasis"><em>Squish</em></span> components.
+</p><p>
+<span class="emphasis"><em>Squish</em></span> can be told to build a particular component (providing it can
+find it) by using
+<code class="option">--enable-<span class="emphasis"><em>component</em></span></code> and replacing
+<code class="option"><span class="emphasis"><em>component</em></span></code> with the name of the
+component you want to build. Similarly, <span class="emphasis"><em>Squish</em></span> can be told
+<span class="emphasis"><em>not</em></span> to build a particular component by using
+<code class="option">--disable-<span class="emphasis"><em>component</em></span></code> and again,
+replacing <code class="option"><span class="emphasis"><em>component</em></span></code> with the name
+of the component—in this case of the one you don't want <span class="emphasis"><em>Squish</em></span>
+to build. You can use as many enable and disable command line switches
+as you need. The components that you can choose to enable (if available)
+or disable are listed below.
+</p><div class="tabularx"><table border="1"><colgroup><col></col><col></col></colgroup><tbody><tr><td><code class="option">all</code></td><td><p>use this to enable or disable all <span class="emphasis"><em>Squish</em></span>'s
+components—this is enabled by default which is why the build
+system builds everything it can find by default</p></td></tr><tr><td><code class="option">server</code></td><td><p>the <span class="application">squishserver</span> application (needed to run
+tests)—this is built by default</p></td></tr><tr><td><code class="option">runner</code></td><td><p>the <span class="application">squishrunner</span> application (needed to run
+tests)—this is built by default</p></td></tr><tr><td><code class="option">explorer</code></td><td><p>the wrapper explorer (used for looking into wrapped
+libraries)—this is built by default</p></td></tr><tr><td><code class="option">idl</code></td><td><p>the IDL compiler (needed for generating wrapper
+libraries)—this is built by default</p></td></tr><tr><td><code class="option">wrappers</code></td><td><p><span class="emphasis"><em>Squish</em></span>'s
+framework wrapper libraries—this is built by
+default</p></td></tr><tr><td><code class="option">examples</code></td><td><p>the example applications and their tests (useful for
+following the tutorial and includes the examples used in the
+manual)—these are built by default</p></td></tr><tr><td><code class="option">64bit</code></td><td><p>forces a
+64-bit build on platforms where this is supported</p></td></tr><tr><td><code class="option">pure-qt4</code></td><td><p>if enabled,
+tells <span class="emphasis"><em>Squish</em></span> not to use Qt 3 support when testing
+Qt 4 applications</p></td></tr><tr><td><code class="option">tk</code></td><td><p>Tk testing</p></td></tr></tbody></table></div><p>
+For instance, if you don't want to build <span class="emphasis"><em>Squish</em></span>'s examples,
+you could configure and build <span class="emphasis"><em>Squish</em></span> like this:
+</p><pre class="screen">
+configure --disable-examples
+build
+</pre><p>
+You can combine these switches freely within the constraints of internal
+dependencies. This is where the <code class="option">all</code> component comes in
+handy:
+</p><pre class="screen">
+configure --disable-all --enable-idl --enable-server --enable-wrappers
+</pre><p>
+This disables every component <span class="emphasis"><em>except</em></span> for the server, the
+IDL compiler and the wrapper libraries. This might be useful in scenarios where
+one machine runs the <span class="application">squishserver</span>, and other machines run the <span class="application">squishrunner</span>.
+</p><h5><a id="idp37263768"></a>Overriding Build Variables</h5><p><a id="overriding.build.variables"></a>
+When <span class="application">configure</span> is run, it will output the
+configuration it creates—based on the components it automatically
+detects, but respecting any command line switches we have used to
+override the automatic detection—into the files
+<code class="filename">config.h</code> and <code class="filename">Build.conf</code>.
+</p><p>
+The <code class="filename">config.h</code> file is included with <span class="emphasis"><em>Squish</em></span>'s source
+code files, and the <code class="filename">Build.conf</code> file is used as an
+input file for the <span class="application">build</span> tool. If the
+automatic detection produced unsatisfactory results, you could choose to
+modify these files before running the <span class="application">build</span>
+application. The variables written to <code class="filename">Build.conf</code>
+can easily be changed, without needing to manually edit the file. This
+is achieved by specifying arguments of the form
+<em class="parameter"><code>VARIABLE=value</code></em> or
+<em class="parameter"><code>VARIABLE+=value</code></em> at the
+<span class="application">configure</span> command line. These arguments will
+replace (if you use <code class="code">=</code>) or extend (if you use
+<code class="code">+=</code>), the named variables.
+</p><p>
+Here is an example that replaces a variable's value with a new value; in
+this case changing the default optimization flag:
+</p><pre class="screen">
+configure "CXXOPT=-O1"
+</pre><p>
+And here is another example, in this case we extend the values stored by
+two variables—the effect of this is to change the
+<code class="filename">gcc</code> compiler's default mode of operation, forcing
+it to do a 32-bit build on a 64-bit system:
+</p><pre class="screen">
+configure "CXXFLAGS+=-m32" "LFLAGS+=-m32"
+</pre></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="ins-pure-qt4"></a>3.1.2.3. Installation for Testing Pure Qt 4 Applications</h4></div></div></div><p>
+Testing a Qt 4.x application that does not use the Qt 3.x support
+functionality (i.e., a “<span class="quote">pure</span>” Qt 4.x application), requires
+us to do a split build of <span class="emphasis"><em>Squish</em></span>. (This is necessary because <span class="emphasis"><em>Squish</em></span>
+itself uses the Qt 3 compatibility so that it can test both Qt 3 and Qt
+4 applications.)
+</p><p>
+A split build means that you must compile the components that come in
+direct contact with the AUT using your pure Qt 4.x library. The rest of
+Squish can be compiled with either Qt 3 or with a Qt 4 installation that
+includes the Qt3Support module.
+</p><p>
+Performing a split build requires you to run both
+<span class="application">configure</span> and
+<span class="application">build</span> twice: the first time to build the
+parts that will use the pure Qt 4 library and the second time to build
+the parts that require Qt 3, or Qt 4 with Qt3Support.
+</p><p>
+Here is a very basic example that assumes <span class="emphasis"><em>Squish</em></span> has been unpacked
+<span class="emphasis"><em>twice</em></span>, each time into a different directory. One
+directory will be used for the pure Qt 4 parts, and the other will be used
+for the Qt 4 with Qt3Support (or just Qt 3 if preferred) parts. For
+Unix-like systems, we have assumed a username of “<span class="quote">user</span>”
+which must be changed to your actual username.
+</p><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Note: Using Qt 4 Debug Libraries"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/note.png"></img></td><th align="left"><a id="using.qt.4.debug.libraries"></a>Using Qt 4 Debug Libraries</th></tr><tr><td align="left" valign="top"><p>
+If you build your application using the Qt 4 debug libraries then you
+will need to use those same libraries when building <span class="emphasis"><em>Squish</em></span>.
+</p><p>
+If you want to be able to test both release <span class="emphasis"><em>and</em></span>
+debug versions of your application you will need two versions of
+<span class="emphasis"><em>Squish</em></span>: one built against the normal Qt 4 libraries, and the other built
+against the Qt 4 debug libraries, so you will need to do two separate
+builds. For example, on Windows for the normal Qt 4 libraries, you might
+use directories:
+</p><div class="literallayout"><p><code class="filename">C:\Squish-Qt4</code><br></br>
+<code class="filename">C:\Squish-Qt4-and-Qt3</code><br></br>
+<code class="filename">C:\Qt\4.7.1</code><br></br>
+<code class="filename">C:\Qt\Qt4-and-Qt3</code></p></div><p>
+And for the Qt 4 debug libraries, you might use directories:
+</p><div class="literallayout"><p><code class="filename">C:\Squish-Qt4-debug</code><br></br>
+<code class="filename">C:\Squish-Qt4-and-Qt3-debug</code><br></br>
+<code class="filename">C:\Qt\4.7.1-debug</code><br></br>
+<code class="filename">C:\Qt\Qt4-and-Qt3-debug</code></p></div><p>
+Those using Unix-like systems and macOS would need to use similar
+directory layouts adapted to their filesystems.
+</p></td></tr></table></div><p>
+<span class="bold"><strong>Step 1 of 6</strong></span>
+</p><p>
+First unpack the <span class="emphasis"><em>Squish</em></span> tools source package, then rename its
+directory (e.g., to <code class="filename">C:\Squish-Qt4</code>). Then unpack
+the <span class="emphasis"><em>Squish</em></span> source tools package a <span class="emphasis"><em>second</em></span> time,
+and again rename its directory (e.g., to
+<code class="filename">C:\Squish-Qt4-and-Qt3</code>).
+</p><div class="tabularx"><table width="100%" border="1"><colgroup><col></col><col></col></colgroup><tbody valign="top"><tr><td align="left" valign="top"><p><span class="bold"><strong>Windows</strong></span></p></td><td align="left" valign="top"><p><code class="filename">C:\Squish-Qt4</code></p>
+           <p><code class="filename">C:\Squish-Qt4-and-Qt3</code></p>
+    </td></tr><tr><td align="left" valign="top"><p><span class="bold"><strong>Linux/Unix</strong></span></p></td><td align="left" valign="top"><p><code class="filename">/home/user/squish-qt4</code></p>
+           <p><code class="filename">/home/user/squish-qt4-and-qt3</code></p>
+    </td></tr><tr><td align="left" valign="top"><p><span class="bold"><strong>macOS</strong></span></p></td><td align="left" valign="top"><p><code class="filename">/Users/user/squish-qt4</code></p>
+           <p><code class="filename">/Users/user/squish-qt4-and-qt3</code></p>
+    </td></tr></tbody></table></div><p>
+For the purposes of this example, we have assumed that the pure Qt 4
+(used by your AUTs) and the Qt 4 with Qt3Support (needed to build
+many of <span class="emphasis"><em>Squish</em></span>'s components) are installed in the directories listed
+below. The directory names don't matter—all that matters is that
+you have a pure Qt 4 installation in one directory, and a Qt 4 with
+Qt3Support (or Qt 3) installation in a separate directory.
+</p><div class="tabularx"><table width="100%" border="1"><colgroup><col></col><col></col></colgroup><tbody valign="top"><tr><td align="left" valign="top"><p><span class="bold"><strong>Windows</strong></span></p></td><td align="left" valign="top"><p><code class="filename">C:\Qt\4.7.1</code></p>
+           <p><code class="filename">C:\Qt\Qt4-and-Qt3</code></p>
+    </td></tr><tr><td align="left" valign="top"><p><span class="bold"><strong>Linux/Unix</strong></span></p></td><td align="left" valign="top"><p><code class="filename">/usr/local/qt47</code></p>
+           <p><code class="filename">/usr/local/qt4-and-qt3</code></p>
+    </td></tr><tr><td align="left" valign="top"><p><span class="bold"><strong>macOS</strong></span></p></td><td align="left" valign="top"><p><code class="filename">/opt/local/qt47</code></p>
+           <p><code class="filename">/opt/local/qt4-and-qt3</code></p>
+    </td></tr></tbody></table></div><p>
+<span class="bold"><strong>Step 2 of 6</strong></span>
+</p><p>
+Next, we build those parts that only require a pure Qt 4
+installation—the IDL compiler, the Qt wrappers, and the examples.
+These are all built using the pure Qt 4 library:
+</p><div class="tabularx"><table width="100%" border="1"><colgroup><col></col><col></col></colgroup><tbody valign="top"><tr><td align="left" valign="top"><p><span class="bold"><strong>Windows</strong></span></p></td><td align="left" valign="top">
+        <p><code class="computeroutput">C:\&gt; cd C:\Squish-Qt4</code></p>
+        <p><code class="computeroutput">C:\Squish-Qt4&gt; configure --enable-pure-qt4 --with-qtdir=C:\Qt\4.7.1 --disable-all --enable-idl --enable-wrappers --enable-examples</code></p>
+    </td></tr><tr><td align="left" valign="top"><p><span class="bold"><strong>Linux/Unix</strong></span></p></td><td align="left" valign="top">
+        <p><code class="computeroutput">$ cd /home/user/squish-qt4</code></p>
+        <p><code class="computeroutput">$ ./configure --enable-pure-qt4 --with-qtdir=/usr/local/qt47 --disable-all --enable-idl --enable-wrappers --enable-examples</code></p>
+    </td></tr><tr><td align="left" valign="top"><p><span class="bold"><strong>macOS</strong></span></p></td><td align="left" valign="top">
+        <p><code class="computeroutput">$ cd /Users/user/squish-qt4</code></p>
+        <p><code class="computeroutput">$ ./configure --enable-pure-qt4
+	--with-qtdir=/opt/local/qt47 --disable-all --enable-idl --enable-wrappers --enable-examples</code></p>
+    </td></tr></tbody></table></div><p>
+Once <span class="application">configure</span> has finished, it is wise to
+verify that the configuration log output includes the line
+<code class="computeroutput">Checking Qt version ......
+4.<span class="emphasis"><em>x</em></span></code> where <span class="emphasis"><em>x</em></span>
+is the Qt 4 release you are using.
+</p><p>
+<span class="bold"><strong>Step 3 of 6</strong></span>
+</p><p>
+Now build the wrappers and the examples using the pure Qt 4
+installation:
+</p><div class="tabularx"><table width="100%" border="1"><colgroup><col></col><col></col></colgroup><tbody valign="top"><tr><td align="left" valign="top"><p><span class="bold"><strong>Windows</strong></span></p></td><td align="left" valign="top"><p><code class="computeroutput">C:\Squish-Qt4&gt; build</code></p></td></tr><tr><td align="left" valign="top"><p><span class="bold"><strong>Linux/Unix/macOS</strong></span></p></td><td align="left" valign="top"><p><code class="computeroutput">$ ./build</code></p></td></tr></tbody></table></div><p>
+<span class="bold"><strong>Step 4 of 6</strong></span>
+</p><p>
+Now change to the directory of the second Squish installation, and make
+<span class="application">configure</span> use the Qt 4 with Qt3Support (or Qt
+3) installation, and select the remaining components to be configured
+and built:
+</p><div class="tabularx"><table width="100%" border="1"><colgroup><col></col><col></col></colgroup><tbody valign="top"><tr><td align="left" valign="top"><p><span class="bold"><strong>Windows</strong></span></p></td><td align="left" valign="top">
+        <p><code class="computeroutput">C:\Squish-Qt-4&gt; cd C:\Squish-Qt4-and-Qt3</code></p>
+        <p><code class="computeroutput">C:\Squish-Qt4-and-Qt3&gt; configure --with-qtdir=c:\Qt\Qt4-and-Qt3 --disable-idl --disable-wrappers --disable-examples --disable-explorer</code></p>
+    </td></tr><tr><td align="left" valign="top"><p><span class="bold"><strong>Linux/Unix</strong></span></p></td><td align="left" valign="top">
+        <p><code class="computeroutput">$ cd /home/user/squish-qt4-and-qt3</code></p>
+        <p><code class="computeroutput">$ ./configure --with-qtdir=/usr/local/qt4-and-qt3 --disable-idl --disable-wrappers --disable-examples --disable-explorer</code></p>
+    </td></tr><tr><td align="left" valign="top"><p><span class="bold"><strong>macOS</strong></span></p></td><td align="left" valign="top">
+        <p><code class="computeroutput">$ cd /Users/user/squish-qt4-and-qt3</code></p>
+        <p><code class="computeroutput">$ ./configure --with-qtdir=/opt/local/qt4-and-qt3 --disable-idl --disable-wrappers --disable-examples --disable-explorer</code></p>
+    </td></tr></tbody></table></div><p>
+<span class="bold"><strong>Step 5 of 6</strong></span>
+</p><p>
+Now that the rest of the components are configured, we can build them:
+</p><div class="tabularx"><table width="100%" border="1"><colgroup><col></col><col></col></colgroup><tbody valign="top"><tr><td align="left" valign="top"><p><span class="bold"><strong>Windows</strong></span></p></td><td align="left" valign="top"><p><code class="computeroutput">C:\Squish-Qt4-and-Qt3&gt; build</code></p></td></tr><tr><td align="left" valign="top"><p><span class="bold"><strong>Linux/Unix/macOS</strong></span></p></td><td align="left" valign="top"><p><code class="computeroutput">$ ./build</code></p></td></tr></tbody></table></div><p>
+If you want to, you could even perform the above steps on different
+machines, if you prefer to execute the tests remotely.
+</p><p>
+<span class="bold"><strong>Step 6 of 6</strong></span>
+</p><p>
+The last step necessary to complete the split build is to
+copy over the required files which were built in the pure Qt 4
+directory over to your Qt 4 with Qt3Support (or Qt 3) build directory:
+</p><div class="tabularx"><table width="100%" border="1"><colgroup><col></col><col></col></colgroup><tbody valign="top"><tr><td align="left" valign="top"><p><span class="bold"><strong>Windows</strong></span></p></td><td align="left" valign="top">
+        <p><code class="computeroutput">C:\Squish-Qt4-and-Qt3&gt; copy C:\Squish-Qt4\bin\dllpreload.exe bin\</code></p>
+        <p><code class="computeroutput">C:\Squish-Qt4-and-Qt3&gt; copy C:\Squish-Qt4\bin\extrawindowwatcher.exe bin\</code></p>
+        <p><code class="computeroutput">C:\Squish-Qt4-and-Qt3&gt; copy C:\Squish-Qt4\bin\injectdll*.exe bin\</code></p>
+        <p><code class="computeroutput">C:\Squish-Qt4-and-Qt3&gt; copy C:\Squish-Qt4\bin\squishhook.dll bin\</code></p>
+        <p><code class="computeroutput">C:\Squish-Qt4-and-Qt3&gt; copy C:\Squish-Qt4\bin\squishqtwrapper.dll bin\</code></p>
+        <p><code class="computeroutput">C:\Squish-Qt4-and-Qt3&gt; copy C:\Squish-Qt4\bin\startaut.exe bin\</code></p>
+        <p><code class="computeroutput">C:\Squish-Qt4-and-Qt3&gt; copy C:\Squish-Qt4\bin\startwinaut.exe bin\</code></p>
+        <p><code class="computeroutput">C:\Squish-Qt4-and-Qt3&gt; copy C:\Squish-Qt4\bin\winhook.dll bin\</code></p>
+        <p><code class="computeroutput">C:\Squish-Qt4-and-Qt3&gt; copy C:\Squish-Qt4\lib\_extrawindowwatcher.exe lib\</code></p>
+        <p><code class="computeroutput">C:\Squish-Qt4-and-Qt3&gt; copy C:\Squish-Qt4\lib\_startwinaut.exe lib\</code></p>
+        <p><code class="computeroutput">C:\Squish-Qt4-and-Qt3&gt; copy C:\Squish-Qt4\lib\extensions\qt\*.* lib\extensions\qt\</code></p>
+        <p><code class="computeroutput">C:\Squish-Qt4-and-Qt3&gt; copy C:\Squish-Qt4\lib\extensions\win\*.* lib\extensions\win\</code></p>
+        <p><code class="computeroutput">C:\Squish-Qt4-and-Qt3&gt; copy C:\Squish-Qt4\lib\squishqtpre.dll lib\</code></p>
+        <p><code class="computeroutput">C:\Squish-Qt4-and-Qt3&gt; copy C:\Squish-Qt4\src\wrappers\qt\*.tcl lib\</code></p>
+    </td></tr><tr><td align="left" valign="top"><p><span class="bold"><strong>Linux/Unix</strong></span></p></td><td align="left" valign="top">
+        <p><code class="computeroutput">$ cp /home/user/squish-qt4/bin/isstaticapp /home/user/squish-qt4-and-qt3/bin</code></p>
+        <p><code class="computeroutput">$ cp /home/user/squish-qt4/bin/startaut /home/user/squish-qt4-and-qt3/bin</code></p>
+        <p><code class="computeroutput">$ cp /home/user/squish-qt4/lib/extensions/qt/*.* /home/user/squish-qt4-and-qt3/lib/extensions/qt</code></p>
+        <p><code class="computeroutput">$ cp /home/user/squish-qt4/lib/libsquishhook.so /home/user/squish-qt4-and-qt3/lib</code></p>
+        <p><code class="computeroutput">$ cp /home/user/squish-qt4/lib/libsquishqtpre.so /home/user/squish-qt4-and-qt3/lib</code></p>
+        <p><code class="computeroutput">$ cp /home/user/squish-qt4/lib/libsquishqtwrapper.so /home/user/squish-qt4-and-qt3/lib</code></p>
+        <p><code class="computeroutput">$ cp /home/user/squish-qt4/src/wrappers/qt/*.tcl /home/user/squish-qt4-and-qt3/lib</code></p>
+    </td></tr><tr><td align="left" valign="top"><p><span class="bold"><strong>macOS</strong></span></p></td><td align="left" valign="top">
+        <p><code class="computeroutput">$ cp /Users/user/squish-qt4/bin/isstaticapp /Users/user/squish-qt4-and-qt3/bin</code></p>
+        <p><code class="computeroutput">$ cp /Users/user/squish-qt4/bin/startaut /Users/user/squish-qt4-and-qt3/bin</code></p>
+        <p><code class="computeroutput">$ cp /Users/user/squish-qt4/lib/extensions/qt/*.* /Users/user/squish-qt4-and-qt3/lib/extensions/qt</code></p>
+        <p><code class="computeroutput">$ cp /Users/user/squish-qt4/lib/libsquishhook.so /Users/user/squish-qt4-and-qt3/lib</code></p>
+        <p><code class="computeroutput">$ cp /Users/user/squish-qt4/lib/libsquishqtpre.so /Users/user/squish-qt4-and-qt3/lib</code></p>
+        <p><code class="computeroutput">$ cp /Users/user/squish-qt4/lib/libsquishqtwrapper.so /Users/user/squish-qt4-and-qt3/lib</code></p>
+        <p><code class="computeroutput">$ cp /Users/user/squish-qt4/src/wrappers/qt/*.tcl /Users/user/squish-qt4-and-qt3/lib</code></p>
+    </td></tr></tbody></table></div><p>
+Now, the build in your Qt 4 with Qt3Support directory (or Qt 3
+directory) is fully usable for creating and running tests for
+applications that link against a pure Qt 4.x library.
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="ins-qt30"></a>3.1.2.4. Installation for Testing Qt 3.x Applications</h4></div></div></div><p>
+To test applications that are built against Qt 3.1 or later it is
+possible to use a suitable <span class="emphasis"><em>Squish</em></span> binary package matching your Qt
+version, or if one isn't available, to do a standard build. This means
+that as long as you are using Qt 3.1 or later you can just build
+<span class="emphasis"><em>Squish</em></span> normally using the <a class="xref" href="ins-commandline-tools-server-ide.html#ins-quick" title="3.1.2.1. Quick Install">Quick Install (Section 3.1.2.1)</a> procedure.
+</p><p>
+Testing a Qt 3.0 application requires a split build of
+<span class="emphasis"><em>Squish</em></span>—but this is not necessary for Qt 3.1 or later for which
+the standard build works fine. But for Qt 3.0 only, you must compile the
+components that come in direct contact with the AUT using the same Qt 3
+library you use to build the AUT. The rest of <span class="emphasis"><em>Squish</em></span> must be compiled
+with a separate version of the Qt library, either Qt 4 with the
+Qt3Support module (or with Qt 3.1 or later).
+</p><p>
+A split build means that you must compile the components that come in
+direct contact with the AUT using your Qt 3.0 library. The rest of
+Squish can be compiled with either Qt 3 or with a Qt 4 installation that
+includes the Qt3Support module.
+</p><p>
+Performing a split build requires you to run both
+<span class="application">configure</span> and
+<span class="application">build</span> twice: the first time to build the
+parts that will use the Qt 3 library that your AUT uses, and the second
+time to build the parts of <span class="emphasis"><em>Squish</em></span> that require Qt 4 with Qt3Support
+(or Qt 3.1 or later).
+</p><p>
+Here is a very basic example that assumes that the <span class="emphasis"><em>Squish</em></span> tools
+package has been unpacked
+<span class="emphasis"><em>twice</em></span>, each time into a different directory. One
+directory will be used for the Qt 3 parts, and the other will be used
+for the Qt 4 with Qt3Support (or just Qt 3.1 if preferred) parts. For
+Unix-like systems, we have assumed a username of “<span class="quote">user</span>”
+which must be changed to your actual username. We have assumed that the
+<span class="emphasis"><em>Squish</em></span> tools package has been unpacked twice, and each time had its
+directory renamed so that you now have two identical <span class="emphasis"><em>Squish</em></span>
+directories with the following names:
+</p><div class="tabularx"><table width="100%" border="1"><colgroup><col></col><col></col></colgroup><tbody valign="top"><tr><td align="left" valign="top"><p><span class="bold"><strong>Windows</strong></span></p></td><td align="left" valign="top"><p><code class="filename">C:\Squish-Qt3</code></p>
+           <p><code class="filename">C:\Squish-Qt4-and-Qt3</code></p>
+    </td></tr><tr><td align="left" valign="top"><p><span class="bold"><strong>Linux/Unix</strong></span></p></td><td align="left" valign="top"><p><code class="filename">/home/user/squish-qt3</code></p>
+           <p><code class="filename">/home/user/squish-qt4-and-qt3</code></p>
+    </td></tr><tr><td align="left" valign="top"><p><span class="bold"><strong>macOS</strong></span></p></td><td align="left" valign="top"><p><code class="filename">/Users/user/squish-qt3</code></p>
+           <p><code class="filename">/Users/user/squish-qt4-and-qt3</code></p>
+    </td></tr></tbody></table></div><p>
+We also assume that Qt 3 and Qt 4 with Qt 3 support are installed in
+the directories listed below. (Naturally, it doesn't matter what
+directories are used, so long as you adapt the instructions to match.)
+</p><div class="tabularx"><table width="100%" border="1"><colgroup><col></col><col></col></colgroup><tbody valign="top"><tr><td align="left" valign="top"><p><span class="bold"><strong>Windows</strong></span></p></td><td align="left" valign="top"><p><code class="filename">C:\Qt\3.2.3</code></p>
+           <p><code class="filename">C:\Qt\4.7.1</code></p>
+    </td></tr><tr><td align="left" valign="top"><p><span class="bold"><strong>Linux/Unix</strong></span></p></td><td align="left" valign="top"><p><code class="filename">/usr/local/qt3</code></p>
+           <p><code class="filename">/usr/local/qt4</code></p>
+    </td></tr><tr><td align="left" valign="top"><p><span class="bold"><strong>macOS</strong></span></p></td><td align="left" valign="top"><p><code class="filename">/opt/local/qt3</code></p>
+           <p><code class="filename">/opt/local/qt4</code></p>
+    </td></tr></tbody></table></div><p>
+First, build just the server, IDL compiler, the Qt wrappers, and the
+examples, using Qt 3:
+</p><div class="tabularx"><table width="100%" border="1"><colgroup><col></col><col></col></colgroup><tbody valign="top"><tr><td align="left" valign="top"><p><span class="bold"><strong>Windows</strong></span></p></td><td align="left" valign="top">
+        <p><code class="computeroutput">C:\&gt; cd C:\Squish-Qt3</code></p>
+        <p><code class="computeroutput">C:\Squish-Qt3&gt; configure --with-qtdir=c:\Qt\3.2.3 --disable-all --enable-server --enable-idl --enable-wrappers --enable-examples</code></p>
+    </td></tr><tr><td align="left" valign="top"><p><span class="bold"><strong>Linux/Unix</strong></span></p></td><td align="left" valign="top">
+        <p><code class="computeroutput">$ cd /home/user/squish-qt3</code></p>
+        <p><code class="computeroutput">$ ./configure --with-qtdir=/usr/local/qt3 --disable-all --enable-server --enable-idl --enable-wrappers --enable-examples</code></p>
+    </td></tr><tr><td align="left" valign="top"><p><span class="bold"><strong>macOS</strong></span></p></td><td align="left" valign="top">
+        <p><code class="computeroutput">$ cd /Users/user/squish-qt3</code></p>
+        <p><code class="computeroutput">$ ./configure --with-qtdir=/opt/local/qt3 --disable-all --enable-server --enable-idl --enable-wrappers --enable-examples</code></p>
+    </td></tr></tbody></table></div><p>
+Once <span class="application">configure</span> has finished, it is wise to
+verify that the configuration log output includes the line
+<code class="computeroutput">Checking Qt version ......
+3.<span class="emphasis"><em>x</em></span></code> where <span class="emphasis"><em>x</em></span>
+is the Qt 3 release you are using. Now build the wrappers and the
+examples using the Qt 3 installation:
+</p><div class="tabularx"><table width="100%" border="1"><colgroup><col></col><col></col></colgroup><tbody valign="top"><tr><td align="left" valign="top"><p><span class="bold"><strong>Windows</strong></span></p></td><td align="left" valign="top"><p><code class="computeroutput">C:\Squish-Qt3&gt; build</code></p></td></tr><tr><td align="left" valign="top"><p><span class="bold"><strong>Linux/Unix/macOS</strong></span></p></td><td align="left" valign="top"><p><code class="computeroutput">$ ./build</code></p></td></tr></tbody></table></div><p>
+Now change to the directory of the second Squish installation, and make
+<span class="application">configure</span> use the Qt 4 with Qt3Support (or Qt
+3.1 or later) installation, and select the remaining components to be
+configured and built:
+</p><div class="tabularx"><table width="100%" border="1"><colgroup><col></col><col></col></colgroup><tbody valign="top"><tr><td align="left" valign="top"><p><span class="bold"><strong>Windows</strong></span></p></td><td align="left" valign="top">
+        <p><code class="computeroutput">C:\Squish-Qt3&gt; cd C:\Squish-Qt4-and-Qt3</code></p>
+        <p><code class="computeroutput">C:\Squish-Qt4-and-Qt3&gt; configure --with-qtdir=c:\Qt\4.7.1 --disable-server --disable-idl --disable-wrappers --disable-examples</code></p>
+    </td></tr><tr><td align="left" valign="top"><p><span class="bold"><strong>Linux/Unix</strong></span></p></td><td align="left" valign="top">
+        <p><code class="computeroutput">$ cd /home/user/squish-qt4-and-qt3</code></p>
+        <p><code class="computeroutput">$ ./configure --with-qtdir=/usr/local/qt4 --disable-server --disable-idl --disable-wrappers --disable-examples</code></p>
+    </td></tr><tr><td align="left" valign="top"><p><span class="bold"><strong>macOS</strong></span></p></td><td align="left" valign="top">
+        <p><code class="computeroutput">$ cd /Users/user/squish-qt4-and-qt3</code></p>
+        <p><code class="computeroutput">$ ./configure --with-qtdir=/opt/local/qt4 --disable-server --disable-idl --disable-wrappers --disable-examples</code></p>
+    </td></tr></tbody></table></div><p>
+Now that the rest of the components are configured, we can now build them:
+</p><div class="tabularx"><table width="100%" border="1"><colgroup><col></col><col></col></colgroup><tbody valign="top"><tr><td align="left" valign="top"><p><span class="bold"><strong>Windows</strong></span></p></td><td align="left" valign="top"><p><code class="computeroutput">C:\Squish-Qt4-and-Qt3&gt; build</code></p></td></tr><tr><td align="left" valign="top"><p><span class="bold"><strong>Linux/Unix/macOS</strong></span></p></td><td align="left" valign="top"><p><code class="computeroutput">$ ./build</code></p></td></tr></tbody></table></div><p>
+If you want to, you could even perform the above steps on different
+machines, if you prefer to execute the tests remotely.
+</p><h5><a id="idp37405560"></a>Usage Example</h5><p>Here is a very brief summary of an example usage of this setup on a
+Unix system. Apart from the different path names, the approach is the same
+on Windows. We will assume an AUT with the path
+<code class="filename">/opt/ourcompany/ourapp</code>.</p><pre class="screen">
+/home/user/squish-qt3/bin/squishserver &amp;
+/home/user/squish-qt3/bin/squishserver --config addAppPath /opt/ourcompany
+</pre><p>At this point you could verify that the application will indeed be
+found in the given path:</p><pre class="screen">
+/home/user/squish-qt4-and-qt3/bin/squishrunner --info applications
+</pre><p>
+The name of your application should be printed out—possibly along
+with the names of any other applications that you have registered with
+<span class="emphasis"><em>Squish</em></span>.
+</p><p>
+Now run the IDE (assuming that you have installed it; see <a class="xref" href="ins-new-ide.html" title="3.10. Standalone Installation of the IDE">Standalone Installation of the IDE (Section 3.10)</a>):
+</p><pre class="screen">
+/home/user/squishide/squishide
+</pre><p>
+This will automatically start and stop a local <span class="application">squishserver</span> as needed.
+(This behavior is controlled by the Remote Testing setting. To change it
+click
+<span class="guimenuitem">Preferences</span>,
+then click the <span class="guibutton">Squish</span> item's triangle to expand
+it, and then this item's <span class="guibutton">Remote Testing</span> item to
+show the Remote Testing pane. The <span class="guibutton">Start local Squish server
+automatically</span> checkbox should be checked.)
+</p><p>All that's left, before you can start creating new test cases, is the
+creation of a new test suite and the selection of
+<span class="application">ourapp</span> in the suite's settings dialog.</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="ins-singlethreaded"></a>3.1.2.5. Installation for testing with a single-threaded Qt library</h4></div></div></div><p>
+The easiest approach is to link the AUT and all of <span class="emphasis"><em>Squish</em></span> to the same
+Qt library. If it is possible to link your AUT to a shared,
+multi-threaded Qt library, we recommend using this for both <span class="emphasis"><em>Squish</em></span> and
+your AUT. Any other Qt configuration settings, (STL, etc.) don't
+matter.
+</p><p>
+If you don't want to use a multi-threaded Qt library for your AUT, you
+can use one Qt library for your AUT and a different one for Squish (some
+parts of <span class="emphasis"><em>Squish</em></span>, mainly the <span class="application">squishserver</span> and the <span class="application">squishrunner</span>,
+require a multi-threaded Qt library).
+</p><p>
+However, the parts of Squish that hook into your AUT (<span class="emphasis"><em>Squish</em></span>'s
+qtwrapper, hook, and object model libraries), must be built against
+<span class="emphasis"><em>exactly</em></span> the same Qt library as your AUT. Also make
+sure that the same C++ compiler is used. The other <span class="emphasis"><em>Squish</em></span> tools can be
+linked with any Qt library.
+</p><p>
+So in order to support a single-threaded Qt library, you must perform a
+split build of <span class="emphasis"><em>Squish</em></span>, i.e., build some parts against a multi-threaded
+Qt library and some parts against the single-threaded Qt library that
+your AUT uses.
+</p><p>
+For example, suppose that the single- and multi-threaded Qt libraries
+are in the following locations:
+</p><div class="tabularx"><table width="100%" border="1"><colgroup><col></col><col></col></colgroup><tbody valign="top"><tr><td align="left" valign="top"><p><span class="bold"><strong>Windows</strong></span></p></td><td align="left" valign="top"><p><code class="filename">C:\Qt\singlethreaded</code></p>
+           <p><code class="filename">C:\Qt\multithreaded</code></p>
+    </td></tr><tr><td align="left" valign="top"><p><span class="bold"><strong>Linux/Unix</strong></span></p></td><td align="left" valign="top"><p><code class="filename">/usr/local/qt-singlethreaded</code></p>
+           <p><code class="filename">/usr/local/qt-multithreaded</code></p>
+    </td></tr><tr><td align="left" valign="top"><p><span class="bold"><strong>macOS</strong></span></p></td><td align="left" valign="top"><p><code class="filename">/opt/local/qt-singlethreaded</code></p>
+           <p><code class="filename">/opt/local/qt-multithreaded</code></p>
+    </td></tr></tbody></table></div><p>
+The first step is to compile only the multi-threaded parts of <span class="emphasis"><em>Squish</em></span>
+by running <span class="application">configure</span>, and disabling
+everything except for the server and runner:
+</p><div class="tabularx"><table width="100%" border="1"><colgroup><col></col><col></col></colgroup><tbody valign="top"><tr><td align="left" valign="top"><p><span class="bold"><strong>Windows</strong></span></p></td><td align="left" valign="top"><p><code class="computeroutput">C:\squish&gt; configure --with-qtdir=C:\Qt\multithreaded --disable-all --enable-server --enable-runner --enable-ide-utils</code></p>
+           <p><code class="computeroutput">C:\squish&gt; build</code></p>
+    </td></tr><tr><td align="left" valign="top"><p><span class="bold"><strong>Linux/Unix</strong></span></p></td><td align="left" valign="top"><p><code class="computeroutput">$ ./configure --with-qtdir=/usr/local/qt-multithreaded --disable-all --enable-server --enable-runner --enable-ide-utils</code></p>
+           <p><code class="computeroutput">$ ./build</code></p>
+    </td></tr><tr><td align="left" valign="top"><p><span class="bold"><strong>macOS</strong></span></p></td><td align="left" valign="top"><p><code class="computeroutput">$ ./configure --with-qtdir=/opt/local/qt-multithreaded --disable-all --enable-server --enable-runner --enable-ide-utils</code></p>
+           <p><code class="computeroutput">$ ./build</code></p>
+    </td></tr></tbody></table></div><p>
+The second step is to compile the remaining parts of <span class="emphasis"><em>Squish</em></span> with the
+single-threaded Qt by running <span class="application">configure</span>
+again, this time disabling only the server and the runner:
+</p><div class="tabularx"><table width="100%" border="1"><colgroup><col></col><col></col></colgroup><tbody valign="top"><tr><td align="left" valign="top"><p><span class="bold"><strong>Windows</strong></span></p></td><td align="left" valign="top"><p><code class="computeroutput">C:\squish&gt; configure --with-qtdir=C:\Qt\singlethreaded --disable-server --disable-runner --disable-ide-utils --disable-win</code></p>
+           <p><code class="computeroutput">C:\squish&gt; build</code></p>
+    </td></tr><tr><td align="left" valign="top"><p><span class="bold"><strong>Linux/Unix</strong></span></p></td><td align="left" valign="top"><p><code class="computeroutput">$ ./configure --with-qtdir=/usr/local/qt-singlethreaded --disable-server --disable-runner --disable-ide-utils</code></p>
+           <p><code class="computeroutput">$ ./build</code></p>
+    </td></tr><tr><td align="left" valign="top"><p><span class="bold"><strong>macOS</strong></span></p></td><td align="left" valign="top"><p><code class="computeroutput">$ ./configure --with-qtdir=/opt/local/qt-singlethreaded --disable-server --disable-runner --disable-ide-utils</code></p>
+           <p><code class="computeroutput">$ ./build</code></p>
+    </td></tr></tbody></table></div><p>
+Make sure that the AUT is linked against exactly the same
+single-threaded Qt library as you have used for building the
+single-threaded parts of <span class="emphasis"><em>Squish</em></span>. If in doubt, use one of the following
+tools to verify the correct linkage:
+</p><div class="tabularx"><table width="100%" border="1"><colgroup><col></col><col></col></colgroup><tbody valign="top"><tr><td align="left" valign="top"><p><span class="bold"><strong>Windows</strong></span></p></td><td align="left" valign="top"><p>Dependency Walker
+                 (<span class="application">depends.exe</span>)</p></td></tr><tr><td align="left" valign="top"><p><span class="bold"><strong>Linux/Unix</strong></span></p></td><td align="left" valign="top"><p><span class="application">ldd</span> or
+                 <span class="application">chatr</span></p>
+    </td></tr><tr><td align="left" valign="top"><p><span class="bold"><strong>macOS</strong></span></p></td><td align="left" valign="top"><p><span class="application">otool</span></p>
+    </td></tr></tbody></table></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="ins-staticqt"></a>3.1.2.6. Statically-linked Qt libraries</h4></div></div></div><p>
+Recording and running tests is now possible with applications built with
+statically-linked Qt libraries. Here is a summary of the requirements:
+</p><div class="orderedlist"><ol type="1"><li><p> The correct version/static build of Qt must be installed. </p></li><li><p> The <span class="emphasis"><em>Squish</em></span> source package must be extracted, configured with
+special options, and built against the static Qt library.
+</p></li><li><p> Your AUT must be instrumented to use a built-in hook. </p></li><li><p>
+For the <span class="application">squishidl</span>, <span class="application">squishserver</span>, <span class="application">Squish IDE</span>, and
+<span class="application">squishrunner</span>, you will need a Squish binary package that matches the source
+package version number. This would be
+<code class="filename">squish-6.4.2-qt55x-win64-msvc12.exe</code> for
+Squish 6.4.2 with Qt 5.5, for example.
+</p></li><li><p> <span class="application">squishserver</span> must be configured so that
+<em class="parameter"><code>usesBuiltinHook</code></em> is set for the AUT. </p></li></ol></div><p>
+Extract the <span class="emphasis"><em>Squish</em></span> source package to <code class="filename">C:\Users\user</code> on Windows,
+<code class="filename">/home/user</code> on Linux/Unix or to
+<code class="filename">/Applications</code> on macOS. The exact name of the directory is
+determined by the archive filename, but we will refer to it below as simply
+<code class="filename">squish</code>.
+</p><p> Install the <span class="emphasis"><em>Squish</em></span> binary package to a directory right next to that. We will
+refer to that directory below as <code class="filename">Squish_for_Qt</code>. </p><p>
+It is assumed that your static Qt installation is found in the directory
+<code class="filename">C:\Qt</code> on Windows, <code class="filename">/usr/local/qt</code>
+on Linux/Unix or <code class="filename">/Users/Qt</code> on macOS.
+</p><h5><a id="idp37462464"></a>Building Squish</h5><p>
+It is best practice to configure and build outside of the source directory.
+First, create an empty build directory, and then configure from within
+that directory:
+</p><div class="tabularx"><table width="100%" border="1"><colgroup><col></col><col></col></colgroup><tbody valign="top"><tr><td align="left" valign="top"><p><span class="bold"><strong>Windows</strong></span></p></td><td align="left" valign="top"><p><code class="computeroutput">C:\Users\user&gt; mkdir builddir</code></p>
+	   <p><code class="computeroutput">C:\Users\user&gt; cd builddir</code></p></td></tr><tr><td align="left" valign="top"><p><span class="bold"><strong>Linux/Unix/macOS</strong></span></p></td><td align="left" valign="top"><p><code class="computeroutput">$ mkdir builddir</code></p>
+           <p><code class="computeroutput">$ cd builddir</code></p>
+    </td></tr></tbody></table></div><p>
+Prepare the <span class="emphasis"><em>Squish</em></span> build by running the <span class="application">configure</span>
+script:
+</p><div class="tabularx"><table width="100%" border="1"><colgroup><col></col><col></col></colgroup><tbody valign="top"><tr><td align="left" valign="top"><p><span class="bold"><strong>Windows</strong></span></p></td><td align="left" valign="top"><p><code class="computeroutput">C:\Users\user\builddir&gt; ..\squish\configure --with-qmake=C:\Qt\bin\qmake --enable-qmake-config --with-squishidl=C:\Users\user\Squish_for_Qt\bin\squishidl --disable-all --enable-qt</code></p></td></tr><tr><td align="left" valign="top"><p><span class="bold"><strong>Linux/Unix/macOS</strong></span></p></td><td align="left" valign="top"><p><code class="computeroutput">$ ../squish/configure --with-qmake=/Users/Qt/bin/qmake --enable-qmake-config --with-squishidl=/Applications/Squish_for_Qt/bin/squishidl --disable-all --enable-qt</code></p>
+    </td></tr></tbody></table></div><p>
+</p><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Note: macOS-specific"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/note.png"></img></td><th align="left">macOS-specific</th></tr><tr><td align="left" valign="top"><p>
+For macOS Mojave users, an additional flag to the configure step is
+required, <code class="computeroutput">--enable-64bit</code>.
+</p></td></tr></table></div><p>
+Once the <span class="application">configure</span> step is complete, start
+the build process:
+</p><div class="tabularx"><table width="100%" border="1"><colgroup><col></col><col></col></colgroup><tbody valign="top"><tr><td align="left" valign="top"><p><span class="bold"><strong>Windows</strong></span></p></td><td align="left" valign="top"><p><code class="computeroutput">C:\Users\user\builddir&gt; build </code></p></td></tr><tr><td align="left" valign="top"><p><span class="bold"><strong>Linux/Unix/macOS</strong></span></p></td><td align="left" valign="top"><p><code class="computeroutput">$ ./build </code></p>
+    </td></tr></tbody></table></div><h5><a id="idp37480024"></a>Instrumenting your AUT </h5><p>
+Navigate to the *.pro file of your Qt application and add the following:
+</p><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage"></span><pre class="programlisting">
+# Include Squish/Qt if a Squish installation prefix was provided to qmake
+!isEmpty(SQUISH_PREFIX) {
+	message("Including Squish/Qt files")
+	include($$SQUISH_PREFIX/qtbuiltinhook.pri)
+}
+</pre></div><p>
+Now add the built-in hook to the main function of your application, or
+right after your QApplication or QGuiApplication object is setup (e.g., main.cpp):
+</p><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage"></span><pre class="programlisting">
+#ifdef HAVE_SQUISH
+#include &lt;qtbuiltinhook.h&gt;
+#endif
+...
+int main(int argc, char **argv)
+{
+   QApplication app(argc, argv)
+#ifdef HAVE_SQUISH
+      Squish::installBuiltinHook();
+#endif
+   ...
+}
+</pre></div><p>
+Rebuild your application using make:
+</p><div class="tabularx"><table width="100%" border="1"><colgroup><col></col><col></col></colgroup><tbody valign="top"><tr><td align="left" valign="top"><p><span class="bold"><strong>Windows</strong></span></p></td><td align="left" valign="top"><p><code class="computeroutput">C:\&gt; C:\Qt\bin\qmake -makefile SQUISH_PREFIX=C:\Users\user\builddir</code></p></td></tr><tr><td align="left" valign="top"><p><span class="bold"><strong>Linux/Unix/macOS</strong></span></p></td><td align="left" valign="top"><p><code class="computeroutput">$ /Users/Qt/bin/qmake -makefile SQUISH_PREFIX=/Users/user/builddir </code></p>
+           <p><code class="computeroutput">$ make </code></p>
+    </td></tr></tbody></table></div><h5><a id="idp37487712"></a>Configuring <span class="application">squishserver</span></h5><p> For each AUT that uses the built in hook, squishserver must be registered
+properly. This can not be done from the <span class="application">Squish IDE</span> and can not be un-done unless you
+manually edit the server.ini in your user settings directory. </p><div class="tabularx"><table width="100%" border="1"><colgroup><col></col><col></col></colgroup><tbody valign="top"><tr><td align="left" valign="top"><p><span class="bold"><strong>Windows</strong></span></p></td><td align="left" valign="top"><p><code class="computeroutput">C:\&gt; C:\Users\user\Squish_for_Qt\bin\squishserver --config usesBuiltinHook AUT</code></p></td></tr><tr><td align="left" valign="top"><p><span class="bold"><strong>Linux/Unix/macOS</strong></span></p></td><td align="left" valign="top"><p><code class="computeroutput">$ /Applications/Squish_for_Qt/bin/squishserver --config usesBuiltinHook AUT</code></p>
+    </td></tr></tbody></table></div><p>
+Create a new test suite with the appropriate settings and choose the newly
+instrumented application binary as the Application Under Test.
+</p><p>
+You should now be able to launch the AUT and record and replay tests.
+</p></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="ins-renamedqt"></a>3.1.3. Installation for testing with a renamed Qt library</h3></div></div></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><span class="section"><a href="ins-commandline-tools-server-ide.html#ins-qt">3.1.3.1. Qt 3</a></span></dt><dt><span class="section"><a href="ins-commandline-tools-server-ide.html#ins-qt4">3.1.3.2. Qt 4 or later</a></span></dt></dl></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="ins-qt"></a>3.1.3.1. Qt 3</h4></div></div></div><p>
+If you want to use <span class="emphasis"><em>Squish</em></span> with a renamed Qt 3 library, you must use
+additional options to <span class="application">configure</span>. On Unix and
+macOS you must use the <code class="option">-with-qtlibname=&lt;renamed
+Qt library&gt;</code>.
+</p><p>
+On Windows, you must specify three options (you must specify all three
+options, even if one of the libraries is not renamed; in which case, just
+specify the original version):
+</p><div class="itemizedlist"><ul type="disc"><li><p><code class="option">--with-qtdllname=&lt;path to Qt&gt;/bin/&lt;renamedqt-mt.dll&gt;</code></p></li><li><p><code class="option">--with-qtlibname=&lt;path to Qt&gt;/lib/&lt;renamedqt-mt.lib&gt;</code></p></li><li><p><code class="option">--with-qtmainlibname=&lt;path to Qt&gt;/lib/&lt;qtmain.lib&gt;</code></p></li></ul></div><p>
+With the option <code class="option">--with-qtdllname</code> you must specify the
+path to the renamed Qt DLL, with <code class="option">--with-qtlibname</code> you
+must specify the path to the renamed Qt import library, and with the
+option <code class="option">--with-qtmainlibname</code> you must specify the path
+to the renamed <code class="filename">qtmain.lib</code> library.
+</p><p>
+The renamed Qt DLL and import library should contain the characters
+<code class="filename">mt</code> if you have a multi-threaded Qt library.
+<span class="application">configure</span> uses this to detect if the Qt
+library is mult-threaded or single-threaded. If you don't follow this
+convention, the automatic detection fails and some parts of <span class="emphasis"><em>Squish</em></span> are
+incorrectly disabled.
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="ins-qt4"></a>3.1.3.2. Qt 4 or later</h4></div></div></div><p>
+If you want to use <span class="emphasis"><em>Squish</em></span> with a renamed Qt library, you must use
+an additional option to <span class="application">configure</span>: if you
+configured your Qt library with the option
+<code class="option">-qtlibinfix &lt;infix&gt;</code>, you must
+configure <span class="emphasis"><em>Squish</em></span> with the option
+<code class="option">--with-qtlibinfix=&lt;infix&gt;</code>.
+</p></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="ins-build-errors"></a>3.1.4. Solving Build Errors</h3></div></div></div><p>
+Missing prerequisites, incompatible system libraries or misconfigured
+development tools may lead to the build process failing.
+</p><p>
+We have started to list most commonly reported build errors and
+solutions in
+the <a class="ulink" href="https://kb.froglogic.com/display/KB/Error Messages (Installation)" target="_blank">Knowledge
+Base</a>. For errors not covered please file a technical support
+request including the error output and configuration files like
+<code class="filename">config.log</code> and <code class="filename">Build.conf</code>.
+</p><p>We'll help solving obvious problems through our standard support
+offering. For more involved cases including remote or on-device
+debugging, tool chain setups or code adaptions we provide a
+ <a class="ulink" href="https://www.froglogic.com/services/consulting-services/" target="_blank">Consulting
+ Service</a>. Case-specific conditions are available upon request.
+</p></div></div><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" type="text/javascript" src="ScriptingLanguage.js"></script><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format">setScriptingLanguage();</script><div class="navfooter"><hr></hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="install.html">Prev</a> </td><td width="20%" align="center"><a accesskey="u" href="install.html">Up</a></td><td width="40%" align="right"> <a accesskey="n" href="ins-floating-license-server.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">Chapter 3. How to Install Squish </td><td width="20%" align="center"><a accesskey="h" href="index-noframes.html">Home</a></td><td width="40%" align="right" valign="top"> 3.2. Setting up the Squish Floating License Server</td></tr></table></div></body>
+<!-- Mirrored from ins-commandline-tools-server-ide.html by HTTrack Website Copier/3.x [XR&CO'2013], Wed, 06 Jul 2022 13:29:02 GMT -->
+</html>

@@ -1,0 +1,1261 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<!-- Mirrored from ide.dialogs.html by HTTrack Website Copier/3.x [XR&CO'2013], Wed, 06 Jul 2022 13:29:01 GMT -->
+<head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><title>8.3. Dialogs</title><link rel="stylesheet" href="manual.css" type="text/css"></link><meta name="generator" content="DocBook XSL Stylesheets V1.73.2"></meta><link rel="start" href="https://index-noframes.html" title="Squish Manual"></link><link rel="up" href="https://ide.ref.man.html" title="Chapter 8. IDE Reference Manual"></link><link rel="prev" href="https://ide.views.html" title="8.2. Views"></link><link rel="next" href="https://ide.keyboard.shortcuts.html" title="8.4. Keyboard Shortcuts"></link><style xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" type="text/css" media="screen">
+        div.toc * { margin-left: 6px; margin-right: auto; max-width: 75em; }
+        div.toc span { margin-left: 0px; }
+        * { margin-left: auto; margin-right: auto; max-width: 75em; }
+        body { margin-left: 6px; margin-right: 6px; }
+        table th { padding: .5ex }
+        table td { padding: .5ex }
+    </style><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format">
+        function keyPress() {
+            var e = window.event;
+            if ( e == undefined ) {
+                return;
+            }
+            /* ### does not properly scroll, yet
+            if ( e.keyCode == 32 ) {
+            var l = document.links;
+            for ( var i = 0; i < l.length; i++ ) {
+                if ( l[i].innerText == "Next" ) {
+                location.href = l[i].href;
+                }
+            }
+            } else
+                */
+                if ( e.keyCode == 0x08 ) {
+            var l = document.links;
+            for ( var i = 0; i < l.length; i++ ) {
+                if ( l[i].innerText == "Prev" ) {
+                location.href = l[i].href;
+                }
+            }
+            }
+        }
+        document.onkeypress = keyPress;
+    </script></head><body><div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="ide.dialogs"></a>8.3. Dialogs</h2></div></div></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><span class="section"><a href="https://ide.dialogs.html#ide.collect.support.information.dialog">8.3.1. Collect Information for Squish Support dialog</a></span></dt><dt><span class="section"><a href="https://ide.dialogs.html#ide.customize.perspective.dialog">8.3.2. Customize Perspective dialog</a></span></dt><dt><span class="section"><a href="https://ide.dialogs.html#ide.find.and.replace.dialog">8.3.3. Find/Replace dialog</a></span></dt><dt><span class="section"><a href="https://ide.dialogs.html#ide.image.not.found.dialog">8.3.4. Image Not Found dialog</a></span></dt><dt><span class="section"><a href="https://ide.dialogs.html#ide.text.not.found.dialog">8.3.5. Text Not Found dialog</a></span></dt><dt><span class="section"><a href="https://ide.dialogs.html#ide.image.search.preview.dialog">8.3.6. Image Search Preview dialog</a></span></dt><dt><span class="section"><a href="https://ide.dialogs.html#ide.import.squish.resource.dialog">8.3.7. Import Squish Resource dialog</a></span></dt><dt><span class="section"><a href="https://ide.dialogs.html#ide.search.image.selection.dialog">8.3.8. The Search Image Selection dialog</a></span></dt><dt><span class="section"><a href="https://ide.dialogs.html#ide.new.dialog">8.3.9. New dialog</a></span></dt><dt><span class="section"><a href="https://ide.dialogs.html#ide.new.squish.test.case.wizard">8.3.10. New Squish Test Case wizard</a></span></dt><dt><span class="section"><a href="https://ide.dialogs.html#ide.new.squish.test.data.dialog">8.3.11. New Squish Test Data dialog</a></span></dt><dt><span class="section"><a href="https://ide.dialogs.html#ide.new.squish.test.script.dialog">8.3.12. New Squish Test Script dialog</a></span></dt><dt><span class="section"><a href="https://ide.dialogs.html#ide.new.squish.test.suite.wizard">8.3.13. New Squish Test Suite wizard</a></span></dt><dt><span class="section"><a href="https://ide.dialogs.html#ide.object.not.found.dialog">8.3.14. Object Not Found dialog</a></span></dt><dt><span class="section"><a href="https://ide.dialogs.html#ide.ocr.selection.dialog">8.3.15. OCR Selection dialog</a></span></dt><dt><span class="section"><a href="https://ide.dialogs.html#ide.open.perspective.dialog">8.3.16. Open Perspective dialog</a></span></dt><dt><span class="section"><a href="https://ide.dialogs.html#ide.preferences.dialog">8.3.17. Pref­er­ences dialog</a></span></dt><dt><span class="section"><a href="https://ide.dialogs.html#ide.remote.control.dialog">8.3.18. Remote Control dialog</a></span></dt><dt><span class="section"><a href="https://ide.dialogs.html#ide.screenshot.verification.dialog">8.3.19. Screenshot Verification Point dialog</a></span></dt><dt><span class="section"><a href="https://ide.dialogs.html#ide.search.dialog">8.3.20. Search dialog</a></span></dt><dt><span class="section"><a href="https://ide.dialogs.html#ide.show.view.dialog">8.3.21. Show View dialog</a></span></dt><dt><span class="section"><a href="https://ide.dialogs.html#ide.squish.server.settings.dialog">8.3.22. Squish Server Settings dialog</a></span></dt><dt><span class="section"><a href="https://ide.dialogs.html#ide.squish.support.request.wizard">8.3.23. Squish Support Request Wizard</a></span></dt><dt><span class="section"><a href="https://ide.dialogs.html#ide.switch.to.editor.dialog">8.3.24. Switch to Editor dialog</a></span></dt><dt><span class="section"><a href="https://ide.dialogs.html#ide.vvp.dialog">8.3.25. Visual Verification Point editor</a></span></dt></dl></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="ide.collect.support.information.dialog"></a>8.3.1. Collect Information for Squish Support dialog</h3></div></div></div><p> This dialog is shown when the user selects <span class="guimenu">Help</span> -
+<span class="guimenuitem">Collect Support Information...</span>. </p><p> Generally, when you run into an unexpected problem with Squish and need
+help from support, you will be asked to send a support information zip file that
+can be created from here. </p><div class="screenshot"><div class="mediaobject" align="center"><img src="https://images/ide/collect-supportinfo.png" align="middle"></img><div class="caption">The Collect Support Information dialog
+</div></div></div><p> After clicking <span class="guibutton">Ok</span>, you will be shown a dialog that
+explains what is in the zip file. From here, you can click
+<span class="guibutton">Ok</span> to dismiss the dialog, or
+<span class="guibutton">Open Support Request...</span> which will open the
+<a class="xref" href="https://ide.dialogs.html#ide.squish.support.request.wizard" title="8.3.23. Squish Support Request Wizard">Squish Support Request Wizard (Section 8.3.23)</a> and guide you through the
+process of opening a support ticket.
+</p><div class="screenshot"><div class="mediaobject" align="center"><img src="https://images/ide/collecting-finished.png" align="middle"></img><div class="caption">Collecting Finished dialog
+</div></div></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="ide.customize.perspective.dialog"></a>8.3.2. Customize Perspective dialog</h3></div></div></div><p>
+This dialog is used to customize a predefined or custom
+perspective—for example, customizing some of the toolbars, menus,
+and submenus that are visible when the perspective is shown. The dialog
+is invoked by clicking
+<span class="guimenu">Window</span>|<span class="guimenuitem">Customize
+Perspective</span>.
+(To change the views shown in a perspective simply close any you don't
+want and add new ones using the <a class="xref" href="https://ide.main.window.html#ide.show.view.action" title="8.1.1.62. Show View action"><span class="guiicon">Show View</span> action (Section 8.1.1.62)</a>.)
+</p><div class="screenshot"><div class="mediaobject" align="center"><img src="https://images/ide-ref-customize-perspective-dialog.png" align="middle"></img><div class="caption">The Customize Perspective dialog
+</div></div></div><p>
+Use the Tool Bar Visibility tab to hide or show toolbars and individual
+toolbar buttons within toolbars. Similarly, use the Menu Visibility tab
+to hide or show menus and individual menu options within menus. The
+Command Groups Availability tab is for advanced users and is not
+documented in this manual. The Shortcuts tab can be used to add keyboard
+shortcut actions to submenus.
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="ide.find.and.replace.dialog"></a>8.3.3. Find/Replace dialog</h3></div></div></div><p>
+This modeless dialog is used to find and optionally replace text in the
+active editable window. The dialog is invoked by clicking
+<span class="guimenu">Edit</span>|<span class="guimenuitem">Find and Replace</span> or by pressing
+<span class="keycap"><strong>Ctrl</strong></span>+<span class="keycap"><strong>F</strong></span>.
+</p><div class="screenshot"><div class="mediaobject" align="center"><img src="https://images/ide-ref-find-and-replace-dialog.png" align="middle"></img><div class="caption">The Find/Replace dialog
+</div></div></div><p>
+Be aware that even if you set Scope to be All the search will only be
+made from the current cursor position Forward (or Backward depending on
+the Direction setting) to the end (or start) of the file—unless
+you check the <span class="guibutton">Wrap search</span> checkbox. Searching is
+case insensitive by default but this can be changed by checking the
+<span class="guibutton">Case sensitive</span> checkbox. If the
+<span class="guibutton">Regular expressions</span> checkbox is checked the Find
+text can be a regex using<a class="ulink" href="https://docs.oracle.com/javase/8/docs/api/java/util/regex/Pattern.html" target="_blank">
+Java's regular expression</a> syntax.
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="ide.image.not.found.dialog"></a>8.3.4. Image Not Found dialog</h3></div></div></div><p>
+This dialog automatically shows up during the execution of tests in
+the Squish IDE if a <a class="xref" href="https://rgs-squish.html#findImage-function"><code class="function">findImage</code></a> function
+fails to find a specific occurrence of the template image, or
+<a class="xref" href="https://rgs-squish.html#waitForImage-function"><code class="function">waitForImage</code></a> command runs into the
+specified (or default) timeout.
+</p><div class="screenshot"><div class="mediaobject" align="center"><img src="https://images/ide/inf-dialog.png" align="middle"></img><div class="caption">Image Not Found dialog
+</div></div></div><p>
+The dialog shows the template image(s) that were not found on the
+desktop screenshot, and the latest desktop screenshot used for image
+search. The dialog then allows the user to pick from a variety of
+options to try to solve the error.
+</p><p>
+The <span class="guibutton">Update Image...</span> button opens the
+<a class="xref" href="https://ide.views.html#ide.search.image.view" title="8.2.14. Image Selection Editor view">Image Selection Editor view (Section 8.2.14)</a>, where a new image can be
+selected. New image will replace the failed image selected in the
+Image Not Found dialog.
+</p><p>
+The <span class="guibutton">Add New Image...</span> button opens the
+<a class="xref" href="https://ide.views.html#ide.search.image.view" title="8.2.14. Image Selection Editor view">Image Selection Editor view (Section 8.2.14)</a>, where a new image can be
+selected. Selected image will added to the image group that was not
+found on the desktop. In case a single image was used in the image
+search, it will be converted to a group.
+</p><p>
+The <span class="guibutton">Adjust Search Parameters</span> button opens the
+<a class="xref" href="https://ide.dialogs.html#ide.image.search.preview.dialog" title="8.3.6. Image Search Preview dialog">Image Search Preview dialog (Section 8.3.6)</a> that allows adjusting
+image search parameters like the tolerance and observing the
+results.
+</p><p>
+The <span class="guibutton">Throw Error</span> button will let the test
+execution continue and generate the appropriate error. Letting the
+execution continue at this point may end the test unless the test
+script catches the lookup error to recover from this itself.
+</p><p>
+The <span class="guibutton">Retry</span> button will re-execute the image
+search. It can be useful to determine if the image search error is
+triggered because the image takes longer to appear on the screen than
+the timeout. If the user introduced changes to the search image(s),
+the new template images will be used.
+</p><p>
+The <span class="guilabel">Do not show this dialog again</span> checkbox can be
+used together with the <span class="guibutton">Throw Error</span> button to
+indicate that the dialog should not be shown on any future lookup
+errors. This means the dialog will not be shown anymore until the user
+re-enables it through the
+<a class="link" href="https://ide.dialogs.html#ide.preferences.squish.playback.pane">
+Playback preferences</a> of the <span class="application">Squish IDE</span>.
+</p><p>
+The <span class="guilabel">Attempt to fix image search errors automatically
+</span> used together with the <span class="guibutton">Retry</span> button
+will cause the IDE to attempt to fix any subsequent image search
+errors by adjusting the default tolerance and image resize range.
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="ide.text.not.found.dialog"></a>8.3.5. Text Not Found dialog</h3></div></div></div><p>
+This dialog automatically shows up during the execution of tests in
+the Squish IDE if a <a class="xref" href="https://rgs-squish.html#findOcrText-function"><code class="function">findOcrText</code></a> function
+fails to find a specific occurrence of the search text, or
+<a class="xref" href="https://rgs-squish.html#waitForOcrText-function"><code class="function">waitForOcrText</code></a> command runs into the
+specified (or default) timeout.
+</p><div class="screenshot"><div class="mediaobject" align="center"><img src="https://images/ide/tnf-dialog.png" align="middle"></img><div class="caption">Text Not Found dialog
+</div></div></div><p>
+The dialog shows the search text that were not found on the
+desktop screenshot, and the latest desktop screenshot used for text
+search. The dialog then allows the user to pick from a variety of
+options to try to solve the error.
+</p><p>
+The <span class="guibutton">Adjust Search Parameters</span> button opens the
+<a class="xref" href="https://ide.dialogs.html#ide.ocr.selection.dialog" title="8.3.15. OCR Selection dialog">OCR Selection dialog (Section 8.3.15)</a> that allows adjusting
+text search parameters like the language hint and observing the
+results.
+</p><p>
+The <span class="guibutton">Throw Error</span> button will let the test
+execution continue and generate the appropriate error. Letting the
+execution continue at this point may end the test unless the test
+script catches the lookup error to recover from this itself.
+</p><p>
+The <span class="guibutton">Retry</span> button will re-execute the text
+search. It can be useful to determine if the text search error is
+triggered because the image takes longer to appear on the screen than
+the timeout.
+</p><p>
+The <span class="guilabel">Do not show this dialog again</span> checkbox can be
+used together with the <span class="guibutton">Throw Error</span> button to
+indicate that the dialog should not be shown on any future lookup
+errors. This means the dialog will not be shown anymore until the user
+re-enables it through the
+<a class="link" href="https://ide.dialogs.html#ide.preferences.squish.playback.pane">
+Playback preferences</a> of the <span class="application">Squish IDE</span>.
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="ide.image.search.preview.dialog"></a>8.3.6. Image Search Preview dialog</h3></div></div></div><p>
+The Image Search Preview dialog can be used to adjust the image search
+parameters and observe the search results in realtime. It is useful
+when an "exact" match of every pixel is not to be expected, and we
+wish to perform a fuzzy match in order to find the image.
+</p><div class="screenshot"><div class="mediaobject" align="center"><img src="https://images/ide/image-search-preview.png" align="middle"></img><div class="caption">Image Search Preview dialog
+</div></div></div><p>
+The <span class="guibutton">Refresh</span> can be used to update the desktop
+screenshot displayed in the preview pane. The dialog and any other
+<span class="application">Squish IDE</span> windows will be temporarily hidden for the purpose of the
+screenshot.
+</p><p>
+The image search options correspond to the parameters passed to the
+<a class="xref" href="https://rgs-squish.html#findImage-function"><code class="function">findImage</code></a> and
+<a class="xref" href="https://rgs-squish.html#waitForImage-function"><code class="function">waitForImage</code></a> functions. Adjustments to the
+values of the parameters triggers re-computation of the image search
+results visible in the preview pane.
+</p><p>
+If the search option values are adjusted to a sensible default for other
+image searches, you can <span class="guilabel">Apply the settings as</span>
+the <span class="guimenuitem">Default values for new test suites</span>, or
+<span class="guimenuitem">Statements in the current test script</span>.
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="ide.import.squish.resource.dialog"></a>8.3.7. Import Squish Resource dialog</h3></div></div></div><p>
+This dialog can be popped up by invoking the <a class="xref" href="https://ide.main.window.html#ide.import.test.resource.action" title="8.1.1.19. Import Test Resource action"><span class="guiicon">Import Test Resource</span> action (Section 8.1.1.19)</a>. It is used to import
+scripts, test data, and verification points into a test case or a test
+suite.
+</p><div class="screenshot"><div class="mediaobject" align="center"><img src="https://images/ide-ref-import-squish-resource-dialog.png" align="middle"></img><div class="caption">The Import Squish Resource dialog
+</div></div></div><p>
+The File to Import should be chosen by clicking the
+<span class="guibutton">Browse</span> button and navigating to it using the Open
+File dialog that pops up. The file should either be a test data file in
+<code class="filename">.tsv</code> (tab-separated values format),
+<code class="filename">.csv</code> (comma-separated values format),
+<code class="filename">.xls</code> or <code class="filename">.xlsx</code>
+(<span class="trademark">Microsoft</span>® <span class="trademark">Excel</span>™ spreadsheet format),
+or a test script file (e.g., a file containing functions you
+want all the test suite's test cases to be able to share using the <a class="xref" href="https://rgs-squish.html#source-function"><code class="function">source</code></a> function). If you import a test script, it
+must be in the same scripting language as that used by the test suite's
+test cases.
+</p><p>
+Once the file has been chosen you must tell the <span class="application">Squish IDE</span> whether it is test
+data or a test script by setting the <span class="guibutton">Import As</span>
+combobox's value appropriately.
+</p><p>
+With any resource you have two choices as to its location: it can either
+be stored within a particular test case or it can be stored in a place
+that is accessible to all the test suite's test scripts. Unless the test
+data or test script resource really is specific to one particular test
+case it is almost always more convenient to store it so that it can be
+shared by the entire test suite. If you just want to store the data or
+script in the current test case check the <span class="guibutton">Copy to Test
+Case</span> radio button. And if you want the data or script to be
+shared by all the test cases check the <span class="guibutton">Copy to Test Suite for
+sharing</span> radio button. Then, in either case, click the
+<span class="guibutton">Finish</span> button.
+</p><p>
+See also the <a class="xref" href="https://ide.dialogs.html#ide.new.squish.test.data.dialog" title="8.3.11. New Squish Test Data dialog">New Squish Test Data dialog (Section 8.3.11)</a> and the
+<a class="xref" href="https://ide.dialogs.html#ide.new.squish.test.script.dialog" title="8.3.12. New Squish Test Script dialog">New Squish Test Script dialog (Section 8.3.12)</a>.
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="ide.search.image.selection.dialog"></a>8.3.8. The Search Image Selection dialog</h3></div></div></div><p>
+The dialog is used to select an image file (or create a new one) for
+insertion of an image-based script function. The dialog is shown when
+choosing the <a class="xref" href="https://ide.main.window.html#ide.insert.mouseclick.action" title="8.1.3.8. Insert &gt; mouseClick(&lt;Image&gt;) action"><span class="guiicon">Insert &gt; mouseClick(&lt;Image&gt;)</span> action (Section 8.1.3.8)</a>,
+<a class="xref" href="https://ide.main.window.html#ide.insert.doubleclick.action" title="8.1.3.9. Insert &gt; doubleClick(&lt;Image&gt;) action"><span class="guiicon">Insert &gt; doubleClick(&lt;Image&gt;)</span> action (Section 8.1.3.9)</a> or
+<a class="xref" href="https://ide.main.window.html#ide.insert.tapobject.action" title="8.1.3.10. Insert &gt; tapObject(&lt;Image&gt;) action"><span class="guiicon">Insert &gt; tapObject(&lt;Image&gt;)</span> action (Section 8.1.3.10)</a> from the Control
+Bar. However, if no images have been stored in the test suite we are
+taken to the <a class="xref" href="https://ide.views.html#ide.search.image.view" title="8.2.14. Image Selection Editor view">Image Selection Editor view (Section 8.2.14)</a> directly.
+</p><div class="screenshot"><div class="mediaobject" align="center"><img src="https://images/ide-ref-select-image-dialog.png" align="middle"></img><div class="caption">The Search Image Selection view
+</div></div></div><p>
+The dialog displays the list of available images and image groups
+stored in the test suite's <code class="filename">shared/searchImages</code>
+or the current test case's <code class="filename">searchImages/</code>
+directory. The image groups are distinguished by a folder icon
+overlay. Double clicking on an image group displays its contents.
+The path to the currently displayed group is displayed in the top
+frame. Clicking on the group buttons returns the view to the
+respective image group or to the root of the hierarchy.
+</p><p>
+Upon selection of one of the existing images the <span class="guibutton">Insert
+&lt;action&gt;</span> will first attempt to execute the selection
+action and (upon sucess) insert the respective script statement into
+the test script.
+</p><p>
+In case none of the existing images fits the need
+clicking <span class="guibutton">New Image...</span> will perform a screen
+grab and take us to
+the <a class="xref" href="https://ide.views.html#ide.search.image.view" title="8.2.14. Image Selection Editor view">Image Selection Editor view (Section 8.2.14)</a>.
+</p><p>
+When deciding against the insertion of an image-based script statement
+the <span class="guibutton">Cancel</span> button will take us back into the main
+recording mode.
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="ide.new.dialog"></a>8.3.9. New dialog</h3></div></div></div><p>
+This dialog is used to import a new shared <span class="emphasis"><em>Squish</em></span> test script or test
+data file, or to create a new test case within the current test suite,
+or to create a new test suite. The dialog can be invoked by clicking the
+main window's <span class="guibutton">New</span> toolbar button or by pressing
+<span class="keycap"><strong>Ctrl</strong></span>+<span class="keycap"><strong>N</strong></span>.
+(Note that there are more convenient direct menu options for all of
+these—apart from creating a new test case from a template.)
+</p><div class="screenshot"><div class="mediaobject" align="center"><img src="https://images/ide-ref-new-dialog.png" align="middle"></img><div class="caption">The New dialog
+</div></div></div><p>
+Once the wizard is visible click the type of the thing you want to
+create, then click the <span class="guibutton">Next</span> button.
+</p><p>
+If you click “<span class="quote">Squish Script File</span>” the <a class="xref" href="https://ide.dialogs.html#ide.new.squish.test.script.dialog" title="8.3.12. New Squish Test Script dialog">New Squish Test Script dialog (Section 8.3.12)</a> will replace the "New"
+dialog. This dialog is used to add a shared test script file (e.g., a
+script that contains functions you want to share amongst your test
+cases).
+</p><p>
+If you click “<span class="quote">Squish Test Case</span>” the <a class="xref" href="https://ide.dialogs.html#ide.new.squish.test.case.wizard" title="8.3.10. New Squish Test Case wizard">New Squish Test Case wizard (Section 8.3.10)</a> will replace the "New"
+dialog. This dialog is used to create a new empty test case.
+</p><p>
+If you click “<span class="quote">Squish Test Case from Template</span>” the Create
+Test Case from Template dialog will replace the "New"
+dialog. This dialog is used to create a new test case based on the
+specified template. (Note that there are no default templates, so you
+will need to create at least one template to be able to use this
+option. A Test Case Template can be created using the <a class="xref" href="https://ide.views.html#ide.the-test-suites.view" title="8.2.19. Test Suites view">Test Suites view (Section 8.2.19)</a>'s Test Cases list's context menu.)
+</p><p>
+If you click “<span class="quote">Squish Test Data File</span>” the <a class="xref" href="https://ide.dialogs.html#ide.new.squish.test.data.dialog" title="8.3.11. New Squish Test Data dialog">New Squish Test Data dialog (Section 8.3.11)</a> will replace the "New"
+dialog. This dialog is used to import shared test data that can be used
+by the test suite's test cases.
+</p><p>
+If you click “<span class="quote">Squish Test Suite</span>” the <a class="xref" href="https://ide.dialogs.html#ide.new.squish.test.suite.wizard" title="8.3.13. New Squish Test Suite wizard">New Squish Test Suite wizard (Section 8.3.13)</a> will replace the "New"
+dialog. This dialog is used to create a new test suite.
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="ide.new.squish.test.case.wizard"></a>8.3.10. New Squish Test Case wizard</h3></div></div></div><p>
+This dialog is used to create a new test case within the current test
+suite. It can be invoked by clicking the <a class="xref" href="https://ide.views.html#ide.the-test-suites.view" title="8.2.19. Test Suites view">Test Suites view (Section 8.2.19)</a>'s <span class="guibutton">New Test
+Case</span> toolbar button or by clicking
+<span class="guimenu">File</span>|<span class="guimenuitem">New Test
+Case</span> or
+<span class="guimenu">File</span>|<span class="guimenuitem">New</span>|<span class="guimenuitem">New
+Test Case</span>, or via the <a class="xref" href="https://ide.dialogs.html#ide.new.dialog" title="8.3.9. New dialog">New dialog (Section 8.3.9)</a>. (See also the <a class="xref" href="https://ide.main.window.html#ide.new.test.case.action" title="8.1.1.27. New Test Case action"><span class="guiicon">New Test Case</span> action (Section 8.1.1.27)</a>.)
+</p><div class="screenshot"><div class="mediaobject" align="center"><img src="https://images/ide-ref-new-test-case-wizard.png" align="middle"></img><div class="caption">The New Squish Test Case wizard
+</div></div></div><p>
+Once the wizard has appeared, you can choose between a <span class="guibutton">Script Test
+Case</span> or a <span class="guibutton">BDD Test Case</span>
+(<code class="filename">.feature</code>) file. </p><p>
+Enter the name of the new test case and
+click the <span class="guibutton">Finish</span> button to finish. At this point
+an empty test case with the given name will be created (prefixed with
+<code class="filename">tst_</code> if it isn't already), ready for a new test
+script to be entered or recorded.
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="ide.new.squish.test.data.dialog"></a>8.3.11. New Squish Test Data dialog</h3></div></div></div><p>
+This dialog is used to add test data for a particular test case or to be
+shared by an entire test suite. It can be invoked by clicking
+<span class="guimenu">File</span>|<span class="guimenuitem">New</span>|<span class="guimenuitem">Squish Test Data</span>, or via the <a class="xref" href="https://ide.dialogs.html#ide.new.dialog" title="8.3.9. New dialog">New dialog (Section 8.3.9)</a>.
+</p><div class="screenshot"><div class="mediaobject" align="center"><img src="https://images/ide-ref-new-test-data-dialog.png" align="middle"></img><div class="caption">The New Squish Test Data dialog
+</div></div></div><p>
+The Test Data Filename should be entered first. The filename should be
+in <code class="filename">.tsv</code> (tab-separated values format) or
+<code class="filename">.csv</code> (comma-separated values format). If
+entering the filename directly isn't convenient because you
+want to pick the file using a file chooser dialog, close this dialog and
+open the <a class="xref" href="https://ide.dialogs.html#ide.import.squish.resource.dialog" title="8.3.7. Import Squish Resource dialog">Import Squish Resource dialog (Section 8.3.7)</a> instead.
+</p><p>
+With any resource you have two choices as to its location: it can either
+be stored within a particular test case or it can be stored in a place
+that is accessible to all the test suite's test scripts. Unless the test
+data really is specific to one particular test case it is almost always
+more convenient to store it so that it can be shared by the entire test
+suite. If you just want to copy the data into the current test case
+check the <span class="guibutton">Create file in Test Case</span> radio button.
+And if you want to copy the data so that it can be shared by all the
+test cases check the <span class="guibutton">Create shared File in Test
+Suite</span> radio button. Then, in either case, click the
+<span class="guibutton">Finish</span> button.
+</p><p>
+See also the <a class="xref" href="https://ide.dialogs.html#ide.new.squish.test.script.dialog" title="8.3.12. New Squish Test Script dialog">New Squish Test Script dialog (Section 8.3.12)</a>.
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="ide.new.squish.test.script.dialog"></a>8.3.12. New Squish Test Script dialog</h3></div></div></div><p>
+This dialog is used to add a test script (e.g., containing supporting
+functions) for a particular test case or to be
+shared by an entire test suite. It can be invoked by clicking
+<span class="guimenu">File</span>|<span class="guimenuitem">New</span>|<span class="guimenuitem">Squish Script File</span>, or via the <a class="xref" href="https://ide.dialogs.html#ide.new.dialog" title="8.3.9. New dialog">New dialog (Section 8.3.9)</a>.
+</p><div class="screenshot"><div class="mediaobject" align="center"><img src="https://images/ide-ref-new-test-script-dialog.png" align="middle"></img><div class="caption">The New Squish Test Script dialog
+</div></div></div><p>
+The Test Script Filename should be entered first. The filename should be
+for the same scripting language as that used for the test suite's test
+cases. If entering the filename directly isn't convenient because you
+want to pick the file using a file chooser dialog, close this dialog and
+open the <a class="xref" href="https://ide.dialogs.html#ide.import.squish.resource.dialog" title="8.3.7. Import Squish Resource dialog">Import Squish Resource dialog (Section 8.3.7)</a> instead.
+</p><p>
+With any resource you have two choices as to its location: it can either
+be stored within a particular test case or it can be stored in a place
+that is accessible to all the test suite's test scripts. Unless the test
+script really is specific to one particular test case it is almost always
+more convenient to store it so that it can be shared by the entire test
+suite. If you just want to copy the test script into the current test case
+check the <span class="guibutton">Create file in Test Case</span> radio button.
+And if you want to copy the test script so that it can be shared by all the
+test cases check the <span class="guibutton">Create shared File in Test
+Suite</span> radio button. Then, in either case, click the
+<span class="guibutton">Finish</span> button.
+</p><p>
+See also the <a class="xref" href="https://ide.dialogs.html#ide.new.squish.test.data.dialog" title="8.3.11. New Squish Test Data dialog">New Squish Test Data dialog (Section 8.3.11)</a>.
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="ide.new.squish.test.suite.wizard"></a>8.3.13. New Squish Test Suite wizard</h3></div></div></div><p>
+This dialog is used to creat a new test suite. It is invoked by clicking
+the <a class="xref" href="https://ide.views.html#ide.the-test-suites.view" title="8.2.19. Test Suites view">Test Suites view (Section 8.2.19)</a>'s <span class="guibutton">New Test
+Suite</span> toolbar button or by clicking
+<span class="guimenu">File</span>|<span class="guimenuitem">New Test
+Suite</span> or
+<span class="guimenu">File</span>|<span class="guimenuitem">New</span>|<span class="guimenuitem">New
+Test Suite</span>, or via the <a class="xref" href="https://ide.dialogs.html#ide.new.dialog" title="8.3.9. New dialog">New dialog (Section 8.3.9)</a>. (See also, the <a class="xref" href="https://ide.main.window.html#ide.new.test.suite.action" title="8.1.1.28. New Test Suite action"><span class="guiicon">New Test Suite</span> action (Section 8.1.1.28)</a>.)
+</p><div class="screenshot"><div class="mediaobject" align="center"><img src="https://images/ide/ide-ref-new-test-suite-wizard.png" align="middle"></img><div class="caption">The New Squish Suite wizard
+</div></div></div><p>
+The use of this wizard is described in the tutorials:
+</p><div class="itemizedlist"><ul type="disc"><li><p><a class="xref" href="https://tutorials-qt.html#tut-qt-creating-a-test-suite" title="4.1.1.2. Creating a Test Suite">Creating a Test Suite (Section 4.1.1.2)</a>
+(Qt).
+</p></li><li><p><a class="xref" href="https://tutorials-java-awt.html#tut-java-awt-creating-a-test-suite" title="4.2.1.2. Creating a Test Suite">Creating a Test Suite (Section 4.2.1.2)</a> (Java AWT/Swing).
+</p></li><li><p><a class="xref" href="https://tutorials-java-swt.html#tut-java-swt-creating-a-test-suite" title="4.3.1.2. Creating a Test Suite">Creating a Test Suite (Section 4.3.1.2)</a> (Java SWT).
+</p></li><li><p><a class="xref" href="https://tutorials-web.html#tutorial-getting-started-web" title="4.6.1. Tutorial: Starting to Test Web Applications">Tutorial: Starting to Test Web Applications (Section 4.6.1)</a> (Web).
+</p></li><li><p><a class="xref" href="https://tutorials-win.html#win-tut-creating-a-test-suite" title="4.7.1.2. Creating a Test Suite">Creating a Test Suite (Section 4.7.1.2)</a> (Windows).
+</p></li><li><p><a class="xref" href="https://tutorials-mac.html#tut-mac-creating-a-test-suite" title="4.8.1.2. Creating a Test Suite">Creating a Test Suite (Section 4.8.1.2)</a> (macOS).
+</p></li><li><p><a class="xref" href="https://tutorials-iphone.html#tut-ios-creating-a-test-suite" title="4.9.1.2. Creating a Test Suite">Creating a Test Suite (Section 4.9.1.2)</a> (iOS).
+</p></li><li><p><a class="xref" href="https://tutorials-tk.html#tut-tk-creating-a-test-suite" title="4.10.1.2. Creating a Test Suite">Creating a Test Suite (Section 4.10.1.2)</a>
+(Tk).
+</p></li><li><p><a class="xref" href="https://tutorials-flex.html#tutorial-getting-started-flex" title="4.13.1. Tutorial: Starting to Test Flex Applications">Tutorial: Starting to Test Flex Applications (Section 4.13.1)</a> (Web).
+</p></li><li><p><a class="xref" href="https://tutorials-android.html#tut-android-creating-a-test-suite" title="4.12.1.2. Creating a Test Suite">Creating a Test Suite (Section 4.12.1.2)</a> (Web).
+</p></li><li><p>N/A (XView)
+</p></li><li><p>N/A (GDC)
+</p></li><li><p><a class="xref" href="https://tutorials-visual.html#tut-visual-creating-a-test-suite" title="4.14.1.2. Creating a Test Suite">Creating a Test Suite (Section 4.14.1.2)</a> (VNC).
+</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="ide.object.not.found.dialog"></a>8.3.14. Object Not Found dialog</h3></div></div></div><p>
+This dialog automatically shows up during the execution of tests in
+the <span class="application">Squish IDE</span> if a waitForObject command runs into the specified (or default)
+timeout.
+</p><div class="screenshot"><div class="mediaobject" align="center"><img src="https://images/ide/ref-object-not-found-dialog.png" align="middle"></img><div class="caption">The Object Not Found dialog
+</div></div></div><p>
+The dialog shows the error message generated for the lookup error and the
+object name for which the lookup was executed. The dialog then allows the
+user to pick from a variety of options to try to solve the lookup error
+</p><p>
+The <span class="guibutton">Pick New Object</span> button lets you to pick an object from
+the AUT to compare that object's properties against the ones used for the name
+so far. This lets you investigate how the properties have changed, and whether
+they caused the lookup error.
+</p><div class="screenshot"><div class="mediaobject" align="center"><img src="https://images/ide/ref-object-not-found-dialog-picked.png" align="middle"></img><div class="caption">The Object Not Found dialog after picking the object
+</div></div></div><p>
+The <span class="guibutton">Throw Error</span> button will let the test execution continue
+and generate the appropriate error. Letting the execution continue at this point
+may end the test unless the test script catches the lookup error to recover from
+this itself.
+</p><p>
+The <span class="guibutton">Debug</span> button will close the dialog and open the
+corresponding name in the object map editor. The <span class="application">Squish IDE</span> is now in the
+<a class="xref" href="https://ide.main.window.html#ide.squish.test.debugging.perspective" title="8.1.2.3. Squish Test Debugging Perspective">Squish Test Debugging Perspective (Section 8.1.2.3)</a> so
+all the usual debugging tools can be used to further examine the problem.
+</p><p> The <span class="guibutton">Retry</span> button will re-execute the object lookup.
+It will use the old name if the user did not pick a new object, which can be
+useful to determine if the lookup error is triggered because the object takes
+longer to become ready than the default timeout. If the user picked a new object
+the new object name will be stored under the symbolic name in the object map and
+the lookup will be performed with that new name. </p><p> The checkbox <span class="guilabel">Do not show this dialog again</span> can used
+together with the <span class="guibutton">Throw Error</span> button to indicate that the
+dialog should not be shown on any future lookup errors. This means the dialog
+will not be shown anymore until the user re-enables it through the <a class="link" href="https://ide.dialogs.html#ide.preferences.squish.playback.pane">Playback preferences</a> of
+the <span class="application">Squish IDE</span>. </p><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Note"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/note.png"></img></td><th align="left">Note</th></tr><tr><td align="left" valign="top"><p> The <span class="guibutton">Pick New Object</span> button is only
+available if the object lookup error happened for a symbolic name found in the
+object map. If the symbolic or real name is assembled inside the test script
+this option is disabled as the <span class="application">Squish IDE</span> cannot properly update the object map.
+</p></td></tr></table></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="ide.ocr.selection.dialog"></a>8.3.15. OCR Selection dialog</h3></div></div></div><p>The OCR selection dialog shows a desktop screenshot captured
+for optical character recognition (OCR) and the recognition results.
+It allows the user to free-draw a slection rectangle on the screenshot.
+If any of the words in the OCR result are completely within the selection,
+it will appear in the <span class="guilabel">Matches in selection:</span> list.
+Any of the matches on the list can be selected - the related text will
+be displayed in the <span class="guilabel">Search text:</span> field. The search
+text can be freely adjusted. The matches corresponding to the current
+search text will be highlighted on the desktop screenshot. If any of such
+matches is entirely within the selection, the <span class="guibutton">Insert</span>
+will become active, allowing the OCR instruction to be performed.</p><div class="screenshot"><div class="mediaobject" align="center"><img src="https://images/ide-ref-ocr-selection-dialog.png" align="middle"></img><div class="caption">The OCR Selection dialog during instruction recording
+</div></div></div><p>
+The <span class="guibutton">Refresh</span> button allows to update the current
+screenshot with the current desktop contents. The Squish IDE will be
+hidden for the duration of the screenshot.
+</p><p>
+The <span class="guilabel">Language</span> combo box allows selection of a language
+hint for the OCR engine.
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="ide.open.perspective.dialog"></a>8.3.16. Open Perspective dialog</h3></div></div></div><p>
+This dialog is used to open a particular perspective. It is invoked by
+the <a class="xref" href="https://ide.main.window.html#ide.open.perspective.action" title="8.1.1.35. Open Perspective action"><span class="guiicon">Open Perspective</span> action (Section 8.1.1.35)</a>.
+</p><div class="screenshot"><div class="mediaobject" align="center"><img src="https://images/ide/ref-open-perspective-dialog.png" align="middle"></img><div class="caption">The Open Perspective dialog
+</div></div></div><p>
+By default the <span class="application">Squish IDE</span> has three perspectives (see <a class="xref" href="https://ide.main.window.html#ide.perspectives" title="8.1.2. Perspectives">Perspectives (Section 8.1.2)</a>) each of which can be opened directly using
+the appropriate action—<a class="xref" href="https://ide.main.window.html#ide.squish.test.management.perspective.action" title="8.1.1.69. Squish Test Management Perspective action"><span class="guiicon">Squish Test Management Perspective</span> action (Section 8.1.1.69)</a>, <a class="xref" href="https://ide.main.window.html#ide.squish.spy.perspective.action" title="8.1.1.67. Squish Spy Perspective action"><span class="guiicon">Squish Spy Perspective</span> action (Section 8.1.1.67)</a>, and <a class="xref" href="https://ide.main.window.html#ide.squish.test.debugging.perspective.action" title="8.1.1.68. Squish Test De­bug­ging Per­spec­tive action"><span class="guiicon">Squish Test De­bug­ging Per­spec­tive</span> action (Section 8.1.1.68)</a>. Note that in
+practice is not necessary to open any of these perspectives
+manually since the <span class="application">Squish IDE</span> automatically opens the right one depending on
+context. So this dialog is only really useful if you have created your
+own custom perspectives and want to choose one of them. (See the <a class="xref" href="https://ide.dialogs.html#ide.customize.perspective.dialog" title="8.3.2. Customize Perspective dialog">Customize Perspective dialog (Section 8.3.2)</a>.)
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="ide.preferences.dialog"></a>8.3.17. Pref­er­ences dialog</h3></div></div></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><span class="section"><a href="https://ide.dialogs.html#dynamic.languages.pane">8.3.17.1. Dynamic Languages pane</a></span></dt><dt><span class="section"><a href="https://ide.dialogs.html#general.pane">8.3.17.2. General pane</a></span></dt><dt><span class="section"><a href="https://ide.dialogs.html#javascript.pane">8.3.17.3. JavaScript pane</a></span></dt><dt><span class="section"><a href="https://ide.dialogs.html#perl.epic.pane">8.3.17.4. Perl EPIC pane</a></span></dt><dt><span class="section"><a href="https://ide.dialogs.html#python.pane">8.3.17.5. Python pane</a></span></dt><dt><span class="section"><a href="https://ide.dialogs.html#run.debug.pane">8.3.17.6. Run/Debug pane</a></span></dt><dt><span class="section"><a href="https://ide.dialogs.html#squish.pane">8.3.17.7. Squish pane</a></span></dt><dt><span class="section"><a href="https://ide.dialogs.html#tcl.pane">8.3.17.8. Tcl pane</a></span></dt><dt><span class="section"><a href="https://ide.dialogs.html#team.pane">8.3.17.9. Team pane</a></span></dt></dl></div><p>
+This dialog is used to set the <span class="application">Squish IDE</span>'s global preferences. It is invoked
+by the <a class="xref" href="https://ide.main.window.html#ide.preferences.action" title="8.1.1.37. Preferences action"><span class="guiicon">Preferences</span> action (Section 8.1.1.37)</a>.
+</p><div class="screenshot"><div class="mediaobject" align="center"><img src="https://images/ide-ref-preferences-dialog.png" align="middle"></img><div class="caption">The Preferences dialog
+</div></div></div><p>
+The screenshot above shows the dialog's first section's first pane. The
+dialog has a lot of sections (“<span class="quote">Dynamic Languages</span>”,
+“<span class="quote">General</span>”, etc.), and most of thes have several panes. For
+example, the Dynamic Languages section has its own pane plus
+“<span class="quote">Debug</span>” and “<span class="quote">Validators</span>” child panes. Some
+child panes have their own child panes and so on. Most of the dialog's
+panes are inherited from Eclipse and most of them are rarely used. Here
+we will only document the most important panes, and within them the most
+important options.
+</p><p>
+In general, all the panes have a <span class="guibutton">Restore Defaults</span>
+button which restore's the panes's settings to their defaults and an
+<span class="guibutton">Apply</span> button which applies any changes you have
+made. If you make a mistake and don't want to restore the defaults
+(because your previous non-default settings are what you want), simply
+click the dialog's <span class="guibutton">Cancel</span> button—but note
+that this will not revert your changes if you clicked the
+<span class="guibutton">Apply</span> button. To accept your changes click the
+<span class="guibutton">OK</span> button.
+</p><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="dynamic.languages.pane"></a>8.3.17.1. Dynamic Languages pane</h4></div></div></div><p>
+The Dynamic Languages pane is used to set various “<span class="quote">DLTK</span>”
+(Dynamic Language ToolKit) settings.
+</p><div class="screenshot"><div class="mediaobject" align="center"><img src="https://images/ide-ref-preferences-dialog.png" align="middle"></img><div class="caption">The Preferences dialog Dynamic Languages pane
+</div></div></div><p>
+Probably the only interesting setting is the <span class="guibutton">Report problems
+as you type</span> checkbox. If this is checked syntax errors are
+highlighted as you edit (and also indicated in the line numbers margin).
+</p><p>
+The Dynamic Languages pane has two child panes, Debug and Validators.
+These are very rarely needed and are not documented here. (Note that the
+Dynamic Languages Debug pane is not concerned with debugging test
+scripts.)
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="general.pane"></a>8.3.17.2. General pane</h4></div></div></div><p>
+The <span class="guilabel">General</span> pane is used to set Eclipse settings. This pane
+has many child panes (some of which have their own child panes and so on).
+</p><div class="screenshot"><div class="mediaobject" align="center"><img src="https://images/ide-ref-preferences-dialog-general.png" align="middle"></img><div class="caption">The Preferences dialog General pane
+</div></div></div><p>
+Probably the most interesting setting is the Open mode. <span class="emphasis"><em>Squish</em></span>
+defaults to Double click mode which means that you have to double-click
+test cases to get their code to appear in a code editor and so on.
+Setting the mode to Single click can save a lot of needless mouse
+clicking.
+</p><div class="section" lang="en"><div class="titlepage"><div><div><h5 class="title"><a id="the.general.pane.s.child.panes"></a>8.3.17.2.1. General pane's child panes</h5></div></div></div><p>
+The General pane has many child panes. Here will will merely mention
+those that have settings that are likely to be of interest.
+</p><p>
+The <span class="guilabel">Appearance</span> pane has a <span class="guilabel">Colors and
+Fonts</span> child pane in which it is
+possible to customize the colors and fonts used by the <span class="application">Squish IDE</span> and in
+particular by the <a class="xref" href="https://ide.views.html#ide.the-editor.view" title="8.2.6. Editor view">Editor view (Section 8.2.6)</a>s. To change the
+fonts, expand the <span class="guilabel">Colors and Fonts</span> pane's tree view's
+<span class="guilabel">Basic</span> item; the
+last two items concern text fonts: click one of these and then click the
+<span class="guibutton">Edit</span> button to set the font. Usually it is best
+to set both fonts to be the same. The same tree view can be used to set
+various colors—simply click the color of interest and then click
+the <span class="guibutton">Edit</span> button to choose a new color. There are
+other top-level items in the tree such as Debug, Dynamic Languages, and
+so on, so you can customize fonts and colors in very fine detail if you
+wish. The Appearance pane also has a Label Decorations child pane, but
+this is not currently used by the <span class="application">Squish IDE</span>.
+</p><p>
+The <span class="guilabel">Content Types</span> pane can be used to set up file type
+associations. For
+example, <span class="emphasis"><em>Squish</em></span>'s non-scriptified verification points (such as
+screenshot verifications) are recorded in an XML-format file. If you
+wanted to use a custom file extention for such files you could add a
+file association in this pane. To do this, navigate in the Content types
+tree to the Text item then inside that tem to the XML item and then
+inside that item to the Verification Point item. (It is also possible to
+specify a default encoding but we recommend always using UTF-8 which is
+the default.)
+</p><p>
+The <span class="guilabel">Editors</span> pane and its child panes can be used to set up
+some general
+and some language-specific editing preferences. The <span class="guilabel">Editors</span>
+pane itself
+can be used to set the number of recently opened files that are
+available from the <span class="guimenu">File</span> menu, and to restore (or not)
+editor state when the <span class="application">Squish IDE</span> is started up. The File Associations child
+pane can be used to associate file types with particular editors. For
+example, to make the <span class="application">Squish IDE</span> open <code class="filename">.pyw</code> files using
+its Python editor, click the File types <span class="guibutton">Add</span>
+button (the top-most Add button) and enter a file type of
+<code class="code">*.pyw</code>. Then click the new <code class="code">*.pyw</code> File types
+entry if it isn't already selected and click the Associated editors
+<span class="guibutton">Add</span> button and choose the Python Source Editor.
+</p><p>
+The <span class="guilabel">Editors</span> pane's <span class="guilabel">Text Editors</span> child
+pane itself has a number of options, plus its own child panes. Use the
+<span class="guilabel">Text Editors</span> pane to
+customize general editing features such as the undo history size, the
+displayed tab width, whether to show line numbers, and so on. It is also
+possible to customize a limited range of colors here too. The child
+panes provide means of customizing the cursor (in the Accessibility
+pane) and the code annotations (in the Annotations pane). There are also
+some other rarely used child panes.
+</p><p>
+The <span class="guilabel">Editors</span> pane has one other direct child pane,
+<span class="guilabel">Keys</span>. This can be used
+to change the <span class="application">Squish IDE</span>'s keyboard shortcuts. Of course, if the shortcuts
+are changed this will invalidate some or all of those shown in this
+manual's <a class="xref" href="https://ide.keyboard.shortcuts.html" title="8.4. Keyboard Shortcuts">Keyboard Shortcuts (Section 8.4)</a> section.
+</p><p>
+The <span class="guilabel">Perspectives</span> pane is used to control some of the high
+level behavior
+of perspectives, such as whether a newly opened perspective replaces the
+current perspective (the default) or appears in a new window.
+</p><p>
+The <span class="guilabel">Search</span> pane is used to control some general features that apply to
+the <a class="xref" href="https://ide.views.html#ide.the-search.view" title="8.2.15. Search view">Search view (Section 8.2.15)</a>.
+</p><p>
+The <span class="guilabel">Workspace</span> pane and its child panes control some aspects of the
+<span class="application">Squish IDE</span>'s behavior such as the automatic save interval and the default
+text encoding. <span class="emphasis"><em>Squish</em></span> always and only uses the UTF-8 encoding so this
+setting should <span class="bold"><strong>never</strong></span> be changed. Of the
+Workspace pane's child panes, the Build Order pane isn't used by
+<span class="emphasis"><em>Squish</em></span>, and the Linked Resources pane's <span class="guibutton">Enable linked
+resources</span> checkbox <span class="emphasis"><em>must</em></span> be
+checked—or the <span class="application">Squish IDE</span> simply won't work properly. The Local History
+pane can be used to control a certain amount of undo history—even
+between sessions.
+</p></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="javascript.pane"></a>8.3.17.3. JavaScript pane</h4></div></div></div><p>
+The <span class="guilabel">JavaScript</span> pane and its child panes are used to set various
+JavaScript-specific options.
+</p><p>
+The main pane is empty and neither the Console nor the Debug panes (or
+the Debug pane's child panes) are used by <span class="emphasis"><em>Squish</em></span>. The other panes are
+used however. The Editor pane is used to control how the caret is
+positioned during navigation and whether to use spaces or tabs and the
+what and how much indentation to use. This pane also has some child
+panes. These are used to control such things as folding and syntax
+highlighting, code templates, and whether the editor closes strings and
+opening brackets of various kinds. The Error/Warnings child pane is used
+to control how strict the editor is about JavaScript syntax. The
+Formatter child pane is used to control how JavaScript is formatted by
+the editor. The Interpreters pane is used to specify which JavaScript
+interpreter to use. <span class="emphasis"><em>Squish</em></span> uses its own built-in JavaScript
+interpreter but this option could be used to influence how the
+JavaScript editor does its syntax highlighting and error reporting. The
+Task Tags child pane is used to manage a list of special words that the
+<span class="application">Squish IDE</span> must recognize and highlight inside JavaScript comments—for
+example, <code class="code">FIXME</code> or <code class="code">TODO</code>.
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="perl.epic.pane"></a>8.3.17.4. Perl EPIC pane</h4></div></div></div><p>
+The <span class="guilabel">Perl EPIC</span> pane and its child panes are used to set various
+Perl-specific options.
+</p><p>
+The Perl executable setting is from Eclipse—it has no effect on
+test script execution. The Perl EPIC pane has a number of child panes
+including an Editor pane that itself has child panes (which are not
+documented here). The Editor pane can be used to set what and how much
+to indent, syntax highlighting colors, and whether the editor closes
+open quotes and various kinds of brackets. Those who use the <span class="application">Squish IDE</span>
+to create Perl modules or who are deeply into Perl programming may wish
+to enable the <span class="application">Squish IDE</span>'s Module::Starter and Perl::Critic
+functionality—but these features are too specialized to be
+documented here. The Source Formatter pane is used to control how the
+editor formats Perl source code. The Task Tags child pane is used to
+manage a list of special words that the <span class="application">Squish IDE</span> must recognize and
+highlight inside Perl comments—for example,
+<code class="code">FIXME</code> or <code class="code">TODO</code>.
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="python.pane"></a>8.3.17.5. Python pane</h4></div></div></div><p>
+The <span class="guilabel">Python</span> pane and its child panes are used to set various
+Python-specific options.
+</p><p>
+The <span class="guilabel">Python</span> pane has no options of its own but it does have various child
+panes. The <span class="guilabel">Debug</span> child pane is not used by the <span class="application">Squish IDE</span>. The
+<span class="guilabel">Editor</span> pane is
+used to control how the caret is positioned during navigation and
+whether to use spaces or tabs and the what and how much indentation to
+use. This pane also has some child panes. These are used to control such
+things as folding and syntax highlighting, code templates, and whether
+the editor closes strings and opening brackets of various kinds. The
+Interpreters pane is not used by the <span class="application">Squish IDE</span>—<span class="emphasis"><em>Squish</em></span> uses the
+Python interpreter it is shipped with. The Task Tags child pane is used to
+manage a list of special words that the <span class="application">Squish IDE</span> must recognize and
+highlight inside Python comments—for example,
+<code class="code">FIXME</code> or <code class="code">TODO</code>.
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="run.debug.pane"></a>8.3.17.6. Run/Debug pane</h4></div></div></div><p>
+The <span class="guilabel">Run/Debug</span> pane and its child panes are used to set some general
+options concerning the running and debugging of test scripts.
+</p><p>
+The <span class="guilabel">Run/Debug</span> pane itself can be used to set some basic
+behaviors, for
+example what to do when a breakpoint is hit, and various color settings.
+It is best to at least keep the <span class="guibutton">Activate the ...</span>
+checkboxes checked. The Console child pane is not used by the <span class="application">Squish IDE</span>. The
+Launching child pane can be used to control the <span class="application">Squish IDE</span>'s behavior when
+running a test, although options relating to “<span class="quote">building</span>” are
+ignored. It is best to have the <span class="guilabel">Save required dirty editors
+before launching</span> set to Always (the default), or at least to
+Prompt; setting it to Never introduces a risk that test edits
+could be lost in the unlikely event that the <span class="application">Squish IDE</span> crashes. The Launch
+pane's Default Launchers sub-pane is ignored by the <span class="application">Squish IDE</span>. The Launch
+pane's Launch Configurations pane should not be used. The Run/Debug
+pane's Perspectives child pane is ignored by the <span class="application">Squish IDE</span>—<span class="emphasis"><em>Squish</em></span>
+will always use the <a class="xref" href="https://ide.main.window.html#ide.squish.test.debugging.perspective" title="8.1.2.3. Squish Test Debugging Perspective">Squish Test Debugging Perspective (Section 8.1.2.3)</a> when debugging is
+required. The String Substitution child pane is rarely needed and not
+documented here. The View Management child pane is used to control some
+aspects of how perpectives behave regarding their views.
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="squish.pane"></a>8.3.17.7. Squish pane</h4></div></div></div><p>
+The <span class="guilabel">Squish</span> pane and its child panes are used to control various
+<span class="emphasis"><em>Squish</em></span>-specific settings.
+</p><div class="screenshot"><div class="mediaobject" align="center"><img src="https://images/ide/ide-ref-preferences-dialog-squish.png" align="middle"></img><div class="caption">The Preferences dialog Squish pane
+</div></div></div><p>
+The <span class="guilabel">Squish</span> pane itself shows the <span class="emphasis"><em>Squish</em></span> tools folder being used by
+the <span class="application">Squish IDE</span>. This folder can easily be changed by navigating to another
+folder in the tree. This is useful when you have AUTs that use different
+GUI toolkits and want to switch between toolkits while using the <span class="application">Squish IDE</span>.
+</p><div class="section" lang="en"><div class="titlepage"><div><div><h5 class="title"><a id="the.squish.pane.s.child.panes"></a>8.3.17.7.1. Squish Preferences Child Panes</h5></div></div></div><p>
+The <span class="guilabel">Squish</span> pane has several children:
+<span class="guilabel">Application Behavior</span>, <span class="guilabel">Browser</span>,
+<span class="guilabel">Logging</span>, <span class="guilabel">Playback</span>,
+<span class="guilabel">Recording</span>, <span class="guilabel">Remote Testing</span>, and
+<span class="guilabel">Test Creation</span>, all of which we will briefly describe here.
+</p><p>
+The <span class="guilabel">Application Behavior</span> pane is used to set how long <span class="emphasis"><em>Squish</em></span> should
+wait for an AUT to start up before giving up and how long <span class="emphasis"><em>Squish</em></span>
+should wait for any given response from the AUT. (The response time can
+also be set using the <span class="application">squishrunner</span>'s or <span class="application">squishserver</span>'s
+<code class="option">setResponseTimeout</code> option (see <a class="xref" href="https://rg-cmdline.html#rg-squishrunner-cli--config" title="7.4.3.27. Configuring squishrunner">Configuring <span class="application">squishrunner</span> (Section 7.4.3.27)</a> or <a class="xref" href="https://rg-cmdline.html#rg-squishserver--config" title="7.4.4.3. Configuring squishserver">Configuring <span class="application">squishserver</span> (Section 7.4.4.3)</a>).
+(From <span class="emphasis"><em>Squish</em></span> 4.2, the Application Behavior pane is in the <a class="xref" href="https://ide.dialogs.html#ide.squish.server.settings.dialog" title="8.3.22. Squish Server Settings dialog">Squish Server Settings dialog (Section 8.3.22)</a>, not the Preferences
+dialog.)
+</p><p>
+The <span class="guilabel">Browser</span> pane is only relevant to those testing web
+applications
+since it is used to set the browser to use for web testing.
+(From <span class="emphasis"><em>Squish</em></span> 4.2, the Browser pane is in the <a class="xref" href="https://ide.dialogs.html#ide.squish.server.settings.dialog" title="8.3.22. Squish Server Settings dialog">Squish Server Settings dialog (Section 8.3.22)</a>, not the Preferences
+dialog.)
+</p><p>
+The <span class="guilabel">Logging</span> pane provides some settings to achieve finer
+control over logging. (Note that the IDE Internal Logging Level affects only the
+<span class="application">Squish IDE</span>'s internal log. Occassionally <span class="emphasis"><em>froglogic</em></span>'s support staff may ask
+you to set its level to Verbose when trying to help solve a problem that
+you have encountered.)
+</p><a id="idp57995256" class="indexterm"></a><a id="idp57995768" class="indexterm"></a><div class="screenshot"><div class="mediaobject" align="center"><img src="https://images/ide/playback_preferences.png" align="middle"></img><div class="caption">The Playback Preferences pane
+</div></div></div><p><a id="ide.preferences.squish.ocr.pane"></a>
+The <span class="guilabel">OCR</span> pane allows to set the preferences for the
+supported OCR engines. It includes the OCR engine used by default and
+authentication keys for online engines. The OCR settings can be edited
+without help of the Squish IDE in the <a class="xref" href="https://rg-ini-files.html#rg-ocr.ini-file" title="7.6.1.2. ocr.ini">ocr.ini (Section 7.6.1.2)</a> file.
+</p><a id="idp57999456" class="indexterm"></a><a id="idp57999936" class="indexterm"></a><div class="screenshot"><div class="mediaobject" align="center"><img src="https://images/ide-ref-preferences-dialog-ocr.png" align="middle"></img><div class="caption">The OCR Preferences pane
+</div></div></div><p></p><p><a id="ide.preferences.squish.playback.pane"></a>
+The <span class="guilabel">Playback</span> pane has the following options:
+</p><div class="itemizedlist"><ul type="disc"><li><p> <span class="guilabel">Snooze Factor</span>: With this, you
+can uniformly speed up or slow down recordings that contain calls to
+<a class="xref" href="https://rgs-squish.html#snooze-function"><code class="function">snooze</code></a> by a factor of your choice. </p></li><li><p> The response to lookup errors can also be configured from this pane.
+Test execution can be halted when <span class="emphasis"><em>Squish</em></span> fails to find an object, or
+it can show the <a class="xref" href="https://ide.dialogs.html#ide.object.not.found.dialog" title="8.3.14. Object Not Found dialog">Object Not Found dialog (Section 8.3.14)</a>.</p></li></ul></div><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Note: Object Not Found debugging"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/note.png"></img></td><th align="left">Object Not Found debugging</th></tr><tr><td align="left" valign="top"><p>
+The <a class="xref" href="https://ide.dialogs.html#ide.object.not.found.dialog" title="8.3.14. Object Not Found dialog">Object Not Found dialog (Section 8.3.14)</a> will not be shown
+if the <a class="xref" href="https://rgs-squish.html#testSettings.objectNotFoundDebugging-property">testSettings.objectNotFoundDebugging</a>
+is set to false in the test script or on the
+<a class="xref" href="https://ide.views.html#ide.the-settings.view.testsettings" title="8.2.16.4. Test Settings">Test Settings (Section 8.2.16.4)</a> page.
+</p></td></tr></table></div><a id="idp58007392" class="indexterm"></a><a id="idp58007992" class="indexterm"></a><div class="screenshot"><div class="mediaobject" align="center"><img src="https://images/ide/recording_preferences.png" align="middle"></img><div class="caption">The Recording Preferences pane
+</div></div></div><p>
+The <span class="guilabel">Recording</span> pane is used to control how <span class="emphasis"><em>Squish</em></span> records
+tests. You can configure the following things from here:
+</p><div class="itemizedlist"><ul type="disc"><li><p> For Object Synchronization, we have 2 options:
+<span class="guilabel">Based on Object Existence</span>, or
+<span class="guilabel">Based on Time During Recording</span>. The default,
+Object Existance, means Squish uses waitFor functions such as the
+<a class="xref" href="https://rgs-squish.html#waitForObject-function"><code class="function">waitForObject</code></a> function for synchronization.
+If you choose to use <span class="guilabel">Based on Time During Recording</span>,
+<span class="emphasis"><em>Squish</em></span> will record calls to <a class="xref" href="https://rgs-squish.html#snooze-function"><code class="function">snooze</code></a> rather than to
+the waitFor functions, and playback speed will be roughly the same as the
+recording.
+</p></li><li><p> <span class="guilabel">Compress Events</span> is an option that is
+on by default, and the checkbox has no effect except on Qt Widgets. Disabling it
+means that <span class="emphasis"><em>Squish</em></span> will record test cases with intermediate mouse hover and
+mouse move events. This could lead to recorded test scripts having many more
+lines than with event compression on. </p></li></ul></div><p><a id="ide.preferences.remote.testing.pane"></a>
+The <span class="guilabel">Remote Testing</span> pane is used to control which computer
+tests should be executed on. The default settings tell the <span class="application">Squish IDE</span> to start a local
+<span class="application">squishserver</span> whenever necessary (i.e., to record or play back a test),
+on <span class="emphasis"><em>Squish</em></span>'s default port. If you want to run the <span class="application">squishserver</span> on a
+remote machine you can enter the remote machine's hostname and the port
+to use. See <a class="xref" href="https://rg-regressiontesting.html#rgr-disttesting" title="7.1.2. Distributed Tests">Distributed Tests (Section 7.1.2)</a> for more about this topic.
+</p><p>
+The <span class="guilabel">Test Creation</span> pane is used to specify the
+<span class="guilabel">Test Case Template</span> directory and the
+<span class="guilabel">Default scripting language</span> to use for new test suites
+(which can be overridden when a new test suite is created of course).
+A Test Case Template can be created using the <a class="xref" href="https://ide.views.html#ide.the-test-suites.view" title="8.2.19. Test Suites view">Test Suites view (Section 8.2.19)</a>'s Test Cases list's context menu;
+see also <a class="xref" href="https://rg-templates.html" title="7.14. Testcase Templates">Testcase Templates (Section 7.14)</a>.
+</p></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="tcl.pane"></a>8.3.17.8. Tcl pane</h4></div></div></div><p>
+The <span class="guilabel">Tcl</span> pane's child panes are used to set various
+Tcl-specific options.
+</p><p>
+The main pane is empty and none of the Console, Core, Debug,
+Interpreters, Libraries, or Man pages panes (or any of their child
+panes) are used by <span class="emphasis"><em>Squish</em></span>. Many of the other panes are used however.
+The Code Templates pane can be used to create Tcl template files
+(separately from <span class="emphasis"><em>Squish</em></span>'s own file template mechanism). Some very
+basic predefined templates are provided and these can easily be edited
+or custom ones added. The Editor pane is used to control how the caret
+is positioned during navigation and whether to use spaces or tabs and
+the what and how much indentation to use. This pane also has some child
+panes. These are used to control such things as folding and syntax
+highlighting, code templates, and whether the editor closes strings and
+opening brackets of various kinds. The Task Tags child pane is used to
+manage a list of special words that the <span class="application">Squish IDE</span> must recognize and
+highlight inside Tcl comments—for example,
+<code class="code">FIXME</code> or <code class="code">TODO</code>.
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="team.pane"></a>8.3.17.9. Team pane</h4></div></div></div><p>
+Neither the Team pane nor any of its child panes has any effect in the
+<span class="application">Squish IDE</span>, so none of these panes are documented here.
+</p></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="ide.remote.control.dialog"></a>8.3.18. Remote Control dialog</h3></div></div></div><p>
+This dialog is used to operate on the test system remotely. The central
+widget on the dialog displays the current content of the desktop on the
+remote system. All input actions performed on the central widget are
+forwarded to and replayed on the remote test system.
+</p><div class="screenshot"><div class="mediaobject" align="center"><img src="https://images/ide/ref-remote-control-dialog.png" align="middle"></img><div class="caption">The Remote Control dialog
+</div></div></div><p>
+The dialog features a toolbar with a number of controls which can
+be used to adjust the dialogs behavior. The function of each of
+them is described below.
+</p><p>
+The <span class="guibutton">Pause</span> button can be used to freeze-frame the
+video stream. Paused remote control window does not update the screen
+contents captured on the remote system and does not replay the user
+inputs. Clicking the <span class="guibutton">Pause</span> once again restores
+the normal operation of the <span class="guilabel">Remote Control</span> dialog.
+</p><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Note"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/note.png"></img></td><th align="left">Note</th></tr><tr><td align="left" valign="top"><p>
+In case the video transmission is interrupted due to eg. networking
+problems, the <span class="guibutton">Pause</span> becomes automatically selected.
+You can un-select the <span class="guibutton">Pause</span> button to establish
+a new connection.
+</p></td></tr></table></div><p>
+The <span class="guibutton">Disable Inputs</span> button can be used to disable
+the user inputs forwarding. When enabled the Remote Control dialog
+functions in view-only mode. It can be useful to avoid interference with
+the execution of a remote test case which is sensitive to the position of
+the cursor.
+</p><p>
+The <span class="guibutton">Remote Keymap</span> button can be toggled to switch
+the key-press handling mode. In the remote-keymap mode the keys are forwarded
+as key codes and interpreted on the target operating system using its
+current keyboard map. In the local-keymap mode the keys are interpreted
+as symbols by the IDE using local keyboard map and forwarded as symbols.
+</p><p>
+Since the <span class="emphasis"><em>Squish</em></span> IDE is designed to run on desktop systems which rarely
+use a touchscreen, sending touch inputs to the remote system is not normally
+possible. The <span class="guibutton">Convert Mouse Inputs to Touch</span> button
+can be toggled to enforce conversion of all the pointer inputs to touch
+on the remote system.
+</p><p>
+Some embedded and mobile devices offer additional controls which do
+not map to a regular PC keyboard - eg. volume buttons on a side of a
+smartphone. In case <span class="emphasis"><em>Squish</em></span> is able to detect such keys, it will be listed
+in the menu under the <span class="guibutton">Extra Keys</span> button. The menu
+can be used to activate the buttons on the remote device.
+</p><p>
+The <span class="guibutton">FPS Limit</span> combo box can be used to limit the
+video transmission framerate. It can be used to avoid saturation of the
+network connection.
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="ide.screenshot.verification.dialog"></a>8.3.19. Screenshot Verification Point dialog</h3></div></div></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><span class="section"><a href="https://ide.dialogs.html#ide.setting.comparison.modes">8.3.19.1. Screenshot Comparison Modes</a></span></dt><dt><span class="section"><a href="https://ide.dialogs.html#ide.setting.masks">8.3.19.2. Setting Masks</a></span></dt></dl></div><p>
+This dialog is used to compare expected and actual screenshots and to
+configure how screenshot comparisons work on a per-screenshot basis. It
+is invoked by right-clicking a failed screenshot verification in the <a class="xref" href="https://ide.views.html#ide.the-test-results.view" title="8.2.18. Test Results view">Test Results view (Section 8.2.18)</a> to pop up the context menu and
+then choosing the context menu's <span class="guimenuitem">View Differences</span>
+menu item. (See also, <a class="xref" href="https://ide.dialogs.html#ide.setting.masks" title="8.3.19.2. Setting Masks">Setting Masks (Section 8.3.19.2)</a> for another way to invoke the
+dialog.)
+</p><div class="screenshot"><div class="mediaobject" align="center"><img src="https://images/ide-screenshot-vp-dialog.png" align="middle"></img><div class="caption">The Screenshot Verification Point dialog
+</div></div></div><p>
+The dialog has some controls that apply generally: these are shown along
+the bottom and consist of zoom in and zoom out buttons, a restore to
+original size button, a button to show or hide the mask, a button to
+show or hide highlighting (i.e., show or hide a red outline around
+differences), and a button to pop up a color chooser dialog to choose
+the highlighting line color. Then there is a <span class="guibutton">Save</span>
+button to save the settings for the current screenshot, and a
+<span class="guibutton">Cancel</span> button for closing the dialog without
+saving any changes.
+</p><p>
+The dialog's first tab (<span class="guilabel">Differences</span>) shows the difference
+between the expected and actual image. This tab offers four different ways to view
+the differences, with the default being <span class="guilabel">Flicker</span> view where
+the expected and actual images are shown alternately (and with differences
+outlined in red). The flicker speed can be set using the control on the right.
+</p><p>
+The <span class="guilabel">Differences</span> tab's <span class="guilabel">Subtract</span> view
+shows the differences by removing all the common pixels and just leaving those
+that differ between the two images. The way the subtraction works can be
+influenced by changing the HSV (Hue, Saturation, Value) color settings, and by
+checking or unchecking the <span class="guibutton">Invert</span> checkbox.
+</p><p>
+The <span class="guilabel">Differences</span> tab's <span class="guilabel">Gray Diff</span> view
+shows the differences by removing all the common pixels and just leaving those
+that differ between the two images. The way the differencing works can be
+influenced by changing the <span class="guilabel">Contrast</span> setting, and by
+checking or unchecking the <span class="guibutton">Invert</span> checkbox.
+</p><p>
+The <span class="guilabel">Differences</span> tab's <span class="guilabel">Split View</span> shows
+the left half of the expected image and the right half of the actual image with
+a vertical slider inbetween which can be used to vary the proportions to show
+more of one and less of the other.
+</p><p> The dialog's <span class="guilabel">Mask</span> tab shows the expected and actual
+images. It also provides <span class="guilabel">Mask Tools</span> (in the form of buttons
+at the right hand side of the dialog) for <span class="guibutton">Add Positive
+Mask</span>, <span class="guibutton">Add Negative Mask</span>,
+<span class="guibutton">Mask Highlighted Differences</span>, and
+<span class="guibutton">Remove Mask</span>. Most of these buttons are only enabled if
+the global <span class="guibutton">Show/Hide Mask</span> toggle toolbutton is pressed. </p><p> <span class="guibutton">Add Positive Mask</span> and <span class="guibutton">Add Negative
+Mask</span> allow you to mark a rectangular region of the expected image,
+marking it to be either an interesting area, or an uninteresting one (for the
+purposes of verification).</p><p> <span class="guibutton">Mask Highlighted Differences</span> makes sense only
+if there is an actual image to compare with the expected one, and they differ
+somehow. Then, clicking this button will will highlight and create a mask based
+on those differences. </p><p>
+The dialog's <span class="guilabel">Comparison Mode</span> tab is used to set the comparison
+mode. By default <span class="guilabel">Strict</span> mode is used which does a straight
+pixel-by-pixel comparison. If <span class="guilabel">Strict</span> mode is too strict there more
+tolerant modes available as documented below.
+</p><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="ide.setting.comparison.modes"></a>8.3.19.1. Screenshot Comparison Modes</h4></div></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h5 class="title"><a id="ide.setting.comparison.mode.strict"></a>8.3.19.1.1. Strict Comparison Mode</h5></div></div></div><p>
+The <span class="guilabel">Strict</span> mode is a pixel by pixel comparison which offers no
+additional configuration options:
+</p><div class="screenshot"><div class="mediaobject" align="center"><img src="https://images/ide-ref-screenshot-strict.png" align="middle"></img><div class="caption">The Strict Comparison Mode
+</div></div></div><p>
+Note that pixel differences can occur which are not noticeable by the
+human eye due to various factors (graphics card drivers and hardware,
+operating system, anti-aliasing, etc.) which makes the "Strict" mode
+unsuitable at times.
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h5 class="title"><a id="ide.setting.comparison.mode.pixel"></a>8.3.19.1.2. Fuzzy Pixel Comparison Mode</h5></div></div></div><p>
+The <span class="guilabel">Pixel</span> comparison mode compares the color of corresponding
+pixels of two images having the same dimensions.
+</p><p>
+It presents the images differences in percentage. For example, a
+difference of 10% means that 10% of the pixels are different.
+</p><p>
+The algorithm has a <span class="guilabel">Allowed failure</span> threshold
+parameter that defines the criterion by which images are considered to
+be equal. Therefore, for the example of 10% different pixels, a
+threshold of 11% would consider both images to be equal:
+</p><div class="screenshot"><div class="mediaobject" align="center"><img src="https://images/ide-ref-screenshot-pixel.png" align="middle"></img><div class="caption">The fuzzy Pixel Comparison Mode
+</div></div></div><p>
+The <span class="guilabel">Max. Color Difference</span> parameter is useful
+when you compare images that have different shades (not detectable by
+eye). This can happen to screenshots that are taken on machines that
+have different video adapters. The screenshots look very similar and
+you want to ignore tiny color differences they have.
+</p><p>
+Technically speaking, <span class="guilabel">Max. Color Difference</span> is
+the distance between two colors in 3D (RGB) color space (also see
+<a class="ulink" href="https://en.wikipedia.org/wiki/Euclidean_distance" target="_blank">Euclidean
+distance</a>).
+</p><p>
+For example you have two pixels with the following colors: (0, 0, 0)
+and (1, 1, 1) - one is absolutely black and another is almost black
+(you cannot distinguish their colors by eye). The difference between
+these two colors can be calculated with the following formula:
+</p><pre class="programlisting">
+diff = sqrt((r2 - r1)^2 + (g2 - g1)^2 + (b2 - b1)^2)
+</pre><p>
+Here r, g and b are red, green and blue color component values. So for
+our example the calculation would be:
+</p><pre class="programlisting">
+diff = sqrt(1 + 1 + 1) = ~1.73
+</pre><p>
+Also, the color difference between black and white colors is
+~441.67. So, if you want to compare solid black image with white one
+and set the <span class="guilabel">Max Color Difference</span> to be 441.67,
+result will be positive, i.e. images match.
+</p><p>
+In the <span class="guilabel">Test Results</span> view you may find this
+additional information in failed screenshots:
+</p><pre class="screen">
+...(difference: 0.7976%, max. color difference: 80.6040)
+</pre><p>
+The “<span class="quote">difference: 0.7976%</span>” part denotes the number of
+pixels that are different in percent. In this example it is 0.7976%
+and not 79.76%, i.e. the relative number is very small, less than one
+percent. For example, if you compare images of 10x10px, and only one
+pixel is different, you will get 1% difference.
+</p><p>
+The “<span class="quote">max. color difference: 80.6040</span>” part denotes the
+largest pixel color difference - in this case 80.6040. So if you
+set <span class="guilabel">Max Color Difference</span> to be 81, your test will
+pass, because all the pixels that failed previously will be considered
+equal then.
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h5 class="title"><a id="ide.setting.comparison.mode.histogram"></a>8.3.19.1.3. Histogram Comparison Mode</h5></div></div></div><p>
+<span class="guilabel">Histogram</span> mode is based on comparing image color
+histograms. It is useful for cases when images are resized/scaled or rotated, so
+that their color profile remains the same or is not changed much:
+</p><div class="screenshot"><div class="mediaobject" align="center"><img src="https://images/ide-ref-screenshot-histogram.png" align="middle"></img><div class="caption">The Histogram Comparison Mode
+</div></div></div><p>
+How it works:
+
+</p><div class="itemizedlist"><ul type="disc"><li><p>
+Divide the color range (0-255) of each color component (RGB) of every
+pixel by the number of <span class="guilabel">Bins</span> (or baskets) and
+calculate the number of pixels that fall into each bin based on their
+color characteristics.
+</p></li><li><p>
+Divide the total number of pixels in the image by the number of pixels
+in each bin to get "normalized values" (which allows comparison even
+if they have different sizes). These respective values are put back
+into the corresponding bins.
+</p></li><li><p>
+The values of all corresponding bins are subtracted from another and
+the resulting values summed up. This value represents the difference
+of the images.
+</p></li></ul></div><p>
+
+</p><p>
+This mode lets you configure the number of <span class="guilabel">Bins</span>
+and <span class="guilabel">Allowed failures</span> (threshold in percent),
+which represents the maximum difference between two images for which
+they are still considered to be "equal".
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h5 class="title"><a id="ide.setting.comparison.mode.correlation"></a>8.3.19.1.4. Correlation Comparison Mode</h5></div></div></div><p>
+The <span class="guilabel">Correlation</span> mode measures the similarity between two
+images as a statistical "correlation" coefficient based on functions originally
+stemming from the signal processing domain. The degree of similarity will be given
+in a percentage whereas 0% could roughly be labeled as "no
+similarity" and 100% as "perfect similarity".
+</p><p>
+The comparison is done based on gray values after mapping images of
+different sizes to the same scale. Unlike the <span class="guilabel">Strict</span>
+Comparison mode, this mode is therefore potentially able to cope with
+screenshots of applications running on systems with different screen
+resolutions.
+</p><div class="screenshot"><div class="mediaobject" align="center"><img src="https://images/ide-ref-screenshot-correlation.png" align="middle"></img><div class="caption">The Correlation Comparison Mode
+</div></div></div><p>
+Use the <span class="guilabel">Threshold</span> configuration parameter to set
+the minimum correlation coefficient expected to consider the images to
+be equal. Two sets of sample images are given below to convey an
+assessment of calculated correlation values:
+</p><div class="orderedlist"><ol type="1"><li><p>The correlation between
+<img src="https://images/ide-ref-screenshot-button-ubuntu.png"></img>
+and
+<img src="https://images/ide-ref-screenshot-button-win7.png"></img>
+is 99.4614%. Note the different size and missing keyboard accelerator
+of the right button.
+</p></li><li><p>The correlation between
+<img src="https://images/ide-ref-screenshot-button-ubuntu.png"></img>
+and
+<img src="https://images/ide-ref-screenshot-button-wrong.png"></img>
+is 13.8309%. The screenshots have not much in common besides a few
+bright pixels in the center.
+</p></li></ol></div></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="ide.setting.masks"></a>8.3.19.2. Setting Masks</h4></div></div></div><p>
+When comparing screenshots, it is possible that the expected image contains
+more information than we need in our verification. We can
+<em class="firstterm">mask</em> parts of this image by either creating a
+<span class="guilabel">Positive Mask</span>, where the region outside
+the mask is ignored, or a <span class="guilabel">Negative Mask</span>,
+where the region inside the mask is ignored. The masking is done before the
+images are compared.
+</p><p>
+It is possible to set the <span class="guilabel">Mask</span>
+for a screenshot verification point before running a test (or between test runs), or when
+there is no failed screenshot test in the <a class="xref" href="https://ide.views.html#ide.the-test-results.view" title="8.2.18. Test Results view">Test Results view (Section 8.2.18)</a> (so no <span class="guimenuitem">View
+Differences</span> context menu item). This is done by
+clicking the VPs tab in the <a class="xref" href="https://ide.views.html#ide.the-test-suites.view" title="8.2.19. Test Suites view">Test Suites view (Section 8.2.19)</a>'s
+Test Case Resources list and then clicking (or double-clicking depending
+on your settings) the image verification point whose <span class="guilabel">Mask</span>
+you want to modify. This will result in the Verification Point
+being shown, along with a tiny <span class="guibutton">Edit Verification
+Point</span> button. Click this button to invoke the <span class="guilabel">Screenshot
+Verification Point</span> dialog. The dialog will pop up with only two tabs,
+<span class="guilabel">Mask</span> and <span class="guilabel">Comparison Mode</span>—the
+<span class="guilabel">Differences</span> tab does not appear because the only image
+available is the expected image.
+The <span class="guilabel">Mask</span> tab can be selected, to see a GUI like
+the following screenshot.
+</p><div class="screenshot"><div class="mediaobject" align="center"><img src="https://images/vp_mask_editor.png" align="middle"></img><div class="caption">Editing Masks in Screenshot VPs  </div></div></div><p> From here, we can insert, modify and remove positive and negative masks.
+A <span class="guilabel">Positive Mask</span> appears transparent, but the region outside
+the rectangle is marked red. A <span class="guilabel">Negative Mask</span> appears as a
+blue rectangle. It does not make sense to have both kinds of masks in the same
+verification point, unless they overlap somehow. </p></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="ide.search.dialog"></a>8.3.20. Search dialog</h3></div></div></div><p>
+This dialog is used to perform sophisticated searches across files. It
+is invoked by using the <a class="xref" href="https://ide.main.window.html#ide.search.action" title="8.1.1.59. Search action"><span class="guiicon">Search</span> action (Section 8.1.1.59)</a>. (If you
+just want to do a simple find or find and replace in an <a class="xref" href="https://ide.views.html#ide.the-editor.view" title="8.2.6. Editor view">Editor view (Section 8.2.6)</a> use the <a class="xref" href="https://ide.main.window.html#ide.find.and.replace.action" title="8.1.1.16. Find and Replace action"><span class="guiicon">Find and Replace</span> action (Section 8.1.1.16)</a> instead.)
+</p><div class="screenshot"><div class="mediaobject" align="center"><img src="https://images/ide-ref-search-dialog.png" align="middle"></img><div class="caption">The Search dialog
+</div></div></div><p>
+This dialog has several tabs but we will only very briefly describe the
+File Search tab (which is the one shown by default). The first combobox
+is used to specify the text to search for. The combobox keeps a record
+of texts used this session so it is easy to drop down and pick a
+previous search text. By default the search uses very simple glob-style
+wildcards, but you can use full regular expressions and control case
+sensitivity using the appropriate checkboxes if you wish. The File name
+patterns combobox can be used to restrict the names of the files that
+are searched in. For example, if your scripting language is Python, you
+could set the pattern to be “<span class="quote">*.py</span>” so that only Python
+files are searched. The dialog has some other more advanced settings,
+and can even be used to replace the matching text across files, but
+these features are not covered here. After performing a search a  <a class="xref" href="https://ide.views.html#ide.the-search.view" title="8.2.15. Search view">Search view (Section 8.2.15)</a> appears in the current perspective
+showing a tree view of the files searched and the line numbers within
+them where the search text matched.
+</p><p>
+The other tabs are all scripting-language-specific. They allow you to
+search for text in all the files containing source code in the tab's
+scripting language (e.g., all the JavaScript files or all Python files),
+and where the search text matches the name of a type (class), method (or
+function), or field (attribute).
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="ide.show.view.dialog"></a>8.3.21. Show View dialog</h3></div></div></div><p>
+This dialog is used to open a view that isn't already open. It can be
+invoked using the <a class="xref" href="https://ide.main.window.html#ide.show.view.action" title="8.1.1.62. Show View action"><span class="guiicon">Show View</span> action (Section 8.1.1.62)</a>.
+(See also, the <a class="xref" href="https://ide.main.window.html#ide.show.view.menu.action" title="8.1.1.63. Show View Menu action"><span class="guiicon">Show View Menu</span> action (Section 8.1.1.63)</a>.)
+</p><div class="screenshot"><div class="mediaobject" align="center"><img src="https://images/ide/ref-show-view-dialog.png" align="middle"></img><div class="caption">The Show View dialog
+</div></div></div><p>
+The <span class="application">Squish IDE</span> provides so many views that the dialog shows them in a tree
+view grouped by category. Views that are already visible are shown
+grayed out. One view that isn't shown by default but which can be useful
+when you need technical support is in the Squish Tests group—the
+Runner/Server Log view. The <span class="application">Squish IDE</span> remembers which views are showing in
+which perspectives between sessions, so you only have to add a view once
+for it to always be shown. Correspondingly, you only have to click a
+view's close button <span class="guiicon"><img src="https://images/ide/close.png"></img></span>to get rid of it.
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="ide.squish.server.settings.dialog"></a>8.3.22. Squish Server Settings dialog</h3></div></div></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><span class="section"><a href="https://ide.dialogs.html#manage.auts.panel">8.3.22.1. Manage AUTs panel</a></span></dt></dl></div><p>
+This dialog is used to control various aspects of the <span class="application">squishserver</span>
+that the <span class="application">Squish IDE</span> uses when recording and playing back tests.
+</p><div class="screenshot"><div class="mediaobject" align="center"><img src="https://images/ide/squish-server-settings-dialog.png" align="middle"></img><div class="caption">The Squish Server Settings dialog
+</div></div></div><p>
+This dialog is used to set <span class="emphasis"><em>Squish</em></span>'s timeouts for AUT startup time and
+response time, to specify the web browser to use with <span class="emphasis"><em>Squish</em></span> for Web,
+and whether to animate the mouse cursor on playback. The dialog also
+contains a Manage AUTs panel.
+</p><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="manage.auts.panel"></a>8.3.22.1. Manage AUTs panel</h4></div></div></div><p>
+This panel is used to manage the Mapped AUTs, AUT Paths, and Attachable
+AUTs that are registered with the <span class="application">squishserver</span>. (See <a class="xref" href="https://rg-autsettings.html#rgas-pathmapped" title="7.3.2. AUT Paths and Mapped AUTs">AUT Paths and Mapped AUTs (Section 7.3.2)</a>.) This panel can be reached by clicking
+<span class="guimenu">Edit</span>|<span class="guimenuitem">Server Settings</span>|<span class="guimenuitem">Manage
+AUTs</span>.
+</p><div class="screenshot"><div class="mediaobject" align="center"><img src="https://images/ide/manage-auts-panel.png" align="middle"></img><div class="caption">The Manage AUTs panel
+</div></div></div><p>
+Any child item shown in this panel can be removed by clicking the
+<span class="guibutton">Remove</span> button. To add a new Mapped AUT, AUT Path,
+or Attachable AUT, <span class="emphasis"><em>first</em></span> click the appropriate
+parent item (e.g., “<span class="quote">Mapped AUTs</span>” if you want to add a
+Mapped AUT), and <span class="emphasis"><em>then</em></span> click the
+<span class="guibutton">Add</span> button. Once you have finished with the
+dialog click the <span class="guibutton">Close</span> button.
+</p><p>
+It is also possible to register and unregister AUTs using <span class="emphasis"><em>Squish</em></span>'s
+command line tools; see <a class="xref" href="https://rg-autsettings.html#rgas-pathmapped" title="7.3.2. AUT Paths and Mapped AUTs">AUT Paths and Mapped AUTs (Section 7.3.2)</a>.
+</p></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="ide.squish.support.request.wizard"></a>8.3.23. Squish Support Request Wizard</h3></div></div></div><p> This 3-step wizard can be invoked from <span class="guimenu">Help</span> -
+<span class="guimenu">Contact Support...</span> and guides the user through the process of
+creating a customer support ticket. The first step asks the user
+for contact information. The <span class="guilabel">E-mail address</span> must be valid,
+and the <span class="guilabel">Customer ID</span> is retrieved from the license info.
+</p><div class="screenshot"><div class="mediaobject" align="center"><img src="https://images/ide/support-request-wizard-1.png" align="middle"></img><div class="caption">Support Request Wizard step 1
+</div></div></div><p>
+In Step 2, the user can click a link to search <span class="guilabel">known Squish
+issues</span>, or describe the issue, and steps to reproduce it
+here. <span class="guilabel">Summary</span> and <span class="guilabel">Description</span> must not
+be empty.
+</p><div class="screenshot"><div class="mediaobject" align="center"><img src="https://images/ide/support-request-wizard-2.png" align="middle"></img><div class="caption">Support Request Wizard step 2
+</div></div></div><p>
+In Step 3, we can add file attachments to the support request.
+Most of the time, we will have at least one attachment, and that will be the
+support information zip file. We can <span class="guibutton">Collect and Attach Support
+Information</span> with the click of a button, which brings us to the
+<a class="xref" href="https://ide.dialogs.html#ide.collect.support.information.dialog" title="8.3.1. Collect Information for Squish Support dialog">Collect Information for Squish Support dialog (Section 8.3.1)</a>.
+We can also take any arbitrary file and <span class="guibutton">Add
+Attachment...</span> to this support request.
+</p><p>
+There's a 50 MB limit on total size of attachments. When crossed, a
+warning will appear. Entries can be removed by clicking the red <span class="guibutton">X</span>
+button on the right edge of the table entry.
+</p><div class="screenshot"><div class="mediaobject" align="center"><img src="https://images/ide/support-request-wizard-3.png" align="middle"></img><div class="caption">Support Request Wizard step 3
+</div></div></div><p> After the correct attachments
+are set, click <span class="guibutton">Submit Support Request</span> to send it to
+froglogic. Subsequent communication is over email from this point on.
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="ide.switch.to.editor.dialog"></a>8.3.24. Switch to Editor dialog</h3></div></div></div><p>
+This dialog is used to make one of the editor views' tabs the active one
+(i.e., the one shown and with the keyboard focus). It can be invoked
+using the <a class="xref" href="https://ide.main.window.html#ide.switch.to.editor.action" title="8.1.1.74. Switch to Editor action"><span class="guiicon">Switch to Editor</span> action (Section 8.1.1.74)</a>.
+</p><div class="screenshot"><div class="mediaobject" align="center"><img src="https://images/ide/ref-switch-to-editor-dialog.png" align="middle"></img><div class="caption">The Switch to Editor dialog
+</div></div></div><p>
+One convenience of using this dialog is that it shows the path as well
+as the filename of the files being edited. This is particularly useful
+since <span class="application">Squish IDE</span> only shows the
+filenames on the <a class="xref" href="https://ide.views.html#ide.the-editor.view" title="8.2.6. Editor view">Editor view (Section 8.2.6)</a> tabs (e.g.,
+<code class="filename">test.py</code>, <code class="filename">test.py</code>,
+<code class="filename">test.py</code>). (Note that if you hover the mouse over an
+<a class="xref" href="https://ide.views.html#ide.the-editor.view" title="8.2.6. Editor view">Editor view (Section 8.2.6)</a> tab the full path is shown.)
+</p><p>
+To switch to an particular tab simply click the name of the file in the
+list and then click the <span class="guibutton">Close</span> button. There are
+also buttons for selecting multiple tabs and for closing and saving.
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="ide.vvp.dialog"></a>8.3.25. Visual Verification Point editor</h3></div></div></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><span class="section"><a href="https://ide.dialogs.html#ide.vvp.edit">8.3.25.1. Plain editing mode</a></span></dt><dt><span class="section"><a href="https://ide.dialogs.html#ide.vvp.diff">8.3.25.2. View visual differences</a></span></dt><dt><span class="section"><a href="https://ide.dialogs.html#ide.vvp.tune">8.3.25.3. Tuning of Visual Verifications</a></span></dt></dl></div><p>
+Visual Verification Points are typically created through the IDE
+(<a class="xref" href="https://ug-vps.html#ugv-visual" title="5.22.4. How to Do Visual Verifications">Visual Verification Point (Section 5.22.4)</a>) or the
+<a class="xref" href="https://rgs-squish.html#createVisualVP-function"><code class="function">createVisualVP</code></a> function. A dedicated dialog
+can later be used to view comparison failures and edit the expected
+visual state stored within the Verification Point.
+</p><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="ide.vvp.edit"></a>8.3.25.1. Plain editing mode</h4></div></div></div><p>
+The expectation of the visual state of an object hierarchy checked via
+a <a class="xref" href="https://rgs-squish.html#test.vp-function"><code class="function">test.vp</code></a> call can be configured prior to
+the first test execution. To open the editor select the Verification
+Point file and click the edit icon
+(<span class="guiicon"><img src="https://images/ide/edit_template.gif"></img></span>)
+or double-click on the file.
+</p><p>
+The dialog centers around an image of the GUI structure to be
+checked. On the left a tree view shows the hierarchy
+(<span class="guilabel">Structure</span>) of discovered sub-controls. When
+selecting a control through a click on the tree item or image the
+control's properties and activated checks will be displayed in the
+<span class="guilabel">Properties</span> panel on the right hand side.
+</p><div class="screenshot"><div class="mediaobject" align="center"><img src="https://images/ide-ref-vvp-edit.png" align="middle"></img><div class="caption">The Visual Verification Point Editor
+</div></div></div><p>
+The object properties are grouped into four
+categories: <span class="guilabel">Identification</span>, <span class="guilabel">Content</span>, <span class="guilabel">Geometry</span>
+and <span class="guilabel">Screenshot</span>. This is also the order later
+followed during test execution after a matching object hierarchy was
+found.
+</p><div class="section" lang="en"><div class="titlepage"><div><div><h5 class="title"><a id="idp58151672"></a>8.3.25.1.1. Identifying Properties</h5></div></div></div><p>
+Some object properties are not relevant to the visual appearance. But
+if the structures of two object snapshots are not identical they can
+help with mapping objects from one tree to the other.
+</p><p>
+In case an object possesses identifying properties that turn out to be
+unstable (like the HTML element 'id' attribute that is often assigned
+dynamically calculated values) they can be excluded from the list of
+object characteristics to be considered.
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h5 class="title"><a id="idp58152936"></a>8.3.25.1.2. Content Properties</h5></div></div></div><p>
+Content properties influence the way a UI element is rendered on the
+screen. Be it through textual content, a numerical value or current
+state of a button.
+</p><p>
+Content properties are part of the Identity Check as they can often
+provide a good way to tell one element from another.
+</p><p>
+In case a property's value can be permuted a fuzzy check using
+wildcard characters can be configured.
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h5 class="title"><a id="idp58154328"></a>8.3.25.1.3. Geometry Properties</h5></div></div></div><p>
+An element's geometry is specified by its x and y position (relative
+to the topmost element being checked) as well as its width and height.
+</p><p>
+In case the exact geometry can vary between test execution platforms
+an acceptable tolerance can be specified.
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h5 class="title"><a id="idp58155392"></a>8.3.25.1.4. Screenshot</h5></div></div></div><p>
+A screenshot check can be performed for a window as a whole,
+individual controls or groups of controls.
+</p><p>
+By default, the whole surface is checked (pixel by pixel) but in case
+of unstable content the check can be disabled.
+</p></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="ide.vvp.diff"></a>8.3.25.2. View visual differences</h4></div></div></div><p>
+A failed <a class="xref" href="https://rgs-squish.html#test.vp-function"><code class="function">test.vp</code></a> test will show up in the
+<a class="xref" href="https://ide.views.html#ide.the-test-results.view" title="8.2.18. Test Results view">Test Results view (Section 8.2.18)</a> view with a short summary
+of the failed check(s).
+</p><div class="screenshot"><div class="mediaobject" align="center"><img src="https://images/ide-ref-vvp-script.png" align="middle"></img><div class="caption">Test Results with Visual Verification Point failure
+</div></div></div><p>
+When clicking the <span class="guilabel">View Differences</span> toolbar
+button the editor will open in an extended mode for analysis of the
+difference details:
+</p><div class="screenshot"><div class="mediaobject" align="center"><img src="https://images/ide-ref-vvp-failed.png" align="middle"></img><div class="caption">Editor showing failed Visual Verification</div></div></div><p>
+In extended mode the editor will show both the expected and actual
+images, a list of <span class="guilabel">Failures</span> and differences marked
+in red.
+</p><p>The <span class="guilabel">Properties</span> includes an
+additional <span class="guilabel">Hierarchy</span> section. This section will
+display possible disagreements between the two object
+structures.</p><p>A click on the <span class="guibutton">Structure</span> button will make
+the panel on the display the whole object structure. Including both
+identical and different objects:
+</p><div class="screenshot"><div class="mediaobject" align="center"><img src="https://images/ide-ref-vvp-structure.png" align="middle"></img><div class="caption">Visual Verification Structure View
+</div></div></div><p>While the green checkmark denotes positive results of all active
+checks, the red circle is shown if at least one check failed. The
+yellow icons signals that an object had successful checks but a
+failure was found within one of its child or children's children
+objects.
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="ide.vvp.tune"></a>8.3.25.3. Tuning of Visual Verifications</h4></div></div></div><p>
+Ideally, executions of Verification Points with all checks enabled
+produce a positive result. Due to a multitude of factors verifications
+may fail. At least on the first run. Many types of failures can be
+dealt with automatically by pressing the <span class="guibutton">Relax
+Check</span> button. The <span class="guibutton">Accept All</span>
+button, on the other hand, will simply overwrite the expected state
+with the now seen actual state.
+</p><p>
+ Here are more specific suggested ways of "tuning" a Verification
+Point in case of persistent failures:
+</p><div class="section" lang="en"><div class="titlepage"><div><div><h5 class="title"><a id="idp58169208"></a>8.3.25.3.1. Handling of Screenshot check failures</h5></div></div></div><p>
+Turn off screenshot checks for elements known to contain
+dynamic content. In case content and geometry checks alone can be
+considered sufficient to verify the UI layout.
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h5 class="title"><a id="idp58170008"></a>8.3.25.3.2. Handling of Content check failures</h5></div></div></div><p>
+In case property values are unstable consider the usage of
+wildcards. If unavoidable drop the check completely by
+deselecting <span class="guibutton">Include in verification</span>.
+</p><div class="screenshot"><div class="mediaobject" align="center"><img src="https://images/ide-ref-vvp-wildcard.png" align="middle"></img><div class="caption">Content check with wildcards</div></div></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h5 class="title"><a id="idp58172792"></a>8.3.25.3.3. Handling of Geometry check failures</h5></div></div></div><p>
+In case of varying geometries the checks can be relaxed through usage
+of allowable ranges for x, y, width and height. Or a complete check
+removal through deselection of <span class="guibutton">Include in
+verification</span>.
+</p><div class="screenshot"><div class="mediaobject" align="center"><img src="https://images/ide-ref-vvp-range.png" align="middle"></img><div class="caption">Range Check</div></div></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h5 class="title"><a id="idp58175576"></a>8.3.25.3.4. Creation vs. execution state</h5></div></div></div><p>
+During test execution the application's state may slightly differ from
+the state seen during the interactive creation of the Verification
+Point. As a result an immediate failure of the layout check may
+occur. First, inspect the changes to validate whether they are maybe
+acceptable. Then use the <span class="guibutton">Accept All</span> button
+to accept the changes. This can make the checks work for the following
+runs.
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h5 class="title"><a id="idp58177024"></a>8.3.25.3.5. Failures due to transient state</h5></div></div></div><p>
+A Verification Point executed during an application state transition
+may be very sensitive to exact timing. Parts of the UI may still be
+in the setup phase. A snooze() statement inserted before test.vp() can
+make the check fall into a stable state of the UI.
+</p></div></div></div></div><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" type="text/javascript" src="ScriptingLanguage.js"></script><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format">setScriptingLanguage();</script><div class="navfooter"><hr></hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="https://ide.views.html">Prev</a> </td><td width="20%" align="center"><a accesskey="u" href="https://ide.ref.man.html">Up</a></td><td width="40%" align="right"> <a accesskey="n" href="https://ide.keyboard.shortcuts.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">8.2. Views </td><td width="20%" align="center"><a accesskey="h" href="https://index-noframes.html">Home</a></td><td width="40%" align="right" valign="top"> 8.4. Keyboard Shortcuts</td></tr></table></div></body>
+<!-- Mirrored from ide.dialogs.html by HTTrack Website Copier/3.x [XR&CO'2013], Wed, 06 Jul 2022 13:29:01 GMT -->
+</html>

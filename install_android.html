@@ -1,0 +1,190 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<!-- Mirrored from install_android.html by HTTrack Website Copier/3.x [XR&CO'2013], Wed, 06 Jul 2022 13:28:58 GMT -->
+<head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><title>3.9. Installing Squish for Android</title><link rel="stylesheet" href="manual.css" type="text/css"></link><meta name="generator" content="DocBook XSL Stylesheets V1.73.2"></meta><link rel="start" href="index-noframes.html" title="Squish Manual"></link><link rel="up" href="install.html" title="Chapter 3. How to Install Squish"></link><link rel="prev" href="installation.for.flex.testing.html" title="3.8. Installation for Flex applets in web pages"></link><link rel="next" href="ins-new-ide.html" title="3.10. Standalone Installation of the IDE"></link><style xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" type="text/css" media="screen">
+        div.toc * { margin-left: 6px; margin-right: auto; max-width: 75em; }
+        div.toc span { margin-left: 0px; }
+        * { margin-left: auto; margin-right: auto; max-width: 75em; }
+        body { margin-left: 6px; margin-right: 6px; }
+        table th { padding: .5ex }
+        table td { padding: .5ex }
+    </style><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format">
+        function keyPress() {
+            var e = window.event;
+            if ( e == undefined ) {
+                return;
+            }
+            /* ### does not properly scroll, yet
+            if ( e.keyCode == 32 ) {
+            var l = document.links;
+            for ( var i = 0; i < l.length; i++ ) {
+                if ( l[i].innerText == "Next" ) {
+                location.href = l[i].href;
+                }
+            }
+            } else
+                */
+                if ( e.keyCode == 0x08 ) {
+            var l = document.links;
+            for ( var i = 0; i < l.length; i++ ) {
+                if ( l[i].innerText == "Prev" ) {
+                location.href = l[i].href;
+                }
+            }
+            }
+        }
+        document.onkeypress = keyPress;
+    </script></head><body><div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="install_android"></a>3.9. Installing Squish for Android</h2></div></div></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><span class="section"><a href="install_android.html#android_app_instrumentation">3.9.1. Make the Android app testable</a></span></dt></dl></div><p>
+<span class="emphasis"><em>Squish</em></span> can be used to test software for Android that meets the
+following prerequisites:
+</p><div class="orderedlist"><ol type="1" compact><li><p>The application must provide a user interface.</p></li><li><p>From the application, a test package has to be made and
+installed.</p></li></ol></div><p>
+For the second prerequisite, a <span class="trademark">Java</span>™ <acronym class="acronym">JDK</acronym>,
+version 7 or higher, and optionally the Android <acronym class="acronym">SDK</acronym>
+has to be installed.
+</p><p>
+With the prerequisites in place, <span class="emphasis"><em>Squish</em></span> can be used to test the
+application, either using an Android emulator or using an Android
+device connected to the machine running <span class="emphasis"><em>Squish</em></span> via
+<acronym class="acronym">USB</acronym>.
+</p><div class="warning" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Warning: OS-level changes for &gt;= Android-28"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Warning]" src="images/warning.png"></img></td><th align="left">OS-level changes for &gt;= Android-28</th></tr><tr><td align="left" valign="top"><p>
+For finding some UI elements, <span class="emphasis"><em>Squish</em></span> has to use <span class="trademark">Java</span>™ reflection in
+some cases. These code paths may break in future, yet unsupported, Android
+versions. Therefore since Android-28 (Android Pie), a warning dialog
+informs the user about this access. Of course that breaks UI testing and
+therefore <span class="emphasis"><em>Squish</em></span>
+<a class="ulink" href="https://developer.android.com/about/versions/pie/restrictions-non-sdk-interfaces" target="_blank">disables</a>
+warnings dialogs, but keep warnings in the log (the <code class="code">logcat</code>
+output).
+</p></td></tr></table></div><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Note"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/note.png"></img></td><th align="left">Note</th></tr><tr><td align="left" valign="top"><p>
+When testing on a real device using <acronym class="acronym">USB</acronym> on
+MS Windows, a special USB driver (for development/debugging
+purposes) from the vendor of the specific Android
+device/model must be installed (see <a class="ulink" href="https://developer.android.com/tools/extras/oem-usb.html" target="_blank">OEM
+USB Drivers</a>, the fact that an Android device shows up as a usable
+device in the operating system is usually not sufficient).
+</p></td></tr></table></div><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Note"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/note.png"></img></td><th align="left">Note</th></tr><tr><td align="left" valign="top"><p>
+Linux users testing on a real device using <acronym class="acronym">USB</acronym> should make
+sure the access permissions to the device are configured properly (see
+<a class="ulink" href="https://developer.android.com/tools/device.html" target="_blank">Using Hardware
+Devices</a>).
+</p></td></tr></table></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="android_app_instrumentation"></a>3.9.1. Make the Android app testable</h3></div></div></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><span class="section"><a href="install_android.html#android_app_extern_instrumentation">3.9.1.1. Using a separate test package</a></span></dt><dt><span class="section"><a href="install_android.html#android_app_intern_instrumentation">3.9.1.2. Using a built-in SquishHook</a></span></dt><dt><span class="section"><a href="install_android.html#idp37866424">3.9.1.3.  Starting the AUT </a></span></dt></dl></div><p>
+<span class="emphasis"><em>Squish</em></span> can record and replay test scripts for your application when there
+is a package containing the SquishHook instrumentation that has the target
+set to your application's package name.
+</p><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="android_app_extern_instrumentation"></a>3.9.1.1. Using a separate test package</h4></div></div></div><p>
+This is the method used by the <span class="emphasis"><em>Squish</em></span> IDE. The IDE will build a test apk,
+re-sign your apk and finally install both. Either when choosing a new package
+in the <a class="link" href="ide.views.html#ide.the-settings.view" title="8.2.16. Test Suite Settings view">test suite settings page</a>
+or <a class="link" href="ide.dialogs.html#manage.auts.panel" title="8.3.22.1. Manage AUTs panel">“<span class="quote">Manage Android AUTs</span>”</a>
+in the <a class="link" href="ide.dialogs.html#ide.squish.server.settings.dialog" title="8.3.22. Squish Server Settings dialog">
+“<span class="quote">Server Settings</span>”</a>.
+</p><p>
+For command-line users, to create a test package, re-sign yours and install,
+run
+</p><pre class="screen">
+apk-tool -a &lt;path-to-android-sdk&gt; -j &lt;jdk&gt; -pkg &lt;your-apk&gt; -o &lt;temp-dir&gt; -d &lt;device&gt;
+</pre><p>
+where <code class="filename">apk-tool</code> is a script found in the Squish'
+<code class="filename">bin</code> directory, <code class="filename">jdk</code> the
+full path to a <span class="trademark">Java</span>™ <acronym class="acronym">JDK</acronym>, version 7 or higher, and
+<code class="filename">temp-dir</code> some directory where
+<code class="filename">apk-tool</code> writes some temporary files.
+</p><p>
+The <code class="option">-a</code> option may be omitted. <span class="emphasis"><em>Squish</em></span> has the required
+tools packed. Use it when your app uses more up-to-date resources from
+the Android <acronym class="acronym">SDK</acronym>.
+</p><p>
+The <code class="option">-j</code> option may be omitted when both
+<span class="application">java</span> and <span class="application">jarsigner</span>
+are in your path.
+</p><p>
+You can pass multiple <code class="option">-d device</code> pairs to the apk-tool.
+</p><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Note"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/note.png"></img></td><th align="left">Note</th></tr><tr><td align="left" valign="top"><p>
+The packages installed by <code class="filename">apk-tool</code> may conflict with
+a previous installed package due to re-signing. Either uninstall it manually
+first or edit the apk-tool script <code class="code">Settings for Signing</code> field
+to match the keystore and credential your apk is using.
+</p></td></tr></table></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="android_app_intern_instrumentation"></a>3.9.1.2. Using a built-in SquishHook</h4></div></div></div><p>
+This is an alternative method to get a testable application. Instead of
+creating a test apk, the squish hook can be built-in too. This may be a faster
+compile/test cycle in some work loads.
+</p><p>
+We take as example <code class="filename">AddressBook</code>, which you can find in
+the <code class="filename">android</code> directory under <code class="filename">examples</code>.
+</p><p>
+This project was created as
+</p><pre class="screen">
+$ android-sdk/tools/android create project --target android-8 \
+    --name AddressBook --path AddressBook \
+    --activity AddressBook --package com.froglogic.addressbook
+</pre><p>
+
+To compile this application yourself, first create a
+<code class="filename">local.properties</code> file
+containing
+</p><pre class="screen">
+sdk.dir=path-to-your-android-sdk
+</pre><p>
+</p><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Note"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/note.png"></img></td><th align="left">Note</th></tr><tr><td align="left" valign="top"><p>
+When on MS Windows, either use forward slashes or use double backslashes
+for the path.
+</p></td></tr></table></div><p>
+Next, create a <code class="filename">project.properties</code> file containing
+</p><pre class="screen">
+target=android-8
+</pre><p>
+</p><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Note"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/note.png"></img></td><th align="left">Note</th></tr><tr><td align="left" valign="top"><p>
+Look in your Android <acronym class="acronym">SDK</acronym> directory for the possible
+targets. The targets are the subdirectories under
+<code class="filename">android-sdk/targets/</code>. Here we use target
+<code class="code">android-8</code>.
+</p></td></tr></table></div><p>
+Then create a <code class="filename">libs</code> subdirectory and copy the file
+<code class="filename">squishandroid.jar</code> in there.
+</p><p>
+To add support for
+<a class="link" href="ug-how.to.use.the.android.api.html#ug-how.to.use.the.android.accessibility" title="5.7.1. How to Work with Accessibility objects">UiAutomation</a>, also
+the jars testing-support-lib and uiautomator can be copied to
+<code class="filename">libs</code>. These two jars can be retrieved from the Android-SDK
+<code class="filename">extras/android/m2repository/com/android/support/test</code>
+directory, when having 'Android Support Repository' installed. Unzip the
+<code class="filename">aar</code> files and rename <code class="filename">classes.jar</code>
+so that these two jars don't overwrite each other.
+</p><p>
+Edit the <code class="filename">AndroidManifest.xml</code> file to enable Squish
+instrumentation.
+</p><p>
+Edit the <code class="filename">AndroidManifest.xml</code> file to add
+<code class="code">android.permission.INTERNET</code> permission.
+</p><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Note"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/note.png"></img></td><th align="left">Note</th></tr><tr><td align="left" valign="top"><p>
+The above two steps have been done for the AddressBook application already
+</p></td></tr></table></div><p>
+To build the application, execute
+</p><pre class="screen">
+$ ant debug
+</pre><p>
+</p><p>
+Start the device or emulator, and once it is ready, install the
+application by executing
+</p><pre class="screen">
+$ android-sdk/platform-tools/adb install -r bin/AddressBook-debug.apk
+</pre><p>
+Naturally, you must replace <code class="filename">android-sdk</code> with
+the full path to your Android <acronym class="acronym">SDK</acronym> installation.
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="idp37866424"></a>3.9.1.3.  Starting the AUT </h4></div></div></div><p>
+For more information of starting the application in a test script, see
+<a class="xref" href="ugs-appcontext.html#ugsac-multipleaut-android" title="5.12.2. Notes on using startApplication with Android">Notes on using <code class="code">startApplication</code> with Android (Section 5.12.2)</a>
+</p><p>
+You can check to see if <span class="emphasis"><em>Squish</em></span> can see multiple devices and emulators
+by executing:
+</p><pre class="screen">
+squishrunner --info androidDevices
+</pre><p>To see all applications that <span class="emphasis"><em>Squish</em></span> can use, run</p><pre class="screen">
+squishrunner --info androidInstrumentation
+</pre><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Note"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/note.png"></img></td><th align="left">Note</th></tr><tr><td align="left" valign="top"><p>
+<span class="application">squishserver</span> must be running to handle the
+<code class="option">--info</code> request.
+</p></td></tr></table></div></div></div></div><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" type="text/javascript" src="ScriptingLanguage.js"></script><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format">setScriptingLanguage();</script><div class="navfooter"><hr></hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="installation.for.flex.testing.html">Prev</a> </td><td width="20%" align="center"><a accesskey="u" href="install.html">Up</a></td><td width="40%" align="right"> <a accesskey="n" href="ins-new-ide.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">3.8. Installation for Flex applets in web pages </td><td width="20%" align="center"><a accesskey="h" href="index-noframes.html">Home</a></td><td width="40%" align="right" valign="top"> 3.10. Standalone Installation of the IDE</td></tr></table></div></body>
+<!-- Mirrored from install_android.html by HTTrack Website Copier/3.x [XR&CO'2013], Wed, 06 Jul 2022 13:28:58 GMT -->
+</html>

@@ -1,0 +1,287 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<!-- Mirrored from ug-how.to.use.the.android.api.html by HTTrack Website Copier/3.x [XR&CO'2013], Wed, 06 Jul 2022 13:28:59 GMT -->
+<head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><title>5.7. How to Use the Android API</title><link rel="stylesheet" href="manual.css" type="text/css"></link><meta name="generator" content="DocBook XSL Stylesheets V1.73.2"></meta><link rel="start" href="index-noframes.html" title="Squish Manual"></link><link rel="up" href="users-guide.html" title="Chapter 5. User Guide"></link><link rel="prev" href="ugs-tkapi.html" title="5.6. How to Use the Tk API"></link><link rel="next" href="ug-how.to.use.the.ios.api.html" title="5.8. How to Use the iOS API"></link><style xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" type="text/css" media="screen">
+        div.toc * { margin-left: 6px; margin-right: auto; max-width: 75em; }
+        div.toc span { margin-left: 0px; }
+        * { margin-left: auto; margin-right: auto; max-width: 75em; }
+        body { margin-left: 6px; margin-right: 6px; }
+        table th { padding: .5ex }
+        table td { padding: .5ex }
+    </style><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format">
+        function keyPress() {
+            var e = window.event;
+            if ( e == undefined ) {
+                return;
+            }
+            /* ### does not properly scroll, yet
+            if ( e.keyCode == 32 ) {
+            var l = document.links;
+            for ( var i = 0; i < l.length; i++ ) {
+                if ( l[i].innerText == "Next" ) {
+                location.href = l[i].href;
+                }
+            }
+            } else
+                */
+                if ( e.keyCode == 0x08 ) {
+            var l = document.links;
+            for ( var i = 0; i < l.length; i++ ) {
+                if ( l[i].innerText == "Prev" ) {
+                location.href = l[i].href;
+                }
+            }
+            }
+        }
+        document.onkeypress = keyPress;
+    </script></head><body><div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="ug-how.to.use.the.android.api"></a>5.7. How to Use the Android API</h2></div></div></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><span class="section"><a href="ug-how.to.use.the.android.api.html#ug-how.to.use.the.android.accessibility">5.7.1. How to Work with Accessibility objects</a></span></dt><dt><span class="section"><a href="ug-how.to.use.the.android.api.html#ug-how.to.use.the.android.nativeobject">5.7.2. How to Use the nativeObject Property</a></span></dt><dt><span class="section"><a href="ug-how.to.use.the.android.api.html#ug-how.to.use.the.android.GestureBuilder">5.7.3. How to Use the GestureBuilder class</a></span></dt></dl></div><p>
+One of <span class="emphasis"><em>Squish</em></span>'s most useful features is the ability to access the
+Java API from test scripts. This gives test engineers sufficient
+flexibility to allow them to test just about any aspect of the AUT.
+</p><p>
+<span class="trademark">Java</span>™ API access is available for apps that are started by Squish,
+either using <a class="xref" href="rgs-squish.html#startApplication-function"><code class="function">startApplication</code></a> or
+<a class="xref" href="rg-cmdline.html#androidobserver" title="7.4.7.2. androidobserver">androidobserver (Section 7.4.7.2)</a> in combination with
+<a class="xref" href="rgs-squish.html#attachToApplication-function"><code class="function">attachToApplication</code></a>. For the Android
+desktop and for other apps, <span class="emphasis"><em>Squish</em></span> can <a class="link" href="ug-how.to.use.the.android.api.html#ug-how.to.use.the.android.accessibility" title="5.7.1. How to Work with Accessibility objects">invoke touch and keyboard
+actions on objects available via the Android accessibility framework
+</a>. At least if the Android OS version is 4.3 or later.
+</p><p>
+With <span class="emphasis"><em>Squish</em></span>'s Android Object API it is possible to find and query
+objects, call methods, and access properties. In addition, <span class="emphasis"><em>Squish</em></span>
+provides a convenience API (<a class="xref" href="rgs-androidconvenience.html" title="6.13. Android Convenience API">Android Convenience API (Section 6.13)</a>) to
+execute common user interface actions such as tapping on a button or
+typing text into a text widget.  Java objects are made available in a
+wrapper and the underlying objects' properties and methods are accessible
+through the <span class="emphasis"><em>Squish</em></span>-added <a class="xref" href="rgs-androidconvenience.html#android-nativeObject-property">nativeObject</a> property.
+</p><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="ug-how.to.use.the.android.accessibility"></a>5.7.1. How to Work with Accessibility objects</h3></div></div></div><p>
+For certain tests it may be required to change Android wide setting. Other
+tests may launch a third party app that cannot be instrumented with <span class="emphasis"><em>Squish</em></span>
+or using the accessibility frameworks is good enough to do some tasks.
+</p><p>
+<span class="emphasis"><em>Squish</em></span> cannot record on objects outside the by <span class="emphasis"><em>Squish</em></span> instrumented and
+started apps directly. But when during a recording
+<a class="xref" href="ide.dialogs.html#ide.remote.control.dialog" title="8.3.18. Remote Control dialog">Remote Control dialog (Section 8.3.18)</a> as display is used for your
+Android device, actions are recorded for the provided <a class="ulink" href="https://developer.android.com/guide/topics/ui/accessibility/index.html" target="_blank">
+accessibility</a> user interface nodes. Android OS version must be
+4.3 or later.
+</p><p>
+Like with in-app object names, prefer objects with unique text, resource
+name or description. Also look at the
+<a class="xref" href="rgs-androidconvenience.html#android-UiAutomator-class" title="6.13.2. UiAutomator">UiAutomator</a> support, when replaying touches
+doesn't have any effect.
+</p><p>
+The IDE can help getting object names. When the IDE is at a breakpoint
+or recording is paused, the <a class="xref" href="ide.views.html#ide.the-application-objects.view" title="8.2.1. Application Objects view">Application Objects view (Section 8.2.1)</a>
+will show an extra top element, typically of type <code class="code">AccessiblePanel</code>,
+if the by <span class="emphasis"><em>Squish</em></span> instrumented app is not visible. So via the context menu
+an object names can be copied.
+</p><div class="tip" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Tip"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Tip]" src="images/tip.png"></img></td><th align="left">Tip</th></tr><tr><td align="left" valign="top"><div class="mediaobject" align="right"><img src="images/ide/application-objects-context-menu.png" align="right"></img></div><p>
+The object snapshot viewer, called <span class="guilabel">UI Browser</span>, may help
+finding a particular accessibility object. Right mouse click on an
+accessibility object in the
+<a class="xref" href="ide.views.html#ide.the-application-objects.view" title="8.2.1. Application Objects view">Application Objects view (Section 8.2.1)</a>. Choose the <span class="guilabel">Save
+Object Snapshot...</span>, include screenshot, object names and select
+<span class="guilabel">Open Snapshot in Browser After Saving</span> in dialog that
+follows. In the graphical representation of the Android UI of the viewer,
+click on the wanted object. Then right mouse click on the selected item in
+the left hierarchical view and choose <span class="guilabel">Copy real name</span>.
+</p><div class="mediaobject" align="right"><img src="images/ui-browser-save-realname.png" align="right"></img></div><p>
+For following object snapshots, just leave the <span class="guilabel">Open Snapshot in
+Browser After Saving</span> unchecked. The viewer will automatically
+update its content when the object snapshot output file changes on disk.
+</p></td></tr></table></div><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Note"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/note.png"></img></td><th align="left">Note</th></tr><tr><td align="left" valign="top"><p>
+Make sure to refresh the <a class="xref" href="ide.views.html#ide.the-application-objects.view" title="8.2.1. Application Objects view">Application Objects view (Section 8.2.1)</a>
+every time the screen content changes.
+</p></td></tr></table></div><p>
+Example script snippet that <a class="link" href="rgs-androidconvenience.html#android-tapObject-function">
+presses</a> the <a class="link" href="rgs-androidconvenience.html#android-goHome-function">Home</a>
+button, opens the setting app, etc. To emphasise the differences in the
+object names, <a class="link" href="rg-namingconfig.html#rg-namingconfig-why" title="7.12.1. Object Names">multi property names</a>
+are shown but abbreviated.
+</p><pre class="programlisting">
+goHome()
+tapObject(waitForObject("{... description='Apps' type='Clickable' ...}"))
+tapObject(waitForObject("{... text='Settings' type='Clickable' ...}"))
+tapObject(waitForObject("{... text='Accounts' type='AccessibleLabel' ...}"))
+tapObject(waitForObject("{... text='Add account' type='AccessibleLabel' ...}"))
+tapObject(waitForObject("{... text='Exchange' type='AccessibleLabel' ...}"))
+type(waitForObject("{... type='Editable' ...}"), "user@example.com")
+</pre><p>
+Only one Android instrumentation can access the Android UIAutomation
+framework. If more than one app should be accessed by <span class="emphasis"><em>Squish</em></span> test scripts,
+then all but one should be started using the <a class="xref" href="rg-cmdline.html#androidobserver-no-ui-automation" title="7.4.7.2.7. --no-ui-automation">--no-ui-automation (Section 7.4.7.2.7)</a> launcher option, e.g.
+
+</p><pre class="programlisting">
+startApplication("{no-ui-automation}:com.froglogic.addressbook")
+</pre><p>
+
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="ug-how.to.use.the.android.nativeobject"></a>5.7.2. How to Use the nativeObject Property</h3></div></div></div><p>
+The <a class="xref" href="rgs-androidconvenience.html#android-nativeObject-property">nativeObject</a> property provides access
+to the methods and properties of a Java object.
+For example, to change the text of an Android Button, we would
+first obtain a reference to the button object, and then call setText:
+</p><div xmlns="" class="scriptlang"><form><select name="scriptlangcombo" onchange="javascript:changeScriptingLanguage(this)" onclick="javascript:changeScriptingLanguage(this)"><option value="all" selected>Show All</option><option value="JavaScript">Show JavaScript</option><option value="Perl">Show Perl</option><option value="Python">Show Python</option><option value="Ruby">Show Ruby</option><option value="Tcl">Show Tcl</option></select></form></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Python</span><pre class="programlisting">
+button = waitForObject(":Okay_Button")
+button.nativeObject.setText("Cancel")
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">JavaScript</span><pre class="programlisting">
+var button = waitForObject(":Okay_Button");
+button.nativeObject.setText("Cancel");
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Perl</span><pre class="programlisting">
+my $button = waitForObject(":Okay_Button");
+button-&gt;nativeObject-&gt;setText("Cancel");
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Ruby</span><pre class="programlisting">
+button = waitForObject(":Okay_Button")
+button.nativeObject.setText("Cancel")
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Tcl</span><pre class="programlisting">
+set button [waitForObject ":Okay_Button"]
+invoke $button setText "Cancel"
+</pre></div><p>
+Here is another example that writes the method names of a java object
+methods (in this case a Button widget) to the <span class="emphasis"><em>Squish</em></span> log.
+</p><div xmlns="" class="scriptlang"><form><select name="scriptlangcombo" onchange="javascript:changeScriptingLanguage(this)" onclick="javascript:changeScriptingLanguage(this)"><option value="all" selected>Show All</option><option value="JavaScript">Show JavaScript</option><option value="Perl">Show Perl</option><option value="Python">Show Python</option><option value="Ruby">Show Ruby</option><option value="Tcl">Show Tcl</option></select></form></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Python</span><pre class="programlisting">
+buttonclass = button.nativeObject.getClass()
+methods = buttonclass.getMethods()
+for method in methods:
+    test.log("Button method: " + method.getName())
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">JavaScript</span><pre class="programlisting">
+var buttonclass = button.nativeObject.getClass();
+var methods = buttonclass.getMethods();
+for (i = 0; i &lt; methods.length; ++i)
+    test.log("Button method: " + methods.at(i).getName());
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Perl</span><pre class="programlisting">
+my $buttonclass = button-&gt;nativeObject-&gt;getClass();
+my @methods = buttonclass-&gt;getMethods();
+foreach $method (@methods) {
+    test.log("Button method: " . $method-&gt;getName());
+}
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Ruby</span><pre class="programlisting">
+buttonclass = button.nativeObject.getClass()
+methods = buttonclass.getMethods()
+for method in methods:
+    test.log("Button method: " + method.getName())
+end
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Tcl</span><pre class="programlisting">
+set buttonclass [invoke [property get $button nativeObject] getClass]
+set methods [invoke $buttonclass getMethods]
+foreach method $methods {
+    set name [invoke $method getName]
+    test.log("ListView method: $name")
+}
+</pre></div><p>
+Finally an example of accessing a static property.
+</p><div xmlns="" class="scriptlang"><form><select name="scriptlangcombo" onchange="javascript:changeScriptingLanguage(this)" onclick="javascript:changeScriptingLanguage(this)"><option value="all" selected>Show All</option><option value="JavaScript">Show JavaScript</option><option value="Perl">Show Perl</option><option value="Python">Show Python</option><option value="Ruby">Show Ruby</option><option value="Tcl">Show Tcl</option></select></form></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Python</span><pre class="programlisting">
+test.log("Value of View.INVISIBLE is " + Native.android.view.View.INVISIBLE)
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">JavaScript</span><pre class="programlisting">
+test.log("Value of View.INVISIBLE is " + Native.android.view.View.INVISIBLE);
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Perl</span><pre class="programlisting">
+test-&gt;log("Value of View.INVISIBLE is " . Native::android::view::View-&gt;INVISIBLE);
+</pre></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="ug-how.to.use.the.android.GestureBuilder"></a>5.7.3. How to Use the GestureBuilder class</h3></div></div></div><p>
+An instance of this class is returned by
+<a class="xref" href="rgs-androidconvenience.html#android-readGesture-function"><code class="function">readGesture</code></a>. When however the recorded
+gesture doesn't fit on the screen of the target device or emulator, a scaling
+and/or translation can be done.
+</p><p>
+It might be useful to get the screen metrics. Here an example how to get
+the screen size, using the <span class="trademark">Java</span>™ script bindings. These metrics are in pixels,
+therefore also a convertion to milli-meter to match the points in the
+<code class="code">GestureBuilder</code> object.
+</p><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">JavaScript</span><pre class="programlisting">
+var activity = findObject(":Your_Activity").nativeObject;
+var metrics = activity.getClass().forName("android.util.DisplayMetrics").newInstance();
+activity.getWindowManager().getDefaultDisplay().getMetrics(metrics);
+w = metrics.widthPixels * 25.4 / metrics.xdpi;
+y = metrics.heightPixels * 25.4 / metrics.ydpi;
+</pre></div><p>
+Suppose the gesture was recorded in portrait mode. And when replaying in
+landscape mode, the gesture is too large and too much to the bottom-left. Then
+a <a class="xref" href="rgs-androidconvenience.html#android-GestureBuilder.scale-function"><code class="function">GestureBuilder.scale</code></a> and
+<a class="xref" href="rgs-androidconvenience.html#android-GestureBuilder.translate-function"><code class="function">GestureBuilder.translate</code></a> towards the
+top-right is a possible solution.
+</p><div class="mediaobject" align="center"><img src="images/transformations.png" align="middle"></img><div class="caption">The effect of a rotation, scale and translate transformation.
+</div></div><p>
+For instance, scale it 3/4 in size and 5 cm to the right and 1 cm upwards.
+</p><div class="tip" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Tip"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Tip]" src="images/tip.png"></img></td><th align="left">Tip</th></tr><tr><td align="left" valign="top"><p>
+When using the <span class="application">Squish IDE</span>, use the <a class="xref" href="ide.views.html#ide.the-console.view" title="8.2.3. Console view">Console view (Section 8.2.3)</a> when at
+a breakpoint in your script, to experiment with gesture transformations.
+</p></td></tr></table></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">JavaScript</span><pre class="programlisting">
+gesture(waitForObject(":some_object"), readGesture("Gesture_1").scale(0.75).translate(50,-10));
+</pre></div><p>
+Another approach could be to only scale with an origin in the top-right corner.
+</p><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">JavaScript</span><pre class="programlisting">
+var gst = readGesture("Gesture_1");
+gesture(waitForObject(":some_object"), gst.scale(0.75, 0.75, gst.areaWidth, 0));
+</pre></div><p>
+In some cases dynamic created gestures are required, e.g. for more accurate
+control or dependency on runtime state information. Then the
+<a class="xref" href="rgs-androidconvenience.html#android-GestureBuilder-create-functions" title="6.13.1.1. Gesture creation">Gesture creation (Section 6.13.1.1)</a> methods can be used.
+</p><p>
+Here an example of a pitch gesture, two finger gesture making a curved
+counter clockwise movement on a 800x1200 pixel screen in one second.
+</p><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">JavaScript</span><pre class="programlisting">
+var tb = new GestureBuilder(800, 1280, GestureBuilder.Pixel);
+tb.addStroke( 600, 400 );
+tb.curveTo(1000, 500, 300, 300, 300, 200, 400 );
+tb.addStroke( 200, 800 );
+tb.curveTo(1000, 300, 900, 500, 900, 600, 800);
+tb.build();
+gesture(waitForObject(":some_object"), tb);
+</pre></div><p>
+And here an example of a zoom gesture, two finger gesture moving away from
+each other, also in one second. This time written as one statement.
+</p><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">JavaScript</span><pre class="programlisting">
+gesture(waitForObject(":some_object"),
+        new GestureBuilder(800, 1280, GestureBuilder.Pixel)
+           .addStroke( 500, 400 )
+           .lineTo(1000, 700, 100 )
+           .addStroke( 300, 700 )
+           .lineTo(1000, 100, 1000)
+           .build());
+</pre></div><p>
+In the above two examples, the coordinate values are based on the area size
+of 800x1280. For different screen sizes or different size or position of the
+widget on which the gesture should replay, some calculations is needed to get
+these values. Next, a strategy that can help to keep the complexity under
+control when having to deal with that.
+</p><div class="itemizedlist"><ul type="disc"><li><p>
+Create a gesture given the screen dimensions, within the boundary of
+x-axis [-0.5,0.5] and y-axis [-0.5,0.5] and a duration of 1s.
+</p></li><li><p>
+Translate it to the center of the target widget.
+</p></li><li><p>
+Scale it with a maximum of the widget size, using the center of this widget as origin.
+</p></li><li><p>
+Adjust the duration.
+</p></li></ul></div><div class="mediaobject" align="right"><img src="images/s-shape.png" align="right"></img></div><p>
+Here a listing of this, in this case an S shaped figure.
+</p><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">JavaScript</span><pre class="programlisting">
+var activity = findObject(":Your_Activity").nativeObject;
+var metrics = activity.getClass().forName("android.util.DisplayMetrics").newInstance();
+activity.getWindowManager().getDefaultDisplay().getMetrics(metrics);
+
+var tb = new GestureBuilder(metrics.widthPixels, metrics.heightPixels, GestureBuilder.Pixel)
+             .addStroke(0, 0.5)
+             .curveTo(500, -0.5, 0.5, -0.5, 0, 0, 0)
+             .curveTo(500, 0.5, 0, 0.5, -0.5, 0, -0.5)
+             .build();
+
+var widget = findObject(":Some widget");
+var scale = widget.width &gt; widget.height ? widget.height : widget.width;
+var centerX = widget.screenX + widget.width/2;
+var centerY = widget.screenY + widget.height/2;
+gesture(widget,
+        tb.translate(centerX, centerY)
+          .scale(scale, -scale, centerX, centerY)
+          .accelerate(1/2))
+</pre></div><p>
+Note that this example defines the figure with the positive y-axis upwards.
+In order to not get the figure up-side-down, a mirror in the x-axis is
+needed. The trick is to use a negative scale factor in the vertical direction.
+</p><p>
+To keep the defined gesture within the -0.5 to 0.5 boundary has the advantage
+that the total size is 1. Thus it can be scaled with the widget sizes without
+being scaled outside the screen boundaries. Having (0, 0) in the center, makes
+the translation simple, just to the center of the widget.
+</p></div></div><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" type="text/javascript" src="ScriptingLanguage.js"></script><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format">setScriptingLanguage();</script><div class="navfooter"><hr></hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="ugs-tkapi.html">Prev</a> </td><td width="20%" align="center"><a accesskey="u" href="users-guide.html">Up</a></td><td width="40%" align="right"> <a accesskey="n" href="ug-how.to.use.the.ios.api.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">5.6. How to Use the Tk API </td><td width="20%" align="center"><a accesskey="h" href="index-noframes.html">Home</a></td><td width="40%" align="right" valign="top"> 5.8. How to Use the iOS API</td></tr></table></div></body>
+<!-- Mirrored from ug-how.to.use.the.android.api.html by HTTrack Website Copier/3.x [XR&CO'2013], Wed, 06 Jul 2022 13:28:59 GMT -->
+</html>

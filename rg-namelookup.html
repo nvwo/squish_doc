@@ -1,0 +1,270 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<!-- Mirrored from rg-namelookup.html by HTTrack Website Copier/3.x [XR&CO'2013], Wed, 06 Jul 2022 13:29:03 GMT -->
+<head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><title>7.10. Improving Object Identification</title><link rel="stylesheet" href="manual.css" type="text/css"></link><meta name="generator" content="DocBook XSL Stylesheets V1.73.2"></meta><link rel="start" href="index-noframes.html" title="Squish Manual"></link><link rel="up" href="ref.man.html" title="Chapter 7. Tools Reference Manual"></link><link rel="prev" href="rg-attachToBrowser.html" title="7.9. Attaching to a running Web Browser"></link><link rel="next" href="rg-objectmap.html" title="7.11. Object Map"></link><style xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" type="text/css" media="screen">
+        div.toc * { margin-left: 6px; margin-right: auto; max-width: 75em; }
+        div.toc span { margin-left: 0px; }
+        * { margin-left: auto; margin-right: auto; max-width: 75em; }
+        body { margin-left: 6px; margin-right: 6px; }
+        table th { padding: .5ex }
+        table td { padding: .5ex }
+    </style><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format">
+        function keyPress() {
+            var e = window.event;
+            if ( e == undefined ) {
+                return;
+            }
+            /* ### does not properly scroll, yet
+            if ( e.keyCode == 32 ) {
+            var l = document.links;
+            for ( var i = 0; i < l.length; i++ ) {
+                if ( l[i].innerText == "Next" ) {
+                location.href = l[i].href;
+                }
+            }
+            } else
+                */
+                if ( e.keyCode == 0x08 ) {
+            var l = document.links;
+            for ( var i = 0; i < l.length; i++ ) {
+                if ( l[i].innerText == "Prev" ) {
+                location.href = l[i].href;
+                }
+            }
+            }
+        }
+        document.onkeypress = keyPress;
+    </script></head><body><div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="rg-namelookup"></a>7.10. Improving Object Identification</h2></div></div></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><span class="section"><a href="rg-namelookup.html#matching.objects.whose.name.can.change">7.10.1. Matching Objects with Changeable Texts</a></span></dt><dt><span class="section"><a href="rg-namelookup.html#exact-matching-with">7.10.2. Exact Matching</a></span></dt><dt><span class="section"><a href="rg-namelookup.html#wildcard-matching-with">7.10.3. Wildcard Matching</a></span></dt><dt><span class="section"><a href="rg-namelookup.html#regular-expression-regex-matching-with">7.10.4. Regular Expression Matching</a></span></dt><dt><span class="section"><a href="rg-namelookup.html#real.multi.property.name.properties">7.10.5. Real (Multi-Property) Name Properties</a></span></dt></dl></div><p>
+When <span class="emphasis"><em>Squish</em></span> records tests, it uses object properties to
+identify most objects. For each object that <span class="emphasis"><em>Squish</em></span> identifies, it
+creates an entry in the Object Map. Each entry is a pair of
+names—a <em class="firstterm">symbolic name</em> (a variable name), and
+a <em class="firstterm">real name</em> (a mapping of property name–value
+pairs). When tests are run, <span class="emphasis"><em>Squish</em></span> uses the values of multi-property
+real names as lookup criteria when searching for objects in the AUT's memory.
+</p><p>
+Properties can be numbers, strings, or objects.
+For properties that have object values (i.e., the value
+is the name of another object, e.g., the <span class="property">container</span> and
+<span class="property">window</span> properties), another search is done using
+<span class="emphasis"><em>Squish</em></span>'s object lookup functionality to find it.
+</p><p>
+Object properties can only be matched exactly, while most string
+properties can use exact, wildcard, or regex matching.
+Some special properties also require exact matching such as
+<span class="property">type</span>, <span class="property">tagName</span> (in <span class="emphasis"><em>Squish</em></span> for Web)
+and <span class="property">basetype</span> (in <span class="emphasis"><em>Squish</em></span> for <span class="trademark">Java</span>™). </p><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Note: className in Squish for Web "><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/note.png"></img></td><th align="left"><span class="property">className</span> in Squish for Web </th></tr><tr><td align="left" valign="top"><p> Note that in <span class="emphasis"><em>Squish</em></span> for Web the <span class="property">className</span>
+  property is unusual in that its value is a list of strings (class names)
+  and if we use exact matching the match will work if
+  <span class="emphasis"><em>any</em></span> of the element's <span class="property">class</span> attribute's
+  classes matches the one we have specified.
+  </p></td></tr></table></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="matching.objects.whose.name.can.change"></a>7.10.1. Matching Objects with Changeable Texts</h3></div></div></div><p>
+One commonly encountered problem is that many applications change the
+texts used by some widgets. For instance, a button's text might change
+from <span class="guibutton">Pause</span> to <span class="guibutton">Resume</span> and back
+again, or the application might put the
+name of the current file or workspace in the main window's title bar
+caption. For example, lets assume that we have the following real name
+for a fictional <code class="classname">MainWindow</code> object in our application with
+the title “<span class="quote">AddressBook v1.3 - google contacts.dat</span>”:
+</p><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Python</span><pre class="programlisting">
+{'windowTitle': 'AddressBook v1.3 - google contacts.dat', 'type':'MainWindow'}
+</pre></div><p>
+This multiple property name will match the first object in the
+application which is of type <code class="classname">MainWindow</code> and whose title
+matches the one shown above.
+</p><p>
+Such names work perfectly well in most situations and they are generated
+automatically when recording a test (see <a class="xref" href="rg-namingconfig.html" title="7.12. Object Name Generation">Object Name Generation (Section 7.12)</a> for more information on that topic).
+Unfortunately, since the <span class="property">windowTitle</span> changes, this can
+break object names that point to it or its children.
+</p><p>
+If we wanted to make the <code class="classname">MainWindow</code>'s real name more
+general, we could remove the property entirely, or use the Wildcard or the
+RegularExpression matching options. From the Object Map Editor, one can be
+selected by double-clicking on the <span class="guibutton">Equals</span>
+operator between the property and the value in a real name, as shown below:
+</p><div class="screenshot"><div class="mediaobject" align="center"><img src="images/object-map-match-operator.png" align="middle"></img><div class="caption"><p>Changing the matching operator in a real name property.
+</p></div></div></div><p> We can see how these object names are represented by looking at the
+Scripted Object Map's
+<code class="filename">suite_xyz/shared/scripts/names.(py|pl|rb|tcl|js)</code> file, as
+shown below:
+</p><div xmlns="" class="scriptlang"><form><select name="scriptlangcombo" onchange="javascript:changeScriptingLanguage(this)" onclick="javascript:changeScriptingLanguage(this)"><option value="all" selected>Show All</option><option value="JavaScript">Show JavaScript</option><option value="Perl">Show Perl</option><option value="Python">Show Python</option><option value="Ruby">Show Ruby</option><option value="Tcl">Show Tcl</option></select></form></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Python</span><pre class="programlisting">
+MainWindow_Wildcard = {"type": "MainWindow", "windowTitle": Wildcard("Address Book*")}
+MainWindow_Regex =    {"type": "MainWindow", "windowTitle": RegularExpression("Address Book.*")}
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">JavaScript</span><pre class="programlisting">
+export var mainWindowWildcard = {"type": "MainWindow", "windowTitle": new Wildcard("Address Book*")};
+export var mainWindowRegex =    {"type": "MainWindow", "windowTitle": new RegularExpression("Address Book.*")};
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Perl</span><pre class="programlisting">
+our $mainwindow_wildcard = {"type" =&gt; "MainWindow", "windowTitle" =&gt; wildcard("Address Book*")};
+our $mainwindow_regex =    {"type" =&gt; "MainWindow", "windowTitle" =&gt; regularExpression("Address Book.*")};
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Ruby</span><pre class="programlisting">
+MainWindow_Wildcard = {:type =&gt; "MainWindow", :windowTitle =&gt; Wildcard.new("Address Book*")}
+MainWindow_Regex =    {:type =&gt; "MainWindow", :windowTitle =&gt; RegularExpression.new("Address Book.*")}
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Tcl</span><pre class="programlisting">
+set MainWindow_Wildcard [::Squish::ObjectName type MainWindow windowTitle {-wildcard {Address Book*}}]
+set MainWindow_Regex    [::Squish::ObjectName type MainWindow windowTitle {-regularexpression {Address Book.*}}]
+</pre></div><p>
+In a real world situation, you would not need both of these entries - they are
+equivalent. Both real names specify that the <span class="property">windowTitle</span>
+must begin with “<span class="quote">Address Book</span>” followed zero or more other
+characters.
+</p><p>
+The <code class="classname">Wildcard</code> version uses <code class="code">*</code> for the
+wildcard, and it stands for zero or more of any characters.
+The <code class="classname">RegularExpression</code> version uses dot (.) to match
+a single character, and star (*) as a quantity-modifying meta-character that
+applies to the thing before it, making it "zero or more" in quantity.
+These both should match “<span class="quote">AddressBook - Untitled</span>”
+and also “<span class="quote">AddressBook - MyAddresses.adr</span>”.
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="exact-matching-with"></a>7.10.2. Exact Matching</h3></div></div></div><p>
+This kind of matching can be used in all situations, and is the only kind of
+matching that is allowed for <span class="property">type</span> and for
+properties whose value is an object (i.e., is specified using a real
+name). Here is an example:
+</p><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Python</span><pre class="programlisting">
+{"type": "LineEdit", "visible": 1, "buddy": {"text": "Phone:", "type": "QLabel"}}
+</pre></div><p>
+This real name is used to identify an object of type
+<code class="classname">LineEdit</code> that has a
+<span class="property">visible</span> set to true (1) and that has an associated
+label—a <span class="property">buddy</span>—which in turn is specified using
+another real name.
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="wildcard-matching-with"></a>7.10.3. Wildcard Matching</h3></div></div></div><p>
+The Wildcard syntax is used for inexact matches.
+This kind of matching cannot be used for the <code class="code">type</code> property
+or for symbolic object names.
+</p><p>
+When wildcard matching is in use the <code class="code">?</code>, <code class="code">*</code>,
+<code class="code">[</code>, <code class="code">]</code>, and <code class="code">\</code> characters all take
+on special meanings and are not matched literally. All other characters
+are matched literally.
+</p><div class="table"><a id="idp56110200"></a><p class="title"><b>Table 7.2. The Wildcard Special Characters</b></p><div class="table-contents"><table summary="The Wildcard Special Characters" border="1"><colgroup><col></col><col></col></colgroup><tbody><tr><td align="center">?</td><td>This character stands for any one
+single character no matter what it is</td></tr><tr><td align="center">*</td><td>This character stands for any number of any
+characters—including no characters at all</td></tr><tr><td align="center">?*</td><td>These two characters
+together stand for at least one of any character (i.e., any one single
+character followed by zero or more of any character)</td></tr><tr><td align="center">[<span class="emphasis"><em>...</em></span>]</td><td>Brackets are used to
+specify a set of one or more characters any <span class="emphasis"><em>one</em></span> of
+which must be matched. For example, <code class="code">[0-9]</code> matches exactly
+one digit, and <code class="code">[aAbBcC]</code> matches only an "a", "b", or "c",
+whether upper- or lower-case</td></tr><tr><td align="center">\</td><td>The backslash is used to escape one of the
+special characters, so <code class="code">\?</code> stands for a literal "?", and
+<code class="code">\*</code> stands for a literal "*". Unfortunately, brackets cannot
+be escaped so always have their special meaning, so the only way to
+match literal brackets is to use <code class="code">?</code> (which will match
+anything), or to use regex syntax</td></tr></tbody></table></div></div><br class="table-break"></br><p>
+Here is a real name containing a wildcard:
+</p><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Python</span><pre class="programlisting">
+{'type' : 'LineEdit', 'visible':'1',
+ 'buddy': {'type':'Label', 'text':Wildcard("Name*\?"} }
+</pre></div><p>
+This real name is used to identify an object of type
+<code class="classname">LineEdit</code> that has a <span class="property">visible</span>
+property set to true (1) and that has an associated
+label—a <span class="property">buddy</span>—which in turn is specified using
+another real name. But here, the buddy's label text is specified using Wildcard
+matching and must contain the text “<span class="quote">Name</span>” followed by zero or more
+other characters followed by a <span class="emphasis"><em>literal</em></span> “<span class="quote">?</span>”.
+</p><p>
+Here's a real name containing a RegularExpression property match:
+</p><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Python</span><pre class="programlisting">
+{'caption': RegularExpression('UsefulApp v[1-9].[0-9] - ?*.[dD][aA][tT]'),
+ 'type': 'MainWindow'}
+</pre></div><p>
+Here, <span class="property">caption</span> must have a value that starts with the
+literal text “<span class="quote">UsefulApp v</span>” followed by a digit (but not
+including zero), then a period, then another digit, then a space, a
+hyphen, and a space, and then at least one character (indicated by the
+<code class="code">?</code>), then zero or more other characters (due to the
+<code class="code">*</code>), followed by “<span class="quote">.dat</span>” (in upper- or
+lower-case). Notice that if we had specified the filename part of the
+caption as <code class="code">*.[dD][aA][tT]</code> it would have matched the suffix
+alone, i.e., “<span class="quote">.dat</span>” since the <code class="code">*</code> symbol can
+match zero characters. By starting with the <code class="code">?</code> we ensure
+that at least once character is matched in front of the suffix.
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="regular-expression-regex-matching-with"></a>7.10.4. Regular Expression Matching</h3></div></div></div><p>
+The RegularExpression syntax is used for inexact matches.
+This kind of matching cannot be used for the <span class="property">type</span>
+or for properties whose value is an object (i.e., is specified using another
+real or symbolic name). Regex matching allows us to write more
+sophisticated—and potentially harder to understand and
+maintain—matching expressions than can be achieved using wildcard
+syntax. For this reason, we recommend using wildcard matching where possible
+simply because it is easier, both to read and write.
+</p><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Note:  Different Regular Expression Syntaxes "><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/note.png"></img></td><th align="left"> Different Regular Expression Syntaxes </th></tr><tr><td align="left" valign="top"><p>
+In <span class="emphasis"><em>Squish</em></span> for Web editions, the regex syntax is the same as the one
+supported by JavaScript. Documentation for this syntax is available from
+<a class="ulink" href="http://www.regular-expressions.info/javascript.html" target="_blank">Regular-Expressions.info</a>
+and <a class="ulink" href="http://www.w3schools.com/jsref/jsref_obj_regexp.asp" target="_blank">w3schools.com</a>.
+For all other <span class="emphasis"><em>Squish</em></span> editions the Qt <code class="code">QRegExp</code> syntax is
+used—this is documented here: <a class="ulink" href="https://doc.qt.io/archives/qt-4.8/qregexp.html" target="_blank">QRegExp</a>.
+</p></td></tr></table></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="real.multi.property.name.properties"></a>7.10.5. Real (Multi-Property) Name Properties</h3></div></div></div><p>
+Which properties does a particular object have that can be used for
+identifying an object? The answer is not straightforward because the
+properties are discovered dynamically.
+</p><p>
+To take the Qt toolkit as a typical example: <span class="emphasis"><em>Squish</em></span> exposes all the
+object's base class's properties (i.e., <code class="classname">QObject</code>'s
+properties), also any object-type-specific properties that have been
+added by the supplier or by the AUT (e.g., through subclassing), and
+finally some <span class="emphasis"><em>artificial</em></span> properties that are
+especially useful to <span class="emphasis"><em>Squish</em></span>.
+</p><p>
+In general, any of an object's properties is potentially usable for
+identifying it (e.g., in a real name for calls to the <a class="xref" href="rgs-squish.html#findObject-function"><code class="function">findObject</code></a> and <a class="xref" href="rgs-squish.html#waitForObject-function"><code class="function">waitForObject</code></a> functions). However, only the
+non-artificial properties are suitable for use in verifications (e.g.,
+in calls to the <a class="xref" href="rgs-squish.html#test.compare-function"><code class="function">test.compare</code></a> function and
+other <code class="code">test</code> module functions).
+</p><p>
+To find out what an object's non-artificial properties are, either look
+up the object's type in its toolkit's documentation, or use the <span class="application">Spy</span>. To
+use the <span class="application">Spy</span> begin by launching the AUT (see the <a class="xref" href="ide.main.window.html#ide.launch.aut.action" title="8.1.1.22. Launch AUT action"><span class="guiicon">Launch AUT</span> action (Section 8.1.1.22)</a>), then interact with the AUT until the
+relevant AUT object is visible. At this point context switch back to the
+<span class="application">Squish IDE</span> and invoke the <span class="emphasis"><em>pick</em></span> action (see the <a class="xref" href="ide.views.html#ide.the-application-objects.view" title="8.2.1. Application Objects view">Application Objects view (Section 8.2.1)</a>); and pick the object of
+interest. Now all the object's non-artificial properties will be shown
+in the <a class="xref" href="ide.views.html#ide.the-properties.view" title="8.2.12. Properties view">Properties view (Section 8.2.12)</a>. To find out the
+object's artificial properties, invoke the context menu on the object in
+the <a class="xref" href="ide.views.html#ide.the-application-objects.view" title="8.2.1. Application Objects view">Application Objects view (Section 8.2.1)</a> and copy its real
+name to the clipboard: any properties in the real name that are not
+listed in the <a class="xref" href="ide.views.html#ide.the-properties.view" title="8.2.12. Properties view">Properties view (Section 8.2.12)</a> are artificial
+properties.
+</p><div class="table"><a id="squish.s.key.artificial.properties"></a><p class="title"><b>Table 7.3. <span class="emphasis"><em>Squish</em></span>'s Key Artificial Properties</b></p><div class="table-contents"><table summary="Squish's Key Artificial Properties" width="100%" border="1"><colgroup><col></col><col></col><col></col></colgroup><thead><tr><th align="left">Property Name</th><th align="left">Toolkits</th><th align="left">Notes</th></tr></thead><tbody valign="top"><tr><td align="left" valign="top"><code class="code">aboveLabel</code></td><td align="left" valign="top">macOS, iPhone</td><td align="left" valign="top">The symbolic name of the label above the object being identified</td></tr><tr><td align="left" valign="top"><code class="code">aboveObject</code></td><td align="left" valign="top">Windows</td><td align="left" valign="top">The symbolic name of the object above the object being
+identified</td></tr><tr><td align="left" valign="top"><code class="code">aboveWidget</code></td><td align="left" valign="top">Qt</td><td align="left" valign="top">The symbolic name of the widget above the object being
+identified</td></tr><tr><td align="left" valign="top"><code class="code">aboveWidgetText</code></td><td align="left" valign="top">Qt</td><td align="left" valign="top">The text held by the widget above the object being identified.
+    Requires <span class="property">aboveWidgetType</span> to also be specified. </td></tr><tr><td align="left" valign="top"><code class="code">aboveWidgetType</code></td><td align="left" valign="top">Qt</td><td align="left" valign="top">The type of the widget above the object being identified</td></tr><tr><td align="left" valign="top"><code class="code">basetype</code></td><td align="left" valign="top">Java</td><td align="left" valign="top">A more versatile alternative to <code class="code">type</code> for Java
+toolkits</td></tr><tr><td align="left" valign="top"><code class="code">buddy</code></td><td align="left" valign="top">Qt</td><td align="left" valign="top">The symbolic name of the label associated with the
+object being identified</td></tr><tr><td align="left" valign="top"><code class="code">buddyName</code></td><td align="left" valign="top">Qt</td><td align="left" valign="top">The <code class="code">objectName</code> of the label associated with the
+object being identified</td></tr><tr><td align="left" valign="top"><code class="code">buddyText</code></td><td align="left" valign="top">Qt</td><td align="left" valign="top">The text of the label associated with the object being
+identified</td></tr><tr><td align="left" valign="top"><code class="code">column</code></td><td align="left" valign="top">Qt</td><td align="left" valign="top">The object being identified's column (if it is inside a multi-valued object such
+as a table or tree)</td></tr><tr><td align="left" valign="top"><code class="code">columnNumber</code></td><td align="left" valign="top">macOS</td><td align="left" valign="top">The object being identified's column (if it is inside a
+multi-valued object such as a table or tree)</td></tr><tr><td align="left" valign="top"><code class="code">container</code></td><td align="left" valign="top">Qt, macOS, iPhone, Windows</td><td align="left" valign="top">The symbolic name of the object that contains the object
+being identified</td></tr><tr><td align="left" valign="top"><code class="code">containerLabel</code></td><td align="left" valign="top">Qt</td><td align="left" valign="top">The text label of the object that contains the object
+being identified</td></tr><tr><td align="left" valign="top"><code class="code">containerName</code></td><td align="left" valign="top">Qt</td><td align="left" valign="top">The name (e.g., caption) of the object that contains the object
+being identified</td></tr><tr><td align="left" valign="top"><code class="code">containerType</code></td><td align="left" valign="top">Qt</td><td align="left" valign="top">The type of the object that contains the object
+being identified</td></tr><tr><td align="left" valign="top"><code class="code">documentView</code></td><td align="left" valign="top">macOS</td><td align="left" valign="top">Used for scrollbars (<code class="classname">NSScroller</code>): the
+symbolic name of the document view which the object being identified
+belongs to (i.e. the view it scrolls)</td></tr><tr><td align="left" valign="top"><code class="code">isApplicationMenuItem</code></td><td align="left" valign="top">macOS</td><td align="left" valign="top">Used for menu items (<code class="classname">NSMenuItem</code>): if this
+property is 1, then the menu item is the menu item in the menu bar that
+opens the application menu. For all other menu items, this property is 0.</td></tr><tr><td align="left" valign="top"><code class="code">leftLabel</code></td><td align="left" valign="top">macOS, iPhone</td><td align="left" valign="top">The symbolic name of the label left of the object being identified</td></tr><tr><td align="left" valign="top"><code class="code">leftObject</code></td><td align="left" valign="top">Windows</td><td align="left" valign="top">The symbolic name of the object to the left of the object
+being identified</td></tr><tr><td align="left" valign="top"><code class="code">leftWidget</code></td><td align="left" valign="top">Qt</td><td align="left" valign="top">The symbolic name of the widget to the left of the object
+being identified</td></tr><tr><td align="left" valign="top"><code class="code">leftWidgetText</code></td><td align="left" valign="top">Qt</td><td align="left" valign="top">The text held by the widget to the left of the object being
+    identified. Requires <span class="property">leftWidgetType</span> to also be
+    specified.
+    </td></tr><tr><td align="left" valign="top"><code class="code">leftWidgetType</code></td><td align="left" valign="top">Qt</td><td align="left" valign="top">The type of the widget to the left of the object being identified</td></tr><tr><td align="left" valign="top"><code class="code">name</code></td><td align="left" valign="top">Qt</td><td align="left" valign="top">The object being identified's <code class="code">objectName</code></td></tr><tr><td align="left" valign="top"><code class="code">occurrence</code></td><td align="left" valign="top">Qt, macOS, iPhone, Windows</td><td align="left" valign="top">A number that uniquely identifies an object which would
+otherwise be identical to another object (due to having exactly the same
+property values)</td></tr><tr><td align="left" valign="top"><code class="code">parentItem</code></td><td align="left" valign="top">macOS</td><td align="left" valign="top">The symbolic name of the object being identified's parent
+object</td></tr><tr><td align="left" valign="top"><code class="code">rightLabel</code></td><td align="left" valign="top">macOS, iPhone</td><td align="left" valign="top">The symbolic name of the label right of the object being identified</td></tr><tr><td align="left" valign="top"><code class="code">row</code></td><td align="left" valign="top">Qt</td><td align="left" valign="top">The object being identified's row (if it is inside a
+multi-valued object such as a list, table, or tree)</td></tr><tr><td align="left" valign="top"><code class="code">rowNumber</code></td><td align="left" valign="top">macOS</td><td align="left" valign="top">The object being identified's row (if it is inside a
+multi-valued object such as a list, table, or tree)</td></tr><tr><td align="left" valign="top"><code class="code">tableView</code></td><td align="left" valign="top">macOS</td><td align="left" valign="top">The symbolic name of the <code class="classname">NSTableView</code> in which the object being
+identified belongs</td></tr><tr><td align="left" valign="top"><code class="code">type</code></td><td align="left" valign="top"><span class="emphasis"><em>All</em></span></td><td align="left" valign="top">The name of the object being identified's type (or class).
+For most GUI toolkits this must always be present in a real
+(multi-property) name; however, it is not required for <span class="emphasis"><em>Squish</em></span> for
+Windows or <span class="emphasis"><em>Squish</em></span> for Web.
+</td></tr><tr><td align="left" valign="top"><code class="code">unnamed</code></td><td align="left" valign="top">Qt</td><td align="left" valign="top">If the object being identified does not have an <span class="property">objectName</span>, this property's
+value is <code class="code">"1"</code>; otherwise its value is <code class="code">"0"</code></td></tr><tr><td align="left" valign="top"><code class="code">visible</code></td><td align="left" valign="top">Qt, macOS, iPhone, Windows</td><td align="left" valign="top">If the object being identified is logically visible (i.e., not completely
+obscured by one or more other AUT objects), this property's
+value is <code class="code">"1"</code>; otherwise its value is <code class="code">"0"</code>. In tests for native
+Windows applications, this property assumes the values <code class="code">true</code> and
+<code class="code">false</code>.</td></tr><tr><td align="left" valign="top"><code class="code">window</code></td><td align="left" valign="top">Qt, macOS, iPhone</td><td align="left" valign="top">The symbolic name of the window that contains the object being identified</td></tr><tr><td align="left" valign="top"><code class="code">windowName</code></td><td align="left" valign="top">Qt</td><td align="left" valign="top">The name (caption) of the window that contains the object being identified</td></tr><tr><td align="left" valign="top"><code class="code">windowOccurrence</code></td><td align="left" valign="top">Qt</td><td align="left" valign="top">The occurrence number of the window that contains the object being identified</td></tr><tr><td align="left" valign="top"><code class="code">windowType</code></td><td align="left" valign="top">Qt</td><td align="left" valign="top">The type of the window that contains the object being identified</td></tr></tbody></table></div></div><br class="table-break"></br></div></div><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" type="text/javascript" src="ScriptingLanguage.js"></script><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format">setScriptingLanguage();</script><div class="navfooter"><hr></hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="rg-attachToBrowser.html">Prev</a> </td><td width="20%" align="center"><a accesskey="u" href="ref.man.html">Up</a></td><td width="40%" align="right"> <a accesskey="n" href="rg-objectmap.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">7.9. Attaching to a running Web Browser </td><td width="20%" align="center"><a accesskey="h" href="index-noframes.html">Home</a></td><td width="40%" align="right" valign="top"> 7.11. Object Map</td></tr></table></div></body>
+<!-- Mirrored from rg-namelookup.html by HTTrack Website Copier/3.x [XR&CO'2013], Wed, 06 Jul 2022 13:29:03 GMT -->
+</html>

@@ -1,0 +1,57 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<!-- Mirrored from tutorial-uploading-results.html by HTTrack Website Copier/3.x [XR&CO'2013], Wed, 06 Jul 2022 13:28:59 GMT -->
+<head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><title>4.15.  Tutorial: Uploading Results to Squish Test Center</title><link rel="stylesheet" href="manual.css" type="text/css"></link><meta name="generator" content="DocBook XSL Stylesheets V1.73.2"></meta><link rel="start" href="index-noframes.html" title="Squish Manual"></link><link rel="up" href="tutorials.html" title="Chapter 4. Tutorials"></link><link rel="prev" href="tutorials-visual.html" title="4.14. Squish for VNC Tutorials"></link><link rel="next" href="users-guide.html" title="Chapter 5. User Guide"></link><style xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" type="text/css" media="screen">
+        div.toc * { margin-left: 6px; margin-right: auto; max-width: 75em; }
+        div.toc span { margin-left: 0px; }
+        * { margin-left: auto; margin-right: auto; max-width: 75em; }
+        body { margin-left: 6px; margin-right: 6px; }
+        table th { padding: .5ex }
+        table td { padding: .5ex }
+    </style><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format">
+        function keyPress() {
+            var e = window.event;
+            if ( e == undefined ) {
+                return;
+            }
+            /* ### does not properly scroll, yet
+            if ( e.keyCode == 32 ) {
+            var l = document.links;
+            for ( var i = 0; i < l.length; i++ ) {
+                if ( l[i].innerText == "Next" ) {
+                location.href = l[i].href;
+                }
+            }
+            } else
+                */
+                if ( e.keyCode == 0x08 ) {
+            var l = document.links;
+            for ( var i = 0; i < l.length; i++ ) {
+                if ( l[i].innerText == "Prev" ) {
+                location.href = l[i].href;
+                }
+            }
+            }
+        }
+        document.onkeypress = keyPress;
+    </script></head><body><div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="tutorial-uploading-results"></a>4.15.  Tutorial: Uploading Results to <span class="application">Squish Test Center</span> </h2></div></div></div><p> After running a test, you can analyze the results in the
+<a class="xref" href="ide.views.html#ide.the-test-results.view" title="8.2.18. Test Results view">Test Results view (Section 8.2.18)</a>. The <span class="application">Squish IDE</span> stores the last 10
+test results (configurable from <span class="guimenu">Preferences</span>-<span class="guimenuitem">Squish</span>
+-<span class="guimenuitem">Logging</span>). If you wish to save the result somewhere
+for further analysis, <span class="application">Squish Test Center</span> provides a very nice HTML report, as well
+as a convenient way to upload test results to it from the <span class="application">Squish IDE</span>. </p><div class="screenshot"><div class="mediaobject" align="center"><img src="images/ide/test-results-upload-button.png" align="middle"></img><div class="caption"><p>The Test Results view
+</p></div></div></div><p> The <span class="guibutton">Upload</span> button is enabled if a <span class="application">Squish Test Center</span> is
+configured from the <a class="xref" href="ide.views.html#ide.the-test-center.view" title="8.2.17. Test Center view">Test Center view (Section 8.2.17)</a>. Clicking it
+brings you this dialog: </p><div class="screenshot"><div class="mediaobject" align="center"><img src="images/ide/test-results-upload.png" align="middle"></img><div class="caption"><p>Uploading Results
+</p></div></div></div><p> You are asked for a <span class="guilabel">Project</span>,
+<span class="guilabel">Batch</span>, and optional <span class="guilabel">Labels</span>. These
+fields determine how your result can be organized and grouped with others in
+Squish Test Center. Now, you should be able to see an entry for this result in
+the <a class="xref" href="ide.views.html#ide.the-test-center.view" title="8.2.17. Test Center view">Test Center view (Section 8.2.17)</a>.
+</p><div class="screenshot"><div class="mediaobject" align="center"><img src="images/ide/test-center-view.png" align="middle"></img><div class="caption"><p>Test Center View
+</p></div></div></div><p> To see an HTML report of this test result, select it and then click on the
+toolbar button for <span class="guilabel">Open in Browser</span>. From the browser, you can
+then drill down into the test report to see the details. </p><div class="screenshot"><div class="mediaobject" align="center"><img src="images/ide/test-center-report.png" align="middle"></img><div class="caption"><p>Test Center HTML Report
+</p></div></div></div></div><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" type="text/javascript" src="ScriptingLanguage.js"></script><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format">setScriptingLanguage();</script><div class="navfooter"><hr></hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="tutorials-visual.html">Prev</a> </td><td width="20%" align="center"><a accesskey="u" href="tutorials.html">Up</a></td><td width="40%" align="right"> <a accesskey="n" href="users-guide.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">4.14. <span class="emphasis"><em>Squish for VNC</em></span> Tutorials </td><td width="20%" align="center"><a accesskey="h" href="index-noframes.html">Home</a></td><td width="40%" align="right" valign="top"> Chapter 5. User Guide</td></tr></table></div></body>
+<!-- Mirrored from tutorial-uploading-results.html by HTTrack Website Copier/3.x [XR&CO'2013], Wed, 06 Jul 2022 13:28:59 GMT -->
+</html>

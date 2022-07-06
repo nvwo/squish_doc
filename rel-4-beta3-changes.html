@@ -1,0 +1,205 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<!-- Mirrored from rel-4-beta3-changes.html by HTTrack Website Copier/3.x [XR&CO'2013], Wed, 06 Jul 2022 13:28:57 GMT -->
+<head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><title>2.53. Changes in 4.0 Beta 3</title><link rel="stylesheet" href="manual.css" type="text/css"></link><meta name="generator" content="DocBook XSL Stylesheets V1.73.2"></meta><link rel="start" href="index-noframes.html" title="Squish Manual"></link><link rel="up" href="relnotes.html" title="Chapter 2. Release Notes—for Upgraders"></link><link rel="prev" href="rel-400.html" title="2.52. Version 4.0.0"></link><link rel="next" href="rel-4-beta2-changes.html" title="2.54. Changes in 4.0 Beta 2"></link><style xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" type="text/css" media="screen">
+        div.toc * { margin-left: 6px; margin-right: auto; max-width: 75em; }
+        div.toc span { margin-left: 0px; }
+        * { margin-left: auto; margin-right: auto; max-width: 75em; }
+        body { margin-left: 6px; margin-right: 6px; }
+        table th { padding: .5ex }
+        table td { padding: .5ex }
+    </style><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format">
+        function keyPress() {
+            var e = window.event;
+            if ( e == undefined ) {
+                return;
+            }
+            /* ### does not properly scroll, yet
+            if ( e.keyCode == 32 ) {
+            var l = document.links;
+            for ( var i = 0; i < l.length; i++ ) {
+                if ( l[i].innerText == "Next" ) {
+                location.href = l[i].href;
+                }
+            }
+            } else
+                */
+                if ( e.keyCode == 0x08 ) {
+            var l = document.links;
+            for ( var i = 0; i < l.length; i++ ) {
+                if ( l[i].innerText == "Prev" ) {
+                location.href = l[i].href;
+                }
+            }
+            }
+        }
+        document.onkeypress = keyPress;
+    </script></head><body><div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="rel-4-beta3-changes"></a>2.53. Changes in 4.0 Beta 3</h2></div></div></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><span class="section"><a href="rel-4-beta3-changes.html#rel-4-beta3-general">2.53.1. General</a></span></dt><dt><span class="section"><a href="rel-4-beta3-changes.html#rel-4-beta3-qt">2.53.2. Qt Edition</a></span></dt><dt><span class="section"><a href="rel-4-beta3-changes.html#rel-4-beta3-mac">2.53.3. Mac Edition</a></span></dt><dt><span class="section"><a href="rel-4-beta3-changes.html#rel-4-beta3-ide">2.53.4. New IDE</a></span></dt><dt><span class="section"><a href="rel-4-beta3-changes.html#rel-4-beta3-classicide">2.53.5. Classic IDE</a></span></dt></dl></div><p>
+Here is a summary of the changes that have been made since the Technical
+Preview editions and since the <span class="emphasis"><em>Squish</em></span> 4.0-beta1 and
+<span class="emphasis"><em>Squish</em></span> 4.0-beta2 editions, and which are incorporated in the new
+<span class="emphasis"><em>Squish</em></span> 4.0-beta3 editions.
+</p><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="rel-4-beta3-general"></a>2.53.1. General</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>
+Added a JavaScript <code class="code">getAttributeNames()</code> function to the
+JavaScript XML object.
+</p></li><li><p>
+The <code class="code">installEventHandler()</code> function that accepts object
+types as arguments has had two improvements. First, it respects derived
+classes, and second it can also be used with types that are registered
+dynamically, even if the registation occurs after the AUT has started.
+</p></li><li><p>
+Python and Tcl functions that return Unicode values now work correctly
+in the script console.
+</p></li><li><p>
+Added a JavaScript <code class="code">File.separator</code> property that contains the
+platform-specific separator for components of a file path (e.g., "\" on
+Windows).
+</p></li><li><p>
+The <code class="code"> setApplicationContext()</code> function now throws an
+exception if an attempt is made to use it to switch to the context of an
+AUT that has already terminated.
+</p></li><li><p>
+When accessing SQLite databases using the JavaScript SQL object, there
+is no need to specify a username. Also, for all database drivers, the
+Host parameter now defaults to "localhost".
+</p></li><li><p>
+Fixed the <code class="code">nativeType()</code> function so that it always correctly
+handles key combinations involving the <span class="keysym">Alt</span> key on
+Windows.
+</p></li><li><p>
+Fixed the <code class="code">type()</code> function so that it always correctly
+handles key combinations involving the <span class="keysym">Alt</span> key on
+Windows.
+</p></li><li><p>
+<span class="emphasis"><em>Squish</em></span> can now be built from source using Microsoft Visual Studio
+2010.
+</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="rel-4-beta3-qt"></a>2.53.2. Qt Edition</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>
+Support for the <code class="code">QtWebKit</code> module has been completely
+reworked. Now <code class="code">QtWebKit</code> HTML objects are treated rather like
+standard <code class="code">QObject</code>s, (i.e., as children of their parent
+widget), so they can now be accessed much more easily.
+</p></li><li><p>
+Made the <span class="application">startaut</span> tool work even if the
+<code class="envar">SQUISH_LIBQTDIR</code> environment variable isn't set on
+Unix-like systems.
+</p></li><li><p>
+Fixed the replaying of items in <code class="code">QComboBox</code>es where it is
+necessary to scroll to reach them.
+</p></li><li><p>
+<span class="emphasis"><em>Squish</em></span> no longer interferes with <code class="code">QEvent</code>s in non-GUI
+threads.
+</p></li><li><p>
+Added support for wildcard matching for <code class="code">QGraphicsItem</code>s.
+</p></li><li><p>
+Fixed the details of Qt key events that are triggered by calls to the
+<code class="code">type()</code> function.
+</p></li><li><p>
+Added support for typing a <span class="keysym">Control</span> key by itself, e.g.
+<code class="code">type("&lt;Control&gt;")</code>.
+</p></li><li><p>
+It is (once again) possible to disable the hooking into sub-processes
+started by the main AUT since this is still useful in rare cases.
+</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="rel-4-beta3-mac"></a>2.53.3. Mac Edition</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>
+Made the <span class="application">startaut</span> tool start the application
+for the correct architecture on macOS 10.6 (Snow Leopard).
+</p></li><li><p>
+Added support for whitelisting the AUTs that Squish can hook into. This
+means that Squish will <span class="emphasis"><em>only</em></span> hook into applications
+that are started by the AUT if they appear in the list of registered
+AUTs. If you have relied on Squish hooking into all your AUT's
+sub-processes, you must now register those applications as AUTs in their
+own right to get the same behavior as before.
+</p></li><li><p>
+The <code class="code">waitForObject()</code> function can now be used with
+views and windows. In addition, the <code class="code">waitForObject()</code>
+function's logic has been improved (to match other toolkits) so that it
+not only finds the given object, but in the case of controls, waits for
+the object to be visible and enabled.
+</p></li><li><p>
+Added support for recording and playing back interactions with Cocoa
+sub-menus.
+</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="rel-4-beta3-ide"></a>2.53.4. New IDE</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>
+Redesigned Test Suite View. A suite's content is now shown in a more
+compact manner with run (play) and record buttons directly integrated
+into the view. The checkboxes for disabling individual test cases have
+been moved into the suite view from the settings page. An extra button
+has been added to make it more convenient to run a single test case.
+</p></li><li><p>
+The active suite is now remembered between sessions
+</p></li><li><p>
+The <code class="envar">SQUISH_USER_SETTINGS_DIR</code> environment variable that is
+understood by the other parts of the <span class="emphasis"><em>Squish</em></span> tool chain is now
+respected by the new <span class="application">Squish IDE</span>.
+</p></li><li><p>
+Text in the <code class="filename">.tsv</code> editor is now word-wrapped if
+necessary. This makes it much easier to edit longer texts.
+</p></li><li><p>
+Added a Default Web Browser settings page.
+</p></li><li><p>
+Newlines are now replaced with ellipses in the test results view.
+</p></li><li><p>
+The 'Error loading suites' dialog now provides more helpful diagnostics.
+</p></li><li><p>
+A test suite's <code class="filename">suite.conf</code> file's
+<code class="code">TEST_CASES</code> variable is now respected, thus preserving the
+order in which the test cases are listed in the <span class="application">Squish IDE</span>.
+</p></li><li><p>
+Whenever a breakpoint is reached the <span class="application">Squish IDE</span> switches to the Debug
+perspective.
+</p></li><li><p>
+The reporting of internal errors has been improved.
+</p></li><li><p>
+The <span class="application">Squish IDE</span> no longer forces the use of specific editors for test resource
+files.
+</p></li><li><p>
+Fixed several problems related to the enabled/disabled state of toolbar
+buttons and menu items in the <span class="application">Squish IDE</span>.
+</p></li><li><p>
+The <span class="application">Squish IDE</span> now gracefully copes when it starts up and discovers that a
+test suite has been moved or deleted on the disk outside of the <span class="application">Squish IDE</span>.
+</p></li><li><p>
+Added support for disabling and enabling logging options to match the
+functionality provided by the classic IDE via the
+<span class="guimenu">Preferences</span>|<span class="guimenuitem">Advanced</span>
+menu option.
+</p></li><li><p>
+The workspace is correctly saved when the <span class="application">Squish IDE</span> is terminated.
+</p></li><li><p>
+The <span class="application">Squish IDE</span> can now use the Perl interpreter shipped with <span class="emphasis"><em>Squish</em></span> to
+improve the editing of Perl scripts.
+</p></li><li><p>
+The runner and server log views have been merged into a single view.
+</p></li><li><p>
+Fixed the enabling of context menu items in the Object Map editor.
+</p></li><li><p>
+Added a context menu item to allow copying from the Summary view.
+</p></li><li><p>
+Fixed a bug with variable watching that sometimes affected deeply nested
+variables.
+</p></li><li><p>
+Reworked the dialogs for the creation of testdata and script files. The
+user can now choose the suite and testcase where they want to create the
+file, with the dialogs taking their defaults from the suite view's
+current selection.
+</p></li><li><p>
+Improved the error handling where an attempt is made to create a suite
+with a name that already exists in the directory.
+</p></li><li><p>
+Fixed <span class="application">squishrunner</span> hangs that could occasionally occur during test
+execution.
+</p></li><li><p>
+Fixed an ordering mix-up that could occasionally occur in test log entries.
+</p></li><li><p>
+Fixed cases where recording stopped working after errors occurred during
+a test run.
+</p></li><li><p>
+Fixed the "Scriptify VP" feature.
+</p></li><li><p>
+Fixed exceptions that were caused by race conditions during the disposal
+of user interface controls.
+</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="rel-4-beta3-classicide"></a>2.53.5. Classic IDE</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>
+Fixed a crash that occurred if the <span class="keysym">Delete</span> key was
+pressed in an empty Object Map Editor.
+</p></li></ul></div></div></div><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" type="text/javascript" src="ScriptingLanguage.js"></script><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format">setScriptingLanguage();</script><div class="navfooter"><hr></hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="rel-400.html">Prev</a> </td><td width="20%" align="center"><a accesskey="u" href="relnotes.html">Up</a></td><td width="40%" align="right"> <a accesskey="n" href="rel-4-beta2-changes.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">2.52. Version 4.0.0 </td><td width="20%" align="center"><a accesskey="h" href="index-noframes.html">Home</a></td><td width="40%" align="right" valign="top"> 2.54. Changes in 4.0 Beta 2</td></tr></table></div></body>
+<!-- Mirrored from rel-4-beta3-changes.html by HTTrack Website Copier/3.x [XR&CO'2013], Wed, 06 Jul 2022 13:28:57 GMT -->
+</html>

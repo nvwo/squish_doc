@@ -1,0 +1,657 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<!-- Mirrored from rg-objectmap.html by HTTrack Website Copier/3.x [XR&CO'2013], Wed, 06 Jul 2022 13:29:00 GMT -->
+<head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><title>7.11. Object Map</title><link rel="stylesheet" href="manual.css" type="text/css"></link><meta name="generator" content="DocBook XSL Stylesheets V1.73.2"></meta><link rel="start" href="index-noframes.html" title="Squish Manual"></link><link rel="up" href="ref.man.html" title="Chapter 7. Tools Reference Manual"></link><link rel="prev" href="rg-namelookup.html" title="7.10. Improving Object Identification"></link><link rel="next" href="rg-namingconfig.html" title="7.12. Object Name Generation"></link><style xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" type="text/css" media="screen">
+        div.toc * { margin-left: 6px; margin-right: auto; max-width: 75em; }
+        div.toc span { margin-left: 0px; }
+        * { margin-left: auto; margin-right: auto; max-width: 75em; }
+        body { margin-left: 6px; margin-right: 6px; }
+        table th { padding: .5ex }
+        table td { padding: .5ex }
+    </style><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format">
+        function keyPress() {
+            var e = window.event;
+            if ( e == undefined ) {
+                return;
+            }
+            /* ### does not properly scroll, yet
+            if ( e.keyCode == 32 ) {
+            var l = document.links;
+            for ( var i = 0; i < l.length; i++ ) {
+                if ( l[i].innerText == "Next" ) {
+                location.href = l[i].href;
+                }
+            }
+            } else
+                */
+                if ( e.keyCode == 0x08 ) {
+            var l = document.links;
+            for ( var i = 0; i < l.length; i++ ) {
+                if ( l[i].innerText == "Prev" ) {
+                location.href = l[i].href;
+                }
+            }
+            }
+        }
+        document.onkeypress = keyPress;
+    </script></head><body><div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="rg-objectmap"></a>7.11. Object Map</h2></div></div></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><span class="section"><a href="rg-objectmap.html#rgo-concept">7.11.1. The Concept of the Object Map</a></span></dt><dt><span class="section"><a href="rg-objectmap.html#rgos-create">7.11.2. Creating an Object Map</a></span></dt><dt><span class="section"><a href="rg-objectmap.html#rgos-edit">7.11.3. Editing an Object Map</a></span></dt><dt><span class="section"><a href="rg-objectmap.html#rgo-squish-scriptbased">7.11.4. Script-Based Object Map</a></span></dt><dt><span class="section"><a href="rg-objectmap.html#rgo-squish-textbased">7.11.5. Text-Based Object Map</a></span></dt></dl></div><p>
+This section introduces the concept of an automatic object map (often
+called a GUI object map in QA literature), and how <span class="emphasis"><em>Squish</em></span> implements
+this concept.
+</p><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="rgo-concept"></a>7.11.1. The Concept of the Object Map</h3></div></div></div><p>
+The object map is designed to make it easier to maintain test scripts when the
+application under test changes its object hierarchy or its object names.
+</p><p>
+As the set of test cases gets larger, there will be more an more places in the
+test script code at which <acronym class="acronym">GUI</acronym> controls are referenced. In
+particular, there may well be multiple places in which the same controls are
+referenced. For example, it's not hard to imagine that many of the test cases
+involve selecting the
+<span class="guimenu">File</span>|<span class="guimenuitem">Exit</span>
+menu item to quit the application. This means that there is some duplication of
+information in the test script code: the object name which identifies the menu
+item is mentioned multiple times, and it's this duplication which can
+negatively impact the maintainability of the test code in the future (for this
+reason, the duplication of information is sometimes referred to as a <a class="ulink" href="https://en.wikipedia.org/wiki/Technical_debt" target="_blank">technical debt</a>).
+</p><p>
+The risk associated with duplicating object names manifests as a problem once
+the <acronym class="acronym">AUT</acronym> changes. Revisiting the earlier example, it is
+imaginable that a review of the user interface design results in the decision
+to rename the <span class="guilabel">Exit</span> menu item to <span class="guilabel">Quit</span>.
+Updating the <acronym class="acronym">AUT</acronym> accordingly will suddenly make all test
+cases expecting a menu item labeled <span class="guilabel">Exit</span> to exist fail to
+replay since there is no such menu item of course. Hence, all test cases
+referencing the <span class="guilabel">Exit</span> need to be updated to now select the
+<span class="guilabel">Quit</span> menu item.
+</p><p>
+Updating the test scripts when the <acronym class="acronym">AUT</acronym> changes is not very
+desirable for multiple reasons, including:
+</p><div class="itemizedlist"><ul type="disc"><li><p>
+Depending on the number of test cases which need to be adjusted, updating the
+test scripts can take a significant amount of time. This is an additional cost
+which needs to be considered when estimating how expensive a change is to the
+<acronym class="acronym">AUT</acronym>.
+</p></li><li><p>
+Updating the test cases is error prone since failing to update
+<span class="emphasis"><em>all</em></span> occurrences of an object name will only become visible
+when actually executing the test.
+</p></li><li><p>
+Since both the <acronym class="acronym">AUT</acronym> as well as the tests themselves are
+changed, greater care must be taken when comparing the test results. Comparing
+test results is a lot easier and safer when it's known that only the
+<acronym class="acronym">AUT</acronym> changed between two test runs, but the tests themselves
+stayed the same since this ensures that. This approach is in the spirit of the
+<a class="ulink" href="https://en.wikipedia.org/wiki/One-factor-at-a-time_method" target="_blank">OFAT
+method</a> of designing experiments.
+</p></li></ul></div><p>
+However, if the <acronym class="acronym">AUT</acronym> changes as in the above example, clearly
+<span class="emphasis"><em>some</em></span> change is needed. We would like to minimise the
+required change though and this is precisely where the Object Map concept comes
+into play.
+</p><p>
+Instead of repeating object names in multiple spots of the test script code
+base, the idea of the Object Map is to maintain a repository of all object
+names in which each object name is defined exactly once, centrally. Test script
+code does not use the object names directly anymore. Instead, the Object Map
+associated each object name with a so-called symbolic name, a free-form
+identifier which serves as a 'key' into the Object Map. Test scripts
+exclusively reference object names by using symbolic names, and the symbolic
+names are automatically mapped to the referenced object names as a test case is
+executed.
+</p><p>
+The benefit of this is that changes to the application (such as renaming
+<span class="guilabel">Exit</span> to <span class="guilabel">Quit</span>) only require changing
+the single Object Map entry mentioning that object name. The symbolic names are
+independent of the <acronym class="acronym">AUT</acronym> and thus don't need any modification.
+Hence, all test scripts can remain unchanged and the test cases replay as
+before since each symbolic name mentioned in the test scripts automatically
+maps to the new &amp; updated object name.
+</p><p>
+There are multiple ways to implement the Object Map concept; two approaches for
+which <span class="emphasis"><em>Squish</em></span> provides built-in support are <a class="xref" href="rg-objectmap.html#rgo-squish-textbased" title="7.11.5. Text-Based Object Map">Text-Based Object Map (Section 7.11.5)</a> and <a class="xref" href="rg-objectmap.html#rgo-squish-scriptbased" title="7.11.4. Script-Based Object Map">Script-Based Object Map (Section 7.11.4)</a>.
+
+The details of each implementation are
+discussed further down, for the most part their usage is the same though, as
+discussed in the following sections.
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="rgos-create"></a>7.11.2. Creating an Object Map</h3></div></div></div><p>
+Whenever <span class="emphasis"><em>Squish</em></span> records a test case, it creates an Object Map for the
+suite if one does not already exist, or it uses the existing one—and
+in either case it adds a symbolic name–real name pair for every
+object that is accessed in the course of the recording, unless that pair
+is already in the map (for example, due to being added in a previous
+recording or earlier in the current recording).
+</p><p>
+However, it is also possible to create an Object Map by hand by manually adding
+entries to it. Since Object Maps are stored as plain text (using the UTF-8
+encoding), so it is possible to edit them using a plain text editor. However,
+we recommend editing the Object Map through the <span class="application">Squish IDE</span>. The Squish IDE's Object Map
+editor will ensure that the Object Map is not accidentally corrupted (as might
+happen when hand editing), and also provides some very convenient features that
+make editing easier—in particular an area for adding and editing object
+properties.
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="rgos-edit"></a>7.11.3. Editing an Object Map</h3></div></div></div><p>
+If you are starting from scratch and want to write tests by hand and to
+use symbolic names, there are several approaches you can take:
+</p><div class="itemizedlist"><ul type="disc"><li><p>
+In many cases the easiest and quickest approach is to record a dummy
+test where you make sure that you interact with every object that you
+plan to use in your hand written tests. During the recording <span class="emphasis"><em>Squish</em></span>
+will populate the Object Map, so when it comes to writing your tests you
+can simply copy and paste the symbolic (or real) names that you need as
+you need them.
+</p></li><li><p>
+Alternatively, you could just <span class="application">Spy</span> the application's window—this
+will cause the <span class="application">Spy</span> to populate its Object tree with all the
+application's objects, and then you can right-click each object you are
+interested in and use the context menu that pops up to add the object to
+the Object Map. (And of course you could use the <span class="application">Spy</span> tool's Object
+Picker to spy individual objects if you just needed to add a few of them
+to the Object Map.)
+</p></li><li><p>
+Another approach is to edit the Object Map manually, inserting your own
+symbolic names—you can use any names you like providing the
+properties you set for each one uniquely identifies the object and
+matches an actual object in the application. (New <span class="emphasis"><em>Squish</em></span> users are
+recommended to use one of the other approaches—once you have seen
+a few Object Maps in practice you'll be ready to use this approach.)
+</p></li></ul></div><p>
+As noted earlier, if an object's symbolic name becomes invalid (for
+example, due to a change in its object name or one of its parents'
+object names), you can edit the Object Map, changing the properties
+associated with the symbolic name to match those that have changed. You
+can use the <a class="xref" href="ug-editdebug.html#uged-spy" title="5.21.3. How to Use the Spy">How to Use the Spy (Section 5.21.3)</a> tool to find the object in the
+AUT's user interface and add the object (under a new symbolic name,
+since some aspect of it has changed), to the Object Map. You can then
+look up the new symbolic name in the Object Map to find out what its
+property values are, and change the original symbolic name's properties
+to match. This way, scripts that use the original symbolic name will
+continue to run correctly, because <span class="emphasis"><em>Squish</em></span> will look up the symbolic
+name in the Object Map and then derive the real name from the (now
+corrected) properties.
+</p><p>
+When the Object Map is visible when the <span class="application">Spy</span> is actively spying the
+application under test, it is possible to check which names in the
+Object Map are valid. To do this, select one or more symbolic names in
+the Object Map, then right-click to pop up the context menu and choose
+the <span class="guimenuitem">Check Object Existence</span> context menu
+option to check the selected symbolic names.
+</p><p>
+It is also possible to edit an object's symbolic name in the Object Map.
+Beware that if you do this, then you <span class="emphasis"><em>must</em></span> change
+every occurrence of this name in every test script that uses the Object
+Map where you changed the symbolic name, replacing the old name with the
+new one throughout. If you don't do this, then the scripts that use the
+old (and now no longer existing) name, will fail.
+</p><p>
+For information about handling the Object Map programmatically in test
+scripts see <a class="xref" href="rgs-squish.html#rgss-objmap" title="6.3.11. Object Map Functions">Object Map Functions (Section 6.3.11)</a>. For information about
+manipulating the Object Map using the <span class="application">Squish IDE</span> see the <a class="xref" href="ide.views.html#ide.the-object-map.view" title="8.2.10. Object Map view">Object Map view (Section 8.2.10)</a>.
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="rgo-squish-scriptbased"></a>7.11.4. Script-Based Object Map</h3></div></div></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><span class="section"><a href="rg-objectmap.html#rgo-squish-scriptbased-storage">7.11.4.1. Storage Location of Script-Based Object Maps</a></span></dt><dt><span class="section"><a href="rg-objectmap.html#rgo-squish-scriptbased-location">7.11.4.2. Structure of Script-Based Object Maps</a></span></dt><dt><span class="section"><a href="rg-objectmap.html#rgo-squish-scriptbased-api">7.11.4.3. Script-Based Object Map API</a></span></dt><dt><span class="section"><a href="rg-objectmap.html#rgo-squish-scriptbased-templates">7.11.4.4. Script-Based Object Map Templates</a></span></dt></dl></div><p>
+Starting with <span class="emphasis"><em>Squish</em></span> 6.4, script-based object maps are the default way to
+define and maintain the object map. This approach to managing object names is
+based on a script file defining variables representing the object names.
+Existing test suites can be switched to this implementation by clicking
+<span class="guibutton">Convert to Script</span> in the <span class="guilabel">General</span>
+section of the <span class="guilabel">Test Suite Settings</span>.
+The <span class="guilabel">Initial Object Map Style for new test suites</span> can be
+changed from <span class="guilabel">Preferences</span>
+<span class="guimenu">Squish</span>|<span class="guimenuitem">Test
+Creation</span>.
+</p><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="rgo-squish-scriptbased-storage"></a>7.11.4.1. Storage Location of Script-Based Object Maps</h4></div></div></div><p>
+The scripted object map is located in the <code class="filename">shared/scripts</code>
+subdirectory of a test suite. A file called <code class="filename">names.&lt;ext&gt;</code>
+(where &lt;ext&gt; is the file extension corresponding to
+the scripting language used in the test suite, e.g. <code class="literal">js</code> for
+JavaScript) is expected to exist in that directory.
+</p><div class="section" lang="en"><div class="titlepage"><div><div><h5 class="title"><a id="rgo-squish-scriptbased-shared-map"></a>7.11.4.1.1. Shared and Split Script-Based Object Maps</h5></div></div></div><p>
+While the default location and name of the Script-Based Object Map cannot be changed it is
+possible to include other files from within the Script-Based Object Map which can be used
+to share a Script-Based Object Map between test suites or to split the Object Map and
+organize it into multiple files to improve maintainability.
+</p><p>
+Every script you want to include in your Script-Based Object Map either needs to be in the
+<code class="filename">shared/scripts</code> subdirectory of your test suite or in
+a global scripts folder if you want to share it between multiple test suites (see
+<a class="xref" href="ide.views.html#ide.the-global-scripts.view" title="8.2.7. Global Scripts view">Global Scripts view (Section 8.2.7)</a>).
+</p><p>
+For the following examples we will assume there is a <code class="filename">localnames.&lt;ext&gt;</code>
+script file in the <code class="filename">shared/scripts</code> subdirectory of your test suite to
+demonstrate how to split an Object Map into multiple files and a
+<code class="filename">globalnames.&lt;ext&gt;</code> script file in a global scripts folder to
+show how an Object Map can be shared between multiple test suites.
+While there might be many ways to achieve the same results, the examples show the way that is supported by
+the <span class="application">Squish IDE</span> to make sure that features like the auto-completion and refactoring still work.
+</p><p>
+This example shows the content of the <code class="filename">names.&lt;ext&gt;</code>. Simply
+include the local and global script files at the beginning of the Script-Based Object Map.
+</p><div xmlns="" class="scriptlang"><form><select name="scriptlangcombo" onchange="javascript:changeScriptingLanguage(this)" onclick="javascript:changeScriptingLanguage(this)"><option value="all" selected>Show All</option><option value="JavaScript">Show JavaScript</option><option value="Perl">Show Perl</option><option value="Python">Show Python</option><option value="Ruby">Show Ruby</option><option value="Tcl">Show Tcl</option></select></form></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">JavaScript</span><pre class="programlisting">
+import { RegularExpression, Wildcard } from 'objectmaphelper.js';
+
+export * from 'globalnames.js';
+export * from 'localnames.js';
+
+//you could define additional names here
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Python</span><pre class="programlisting">
+# encoding: UTF-8
+
+from objectmaphelper import *
+
+from globalnames import *
+from localnames import *
+
+#you could define additional names here
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Perl</span><pre class="programlisting">
+package Names;
+
+use utf8;
+use strict;
+use warnings;
+use Squish::ObjectMapHelper::ObjectName;
+
+require 'globalnames.pl';
+require 'localnames.pl';
+
+#you could define additional names here
+
+1;
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Ruby</span><pre class="programlisting">
+# encoding: UTF-8
+
+require 'squish/objectmaphelper'
+
+load 'globalnames.rb'
+load 'localnames.rb'
+
+module Names
+
+include Squish::ObjectMapHelper
+
+#you could define additional names here
+
+end
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Tcl</span><pre class="programlisting">
+package require squish::objectmaphelper
+
+source [findFile "scripts" "globalnames.tcl"]
+source [findFile "scripts" "localnames.tcl"]
+
+namespace eval ::names {
+    #you could define additional names here
+}
+</pre></div><p>
+This example shows the content of the <code class="filename">globalnames.&lt;ext&gt;</code>.
+It references the “<span class="quote">itemviews</span>” example application.
+</p><div xmlns="" class="scriptlang"><form><select name="scriptlangcombo" onchange="javascript:changeScriptingLanguage(this)" onclick="javascript:changeScriptingLanguage(this)"><option value="all" selected>Show All</option><option value="JavaScript">Show JavaScript</option><option value="Perl">Show Perl</option><option value="Python">Show Python</option><option value="Ruby">Show Ruby</option><option value="Tcl">Show Tcl</option></select></form></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">JavaScript</span><pre class="programlisting">
+import { RegularExpression, Wildcard } from 'objectmaphelper.js';
+
+export var itemViewsMainWindow = {"type": "MainWindow", "unnamed": 1, "visible": 1, "windowTitle": "Item Views"};
+export var itemViewsQListView = {"occurrence": 2, "type": "QListView", "unnamed": 1, "visible": 1, "window": itemViewsMainWindow};
+export var theComedyOfErrorsQModelIndex = {"container": itemViewsQListView, "text": "The Comedy of Errors", "type": "QModelIndex"};
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Python</span><pre class="programlisting">
+# encoding: UTF-8
+
+from objectmaphelper import *
+
+item_Views_MainWindow = {"type": "MainWindow", "unnamed": 1, "visible": 1, "windowTitle": "Item Views"}
+item_Views_QListView = {"occurrence": 2, "type": "QListView", "unnamed": 1, "visible": 1, "window": item_Views_MainWindow}
+the_Comedy_of_Errors_QModelIndex = {"container": item_Views_QListView, "text": "The Comedy of Errors", "type": "QModelIndex"}
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Perl</span><pre class="programlisting">
+package Names;
+
+use utf8;
+use strict;
+use warnings;
+use Squish::ObjectMapHelper::ObjectName;
+
+our $item_views_mainwindow = {"type" =&gt; "MainWindow", "unnamed" =&gt; 1, "visible" =&gt; 1, "windowTitle" =&gt; "Item Views"};
+our $item_views_qlistview = {"occurrence" =&gt; 2, "type" =&gt; "QListView", "unnamed" =&gt; 1, "visible" =&gt; 1, "window" =&gt; $item_views_mainwindow};
+our $the_comedy_of_errors_qmodelindex = {"container" =&gt; $item_views_qlistview, "text" =&gt; "The Comedy of Errors", "type" =&gt; "QModelIndex"};
+
+1;
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Ruby</span><pre class="programlisting">
+# encoding: UTF-8
+
+require 'squish/objectmaphelper'
+
+module Names
+
+include Squish::ObjectMapHelper
+
+Item_Views_MainWindow = {:type =&gt; "MainWindow", :unnamed =&gt; 1, :visible =&gt; 1, :windowTitle =&gt; "Item Views"}
+Item_Views_QListView = {:occurrence =&gt; 2, :type =&gt; "QListView", :unnamed =&gt; 1, :visible =&gt; 1, :window =&gt; Item_Views_MainWindow}
+The_Comedy_of_Errors_QModelIndex = {:container =&gt; Item_Views_QListView, :text =&gt; "The Comedy of Errors", :type =&gt; "QModelIndex"}
+
+end
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Tcl</span><pre class="programlisting">
+package require squish::objectmaphelper
+
+namespace eval ::names {
+
+set Item_Views_MainWindow [::Squish::ObjectName type MainWindow unnamed 1 visible 1 windowTitle {Item Views}]
+set Item_Views_QListView [::Squish::ObjectName occurrence 2 type QListView unnamed 1 visible 1 window $Item_Views_MainWindow]
+set The_Comedy_of_Errors_QModelIndexxxx [::Squish::ObjectName container $Item_Views_QListView text {The Comedy of Errors} type QModelIndex]
+
+}
+</pre></div><p>
+This example shows the content of the <code class="filename">localnames.&lt;ext&gt;</code>.
+It also shows how to reference names defined in other script files, which might be necessary when
+splitting Object Maps.
+</p><div xmlns="" class="scriptlang"><form><select name="scriptlangcombo" onchange="javascript:changeScriptingLanguage(this)" onclick="javascript:changeScriptingLanguage(this)"><option value="all" selected>Show All</option><option value="JavaScript">Show JavaScript</option><option value="Perl">Show Perl</option><option value="Python">Show Python</option><option value="Ruby">Show Ruby</option><option value="Tcl">Show Tcl</option></select></form></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">JavaScript</span><pre class="programlisting">
+import { RegularExpression, Wildcard } from 'objectmaphelper.js';
+
+import * as globalnames from 'globalnames.js';
+
+export var itemViewsQtSplithandleQSplitterHandle = {"name": "qt_splithandle_", "occurrence": 2, "type": "QSplitterHandle", "visible": 1, "window": globalnames.itemViewsMainWindow};
+export var itemViewsQtSplithandleQTableWidget = {"aboveWidget": itemViewsQtSplithandleQSplitterHandle, "type": "QTableWidget", "unnamed": 1, "visible": 1, "window": globalnames.itemViewsMainWindow};
+export var qtSplithandle21QModelIndex = {"column": 1, "container": itemViewsQtSplithandleQTableWidget, "row": 2, "type": "QModelIndex"};
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Python</span><pre class="programlisting">
+# encoding: UTF-8
+
+from objectmaphelper import *
+
+import globalnames
+
+item_Views_qt_splithandle_QSplitterHandle = {"name": "qt_splithandle_", "occurrence": 2, "type": "QSplitterHandle", "visible": 1, "window": globalnames.item_Views_MainWindow}
+item_Views_qt_splithandle_QTableWidget = {"aboveWidget": item_Views_qt_splithandle_QSplitterHandle, "type": "QTableWidget", "unnamed": 1, "visible": 1, "window": globalnames.item_Views_MainWindow}
+qt_splithandle_2_1_QModelIndex = {"column": 1, "container": item_Views_qt_splithandle_QTableWidget, "row": 2, "type": "QModelIndex"}
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Perl</span><pre class="programlisting">
+package Names;
+
+use utf8;
+use strict;
+use warnings;
+use Squish::ObjectMapHelper::ObjectName;
+
+require 'globalnames.pl';
+
+our $item_views_qt_splithandle_qsplitterhandle = {"name" =&gt; "qt_splithandle_", "occurrence" =&gt; 2, "type" =&gt; "QSplitterHandle", "visible" =&gt; 1, "window" =&gt; $Names::item_views_mainwindow};
+our $item_views_qt_splithandle_qtablewidget = {"aboveWidget" =&gt; $item_views_qt_splithandle_qsplitterhandle, "type" =&gt; "QTableWidget", "unnamed" =&gt; 1, "visible" =&gt; 1, "window" =&gt; $Names::item_views_mainwindow};
+our $qt_splithandle_2_1_qmodelindex = {"column" =&gt; 1, "container" =&gt; $item_views_qt_splithandle_qtablewidget, "row" =&gt; 2, "type" =&gt; "QModelIndex"};
+
+1;
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Ruby</span><pre class="programlisting">
+# encoding: UTF-8
+
+require 'squish/objectmaphelper'
+
+require 'globalnames'
+
+module Names
+
+include Squish::ObjectMapHelper
+
+Item_Views_qt_splithandle_QSplitterHandle = {:name =&gt; "qt_splithandle_", :occurrence =&gt; 2, :type =&gt; "QSplitterHandle", :visible =&gt; 1, :window =&gt; Names::Item_Views_MainWindow}
+Item_Views_qt_splithandle_QTableWidget = {:aboveWidget =&gt; Item_Views_qt_splithandle_QSplitterHandle, :type =&gt; "QTableWidget", :unnamed =&gt; 1, :visible =&gt; 1, :window =&gt; Names::Item_Views_MainWindow}
+Qt_splithandle_2_1_QModelIndex = {:column =&gt; 1, :container =&gt; Item_Views_qt_splithandle_QTableWidget, :row =&gt; 2, :type =&gt; "QModelIndex"}
+
+end
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Tcl</span><pre class="programlisting">
+package require squish::objectmaphelper
+
+source [findFile "scripts" "globalnames.tcl"]
+
+namespace eval ::names {
+
+set Item_Views_qt_splithandle_QSplitterHandle [::Squish::ObjectName name qt_splithandle_ occurrence 2 type QSplitterHandle visible 1 window $names::Item_Views_MainWindow]
+set Item_Views_qt_splithandle_QTableWidget [::Squish::ObjectName aboveWidget $Item_Views_qt_splithandle_QSplitterHandle type QTableWidget unnamed 1 visible 1 window $names::Item_Views_MainWindow]
+set qt_splithandle_2_1_QModelIndex [::Squish::ObjectName column 1 container $Item_Views_qt_splithandle_QTableWidget row 2 type QModelIndex]
+
+}
+</pre></div></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="rgo-squish-scriptbased-location"></a>7.11.4.2. Structure of Script-Based Object Maps</h4></div></div></div><p>
+A script-based object map is a standard script file which looks slightly
+different depending on the scripting language being used for the test suite.
+Here are some examples for different scripting languages:
+</p><div xmlns="" class="scriptlang"><form><select name="scriptlangcombo" onchange="javascript:changeScriptingLanguage(this)" onclick="javascript:changeScriptingLanguage(this)"><option value="all" selected>Show All</option><option value="JavaScript">Show JavaScript</option><option value="Perl">Show Perl</option><option value="Python">Show Python</option><option value="Ruby">Show Ruby</option><option value="Tcl">Show Tcl</option></select></form></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Tcl</span><pre class="programlisting">
+package require squish::objectmaphelper
+# Brings the 'ObjectName' command into scope.
+
+namespace eval ::names {
+
+set Ok_Button [::Squish::ObjectName text Ok type Button]
+set Item_Views_MainWindow [::Squish::ObjectName type MainWindow unnamed 1 visible 1 windowTitle {Item Views}]
+
+}
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">JavaScript</span><pre class="programlisting">
+// Include script framework
+import { RegularExpression, Wildcard } from 'objectmaphelper.js';
+
+export var okButton = {"text": "Ok", "type": "Button"};
+export var itemViewsMainWindow = {"type": "MainWindow", "unnamed": 1, "visible": 1, "windowTitle": "Item Views"};
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Python</span><pre class="programlisting">
+# encoding: UTF-8
+
+from objectmaphelper import *
+# Brings the 'Wildcard' and 'RegularExpression' classes into scope.
+
+ok_Button = {"text": "Ok", "type": "Button"}
+item_Views_MainWindow = {"type": "MainWindow", "unnamed": 1, "visible": 1, "windowTitle": "Item Views"}
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Perl</span><pre class="programlisting">
+package Names;
+
+use utf8;
+use strict;
+use warnings;
+use Squish::ObjectMapHelper::ObjectName;
+
+our $ok_button = {"text" =&gt; "Ok", "type" =&gt; "Button"};
+our $item_views_mainwindow = {"type" =&gt; "MainWindow", "unnamed" =&gt; 1, "visible" =&gt; 1, "windowTitle" =&gt; "Item Views"};
+
+1;
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Ruby</span><pre class="programlisting">
+# encoding: UTF-8
+require 'squish/objectmaphelper'
+
+module Names
+
+include Squish::ObjectMapHelper
+# Brings the 'Wildcard' and 'RegularExpression' classes into scope.
+
+Ok_Button = {:text =&gt; "Ok", :type =&gt; "Button"}
+Item_Views_MainWindow = {:type =&gt; "MainWindow", :unnamed =&gt; 1, :visible =&gt; 1, :windowTitle =&gt; "Item Views"}
+
+end
+</pre></div><p>
+The basic layout of a script-based object map is that it defines a sequence of
+variables, each of which corresponding to an object name. The variable name is
+the symbolic name used throughout the test script and the variable's value is
+the object name itself. The value of variables which <span class="emphasis"><em>Squish</em></span> generates
+automatically (e.g. as part of a recording session) are discrete objects
+representing key-value pairs describing the properties by which an object is
+identified.
+</p><p>
+Every script-based object map is made of the same components:
+</p><div class="orderedlist"><ol type="1"><li><p>
+A separate module <code class="literal">objectmaphelper</code> (the name may vary
+slightly between different scripting languages) is loaded; this module provides
+access to various utility API such as the <code class="code">Wildcard</code> identifier
+which is used to denote a wildcard expression value.
+</p></li><li><p>
+A name space is created, commonly called <code class="code">Names</code> or <code class="code">names</code>.
+To avoid clashes of the variables representing object names and other script
+variables, all variables representing object names are defined in a single name
+space.
+</p><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Note"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/note.png"></img></td><th align="left">Note</th></tr><tr><td align="left" valign="top"><p>
+It is not possible to rename this namespace.
+</p></td></tr></table></div></li><li><p>
+A sequence of variable definitions, each of which corresponding to an object map entry.
+</p></li></ol></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="rgo-squish-scriptbased-api"></a>7.11.4.3. Script-Based Object Map API</h4></div></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h5 class="title"><a id="rgo-squish-scriptbased-api-objectname"></a>7.11.4.3.1. Expressing Object Names in Script Code</h5></div></div></div><p>
+Object names are most easily expressed as native script hashes resp.
+dictionaries which define a set of key-values pairs representing the proeprties
+to be used for identifying an object. It's also possible to use plain strings
+in case e.g. hierarchical object names are used.
+</p><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Note"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/note.png"></img></td><th align="left">Note</th></tr><tr><td align="left" valign="top"><p>
+When using the Tcl scripting language, a dedicated <code class="code">ObjectName</code>
+command has to be used which takes a variable number of arguments.
+</p></td></tr></table></div><p>
+Here are some examples showing how to construct an object name matching a
+<acronym class="acronym">GUI</acronym> control of type <code class="literal">Button</code> which is
+visible and which has the text <code class="literal">OK</code>; the button is contained
+in a control of type <code class="literal">Dialog</code> with the caption
+<code class="literal">Login</code>:
+</p><div xmlns="" class="scriptlang"><form><select name="scriptlangcombo" onchange="javascript:changeScriptingLanguage(this)" onclick="javascript:changeScriptingLanguage(this)"><option value="all" selected>Show All</option><option value="JavaScript">Show JavaScript</option><option value="Perl">Show Perl</option><option value="Python">Show Python</option><option value="Ruby">Show Ruby</option><option value="Tcl">Show Tcl</option></select></form></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Tcl</span><pre class="programlisting">
+# Inclusion of 'objectmaphelper' module providing 'ObjectName' command omitted for brevity
+
+set loginDialog [::Squish::ObjectName type Dialog caption Login]
+set okButton    [::Squish::ObjectName type Button text OK container $loginDialog visible 1]
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">JavaScript</span><pre class="programlisting">
+var loginDialog = {type: "Dialog", caption: "Login"};
+var okButton    = {type: "Button", text: "OK", container: loginDialog, visible: true};
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Python</span><pre class="programlisting">
+loginDialog = {"type": "Dialog", "caption": "Login"}
+okButton    = {"type": "Button", "text": "OK", "container": loginDialog, "visible": True}
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Perl</span><pre class="programlisting">
+$loginDialog = {"type" =&gt; "Dialog", "text" =&gt; "Login"};
+$okButton    = {"type" =&gt; "Button", "text" =&gt; "OK", "container" =&gt; $loginDialog, "visible": 1};
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Ruby</span><pre class="programlisting">
+LoginDialog = {:type =&gt; "Dialog", :text =&gt; "Login"}
+OkButton    = {:type =&gt; "Button", :text =&gt; "OK", :container =&gt; LoginDialog, :visible =&gt; true}
+</pre></div><p>
+Note how in each language, a variable is assigned a set of key-value pairs -
+each value can be a string, but also a script-native value such as a boolean or
+an integer value. Furthermore, object names can reference each other as seen
+with the <code class="code">container</code> property in the above examples.
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h5 class="title"><a id="rgo-squish-scriptbased-api-wildcard"></a>7.11.4.3.2. Using Wildcard Matching</h5></div></div></div><p>
+To denote that a wildcard comparison is to be performed, the
+<code class="code">objectmaphelper</code> utility offers dedicated <code class="code">Wildcard</code> and
+<code class="code">RegExp</code> types which can be used to wrap property values.
+</p><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Note: Perl-specific API"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/note.png"></img></td><th align="left">Perl-specific <acronym class="acronym">API</acronym></th></tr><tr><td align="left" valign="top"><p>
+Instead of using a <code class="code">Wildcard</code> class, Perl scripts can use a
+<code class="code">wildcard</code> subroutine. In the same way, instead of using a
+<code class="code">RegExp</code> class, Perl scripts can use a <code class="code">regexp</code>
+subroutine.
+</p></td></tr></table></div><p>For example, an object name which identifies the <acronym class="acronym">GUI</acronym>
+control of type <code class="literal">MainWindow</code> with a text matching (i.e.
+starting with) <code class="literal">AcmeApp v*</code>, you can use:
+</p><div xmlns="" class="scriptlang"><form><select name="scriptlangcombo" onchange="javascript:changeScriptingLanguage(this)" onclick="javascript:changeScriptingLanguage(this)"><option value="all" selected>Show All</option><option value="JavaScript">Show JavaScript</option><option value="Perl">Show Perl</option><option value="Python">Show Python</option><option value="Ruby">Show Ruby</option><option value="Tcl">Show Tcl</option></select></form></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Tcl</span><pre class="programlisting">
+# Inclusion of 'objectmaphelper' module omitted for brevity
+
+set mainWindow [::Squish::ObjectName type MainWindow text -wildcard {AcmeApp v*}]
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">JavaScript</span><pre class="programlisting">
+// Inclusion of 'objectmaphelper' module omitted for brevity
+
+var mainWindow = {type: "MainWindow", text: new Wildcard("AcmeApp v*")};
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Python</span><pre class="programlisting">
+# Inclusion of 'objectmaphelper' module omitted for brevity
+
+mainWindow = {"type": "MainWindow", "text": Wildcard("AcmeApp v*")}
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Perl</span><pre class="programlisting">
+# Inclusion of 'objectmaphelper' module omitted for brevity
+
+$mainWindow = {"type": "MainWindow", "text": wildcard("AcmeApp v*")};
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Ruby</span><pre class="programlisting">
+# Inclusion of 'objectmaphelper' module omitted for brevity
+
+MainWindow = {:type =&gt; "MainWindow", :text =&gt; Wildcard.new("AcmeApp v*")}
+</pre></div><p>
+Regular expression matches work the same way - instead of using the
+<code class="code">Wildcard</code> class, the <code class="code">RegExp</code> class (resp.
+<code class="code">regexp</code> subroutine, when using Perl) can be used.
+</p></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="rgo-squish-scriptbased-templates"></a>7.11.4.4. Script-Based Object Map Templates</h4></div></div></div><p>
+Every time a new script-based object map is created (e.g. when recording for
+the first time in a new test suite), <span class="emphasis"><em>Squish</em></span> will create a new script file
+representing the object map. The script code written is not built into <span class="emphasis"><em>Squish</em></span>
+though but rather taken from a template file which is part of the <span class="emphasis"><em>Squish</em></span>
+installation.
+</p><p>
+The template files are stored in the <span class="emphasis"><em>Squish</em></span> installation directory, under
+<code class="filename">scriptmodules/&lt;language&gt;/objectmap_template.&lt;ext&gt;</code>,
+with &lt;language&gt; being the script language used for the
+test suite and &lt;ext&gt; corresponding to the file
+extension used for script files. For example, the template file used for
+creating script-based object maps in Python is stored in
+<code class="filename">scriptmodules/python/objectmap_template.py</code>.
+</p><p>
+Here are the default contents of the templates files in different scripting
+languages:
+</p><div xmlns="" class="scriptlang"><form><select name="scriptlangcombo" onchange="javascript:changeScriptingLanguage(this)" onclick="javascript:changeScriptingLanguage(this)"><option value="all" selected>Show All</option><option value="JavaScript">Show JavaScript</option><option value="Perl">Show Perl</option><option value="Python">Show Python</option><option value="Ruby">Show Ruby</option><option value="Tcl">Show Tcl</option></select></form></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Tcl</span><pre class="programlisting">
+package require squish::objectmaphelper
+
+namespace eval ::names {
+}
+
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">JavaScript</span><pre class="programlisting">
+import { RegularExpression, Wildcard } from 'objectmaphelper.js';
+
+
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Python</span><pre class="programlisting">
+# encoding: UTF-8
+
+from objectmaphelper import *
+
+
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Perl</span><pre class="programlisting">
+package Names;
+
+use utf8;
+use strict;
+use warnings;
+use Squish::ObjectMapHelper::ObjectName;
+
+1;
+
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Ruby</span><pre class="programlisting">
+# encoding: UTF-8
+
+require 'squish/objectmaphelper'
+
+module Names
+
+include Squish::ObjectMapHelper
+
+end
+
+</pre></div><p>
+You are free to modify these template files in order to use a custom default
+layout, e.g.  for including additional commentary, loading external files
+automatically or importing standard modules.
+</p><div class="warning" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Warning"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Warning]" src="images/warning.png"></img></td><th align="left">Warning</th></tr><tr><td align="left" valign="top"><p>
+Any modifications to the object map template files are specific to that
+particular <span class="emphasis"><em>Squish</em></span> installation. They will be removed when <span class="emphasis"><em>Squish</em></span> is
+uninstalled, and installing a new version of <span class="emphasis"><em>Squish</em></span> will come with the
+standard (potentially different) template scripts.
+</p></td></tr></table></div></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="rgo-squish-textbased"></a>7.11.5. Text-Based Object Map</h3></div></div></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><span class="section"><a href="rg-objectmap.html#rgo-squish-textbased-storage">7.11.5.1. Storage Location of Text-Based Object Maps</a></span></dt><dt><span class="section"><a href="rg-objectmap.html#rgo-squish-textbased-structure">7.11.5.2. Structure of Text-Based Object Maps</a></span></dt></dl></div><p>
+The classic implementation of the <a class="xref" href="rg-objectmap.html" title="7.11. Object Map">Object Map (Section 7.11)</a> concept is
+based on plain text files. This implementation can be the default
+for new test suites, by opening the <span class="guilabel">Preferences</span> dialog and
+then selecting <span class="guimenu">Squish</span>|<span class="guimenuitem">Test
+Creation</span>. From the <span class="guilabel">Test Creation</span>
+settings page, select <span class="guilabel">Text-Based Object Map</span>.
+</p><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="rgo-squish-textbased-storage"></a>7.11.5.1. Storage Location of Text-Based Object Maps</h4></div></div></div><p>
+When using a text-based object map, the object map consists of a single file
+called <code class="filename">objects.map</code> which is commonly saved in the test
+suite's root directory. This file is then shared by all test cases in a test
+suite.
+</p><p>
+In some cases it is more convenient to store the Object Map elsewhere,
+particularly if we want to share it between test suites. This can be configured
+in the <span class="guilabel">Test Suite Settings</span> dialog, or it can be done by
+editing the test suite's <code class="filename">suite.conf</code> file (which is in the
+test suite's root directory). Simply add a new key=value pair using the key,
+<code class="literal">OBJECTMAP</code>, and with the value set to the shared object map's
+path and filename. The path value can be an absolute or relative path. Here is
+an example that uses an absolute path:
+</p><pre class="screen">
+OBJECTMAP = C:\shared\myobjects.map
+</pre><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Note"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/note.png"></img></td><th align="left">Note</th></tr><tr><td align="left" valign="top"><p>
+It is also possible to share scripts and test data between test suites; see
+<a class="xref" href="ug-shareddata.html" title="5.23. How to Create and Use Shared Data and Shared Scripts">How to Create and Use Shared Data and Shared Scripts (Section 5.23)</a> for more details.
+</p></td></tr></table></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="rgo-squish-textbased-structure"></a>7.11.5.2. Structure of Text-Based Object Maps</h4></div></div></div><p>
+Text-based object maps use plain strings for both symbolic names as well as the
+referenced real names. Symbolic names are strings starting with a colon (e.g.
+<code class="literal">:Ok_Button</code>) and real names consist of a set of
+space-separated
+&lt;propertyName&gt;=&lt;value&gt; pairs
+enclosed in curly braces. For example, a multi-property name which identifies
+the object whose <span class="property">type</span> is “<span class="quote">Button</span>” and whose
+<span class="property">text</span> is “<span class="quote">Hello</span>” will look like this:
+</p><pre class="screen">
+{type='Button' text='Hello'}
+</pre><p>
+The object map itself is a plain text file (using the UTF-8 encoding). Each line
+in the file corresponds to one entry in the object map. A line consists of a
+symbolic name and a real name, separated by a tabstop character, e.g.:
+</p><pre class="screen">
+:Hello_Button	{type='Button' text='Hello'}
+</pre></div></div></div><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" type="text/javascript" src="ScriptingLanguage.js"></script><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format">setScriptingLanguage();</script><div class="navfooter"><hr></hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="rg-namelookup.html">Prev</a> </td><td width="20%" align="center"><a accesskey="u" href="ref.man.html">Up</a></td><td width="40%" align="right"> <a accesskey="n" href="rg-namingconfig.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">7.10. Improving Object Identification </td><td width="20%" align="center"><a accesskey="h" href="index-noframes.html">Home</a></td><td width="40%" align="right" valign="top"> 7.12. Object Name Generation</td></tr></table></div></body>
+<!-- Mirrored from rg-objectmap.html by HTTrack Website Copier/3.x [XR&CO'2013], Wed, 06 Jul 2022 13:29:00 GMT -->
+</html>

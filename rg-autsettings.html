@@ -1,0 +1,782 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<!-- Mirrored from rg-autsettings.html by HTTrack Website Copier/3.x [XR&CO'2013], Wed, 06 Jul 2022 13:29:00 GMT -->
+<head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><title>7.3. AUTs and Settings</title><link rel="stylesheet" href="manual.css" type="text/css"></link><meta name="generator" content="DocBook XSL Stylesheets V1.73.2"></meta><link rel="start" href="index-noframes.html" title="Squish Manual"></link><link rel="up" href="ref.man.html" title="Chapter 7. Tools Reference Manual"></link><link rel="prev" href="rg-bindings.html" title="7.2. AUT Script Bindings—Creating and Accessing"></link><link rel="next" href="rg-cmdline.html" title="7.4. Command Line Reference"></link><style xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" type="text/css" media="screen">
+        div.toc * { margin-left: 6px; margin-right: auto; max-width: 75em; }
+        div.toc span { margin-left: 0px; }
+        * { margin-left: auto; margin-right: auto; max-width: 75em; }
+        body { margin-left: 6px; margin-right: 6px; }
+        table th { padding: .5ex }
+        table td { padding: .5ex }
+    </style><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format">
+        function keyPress() {
+            var e = window.event;
+            if ( e == undefined ) {
+                return;
+            }
+            /* ### does not properly scroll, yet
+            if ( e.keyCode == 32 ) {
+            var l = document.links;
+            for ( var i = 0; i < l.length; i++ ) {
+                if ( l[i].innerText == "Next" ) {
+                location.href = l[i].href;
+                }
+            }
+            } else
+                */
+                if ( e.keyCode == 0x08 ) {
+            var l = document.links;
+            for ( var i = 0; i < l.length; i++ ) {
+                if ( l[i].innerText == "Prev" ) {
+                location.href = l[i].href;
+                }
+            }
+            }
+        }
+        document.onkeypress = keyPress;
+    </script></head><body><div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="rg-autsettings"></a>7.3. AUTs and Settings</h2></div></div></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><span class="section"><a href="rg-autsettings.html#rgas-java-aut-settings">7.3.1. AUT Class Name and Classpath for <span class="trademark">Java</span>™</a></span></dt><dt><span class="section"><a href="rg-autsettings.html#rgas-pathmapped">7.3.2. AUT Paths and Mapped AUTs</a></span></dt><dt><span class="section"><a href="rg-autsettings.html#rgas-envars">7.3.3. Setting Environment Variables</a></span></dt><dt><span class="section"><a href="rg-autsettings.html#rgas-shellbatch">7.3.4. Shell Scripts and .bat-Files as AUT</a></span></dt><dt><span class="section"><a href="rg-autsettings.html#rgas-java-policy">7.3.5. Setup custom <span class="trademark">Java</span>™ security policy</a></span></dt><dt><span class="section"><a href="rg-autsettings.html#rgas-appletviewer">7.3.6. Testing Java Applets</a></span></dt><dt><span class="section"><a href="rg-autsettings.html#rgas-javaws">7.3.7. Testing Java Web Start</a></span></dt><dt><span class="section"><a href="rg-autsettings.html#rgas-aut-config-ini-register">7.3.8. AUT <code class="filename">.ini</code> file for Wrapper</a></span></dt><dt><span class="section"><a href="rg-autsettings.html#rgas-config-win32-controls">7.3.9. Configuring the recognition of native Windows controls</a></span></dt><dt><span class="section"><a href="rg-autsettings.html#rgas-aut-settings-android">7.3.10. Launcher arguments for Android</a></span></dt></dl></div><p>This section discusses many aspects of applications under test,
+such as how they are located, how they can be specified, and various special
+settings that can be used with <span class="emphasis"><em>Squish</em></span>.</p><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="rgas-java-aut-settings"></a>7.3.1. AUT Class Name and Classpath for <span class="trademark">Java</span>™</h3></div></div></div><p>
+A <span class="trademark">Java</span>™ application can be configured in the Test Suite's <a class="xref" href="ide.views.html#ide.the-settings.view" title="8.2.16. Test Suite Settings view">Test Suite Settings view (Section 8.2.16)</a>. There are four different ways that
+the AUT can be set—they are summarized below, with further details
+after the summary.
+</p><div class="itemizedlist"><ul type="disc"><li><p>
+Leave the <span class="guilabel">Application</span> as
+<code class="literal">&lt;No Application&gt;</code> and enter the name of the class
+that has the application's static <code class="function">main</code> method in the
+<span class="guilabel">Main Class</span> edit box—for example,
+<code class="code">MyApplication.class</code>.
+(This approach <span class="emphasis"><em>cannot</em></span> be used for Java/SWT
+applications unless the <code class="envar">CLASSPATH</code> points to the
+<code class="filename">swt.jar</code> file.)
+</p></li><li><p>
+Set the <span class="guilabel">Application</span> to be the name of
+a <code class="filename">.class</code> file—providing that this file has
+the application's static <code class="code">main</code> method.
+(This approach <span class="emphasis"><em>cannot</em></span> be used for Java/SWT
+applications unless the <code class="envar">CLASSPATH</code> points to the
+<code class="filename">swt.jar</code> file.)
+</p></li><li><p>
+Set the <span class="guilabel">Application</span> to be the name of
+a <code class="filename">.jar</code> archive—providing that
+the archive contains a suitable
+<code class="filename">MANIFEST</code> file that
+lists the application class that has the application's static
+<code class="function">main</code> method.
+(This approach <span class="emphasis"><em>cannot</em></span> be used for Java/SWT
+applications.)
+</p></li><li><p>
+Set the <span class="guilabel">Application</span> to be the name of a script or
+other executable.
+</p><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Note: RCP applications"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/note.png"></img></td><th align="left">RCP applications</th></tr><tr><td align="left" valign="top"><p>
+When testing <acronym class="acronym">RCP</acronym> applications it is sufficient to set
+the <span class="guilabel">Application</span> to be the name of the launcher
+executable.
+</p></td></tr></table></div><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Note: Java/SWT applications"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/note.png"></img></td><th align="left">Java/SWT applications</th></tr><tr><td align="left" valign="top"><p>
+For Java/SWT applications one approach is to create a shell script or
+batch file to set as the <span class="guilabel">Application</span>.
+</p><p>
+On Unix-like systems create a one line shell script to use
+as the AUT and that includes the <code class="filename">swt.jar</code> in the
+class path. For example:
+</p><pre class="screen">
+java -cp "$PWD":"$PWD/../swt/swt.jar" MyApplication
+</pre><p>
+Similarly, on Windows, create a one line batch file. For example:
+</p><pre class="screen">
+start javaw -cp "%CD%;%CD%\..\swt\swt.jar" MyApplication
+</pre><p>
+In both examples we have assumed that the <code class="filename">swt.jar</code>
+file is in a parallel directory called <code class="filename">swt</code>. Simply
+modify one of the above to point to your <code class="filename">swt.jar</code>
+file and to the <code class="filename">.class</code> that contains your AUT's
+<code class="code">main</code> function.
+</p><p>
+An alternative to using a shell script or batch file is to set the
+<code class="envar">CLASSPATH</code> environment variable to point to the
+<code class="filename">swt.jar</code> file. In this case the
+<code class="filename">.class</code> file that contains your AUT's
+<code class="code">main</code> function can be set as the AUT.
+</p></td></tr></table></div></li></ul></div><p>
+Note that the <code class="envar">CLASSPATH</code> environment variable can be set
+in the Test Suite's <a class="xref" href="ide.views.html#ide.the-settings.view" title="8.2.16. Test Suite Settings view">Test Suite Settings view (Section 8.2.16)</a>'s
+<span class="guilabel">Classpath</span> edit box <span class="emphasis"><em>or</em></span> outside
+of <span class="emphasis"><em>Squish</em></span> as an environment variable for the system in the usual way
+for the platform you are using—only one of these need be used, not
+both. (If you set the <code class="envar">CLASSPATH</code> inside <span class="emphasis"><em>Squish</em></span>, do not
+use quotes.)
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="rgas-pathmapped"></a>7.3.2. AUT Paths and Mapped AUTs</h3></div></div></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><span class="section"><a href="rg-autsettings.html#rgaspm-path">7.3.2.1. AUT Path</a></span></dt><dt><span class="section"><a href="rg-autsettings.html#rgaspm-mapped">7.3.2.2. Mapped AUT</a></span></dt></dl></div><p>
+In <span class="emphasis"><em>Squish</em></span>, only the name of the application under test is stored in the
+test suite's configuration file, not its absolute path. This is because
+the test runner (<span class="application">squishrunner</span>) doesn't execute the AUT itself, but
+instead it tells the <span class="application">squishserver</span> to start the AUT. The <span class="application">squishserver</span>
+can be running on multiple machines, and the AUT could be located on a
+different path on each of them. When <span class="application">squishrunner</span> gives the
+<span class="application">squishserver</span> the name of an AUT to run, it is the responsibility of
+the <span class="application">squishserver</span> to locate the AUT and to start it running.
+</p><p>
+There are two different ways that we can tell the <span class="application">squishserver</span> where
+an executable is located—both of them are explained below.
+(Note also that registering and unregistering AUT paths and AUTs can be
+done using the <span class="application">Squish IDE</span>; see the <a class="xref" href="ide.dialogs.html#manage.auts.panel" title="8.3.22.1. Manage AUTs panel">Manage AUTs panel (Section 8.3.22.1)</a>.)
+</p><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="rgaspm-path"></a>7.3.2.1. AUT Path</h4></div></div></div><p>
+The AUT Path is a variable in <span class="application">squishserver</span>'s settings which specifies
+a list of paths (just like the operating system's own
+<code class="envar">PATH</code> environment variable). When the
+<span class="application">squishserver</span> is given the name of an AUT to start, it searches all of
+the paths in the AUT Path variable, and as soon as it finds a path that
+contains an executable with the name it was given, it starts it running.
+</p><p>To add a path to the <span class="application">squishserver</span>'s AUT Path variable, execute:</p><pre class="screen">
+squishserver --config addAppPath &lt;path&gt;
+</pre><p>To remove a path from the AUT Path variable, execute:</p><pre class="screen">
+squishserver --config removeAppPath &lt;path&gt;
+</pre><p>
+The same can be done using the <span class="application">Squish IDE</span>'s <span class="guilabel">Manage AUTs</span>
+dialog (click <span class="guimenu">Edit</span>|<span class="guimenuitem">Server
+Settings</span>|<span class="guimenuitem">Manage
+AUTs...</span> to invoke it). To add a path to the
+AUT Path, click on the <span class="guilabel">AUT Paths</span> item, then click
+the <span class="guibutton">Add...</span> button and choose a path from the file
+dialog that pops up. Similarly, to remove an AUT Path, expand the
+<span class="guilabel">AUT Paths</span> item, click the unwanted path, then click
+the <span class="guibutton">Remove</span> button.
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="rgaspm-mapped"></a>7.3.2.2. Mapped AUT</h4></div></div></div><p>
+Instead of having the <span class="application">squishserver</span> look through all the AUT Path's
+paths for an AUT's executable, we can create mappings that directly
+relate AUT names to their corresponding paths. If we do this, when the
+<span class="application">squishserver</span> is given the name of an AUT to execute, it starts by
+seeing if the name is mapped to a path—and if it is,
+<span class="application">squishserver</span> starts the application directly using the mapped path.
+This avoids the (usually insignificant) overhead of searching all the
+AUT Path's paths.
+</p><p>
+An additional benefit of using the mapping approach is that it prevents
+the possibility of accidentally executing the wrong AUT. (Without using
+a mapping this could happen if two different executables have the same
+name and when trying to execute one of them the other is unintentionally
+executed because its path comes earlier in the AUT Path list.)
+</p><p>
+To map the application <code class="filename">myapplication</code> to the path
+<code class="filename">/home/jane/bin/</code>, execute:
+</p><pre class="screen">
+squishserver --config addAUT myapplication /home/jane/bin
+</pre><p>
+This way, if <span class="application">squishserver</span> is given the name
+<code class="filename">myapplication</code> to start, it will
+<span class="emphasis"><em>not</em></span> search all the paths in the AUT Path list, but
+instead will use the mapped path and directly execute
+<code class="filename">/home/jane/bin/myapplication</code>.
+</p><p>
+It is just as easy to remove a mapping:
+</p><pre class="screen">
+squishserver --config removeAUT myapplication /home/jane/bin
+</pre><p>
+When a new test suite is created using the <span class="application">Squish IDE</span> and the AUT is
+specified in the New Test Suite wizard, behind the scenes, the <span class="application">Squish IDE</span>
+calls the <span class="application">squishserver</span> with the <code class="option">addAUT</code> option to add
+the new AUT as a mapped AUT.
+</p><p>
+The same can be done using the <span class="application">Squish IDE</span>'s <span class="guilabel">Manage AUTs</span>
+dialog (click <span class="guimenu">Edit</span>|<span class="guimenuitem">Server
+Settings</span>|<span class="guimenuitem">Manage
+AUTs...</span> to invoke it). To add a mapped AUT to
+the Mapped AUTs, click on the <span class="guilabel">Mapped AUTs</span> item,
+then click the <span class="guibutton">Add...</span> button and choose an AUT
+from the file dialog that pops up. Similarly, to remove a mapped AUT,
+expand the <span class="guilabel">Mapped AUTs</span> item, click the unwanted
+mapping, then click the <span class="guibutton">Remove</span> button.
+</p><p>
+See also, the <a class="xref" href="ide.dialogs.html#manage.auts.panel" title="8.3.22.1. Manage AUTs panel">Manage AUTs panel (Section 8.3.22.1)</a>.
+</p></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="rgas-envars"></a>7.3.3. Setting Environment Variables</h3></div></div></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><span class="section"><a href="rg-autsettings.html#rgas-autenv">7.3.3.1. Setting Environment Variables for the AUT</a></span></dt></dl></div><p>
+Some applications, including <span class="emphasis"><em>Squish</em></span>'s tools, read environment
+variables and may alter their behavior depending on the environment. For
+example, an environment variable might be used to provide a path that
+may vary on different machines.
+</p><p>
+In the context of testing, there are two different environments to
+consider: The environment that the <span class="emphasis"><em>Squish</em></span> tools (including test scripts)
+execute in, and the environment that the AUT executes in.
+</p><p>
+To set up <span class="emphasis"><em>Squish</em></span>'s environment (for the tools and for test scripts),
+we must set the relevant environment variables
+<span class="emphasis"><em>before</em></span> running any <span class="emphasis"><em>Squish</em></span> tools, so that when
+they are run they can detect the environment that has been created for
+them. The environment variables that <span class="emphasis"><em>Squish</em></span> uses are described
+elsewhere (<a class="xref" href="rg-envvars.html" title="7.5. Environment Variables">Environment Variables (Section 7.5)</a>). Note that they only have to be
+set if you want to override the defaults.
+</p><p>
+When <span class="emphasis"><em>Squish</em></span> does a <code class="function">startApplication()</code>,
+this means <span class="application">squishserver</span> provides the AUT with an environment.
+This environment is based on the one that
+<span class="application">squishserver</span> itself inherited from the operating system. This environment
+will include <code class="envar">PATH</code> (on Windows),
+<code class="envar">LD_LIBRARY_PATH</code> (Unix, but not macOS), or
+<code class="envar">DYLD_LIBRARY_PATH</code> (macOS). These variables are
+altered by <span class="emphasis"><em>Squish</em></span> and must not be deleted,
+although it is safe to append or prepend additional paths to them.
+It is also possible to create
+AUT-specific environment variables that <span class="emphasis"><em>Squish</em></span> will set up for the
+AUT—this is covered in the following subsection.
+</p><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="rgas-autenv"></a>7.3.3.1. Setting Environment Variables for the AUT</h4></div></div></div><p>
+In some cases an application needs a special environment to be set up
+before it can be started successfully. This might include setting some
+environment variables, running a helper application, or checking for
+some other conditions (e.g., if there is enough memory available).
+Usually this is done by using a shell script or Windows batch file
+to do this pre-initialization work and which then starts the actual
+application. More information about such shell scripts and batch files
+is given in the section, <a class="xref" href="rg-autsettings.html#rgas-shellbatch" title="7.3.4. Shell Scripts and .bat-Files as AUT">Shell Scripts and .bat-Files as AUT (Section 7.3.4)</a>.
+</p><p>
+However, if all that is required to run an application successfully is
+to set up some environment variables, there is no need to create a shell
+script or batch file at all, since this can be handled by <span class="emphasis"><em>Squish</em></span>. And in
+fact, the preferred approach when only environment variables are needed,
+is to let <span class="emphasis"><em>Squish</em></span> take care of them.
+</p><p>
+Note that when the AUT is started with <code class="function">startApplication()</code>,
+it receives the environment that <span class="application">squishserver</span> provides for it.
+</p><p>
+To specify additional environment variables, open the <span class="application">Squish IDE</span>'s
+<a class="xref" href="ide.views.html#ide.the-settings.view" title="8.2.16. Test Suite Settings view">Test Suite Settings view (Section 8.2.16)</a>, and scroll to the
+<span class="guilabel">Environment</span> area, as shown in the screenshot.
+</p><div class="screenshot"><div class="mediaobject" align="center"><img src="images/envvars.png" align="middle"></img><div class="caption"><p>The <span class="application">Squish IDE</span>'s Test Suite Settings Environment section</p></div></div></div><p>
+The values may themselves be or contain references to other environment
+variables using the syntax <code class="code">$(<span class="emphasis"><em>NAME</em></span>)</code>, as
+the screenshot illustrates.
+</p><p>
+The table always shows a blank row into which a new key (environment
+variable name) and value can be entered. Just click a cell in the table
+to start adding or editing a key or value. To delete a row, delete the
+key and click elsewhere.
+</p><p>
+Now, whenever the <span class="application">squishserver</span> is told to run the AUT, it will first
+set up the environment in the normal way, then add the environment
+variables that identify the suite and test case, and then add any
+environment variables that we have set here, so that when the AUT starts
+it has the context we want.
+</p><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Note: Squish vs. AUT Environment
+Variables"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/note.png"></img></td><th align="left"><a id="squish.vs.aut.environment"></a><span class="emphasis"><em>Squish</em></span> vs. AUT Environment
+Variables</th></tr><tr><td align="left" valign="top"><p>
+<span class="emphasis"><em>Squish</em></span> recognizes its own set of environment variables which can be
+set to affect aspects of <span class="emphasis"><em>Squish</em></span>'s behavior. Those that are used to
+control aspects of running and recording tests can be set in the
+<span class="guilabel">Test Suite Settings</span> dialog's
+<span class="guilabel">Environment</span> tab as described above. (For an example
+of such an environment variable, see <a class="xref" href="rg-autsettings.html#rgas-aut-config-ini-register-envar" title="7.3.8. Using an environment variable">Section 7.3.8, “Using an environment variable”</a> in <a class="xref" href="rg-autsettings.html#rgas-javawrapping" title="7.3.8.2. Wrapping custom Java™ classes">Wrapping custom <span class="trademark">Java</span>™ classes (Section 7.3.8.2)</a>.)
+</p><p>
+However, those environment variables that affect how <span class="emphasis"><em>Squish</em></span>'s IDE and
+command line tools behave must be set <span class="emphasis"><em>before</em></span>
+running the <span class="application">Squish IDE</span> or tools, and so cannot be set in the <span class="guilabel">Test
+Suite Settings</span> dialog; see <a class="xref" href="rg-envvars.html" title="7.5. Environment Variables">Environment Variables (Section 7.5)</a> for
+more about these environment variables, and also for details of how test
+scripts can access an AUT's environment variables.
+</p><p>
+It is also possible for test scripts to access environment variables;
+see <a class="xref" href="ug-interact-with-files-environment.html#ug-external-environment" title="5.17.3. How to Read Environment Variables inside Test Scripts">How to Read Environment Variables inside Test Scripts (Section 5.17.3)</a>.
+</p></td></tr></table></div></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="rgas-shellbatch"></a>7.3.4. Shell Scripts and .bat-Files as AUT</h3></div></div></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><span class="section"><a href="rg-autsettings.html#rgas-shellbatch-nonjava">7.3.4.1. Qt-based Applications</a></span></dt><dt><span class="section"><a href="rg-autsettings.html#rgas-shellbatch-ecplise-rcp">7.3.4.2. Eclipse/RCP-based Applications</a></span></dt></dl></div><p>
+In situations where starting an application requires more than just
+setting up some environment variables (see <a class="xref" href="rg-autsettings.html#rgas-autenv" title="7.3.3.1. Setting Environment Variables for the AUT">Setting Environment Variables for the AUT (Section 7.3.3.1)</a> for details), the best solution is to create a
+startup shell script or batch file to perform the necessary setup and to
+start the application, and to specify this startup script or batch file
+as the AUT, instead of the actual application's executable.
+</p><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="rgas-shellbatch-nonjava"></a>7.3.4.1. Qt-based Applications</h4></div></div></div><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Note: Unix-specific"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/note.png"></img></td><th align="left">Unix-specific</th></tr><tr><td align="left" valign="top"><p>
+Even when using a shell script as the
+AUT, it is still necessary to make the actual executable that will be
+run known to <span class="emphasis"><em>Squish</em></span>. The reason for this is that <span class="emphasis"><em>Squish</em></span> will only
+hook into programs started by the AUT that are white-listed, and when
+using a shell script as the AUT, the actual application binary, which
+<span class="emphasis"><em>Squish</em></span> must hook into, will be started by the script and not directly
+by <span class="emphasis"><em>Squish</em></span>. White-listing is easily done by simply adding the
+executable as known AUT to <span class="emphasis"><em>Squish</em></span> by mapping its path or by adding its
+path to the AUT Path list—either method can be done in the <span class="application">Squish IDE</span>
+or by using <span class="emphasis"><em>Squish</em></span>'s command line tools; see <a class="xref" href="rg-autsettings.html#rgas-pathmapped" title="7.3.2. AUT Paths and Mapped AUTs">AUT Paths and Mapped AUTs (Section 7.3.2)</a> for details.
+</p></td></tr></table></div><p>
+On Unix and macOS using a shell script works as expected—assuming
+the actual application's executable is known to <span class="emphasis"><em>Squish</em></span> as mentioned in
+the note above.
+</p><p>
+On Windows, once the batch file is created, it is necessary to make one
+small adjustment to the line where the application is started. To allow
+<span class="emphasis"><em>Squish</em></span> to hook into the application, the AUT must be started with a
+small wrapper application called <code class="filename">dllpreload.exe</code>.
+</p><p>
+The change is easy to make. Let's assume that the application we want to
+test is called <code class="filename">myapp.exe</code>. Normally we could run it
+simply by putting its name in the batch file on a line of its own like
+this:
+
+</p><pre class="screen">
+myapp.exe
+</pre><p>
+
+But to make it accessible to <span class="emphasis"><em>Squish</em></span> we must run it from the wrapper,
+so we must change the line to this:
+
+</p><pre class="screen">
+"%SQUISH_PREFIX%\bin\dllpreload.exe" myapp.exe
+</pre><p>
+
+The environment variable, <code class="envar">SQUISH_PREFIX</code>, is set if the AUT
+was started through <span class="application">squishserver</span>; it points to Squish's base
+directory.
+</p><p>
+This will start <code class="filename">myapp.exe</code> and allow
+<span class="emphasis"><em>Squish</em></span> to hook into it. But in practice you only want to do this when
+testing the application, otherwise the application should be started
+normally. This can be done by putting the following code into the batch
+file at the point where the application binary should be started:
+</p><pre class="programlisting">
+IF "%1"=="-testing" (
+	"%SQUISH_PREFIX%\bin\dllpreload.exe" myapp.exe
+) ELSE (
+	myapp.exe
+)
+</pre><p>
+By default, <code class="filename">myapp.exe</code> will be run normally. To make
+it run inside <span class="emphasis"><em>Squish</em></span>'s wrapper we must specify
+<code class="filename">-testing</code> as an argument in the <span class="guilabel">Test Suite
+Settings</span> dialog's <span class="guilabel">Arguments</span> field, so
+that it will be passed to the AUT (the batch file in this case) by
+<span class="emphasis"><em>Squish</em></span> on startup.
+</p><p>
+See also <a class="xref" href="rghsa-sub.html" title="7.7. Record / Replay on Sub-Processes started by the AUT">Record / Replay on Sub-Processes started by the AUT (Section 7.7)</a> and <a class="xref" href="rghsa-attach.html" title="7.8. Attaching to Running Applications">Attaching to Running Applications (Section 7.8)</a>.
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="rgas-shellbatch-ecplise-rcp"></a>7.3.4.2. Eclipse/RCP-based Applications</h4></div></div></div><p>
+<span class="emphasis"><em>Squish</em></span> hooks into <span class="trademark">Java</span>™ applications by providing a customized Java
+VM shared library, the <span class="emphasis"><em>Squish</em></span> Java VM. To make the standard Oracle <span class="trademark">Java</span>™
+launchers (<span class="application">java</span>,
+<span class="application">java.exe</span>,
+<span class="application">javaw.exe</span>, <span class="application">javaws</span>,
+and <span class="application">javaws.exe</span>) use the <span class="emphasis"><em>Squish</em></span> Java VM,
+<span class="emphasis"><em>Squish</em></span> sets the environment variable <code class="envar">JDK_ALTERNATE_VM</code>
+to the directory of the <span class="emphasis"><em>Squish</em></span> Java VM shared library file. The
+standard Oracle <span class="trademark">Java</span>™ launchers support this environment variable.
+</p><p>
+Unfortunately, Eclipse does not support the
+<code class="envar">JDK_ALTERNATE_VM</code> mechanism, and so must be explicitly told
+which VM to use. This is easily done by calling Eclipse with
+the <code class="option">-vm</code> option.
+</p><p>
+For example, on Windows, instead of executing <code class="code">eclipse.exe</code>,
+we would do this instead:
+</p><pre class="screen">
+eclipse.exe -vm "%JDK_ALTERNATE_VM%" -noSplash
+</pre><p>
+Note that the <code class="option">-vm</code> option should be passed before any
+other option.
+</p><p>
+There is no need to use the <code class="option">-vm</code> option when running an
+Eclipse/RCP application using <span class="application">eclipse.exe</span>
+from within <span class="emphasis"><em>Squish</em></span>, since <span class="emphasis"><em>Squish</em></span> will automatically pass the
+appropriate <code class="option">-vm</code> itself.
+</p></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="rgas-java-policy"></a>7.3.5. Setup custom <span class="trademark">Java</span>™ security policy</h3></div></div></div><p>
+<span class="emphasis"><em>Squish</em></span> for <span class="trademark">Java</span>™ installs its own security policy. A policy file set by
+the AUT gets lost.
+In order to overcome this, <span class="application">squishserver</span> will merge a given policy file
+when set in an AUT specific ini file.
+</p><pre class="programlisting">
+[general]
+SecurityPolicy = "c:/Users/me/secure.policy"
+</pre><p>
+See <a class="xref" href="rg-autsettings.html#rgas-aut-config-ini-register" title="7.3.8. AUT .ini file for Wrapper">AUT <code class="filename">.ini</code> file for Wrapper (Section 7.3.8)</a>.
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="rgas-appletviewer"></a>7.3.6. Testing Java Applets</h3></div></div></div><p>
+To test a <span class="trademark">Java</span>™ applet, in the <span class="guilabel">Test Suite
+Settings</span> dialog, specify the Java
+<code class="filename">appletviewer</code> (which is part of the Java SDK/JDK)
+as the AUT (application under test), and enter the URL of the HTML
+file containing the applet in the <span class="guilabel">Arguments</span> field.
+Nothing more is required.
+</p><p> Using <span class="emphasis"><em>Squish</em></span> for Web, it is also possible to test Java applets embedded
+in a web browser. If you want to test an applet running in <span class="application">Microsoft Internet Explorer</span> 11, please
+contact us for a suitable 64bit <span class="emphasis"><em>Squish</em></span> for Web package for Windows. </p></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="rgas-javaws"></a>7.3.7. Testing Java Web Start</h3></div></div></div><p>
+For testing <span class="trademark">Java</span>™ applications launched via Java Web Start, in the
+<span class="guilabel">AUT</span> tab of <span class="guilabel">Test Suite Settings</span>
+specify <span class="command"><strong>&lt;No Application&gt;</strong></span> for
+<span class="guilabel">Application:</span> and enter the URL to the JNLP file of your
+web start application in the <span class="guilabel">Java Web Start:</span> field.
+</p><p>When using Squish with some versions of Java (such as OpenJDK 1.8), you
+may instead need to use <span class="command"><strong>javaws</strong></span> for the
+<span class="guilabel">Application:</span> and the JNLP URL for
+<span class="guilabel">Arguments:</span>. This article has further information about <a class="ulink" href="https://kb.froglogic.com/display/KB/Article - Automating applications loaded via Java Web Start" target="_blank">Automating Java web start applications</a>.
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="rgas-aut-config-ini-register"></a>7.3.8. AUT <code class="filename">.ini</code> file for Wrapper</h3></div></div></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><span class="section"><a href="rg-autsettings.html#rgas-java-picking-tooltip">7.3.8.1. Change Object Picking Tooltip for <span class="trademark">Java</span>™</a></span></dt><dt><span class="section"><a href="rg-autsettings.html#rgas-javawrapping">7.3.8.2. Wrapping custom <span class="trademark">Java</span>™ classes</a></span></dt></dl></div><p>
+Some options that are specific to the <span class="emphasis"><em>Squish</em></span> wrapper for a specific AUT
+can be configured by using a manual written <code class="filename">.ini</code> file.
+</p><h4><a id="rgas-aut-config-ini-register-server"></a>Using <span class="application">squishserver</span></h4><p>
+Once the <code class="filename">.ini</code> has been created, the <span class="application">squishserver</span>
+can then be used to register it. The syntax of the command is:
+
+</p><pre class="programlisting">
+squishserver --config setConfig &lt;name-of-AUT&gt; &lt;path/file.ini&gt;
+</pre><p>
+
+Note the name of the application must be exactly the same as the name
+used in the <span class="guilabel">Test Suite Settings</span> dialog.
+</p><p>
+It is also possible to unregister a <code class="filename">.ini</code> file,
+using the <code class="code">removeConfig</code> option with a very similar syntax to
+before:
+
+</p><pre class="programlisting">
+squishserver --config removeConfig &lt;name-of-AUT&gt; &lt;path/file.ini&gt;
+</pre><p>
+</p><h4><a id="rgas-aut-config-ini-register-envar"></a>Using an environment variable</h4><p>
+It is also possible to make use of a <code class="filename">.ini</code> file
+without explicitly registering it with <span class="application">squishserver</span>. This is done by
+creating the <code class="envar">SQUISH_WRAPPER_CONFIG</code> environment variable
+(which can be done in the <span class="guilabel">Test Suite Settings</span>
+dialog—see <a class="xref" href="rg-autsettings.html#rgas-autenv" title="7.3.3.1. Setting Environment Variables for the AUT">Setting Environment Variables for the AUT (Section 7.3.3.1)</a>) and making its value the
+path and filename of the <code class="filename">.ini</code> file.
+</p><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="rgas-java-picking-tooltip"></a>7.3.8.1. Change Object Picking Tooltip for <span class="trademark">Java</span>™</h4></div></div></div><p>
+By default, when picking an object, <span class="emphasis"><em>Squish</em></span> will show the generated
+object name in a tooltip of the object being hovered with the mouse.
+However this may drag when the user interface is quite complex. Therefore
+it is possible to override this behavior. The option is called
+<code class="code">ObjectPickerTooltip</code> and must be under section
+<code class="code">Java Wrapper</code>. E.g.
+</p><pre class="programlisting">
+[Java Wrapper]
+ObjectPickerTooltip = "ClassName"
+</pre><p>
+to only show the object its <span class="trademark">Java</span>™ class name. Alternatively, tooltips can
+be turned off entirely by using <code class="code">Off</code>.
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="rgas-javawrapping"></a>7.3.8.2. Wrapping custom <span class="trademark">Java</span>™ classes</h4></div></div></div><p>
+By default, <span class="emphasis"><em>Squish</em></span> 3 wraps a predefined set of <span class="trademark">Java</span>™ classes.
+Scripts can access static class members only for these wrapped classes.
+Classes of wrapped <span class="trademark">Java</span>™ objects automatically get wrapped by <span class="emphasis"><em>Squish</em></span>.
+That happens e.g. when using <a class="xref" href="rgs-squish.html#findObject-function"><code class="function">findObject</code></a>,
+<a class="xref" href="rgs-squish.html#waitForObject-function"><code class="function">waitForObject</code></a> or accessing a class member
+that returns an object.
+</p><p>
+<span class="emphasis"><em>Squish</em></span> 4 extend's <span class="emphasis"><em>Squish</em></span> 3's functionality in this area by
+wrapping more classes, and also by dynamically wrapping AUT classes.
+</p><p>
+No matter which version of <span class="emphasis"><em>Squish</em></span> is being used we might need to
+access a class that for some reason isn't wrapped by default. One way of
+doing this is to extend the list of wrapped classes, making additional
+classes accessible just like the predefined wrapped classes. This is
+done by creating a <code class="filename">.ini</code> file that lists the classes
+that must be wrapped, and then telling <span class="emphasis"><em>Squish</em></span>'s wrapper for the <span class="trademark">Java</span>™
+process where to find this file. This is discussed in a moment—
+<a class="xref" href="rg-autsettings.html#rgas-javawrapping-inifile" title="7.3.8.2.1. Creating the .ini file">Creating the <code class="filename">.ini</code> file (Section 7.3.8.2.1)</a>.
+</p><p>
+The easiest way to access unregistered classes is to use Java's
+introspection capabilities. This is done in a few easy steps:
+</p><div class="itemizedlist"><ul type="disc" compact><li><p>
+Use one of the following methods to get a class instances:
+  </p><div class="itemizedlist"><ul type="circle" compact><li><p>
+If the class is in <code class="filename">rt.jar</code> from <span class="trademark">Java</span>™, then the
+static method <code class="code">forName</code> of <code class="code">java_lang_Class</code>
+can be used.
+  </p></li><li><p>
+If an application class and the application doesn't have its own class
+loaders, the method <code class="code">loadClass</code> on the class loader instance
+returned from the static method <code class="code">getSystemClassLoader</code> of
+<code class="code">java_lang_ClassLoader</code>.
+can be used.
+  </p></li><li><p><a id="rgas-javawrapping-custom-classloader"></a>
+If an application have their own class loaders, use the class loader
+from a UI element. E.g. Eclipse/RCP applications have their own class
+loaders. And these must be used to load classes from the
+<code class="filename">plugins</code> directory. For example
+</p><pre class="programlisting">
+name = "{type='org.eclipse.swt.widgets.Shell' visible='true'}"
+win = waitForObject(name)
+win.getClass().getClassLoader().loadClass("org.eclipse.swt.SWT")
+ok = org_eclipse_swt_SWT.OK
+</pre><p>
+  </p></li></ul></div><p>
+</p></li><li><p>
+Use the script language specific <code class="code">new</code> operator to get an
+instance.
+</p></li><li><p>
+Optionally call methods on the instance to get it into the state we
+need.
+</p></li><li><p>
+Use the instance.
+</p></li></ul></div><p>
+Here is an example (taken from the
+<code class="filename">examples/java/paymentform/suite_*/tst_card_mode</code>
+test case) where we want to use the
+<code class="code">java.text.SimpleDateFormat</code> class even though <span class="emphasis"><em>Squish</em></span>
+doesn't wrap it by default and even though it isn't used in the AUT (and
+so doesn't get dynamically wrapped).
+</p><div xmlns="" class="scriptlang"><form><select name="scriptlangcombo" onchange="javascript:changeScriptingLanguage(this)" onclick="javascript:changeScriptingLanguage(this)"><option value="all" selected>Show All</option><option value="JavaScript">Show JavaScript</option><option value="Perl">Show Perl</option><option value="Python">Show Python</option><option value="Ruby">Show Ruby</option><option value="Tcl">Show Tcl</option></select></form></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Python</span><pre class="programlisting">
+
+    java_lang_Class.forName("java.text.SimpleDateFormat")
+    formatter = java_text_SimpleDateFormat()
+    formatter.applyPattern("yyyy-MM-dd")
+    test.verify(formatter.format(model.getStart()) ==
+                formatter.format(date))
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">JavaScript</span><pre class="programlisting">
+
+    java_lang_Class.forName("java.text.SimpleDateFormat");
+    var formatter = new java_text_SimpleDateFormat();
+    formatter.applyPattern("yyyy-MM-dd");
+    test.verify(formatter.format(model.getStart()) == 
+                formatter.format(threeYearsAgo));
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Perl</span><pre class="programlisting">
+
+    java_lang_Class::forName("java.text.SimpleDateFormat");
+    my $formatter = new java_text_SimpleDateFormat();
+    $formatter-&gt;applyPattern("yyyy-MM-dd");
+    test::verify($formatter-&gt;format($model-&gt;getStart()) eq
+                 $formatter-&gt;format($date));
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Ruby</span><pre class="programlisting">
+
+    LC::Java_lang_Class.forName("java.text.SimpleDateFormat")
+    formatter = LC::Java_text_SimpleDateFormat.new
+    formatter.applyPattern("yyyy-MM-dd")
+    Test.verify(formatter.format(model.getStart()) ==
+    formatter.format(date))
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Tcl</span><pre class="programlisting">
+
+    invoke java_lang_Class forName "java.text.SimpleDateFormat"
+    set formatter [construct java_text_SimpleDateFormat]
+    invoke $formatter applyPattern "yyyy-MM-dd"
+    set minimumAllowed [invoke $formatter format [invoke $model getStart]]
+    set minimumDate [invoke $formatter format [invoke $calendar getTime]]
+    test compare $minimumAllowed $minimumDate
+</pre></div><p>
+Another example of this technique is shown in <a class="xref" href="ugs-semiautomatic.html" title="5.14. How to Create Semi-Automatic Tests that Query for User Input">How to Create Semi-Automatic Tests that Query for User Input (Section 5.14)</a>.
+</p><p>
+If this approach is used there is no need to create or register classes
+using a <code class="filename">.ini</code> file. However, if you need to access a
+lot of different unwrapped classes, using a <code class="filename">.ini</code>
+file might prove more convenient.
+</p><div class="section" lang="en"><div class="titlepage"><div><div><h5 class="title"><a id="rgas-javawrapping-inifile"></a>7.3.8.2.1. Creating the <code class="filename">.ini</code> file</h5></div></div></div><p>
+The <code class="filename">.ini</code> file's format is illustrated by the
+example below, which asks <span class="emphasis"><em>Squish</em></span> to wrap two classes,
+<code class="code">com.example.product.Example</code>, and
+<code class="code">com.example.product.Main</code>.
+</p><pre class="programlisting">
+[general]
+AutClasses="com/example/product/Example", "com/example/product/Main"
+</pre><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Note: Applications using custom ClassLoaders"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/note.png"></img></td><th align="left">Applications using custom ClassLoaders</th></tr><tr><td align="left" valign="top"><p>For applications like <span class="application">Eclipse</span>, either using
+an ini file or using <code class="code">forName</code> might load the class in the
+wrong classloader instance or the default classloader cannot find the
+class. In these cases use
+<a class="xref" href="rg-autsettings.html#rgas-javawrapping-custom-classloader">application class loaders</a> to get a
+<span class="trademark">Java</span>™ class wrapped into <span class="emphasis"><em>Squish</em></span>.</p></td></tr></table></div><p>
+The class names must be relative to the <code class="envar">CLASSPATH</code>. Note
+also, that it is possible to wrap classes in <span class="trademark">Java</span>™'s standard libraries
+if they aren't wrapped by default, for example:
+</p><pre class="programlisting">
+[general]
+AutClasses="java.util.Calendar","java.util.Date",\
+"java.text.DateFormat","java.text.SimpleDateFormat"
+</pre><p>
+When an extra class is wrapped, all super classes, classes from method
+arguments and return type classes will be wrapped as well.
+</p><p>
+In some cases it is possible that the wrapping could fail. If this
+happens the class that failed to be wrapped will be identified as having
+type <code class="code">Unknown</code> in the <span class="application">Spy</span> tool.
+</p><p>
+Additionally, an extra <code class="envar">CLASSPATH</code> can be set that might be
+needed if the application extends its <code class="envar">CLASSPATH</code> during
+execution. For example, when testing <span class="trademark">Java</span>™ applets with <span class="emphasis"><em>Squish</em></span> for Web,
+the <code class="envar">CLASSPATH</code> is extended by the <code class="code">ARCHIVE</code>
+attribute of the <code class="code">APPLET</code> <acronym class="acronym">HTML</acronym> tag. So,
+continuing from the first example, a <code class="envar">CLASSPATH</code> setting
+can be added as shown below.
+</p><pre class="programlisting">
+[general]
+AutClasses="com/example/product/Example", "com/example/product/Main"
+AutClassPath="demo.jar"
+AutClassBaseUrl="http://www.example.com/product/"
+</pre><p>
+The <code class="code">AutClassPath</code> entry uses the same syntax as
+the <code class="envar">CLASSPATH</code> environment variable, with ';' (Windows) or
+':' (Mac/Linux/Unix) used as separators. The entire value
+<span class="emphasis"><em>must</em></span> be quoted, as shown in the example.
+</p><p>
+It is also possible to set an <code class="code">AutClassBaseUrl</code>. This is
+optional, but when set it adds a prefix to all paths in the
+<code class="code">AutClassPath</code> entry and the <code class="code">AutClassBaseUrl</code>
+itself is added to the <code class="envar">CLASSPATH</code>.
+</p><div class="section" lang="en"><div class="titlepage"><div><div><h6 class="title"><a id="rgas-javawrapping-blacklist"></a>7.3.8.2.1.1. Excluding properties</h6></div></div></div><p>
+The automatic addition from public getter function as property (see
+<a class="xref" href="ugs-javaapi.html#ugsjava-properties" title="5.4.3. How to Access Java™ Object Properties">How to Access <span class="trademark">Java</span>™ Object Properties (Section 5.4.3)</a>) to the wrapped class is not always
+desirable. When traversing the application object tree these properties
+will be fetched. That will subsequently call the getter method.
+</p><p>
+To exclude a certain property use <code class="code">JavaWrappingBlackList</code>.
+This config option takes a list of one of more class.property names. The
+class package separator must be a slash. E.g.
+</p><pre class="programlisting">
+[general]
+JavaWrappingBlackList="java/awt/Component.locationonscreen"
+</pre><p>
+
+</p></div></div></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="rgas-config-win32-controls"></a>7.3.9. Configuring the recognition of native Windows controls</h3></div></div></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><span class="section"><a href="rg-autsettings.html#rgas-config-win32-controls-inisetup">7.3.9.1. Creating an INI file for <span class="emphasis"><em>Squish</em></span> to recognize native Windows
+controls</a></span></dt><dt><span class="section"><a href="rg-autsettings.html#rgas-config-win32-controls-conflicts">7.3.9.2. Resolving conflicting ways to identify GUI controls</a></span></dt><dt><span class="section"><a href="rg-autsettings.html#rgas-config-win32-controls-com">7.3.9.3. Accessing the properties of ActiveX-based and COM controls</a></span></dt><dt><span class="section"><a href="rg-autsettings.html#rg-winwrapper.ini.reference">7.3.9.4. <code class="filename">winwrapper.ini</code> Reference</a></span></dt></dl></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="rgas-config-win32-controls-inisetup"></a>7.3.9.1. Creating an INI file for <span class="emphasis"><em>Squish</em></span> to recognize native Windows
+controls</h4></div></div></div><p>
+<span class="emphasis"><em>Squish</em></span> can be told about native Windows controls simply by putting
+some information into a suitable <code class="filename">.ini</code> file. (This
+is very similar in principle to how <span class="trademark">Java</span>™ classes are handled; see
+<a class="xref" href="rg-autsettings.html#rgas-javawrapping" title="7.3.8.2. Wrapping custom Java™ classes">Wrapping custom <span class="trademark">Java</span>™ classes (Section 7.3.8.2)</a>.)
+</p><p>
+It isn't necessary to create the file from scratch. Instead, copy the
+<code class="filename">winwrapper.ini</code> file from <span class="emphasis"><em>Squish</em></span>'s
+<code class="filename">etc</code> folder, and then
+modify this file as described in the following sections.
+</p><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Note: Registering the new INI file"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/note.png"></img></td><th align="left">Registering the new INI file</th></tr><tr><td align="left" valign="top"><p>
+Once you have copied and modifed the <code class="filename">winwrapper.ini</code>
+file, you must let <span class="emphasis"><em>Squish</em></span> know that the file exists so that <span class="emphasis"><em>Squish</em></span>
+will read it when necessary. This is done by registering the file for
+each AUT that you want to be able to make use of it. (See
+<a class="xref" href="rg-autsettings.html#rgas-aut-config-ini-register" title="7.3.8. AUT .ini file for Wrapper">AUT <code class="filename">.ini</code> file for Wrapper (Section 7.3.8)</a>.)
+</p><p>
+Using a copy of the <code class="filename">winwrapper.ini</code> file rather than
+the original ensures that you can always refer to the original
+file—for example, to see the default values of the various
+configuration items. And, of course, when you upgrade <span class="emphasis"><em>Squish</em></span>, your
+copied file won't get overwritten (so long as you don't keep it in
+<span class="emphasis"><em>Squish</em></span>'s directory).
+</p></td></tr></table></div><p>
+If you already have an <code class="filename">.ini</code> file (perhaps because
+you created one to work with <span class="emphasis"><em>Squish</em></span> for <span class="trademark">Java</span>™—as described
+in <a class="xref" href="rg-autsettings.html#rgas-javawrapping" title="7.3.8.2. Wrapping custom Java™ classes">Wrapping custom <span class="trademark">Java</span>™ classes (Section 7.3.8.2)</a>), you can use the existing file,
+and simply add new Windows-specific lines to it. (<span class="emphasis"><em>Squish</em></span> doesn't care
+what the file's name is or where it is located, so long as it is a
+<code class="filename">.ini</code> file that has the right information in the
+right format.)
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="rgas-config-win32-controls-conflicts"></a>7.3.9.2. Resolving conflicting ways to identify GUI controls</h4></div></div></div><p>
+By default, <span class="emphasis"><em>Squish</em></span> will only record actions on native controls—such
+as embedded ActiveX controls—if it can clearly identify the
+controls as such. However, with <span class="trademark">Java</span>™, it's not possible for <span class="emphasis"><em>Squish</em></span>
+to be certain whether something is a native control or a <span class="trademark">Java</span>™ control.
+In view of this, it is necessary to tell <span class="emphasis"><em>Squish</em></span> about the native
+controls being used, so that <span class="emphasis"><em>Squish</em></span> can correctly record actions on
+them.
+</p><p>
+For example, to inform <span class="emphasis"><em>Squish</em></span> that a
+control called <code class="code">MyCalendarCtrl</code> is a native control, create a
+configuration file as described in
+<a class="xref" href="rg-autsettings.html#rgas-config-win32-controls-inisetup" title="7.3.9.1. Creating an INI file for Squish to recognize native Windows controls">Creating an INI file for <span class="emphasis"><em>Squish</em></span> to recognize native Windows
+controls (Section 7.3.9.1)</a> with the following
+contents:
+</p><pre class="programlisting">
+[Windows Wrapper]
+Whitelist="MyCalendarCtrl"
+</pre><div class="tip" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Tip: Native Control Names"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Tip]" src="images/tip.png"></img></td><th align="left">Native Control Names</th></tr><tr><td align="left" valign="top"><p>
+If you don't know the native control's class name, you will need to ask
+the application's developers. Alternatively, you can use a tool like
+Spy++ (which is supplied with Microsoft Visual Studio) or <a class="ulink" href="http://www.autoitscript.com/autoit3/" target="_blank">AutoIt Window Info</a>.
+</p></td></tr></table></div><p>
+It is possible to have more than one class listed in the <span class="emphasis"><em>Squish</em></span>
+whitelist—just separate them with commas, and always put each name
+in quotes. For example:
+</p><pre class="programlisting">
+[Windows Wrapper]
+Whitelist="MyCalendarCtrl","AnotherControl","InternetExplorerCtrl"
+</pre><p>
+It is also possible to tell <span class="emphasis"><em>Squish</em></span> to record events on native
+Windows programs which are launched by your application. To do this, you
+must tell <span class="emphasis"><em>Squish</em></span> the window title bar caption used by the
+Windows application which is launched, so that <span class="emphasis"><em>Squish</em></span> knows that it
+belongs to your main application. This is done by adding an <code class="code">Extra
+Windows</code> entry to your <code class="filename">.ini</code> file, for example:
+</p><pre class="programlisting">
+[Windows Wrapper]
+Whitelist="MyCalendarCtrl","AnotherControl","InternetExplorerCtrl"
+Extra Windows="Microsoft Word"
+</pre><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Note: Extra Windows"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/note.png"></img></td><th align="left">Extra Windows</th></tr><tr><td align="left" valign="top"><p>
+The <code class="code">Extra Windows</code>'s values must be quoted and
+comma-separated.</p><p>Either the exact window title must be specified, or wildcards
+must be used. (<code class="code">*</code> matches any number of characters,
+<code class="code">?</code> matches any single character.)</p></td></tr></table></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="rgas-config-win32-controls-com"></a>7.3.9.3. Accessing the properties of ActiveX-based and COM controls</h4></div></div></div><p>
+Squish can be used to access all the properties exposed by ActiveX-based
+controls. This ActiveX functionality is also used to automate the
+controls supplied by various third-party vendors, such as Infragistics
+and Exontrol. This feature is disabled by default since it may incur a
+small runtime cost in performance and test stability, but it is easy to
+to activate it.
+</p><p>
+To activate the recognition of ActiveX controls—in fact,
+recognition of all COM controls—edit the <code class="filename">.ini</code>
+file described in <a class="xref" href="rg-autsettings.html#rgas-config-win32-controls-inisetup" title="7.3.9.1. Creating an INI file for Squish to recognize native Windows controls">Creating an INI file for <span class="emphasis"><em>Squish</em></span> to recognize native Windows
+controls (Section 7.3.9.1)</a> to add a <code class="code">COM
+Object Detection</code> entry, and give this entry a value of
+<code class="code">1</code> to turn it on.
+</p><pre class="programlisting">
+[Windows Wrapper]
+COM Object Detection=1
+</pre></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="rg-winwrapper.ini.reference"></a>7.3.9.4. <code class="filename">winwrapper.ini</code> Reference</h4></div></div></div><p>
+The <code class="filename">winwrapper.ini</code>'s <code class="code">[Windows Wrapper]</code>
+section supports a number of
+<span class="emphasis"><em>key</em></span>=<span class="emphasis"><em>value</em></span> pairs, as described
+below in alphabetical order.
+</p><p>
+The <span class="bold"><strong>Blacklist</strong></span> key is used to identify
+window class names that the Windows wrapper should
+<span class="emphasis"><em>not</em></span> attempt to record or playback. The matching is
+based on the class name, although wildcards (<code class="code">*</code> to match
+zero or more of any characters) are also supported.
+</p><pre class="programlisting">
+[Windows Wrapper]
+Blacklist="#76423", "Outlook*"
+</pre><p>
+The <span class="bold"><strong>Blacklisted Objects</strong></span> key is used to
+identify objects that the Windows wrapper should
+<span class="emphasis"><em>not</em></span> attempt to record or playback. Such objects are
+identified using <span class="emphasis"><em>Squish</em></span> real (multi-property) names.
+</p><pre class="programlisting">
+[Windows Wrapper]
+Blacklisted Objects="{type='WindowsControl' text='OK'}", "{type='WindowsControl' text='Cancel'}"
+</pre><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Note: Not all object names can be used"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/note.png"></img></td><th align="left">Not all object names can be used</th></tr><tr><td align="left" valign="top"><p>
+For performance reasons, only object names using
+<code class="literal">type='WindowsControl'</code> (or object names specifying no
+<code class="literal">type</code> at all, e.g. <code class="literal">{class='QWidget'
+text='Hello'}</code> can be used.</p></td></tr></table></div><p>
+The <span class="bold"><strong>Blacklisted Processes</strong></span> key is used
+to identify executables that the Windows wrapper should
+<span class="emphasis"><em>not</em></span> attempt to record or playback. The matching is
+done on the filename of the executable (but case-insensitively).
+</p><pre class="programlisting">
+[Windows Wrapper]
+Blacklisted Processes="notepad.exe"
+</pre><p>
+The <span class="bold"><strong>COM Object Detection</strong></span> key is
+described above: <a class="xref" href="rg-autsettings.html#rgas-config-win32-controls-com" title="7.3.9.3. Accessing the properties of ActiveX-based and COM controls">Accessing the properties of ActiveX-based and COM controls (Section 7.3.9.3)</a>.
+</p><p>
+The <span class="bold"><strong>Extra Windows</strong></span> key is used to make
+it possible for <span class="emphasis"><em>Squish</em></span> to hook into additional arbitrary processes
+based on their window titles. The value may use simple glob-style
+wildcards (<code class="code">*</code> for zero or more of any character,
+<code class="code">?</code> for any single character). For example, to match any
+OpenOffice window or the Calculator window we could use:
+</p><pre class="programlisting">
+[Windows Wrapper]
+Extra Windows="*OpenOffice*", "Calculator"
+</pre><p>
+The <span class="bold"><strong>Whitelist</strong></span> key is used to identify
+window class names that the Windows wrapper should record and playback.
+The matching is based on the class name, although wildcards
+(<code class="code">*</code> to match zero or more of any characters) are also
+supported.
+</p><pre class="programlisting">
+[Windows Wrapper]
+Whitelist="#31482", "Notepad++"
+</pre><p>
+The <span class="bold"><strong>Whitelisted Objects</strong></span> key is used to
+identify objects that the Windows wrapper should record and playback.
+Such objects are identified using <span class="emphasis"><em>Squish</em></span> real (multi-property) names.
+</p><pre class="programlisting">
+[Windows Wrapper]
+Whitelisted Objects="{type='WindowsControl' text='OK'}", "{type='WindowsControl' text='Cancel'}"
+</pre><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Note: Not all object names can be used"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/note.png"></img></td><th align="left">Not all object names can be used</th></tr><tr><td align="left" valign="top"><p>
+For performance reasons, only object names using
+<code class="literal">type='WindowsControl'</code> (or object names specifying no
+<code class="literal">type</code> at all, e.g. <code class="literal">{class='QWidget'
+text='Hello'}</code> can be used.</p></td></tr></table></div></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="rgas-aut-settings-android"></a>7.3.10. Launcher arguments for Android</h3></div></div></div><p>
+Some special options can be set in <span class="guilabel">Launcher Arguments</span>
+field on the test suite settings page. These option are command line options
+for <a class="xref" href="rg-cmdline.html#androidobserver" title="7.4.7.2. androidobserver">androidobserver (Section 7.4.7.2)</a>, which handles the connection to an
+Android AUT. Options w/o arguments can be set in the
+<a class="link" href="ugs-appcontext.html#ugsac-multipleaut-android" title="5.12.2. Notes on using startApplication with Android"><code class="code">startApplication</code></a>
+string, but without the -- prefix. Available options are:
+</p><div class="informaltable"><table border="0"><colgroup><col></col></colgroup><tbody><tr valign="top"><td valign="top">
+<div class="itemizedlist"><ul type="disc" compact><li><p><a class="xref" href="rg-cmdline.html#androidobserver-port" title="7.4.7.2.4. --port">--port (Section 7.4.7.2.4)</a></p></li><li><p><a class="xref" href="rg-cmdline.html#androidobserver-clear" title="7.4.7.2.2. --clear-app-settings">--clear-app-settings (Section 7.4.7.2.2)</a></p></li><li><p><a class="xref" href="rg-cmdline.html#androidobserver-force-rotation" title="7.4.7.2.3. --force-rotation">--force-rotation (Section 7.4.7.2.3)</a></p></li><li><p><a class="xref" href="rg-cmdline.html#androidobserver-no-autostart-observer" title="7.4.7.2.6. --no-autostart-observer">--no-autostart-observer (Section 7.4.7.2.6)</a></p></li><li><p><a class="xref" href="rg-cmdline.html#androidobserver-no-ui-automation" title="7.4.7.2.7. --no-ui-automation">--no-ui-automation (Section 7.4.7.2.7)</a></p></li><li><p><a class="xref" href="rg-cmdline.html#androidobserver-web-hookup-timeout" title="7.4.7.2.8. --web-hookup-timeout">--web-hookup-timeout (Section 7.4.7.2.8)</a></p></li></ul></div>
+</td></tr></tbody></table></div></div></div><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" type="text/javascript" src="ScriptingLanguage.js"></script><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format">setScriptingLanguage();</script><div class="navfooter"><hr></hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="rg-bindings.html">Prev</a> </td><td width="20%" align="center"><a accesskey="u" href="ref.man.html">Up</a></td><td width="40%" align="right"> <a accesskey="n" href="rg-cmdline.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">7.2. AUT Script Bindings—Creating and Accessing  </td><td width="20%" align="center"><a accesskey="h" href="index-noframes.html">Home</a></td><td width="40%" align="right" valign="top"> 7.4. Command Line Reference</td></tr></table></div></body>
+<!-- Mirrored from rg-autsettings.html by HTTrack Website Copier/3.x [XR&CO'2013], Wed, 06 Jul 2022 13:29:00 GMT -->
+</html>

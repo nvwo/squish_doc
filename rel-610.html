@@ -1,0 +1,207 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<!-- Mirrored from rel-610.html by HTTrack Website Copier/3.x [XR&CO'2013], Wed, 06 Jul 2022 13:28:55 GMT -->
+<head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><title>2.22. Version 6.1</title><link rel="stylesheet" href="manual.css" type="text/css"></link><meta name="generator" content="DocBook XSL Stylesheets V1.73.2"></meta><link rel="start" href="index-noframes.html" title="Squish Manual"></link><link rel="up" href="relnotes.html" title="Chapter 2. Release Notes—for Upgraders"></link><link rel="prev" href="rel-620.html" title="2.21. Version 6.2"></link><link rel="next" href="rel-610beta.html" title="2.23. Version 6.1 Beta"></link><style xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" type="text/css" media="screen">
+        div.toc * { margin-left: 6px; margin-right: auto; max-width: 75em; }
+        div.toc span { margin-left: 0px; }
+        * { margin-left: auto; margin-right: auto; max-width: 75em; }
+        body { margin-left: 6px; margin-right: 6px; }
+        table th { padding: .5ex }
+        table td { padding: .5ex }
+    </style><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format">
+        function keyPress() {
+            var e = window.event;
+            if ( e == undefined ) {
+                return;
+            }
+            /* ### does not properly scroll, yet
+            if ( e.keyCode == 32 ) {
+            var l = document.links;
+            for ( var i = 0; i < l.length; i++ ) {
+                if ( l[i].innerText == "Next" ) {
+                location.href = l[i].href;
+                }
+            }
+            } else
+                */
+                if ( e.keyCode == 0x08 ) {
+            var l = document.links;
+            for ( var i = 0; i < l.length; i++ ) {
+                if ( l[i].innerText == "Prev" ) {
+                location.href = l[i].href;
+                }
+            }
+            }
+        }
+        document.onkeypress = keyPress;
+    </script></head><body><div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="rel-610"></a>2.22. Version 6.1</h2></div></div></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><span class="section"><a href="rel-610.html#idp35178992">2.22.1. General</a></span></dt><dt><span class="section"><a href="rel-610.html#idp35183856">2.22.2. Squish IDE-specific</a></span></dt><dt><span class="section"><a href="rel-610.html#idp35190944">2.22.3. Scripting</a></span></dt><dt><span class="section"><a href="rel-610.html#idp35205480">2.22.4. Qt-specific</a></span></dt><dt><span class="section"><a href="rel-610.html#idp35214200">2.22.5. <span class="trademark">Java</span>™-specific</a></span></dt><dt><span class="section"><a href="rel-610.html#idp35218192">2.22.6. Web-specific</a></span></dt><dt><span class="section"><a href="rel-610.html#idp35232576">2.22.7. Windows (native)-specific</a></span></dt><dt><span class="section"><a href="rel-610.html#idp35245776">2.22.8. macOS-specific (Cocoa/Carbon edition)</a></span></dt><dt><span class="section"><a href="rel-610.html#idp35248352">2.22.9. iOS-specific (iPhone/iPad edition)</a></span></dt><dt><span class="section"><a href="rel-610.html#idp35252256">2.22.10. Android-specific</a></span></dt><dt><span class="section"><a href="rel-610.html#idp35256608">2.22.11. Tk-specific</a></span></dt><dt><span class="section"><a href="rel-610.html#idp35257864">2.22.12. Source Packages</a></span></dt><dt><span class="section"><a href="rel-610.html#idp35259928">2.22.13. Documentation</a></span></dt></dl></div><p><span class="emphasis"><em>Squish</em></span> 6.1 is a feature release which delivers new features to all
+  editions of the product.</p><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="idp35178992"></a>2.22.1. General</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p><a id="rel-610-visualvp"></a>A new verification point type <span class="guilabel">Visual
+      Verification Point</span> has been introduced which greatly
+      simplifies verifying the appearance of groups of controls (e.g. entire
+      dialogs).</p></li><li><p><a id="rel-610-correlation"></a>Added correlation based image comparison
+      method.</p></li><li><p>A new installation program was implemented for Windows,
+      Linux and macOS. The new installation program supports both unattended
+      installations as well as creating shortcuts on the desktop or start
+      menu.</p></li><li><p>Fixed an issue causing high <acronym class="acronym">CPU</acronym> usage
+      when executing drag-and-drop operations on X11 systems.</p></li><li><p>New test report versions were added to contain the results of <span class="guilabel">Visual
+      Verification Points</span>. The new report generators can be selected by passing
+      <code class="option">json1.1</code>, <code class="option">xml3.1</code> or <code class="option">xml2.2</code> on the
+      command line.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="idp35183856"></a>2.22.2. Squish IDE-specific</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p><a id="rel-610-usewaitforexists"></a>Creating scripted property verifications will now
+      generate code using the <a class="xref" href="rgs-squish.html#waitForObjectExists-function"><code class="function">waitForObjectExists</code></a>
+      function, shortening the generated code.</p></li><li><p>Support choosing the editor which is used to open files
+      from the testcase or testsuite, including allowing to use the system
+      editor for the file.</p></li><li><p><a id="rel-610-objectsnapshot"></a>To simplify test failures and interaction with technical
+      support, it is now possible to save object snapshots of (sub-)trees of
+      the <acronym class="acronym">AUT</acronym>'s object hierarchy via a context menu entry in
+      the application objects tree or <a class="xref" href="rgs-squish.html#saveObjectSnapshot-function"><code class="function">saveObjectSnapshot</code></a> function.</p></li><li><p>The used license key is now shown (and can be changed)
+      via the <span class="guimenu">Help</span> menu of the <span class="application">Squish IDE</span>.</p></li><li><p>Improved error reporting in case creating screenshot
+      verification points fails.</p></li><li><p>Fixed crash when spying with multiple contexts and the
+      not-current context registering new classes or
+      namespaces.</p></li><li><p>Fixed a problem with starting the recording after closing
+      an object not found dialog through the <span class="guilabel">Debug</span>
+      button.</p></li><li><p>Fixed a problem causing the <span class="application">Squish IDE</span> to hang when trying to
+      create a verification point during a recording session on
+      Linux.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="idp35190944"></a>2.22.3. Scripting</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>A new <a class="link" href="rgs-squish.html#rgss-screen-object" title="6.3.15. Screen Object"><code class="code">Screen</code>
+      <acronym class="acronym">API</acronym></a> was introduced which allows querying
+      information about the connected screens (such as the display
+      resolution).</p></li><li><p><a id="rel-610-toplevel"></a>A new <a class="link" href="rgs-squish.html#rgss-toplevelwindow-object" title="6.3.16. ToplevelWindow Object"><code class="code">ToplevelWindow</code>
+      <acronym class="acronym">API</acronym></a> was introduced which allows generic
+      interactions with toplevel windows, such as minimizing, maximing, closing
+      or moving windows.</p></li><li><p>Support passing arbitrary callables (e.g. methods) to the
+      <a class="xref" href="rgs-squish.html#waitFor-function"><code class="function">waitFor</code></a> function in Python.</p></li><li><p>Calling <a class="xref" href="rgs-squish.html#test.fixateResultContext-function"><code class="function">test.fixateResultContext</code></a> without any argument now
+      actually complies to the documentation and behaves the same as
+      <code class="code">test.fixateResultContext(1)</code>.</p></li><li><p>Greatly improved the <a class="xref" href="rgs-squish.html#testData.put-function"><code class="function">testData.put</code></a> function. Besides of ability to copy
+      large files, they will be copied much faster than
+      before.</p></li><li><p><a id="rel-610-websocketclient"></a>Added <a class="link" href="rgs-js.html#ws-object" title="6.16.10. WebSocket Object">WebSocket client
+      support</a> for JavaScript test scripts.</p></li><li><p><a id="rel-610-clipboard"></a>Added script functions <a class="xref" href="rgs-squish.html#setClipboardText-function"><code class="function">setClipboardText</code></a> and <a class="xref" href="rgs-squish.html#getClipboardText-function"><code class="function">getClipboardText</code></a> for clipboard manipulation on
+      <acronym class="acronym">AUT</acronym> side. Users of non-Qt AUT on Linux needs to
+      install the <span class="application">xsel</span> tool for this feature to
+      work.</p></li><li><p>Timeout problems when communicating to the
+      <acronym class="acronym">AUT</acronym> now cause script exceptions to be raised (which
+      can be caught and handled) instead of aborting the test execution right
+      away.</p></li><li><p>Test execution will now wait for all hooked subprocesses
+      of started applications to terminate before ending the test
+      run.</p></li><li><p>The <a class="xref" href="rgs-squish.html#test.compare-function"><code class="function">test.compare</code></a> function in
+      Perl now supports comparing complex AUT objects.</p></li><li><p>A new <a class="xref" href="rgs-squish.html#testSettings.objectNotFoundDebugging-property">testSettings.objectNotFoundDebugging</a> property was
+      added which can be used to temporarily deactivate the object not found
+      dialog.</p></li><li><p>Fixed the <a class="xref" href="rgs-squish.html#test.vp-function"><code class="function">test.vp</code></a> function
+      such that an expected failure does not skip following BDD steps anymore;
+      <a class="xref" href="rgs-squish.html#test.vp-function"><code class="function">test.vp</code></a> with an expected failure no longer
+      throws a failed verification exception when <a class="xref" href="rgs-squish.html#testSettings.throwOnFailure-property">testSettings.throwOnFailure</a> is set to
+      <code class="code">true</code>.</p></li><li><p>The <a class="xref" href="rgs-squish.html#test.fixateResultContext-function"><code class="function">test.fixateResultContext</code></a>
+      and <a class="xref" href="rgs-squish.html#test.restoreResultContext-function"><code class="function">test.restoreResultContext</code></a> functions now
+      correctly influence the locations of test errors logged in response to
+      script exceptions.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="idp35205480"></a>2.22.4. Qt-specific</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p><a id="rel-610-newqtpreload"></a>New approach for hooking into a Qt 5 <acronym class="acronym">AUT</acronym>
+      that is compatible with the Gold Linker</p></li><li><p><a id="rel-610-webengine"></a>Support for Qt WebEngine in both QtWidgets and
+      QtQuick applications.</p></li><li><p>Support screenshots of QtQuick applications on Qt 5
+      embedded and mobile platforms that do not support native screen grabbing
+      </p></li><li><p>Display (most important) properties of
+      <code class="code">QRegExp</code> in the spy.</p></li><li><p>Add support for <code class="code">QRegularExpression</code> including
+      properties in the spy.</p></li><li><p>The <span class="application">dllpreload</span> program now
+      respects a new <code class="envar">SQUISH_DLLPRELOAD_DISABLE</code> environment
+      variable which can be made to make <span class="application">dllpreload</span>
+      not inject any code into the given process but rather launch it straight
+      away.</p></li><li><p>Replay on QtQuick items now ensures that the toplevel
+      window for the item has input focus and raise a script error if focusing
+      fails.</p></li><li><p>Fixed a problem which caused <acronym class="acronym">AUT</acronym>s to
+      not launch sub-processes on Windows in case the sub-process is launched
+      with the <code class="code">CREATE_BREAKAWAY_FROM_JOB</code> flag.</p></li><li><p>Fixed non-working menu recording on macOS with Qt 5 in
+      some cases (especially when a toplevel <code class="code">QMenuBar</code> object is
+      used).</p></li><li><p>Fixed playback of <a class="xref" href="rgs-qtconvenience.html#qt-activateItem-function"><code class="function">activateItem</code></a> on macOS with Qt 5 in some cases
+      where menu items in front of the item that should be activated was merged
+      into the application menu.</p></li><li><p>Improved performance for listing a huge number of
+      toplevel objects (i.e. when hitting a breakpoint).</p></li><li><p>Support building Qt toolkit support with GCC 6.1 or
+      newer.</p></li><li><p>Blinking of text cursor ("caret") is
+      temporarily suspended now while taking screenshots.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="idp35214200"></a>2.22.5. <span class="trademark">Java</span>™-specific</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Support JavaFX HiDPI scaling on
+      Windows.</p></li><li><p>Support JavaFX on Linux framebuffer.</p></li><li><p>Support for replaying <acronym class="acronym">SWT</acronym>/Gtk3 on
+      HiDPI X11 displays.</p></li><li><p>Fix for replaying on <acronym class="acronym">SWT</acronym>/Gtk menus
+      having scroll buttons.</p></li><li><p>Speedups in JavaFX object lookup when embedded in
+      <acronym class="acronym">SWT</acronym>.</p></li><li><p>Blinking of text cursor ("caret") is
+      temporarily suspended now while taking screenshots.</p></li><li><p>Added support for hooking <acronym class="acronym">SWT</acronym>
+      applications based on Eclipse 4.6.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="idp35218192"></a>2.22.6. Web-specific</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Include the browser tab container in all names generated
+      by <span class="emphasis"><em>Squish</em></span> for Web instead of only those generated for recorded
+      interactions.</p></li><li><p>Support using the <code class="code">simplifiedInnerText</code>
+      property in object names and record that property instead of
+      <code class="code">innerText</code> to improve stability of tests across different
+      browsers.</p></li><li><p>Added <a class="xref" href="rgs-webconvenience.html#web-HTML_Select.deselectByValues-function"><code class="function">HTML_Select.deselectByValues</code></a>, <a class="xref" href="rgs-webconvenience.html#web-HTML_Select.deselectByIndexes-function"><code class="function">HTML_Select.deselectByIndexes</code></a> and <a class="xref" href="rgs-webconvenience.html#web-HTML_Select.deselectByTexts-function"><code class="function">HTML_Select.deselectByTexts</code></a> convenience
+      functions for the <a class="link" href="rgs-webconvenience.html#web-HTML_Select-class" title="6.10.32. HTML_Select Class"><code class="code">HTML_Select</code></a> objects
+      to deselect items in a <code class="literal">select</code>
+      element.</p></li><li><p>Provide <a class="link" href="rgs-webconvenience.html#web-HTML_Select.selectedValues-property"><code class="code">HTML_Select.selectedValues</code></a>,
+      <a class="link" href="rgs-webconvenience.html#web-HTML_Select.selectedTexts-property"><code class="code">HTML_Select.selectedTexts</code></a>,
+      <a class="link" href="rgs-webconvenience.html#web-HTML_Select.selectedIndexes-property"><code class="code">HTML_Select.selectedIndexes</code></a>
+      and <a class="link" href="rgs-webconvenience.html#web-HTML_Select.selectedLabels-property"><code class="code">HTML_Select.selectedLabels</code></a>
+      convenience properties for <a class="link" href="rgs-webconvenience.html#web-HTML_Select-class" title="6.10.32. HTML_Select Class"><code class="code">HTML_Select</code></a> objects
+      that provide the value, text, index or label of the selected items of the
+      object.</p></li><li><p>Fixed a problem with Chrome where after a navigation the
+      new page wasn't properly hooked, causing object lookup errors and no
+      <code class="literal">DOCUMENT</code> object in the <span class="application">Spy</span>.</p></li><li><p>Added <a class="link" href="installation.for.web.testing.html#installation.for.web.testing.with.safari.on.osx.10.11.5" title="3.7.7.2. Safari on macOS® 10.11.5 or later">detailed
+      instructions how to enable "Allow JavaScript from Apple Events"</a>
+      which is required to automate <span class="application">Safari</span> on macOS 10.11.5 and
+      later.</p></li><li><p>Added <a class="xref" href="rgs-webconvenience.html#web-Browser.majorVersion-function"><code class="function">Browser.majorVersion</code></a>
+      function.</p></li><li><p>Added <code class="literal">top</code>/<code class="literal">bottom</code>
+      alignment parameter to the <a class="xref" href="rgs-webconvenience.html#web-scrollTo-function"><code class="function">scrollTo</code></a>
+      function.</p></li><li><p>Added <a class="xref" href="rgs-webconvenience.html#web-startDrag-function"><code class="function">startDrag</code></a> and <a class="xref" href="rgs-webconvenience.html#web-dropOn-function"><code class="function">dropOn</code></a> functions to simulating drag and drop
+      operations.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="idp35232576"></a>2.22.7. Windows (native)-specific</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Most Windows Forms controls now expose a
+      <code class="code">visible</code> property.</p></li><li><p>Fixed a problem causing replay of actions on wxWidgets
+      tab controls to fail.</p></li><li><p>A configuration setting was added to disable recording of
+      <a class="xref" href="rgs-squish.html#waitForObjectItem-function"><code class="function">waitForObjectItem</code></a> statements, this is useful
+      for managing all item accesses via the object map.</p></li><li><p>Exposed <code class="code">text</code> property of the <span class="trademark">Microsoft</span>®
+      <acronym class="acronym">UIA</acronym> <code class="literal">Group</code> type.</p></li><li><p>Fixed screenshots of maximized windows containing black
+      borders or parts of the Windows task bar.</p></li><li><p>Blinking of text cursor ("caret") is
+      temporarily suspended now while taking screenshots.</p></li><li><p>Fixed value of <code class="code">position</code> property of
+      <acronym class="acronym">WPF</acronym> applications which use a
+      <code class="literal">RightToLeft</code> flow direction.</p></li><li><p>Screenshots of top level windows no longer include decorations
+        like drop shadows on Windows 10. This functionality can be disabled
+        using a new entry in the <code class="filename">SQUISH_DIR/etc/winwrapper.ini</code> file
+        called <code class="literal">Include Decoration In Top Level Window
+        Geometry</code>.</p><p>Note that depending on the Windows UI theme being used, this
+        change in behavior may cause existing screenshot verifications of top
+        level windows to fail. To resolve this issue, you can either use the
+        aforementioned <code class="literal">Include Decoration In Top Level Window
+        Geometry</code> setting, or update your expected screenshots.</p><p>If you have multiple screenshots to update, you may want to
+        consider setting the <code class="envar">SQUISH_LEARN_SCREENSHOTS</code>
+        environment variable to <code class="literal">1</code> and then replaying your
+        test scripts to automatically update all expected screenshots. See
+        <a class="ulink" href="https://www.froglogic.com/blog/squish-tip-of-the-week-how-to-automatically-update-screenshot-verification-points/" target="_blank">our
+        blog article</a> on this topic for a more elaborate discussion of
+        this feature.</p></li><li><p>Added support for Delphi controls typically used in
+      <a class="ulink" href="http://www.jrsoftware.org/isinfo.php" target="_blank">Inno Setup</a>
+      installers.</p></li><li><p><span class="emphasis"><em>Squish</em></span> will now omit recording relative coordinates
+      when generating script statements which perform mouse clisk.  A few
+      object types are exempt from this, the exact set of types is configurable
+      in a new setting <code class="code">Record With Relative Coordinates</code> in
+      the <code class="filename">SQUISH_DIR/etc/winwrapper.ini</code> file.</p></li><li><p>The <span class="application">startwinaut</span> program has a
+      new parameter <code class="option">--window-title.</code> The parameter can be used
+      to attach to an <acronym class="acronym">AUT</acronym> given the title of one of the
+      windows.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="idp35245776"></a>2.22.8. macOS-specific (Cocoa/Carbon edition)</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Added support for view-based <code class="code">NSOutlineViews</code>:
+      In previous <span class="emphasis"><em>Squish</em></span> versions, the cells in a view-based
+      <code class="code">NSOutlineView</code> appeared as <code class="code">NSNull</code> objects and
+      you couldn't do much useful things with this. In Squish 6.1 you now get
+      the real view object for the cell instead of the <code class="code">NSNull</code>. If
+      you use the <code class="code">NSNull</code> objects in your test scripts, you have to
+      update them to use the view objects instead.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="idp35248352"></a>2.22.9. iOS-specific (iPhone/iPad edition)</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Added support for testing applications in the iOS
+      Simulator of Xcode 8.</p></li><li><p>The <code class="filename">libsquishioswrapper.a</code> library
+      used for device testing has changed its dependencies for linking: use
+      <code class="option">-lc++</code> instead of <code class="option">-lstdc++</code> and
+      additionally specify <code class="option">-liconv</code> for the linker options when
+      building the app for <span class="emphasis"><em>Squish</em></span> device testing.</p></li><li><p>Fixed automatically turning on accessibility properties on
+      iOS 9.3 devices.</p></li><li><p>Added script function <a class="xref" href="rgs-iphoneconvenience.html#iphone-hideKeyboard-function"><code class="function">hideKeyboard</code></a> to hide the on-screen
+      keyboard.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="idp35252256"></a>2.22.10. Android-specific</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Fixed screenshot color channel swapped for some
+      panels.</p></li><li><p>Fixed problem with rotated screenshot on
+      Marshmallow.</p></li><li><p>Fixed a problem causing picking to not work inside
+      WebView.</p></li><li><p>Improved stability of the
+      <span class="application">androidobserver</span> program in case an app shuts
+      down unexpectedly.</p></li><li><p>Added bindings to the Android UI Automator Test
+      Classes.</p></li><li><p>Added support for Android 7.0
+      "Nougat".</p></li><li><p>Added support for inspecting the
+      <code class="code">AccessibilityNodeInfo</code> hierarchy in the Spy and using such
+      objects with the Android script <acronym class="acronym">API</acronym>. See <a class="xref" href="ug-how.to.use.the.android.api.html#ug-how.to.use.the.android.accessibility" title="5.7.1. How to Work with Accessibility objects">How to Work with Accessibility objects (Section 5.7.1)</a> for more
+      information.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="idp35256608"></a>2.22.11. Tk-specific</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Support clickItem with TixHList based
+      controls.</p></li><li><p>Fixed a problem with the lookup of menu items in a
+      menubar on windows.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="idp35257864"></a>2.22.12. Source Packages</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Detect if Qt needs a C++11 enabled compiler (Qt &gt;=
+      5.7).</p></li><li><p>Support building JavaScript support with
+      MSVC14.</p></li><li><p>The <code class="filename">configure</code> script now rejects
+      unknown arguments instead of ignoring them.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="idp35259928"></a>2.22.13. Documentation</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Overhauled the instructions for installing binary
+      packages.</p></li></ul></div></div></div><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" type="text/javascript" src="ScriptingLanguage.js"></script><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format">setScriptingLanguage();</script><div class="navfooter"><hr></hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="rel-620.html">Prev</a> </td><td width="20%" align="center"><a accesskey="u" href="relnotes.html">Up</a></td><td width="40%" align="right"> <a accesskey="n" href="rel-610beta.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">2.21. Version 6.2 </td><td width="20%" align="center"><a accesskey="h" href="index-noframes.html">Home</a></td><td width="40%" align="right" valign="top"> 2.23. Version 6.1 Beta</td></tr></table></div></body>
+<!-- Mirrored from rel-610.html by HTTrack Website Copier/3.x [XR&CO'2013], Wed, 06 Jul 2022 13:28:55 GMT -->
+</html>

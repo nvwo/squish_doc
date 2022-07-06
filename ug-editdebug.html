@@ -1,0 +1,195 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<!-- Mirrored from ug-editdebug.html by HTTrack Website Copier/3.x [XR&CO'2013], Wed, 06 Jul 2022 13:29:00 GMT -->
+<head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><title>5.21. How to Edit and Debug Test Scripts</title><link rel="stylesheet" href="manual.css" type="text/css"></link><meta name="generator" content="DocBook XSL Stylesheets V1.73.2"></meta><link rel="start" href="index-noframes.html" title="Squish Manual"></link><link rel="up" href="users-guide.html" title="Chapter 5. User Guide"></link><link rel="prev" href="how.to.modify.squish.functions.html" title="5.20. How to Modify Squish Functions"></link><link rel="next" href="ug-vps.html" title="5.22. How to Create and Use Verification Points"></link><style xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" type="text/css" media="screen">
+        div.toc * { margin-left: 6px; margin-right: auto; max-width: 75em; }
+        div.toc span { margin-left: 0px; }
+        * { margin-left: auto; margin-right: auto; max-width: 75em; }
+        body { margin-left: 6px; margin-right: 6px; }
+        table th { padding: .5ex }
+        table td { padding: .5ex }
+    </style><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format">
+        function keyPress() {
+            var e = window.event;
+            if ( e == undefined ) {
+                return;
+            }
+            /* ### does not properly scroll, yet
+            if ( e.keyCode == 32 ) {
+            var l = document.links;
+            for ( var i = 0; i < l.length; i++ ) {
+                if ( l[i].innerText == "Next" ) {
+                location.href = l[i].href;
+                }
+            }
+            } else
+                */
+                if ( e.keyCode == 0x08 ) {
+            var l = document.links;
+            for ( var i = 0; i < l.length; i++ ) {
+                if ( l[i].innerText == "Prev" ) {
+                location.href = l[i].href;
+                }
+            }
+            }
+        }
+        document.onkeypress = keyPress;
+    </script></head><body><div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="ug-editdebug"></a>5.21. How to Edit and Debug Test Scripts</h2></div></div></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><span class="section"><a href="ug-editdebug.html#uged-debugger">5.21.1. How to Use the Script Debugger</a></span></dt><dt><span class="section"><a href="ug-editdebug.html#uged-recordbp">5.21.2. How to Record After a Breakpoint</a></span></dt><dt><span class="section"><a href="ug-editdebug.html#uged-spy">5.21.3. How to Use the Spy</a></span></dt></dl></div><p>
+In addition to tools for recording and editing tests, <span class="emphasis"><em>Squish</em></span> also
+provides support for debugging test scripts and for inspecting the AUT's
+internal objects. The debugger is not only useful for finding and fixing
+bugs in test scripts, but also—using its breakpoint
+facility—for inspecting a running AUT.
+</p><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="uged-debugger"></a>5.21.1. How to Use the Script Debugger</h3></div></div></div><p>
+The <span class="application">Squish IDE</span>'s script debugger allows us to set breakpoints in our test
+scripts (see <a class="xref" href="ide.views.html#ide.the-debug.view" title="8.2.5. Debug view">Debug view (Section 8.2.5)</a>). This can be useful
+for when we want to insert verification points (see <a class="xref" href="tutorials-qt.html#tgs-vp" title="4.1.1.4. Inserting Additional Verification Points">Inserting Additional Verification Points (Section 4.1.1.4)</a>), or for recording from a breakpoint onwards, as
+discussed later in this section. Once a test script has stopped at a
+breakpoint we can continue test execution normally by clicking the
+<span class="guibutton">Resume</span> toolbar button (or by pressing
+<span class="keycap"><strong>F8</strong></span>; <a class="xref" href="ide.main.window.html#ide.resume.action" title="8.1.1.54. Resume action"><span class="guiicon">Resume</span> action (Section 8.1.1.54)</a>), or we can
+step through the test script by clicking
+<span class="guimenu">Run</span>|<span class="guimenuitem">Step
+Into</span> (or by pressing <span class="keycap"><strong>F5</strong></span>;
+<a class="xref" href="ide.main.window.html#ide.step.into.action" title="8.1.1.70. Step Into action"><span class="guiicon">Step Into</span> action (Section 8.1.1.70)</a>) or by clicking
+<span class="guimenu">Run</span>|<span class="guimenuitem">Step
+Over</span> (or by pressing <span class="keycap"><strong>F6</strong></span>;
+<a class="xref" href="ide.main.window.html#ide.step.over.action" title="8.1.1.71. Step Over action"><span class="guiicon">Step Over</span> action (Section 8.1.1.71)</a>). Alternatively, we can simply
+stop the test execution by clicking the
+<span class="guimenuitem">Terminate</span> toolbar button
+(<span class="keycap"><strong>Ctrl</strong></span>+<span class="keycap"><strong>F2</strong></span>; <a class="xref" href="ide.main.window.html#ide.terminate.action" title="8.1.1.75. Terminate action"><span class="guiicon">Terminate</span> action (Section 8.1.1.75)</a>).
+</p><p>
+While at a breakpoint it is possible to use <span class="emphasis"><em>Squish</em></span>'s debugger to see
+the call stack and to use the <span class="emphasis"><em>Squish</em></span> <span class="application">Spy</span> to examine application
+objects' property values and to insert verification points.
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="uged-recordbp"></a>5.21.2. How to Record After a Breakpoint</h3></div></div></div><p>
+In some cases it is useful to extend an existing test case with further
+actions. But it would be tedious to have to re-record the entire test
+from scratch just, for example, to click an additional button in the test.
+One solution it to simply edit the test script and add in a few lines
+with the additional actions that are required. But sometimes it is more
+convenient to simply record the extra actions at the point in the script
+where they are required.
+</p><p>
+Recording just a part of what is needed can also be useful in other
+contexts. One common use case is if we know that every one of a whole
+group of tests must always start out the same way by performing some
+initializing actions on the AUT—for example, opening a file of
+test data. We could easily just record these actions and then store them
+in a shared script. Then, for each new test case, we could write in the
+one line necessary to load in a shared script (see <a class="xref" href="ug-shareddata.html#ugsh-datascripts" title="5.23.1. How to Store and Locate Shared Scripts and Shared Data Files">How to Store and Locate Shared Scripts and Shared Data Files (Section 5.23.1)</a>)—or we could create the test from a
+template with the line already in place (see <a class="xref" href="rg-templates.html" title="7.14. Testcase Templates">Testcase Templates (Section 7.14)</a>)—and then record the text from that point
+onwards.
+</p><div class="screenshot"><div class="mediaobject" align="center"><img src="images/controlbar-stop-recording.png" align="middle"></img><div class="caption"><p><span class="emphasis"><em>Squish</em></span>'s controlbar window's Stop Recording toolbar button
+</p></div></div></div><p>
+Recording <span class="emphasis"><em>within</em></span> an existing test is made possible
+by setting a breakpoint in an existing test script at the point where
+the newly recorded actions should be inserted. Once the breakpoint is in
+place, execute the test—it will stop executing as soon as the
+breakpoint is reached. Now click
+<span class="guimenu">Run</span>|<span class="guimenuitem">Record
+Snippet</span> (<a class="xref" href="ide.main.window.html#ide.record.snippet.action" title="8.1.1.46. Re­cord Snip­pet action"><span class="guiicon">Re­cord Snip­pet</span> action (Section 8.1.1.46)</a>). This will make <span class="emphasis"><em>Squish</em></span> start
+recording on the running AUT. Interact with the AUT to perform the
+new actions, and once you have finished, click <span class="emphasis"><em>Squish</em></span>'s controlbar
+window's <span class="guibutton">Stop Recording</span> button (<a class="xref" href="ide.main.window.html#ide.stop.recording.action" title="8.1.3.1. Stop Recording action"><span class="guiicon">Stop Recording</span> action (Section 8.1.3.1)</a>) to stop
+the recording. Now click the <span class="guibutton">Resume</span> toolbar
+button (or press <span class="keycap"><strong>F8</strong></span>) or the
+<span class="guimenuitem">Terminate</span> toolbar button
+(<span class="keycap"><strong>Ctrl</strong></span>+<span class="keycap"><strong>F2</strong></span>). Once
+the script has finished or been stopped the newly recorded actions will
+be inserted into the test script at the breakpoint. At this point the
+entire script can be run again, this time including the newly recorded
+actions.
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="uged-spy"></a>5.21.3. How to Use the Spy</h3></div></div></div><p>
+In the tutorials we saw how to insert verification points by using the
+<span class="emphasis"><em>Squish</em></span> <span class="application">Spy</span>. (See, for example, <a class="xref" href="tutorials-qt.html#tgs-vp" title="4.1.1.4. Inserting Additional Verification Points">Inserting Additional Verification Points (Section 4.1.1.4)</a> in <a class="xref" href="tutorials-qt.html#tutorial-getting-started-qt" title="4.1.1. Tutorial: Starting to Test Qt Applications">Tutorial: Starting to Test Qt Applications (Section 4.1.1)</a>; or look in the equivalent
+section of the tutorial relevant to the GUI toolkit you're using.)
+Two approaches can be used: we can record a test script and then insert
+breakpoints into it—then run the test and add verifications at
+each breakpoint. Or we can record a test script and add verifications as
+we go along using the <a class="xref" href="ide.main.window.html#ide.insert.object.properties.verification.point.action" title="8.1.3.2. Verify &gt; Properties action"><span class="guiicon">Verify &gt; Properties</span> action (Section 8.1.3.2)</a> and <a class="xref" href="ide.main.window.html#ide.insert.screenshot.verification.point.action" title="8.1.3.3. Verify &gt; Screenshot action"><span class="guiicon">Verify &gt; Screenshot</span> action (Section 8.1.3.3)</a> both of
+which are available from the <a class="xref" href="ide.main.window.html#ide-the-controlbar-window" title="8.1.3. Control Bar Window">Control Bar Window (Section 8.1.3)</a>.
+</p><p>
+In either case, when a breakpoint is reached or a verification insertion
+is attempted, <span class="emphasis"><em>Squish</em></span> will switch to the <a class="xref" href="ide.main.window.html#ide.squish.spy.perspective" title="8.1.2.1. Squish Spy Perspective">Squish Spy Perspective (Section 8.1.2.1)</a> so that application objects and
+their properties can be inspected and verification points inserted as
+required.
+</p><p>
+It is also possible to use the <span class="application">Spy</span> independently. Simply click the
+<span class="guibutton">Launch AUT</span> toolbar button; this will start the AUT and
+switch <span class="emphasis"><em>Squish</em></span> to the <a class="xref" href="ide.main.window.html#ide.squish.spy.perspective" title="8.1.2.1. Squish Spy Perspective">Squish Spy Perspective (Section 8.1.2.1)</a>. Interact
+with the AUT however you like, and at any point you can see the current
+Application Objects in the <a class="xref" href="ide.views.html#ide.the-application-objects.view" title="8.2.1. Application Objects view">Application Objects view (Section 8.2.1)</a>
+and the currently selected Object's Properties in the <a class="xref" href="ide.views.html#ide.the-properties.view" title="8.2.12. Properties view">Properties view (Section 8.2.12)</a>.
+</p><p>
+Those Objects in the <a class="xref" href="ide.views.html#ide.the-application-objects.view" title="8.2.1. Application Objects view">Application Objects view (Section 8.2.1)</a>
+that have child objects can be expanded to reveal these objects (and so
+on, recursively). There is also a context menu that offers options for
+copying the current object's symbolic or real (multi-property) name to
+the clipboard: this is useful if you want to refer to the object in a
+test script that you are writing or editing. (In general it is best to
+use the symbolic name.) If you do this, be sure to invoke the context
+menu a second time and choose the <span class="guimenuitem">Add to Object
+Map</span> option so that <span class="emphasis"><em>Squish</em></span> will remember the object and
+recognize it when you use it in your test cases.
+</p><p>
+There is also a view that shows each Object's methods (<a class="xref" href="ide.views.html#ide.the-methods.view" title="8.2.9. Methods view">Methods view (Section 8.2.9)</a>). In general, any of these methods can
+be used in test scripts, for example to test that a particular widget
+has the expected state.
+</p><p>
+The <span class="application">Spy</span> is especially useful when writing test scripts by hand since
+it can be used to find out the names of the AUT's objects and which of
+their properties are accessible and what methods they provide.
+</p><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Note: Quickly Populating
+the Object Map"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/note.png"></img></td><th align="left"><a id="quickly.populating.the.object.map"></a>Quickly Populating
+the Object Map</th></tr><tr><td align="left" valign="top"><p>
+A fast alternative to using the <span class="application">Spy</span> tool when you want to find out the
+names of lots of objects, is to create a dummy test. During this test
+you must interact with all the objects you want to use in your test
+script—this will make <span class="emphasis"><em>Squish</em></span> add entries for all the objects to
+the <a class="xref" href="rg-objectmap.html" title="7.11. Object Map">Object Map (Section 7.11)</a> all in one go. You can then copy and
+paste the names—preferably the symbolic ones—into your test
+script as needed, and then delete the dummy test.
+</p></td></tr></table></div><p>
+When you start spying on an AUT, at first the main window (or first web
+page) is shown in the <a class="xref" href="ide.views.html#ide.the-application-objects.view" title="8.2.1. Application Objects view">Application Objects view (Section 8.2.1)</a>
+along with all its child objects. If you then pop up a dialog, neither
+the dialog nor its child objects are shown in the <a class="xref" href="ide.views.html#ide.the-application-objects.view" title="8.2.1. Application Objects view">Application Objects view (Section 8.2.1)</a>. This is easily remedied by
+clicking the <a class="xref" href="ide.views.html#ide.the-application-objects.view" title="8.2.1. Application Objects view">Application Objects view (Section 8.2.1)</a>'s
+<span class="guibutton">Refresh</span> toolbar button. (You can also do a
+refresh after the dialog has been closed to remove the dialog objects
+that are shown in the <a class="xref" href="ide.views.html#ide.the-application-objects.view" title="8.2.1. Application Objects view">Application Objects view (Section 8.2.1)</a>.)
+</p><p>
+The <span class="application">Spy</span> (<a class="xref" href="ide.main.window.html#ide.squish.spy.perspective" title="8.1.2.1. Squish Spy Perspective">Squish Spy Perspective (Section 8.1.2.1)</a>) has two modes
+of operation: <span class="emphasis"><em>Normal</em></span> (which is the default) and
+<span class="emphasis"><em>Pick</em></span>. The <span class="emphasis"><em>Normal</em></span> mode is
+almost always sufficient (along with the use of the <a class="xref" href="ide.views.html#ide.the-application-objects.view" title="8.2.1. Application Objects view">Application Objects view (Section 8.2.1)</a>'s
+<span class="guibutton">Refresh</span> toolbar button). However, <span class="emphasis"><em>Squish</em></span> also
+provides the <span class="emphasis"><em>Pick</em></span> mode which makes it possible to
+view one particular object in the <a class="xref" href="ide.views.html#ide.the-application-objects.view" title="8.2.1. Application Objects view">Application Objects view (Section 8.2.1)</a>.
+</p><p>
+<span class="emphasis"><em>Before</em></span> entering <span class="emphasis"><em>Pick</em></span> mode,
+interact with the AUT to make the object you are interested in visible.
+Then click the <a class="xref" href="ide.views.html#ide.the-application-objects.view" title="8.2.1. Application Objects view">Application Objects view (Section 8.2.1)</a>'s
+<span class="guibutton">Pick</span> toolbar button. This will switch <span class="emphasis"><em>Squish</em></span>
+into pick mode—<span class="emphasis"><em>Squish</em></span>'s main window will disappear and instead
+the <a class="xref" href="ide.main.window.html#ide-the-controlbar-window" title="8.1.3. Control Bar Window">Control Bar Window (Section 8.1.3)</a> will be shown. Now click
+the AUT's active window to give the AUT the focus. As you move the mouse
+over the window each object (i.e., widget) will be highlighted by being
+outlined in red. In addition, <span class="emphasis"><em>Squish</em></span> will show the highlighted
+object's real name in a tooltip.
+</p><p>
+Once the object you are interested in is highlighted click (or
+double-click depending on your platform and settings) it to pick
+it—this will also return the <span class="application">Spy</span> to its
+<span class="emphasis"><em>Normal</em></span> mode. Now the object will be shown as the
+sole entry in the <a class="xref" href="ide.views.html#ide.the-application-objects.view" title="8.2.1. Application Objects view">Application Objects view (Section 8.2.1)</a>
+with its properties shown in the <a class="xref" href="ide.views.html#ide.the-properties.view" title="8.2.12. Properties view">Properties view (Section 8.2.12)</a>. As usual you can copy its name to
+the clipboard and add it to the <a class="xref" href="rg-objectmap.html" title="7.11. Object Map">Object Map (Section 7.11)</a> using the
+context menu.
+</p><p>
+To finish spying, click the <span class="guimenuitem">Quit AUT</span> toolbar
+button. This will make <span class="emphasis"><em>Squish</em></span> stop the AUT and return to the <a class="xref" href="ide.main.window.html#ide.squish.test.management.perspective" title="8.1.2.2. Squish Test Management Perspective">Squish Test Management Perspective (Section 8.1.2.2)</a>.
+</p></div></div><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" type="text/javascript" src="ScriptingLanguage.js"></script><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format">setScriptingLanguage();</script><div class="navfooter"><hr></hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="how.to.modify.squish.functions.html">Prev</a> </td><td width="20%" align="center"><a accesskey="u" href="users-guide.html">Up</a></td><td width="40%" align="right"> <a accesskey="n" href="ug-vps.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">5.20. How to Modify <span class="emphasis"><em>Squish</em></span> Functions </td><td width="20%" align="center"><a accesskey="h" href="index-noframes.html">Home</a></td><td width="40%" align="right" valign="top"> 5.22. How to Create and Use Verification Points</td></tr></table></div></body>
+<!-- Mirrored from ug-editdebug.html by HTTrack Website Copier/3.x [XR&CO'2013], Wed, 06 Jul 2022 13:29:00 GMT -->
+</html>

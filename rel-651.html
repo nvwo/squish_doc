@@ -1,0 +1,123 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<!-- Mirrored from rel-651.html by HTTrack Website Copier/3.x [XR&CO'2013], Wed, 06 Jul 2022 13:28:55 GMT -->
+<head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><title>2.10. Version 6.5.1</title><link rel="stylesheet" href="manual.css" type="text/css"></link><meta name="generator" content="DocBook XSL Stylesheets V1.73.2"></meta><link rel="start" href="index-noframes.html" title="Squish Manual"></link><link rel="up" href="relnotes.html" title="Chapter 2. Release Notes—for Upgraders"></link><link rel="prev" href="rel-652.html" title="2.9. Version 6.5.2"></link><link rel="next" href="rel-650.html" title="2.11. Version 6.5"></link><style xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" type="text/css" media="screen">
+        div.toc * { margin-left: 6px; margin-right: auto; max-width: 75em; }
+        div.toc span { margin-left: 0px; }
+        * { margin-left: auto; margin-right: auto; max-width: 75em; }
+        body { margin-left: 6px; margin-right: 6px; }
+        table th { padding: .5ex }
+        table td { padding: .5ex }
+    </style><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format">
+        function keyPress() {
+            var e = window.event;
+            if ( e == undefined ) {
+                return;
+            }
+            /* ### does not properly scroll, yet
+            if ( e.keyCode == 32 ) {
+            var l = document.links;
+            for ( var i = 0; i < l.length; i++ ) {
+                if ( l[i].innerText == "Next" ) {
+                location.href = l[i].href;
+                }
+            }
+            } else
+                */
+                if ( e.keyCode == 0x08 ) {
+            var l = document.links;
+            for ( var i = 0; i < l.length; i++ ) {
+                if ( l[i].innerText == "Prev" ) {
+                location.href = l[i].href;
+                }
+            }
+            }
+        }
+        document.onkeypress = keyPress;
+    </script></head><body><div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="rel-651"></a>2.10. Version 6.5.1</h2></div></div></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><span class="section"><a href="rel-651.html#rel-651-general">2.10.1. General</a></span></dt><dt><span class="section"><a href="rel-651.html#rel-651-ide">2.10.2. Squish IDE-specific</a></span></dt><dt><span class="section"><a href="rel-651.html#rel-651-scripting">2.10.3. Scripting</a></span></dt><dt><span class="section"><a href="rel-651.html#rel-651-qt">2.10.4. Qt-specific</a></span></dt><dt><span class="section"><a href="rel-651.html#rel-651-java">2.10.5. <span class="trademark">Java</span>™-specific</a></span></dt><dt><span class="section"><a href="rel-651.html#rel-651-web">2.10.6. Web-specific</a></span></dt><dt><span class="section"><a href="rel-651.html#rel-651-windows">2.10.7. Windows (native)-specific</a></span></dt><dt><span class="section"><a href="rel-651.html#rel-651-mac">2.10.8. macOS-specific (Cocoa/Carbon edition)</a></span></dt><dt><span class="section"><a href="rel-651.html#rel-651-tk">2.10.9. Tk-specific</a></span></dt><dt><span class="section"><a href="rel-651.html#rel-651-source">2.10.10. Source Packages</a></span></dt><dt><span class="section"><a href="rel-651.html#rel-651-known-issues">2.10.11. Known Issues</a></span></dt></dl></div><p><span class="emphasis"><em>Squish</em></span> 6.5.1 is a maintenance release containing bug fixes for all
+  editions of the product. See the following sections for a detailed list of
+  all changes.</p><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="rel-651-general"></a>2.10.1. General</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Fixed an issue causing <code class="code">dragAndDrop</code>
+      nstatements not being recorded correctly when using a <a class="link" href="rg-objectmap.html#rgo-squish-scriptbased" title="7.11.4. Script-Based Object Map">Script-based Object
+      Map</a>.</p></li><li><p>An issue in the script recording functionality was fixed
+      which caused no synchronization statements like <a class="xref" href="rgs-squish.html#waitForObject-function"><code class="function">waitForObject</code></a> to be recorded for some asynchronously
+      executing script calls like <code class="code">dragAndDrop</code>.</p></li><li><p>The <a class="xref" href="rgs-squish.html#waitForObject-function"><code class="function">waitForObject</code></a> function in
+      Python now accepts Unicode string literals
+      (<code class="code">u"..."</code>).</p></li><li><p>Fixed a problem causing replay of <acronym class="acronym">BDD</acronym>
+      test cases to fail with Python 3 in case the step patterns involved
+      non-Latin characters.</p></li><li><p>Fixed an issue in the <a class="xref" href="rgs-squish.html#attachToApplication-function"><code class="function">attachToApplication</code></a> causing it to fail attaching to
+      applications which have many files opened concurrently.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="rel-651-ide"></a>2.10.2. Squish IDE-specific</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Fixed a problem in the <span class="application">Squish IDE</span> causing no splash screen to
+      be shown on Windows systems.</p></li><li><p>Added support for auto-completing <a class="xref" href="rgs-squish.html#test.attachFile-function"><code class="function">test.attachFile</code></a> and <a class="xref" href="rgs-squish.html#test.attachDesktopScreenshot-function"><code class="function">test.attachDesktopScreenshot</code></a> in Python and
+      JavaScript scripts.</p></li><li><p>Fixed a problem causing the columns in the Table
+      verification point editor be 0 pixels wide, making them
+      invisible.</p></li><li><p>Added a search field to the <span class="guilabel">Objects</span>
+      view that allows to filter the objects view based on the name of objects,
+      similar to the filter in the <span class="guilabel">Properties</span>
+      view.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="rel-651-scripting"></a>2.10.3. Scripting</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>The language-specific means for importing external
+      modules (e.g. <code class="code">import</code> in Python) now also respect directories
+      specified via the <code class="envar">SQUISH_SCRIPT_DIR</code> environment variable
+      when looking up external files.</p></li><li><p>The maximum number of active JavaScript objects was
+      increased to 10 million, avoiding out-of-memory errors in some
+      cases.</p></li><li><p>Fixed various cases in which the Python function
+      <code class="code">dir()</code> would not work as expected (e.g., when applied to
+      global Squish objects such as <acronym class="acronym">AUT</acronym> types, the
+      <code class="code">testSettings</code> module or the
+      <code class="code">Modifier</code>/<code class="code">MouseButton</code>
+      objects).</p></li><li><p>Fixed crash in Python standalone <code class="code">squishtest</code>
+      module when calling test functions without a prior call to
+      <code class="code">squishtest.setTestResult()</code>.</p></li><li><p>Fixed replaying <span class="keycap"><strong>Ctrl</strong></span>+<span class="keycap"><strong>+</strong></span> and
+      <span class="keycap"><strong>Command</strong></span>+<span class="keycap"><strong>+</strong></span> key
+      combinations using the <a class="xref" href="rgs-squish.html#nativeType-function"><code class="function">nativeType</code></a>
+      function.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="rel-651-qt"></a>2.10.4. Qt-specific</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Added support for testing Qt 5.13
+      applications.</p></li><li><p>Fixed an issue causing script recording to abort
+      unexpectedly when recording interactions with menus created using QtQuick
+      controls 1.4.</p></li><li><p>Fixed an issue due to which signal handler functions
+      would get called even after invoking the <a class="xref" href="rgs-qtconvenience.html#qt-uninstallSignalHandler-function"><code class="function">uninstallSignalHandler</code></a>
+      function.</p></li><li><p>Fixed a problem that could lead to library loading errors
+      for application or system libraries when an <acronym class="acronym">AUT</acronym> is
+      being instrumented by <span class="emphasis"><em>Squish</em></span>.</p></li><li><p>Added support for calling methods of <code class="code">QObject</code>
+      objects when the method signature involves <code class="code">qint64</code>,
+      <code class="code">quint64</code>, <code class="code">qlonglong</code> or <code class="code">qulonglong</code>
+      arguments.</p></li><li><p>Added support for calling methods and accessing
+      properties of <code class="code">QObject</code> objects that use <code class="code">qint32</code>,
+      <code class="code">quint32</code>, <code class="code">qint16</code>, <code class="code">quin16</code>,
+      <code class="code">short</code> or <code class="code">unsigned short</code>
+      types.</p></li><li><p>Fixed Qt tree model lookups for item texts with escaped
+      dot or underscore characters.</p></li><li><p>Fixed an issue causing Squish for Qt not to launch Qt
+      applications on Windows.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="rel-651-java"></a>2.10.5. <span class="trademark">Java</span>™-specific</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Added support for <acronym class="acronym">SWT</acronym>
+      <code class="code">ExpandBar</code> controls.</p></li><li><p>Added support for the latest
+      <acronym class="acronym">SWT</acronym>/<acronym class="acronym">GTK3</acronym>
+      releases.</p></li><li><p>The <a class="xref" href="rgs-javaconvenience.html#java-installEventHandler-function"><code class="function">installEventHandler</code></a>
+      function can now be used to handle <code class="code">MessageBoxOpened</code> events
+      emitted when <code class="code">JOptionPane</code> <code class="code">JDialog&gt;</code> objects are
+      opened by the application.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="rel-651-web"></a>2.10.6. Web-specific</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Fixed a problem with Webdriver-based browsers (Edge,
+      Chromium, Safari 12) causing <a class="xref" href="rgs-webconvenience.html#web-HTML_Object.evaluateXPath-function"><code class="function">HTML_Object.evaluateXPath</code></a> to fail when the XPath
+      expression contains two or more non-<acronym class="acronym">ASCII</acronym> characters.
+      Similar issues can arise when using more than two
+      non-<acronym class="acronym">ASCII</acronym> characters in other situations, like setting
+      properties or using the <a class="xref" href="rgs-webconvenience.html#web-evalJS-function"><code class="function">evalJS</code></a>
+      command.</p></li><li><p>Fixed a problem with hooking <span class="application">Firefox</span> 68 on Windows. The
+      problem caused the hookup to seem to work, but no browser tab objects
+      were accessible leading to replay and recording errors and the Spy
+      showing no <acronym class="acronym">HTML</acronym> objects.</p></li><li><p>Fixed a problem that would leave <span class="application">Firefox</span> 68 (and newer)
+      running after the test execution ends.</p></li><li><p>Fixed test automation using Microsoft Edge Version
+      18.</p></li><li><p>Fixed a problem with attaching to a running Chrome
+      browser instance multiple times in the same script.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="rel-651-windows"></a>2.10.7. Windows (native)-specific</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Fixed an issue causing File Save (or File Open) dialogs
+      not being displayed when executing tests.</p></li><li><p>Fixed the <a class="xref" href="rgs-windowsconvenienceapi.html#win-chooseFile-function"><code class="function">chooseFile</code></a>
+      function to work as expected for File Save dialogs in Windows Vista and
+      later.</p></li><li><p>Added initial support for Telerik GridView for Windows
+      Forms.</p></li><li><p>Improved object names generated for
+      <code class="code">TableColumn</code> and <code class="code">TableRow</code>
+      objects.</p></li><li><p>Fixed an error raised when replaying test scripts which
+      use the <a class="xref" href="rgs-windowsconvenienceapi.html#win-mouseClick-function"><code class="function">mouseClick</code></a> function to click on a
+      <a class="link" href="rgs-squish.html#rgss-screenrectangle-object" title="6.3.21.3. UiTypes.ScreenRectangle Class"><code class="code">ScreenRectangle</code></a>
+      object while specifying keyboard modifiers.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="rel-651-mac"></a>2.10.8. macOS-specific (Cocoa/Carbon edition)</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Fixed automating web content in <code class="code">WKWebView</code>
+      objects that are created declaratively in the builder
+      interface.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="rel-651-tk"></a>2.10.9. Tk-specific</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Fixed a crash when starting Tk applications using <a class="xref" href="rg-cmdline.html#startaut" title="7.4.7.1. startaut">startaut (Section 7.4.7.1)</a>.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="rel-651-source"></a>2.10.10. Source Packages</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Fixed building <span class="emphasis"><em>Squish</em></span> against a static Qt library on
+      Unix/Linux.</p></li><li><p>Added support for building against static debug builds of
+      Qt using Visual Studio.</p></li><li><p>Improved <span class="application">configure</span> program by
+      making the code for querying qmake variables more
+      robust.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="rel-651-known-issues"></a>2.10.11. Known Issues</h3></div></div></div><p>For a list of noteworthy issues which were found after the release of
+    <span class="emphasis"><em>Squish</em></span> 6.5.1, please see the <a class="ulink" href="https://kb.froglogic.com/display/KB/Squish 6.5.1 Known Issues" target="_blank">Known
+    Issues page</a> on the froglogic Knowledge Base.</p></div></div><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" type="text/javascript" src="ScriptingLanguage.js"></script><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format">setScriptingLanguage();</script><div class="navfooter"><hr></hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="rel-652.html">Prev</a> </td><td width="20%" align="center"><a accesskey="u" href="relnotes.html">Up</a></td><td width="40%" align="right"> <a accesskey="n" href="rel-650.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">2.9. Version 6.5.2 </td><td width="20%" align="center"><a accesskey="h" href="index-noframes.html">Home</a></td><td width="40%" align="right" valign="top"> 2.11. Version 6.5</td></tr></table></div></body>
+<!-- Mirrored from rel-651.html by HTTrack Website Copier/3.x [XR&CO'2013], Wed, 06 Jul 2022 13:28:55 GMT -->
+</html>

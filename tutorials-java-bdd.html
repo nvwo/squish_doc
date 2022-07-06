@@ -1,0 +1,1000 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<!-- Mirrored from tutorials-java-bdd.html by HTTrack Website Copier/3.x [XR&CO'2013], Wed, 06 Jul 2022 13:28:59 GMT -->
+<head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><title>4.5.  Squish for Java BDD Tutorials</title><link rel="stylesheet" href="manual.css" type="text/css"></link><meta name="generator" content="DocBook XSL Stylesheets V1.73.2"></meta><link rel="start" href="index-noframes.html" title="Squish Manual"></link><link rel="up" href="tutorials.html" title="Chapter 4. Tutorials"></link><link rel="prev" href="tutorials-java-fx.html" title="4.4. Squish for JavaFX Tutorials"></link><link rel="next" href="tutorials-web.html" title="4.6. Squish for Web Tutorials"></link><style xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" type="text/css" media="screen">
+        div.toc * { margin-left: 6px; margin-right: auto; max-width: 75em; }
+        div.toc span { margin-left: 0px; }
+        * { margin-left: auto; margin-right: auto; max-width: 75em; }
+        body { margin-left: 6px; margin-right: 6px; }
+        table th { padding: .5ex }
+        table td { padding: .5ex }
+    </style><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format">
+        function keyPress() {
+            var e = window.event;
+            if ( e == undefined ) {
+                return;
+            }
+            /* ### does not properly scroll, yet
+            if ( e.keyCode == 32 ) {
+            var l = document.links;
+            for ( var i = 0; i < l.length; i++ ) {
+                if ( l[i].innerText == "Next" ) {
+                location.href = l[i].href;
+                }
+            }
+            } else
+                */
+                if ( e.keyCode == 0x08 ) {
+            var l = document.links;
+            for ( var i = 0; i < l.length; i++ ) {
+                if ( l[i].innerText == "Prev" ) {
+                location.href = l[i].href;
+                }
+            }
+            }
+        }
+        document.onkeypress = keyPress;
+    </script></head><body><div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="tutorials-java-bdd"></a>4.5.  Squish for Java BDD Tutorials </h2></div></div></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><span class="section"><a href="tutorials-java-bdd.html#tutorial-bdd-java">4.5.1. Tutorial: Designing Behavior Driven Development (BDD) Tests</a></span></dt><dt><span class="section"><a href="tutorials-java-bdd.html#tutorial-migration-bdd-java">4.5.2. Tutorial: Migration of existing tests to BDD</a></span></dt></dl></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="tutorial-bdd-java"></a>4.5.1. Tutorial: Designing Behavior Driven Development (BDD) Tests</h3></div></div></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><span class="section"><a href="tutorials-java-bdd.html#tut-bdd-java-intro">4.5.1.1. Introduction to Behavior Driven Development</a></span></dt><dt><span class="section"><a href="tutorials-java-bdd.html#tut-bdd-java-gherkin">4.5.1.2. Gherkin syntax</a></span></dt><dt><span class="section"><a href="tutorials-java-bdd.html#tut-bdd-java-test-impl">4.5.1.3. Test implementation</a></span></dt><dt><span class="section"><a href="tutorials-java-bdd.html#tut-bdd-java-test-exec">4.5.1.4. Test execution</a></span></dt><dt><span class="section"><a href="tutorials-java-bdd.html#tut-bdd-java-test-debug">4.5.1.5. Test debugging</a></span></dt><dt><span class="section"><a href="tutorials-java-bdd.html#tut-bdd-java-step-reuse">4.5.1.6. Re-using Step definitions</a></span></dt></dl></div><p>
+This tutorial will show you how to create, run, and modify Behavior Driven Development (BDD)
+tests for an example application. You will learn about Squish's most frequently used features.
+By the end of the tutorial you will be able to write your own tests for your own applications.
+</p><p>
+For this chapter we will use a simple Address Book application written
+in JavaFX as our Application Under Test (AUT). This is a very basic
+application that allows users to load an existing address book or create
+a new one, add, edit, and remove entries. The screenshot shows the application
+in action with a user adding a new name and address.
+</p><div class="screenshot"><div class="mediaobject" align="center"><img src="images/qt-tut-addressbook1.png" align="middle"></img><div class="caption"><p>The JavaFX <code class="code">addressbook</code> example.
+</p></div></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="tut-bdd-java-intro"></a>4.5.1.1. Introduction to Behavior Driven Development</h4></div></div></div><p>
+Behavior-Driven Development (BDD) is an extension of the Test-Driven Development approach
+which puts the definition of acceptance criteria at the beginning of the development
+process as opposed to writing tests after the software has been developed. With possible
+cycles of code changes done after testing.
+</p><div class="screenshot"><div class="mediaobject" align="center"><img src="images/bdd-tutorial-process.png" align="middle"></img><div class="caption">BDD process</div></div></div><p>
+Behavior Driven Tests are built out of a set of <code class="literal">Feature</code> files, which
+describe product features through the expected application behavior in one or many
+<code class="literal">Scenarios</code>. Each <code class="literal">Scenario</code> is built
+out of a sequence of steps which represent actions or
+verifications that need to be tested for that <code class="literal">Scenario</code>.
+</p><p>
+BDD focuses on expected application behavior, not on implementation details. Therefore
+BDD tests are described in a human-readable Domain Specific Language (DSL). As this
+language is not technical, such tests can be created not only by programmers, but also by
+product owners, testers or business analysts. Additionally, during the product
+development, such tests serve as living product documentation. For <span class="emphasis"><em>Squish</em></span> usage, BDD
+tests shall be created using Gherkin syntax. The previously written product specification
+(BDD tests) can be turned into executable tests. This step by step tutorial presents
+automating BDD tests with <span class="application">Squish IDE</span> support.
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="tut-bdd-java-gherkin"></a>4.5.1.2. Gherkin syntax</h4></div></div></div><p>
+Gherkin files describe product features through the expected application behavior
+in one or many Scenarios. An example showing the "Filling of addressbook" feature
+of the addressbook example application.
+</p><pre class="screen">
+Feature: Filling of addressbook
+    As a user I want to fill the addressbook with entries
+
+    Scenario: Initial state of created address book
+        Given addressbook application is running
+        When I create a new addressbook
+        Then addressbook should have zero entries
+
+    Scenario: State after adding one entry
+        Given addressbook application is running
+        When I create a new addressbook
+        And I add a new person 'John','Doe','john@m.com','500600700' to address book
+        Then '1' entries should be present
+
+    Scenario: State after adding two entries
+        Given addressbook application is running
+        When I create a new addressbook
+        And I add new persons to address book
+            | forename  | surname  | email        | phone  |
+            | John      | Smith    | john@m.com   | 123123 |
+            | Alice     | Thomson  | alice@m.com  | 234234 |
+        Then '2' entries should be present
+
+    Scenario: Forename and surname is added to table
+        Given addressbook application is running
+        When I create a new addressbook
+        When I add a new person 'Bob','Doe','Bob@m.com','123321231' to address book
+        Then previously entered forename and surname shall be at the top
+</pre><p>
+Most of the above is free form text (does not have to be English). It's
+just the <code class="literal">Feature</code>/<code class="literal">Scenario</code> structure
+and the leading keywords like "Given", "And", "When" and "Then" that are
+fixed. Each of those keywords marks a step defining preconditions, user
+actions and expected results. Above application behavior description can
+be passed to software developers to implement these features and at the
+same time the same description can be passed to software testers to
+implement automated tests.
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="tut-bdd-java-test-impl"></a>4.5.1.3. Test implementation</h4></div></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h5 class="title"><a id="tut-bdd-java-create-testsuite"></a>4.5.1.3.1. Creating Test Suite</h5></div></div></div><p>
+First, we need to create a Test Suite, which is a container for all Test Cases. Start the
+<span class="application">squishide</span> and select <span class="guimenu">File</span>|<span class="guimenuitem">New Test
+Suite...</span>. Please follow the New Test Suite wizard, provide a Test
+Suite name, choose the Java Toolkit and scripting language of your choice and finally
+register addressbook application as AUT. Please refer to <a class="xref" href="tutorials-java-fx.html#tut-javafx-creating-a-test-suite" title="4.4.1.2. Creating a Test Suite">Creating a Test Suite (Section 4.4.1.2)</a> for more details about creating new Test Suites.
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h5 class="title"><a id="tut-bdd-java-create-testcase"></a>4.5.1.3.2. Creating Test Case</h5></div></div></div><p>
+<span class="emphasis"><em>Squish</em></span> offers two types of Test Cases: "Script Test Case" and
+"BDD Test Case". As "Script Test Case" is the default one, in order to
+create new "BDD Test Case" we need to use the context menu by clicking
+on the expander next to <span class="guibutton">New Script Test Case</span> (<span class="guiicon"><img src="images/ide/new_test_case.png"></img></span>) and choosing the option
+<span class="guimenuitem">New BDD Test Case</span>. The <span class="application">Squish IDE</span> will remember your
+choice and the "BDD Test Case" will become the default when clicking on
+the button in the future.
+</p><div class="screenshot"><div class="mediaobject" align="center"><img src="images/bdd-tutorial-new-testcase.png" align="middle"></img><div class="caption">Creating new BDD Test Case</div></div></div><p>
+The newly created BDD Test Case consists of a <code class="filename">test.feature</code>
+file (filled with a Gherkin template while creating a new BDD test case), a file
+named <code class="filename">test.(py|js|pl|rb|tcl)</code> which will drive the execution
+(there is no need to edit this file), and a Test Suite Resource file named
+<code class="filename">steps/steps.(py|js|pl|rb|tcl)</code> where step
+implementation code will be placed.
+</p><p>We need to replace the Gherkin template with a <code class="literal">Feature</code> for the addressbook example application. To do this, copy the <code class="literal">Feature</code>
+description below and paste it into the <code class="literal">Feature</code> file.
+</p><pre class="screen">
+Feature: Filling of addressbook
+    As a user I want to fill the addressbook with entries
+
+    Scenario: Initial state of created address book
+        Given addressbook application is running
+        When I create a new addressbook
+        Then addressbook should have zero entries
+</pre><p>
+When editing the <code class="filename">test.feature</code> file, a <code class="literal">Feature</code> file
+warning, <span class="errortext">No implementation found</span> is displayed for each
+undefined step. The implementations are in the
+<code class="filename">steps</code> subdirectory, in <span class="guilabel">Test Case Resources</span>,
+or in <span class="guilabel">Test Suite Resources</span>. Running our
+<code class="literal">Feature</code> test now will currently fail at the first step with a
+<span class="errortext">No Matching Step Definition</span> and the following
+steps will be skipped.
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h5 class="title"><a id="tut-bdd-java-record-step"></a>4.5.1.3.3. Recording Step implementation</h5></div></div></div><p>
+In order to record the <code class="literal">Scenario</code>, press the
+<span class="guibutton">Record</span> (<span class="guiicon"><img src="images/ide/record.png"></img></span>) next to the respective <code class="literal">Scenario</code>
+that is listed in the <span class="guilabel">Scenarios</span> tab in <span class="guilabel">Test Case Resources</span> view.
+</p><div class="screenshot"><div class="mediaobject" align="center"><img src="images/bdd-tutorial-record-scenario.png" align="middle"></img><div class="caption">Record Scenario</div></div></div><p>
+This will cause <span class="emphasis"><em>Squish</em></span> to run the AUT so that we can interact with it. Additionally,
+the Control Bar is displayed with a list of all steps that need to be
+recorded. Now all interaction with the AUT or any verification points added to
+the script will be recorded under the first step <code class="code">Given addressbook application is
+running</code> (which is bolded in the Step list on the Control Bar). In order to verify that
+this precondition is met, we will add a Verification Point. To do this, click on
+<span class="guibutton">Verify</span> on the Control Bar and select
+<span class="guibutton">Properties</span>.
+</p><div class="screenshot"><div class="mediaobject" align="center"><img src="images/bdd-tutorial-java-control-bar.png" align="middle"></img><div class="caption">Control Bar</div></div></div><p>
+As a result the <span class="application">Squish IDE</span> is put into Spy mode which displays all
+<span class="guilabel">Application Objects</span> and their <span class="guilabel">Properties</span>.
+Select the checkbox in front
+of the property <code class="code">showing</code> in the Properties View.
+Finally, click on the button <span class="guibutton">Save and Insert Verifications</span>. The
+<span class="application">Squish IDE</span> disappears and the Control Bar is shown again.
+</p><div class="screenshot"><div class="mediaobject" align="center"><img src="images/bdd-tutorial-java-spy.png" align="middle"></img><div class="caption">Inserting Verification Point</div></div></div><p>
+When we are done with each step, we can move to the next
+undefined step (playing back the ones that were previously defined)
+by clicking on the <span class="guibutton">Finish Recording Step...</span> (<span class="guiicon"><img src="images/bdd-tutorial-next-step-button.png"></img></span>) arrow button
+in the Control Bar that is located to the left of the current step.
+</p><p>
+Next, for the step <code class="literal">When I create a new addressbook</code>, click on the
+<span class="guibutton">New</span> button on the toolbar of the AddressBook application.
+Again, click <span class="guibutton">Finish Recording Step...</span> (<span class="guiicon"><img src="images/bdd-tutorial-next-step-button.png"></img></span>) to advance to
+the next step.
+</p><p>
+Finally, for the step <code class="literal">Then addressbook should have zero entries</code>
+verify that the table containing the address entries is empty. To record this
+verification, click on
+<span class="guibutton">Verify</span> on the <span class="emphasis"><em>Squish</em></span> control bar, select
+<span class="guibutton">Properties</span>. In the <span class="guilabel">Application Objects</span>
+view, navigate or use the <a class="xref" href="ide.views.html#object-picker">Object Picker</a> (<span class="guiicon"><img src="images/ide/pick-application-object.png"></img></span>) to select (not check) the
+<code class="classname">TableView</code> containing the address book entries (in our
+case this table is empty).
+</p><div class="screenshot"><div class="mediaobject" align="center"><img src="images/bdd-tutorial-java-spy-items.png" align="middle"></img><div class="caption">Up and Picker tool Buttons</div></div></div><p>
+Expand the <span class="property">items</span> treenode in the <span class="guilabel">Properties</span>
+view, and you will see the boolean <span class="property">empty</span> property under that.
+Check that, and then press <span class="guibutton">Save and Insert Verifications</span>.
+Finally, click the last <span class="guibutton">Finish Recording Step...</span> (<span class="guiicon"><img src="images/bdd-tutorial-next-step-button.png"></img></span>) arrow button to finish recording.
+
+As a result of this, <span class="emphasis"><em>Squish</em></span> will generate the following step
+definitions:
+</p><div xmlns="" class="scriptlang"><form><select name="scriptlangcombo" onchange="javascript:changeScriptingLanguage(this)" onclick="javascript:changeScriptingLanguage(this)"><option value="all" selected>Show All</option><option value="JavaScript">Show JavaScript</option><option value="Perl">Show Perl</option><option value="Python">Show Python</option><option value="Ruby">Show Ruby</option><option value="Tcl">Show Tcl</option></select></form></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Python</span><pre class="programlisting">
+
+@Given("addressbook application is running")
+def step(context):
+    startApplication("AddressBook.jar")
+    stage = waitForObject(names.address_Book_Stage)
+    test.compare(stage.showing, True)
+    win = ToplevelWindow.byObject(stage)
+    win.setForeground()
+
+@When("I create a new addressbook")
+def step(context):
+    mouseClick(waitForObject(names.fileNewButton_button))
+
+@Then("addressbook should have zero entries")
+def step(context):
+    test.compare(waitForObjectExists(names.address_Book_Unnamed_itemTbl_table_view).items.empty, True)
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">JavaScript</span><pre class="programlisting">
+
+Given("addressbook application is running", function(context) {
+    startApplication("AddressBook.jar");
+    var stage = waitForObject(names.addressBookStage);
+    test.compare(stage.showing, true);
+    var win = ToplevelWindow.byObject(stage);
+    win.setForeground();
+});
+
+When("I create a new addressbook", function(context) {
+    mouseClick(waitForObject(names.fileNewButtonButton));
+});
+
+Then("addressbook should have zero entries", function(context) {
+    test.compare(waitForObjectExists(names.addressBookUnnamedItemTblTableView).items.empty, true);
+});
+
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Perl</span><pre class="programlisting">
+
+Given("addressbook application is running", sub {
+    my $context = shift;
+    startApplication("AddressBook.jar");
+    waitForObjectExists($Names::address_book_stage);
+    my $stage = findObject($Names::address_book_stage);
+    test::compare($stage-&gt;showing, 1);
+    my $win = Squish::ToplevelWindow-&gt;byObject($stage);
+    $win-&gt;setForeground;
+
+});
+
+When("I create a new addressbook", sub {
+    my $context = shift;
+    mouseClick(waitForObject($Names::filenewbutton_button));
+});
+
+Then("addressbook should have zero entries", sub {
+    my $context = shift;
+    test::compare(waitForObjectExists($Names::address_book_unnamed_itemtbl_table_view)-&gt;items-&gt;empty, 1);
+});
+
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Ruby</span><pre class="programlisting">
+
+Given("addressbook application is running") do |context|
+    startApplication("AddressBook.jar")
+    stage = waitForObject(Names::Address_Book_Stage)
+    Test.compare(stage.showing, true)
+    win = ToplevelWindow::byObject(stage)
+    win.setForeground()
+end
+
+When("I create a new addressbook") do |context|
+    mouseClick(waitForObject(Names::FileNewButton_button))
+end
+
+Then("addressbook should have zero entries") do |context|
+    Test.compare(waitForObjectExists(Names::Address_Book_Unnamed_itemTbl_table_view).items.empty, true)
+end
+
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Tcl</span><pre class="programlisting">
+
+Given "addressbook application is running" {context} {
+    startApplication "AddressBook.jar"
+    set stage [waitForObject $names::Address_Book_Stage]
+    test compare [property get $stage showing] true
+    set win [Squish::ToplevelWindow byObject $stage]
+    $win setForeground
+}
+When "I create a new addressbook" {context} {
+    invoke mouseClick [waitForObject $names::fileNewButton_button]
+}
+Then "addressbook should have zero entries" {context} {
+    waitForObjectExists $names::Address_Book_Unnamed_itemTbl_table_view
+    test compare [property get [property get [findObject $names::Address_Book_Unnamed_itemTbl_table_view] items] empty] true
+}
+
+--&gt;
+</pre></div><p>
+The application is automatically started at the beginning of the first step due
+to the recorded <code class="function">startApplication()</code> call. At the end of each
+Scenario, the <code class="function">onScenarioEnd</code> hook is called, causing
+<code class="function">detach()</code> to be called on the application context.
+Because the AUT was started with <code class="function">startApplication()</code>,
+this causes it to terminate.
+This hook function is found in the file <code class="filename">bdd_hooks.(py|js|pl|rb|tcl)</code>,
+which is located in the <span class="guilabel">Scripts</span> tab of the <span class="guilabel">Test
+Suite Resources</span> view. You can define additional hook functions here.
+For a list of all available hooks, please refer to <a class="xref" href="api.bdt.functions.html#api.bdt.functions.hooks" title="6.19.10. Performing Actions During Test Execution Via Hooks">Performing Actions During Test Execution Via Hooks (Section 6.19.10)</a>.
+</p><div xmlns="" class="scriptlang"><form><select name="scriptlangcombo" onchange="javascript:changeScriptingLanguage(this)" onclick="javascript:changeScriptingLanguage(this)"><option value="all" selected>Show All</option><option value="JavaScript">Show JavaScript</option><option value="Perl">Show Perl</option><option value="Python">Show Python</option><option value="Ruby">Show Ruby</option><option value="Tcl">Show Tcl</option></select></form></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Python</span><pre class="programlisting">
+@OnScenarioEnd
+def hook(context):
+    for ctx in applicationContextList():
+        ctx.detach()
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">JavaScript</span><pre class="programlisting">
+OnScenarioEnd(function(context) {
+    applicationContextList().forEach(function(ctx) { ctx.detach(); });
+});
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Perl</span><pre class="programlisting">
+OnScenarioEnd(sub {
+    foreach (applicationContextList()) {
+        $_-&gt;detach();
+    }
+});
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Ruby</span><pre class="programlisting">
+OnScenarioEnd do |context|
+    applicationContextList().each { |ctx| ctx.detach() }
+end
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Tcl</span><pre class="programlisting">
+OnScenarioEnd { context } {
+    foreach ctx [applicationContextList] {
+        applicationContext $ctx detach
+    }
+}
+</pre></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h5 class="title"><a id="tut-bdd-java-step-parametrization"></a>4.5.1.3.4. Step parametrization</h5></div></div></div><p>
+So far, our steps did not use any parameters and all values were
+hardcoded. <span class="emphasis"><em>Squish</em></span> has different types of parameters like
+<code class="code">any</code>, <code class="code">integer</code> or <code class="code">word</code>, allowing our
+step definitions to be more reusable. Let us add a
+new <code class="literal">Scenario</code> to our <code class="literal">Feature</code> file which will provide
+step parameters for both the Test Data and the expected results.
+Copy the below section into your Feature file.
+</p><pre class="screen">
+Scenario: State after adding one entry
+    Given addressbook application is running
+    When I create a new addressbook
+    And I add a new person 'John','Doe','john@m.com','500600700' to address book
+    Then '1' entries should be present
+</pre><p>
+
+After saving
+the <code class="literal">Feature</code> file, the <span class="application">Squish IDE</span> provides a hint that only 2
+steps need to be implemented: <code class="code">When I add a new person 'John',
+'Doe','john@m.com','500600700' to address book</code> and <code class="code">Then '1' entries should
+be present</code>. The remaining steps already have a matching
+step implementation.
+</p><p>
+To record the missing steps, hit <span class="guibutton">Record</span> (<span class="guiicon"><img src="images/ide/record.png"></img></span>) next to the
+test case name in the <span class="guilabel">Test Suites</span> view. The script will
+play until it gets to the missing step and then prompt you to implement it. If
+you select the <span class="guilabel">Add</span>
+button, then you can type in the information for a new entry. Click on the
+<span class="guibutton">Finish Recording Step...</span> (<span class="guiicon"><img src="images/bdd-tutorial-next-step-button.png"></img></span>) button to move to the next step. For the second missing
+step, we could record an object property verification
+like we did for the step <code class="code">Then addressbook should have zero
+entries</code>, but on <span class="property">items.length</span>.
+</p><p>
+Now we parametrize the generated step implementation by replacing the values with parameter types.
+Since we want to be able to add different names, replace 'John' with '|word|'.
+Note that each parameter will be passed to the step implementation function in the order of
+appearance in the descriptive name of the step. Finish parametrizing by editing the typed values
+into keywords, to look like this example step
+<code class="code">When I add a new person 'John', 'Doe','john@m.com','500600700'</code> to address book:
+</p><div xmlns="" class="scriptlang"><form><select name="scriptlangcombo" onchange="javascript:changeScriptingLanguage(this)" onclick="javascript:changeScriptingLanguage(this)"><option value="all" selected>Show All</option><option value="JavaScript">Show JavaScript</option><option value="Perl">Show Perl</option><option value="Python">Show Python</option><option value="Ruby">Show Ruby</option><option value="Tcl">Show Tcl</option></select></form></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Python</span><pre class="programlisting">
+
+@When("I add a new person '|word|','|word|','|any|','|integer|' to address book")
+def step(context, forename, lastname, email, phone):
+    mouseClick(waitForObject(names.editAddButton_button))
+    type(waitForObject(names.address_Book_Add_forenameText_text_input_text_field), forename)
+    type(waitForObject(names.address_Book_Add_surnameText_text_input_text_field), lastname)
+    type(waitForObject(names.address_Book_Add_emailText_text_input_text_field), email)
+    type(waitForObject(names.address_Book_Add_phoneText_text_input_text_field), phone)
+    mouseClick(waitForObject(names.address_Book_Add_OK_button))
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">JavaScript</span><pre class="programlisting">
+
+When("I add a new person '|word|','|word|','|any|','|integer|' to address book", function(context, forename, lastname, email, phone) {
+    mouseClick(waitForObject(names.editAddButtonButton));
+    type(waitForObject(names.addressBookAddForenameTextTextInputTextField), forename);
+    type(waitForObject(names.addressBookAddSurnameTextTextInputTextField), lastname);
+    type(waitForObject(names.addressBookAddEmailTextTextInputTextField), email);
+    type(waitForObject(names.addressBookAddPhoneTextTextInputTextField), phone);
+    mouseClick(waitForObject(names.addressBookAddOKButton));
+});
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Perl</span><pre class="programlisting">
+
+When("I add a new person '|word|','|word|','|any|','|integer|' to address book", sub {
+    my ($context, $forename, $surname, $email, $phone) = @_;
+    mouseClick(waitForObject($Names::editaddbutton_button));
+    type(waitForObject($Names::address_book_add_forenametext_text_input_text_field), $forename);
+    type(waitForObject($Names::address_book_add_surnametext_text_input_text_field), $surname);
+    type(waitForObject($Names::address_book_add_emailtext_text_input_text_field), $email);
+    type(waitForObject($Names::address_book_add_phonetext_text_input_text_field), $phone);
+    mouseClick(waitForObject($Names::address_book_add_ok_button));
+});
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Ruby</span><pre class="programlisting">
+
+When("I add a new person '|word|','|word|','|any|','|integer|' to address book") do |context, forename, surname, email, phone|
+    mouseClick(waitForObject(Names::EditAddButton_button))
+    type(waitForObject(Names::Address_Book_Add_forenameText_text_input_text_field), forename)
+    type(waitForObject(Names::Address_Book_Add_surnameText_text_input_text_field), surname)
+    type(waitForObject(Names::Address_Book_Add_emailText_text_input_text_field), email)
+    type(waitForObject(Names::Address_Book_Add_phoneText_text_input_text_field), phone)
+    mouseClick(waitForObject(Names::Address_Book_Add_OK_button))
+end
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Tcl</span><pre class="programlisting">
+
+When "I add a new person '|word|','|word|','|any|','|integer|' to address book" {context forename surname email phone} {
+    invoke mouseClick [waitForObject $names::editAddButton_button]
+    invoke type [waitForObject $names::Address_Book_Add_forenameText_text_input_text_field] $forename
+    invoke type [waitForObject $names::Address_Book_Add_surnameText_text_input_text_field] $surname
+    invoke type [waitForObject $names::Address_Book_Add_emailText_text_input_text_field] $email
+    invoke type [waitForObject $names::Address_Book_Add_phoneText_text_input_text_field] $phone
+    invoke mouseClick [waitForObject $names::Address_Book_Add_OK_button]
+}
+</pre></div><p> If we recorded the final <code class="literal">Then</code> as a missing step, and
+verified the <span class="property">items.length</span> is 1 in the tableview, we can modify the
+step so that it takes a parameter, so it can verify other integer values later.
+</p><div xmlns="" class="scriptlang"><form><select name="scriptlangcombo" onchange="javascript:changeScriptingLanguage(this)" onclick="javascript:changeScriptingLanguage(this)"><option value="all" selected>Show All</option><option value="JavaScript">Show JavaScript</option><option value="Perl">Show Perl</option><option value="Python">Show Python</option><option value="Ruby">Show Ruby</option><option value="Tcl">Show Tcl</option></select></form></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Python</span><pre class="programlisting">
+
+@Then("'|integer|' entries should be present")
+def step(context, count):
+    test.compare(waitForObjectExists(names.address_Book_Unnamed_itemTbl_table_view).items.length, count)
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">JavaScript</span><pre class="programlisting">
+
+Then("'|integer|' entries should be present", function(context, count) {
+    test.compare(waitForObjectExists(names.addressBookUnnamedItemTblTableView).items.length, count);
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Perl</span><pre class="programlisting">
+
+Then("'|integer|' entries should be present", sub {
+    my ($context, $count) = @_;
+    test::compare(waitForObjectExists($Names::address_book_unnamed_itemtbl_table_view)-&gt;items-&gt;length, $count);
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Ruby</span><pre class="programlisting">
+
+Then("'|integer|' entries should be present") do |context, count|
+    Test.compare(waitForObjectExists(Names::Address_Book_Unnamed_itemTbl_table_view).items.length, count)
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Tcl</span><pre class="programlisting">
+
+Then "'|integer|' entries should be present" {context count} {
+    test compare [property get [property get [findObject $names::Address_Book_Unnamed_itemTbl_table_view] items] length] $count
+}
+</pre></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h5 class="title"><a id="tut-bdd-java-provide-parameters"></a>4.5.1.3.5. Provide parameters for Step in table</h5></div></div></div><p>
+The next <code class="literal">Scenario</code> will test adding multiple entries to the address
+book. We could use step <code class="code">When I add a new person John','Doe','john@m.com','500600700'
+to address book</code> multiple times just with different data. But lets instead define a
+new step called <code class="code">When I add a new person to address book</code>
+which will handle data from a table.
+</p><pre class="screen">
+Scenario: State after adding two entries
+    Given addressbook application is running
+    When I create a new addressbook
+    And I add new persons to address book
+        | forename  | surname  | email        | phone  |
+        | John      | Smith    | john@m.com   | 123123 |
+        | Alice     | Thomson  | alice@m.com  | 234234 |
+    Then '2' entries should be present
+</pre><p>
+The step implementation to handle such tables looks like this:
+</p><div xmlns="" class="scriptlang"><form><select name="scriptlangcombo" onchange="javascript:changeScriptingLanguage(this)" onclick="javascript:changeScriptingLanguage(this)"><option value="all" selected>Show All</option><option value="JavaScript">Show JavaScript</option><option value="Perl">Show Perl</option><option value="Python">Show Python</option><option value="Ruby">Show Ruby</option><option value="Tcl">Show Tcl</option></select></form></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Python</span><pre class="programlisting">
+
+@When("I add new persons to address book")
+def step(context):
+    table = context.table
+    # Drop initial row with column headers
+    table.pop(0)
+    for (forename, surname, email, phone) in table:
+        mouseClick(waitForObject(names.editAddButton_button))
+        type(waitForObject(names.address_Book_Add_forenameText_text_input_text_field), forename)
+        type(waitForObject(names.address_Book_Add_surnameText_text_input_text_field), surname)
+        type(waitForObject(names.address_Book_Add_emailText_text_input_text_field), email)
+        type(waitForObject(names.address_Book_Add_phoneText_text_input_text_field), phone)
+        mouseClick(waitForObject(names.address_Book_Add_OK_button))
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">JavaScript</span><pre class="programlisting">
+
+When("I add new persons to address book", function(context) {
+    var table = context.table;
+    for (var i = 1; i &lt; table.length; ++i) {
+        var row = table[i];
+        mouseClick(waitForObject(names.editAddButtonButton));
+        type(waitForObject(names.addressBookAddForenameTextTextInputTextField), row[0]);
+        type(waitForObject(names.addressBookAddSurnameTextTextInputTextField), row[1]);
+        type(waitForObject(names.addressBookAddEmailTextTextInputTextField), row[2]);
+        type(waitForObject(names.addressBookAddPhoneTextTextInputTextField), row[3]);
+        mouseClick(waitForObject(names.addressBookAddOKButton));
+    }
+});
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Perl</span><pre class="programlisting">
+
+When("I add new persons to address book", sub {
+    my $context = shift;
+    my $table = $context-&gt;{'table'};
+
+    # Drop initial row with column headers
+    shift(@{$table});
+
+    for my $row (@{$table}) {
+        my ($forename, $surname, $email, $phone) = @{$row};
+        mouseClick(waitForObject($Names::editaddbutton_button));
+        type(waitForObject($Names::address_book_add_forenametext_text_input_text_field), $forename);
+        type(waitForObject($Names::address_book_add_surnametext_text_input_text_field), $surname);
+        type(waitForObject($Names::address_book_add_emailtext_text_input_text_field), $email);
+        type(waitForObject($Names::address_book_add_phonetext_text_input_text_field), $phone);
+        mouseClick(waitForObject($Names::address_book_add_ok_button));
+    }
+});
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Ruby</span><pre class="programlisting">
+
+When("I add new persons to address book") do |context|
+    table = context.table
+    # Drop initial row with column headers
+    table.shift
+    for forename, surname, email, phone in table do
+        mouseClick(waitForObject(Names::EditAddButton_button))
+        type(waitForObject(Names::Address_Book_Add_forenameText_text_input_text_field), forename)
+        type(waitForObject(Names::Address_Book_Add_surnameText_text_input_text_field), surname)
+        type(waitForObject(Names::Address_Book_Add_emailText_text_input_text_field), email)
+        type(waitForObject(Names::Address_Book_Add_phoneText_text_input_text_field), phone)
+        mouseClick(waitForObject(Names::Address_Book_Add_OK_button))
+    end
+end
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Tcl</span><pre class="programlisting">
+
+When "I add new persons to address book" {context} {
+    set table [$context table]
+    # Drop initial row with column headers
+    foreach row [lreplace $table 0 0] {
+        foreach {forename surname email phone} $row break
+        invoke mouseClick [waitForObject $names::editAddButton_button]
+        invoke type [waitForObject $names::Address_Book_Add_forenameText_text_input_text_field] $forename
+        invoke type [waitForObject $names::Address_Book_Add_surnameText_text_input_text_field] $surname
+        invoke type [waitForObject $names::Address_Book_Add_emailText_text_input_text_field] $email
+        invoke type [waitForObject $names::Address_Book_Add_phoneText_text_input_text_field] $phone
+        invoke mouseClick [waitForObject $names::Address_Book_Add_OK_button]
+    }
+}
+</pre></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h5 class="title"><a id="tut-bdd-java-sharing"></a>4.5.1.3.6. Sharing data between Steps and Scenarios</h5></div></div></div><p>
+Lets add a new <code class="literal">Scenario</code> to the <code class="literal">Feature</code> file. This
+time we would like to check not the number of entries in address book list, but if this
+list contains proper data. Because we enter data into the address book in one
+step and verify them in another, we must share information about
+entered data among those steps in order to perform a verification.
+</p><pre class="screen">
+Scenario: Forename and surname is added to table
+    Given addressbook application is running
+    When I create a new addressbook
+    When I add a new person 'Bob','Doe','Bob@m.com','123321231' to address book
+    Then previously entered forename and surname shall be at the top
+</pre><p>
+To share this data, the <span class="property">context.userData</span> can be used.
+</p><div xmlns="" class="scriptlang"><form><select name="scriptlangcombo" onchange="javascript:changeScriptingLanguage(this)" onclick="javascript:changeScriptingLanguage(this)"><option value="all" selected>Show All</option><option value="JavaScript">Show JavaScript</option><option value="Perl">Show Perl</option><option value="Python">Show Python</option><option value="Ruby">Show Ruby</option><option value="Tcl">Show Tcl</option></select></form></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Python</span><pre class="programlisting">
+
+@When("I add a new person '|word|','|word|','|any|','|integer|' to address book")
+def step(context, forename, lastname, email, phone):
+    mouseClick(waitForObject(names.editAddButton_button))
+    type(waitForObject(names.address_Book_Add_forenameText_text_input_text_field), forename)
+    type(waitForObject(names.address_Book_Add_surnameText_text_input_text_field), lastname)
+    type(waitForObject(names.address_Book_Add_emailText_text_input_text_field), email)
+    type(waitForObject(names.address_Book_Add_phoneText_text_input_text_field), phone)
+    mouseClick(waitForObject(names.address_Book_Add_OK_button))
+    context.userData = {}
+    context.userData['forename'] = forename
+    context.userData['lastname'] = lastname
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Ruby</span><pre class="programlisting">
+
+When("I add a new person '|word|','|word|','|any|','|integer|' to address book") do |context, forename, surname, email, phone|
+    mouseClick(waitForObject(Names::EditAddButton_button))
+    type(waitForObject(Names::Address_Book_Add_forenameText_text_input_text_field), forename)
+    type(waitForObject(Names::Address_Book_Add_surnameText_text_input_text_field), surname)
+    type(waitForObject(Names::Address_Book_Add_emailText_text_input_text_field), email)
+    type(waitForObject(Names::Address_Book_Add_phoneText_text_input_text_field), phone)
+    mouseClick(waitForObject(Names::Address_Book_Add_OK_button))
+    context.userData = Hash.new
+    context.userData[:forename] = forename
+    context.userData[:surname] = surname
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">JavaScript</span><pre class="programlisting">
+
+When("I add a new person '|word|','|word|','|any|','|integer|' to address book", function(context, forename, lastname, email, phone) {
+    mouseClick(waitForObject(names.editAddButtonButton));
+    type(waitForObject(names.addressBookAddForenameTextTextInputTextField), forename);
+    type(waitForObject(names.addressBookAddSurnameTextTextInputTextField), lastname);
+    type(waitForObject(names.addressBookAddEmailTextTextInputTextField), email);
+    type(waitForObject(names.addressBookAddPhoneTextTextInputTextField), phone);
+    mouseClick(waitForObject(names.addressBookAddOKButton));
+    context.userData = {};
+    context.userData['forename'] = forename;
+    context.userData['lastname'] = lastname;
+});
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Perl</span><pre class="programlisting">
+
+When("I add a new person '|word|','|word|','|any|','|integer|' to address book", sub {
+    my ($context, $forename, $surname, $email, $phone) = @_;
+    mouseClick(waitForObject($Names::editaddbutton_button));
+    type(waitForObject($Names::address_book_add_forenametext_text_input_text_field), $forename);
+    type(waitForObject($Names::address_book_add_surnametext_text_input_text_field), $surname);
+    type(waitForObject($Names::address_book_add_emailtext_text_input_text_field), $email);
+    type(waitForObject($Names::address_book_add_phonetext_text_input_text_field), $phone);
+    mouseClick(waitForObject($Names::address_book_add_ok_button));
+    $context-&gt;{userData}{'forename'} = $forename;
+    $context-&gt;{userData}{'surname'} = $surname;
+});
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Tcl</span><pre class="programlisting">
+
+When "I add a new person '|word|','|word|','|any|','|integer|' to address book" {context forename surname email phone} {
+    invoke mouseClick [waitForObject $names::editAddButton_button]
+    invoke type [waitForObject $names::Address_Book_Add_forenameText_text_input_text_field] $forename
+    invoke type [waitForObject $names::Address_Book_Add_surnameText_text_input_text_field] $surname
+    invoke type [waitForObject $names::Address_Book_Add_emailText_text_input_text_field] $email
+    invoke type [waitForObject $names::Address_Book_Add_phoneText_text_input_text_field] $phone
+    invoke mouseClick [waitForObject $names::Address_Book_Add_OK_button]
+    $context userData [dict create forename $forename surname $surname]
+}
+</pre></div><p>
+All data stored in <span class="property">context.userData</span> can be accessed in all
+steps and <code class="literal">Hooks</code> in all <code class="literal">Scenarios</code>
+of the given <code class="literal">Feature</code>. Finally, we need to implement
+the step <code class="code">Then previously entered forename and lastname shall be at the top</code>.
+</p><div xmlns="" class="scriptlang"><form><select name="scriptlangcombo" onchange="javascript:changeScriptingLanguage(this)" onclick="javascript:changeScriptingLanguage(this)"><option value="all" selected>Show All</option><option value="JavaScript">Show JavaScript</option><option value="Perl">Show Perl</option><option value="Python">Show Python</option><option value="Ruby">Show Ruby</option><option value="Tcl">Show Tcl</option></select></form></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Python</span><pre class="programlisting">
+
+@Then("previously entered forename and surname shall be at the top")
+def step(context):
+    test.compare(waitForObjectItem(names.address_Book_Unnamed_itemTbl_table_view, '0/0').text, context.userData['forename'], "forename")
+    test.compare(waitForObjectItem(names.address_Book_Unnamed_itemTbl_table_view, '0/1').text, context.userData['lastname'], "lastname")
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Ruby</span><pre class="programlisting">
+
+Then("previously entered forename and surname shall be at the top") do |context|
+    Test.compare(waitForObjectItem(Names::Address_Book_Unnamed_itemTbl_table_view, '0/0').text, context.userData[:forename], "forename");
+    Test.compare(waitForObjectItem(Names::Address_Book_Unnamed_itemTbl_table_view, '0/1').text, context.userData[:surname], "surname")
+end
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">JavaScript</span><pre class="programlisting">
+
+Then("previously entered forename and surname shall be at the top", function(context) {
+    test.compare(waitForObjectItem(names.addressBookUnnamedItemTblTableView, '0/0').text, context.userData['forename'], "forename");
+    test.compare(waitForObjectItem(names.addressBookUnnamedItemTblTableView, '0/1').text, context.userData['lastname'], "lastname");
+});
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Perl</span><pre class="programlisting">
+
+Then("previously entered forename and surname shall be at the top", sub {
+    my $context = shift;
+    test::compare(waitForObjectItem($Names::address_book_unnamed_itemtbl_table_view, '0/0')-&gt;text, $context-&gt;{userData}{'forename'}, "forename?");
+    test::compare(waitForObjectItem($Names::address_book_unnamed_itemtbl_table_view, '0/1')-&gt;text, $context-&gt;{userData}{'surname'}, "surname?");
+});
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Tcl</span><pre class="programlisting">
+
+Then "previously entered forename and surname shall be at the top" {context} {
+    test compare [property get [waitForObjectItem $names::Address_Book_Unnamed_itemTbl_table_view "0/0"] text] [dict get [$context userData] forename]
+    test compare [property get [waitForObjectItem $names::Address_Book_Unnamed_itemTbl_table_view "0/1"] text] [dict get [$context userData] surname]
+}
+</pre></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h5 class="title"><a id="tut-bdd-java-scenario-outline"></a>4.5.1.3.7. Scenario Outline</h5></div></div></div><p>
+Assume our <code class="literal">Feature</code> contains the following two <code class="literal">Scenarios</code>:
+</p><pre class="screen">
+Scenario: State after adding one entry
+    Given addressbook application is running
+    When I create a new addressbook
+    And I add a new person 'John','Doe','john@m.com','500600700' to address book
+    Then '1' entries should be present
+
+Scenario: State after adding one entry
+    Given addressbook application is running
+    When I create a new addressbook
+    And I add a new person 'Bob','Koo','bob@m.com','500600800' to address book
+    Then '1' entries should be present
+</pre><p>
+As we can see, those <code class="literal">Scenarios</code> perform the same actions using different
+test data. The same can be achieved by using a <code class="literal">Scenario Outline</code> (a
+<code class="literal">Scenario</code> template with placeholders) and Examples (a table with
+parameters).
+</p><pre class="screen">
+Scenario Outline: Adding single entries multiple time
+    Given addressbook application is running
+    When I create a new addressbook
+    And I add a new person '&lt;forename&gt;','&lt;lastname&gt;','&lt;email&gt;','&lt;phone&gt;' to address book
+    Then '1' entries should be present
+    Examples:
+        | forename | lastname | email       | phone     |
+        | John     | Doe      | john@m.com  | 500600700 |
+        | Bob      | Koo      | bob@m.com   | 500600800 |
+</pre><p>
+Please note that the <code class="code">OnScenarioEnd</code> hook will be executed at the end of
+each loop iteration in a <code class="literal">Scenario Outline</code>.
+</p></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="tut-bdd-java-test-exec"></a>4.5.1.4. Test execution</h4></div></div></div><p>
+In the <span class="application">Squish IDE</span>, users can execute all <code class="literal">Scenarios</code> in a
+<code class="literal">Feature</code>, or execute only one selected <code class="literal">Scenario</code>. In
+order to execute all <code class="literal">Scenarios</code>, the proper Test Case has to be
+executed by clicking on the <span class="guibutton">Play</span> button in the Test Suites view.
+</p><div class="screenshot"><div class="mediaobject" align="center"><img src="images/bdd-tutorial-execute-all.png" align="middle"></img><div class="caption">Execute all Scenarios from Feature</div></div></div><p>
+In order to execute only one <code class="literal">Scenario</code>, you need to open the
+<code class="literal">Feature</code> file, right-click on the given <code class="literal">Scenario</code> and
+choose <span class="guibutton">Run Scenario</span>. An alternative approach is to click on the
+<span class="guibutton">Play</span> button next to the respective
+<code class="literal">Scenario</code> in the Scenarios tab in Test Case Resources.
+</p><div class="screenshot"><div class="mediaobject" align="center"><img src="images/bdd-tutorial-execute-one.png" align="middle"></img><div class="caption">Execute one Scenario from Feature</div></div></div><p>
+After a <code class="literal">Scenario</code> is executed, the <code class="literal">Feature</code> file is
+colored according to the execution results. More detailed information (like logs) can
+be found in the Test Results View.
+</p><div class="screenshot"><div class="mediaobject" align="center"><img src="images/bdd-tutorial-results.png" align="middle"></img><div class="caption">Execution results in Feature file</div></div></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="tut-bdd-java-test-debug"></a>4.5.1.5. Test debugging</h4></div></div></div><p>
+<span class="emphasis"><em>Squish</em></span> offers the possibility to pause an execution of a Test Case at any point in
+order to check script variables, spy application objects or run custom
+code in the <span class="emphasis"><em>Squish</em></span> script console. To do this, a breakpoint has to be placed before
+starting the execution, either in the <code class="literal">Feature</code> file at any line
+containing a step or at any line of executed code (i.e. in middle of
+step definition code).
+</p><div class="screenshot"><div class="mediaobject" align="center"><img src="images/bdd-tutorial-breakpoint.png" align="middle"></img><div class="caption">Breakpoint in Feature file</div></div></div><p>
+After the breakpoint is reached, you can inspect all application objects and their
+properties. If a breakpoint is placed at a step definition or a hook
+is reached, then you can additionally add Verification Points or record code snippets.
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="tut-bdd-java-step-reuse"></a>4.5.1.6. Re-using Step definitions</h4></div></div></div><p>
+BDD test maintainability can be increased by reusing step definitions
+in test cases located in another directory. For more information, see
+<a class="xref" href="api.bdt.functions.html#api.bdt.functions.collectstepdefinitions">collectStepDefinitions()</a>.
+</p></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="tutorial-migration-bdd-java"></a>4.5.2. Tutorial: Migration of existing tests to BDD</h3></div></div></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><span class="section"><a href="tutorials-java-bdd.html#bdd-migration-java-extend">4.5.2.1. Extend existing tests to BDD</a></span></dt><dt><span class="section"><a href="tutorials-java-bdd.html#bdd-migration-java-convert">4.5.2.2. Convert existing tests to BDD</a></span></dt></dl></div><p>
+This chapter is for users that have existing <span class="emphasis"><em>Squish</em></span> tests
+and who would like to introduce Behavior Driven Testing. The first section
+describes how to keep the existing tests and just create new tests with the
+BDD approach. The second section describes how to convert existing Script Test
+Cases to BDD tests.
+</p><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="bdd-migration-java-extend"></a>4.5.2.1. Extend existing tests to BDD</h4></div></div></div><p>
+The first option is to keep any existing <span class="emphasis"><em>Squish</em></span> Test Cases and extend them by
+adding new BDD tests. It's possible to have a <code class="literal">Test Suite</code> containing
+both script-based and BDD Test Cases. Simply open existing
+<code class="literal">Test Suite</code> and choose <span class="guimenuitem">New BDD Test
+Case</span> option from drop down list.
+</p><div class="screenshot"><div class="mediaobject" align="center"><img src="images/bdd-tutorial-new-testcase.png" align="middle"></img><div class="caption">Creating new BDD Test Case</div></div></div><p>
+Assuming your existing Test Cases make use of a library and you
+are calling shared functions to interact with the AUT, those functions can
+still be used in existing Script Test Cases as well as newly created
+BDD Test Cases. In the example below, a function is used from multiple
+Script Test Cases:
+</p><div xmlns="" class="scriptlang"><form><select name="scriptlangcombo" onchange="javascript:changeScriptingLanguage(this)" onclick="javascript:changeScriptingLanguage(this)"><option value="all" selected>Show All</option><option value="JavaScript">Show JavaScript</option><option value="Perl">Show Perl</option><option value="Python">Show Python</option><option value="Ruby">Show Ruby</option><option value="Tcl">Show Tcl</option></select></form></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Python</span><pre class="programlisting">
+def createNewAddressBook():
+    mouseClick(waitForObject(names.fileNewButton_button))
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Ruby</span><pre class="programlisting">
+def createNewAddressBook
+    mouseClick(waitForObject(Names::FileNewButton_button))
+end
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">JavaScript</span><pre class="programlisting">
+function createNewAddressBook(){
+    mouseClick(waitForObject(names.fileNewButtonButton));
+}
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Perl</span><pre class="programlisting">
+sub createNewAddressBook{
+    mouseClick(waitForObject($Names::filenewbutton_button));
+}
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Tcl</span><pre class="programlisting">
+proc createNewAddressBook {} {
+    invoke mouseClick [waitForObject $names::fileNewButton_button]
+}
+</pre></div><p>
+BDD step implementations can easily use the same function:
+</p><div xmlns="" class="scriptlang"><form><select name="scriptlangcombo" onchange="javascript:changeScriptingLanguage(this)" onclick="javascript:changeScriptingLanguage(this)"><option value="all" selected>Show All</option><option value="JavaScript">Show JavaScript</option><option value="Perl">Show Perl</option><option value="Python">Show Python</option><option value="Ruby">Show Ruby</option><option value="Tcl">Show Tcl</option></select></form></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Python</span><pre class="programlisting">
+@When("I create a new addressbook")
+def step(context):
+    createNewAddressBook()
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">JavaScript</span><pre class="programlisting">
+When("I create a new addressbook", function(context){
+    createNewAddressBook()
+});
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Perl</span><pre class="programlisting">
+When("I create a new addressbook", sub {
+    createNewAddressBook();
+});
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Ruby</span><pre class="programlisting">
+When("I create a new addressbook") do |context|
+    createNewAddressBook
+end
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Tcl</span><pre class="programlisting">
+When "I create a new addressbook" {context} {
+	  createNewAddressBook
+}
+</pre></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="bdd-migration-java-convert"></a>4.5.2.2. Convert existing tests to BDD</h4></div></div></div><p>
+The second option is to convert an existing <code class="literal">Test Suite</code> that
+contains script-based tests into behavior driven tests. Since a <code class="literal">Test
+Suite</code> can Script Test Cases and BDD Test Cases, migration can be done
+gradually. A <code class="literal">Test Suite</code> containing a mix of both Test Case
+types can be executed and results analyzed without any extra effort required.
+</p><p>
+The first step is to review all Test Cases of the existing <code class="literal">Test Suite</code>
+and group them by the <code class="literal">Feature</code> they test. Each Script Test Case will
+be transformed into a <code class="literal">Scenario</code>, which is a part of a
+<code class="literal">Feature</code>. For example, assume we have 5 Script Test Cases. After
+review, we realize that they examine two <code class="literal">Features</code>.
+Therefore, when migration is completed, our Test Suite will contain two BDD Test Cases,
+each of them containing one <code class="literal">Feature</code>. Each <code class="literal">Feature</code>
+will contain multiple <code class="literal">Scenarios</code>. In our example the first
+<code class="literal">Feature</code> contains three <code class="literal">Scenarios</code> and the second
+<code class="literal">Feature</code> contains two <code class="literal">Scenarios</code>.
+</p><div class="screenshot"><div class="mediaobject" align="center"><img src="images/bdd-tutorial-migration.png" align="middle"></img><div class="caption">Conversion Chart</div></div></div><p>
+At the beginning, open a <code class="literal">Test Suite</code> in the <span class="application">Squish IDE</span> that contains
+<span class="emphasis"><em>Squish</em></span> tests that need to be migrated to BDD. Next, create a
+<span class="guibutton">New Test Case</span> by choosing
+<span class="guimenuitem">New BDD Test Case</span> option from the
+drop-down menu. Each BDD Test Case contains a <code class="filename">test.feature</code> file
+that can be filled with maximum one <code class="literal">Feature</code>. Next, open the
+<code class="filename">test.feature</code> file to describe the <code class="literal">Features</code>
+using the Gherkin language. Following the syntax from the template, edit the
+<code class="literal">Feature</code> name and optionally provide a short description. Next,
+analyze which actions and verifications are performed in the Script Test Case that
+are going to be migrated. This is how an example Test Case for the addressbook
+application could look like:
+</p><div xmlns="" class="scriptlang"><form><select name="scriptlangcombo" onchange="javascript:changeScriptingLanguage(this)" onclick="javascript:changeScriptingLanguage(this)"><option value="all" selected>Show All</option><option value="JavaScript">Show JavaScript</option><option value="Perl">Show Perl</option><option value="Python">Show Python</option><option value="Ruby">Show Ruby</option><option value="Tcl">Show Tcl</option></select></form></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Python</span><pre class="programlisting">
+def main():
+    startApplication("AddressBook.jar")
+    test.log("Create new addressbook")
+    mouseClick(waitForObject(names.fileNewButton_button))
+    test.compare(waitForObjectExists(names.address_Book_Unnamed_itemTbl_table_view).items.empty, True)
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Ruby</span><pre class="programlisting">
+def main
+    startApplication("AddressBook.jar")
+    Test.log("Create new addressbook")
+    mouseClick(waitForObject(Names::FileNewButton_button))
+    Test.compare(waitForObjectExists(Names::Address_Book_Unnamed_itemTbl_table_view).items.empty, true)
+end
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">JavaScript</span><pre class="programlisting">
+function main(){
+    startApplication("AddressBook.jar");
+    test.log("Create new addressbook");
+    mouseClick(waitForObject(names.fileNewButtonButton));
+    test.compare(waitForObjectExists(names.addressBookUnnamedItemTblTableView).items.empty, true);
+}
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Perl</span><pre class="programlisting">
+sub main {
+    startApplication("AddressBook.jar");
+    test::log("Create new addressbook");
+    mouseClick(waitForObject($Names::filenewbutton_button));
+    test::compare(waitForObjectExists($Names::address_book_unnamed_itemtbl_table_view)-&gt;items-&gt;empty, 1);
+}
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Tcl</span><pre class="programlisting">
+proc main {} {
+    startApplication "AddressBook.jar"
+    test log "Create new addressbook"
+    invoke mouseClick [waitForObject $names::fileNewButton_button]
+    test compare [property get [property get [waitForObjectExists $names::Address_Book_Unnamed_itemTbl_table_view] items] empty] true
+}
+</pre></div><p>
+After analyzing the above Test Case we can create
+the following  <code class="literal">Scenario</code> and add it to
+<code class="filename">test.feature</code>:
+</p><pre class="screen">
+Scenario: Initial state of created address book
+      Given addressbook application is running
+      When I create a new addressbook
+      Then addressbook should have zero entries
+</pre><p>
+Next, right-click on the <code class="literal">Scenario</code> and choose the option
+<span class="guibutton">Create Missing Step Implementations</span> from the context menu. This
+will create a skeleton of steps definitions:
+</p><div xmlns="" class="scriptlang"><form><select name="scriptlangcombo" onchange="javascript:changeScriptingLanguage(this)" onclick="javascript:changeScriptingLanguage(this)"><option value="all" selected>Show All</option><option value="JavaScript">Show JavaScript</option><option value="Perl">Show Perl</option><option value="Python">Show Python</option><option value="Ruby">Show Ruby</option><option value="Tcl">Show Tcl</option></select></form></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Python</span><pre class="programlisting">
+@Given("addressbook application is running")
+def step(context):
+    test.warning("TODO implement addressbook application is running")
+
+@When("I create a new addressbook")
+def step(context):
+    test.warning("TODO implement I create a new addressbook")
+
+@Then("addressbook should have zero entries")
+def step(context):
+    test.warning("TODO implement addressbook should have zero entries")
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">JavaScript</span><pre class="programlisting">
+Given("addressbook application is running", function(context) {
+    test.warning("TODO implement addressbook application is running");
+});
+
+When("I create a new addressbook", function(context) {
+    test.warning("TODO implement I create a new addressbook");
+});
+
+Then("addressbook should have zero entries", function(context) {
+    test.warning("TODO implement addressbook should have zero entries");
+});
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Perl</span><pre class="programlisting">
+Given("addressbook application is running", sub {
+    my $context = shift;
+    test::warning("TODO implement addressbook application is running");
+});
+
+When("I create a new addressbook", sub {
+    my $context = shift;
+    test::warning("TODO implement I create a new addressbook");
+});
+
+Then("addressbook should have zero entries", sub {
+    my $context = shift;
+    test::warning("TODO implement addressbook should have zero entries");
+});
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Ruby</span><pre class="programlisting">
+Given("addressbook application is running") do |context|
+    Test.warning "TODO implement addressbook application is running"
+end
+
+When("I create a new addressbook") do |context|
+    Test.warning "TODO implement I create a new addressbook"
+end
+
+Then("addressbook should have zero entries") do |context|
+    Test.warning "TODO implement addressbook should have zero entries"
+end
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Tcl</span><pre class="programlisting">
+Given "addressbook application is running" {context} {
+    test warning "TODO implement addressbook application is running"
+}
+
+When "I create a new addressbook" {context} {
+    test warning "TODO implement I create a new addressbook"
+}
+
+Then "addressbook should have zero entries" {context} {
+    test warning "TODO implement addressbook should have zero entries"
+}
+</pre></div><p>
+Now we put code snippets from the Script Test Case into respective
+step definitions and remove the lines containing
+<code class="code">test.warning</code>. If your Script Test Cases make use of shared scripts, you
+can call those functions inside of the step definition as well. For
+example, the final result could look like this:
+</p><div xmlns="" class="scriptlang"><form><select name="scriptlangcombo" onchange="javascript:changeScriptingLanguage(this)" onclick="javascript:changeScriptingLanguage(this)"><option value="all" selected>Show All</option><option value="JavaScript">Show JavaScript</option><option value="Perl">Show Perl</option><option value="Python">Show Python</option><option value="Ruby">Show Ruby</option><option value="Tcl">Show Tcl</option></select></form></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Python</span><pre class="programlisting">
+@Given("addressbook application is running")
+def step(context):
+    startApplication("AddressBook.jar")
+    stage = waitForObject(names.address_Book_Stage)
+    test.compare(stage.showing, True)
+
+@When("I create a new addressbook")
+def step(context):
+    mouseClick(waitForObject(names.fileNewButton_button))
+
+@Then("addressbook should have zero entries")
+def step(context):
+    test.compare(waitForObjectExists(names.address_Book_Unnamed_itemTbl_table_view).items.empty, True)
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Ruby</span><pre class="programlisting">
+Given("addressbook application is running") do |context|
+    startApplication("AddressBook.jar")
+    stage = waitForObject(Names::Address_Book_Stage)
+    Test.compare(stage.showing, true)
+end
+
+When("I create a new addressbook") do |context|
+    mouseClick(waitForObject(Names::FileNewButton_button))
+end
+
+Then("addressbook should have zero entries") do |context|
+    Test.compare(waitForObjectExists(Names::Address_Book_Unnamed_itemTbl_table_view).items.empty, true)
+end
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">JavaScript</span><pre class="programlisting">
+Given("addressbook application is running", function(context) {
+    startApplication("AddressBook.jar");
+    var stage = waitForObject(names.addressBookStage);
+    test.compare(stage.showing, true);
+});
+
+When("I create a new addressbook", function(context) {
+    mouseClick(waitForObject(names.fileNewButtonButton));
+});
+
+Then("addressbook should have zero entries", function(context) {
+    test.compare(waitForObjectExists(names.addressBookUnnamedItemTblTableView).items.empty, true);
+});
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Perl</span><pre class="programlisting">
+Given("addressbook application is running", sub {
+    my $context = shift;
+    startApplication("AddressBook.jar");
+    my $stage = waitForObject($Names::address_book_stage);
+    test::compare($stage-&gt;showing, 1);
+});
+
+When("I create a new addressbook", sub {
+    my $context = shift;
+    mouseClick(waitForObject($Names::filenewbutton_button));
+});
+
+Then("addressbook should have zero entries", sub {
+    my $context = shift;
+    test::compare(waitForObjectExists($Names::address_book_unnamed_itemtbl_table_view)-&gt;items-&gt;empty, 1);
+});
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Tcl</span><pre class="programlisting">
+Given "addressbook application is running" {context} {
+    startApplication "AddressBook.jar"
+    set stage [waitForObject $names::Address_Book_Stage]
+    test compare [property get $stage showing] true
+}
+When "I create a new addressbook" {context} {
+    invoke mouseClick [waitForObject $names::fileNewButton_button]
+}
+Then "addressbook should have zero entries" {context} {
+    test compare [property get [property get [waitForObjectExists $names::Address_Book_Unnamed_itemTbl_table_view] items] empty] true
+}
+</pre></div><p>
+Note that the <code class="code">test.log("Create new addressbook")</code> got
+removed while migrating this script-based test to BDD.
+When the step <code class="code">I create a new addressbook</code> is executed, the
+step name will be logged into Test Results, so the
+<code class="function">test.log</code> call would have been redundant.
+</p><p>
+The above example was simplified for this tutorial. In order to take full
+advantage of Behavior Driven Testing in <span class="emphasis"><em>Squish</em></span>, please familiarize
+yourself with the section <a class="xref" href="api.bdt.functions.html" title="6.19. Behavior Driven Testing">Behavior Driven Testing (Section 6.19)</a> in
+<a class="xref" href="api.man.html" title="Chapter 6. API Reference Manual">API Reference Manual (Chapter 6)</a>.
+</p></div></div></div><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" type="text/javascript" src="ScriptingLanguage.js"></script><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format">setScriptingLanguage();</script><div class="navfooter"><hr></hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="tutorials-java-fx.html">Prev</a> </td><td width="20%" align="center"><a accesskey="u" href="tutorials.html">Up</a></td><td width="40%" align="right"> <a accesskey="n" href="tutorials-web.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">4.4. Squish for JavaFX Tutorials </td><td width="20%" align="center"><a accesskey="h" href="index-noframes.html">Home</a></td><td width="40%" align="right" valign="top"> 4.6. Squish for Web Tutorials</td></tr></table></div></body>
+<!-- Mirrored from tutorials-java-bdd.html by HTTrack Website Copier/3.x [XR&CO'2013], Wed, 06 Jul 2022 13:28:59 GMT -->
+</html>

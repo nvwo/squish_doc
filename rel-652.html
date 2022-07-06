@@ -1,0 +1,121 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<!-- Mirrored from rel-652.html by HTTrack Website Copier/3.x [XR&CO'2013], Wed, 06 Jul 2022 13:28:55 GMT -->
+<head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><title>2.9. Version 6.5.2</title><link rel="stylesheet" href="manual.css" type="text/css"></link><meta name="generator" content="DocBook XSL Stylesheets V1.73.2"></meta><link rel="start" href="index-noframes.html" title="Squish Manual"></link><link rel="up" href="relnotes.html" title="Chapter 2. Release Notes—for Upgraders"></link><link rel="prev" href="rel-660.html" title="2.8. Version 6.6"></link><link rel="next" href="rel-651.html" title="2.10. Version 6.5.1"></link><style xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" type="text/css" media="screen">
+        div.toc * { margin-left: 6px; margin-right: auto; max-width: 75em; }
+        div.toc span { margin-left: 0px; }
+        * { margin-left: auto; margin-right: auto; max-width: 75em; }
+        body { margin-left: 6px; margin-right: 6px; }
+        table th { padding: .5ex }
+        table td { padding: .5ex }
+    </style><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format">
+        function keyPress() {
+            var e = window.event;
+            if ( e == undefined ) {
+                return;
+            }
+            /* ### does not properly scroll, yet
+            if ( e.keyCode == 32 ) {
+            var l = document.links;
+            for ( var i = 0; i < l.length; i++ ) {
+                if ( l[i].innerText == "Next" ) {
+                location.href = l[i].href;
+                }
+            }
+            } else
+                */
+                if ( e.keyCode == 0x08 ) {
+            var l = document.links;
+            for ( var i = 0; i < l.length; i++ ) {
+                if ( l[i].innerText == "Prev" ) {
+                location.href = l[i].href;
+                }
+            }
+            }
+        }
+        document.onkeypress = keyPress;
+    </script></head><body><div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="rel-652"></a>2.9. Version 6.5.2</h2></div></div></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><span class="section"><a href="rel-652.html#rel-652-general">2.9.1. General</a></span></dt><dt><span class="section"><a href="rel-652.html#rel-652-ide">2.9.2. Squish IDE-specific</a></span></dt><dt><span class="section"><a href="rel-652.html#rel-652-scripting">2.9.3. Scripting</a></span></dt><dt><span class="section"><a href="rel-652.html#rel-652-qt">2.9.4. Qt-specific</a></span></dt><dt><span class="section"><a href="rel-652.html#rel-652-java">2.9.5. <span class="trademark">Java</span>™-specific</a></span></dt><dt><span class="section"><a href="rel-652.html#rel-652-web">2.9.6. Web-specific</a></span></dt><dt><span class="section"><a href="rel-652.html#rel-652-android">2.9.7. Android-specific</a></span></dt><dt><span class="section"><a href="rel-652.html#rel-652-windows">2.9.8. Windows (native)-specific</a></span></dt><dt><span class="section"><a href="rel-652.html#rel-652-mac">2.9.9. macOS-specific (Cocoa/Carbon edition)</a></span></dt><dt><span class="section"><a href="rel-652.html#rel-652-tk">2.9.10. Tk-specific</a></span></dt><dt><span class="section"><a href="rel-652.html#rel-652-source">2.9.11. Source Packages</a></span></dt><dt><span class="section"><a href="rel-652.html#rel-652-known-issues">2.9.12. Known Issues</a></span></dt></dl></div><p><span class="emphasis"><em>Squish</em></span> 6.5.2 is a maintenance release containing bug fixes for all
+  editions of the product. See the following sections for a detailed list of
+  all changes.</p><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="rel-652-general"></a>2.9.1. General</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p><span class="emphasis"><em>Squish</em></span> packages based on Python 3.8.0 are now available
+      on demand. Please contact us at <code class="email">&lt;<a class="email" href="mailto:squish@froglogic.com">squish@froglogic.com</a>&gt;</code> if
+      you are interested in such a package. The next release will offer a
+      choice between Python 2 and 3 at installation time.</p></li><li><p>Resolved an issue related to connecting to AUTs via
+      <span class="application">squishserver</span> processes launched with the <code class="option">--host</code>
+      option.</p></li><li><p>Improved the stability of shutting down
+      <span class="application">squishserver</span>.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="rel-652-ide"></a>2.9.2. Squish IDE-specific</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Fixed a problem when adding object names to the object
+      map from the application objects view. Object names using the
+      <code class="code">leftObject</code> property did not get a symbolic name generated
+      for that property.</p></li><li><p>Fixed a problem that brought the <span class="application">Squish IDE</span> into an unusable
+      state when double clicking the test case play button.</p></li><li><p>Resolved an issue causing the control bar to be not shown
+      when doing a recording in a <acronym class="acronym">BDD</acronym> test
+      case.</p></li><li><p>Fixed a problem that would cause the control bar to stay
+      visible after a very short test has been executed.</p></li><li><p>Fixed a problem in the <span class="application">Squish IDE</span> that caused an error message
+      in the PyDev Package explorer about a <code class="literal">/lib/python</code>
+      entry reappearing upon each restart.</p></li><li><p>The Visual VP Editor now offers to save any changes when
+      closing the dialog via the <span class="keycap"><strong>Esc</strong></span> key.</p></li><li><p>The Visual VP Editor now permits excluding a sub-tree of
+      <acronym class="acronym">UI</acronym> elements even in edit mode, as
+      intended.</p></li><li><p>The Visual VP editor now shows expected values in diff
+      mode, too.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="rel-652-scripting"></a>2.9.3. Scripting</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Completed documentation of supported classes and methods
+      in <span class="emphasis"><em>Squish</em></span>'s implementation of ECMAScript.</p></li><li><p>Fixed a problem causing test execution to abort when
+      using the <a class="link" href="rgs-squish.html#rgs-testinteraction" title="6.3.18. testInteraction Functions"><code class="code">testInteraction</code></a>
+      functions on macOS.</p></li><li><p>Improved precision for timeout in <a class="xref" href="rgs-squish.html#waitFor-function"><code class="function">waitFor</code></a> functions to avoid returning before the
+      timeout expires.</p></li><li><p><a class="xref" href="rgs-squish.html#waitForObjectExists-function"><code class="function">waitForObjectExists</code></a> now also
+      honors the <a class="xref" href="rgs-squish.html#testSettings.waitForObjectTimeout-property">testSettings.waitForObjectTimeout</a>
+      setting.</p></li><li><p>Fixed 'Function has keyword-only parameters or
+      annotations' error when running <acronym class="acronym">BDD</acronym> tests using
+      Python 3 type annotations.</p></li><li><p>Fixed an issue in the <code class="code">testData</code>
+      <acronym class="acronym">API</acronym> related to reading table cells with double spaces
+      from <code class="filename">xlsx</code> files.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="rel-652-qt"></a>2.9.4. Qt-specific</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Support added for testing applications built with the
+      Qt 5.14 toolkit.</p></li><li><p>Fixed launching Qt 5.12 or later <acronym class="acronym">AUT</acronym>s
+      on Android <acronym class="acronym">NDK</acronym> r18b or later.</p></li><li><p>Fixed record &amp; replay of keypad input for QtQuick
+      applications.</p></li><li><p>Support added for <code class="code">QFlags</code> typedef arguments in
+      invokable methods and slots. This allows calling e.g.
+      <code class="code">QQuickComboBox::find(QString, Qt::MatchFlags)</code>.
+      </p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="rel-652-java"></a>2.9.5. <span class="trademark">Java</span>™-specific</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Fixed taking screenshots of Java controls on X11 when the
+      object coordinates are outside the root window.</p></li><li><p>The <code class="code">IncludeIdPropertyInGeneratedNames</code>
+      setting of the <code class="filename">webwrapper.ini</code> file is now considered
+      when generating names for JavaFx WebView and <acronym class="acronym">SWT</acronym>
+      browser <acronym class="acronym">HTML</acronym> objects.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="rel-652-web"></a>2.9.6. Web-specific</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Fixed a problem with hooking up Chrome 79 on Windows, a
+      new version of the froglogic <span class="emphasis"><em>Squish</em></span> Extension for Chrome corrects the
+      problem.</p></li><li><p>Dropped support for fully customizing generated names
+      as this would generate broken names in too many cases. The related
+      <code class="code">IncludeIdPropertyInGeneratedNames</code> setting in
+      <code class="filename">etc/webwrapper.ini</code> is still supported and now
+      ensures that alternative name generation options (like using the text)
+      are being used.</p></li><li><p>Fixed an issue with tests aborting unexpectedly while
+      executing visual verifications.</p></li><li><p>Resolved an issue when picking objects with <span class="application">Firefox</span> 68 or
+      newer.</p></li><li><p>Fixed a problem accessing the selected text of a field
+      that has no selection in Google Chrome.</p></li><li><p>The behavior of functions from the <a class="link" href="rgs-squish.html#rgss-toplevelwindow-object" title="6.3.16. ToplevelWindow Object"><code class="code">ToplevelWindow</code>
+      module</a> have been aligned between different browsers. In <span class="application">Firefox</span>
+      and Chrome they are now executed in a synchronous manner as happens
+      already for <span class="application">Microsoft Internet Explorer</span> or <span class="application">Safari</span>. Functions like <a class="xref" href="rgs-squish.html#ToplevelWindow.resizeTo-function"><code class="function">resizeTo</code></a>, <a class="xref" href="rgs-squish.html#ToplevelWindow.maximize-function"><code class="function">maximize</code></a> or <a class="xref" href="rgs-squish.html#ToplevelWindow.restore-function"><code class="function">restore</code></a> now return only once the
+      browser has executed the requested action or they'll fail and report an
+      error.</p></li><li><p>Fixed a problem related to terminating the <span class="application">Firefox</span>
+      browser process.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="rel-652-android"></a>2.9.7. Android-specific</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Added support for testing on Android
+      10.</p></li><li><p>Resolved an issue causing a message to pop up related to
+      using old <acronym class="acronym">API</acronym> when testing on newer Android Pie
+      setups.</p></li><li><p>Fixed support for CrossWalk-Cordova.</p></li><li><p>The <code class="code">IncludeIdPropertyInGeneratedNames</code>
+      setting of the <code class="filename">webwrapper.ini</code> file is now considered
+      when generating names for WebView <acronym class="acronym">HTML</acronym>
+      objects.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="rel-652-windows"></a>2.9.8. Windows (native)-specific</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Fixed an issue in <span class="emphasis"><em>Squish</em></span> for Windows which caused no
+      console window to show up.</p></li><li><p>Fixed issue with determining the <code class="code">leftObject</code>
+      for <acronym class="acronym">MFC</acronym> <code class="code">ComboBox</code>
+      controls.</p></li><li><p>Fixed a rare issue with accessing the
+      <code class="code">nativeObject</code> property (or sub-properties thereof) on .NET
+      controls.</p></li><li><p>Improved stability of repeatedly attaching to the same
+      <acronym class="acronym">AUT</acronym>.</p></li><li><p>Restored backwards compatibility when interacting with
+      <acronym class="acronym">WPF</acronym> <code class="code">ListBoxItems</code> and their
+      <code class="code">Label</code> children.</p></li><li><p>Fixed accessing <code class="code">nativeObject</code> property of
+      .NET controls defined in dynamically loaded assemblies.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="rel-652-mac"></a>2.9.9. macOS-specific (Cocoa/Carbon edition)</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Improved support for accessing properties provided by
+      the Hero framework.</p></li><li><p><span class="emphasis"><em>Squish</em></span> no longer attempts to access child objects of
+      non-expandable <code class="code">Outline</code> view items. This can cause problems
+      with some <acronym class="acronym">AUT</acronym>s, in particular it may crash an
+      <acronym class="acronym">AUT</acronym> that is not prepared for such a
+      case.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="rel-652-tk"></a>2.9.10. Tk-specific</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Fixed a case of tests aborting unexpectedly when
+      replaying interactions on controls created with the Tix library in Tk
+      applications.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="rel-652-source"></a>2.9.11. Source Packages</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Fixed a build tool crash for embedded packages on newer
+      Linux kernels.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="rel-652-known-issues"></a>2.9.12. Known Issues</h3></div></div></div><p>For a list of noteworthy issues which were found after the release of
+    <span class="emphasis"><em>Squish</em></span> 6.5.2 please see the <a class="ulink" href="https://kb.froglogic.com/squish/known-issues/6-5-2/" target="_blank">Known
+    Issues page</a> in the froglogic Knowledge Base.</p></div></div><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" type="text/javascript" src="ScriptingLanguage.js"></script><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format">setScriptingLanguage();</script><div class="navfooter"><hr></hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="rel-660.html">Prev</a> </td><td width="20%" align="center"><a accesskey="u" href="relnotes.html">Up</a></td><td width="40%" align="right"> <a accesskey="n" href="rel-651.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">2.8. Version 6.6 </td><td width="20%" align="center"><a accesskey="h" href="index-noframes.html">Home</a></td><td width="40%" align="right" valign="top"> 2.10. Version 6.5.1</td></tr></table></div></body>
+<!-- Mirrored from rel-652.html by HTTrack Website Copier/3.x [XR&CO'2013], Wed, 06 Jul 2022 13:28:55 GMT -->
+</html>

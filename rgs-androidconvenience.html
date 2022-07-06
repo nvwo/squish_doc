@@ -1,0 +1,503 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<!-- Mirrored from rgs-androidconvenience.html by HTTrack Website Copier/3.x [XR&CO'2013], Wed, 06 Jul 2022 13:29:00 GMT -->
+<head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><title>6.13. Android Convenience API</title><link rel="stylesheet" href="manual.css" type="text/css"></link><meta name="generator" content="DocBook XSL Stylesheets V1.73.2"></meta><link rel="start" href="index-noframes.html" title="Squish Manual"></link><link rel="up" href="api.man.html" title="Chapter 6. API Reference Manual"></link><link rel="prev" href="rgs-windowsconvenienceapi.html" title="6.12. Windows Convenience API"></link><link rel="next" href="rgs-py.html" title="6.14. Python Notes"></link><style xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" type="text/css" media="screen">
+        div.toc * { margin-left: 6px; margin-right: auto; max-width: 75em; }
+        div.toc span { margin-left: 0px; }
+        * { margin-left: auto; margin-right: auto; max-width: 75em; }
+        body { margin-left: 6px; margin-right: 6px; }
+        table th { padding: .5ex }
+        table td { padding: .5ex }
+    </style><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format">
+        function keyPress() {
+            var e = window.event;
+            if ( e == undefined ) {
+                return;
+            }
+            /* ### does not properly scroll, yet
+            if ( e.keyCode == 32 ) {
+            var l = document.links;
+            for ( var i = 0; i < l.length; i++ ) {
+                if ( l[i].innerText == "Next" ) {
+                location.href = l[i].href;
+                }
+            }
+            } else
+                */
+                if ( e.keyCode == 0x08 ) {
+            var l = document.links;
+            for ( var i = 0; i < l.length; i++ ) {
+                if ( l[i].innerText == "Prev" ) {
+                location.href = l[i].href;
+                }
+            }
+            }
+        }
+        document.onkeypress = keyPress;
+    </script></head><body><div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="rgs-androidconvenience"></a>6.13. Android Convenience API</h2></div></div></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><span class="section"><a href="rgs-androidconvenience.html#android-GestureBuilder-class">6.13.1. GestureBuilder</a></span></dt><dt><span class="section"><a href="rgs-androidconvenience.html#android-UiAutomator-class">6.13.2. UiAutomator</a></span></dt></dl></div><div class="important" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Important: Android-specific"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Important]" src="images/important.png"></img></td><th align="left">Android-specific</th></tr><tr><td align="left" valign="top"><p>
+The Android Convenience API is <span class="emphasis"><em>only</em></span> available for
+the Squish for Android editions.
+</p></td></tr></table></div><p>
+Here are some quick links to the Android Convenience API's functions:
+</p><div class="informaltable"><table border="0"><colgroup><col></col><col></col><col></col></colgroup><tbody><tr valign="top"><td valign="top">
+<div class="itemizedlist"><ul type="disc" compact><li><p><a class="xref" href="rgs-androidconvenience.html#android-androidUiAutomator-function"><code class="function">androidUiAutomator</code></a></p></li><li><p><a class="xref" href="rgs-androidconvenience.html#android-defaultDevice-property">defaultDevice</a></p></li><li><p><a class="xref" href="rgs-androidconvenience.html#android-doubleTap-function"><code class="function">doubleTap</code></a></p></li><li><p><a class="xref" href="rgs-androidconvenience.html#android-gesture-function"><code class="function">gesture</code></a></p></li><li><p><a class="xref" href="rgs-androidconvenience.html#android-GestureBuilder-class" title="6.13.1. GestureBuilder">GestureBuilder</a></p></li><li><p><a class="xref" href="rgs-androidconvenience.html#android-goBack-function"><code class="function">goBack</code></a></p></li><li><p><a class="xref" href="rgs-androidconvenience.html#android-goHome-function"><code class="function">goHome</code></a></p></li><li><p><a class="xref" href="rgs-androidconvenience.html#android-goRecents-function"><code class="function">goRecents</code></a></p></li><li><p><a class="xref" href="rgs-androidconvenience.html#android-goNotifications-function"><code class="function">goNotifications</code></a></p></li><li><p><a class="xref" href="rgs-androidconvenience.html#android-goQuickSettings-function"><code class="function">goQuickSettings</code></a></p></li></ul></div>
+</td><td valign="top">
+<div class="itemizedlist"><ul type="disc" compact><li><p><a class="xref" href="rgs-androidconvenience.html#android-grabWidget-function"><code class="function">grabWidget</code></a></p></li><li><p><a class="xref" href="rgs-androidconvenience.html#android-hideKeyboard-function"><code class="function">hideKeyboard</code></a></p></li><li><p><a class="xref" href="rgs-androidconvenience.html#android-installEventHandler-function"><code class="function">installEventHandler</code></a></p></li><li><p><a class="xref" href="rgs-androidconvenience.html#android-longPress-function"><code class="function">longPress</code></a></p></li><li><p><a class="xref" href="rgs-androidconvenience.html#android-longPressAndDrag-function"><code class="function">longPressAndDrag</code></a></p></li><li><p><a class="xref" href="rgs-androidconvenience.html#android-openMenu-function"><code class="function">openMenu</code></a></p></li><li><p><a class="xref" href="rgs-androidconvenience.html#android-nativeObject-property">nativeObject</a></p></li><li><p><a class="xref" href="rgs-androidconvenience.html#android-nativeGesture-function"><code class="function">nativeGesture</code></a></p></li><li><p><a class="xref" href="rgs-androidconvenience.html#android-nativeTap-function"><code class="function">nativeTap</code></a></p></li><li><p><a class="xref" href="rgs-androidconvenience.html#android-readGesture-function"><code class="function">readGesture</code></a></p></li></ul></div>
+</td><td valign="top">
+<div class="itemizedlist"><ul type="disc" compact><li><p><a class="xref" href="rgs-androidconvenience.html#android-startObserver-function"><code class="function">startObserver</code></a></p></li><li><p><a class="xref" href="rgs-androidconvenience.html#android-stopObserver-function"><code class="function">stopObserver</code></a></p></li><li><p><a class="xref" href="rgs-androidconvenience.html#android-tapMenuItem-function"><code class="function">tapMenuItem</code></a></p></li><li><p><a class="xref" href="rgs-androidconvenience.html#android-tapObject-function"><code class="function">tapObject</code></a></p></li><li><p><a class="xref" href="rgs-androidconvenience.html#android-touchAndDrag-function"><code class="function">touchAndDrag</code></a></p></li><li><p><a class="xref" href="rgs-androidconvenience.html#android-type-function"><code class="function">type</code></a></p></li><li><p><a class="xref" href="rgs-androidconvenience.html#android-UiAutomator-class" title="6.13.2. UiAutomator">UiAutomator</a></p></li><li><p><a class="xref" href="rgs-androidconvenience.html#android-uninstallEventHandler-function"><code class="function">uninstallEventHandler</code></a></p></li><li><p><a class="xref" href="rgs-androidconvenience.html#android-WebView.evalJS-function"><code class="function">WebView.evalJS</code></a></p></li></ul></div>
+</td></tr></tbody></table></div><div class="funcsynopsis"><a id="android-androidUiAutomator-function"></a><p><code class="funcdef"><b class="fsfunc">androidUiAutomator</b>(</code><code>)</code>;</p></div><p>
+This function returns a <a class="xref" href="rgs-androidconvenience.html#android-UiAutomator-class" title="6.13.2. UiAutomator">UiAutomator</a>
+object, when the Android OS is at API level 18 or higher (Android-4.3
+or later). Which should be used when accessing the <a class="ulink" href="https://developer.android.com/reference/android/support/test/uiautomator/package-summary.html" target="_blank">
+android.support.test.uiautomator</a> classes and objects from a <span class="emphasis"><em>Squish</em></span>
+test script.
+</p><a id="android-defaultDevice-property"></a>String
+<span class="property">defaultDevice</span><p>
+This read-only property of <a class="xref" href="rgs-squish.html#rgss-info" title="6.3.17. squishinfo Object"><code class="code">squishinfo</code> Object (Section 6.3.17)</a> holds the Android
+device string that is selected in the IDE or passed as
+<code class="option">--device</code> option to
+<a class="link" href="rg-cmdline.html#rg-squishrunner-cli" title="7.4.3. squishrunner"><span class="application">squishrunner</span></a>
+</p><div class="funcsynopsis"><a id="android-doubleTap-function"></a><p><code class="funcdef"><b class="fsfunc">doubleTap</b>(</code><var class="pdparam">objectOrName</var><code>)</code>;</p></div><div class="funcsynopsis"><p><code class="funcdef"><b class="fsfunc">doubleTap</b>(</code><var class="pdparam">objectOrName</var>, <var class="pdparam">x</var>, <var class="pdparam">y</var><code>)</code>;</p></div><p>
+This function double taps on the specified <em class="parameter"><code>objectOrName</code></em>
+widget. The <em class="parameter"><code>x</code></em> and <em class="parameter"><code>y</code></em>
+coordinates are optional. If they are not specified, the double tap is
+made in the center of the widget. On the other hand, if the additional
+parameters are given, the double tap is made at position
+<em class="parameter"><code>x</code></em> and <em class="parameter"><code>y</code></em> (in the
+<em class="parameter"><code>objectOrName</code></em> widget's coordinates).
+</p><div class="funcsynopsis"><a id="android-goBack-function"></a><p><code class="funcdef"><b class="fsfunc">goBack</b>(</code><var class="pdparam">objectOrName</var><code>)</code>;</p></div><p>
+This function taps the Android back button. The specified
+<em class="parameter"><code>objectOrName</code></em> can refer to any object
+that is visible, though Squish will record the object having the
+input focus.
+</p><div class="funcsynopsis"><a id="android-goHome-function"></a><p><code class="funcdef"><b class="fsfunc">goHome</b>(</code><code>)</code>;</p></div><p>
+This function taps the Android home button when
+<a class="link" href="rg-cmdline.html#androidobserver-no-ui-automation" title="7.4.7.2.7. --no-ui-automation">UiAutomation</a> is
+enabled. Otherwise this function does nothing.
+</p><div class="funcsynopsis"><a id="android-goRecents-function"></a><p><code class="funcdef"><b class="fsfunc">goRecents</b>(</code><code>)</code>;</p></div><p>
+This function taps the Android recents button when
+<a class="link" href="rg-cmdline.html#androidobserver-no-ui-automation" title="7.4.7.2.7. --no-ui-automation">UiAutomation</a> is
+enabled. Otherwise this function throws an exception.
+</p><div class="funcsynopsis"><a id="android-goNotifications-function"></a><p><code class="funcdef"><b class="fsfunc">goNotifications</b>(</code><code>)</code>;</p></div><p>
+This function opens the Android notifications when
+<a class="link" href="rg-cmdline.html#androidobserver-no-ui-automation" title="7.4.7.2.7. --no-ui-automation">UiAutomation</a> is
+enabled. Otherwise this function throws an exception.
+</p><div class="funcsynopsis"><a id="android-goQuickSettings-function"></a><p><code class="funcdef"><b class="fsfunc">goQuickSettings</b>(</code><code>)</code>;</p></div><p>
+This function opens the Android quick-settings when
+<a class="link" href="rg-cmdline.html#androidobserver-no-ui-automation" title="7.4.7.2.7. --no-ui-automation">UiAutomation</a> is
+enabled. Otherwise this function throws an exception.
+</p><div class="funcsynopsis"><a id="android-gesture-function"></a><p><code class="funcdef"><b class="fsfunc">gesture</b>(</code><var class="pdparam">objectOrName</var>, <var class="pdparam">touches</var><code>)</code>;</p></div><p>
+This function plays a gesture. The specified
+<em class="parameter"><code>objectOrName</code></em> can refer to any object that is
+visible and serves for synchronization only.
+The specified <em class="parameter"><code>touches</code></em> refers to a
+<a class="xref" href="rgs-androidconvenience.html#android-GestureBuilder-class" title="6.13.1. GestureBuilder">GestureBuilder</a> object, which can be
+retrieved using <a class="xref" href="rgs-androidconvenience.html#android-readGesture-function"><code class="function">readGesture</code></a>.
+</p><div class="funcsynopsis"><a id="android-grabWidget-function"></a><p><code class="funcdef">QImage <b class="fsfunc">grabWidget</b>(</code><var class="pdparam">object</var><code>)</code>;</p></div><p>
+This function takes a screenshot of the <em class="parameter"><code>object</code></em>
+view rectangle and returns it as an <a class="xref" href="rgs-squish.html#rgss-image-object" title="6.3.13. QImage Object"><code class="code">QImage</code> Object (Section 6.3.13)</a>.
+</p><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Note: The Newer Way to Grab a Widget "><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/note.png"></img></td><th align="left">The Newer Way to Grab a Widget </th></tr><tr><td align="left" valign="top"><p> Instead of using <code class="function">grabWidget</code> to get an
+AUT-side QImage, it is easier to capture an <a class="xref" href="rgs-squish.html#script-image-object" title="6.3.14. Image Object">Image Object (Section 6.3.14)</a>
+using <a class="xref" href="rgs-squish.html#object.grabScreenshot-function"><code class="function">object.grabScreenshot</code></a>.
+The <a class="xref" href="rgs-squish.html#Image.save-function"><code class="function">Image.save</code></a> function allows you to save
+directly to a location on the <span class="application">squishrunner</span> host.
+</p></td></tr></table></div><div class="funcsynopsis"><a id="android-hideKeyboard-function"></a><p><code class="funcdef"><b class="fsfunc">hideKeyboard</b>(</code><var class="pdparam">object</var><code>)</code>;</p></div><p>
+This function hides the soft keyboard when it is showing. The specified
+<em class="parameter"><code>object</code></em> can refer to any object that is visible.
+Note that <a class="xref" href="rgs-squish.html#waitForObject-function"><code class="function">waitForObject</code></a> also implicitly hides
+the soft keyboard.
+</p><p>Hiding keyboard does not does not work for AccessibilityNode objects.
+</p><div class="funcsynopsis"><a id="android-installEventHandler-function"></a><p><code class="funcdef"><b class="fsfunc">installEventHandler</b>(</code><var class="pdparam">eventName</var>, <var class="pdparam">handlerFunctionNameOrReference</var><code>)</code>;</p></div><p>
+This function installs a global event handler. The script function
+named or referenced in <em class="parameter"><code>handlerFunctionNameOrReference</code></em>,
+will be called when an event
+of the <em class="parameter"><code>eventName</code></em> type occurs.
+</p><p>
+The <em class="parameter"><code>eventName</code></em> can be the name of any of the
+following event types:
+</p><div class="variablelist"><dl><dt><span class="term"><code class="literal">BannerShowed</code></span></dt><dd><p>This event occurs when an
+  <code class="classname">android.widget.Toast</code> is shown</p></dd><dt><span class="term"><code class="literal">DialogOpened</code></span></dt><dd><p>This event occurs when an
+  <code class="classname">android.app.AlertDialog</code> is shown</p></dd><dt><span class="term"><code class="literal">Vibrate</code></span></dt><dd><p>This event occurs when the app calls the Android
+  <acronym class="acronym">API</acronym> function
+  <code class="classname">android.os.Vibrator.vibrate</code>
+</p></dd></dl></div><p>
+The function named in <em class="parameter"><code>handlerFunctionName</code></em> is called
+with one argument—the object that was shown.
+</p><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Note: Python-specific"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/note.png"></img></td><th align="left">Python-specific</th></tr><tr><td align="left" valign="top"><p>
+In Python scripts, you can specify the callback function to invoke by
+passing an actual function or a lambda function.
+</p></td></tr></table></div><p>
+For examples see <a class="xref" href="ugs-eventhandlers.html" title="5.10. How to Use Event Handlers">How to Use Event Handlers (Section 5.10)</a>.
+</p><div class="important" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Important: The AUT Must be Running"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Important]" src="images/important.png"></img></td><th align="left">The AUT Must be Running</th></tr><tr><td align="left" valign="top"><p>
+The <code class="code">installEventHandler</code> function will only work if it is
+called <span class="emphasis"><em>after</em></span> the AUT has been started (e.g., using
+the <a class="xref" href="rgs-squish.html#startApplication-function"><code class="function">startApplication</code></a> function).
+</p></td></tr></table></div><div class="funcsynopsis"><a id="android-longPress-function"></a><p><code class="funcdef"><b class="fsfunc">longPress</b>(</code><var class="pdparam">objectOrName</var><code>)</code>;</p></div><div class="funcsynopsis"><p><code class="funcdef"><b class="fsfunc">longPress</b>(</code><var class="pdparam">objectOrName</var>, <var class="pdparam">x</var>, <var class="pdparam">y</var><code>)</code>;</p></div><p>
+This function taps by pressing 2s on the specified
+<em class="parameter"><code>objectOrName</code></em> widget. The <em class="parameter"><code>x</code></em>
+and <em class="parameter"><code>y</code></em> coordinates are optional. If they are not
+specified the tap is made in the center of the widget. On the other
+hand, if the additional parameters are given, the tap is made at
+position <em class="parameter"><code>x</code></em> and <em class="parameter"><code>y</code></em> (in the
+<em class="parameter"><code>objectOrName</code></em> widget's coordinates).
+</p><div class="funcsynopsis"><a id="android-longPressAndDrag-function"></a><p><code class="funcdef"><b class="fsfunc">longPressAndDrag</b>(</code><var class="pdparam">objectOrName</var>, <var class="pdparam">dx</var>, <var class="pdparam">dy</var><code>)</code>;</p></div><div class="funcsynopsis"><p><code class="funcdef"><b class="fsfunc">longPressAndDrag</b>(</code><var class="pdparam">objectOrName</var>, <var class="pdparam">x</var>, <var class="pdparam">y</var>, <var class="pdparam">dx</var>, <var class="pdparam">dy</var><code>)</code>;</p></div><p>
+This function performs a touch drag operation, pressing 2s first then
+drag, of the specified <em class="parameter"><code>objectOrName</code></em> widget.
+The <em class="parameter"><code>objectOrName</code></em> widget is dragged by
+<em class="parameter"><code>dx</code></em> pixels horizontally and by
+<em class="parameter"><code>dy</code></em> pixels vertically.
+The <em class="parameter"><code>x</code></em> and <em class="parameter"><code>y</code></em> coordinates
+are optional. If they are not specified the initial press is made in the
+center of the widget. On the other hand, if the additional parameters are
+given, the initial press is made at position <em class="parameter"><code>x</code></em> and
+<em class="parameter"><code>y</code></em> (in the <em class="parameter"><code>objectOrName</code></em>
+widget's coordinates).
+</p><div class="funcsynopsis"><a id="android-openMenu-function"></a><p><code class="funcdef"><b class="fsfunc">openMenu</b>(</code><var class="pdparam">objectOrName</var><code>)</code>;</p></div><p>
+This function taps the Android menu button. The specified
+<em class="parameter"><code>objectOrName</code></em> can refer to any object
+that is visible, though Squish will record the object
+having the input focus.
+</p><a id="android-nativeObject-property"></a>Object
+<span class="property">nativeObject</span><p>
+<span class="emphasis"><em>Squish</em></span> automatically adds a property called <code class="code">nativeObject</code>
+to every Android object. The native object provides
+access to all the underlying object's methods and properties.
+</p><p>
+For examples of how to use the <code class="code">nativeObject</code> see <a class="xref" href="ug-how.to.use.the.android.api.html#ug-how.to.use.the.android.nativeobject" title="5.7.2. How to Use the nativeObject Property">How to Use the nativeObject Property (Section 5.7.2)</a>.
+</p><div class="funcsynopsis"><a id="android-nativeGesture-function"></a><p><code class="funcdef"><b class="fsfunc">nativeGesture</b>(</code><var class="pdparam">touches</var><code>)</code>;</p></div><p>
+This function plays a gesture by using Android's shell commands and
+thus works outside the by <span class="emphasis"><em>Squish</em></span> started app. Only the first stroke
+in a gesture file is replayed (i.e. touches for one finger).
+The specified <em class="parameter"><code>touches</code></em> refers to a
+<a class="xref" href="rgs-androidconvenience.html#android-GestureBuilder-class" title="6.13.1. GestureBuilder">GestureBuilder</a> object, which can be
+retrieved using <a class="xref" href="rgs-androidconvenience.html#android-readGesture-function"><code class="function">readGesture</code></a>.
+</p><div class="funcsynopsis"><a id="android-nativeTap-function"></a><p><code class="funcdef"><b class="fsfunc">nativeTap</b>(</code><var class="pdparam">x</var>, <var class="pdparam">y</var><code>)</code>;</p></div><p>
+This function performs a tap by using Android's shell commands and
+thus works outside the by <span class="emphasis"><em>Squish</em></span> started app.
+The <em class="parameter"><code>x</code></em> and <em class="parameter"><code>y</code></em> are relative
+w.r.t. the top-left of the screen.
+</p><div class="funcsynopsis"><a id="android-readGesture-function"></a><p><code class="funcdef"><b class="fsfunc">readGesture</b>(</code><var class="pdparam">gesture-file</var><code>)</code>;</p></div><p>
+This function opens a gesture file from a test suite directory and returns
+a <a class="xref" href="rgs-androidconvenience.html#android-GestureBuilder-class" title="6.13.1. GestureBuilder">GestureBuilder</a> object.
+This can then be passed to <a class="xref" href="rgs-androidconvenience.html#android-gesture-function"><code class="function">gesture</code></a>.
+The specified <em class="parameter"><code>gesture-file</code></em> refers to the filename.
+</p><div class="funcsynopsis"><a id="android-startObserver-function"></a><p><code class="funcdef"><b class="fsfunc">startObserver</b>(</code><code>)</code>;</p></div><p>
+This function should only be used when
+<a class="xref" href="rg-cmdline.html#androidobserver-no-autostart-observer" title="7.4.7.2.6. --no-autostart-observer">--no-autostart-observer (Section 7.4.7.2.6)</a> is specified as launcher
+argument to <a class="xref" href="rg-cmdline.html#androidobserver" title="7.4.7.2. androidobserver">androidobserver (Section 7.4.7.2)</a> or when
+<a class="xref" href="rgs-androidconvenience.html#android-stopObserver-function"><code class="function">stopObserver</code></a> has been called. When the
+<span class="emphasis"><em>observer</em></span> is not running, the object recognition with
+popups, dropdowns and dialogs is limited or will not work at all.
+</p><div class="funcsynopsis"><a id="android-stopObserver-function"></a><p><code class="funcdef"><b class="fsfunc">stopObserver</b>(</code><code>)</code>;</p></div><p>
+This function stops the <span class="emphasis"><em>observer</em></span>. Use this function
+when a certain part in the app execution becomes very slow when running
+under <span class="emphasis"><em>Squish</em></span>. See <a class="xref" href="rgs-androidconvenience.html#android-startObserver-function"><code class="function">startObserver</code></a> for
+enabling the <span class="emphasis"><em>observer</em></span> again.
+</p><div class="funcsynopsis"><a id="android-tapMenuItem-function"></a><p><code class="funcdef"><b class="fsfunc">tapMenuItem</b>(</code><var class="pdparam">objectOrName</var><code>)</code>;</p></div><p>
+This function performs a menu action. The specified
+<em class="parameter"><code>objectOrName</code></em> can refer to any object
+that is visible, though Squish will record the current
+Activity object.
+</p><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Note"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/note.png"></img></td><th align="left">Note</th></tr><tr><td align="left" valign="top"><p><a class="xref" href="rgs-androidconvenience.html#android-tapMenuItem-function"><code class="function">tapMenuItem</code></a> does not work on
+AccessibilityNode objects. Also the application menu has to be open or else
+this function will fail.</p></td></tr></table></div><p>
+</p><div class="funcsynopsis"><a id="android-tapObject-function"></a><p><code class="funcdef"><b class="fsfunc">tapObject</b>(</code><var class="pdparam">objectOrName</var><code>)</code>;</p></div><div class="funcsynopsis"><p><code class="funcdef"><b class="fsfunc">tapObject</b>(</code><var class="pdparam">objectOrName</var>, <var class="pdparam">x</var>, <var class="pdparam">y</var><code>)</code>;</p></div><p>
+This function taps on the specified <em class="parameter"><code>objectOrName</code></em>
+widget. The <em class="parameter"><code>x</code></em> and <em class="parameter"><code>y</code></em>
+coordinates are optional. If they are not specified, the tap is made in
+the center of the widget. On the other hand, if the additional
+parameters are given, the click is made at position
+<em class="parameter"><code>x</code></em> and <em class="parameter"><code>y</code></em> (in the
+<em class="parameter"><code>objectOrName</code></em> widget's coordinates).
+</p><div class="funcsynopsis"><a id="android-touchAndDrag-function"></a><p><code class="funcdef"><b class="fsfunc">touchAndDrag</b>(</code><var class="pdparam">objectOrName</var>, <var class="pdparam">x</var>, <var class="pdparam">y</var>, <var class="pdparam">dx</var>, <var class="pdparam">dy</var><code>)</code>;</p></div><p>
+This function performs a touch drag operation. It initiates a drag
+of the specified <em class="parameter"><code>objectOrName</code></em> widget starting at
+position <em class="parameter"><code>x</code></em> and <em class="parameter"><code>y</code></em>.
+The <em class="parameter"><code>objectOrName</code></em> widget is dragged by
+<em class="parameter"><code>dx</code></em> pixels horizontally and by
+<em class="parameter"><code>dy</code></em> pixels vertically.
+</p><div class="funcsynopsis"><a id="android-type-function"></a><p><code class="funcdef"><b class="fsfunc">type</b>(</code><var class="pdparam">objectOrName</var>, <var class="pdparam">text</var><code>)</code>;</p></div><p>
+This function types the specified <em class="parameter"><code>text</code></em> (as if the
+user had used the keyboard) into the <em class="parameter"><code>objectOrName</code></em>
+editable widget. If the text is surrounded by angle brackets (&lt;&gt;),
+it is interpreted as a key combination, e.g
+<code class="code">"&lt;Ctrl+Return&gt;"</code>. The input is case-sensitive, so
+<code class="code">type(<span class="emphasis"><em>object</em></span>, "R")</code> is different from
+<code class="code">type(<span class="emphasis"><em>object</em></span>, "r")</code>. (For a list of the
+supported special keys see the <a class="xref" href="rgs-squish.html#nativeType-function"><code class="function">nativeType</code></a>
+function's documentation.)
+</p><div class="funcsynopsis"><a id="android-uninstallEventHandler-function"></a><p><code class="funcdef"><b class="fsfunc">uninstallEventHandler</b>(</code><var class="pdparam">eventName</var>, <var class="pdparam">handlerFunctionNameOrReference</var><code>)</code>;</p></div><p>
+This function uninstalls an event handler that has been previously
+installed using <a class="xref" href="rgs-androidconvenience.html#android-installEventHandler-function"><code class="function">installEventHandler</code></a>.
+</p><div class="funcsynopsis"><a id="android-WebView.evalJS-function"></a><p><code class="funcdef"><b class="fsfunc">WebView.evalJS</b>(</code><var class="pdparam">script</var><code>)</code>;</p></div><p>
+This function is a convenient for
+<a class="ulink" href="https://developer.android.com/reference/android/webkit/WebView.html#evaluateJavascript(java.lang.String,%20android.webkit.ValueCallback%3Cjava.lang.String%3E)" target="_blank"><code class="code">android.webkit.WebView.evaluateJavaScript</code></a>
+The target <code class="code">WebView</code> is a UI element of type WebView and the
+<em class="parameter"><code>script</code></em> argument is some JavaScript code.
+This function returns the result of the JavaScript evaluation as a string.
+</p><div xmlns="" class="scriptlang"><form><select name="scriptlangcombo" onchange="javascript:changeScriptingLanguage(this)" onclick="javascript:changeScriptingLanguage(this)"><option value="all" selected>Show All</option><option value="JavaScript">Show JavaScript</option><option value="Perl">Show Perl</option><option value="Python">Show Python</option><option value="Ruby">Show Ruby</option><option value="Tcl">Show Tcl</option></select></form></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">JavaScript</span><pre class="programlisting">
+var webview = waitForObject(":some_WebView");
+test.log("Pixel ratio is " + webview.evalJS("window.top.devicePixelRatio"));
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Perl</span><pre class="programlisting">
+my $webview = waitForObject(":some_WebView");
+test::log("Pixel ratio is " . $webview-&gt;evalJS("window.top.devicePixelRatio"));
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Python</span><pre class="programlisting">
+webview = waitForObject(":some_WebView")
+test.log("Pixel ratio is " + webview.evalJS("window.top.devicePixelRatio"))
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Ruby</span><pre class="programlisting">
+webview = waitForObject(":some_WebView")
+Test.log("Pixel ratio is " + webview.evalJS("window.top.devicePixelRatio"))
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Tcl</span><pre class="programlisting">
+set webview [waitForObject ":some_WebView"]
+test log [concat "Pixel ratio is" [webview evalJS "window.top.devicePixelRatio"]]
+</pre></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="android-GestureBuilder-class"></a>6.13.1. GestureBuilder</h3></div></div></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><span class="section"><a href="rgs-androidconvenience.html#android-GestureBuilder-create-functions">6.13.1.1. Gesture creation</a></span></dt><dt><span class="section"><a href="rgs-androidconvenience.html#android-GestureBuilder-manipulate-functions">6.13.1.2. Gesture manipulation</a></span></dt></dl></div><p>
+Objects of this type hold the touch strokes information needed to
+replay <a class="xref" href="rgs-androidconvenience.html#android-gesture-function"><code class="function">gesture</code></a>.
+An instance of this class is returned by
+<a class="xref" href="rgs-androidconvenience.html#android-readGesture-function"><code class="function">readGesture</code></a>.
+Strokes are defined by screen coordinates points, pressure and
+touch size.
+</p><p>
+For examples of how <code class="code">GestureBuilder</code> objects can be used to
+manipulate the gesture information, see <a class="xref" href="ug-how.to.use.the.android.api.html#ug-how.to.use.the.android.GestureBuilder" title="5.7.3. How to Use the GestureBuilder class">How to Use the GestureBuilder class (Section 5.7.3)</a>.
+</p><a id="android-GestureBuilder-areaWidth-property"></a>int
+<span class="property">GestureBuilder.areaWidth</span><p>
+The width of the area in which this gesture is defined. This will be
+the device or emulator screen width.
+</p><a id="android-GestureBuilder-areaHeight-property"></a>int
+<span class="property">GestureBuilder.areaHeight</span><p>
+The height of the area in which this gesture is defined. This will be
+the device or emulator screen height.
+</p><p>
+All <a class="xref" href="rgs-androidconvenience.html#android-GestureBuilder-class" title="6.13.1. GestureBuilder">GestureBuilder</a> methods listed in the
+<a class="xref" href="rgs-androidconvenience.html#android-GestureBuilder-create-functions" title="6.13.1.1. Gesture creation">Gesture creation (Section 6.13.1.1)</a> and
+<a class="xref" href="rgs-androidconvenience.html#android-GestureBuilder-manipulate-functions" title="6.13.1.2. Gesture manipulation">Gesture manipulation (Section 6.13.1.2)</a> section,
+return the <a class="xref" href="rgs-androidconvenience.html#android-GestureBuilder-class" title="6.13.1. GestureBuilder">GestureBuilder</a> object
+itself, unless specified differently.
+</p><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="android-GestureBuilder-create-functions"></a>6.13.1.1. Gesture creation</h4></div></div></div><p>
+This section lists the methods for manually creating a
+<a class="xref" href="rgs-androidconvenience.html#android-GestureBuilder-class" title="6.13.1. GestureBuilder">GestureBuilder</a> object.
+</p><div class="funcsynopsis"><p><code class="funcdef"><b class="fsfunc">GestureBuilder</b>(</code><var class="pdparam">width</var>, <var class="pdparam">height</var>, <var class="pdparam">unit</var><code>)</code>;</p></div><div class="funcsynopsis"><p><code class="funcdef"><b class="fsfunc">GestureBuilder</b>(</code><var class="pdparam">xml</var><code>)</code>;</p></div><p>
+Two constructor functions for creating a
+<a class="xref" href="rgs-androidconvenience.html#android-GestureBuilder-class" title="6.13.1. GestureBuilder">GestureBuilder</a> object. The
+<em class="parameter"><code>width</code></em> and <em class="parameter"><code>height</code></em> are
+the target screen size. The <em class="parameter"><code>unit</code></em> can be either
+0 or 1, meaning respectively in pixels or millimeters. The constants
+<code class="constant">GestureBuilder.Pixel</code> and
+<code class="constant">GestureBuilder.MilliMeter</code> can be used as well.
+</p><p>
+The second constructor function constructs a
+<a class="xref" href="rgs-androidconvenience.html#android-GestureBuilder-class" title="6.13.1. GestureBuilder">GestureBuilder</a> object by passing a
+string containing <acronym class="acronym">XML</acronym>, which should be in the same
+format as the recorded gesture files.
+</p><div class="funcsynopsis"><p><code class="funcdef">Object <b class="fsfunc">GestureBuilder.addStroke</b>(</code><var class="pdparam">x</var>, <var class="pdparam">y</var><code>)</code>;</p></div><div class="funcsynopsis"><p><code class="funcdef">Object <b class="fsfunc">GestureBuilder.addStroke</b>(</code><var class="pdparam">startTime</var>, <var class="pdparam">x</var>, <var class="pdparam">y</var><code>)</code>;</p></div><div class="funcsynopsis"><p><code class="funcdef">Object <b class="fsfunc">GestureBuilder.addStroke</b>(</code><var class="pdparam">startTime</var>, <var class="pdparam">x</var>, <var class="pdparam">y</var>, <var class="pdparam">pressure</var><code>)</code>;</p></div><div class="funcsynopsis"><p><code class="funcdef">Object <b class="fsfunc">GestureBuilder.addStroke</b>(</code><var class="pdparam">startTime</var>, <var class="pdparam">x</var>, <var class="pdparam">y</var>, <var class="pdparam">pressure</var>, <var class="pdparam">size</var><code>)</code>;</p></div><p>
+Starts a new stroke. The whole movement of one finger or pen from
+touch down to releasing the screen is called a stroke. The touch down
+coordinate is (<em class="parameter"><code>x</code></em>, <em class="parameter"><code>y</code></em>).
+For the non-first stroke, a time offset can be specified in milliseconds using
+the <em class="parameter"><code>startTime</code></em> argument. Strokes cannot be disjointed
+in time, at least one finger or pen has to be down during the whole gesture.
+The maximum simultaneous touches is device dependent.
+</p><p>
+Finally, the <em class="parameter"><code>pressure</code></em> and
+<em class="parameter"><code>size</code></em> are relative messure values for
+respectively pen or finger pressure and size. These should be between
+0.0 and 1.0 and when omitted defaults to 0.25.
+</p><div class="funcsynopsis"><p><code class="funcdef">Object <b class="fsfunc">GestureBuilder.curveTo</b>(</code><var class="pdparam">duration</var>, <var class="pdparam">controlX</var>, <var class="pdparam">controlY</var>, <var class="pdparam">endX</var>, <var class="pdparam">endy</var><code>)</code>;</p></div><div class="funcsynopsis"><p><code class="funcdef">Object <b class="fsfunc">GestureBuilder.curveTo</b>(</code><var class="pdparam">duration</var>, <var class="pdparam">control1X</var>, <var class="pdparam">control1Y</var>, <var class="pdparam">control2X</var>, <var class="pdparam">control2Y</var>, <var class="pdparam">endX</var>, <var class="pdparam">endy</var><code>)</code>;</p></div><p>
+Adds a bézier curve movement to the latest added stroke in
+<em class="parameter"><code>duration</code></em> milliseconds.
+The curve starts with the end coordinate of the last added movement or, if
+none added to the stroke, the stroke touch down coordinate. The end coordinate
+is specified with <em class="parameter"><code>endX</code></em> and <em class="parameter"><code>endY</code></em>.
+One or two so called control points can be used.
+</p><div class="funcsynopsis"><p><code class="funcdef">Object <b class="fsfunc">GestureBuilder.lineTo</b>(</code><var class="pdparam">duration</var>, <var class="pdparam">endX</var>, <var class="pdparam">endy</var><code>)</code>;</p></div><p>
+Adds a line movement to the latest added stroke in
+<em class="parameter"><code>duration</code></em> milliseconds.
+The line starts with the end coordinate of the last added movement or, if none
+added to the stroke, the stroke touch down coordinate. The end coordinate is
+specified with <em class="parameter"><code>endX</code></em> and <em class="parameter"><code>endY</code></em>.
+</p><div class="funcsynopsis"><p><code class="funcdef">Object <b class="fsfunc">GestureBuilder.build</b>(</code><code>)</code>;</p></div><p>
+Creates the gesture from the added strokes and movements. After calling this
+method, no strokes or movements can be added.
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="android-GestureBuilder-manipulate-functions"></a>6.13.1.2. Gesture manipulation</h4></div></div></div><div class="funcsynopsis"><p><code class="funcdef">Object <b class="fsfunc">GestureBuilder.accelerate</b>(</code><var class="pdparam">factor</var><code>)</code>;</p></div><p>
+Changes stroke speed given a factor. A factor between 0.0 and 1.0
+slows down the gesture, above 1.0 will speed it up.
+</p><div class="funcsynopsis"><p><code class="funcdef">Object <b class="fsfunc">GestureBuilder.rotate</b>(</code><var class="pdparam">degrees</var><code>)</code>;</p></div><div class="funcsynopsis"><p><code class="funcdef">Object <b class="fsfunc">GestureBuilder.rotate</b>(</code><var class="pdparam">degrees</var>, <var class="pdparam">originX</var>, <var class="pdparam">originY</var><code>)</code>;</p></div><p>
+Rotates the strokes. The <em class="parameter"><code>degrees</code></em>
+is the agle in degrees in a counter clockwise direction.
+The <em class="parameter"><code>originX</code></em> and <em class="parameter"><code>originY</code></em> define
+the origin of the rotate operation. If omitted, the area center is
+taken as origin.
+</p><div class="funcsynopsis"><p><code class="funcdef">Object <b class="fsfunc">GestureBuilder.scale</b>(</code><var class="pdparam">scale</var><code>)</code>;</p></div><div class="funcsynopsis"><p><code class="funcdef">Object <b class="fsfunc">GestureBuilder.scale</b>(</code><var class="pdparam">scaleX</var>, <var class="pdparam">scaleY</var><code>)</code>;</p></div><div class="funcsynopsis"><a id="android-GestureBuilder.scale-function"></a><p><code class="funcdef">Object <b class="fsfunc">GestureBuilder.scale</b>(</code><var class="pdparam">scaleX</var>, <var class="pdparam">scaleY</var>, <var class="pdparam">originX</var>, <var class="pdparam">originY</var><code>)</code>;</p></div><p>
+Changes the size of the strokes. The <em class="parameter"><code>scaleX</code></em>
+is the scale factor in the horizontal direction and
+<em class="parameter"><code>scaleY</code></em> in the vertical direction.
+The <em class="parameter"><code>originX</code></em> and <em class="parameter"><code>originY</code></em> define
+the origin of the scale operation. If omitted, the area center is
+taken as origin. When also <em class="parameter"><code>scaleY</code></em> is omitted, then
+the scaling is homogeneous in both directions.
+</p><div class="funcsynopsis"><a id="android-GestureBuilder.translate-function"></a><p><code class="funcdef">Object <b class="fsfunc">GestureBuilder.translate</b>(</code><var class="pdparam">x</var>, <var class="pdparam">y</var><code>)</code>;</p></div><p>
+Moves the strokes. The <em class="parameter"><code>x</code></em> and
+<em class="parameter"><code>y</code></em> specifies the movement. A positive value for
+<em class="parameter"><code>x</code></em> moves the strokes to the right and a positive
+value for <em class="parameter"><code>y</code></em> moves the strokes downwards.
+</p></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="android-UiAutomator-class"></a>6.13.2. UiAutomator</h3></div></div></div><p>
+Objects of this type allows test scripts to run methods on
+<a class="ulink" href="https://developer.android.com/reference/android/support/test/uiautomator/package-summary.html" target="_blank">
+android.support.test.uiautomator</a> classes and objects. Call
+<a class="xref" href="rgs-androidconvenience.html#android-androidUiAutomator-function"><code class="function">androidUiAutomator</code></a> to get an instance
+of a <code class="code">UiAutomator</code> instance.
+</p><p>
+The requirement is that the Android OS is at API level 18 or higher
+(Android-4.3 or later).
+</p><p>
+The equivalent script of an example script that presses the Android
+“<span class="quote">Home</span>” button, opens the Android application launcher and
+from the second screen, opens the <span class="guilabel">Settings</span> app. Using
+the object names <code class="code">:Apps_Clickable</code> which is <code class="code">
+{description='Apps' simpleName='TextView' type='Clickable' visible='true'}
+</code>, <code class="code">:_AccessiblePanel</code> being <code class="code">
+{simpleName='FrameLayout' type='AccessiblePanel' visible='true'}</code>
+and <code class="code">:Settings_Clickable</code> stands for <code class="code">
+{simpleName='TextView' text='Settings' type='Clickable' visible='true'}
+</code>.
+</p><pre class="programlisting">
+goHome()
+tapObject(waitForObject(":Apps_Clickable"))
+geom = Screen.byIndex(0).geometry
+w = geom.width
+touchAndDrag(waitForObject(":_AccessiblePanel"), w-10, geom.height/2, 20-w, 0)
+tapObject(waitForObject(":Settings_Clickable"))
+</pre><p>
+The equivalent snippet using <a class="xref" href="rgs-androidconvenience.html#android-UiAutomator-class" title="6.13.2. UiAutomator">UiAutomator</a> is:
+</p><div xmlns="" class="scriptlang"><form><select name="scriptlangcombo" onchange="javascript:changeScriptingLanguage(this)" onclick="javascript:changeScriptingLanguage(this)"><option value="all" selected>Show All</option><option value="JavaScript">Show JavaScript</option><option value="Perl">Show Perl</option><option value="Python">Show Python</option><option value="Ruby">Show Ruby</option><option value="Tcl">Show Tcl</option></select></form></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">JavaScript</span><pre class="programlisting">
+var au = androidUiAutomator();
+
+//press home
+var dev = au.getDevice();
+dev.pressHome();
+
+//open application launcher
+var sel = au.createSelector().description("Apps");
+var obj = au.createObject(sel);
+obj.click();
+
+//swipe right to left
+var y = dev.displayHeight / 2;
+dev.swipe(dev.displayWidth - 10, y, 10, y, 50);
+
+//open settings app
+sel = au.createSelector().text("Settings");
+obj = au.createObject(sel);
+obj.click();
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Perl</span><pre class="programlisting">
+my $au = androidUiAutomator();
+
+#press home
+my $dev = $au-&gt;getDevice();
+$dev-&gt;pressHome();
+
+#open application launcher
+my $sel = $au-&gt;createSelector()-&gt;description("Apps");
+my $obj = $au-&gt;createObject($sel);
+$obj-&gt;click();
+
+#swipe right to left
+my $y = $dev-&gt;displayHeight / 2;
+$dev-&gt;swipe($dev-&gt;displayWidth - 10, $y, 10, $y, 50);
+
+#open settings app
+$sel = $au-&gt;createSelector()-&gt;text("Settings");
+$obj = $au-&gt;createObject($sel);
+$obj-&gt;click();
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Python</span><pre class="programlisting">
+au = androidUiAutomator()
+
+#press home
+dev = au.getDevice()
+dev.pressHome()
+
+#open application launcher
+sel = au.createSelector().description("Apps")
+obj = au.createObject(sel)
+obj.click()
+
+#swipe right to left
+y = dev.displayHeight / 2
+dev.swipe(dev.displayWidth - 10, y, 10, y, 50)
+
+#open settings app
+sel = au.createSelector().text("Settings")
+obj = au.createObject(sel)
+obj.click()
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Ruby</span><pre class="programlisting">
+au = androidUiAutomator()
+
+#press home
+dev = au.getDevice()
+dev.pressHome()
+
+#open application launcher
+sel = au.createSelector().description("Apps")
+obj = au.createObject(sel)
+obj.click()
+
+#swipe right to left
+y = dev.displayHeight / 2
+dev.swipe(dev.displayWidth - 10, y, 10, y, 50)
+
+#open settings app
+sel = au.createSelector().text("Settings")
+obj = au.createObject(sel)
+obj.click()
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Tcl</span><pre class="programlisting">
+set au [invoke androidUiAutomator]
+
+#press home
+set dev [invoke $au getDevice]
+invoke $dev pressHome
+
+#open application launcher
+set sel [invoke [invoke $au createSelector] description "Apps"]
+set obj [invoke $au createObject $sel]
+invoke $obj click
+
+#swipe right to left
+set y [expr [property get $dev displayHeight] / 2]
+invoke $dev swipe [expr [property get $dev displayWidth] - 10] $y 10 $y 50
+
+#open settings app
+set sel [invoke [invoke $au createSelector] text "Settings"]
+set obj [invoke $au createObject $sel]
+invoke $obj click
+</pre></div><div class="funcsynopsis"><p><code class="funcdef"><b class="fsfunc">UiAutomator.getDevice</b>(</code><code>)</code>;</p></div><p>
+Returns a
+<a class="ulink" href="https://developer.android.com/reference/android/support/test/uiautomator/UiDevice.html" target="_blank">
+android.support.test.UiDevice</a> object. By calling
+<a class="ulink" href="https://developer.android.com/reference/android/support/test/uiautomator/UiDevice.html#getInstance()" target="_blank">
+android.support.test.UiDevice.getInstance</a> and using the
+<code class="code">SquishHook</code> as <em class="parameter"><code>instrumentation</code></em> argument.
+</p><div class="funcsynopsis"><p><code class="funcdef"><b class="fsfunc">UiAutomator.createSelector</b>(</code><code>)</code>;</p></div><p>
+Returns a newly created
+<a class="ulink" href="https://developer.android.com/reference/android/support/test/uiautomator/UiSelector.html" target="_blank">
+android.support.test.uiautomator.UiSelector</a> object.
+</p><div class="funcsynopsis"><p><code class="funcdef"><b class="fsfunc">UiAutomator.createObject</b>(</code><var class="pdparam">selector</var><code>)</code>;</p></div><p>
+Returns a newly created
+<a class="ulink" href="https://developer.android.com/reference/android/support/test/uiautomator/UiObject.html" target="_blank">
+android.support.test.uiautomator.UiObject</a> object for the
+<em class="parameter"><code>selector</code></em> argument.
+</p><div class="funcsynopsis"><p><code class="funcdef"><b class="fsfunc">UiAutomator.getBy</b>(</code><code>)</code>;</p></div><p>
+Returns the
+<a class="ulink" href="https://developer.android.com/reference/android/support/test/uiautomator/By.html" target="_blank">
+android.support.test.uiautomator.By</a> class on which the static methods
+can be called to create
+<a class="ulink" href="https://developer.android.com/reference/android/support/test/uiautomator/BySelector.html" target="_blank">
+android.support.test.uiautomator.BySelector</a> objects.
+</p><div class="funcsynopsis"><p><code class="funcdef"><b class="fsfunc">UiAutomator.getUntil</b>(</code><code>)</code>;</p></div><p>
+Returns the
+<a class="ulink" href="https://developer.android.com/reference/android/support/test/uiautomator/Until.html" target="_blank">
+android.support.test.uiautomator.Until</a> class on which the static methods
+can be called.
+</p></div></div><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" type="text/javascript" src="ScriptingLanguage.js"></script><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format">setScriptingLanguage();</script><div class="navfooter"><hr></hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="rgs-windowsconvenienceapi.html">Prev</a> </td><td width="20%" align="center"><a accesskey="u" href="api.man.html">Up</a></td><td width="40%" align="right"> <a accesskey="n" href="rgs-py.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">6.12. Windows Convenience API </td><td width="20%" align="center"><a accesskey="h" href="index-noframes.html">Home</a></td><td width="40%" align="right" valign="top"> 6.14. Python Notes</td></tr></table></div></body>
+<!-- Mirrored from rgs-androidconvenience.html by HTTrack Website Copier/3.x [XR&CO'2013], Wed, 06 Jul 2022 13:29:00 GMT -->
+</html>

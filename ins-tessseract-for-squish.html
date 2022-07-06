@@ -1,0 +1,163 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<!-- Mirrored from ins-tessseract-for-squish.html by HTTrack Website Copier/3.x [XR&CO'2013], Wed, 06 Jul 2022 13:28:58 GMT -->
+<head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><title>3.11. OCR and Installing Tesseract for Squish</title><link rel="stylesheet" href="manual.css" type="text/css"></link><meta name="generator" content="DocBook XSL Stylesheets V1.73.2"></meta><link rel="start" href="index-noframes.html" title="Squish Manual"></link><link rel="up" href="install.html" title="Chapter 3. How to Install Squish"></link><link rel="prev" href="ins-new-ide.html" title="3.10. Standalone Installation of the IDE"></link><link rel="next" href="ins-source-squishrunner.html" title="3.12.  Building squishrunner with Video support"></link><style xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" type="text/css" media="screen">
+        div.toc * { margin-left: 6px; margin-right: auto; max-width: 75em; }
+        div.toc span { margin-left: 0px; }
+        * { margin-left: auto; margin-right: auto; max-width: 75em; }
+        body { margin-left: 6px; margin-right: 6px; }
+        table th { padding: .5ex }
+        table td { padding: .5ex }
+    </style><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format">
+        function keyPress() {
+            var e = window.event;
+            if ( e == undefined ) {
+                return;
+            }
+            /* ### does not properly scroll, yet
+            if ( e.keyCode == 32 ) {
+            var l = document.links;
+            for ( var i = 0; i < l.length; i++ ) {
+                if ( l[i].innerText == "Next" ) {
+                location.href = l[i].href;
+                }
+            }
+            } else
+                */
+                if ( e.keyCode == 0x08 ) {
+            var l = document.links;
+            for ( var i = 0; i < l.length; i++ ) {
+                if ( l[i].innerText == "Prev" ) {
+                location.href = l[i].href;
+                }
+            }
+            }
+        }
+        document.onkeypress = keyPress;
+    </script></head><body><div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="ins-tessseract-for-squish"></a>3.11. OCR and Installing Tesseract for <span class="emphasis"><em>Squish</em></span></h2></div></div></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><span class="section"><a href="ins-tessseract-for-squish.html#idp37892816">3.11.1. OCR Functionality in Squish</a></span></dt><dt><span class="section"><a href="ins-tessseract-for-squish.html#idp37897896">3.11.2. Configuring the Package</a></span></dt><dt><span class="section"><a href="ins-tessseract-for-squish.html#ins-tesseract-unattended">3.11.3. Performing Unattended Installations</a></span></dt></dl></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="idp37892816"></a>3.11.1. OCR Functionality in Squish</h3></div></div></div><p>
+Optical Character Recognition (OCR) is a technology that
+enables the digitization of scanned images with printed or
+handwritten text into machine-readable data that can later
+be used for electronic editing. Image sources fed to OCR
+software include image-only PDFs, scanned documents,
+handwritten manuscripts or camera images, among others.
+</p><p>
+Applications of OCR technology are wide and varied and
+include automatic data entry, passport recognition in airports,
+digitizing dated newspapers, automatic number-plate recognition
+and assistive technology for the visually impaired.
+Advantages of using OCR to digitize text are clear.
+That is, OCR offers a massive saving of storage space by
+compacting paper documents into electronic documents;
+searchability is vastly improved for printed texts;
+revising a document is then easier once a text has been
+computerised into machine-encoded text and can be done
+with a standard word processor; and digital backups of printed text
+(e.g., legal paperwork or newspapers) can be done
+frequently and with greater security over keeping documents in printed form.
+</p><p>
+Squish includes OCR as a compliment to its already powerful
+Object-based and Image-based recognition methods.
+Variability in a component's visual appearance is
+particularly prominent for onscreen text when trying to
+create platform-independent tests, due to a wide
+assortment of fonts, font sizes, decorations and rendering modes.
+Thus, Image-based recognition methods, including Fuzzy Image Search,
+are generally unsuitable for locating text onscreen.
+OCR therefore allows for efficient text handling in those
+scenarios where the same text is rendered with different parameters,
+making it look largely dissimilar in pixel-to-pixel comparison (i.e., due
+to varying letter widths, different kerning or shifting line break positions).
+</p><p>
+Squish uses, as its primary engine, the free Tesseract OCR
+library to faciliate text recognition. In order to use
+the Tesseract OCR engine, the package, including all
+of the language files, needs to be installed independently
+of Squish. Any other OCR engine can potentially be
+substituted for use with Squish.</p><p>
+Tesseract for <span class="emphasis"><em>Squish</em></span> is supplied as a single, easy-to-install
+binary package that contains the engine libraries and the full
+set of language files. The packages for all supported platforms
+can be found in the <a class="ulink" href="https://www.froglogic.com/squish/download" target="_blank">download portal.</a>
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="idp37897896"></a>3.11.2. Configuring the Package</h3></div></div></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><span class="section"><a href="ins-tessseract-for-squish.html#ins-tesseract-config-targetdir">3.11.2.1. Installation Folder</a></span></dt><dt><span class="section"><a href="ins-tessseract-for-squish.html#ins-tesseract-config-licensetext">3.11.2.2. Acknowledging the Terms of Use</a></span></dt><dt><span class="section"><a href="ins-tessseract-for-squish.html#ins-tesseract-config-register">3.11.2.3. Tesseract engine registration</a></span></dt><dt><span class="section"><a href="ins-tessseract-for-squish.html#ins-tesseract-config-review">3.11.2.4. Ready to Install</a></span></dt><dt><span class="section"><a href="ins-tessseract-for-squish.html#ins-tesseract-config-progress">3.11.2.5. Executing the Installation</a></span></dt><dt><span class="section"><a href="ins-tessseract-for-squish.html#ins-tesseract-config-final">3.11.2.6. Concluding the Configuration</a></span></dt></dl></div><p>
+Please download the Tesseract for <span class="emphasis"><em>Squish</em></span> package for your operating
+system from your customer area onto your computer, and execute it.
+</p><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Note: On Linux"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/note.png"></img></td><th align="left">On Linux</th></tr><tr><td align="left" valign="top"><p>
+On Linux, you first need to make the <code class="filename">.run</code> file which you downloaded
+executable. Popular desktop environments allow this by right-clicking the
+file and enabling the <code class="literal">Execute</code> permission. You can also
+make the installer executable on the command line by issuing the following:
+</p><pre class="screen"><code class="prompt">$ </code><span class="application">chmod</span> <code class="option">a+x</code>
+<code class="option">tesseract-4.0.0-for-squish.x64.run</code></pre></td></tr></table></div><p>
+The installation program will guide you through the configuration process
+by presenting multiple pages.
+</p><div class="screenshot"><div class="mediaobject" align="center"><img src="images/tesseract-installer-welcome.png" align="middle" alt="The Tesseract for Squish setup program in action."></img></div></div><div class="tip" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Tip: Changing Configuration Settings"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Tip]" src="images/tip.png"></img></td><th align="left">Changing Configuration Settings</th></tr><tr><td align="left" valign="top"><p>
+Once you start the installer, you can go back to change a
+configuration setting using the <span class="guilabel">Back</span> button
+and proceed to the following pages using the <span class="guilabel">Next</span> button.
+</p></td></tr></table></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="ins-tesseract-config-targetdir"></a>3.11.2.1. Installation Folder</h4></div></div></div><p>
+This step decides the location on your system in which the Tesseract for
+<span class="emphasis"><em>Squish</em></span> will be installed.
+</p><div class="screenshot"><div class="mediaobject" align="center"><img src="images/tesseract-installer-targetdir.png" align="middle" alt="A picture of the target selection page from the froglogic Tesseract for Squish setup program."></img></div></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="ins-tesseract-config-licensetext"></a>3.11.2.2. Acknowledging the Terms of Use</h4></div></div></div><div class="screenshot"><div class="mediaobject" align="center"><img src="images/tesseract-installer-licensetext.png" align="middle" alt="A picture of the Appache license test page from the froglogic Tesseract for Squish installation program."></img></div></div><p>
+After selecting the installation folder, you will be presented with the
+license under which you are permitted to use your copy of Tesseract for <span class="emphasis"><em>Squish</em></span>. Please read
+the entire license text carefully before proceeding. Click one of the two radio
+buttons (<span class="guibutton">I accept the license.</span> or <span class="guibutton">I do not
+accept the license.</span>), that appear below the license text, to
+indicate whether you agree or disagree with the terms. If you disagree, then
+you cannot install or use Tesseract for <span class="emphasis"><em>Squish</em></span>. To terminate the installation,
+click the <span class="guibutton">Cancel</span>.
+</p><p>
+If you accept the license, the  <span class="guilabel">Next</span> button will
+become enabled, and you can proceed to the next step of the configuration
+process.
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="ins-tesseract-config-register"></a>3.11.2.3. Tesseract engine registration</h4></div></div></div><p>
+In order to use Tesseract with <span class="emphasis"><em>Squish</em></span>, its installation path needs to
+be registered with <span class="emphasis"><em>Squish</em></span>. The Tesseract for <span class="emphasis"><em>Squish</em></span> package installer
+will perform the registration during the installation if the
+<span class="guilabel">Register the Tesseract installation with Squish</span>
+selected.
+</p><div class="screenshot"><div class="mediaobject" align="center"><img src="images/tesseract-installer-register.png" align="middle" alt="A picture of the page from the froglogic Squish configuration program where you configure which Qt library should be used for the tested application."></img></div></div><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Note"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/note.png"></img></td><th align="left">Note</th></tr><tr><td align="left" valign="top"><p>
+If you choose not to register the Tesseract installation with <span class="emphasis"><em>Squish</em></span>, you can
+do it at a later time by entering the chosen installation path on the <span class="emphasis"><em>Squish</em></span> IDE
+<a class="xref" href="ide.dialogs.html#ide.preferences.squish.ocr.pane">OCR Preferences pane</a>
+or by editing the <a class="xref" href="rg-ini-files.html#rg-ocr.ini-file" title="7.6.1.2. ocr.ini">ocr.ini (Section 7.6.1.2)</a> file manually.
+</p></td></tr></table></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="ins-tesseract-config-review"></a>3.11.2.4. Ready to Install</h4></div></div></div><p>
+At this point all the configuration options have been set and the
+installation is ready to launch. A page is shown which displays the
+disk space required by the Tesseract for <span class="emphasis"><em>Squish</em></span> installation.
+</p><div class="screenshot"><div class="mediaobject" align="center"><img src="images/tesseract-installer-review.png" align="middle" alt="A picture of the configuration review page from the froglogic Tesseract for Squish configuration program."></img></div></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="ins-tesseract-config-progress"></a>3.11.2.5. Executing the Installation</h4></div></div></div><p>The installation program now commences installing Tesseract for <span class="emphasis"><em>Squish</em></span>
+on your system. You can click the <span class="guilabel">Show Details</span> button to
+get a detailed list of actions performed as part of the installation.</p><div class="screenshot"><div class="mediaobject" align="center"><img src="images/tesseract-installer-progress.png" align="middle" alt="A picture of the Tesseract for Squish setup program installating a package."></img></div></div><p>
+You can close the installer at any time, e.g. by closing the window or by
+pressing the <span class="guilabel">Cancel</span> button (only visible on platforms
+other than macOS). All changes done so far will be rolled back.
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="ins-tesseract-config-final"></a>3.11.2.6. Concluding the Configuration</h4></div></div></div><p>
+Congratulations! You have finished installing the Tesseract for <span class="emphasis"><em>Squish</em></span>.
+This page concludes the setup of your Tesseract for <span class="emphasis"><em>Squish</em></span> binary package.
+</p><div class="screenshot"><div class="mediaobject" align="center"><img src="images/tesseract-installer-finished.png" align="middle" alt="A picture of the final page from the froglogic Tesseract for Squish insatllation program."></img></div></div><p>
+You should now click the <span class="guilabel">Finish</span> button to close the
+installation program.
+</p></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="ins-tesseract-unattended"></a>3.11.3. Performing Unattended Installations</h3></div></div></div><p>
+It is possible to perform the installation of Tesseract for <span class="emphasis"><em>Squish</em></span>
+completely unattended, passing any required values up front. Unattended
+installation requires no user interactions whatsoever and is equivalent to
+manually interacting with the installer interface. To perform an unattended
+installation, invoke the Tesseract for <span class="emphasis"><em>Squish</em></span> installation program from the
+command line passing at least the argument <code class="code">unattended=1</code>:
+</p><pre class="screen">
+$ ./tesseract-4.0.0-for-squish.x64.run unattended=1 &lt;more options...&gt;
+</pre><p>
+That argument will launch the installation without any graphical user
+interface. Instead, progress information and potential error messages are
+written to the console.
+</p><p>
+In addition to the <code class="code">unattended=1</code> argument, you may want to specify
+<code class="code">targetdir=&lt;PATH&gt;</code> argument to specify the
+target installation directory or the <code class="code">register=0</code> to disable the
+automatic registration of the engine with <span class="emphasis"><em>Squish</em></span>
+</p><pre class="screen">
+$ ./tesseract-4.0.0-for-squish.x64.run unattended=1 targetdir=/opt/tesseract register=0
+</pre></div></div><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" type="text/javascript" src="ScriptingLanguage.js"></script><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format">setScriptingLanguage();</script><div class="navfooter"><hr></hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="ins-new-ide.html">Prev</a> </td><td width="20%" align="center"><a accesskey="u" href="install.html">Up</a></td><td width="40%" align="right"> <a accesskey="n" href="ins-source-squishrunner.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">3.10. Standalone Installation of the IDE </td><td width="20%" align="center"><a accesskey="h" href="index-noframes.html">Home</a></td><td width="40%" align="right" valign="top"> 3.12.  Building <span class="application">squishrunner</span> with Video support </td></tr></table></div></body>
+<!-- Mirrored from ins-tessseract-for-squish.html by HTTrack Website Copier/3.x [XR&CO'2013], Wed, 06 Jul 2022 13:28:58 GMT -->
+</html>

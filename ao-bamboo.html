@@ -1,0 +1,116 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<!-- Mirrored from ao-bamboo.html by HTTrack Website Copier/3.x [XR&CO'2013], Wed, 06 Jul 2022 13:29:01 GMT -->
+<head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><title>9.4. Atlassian Bamboo integration</title><link rel="stylesheet" href="manual.css" type="text/css"></link><meta name="generator" content="DocBook XSL Stylesheets V1.73.2"></meta><link rel="start" href="https://index-noframes.html" title="Squish Manual"></link><link rel="up" href="https://addons.html" title="Chapter 9. Add-Ons Reference Manual"></link><link rel="prev" href="https://ao-hudson.html" title="9.3. Jenkins integration"></link><link rel="next" href="https://ao-teamcity.html" title="9.5. JetBrains TeamCity integration"></link><style xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" type="text/css" media="screen">
+        div.toc * { margin-left: 6px; margin-right: auto; max-width: 75em; }
+        div.toc span { margin-left: 0px; }
+        * { margin-left: auto; margin-right: auto; max-width: 75em; }
+        body { margin-left: 6px; margin-right: 6px; }
+        table th { padding: .5ex }
+        table td { padding: .5ex }
+    </style><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format">
+        function keyPress() {
+            var e = window.event;
+            if ( e == undefined ) {
+                return;
+            }
+            /* ### does not properly scroll, yet
+            if ( e.keyCode == 32 ) {
+            var l = document.links;
+            for ( var i = 0; i < l.length; i++ ) {
+                if ( l[i].innerText == "Next" ) {
+                location.href = l[i].href;
+                }
+            }
+            } else
+                */
+                if ( e.keyCode == 0x08 ) {
+            var l = document.links;
+            for ( var i = 0; i < l.length; i++ ) {
+                if ( l[i].innerText == "Prev" ) {
+                location.href = l[i].href;
+                }
+            }
+            }
+        }
+        document.onkeypress = keyPress;
+    </script></head><body><div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="ao-bamboo"></a>9.4. Atlassian Bamboo integration</h2></div></div></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><span class="section"><a href="https://ao-bamboo.html#ao-bamboo-intro">9.4.1. Introduction</a></span></dt><dt><span class="section"><a href="https://ao-bamboo.html#ao-bamboo-inst">9.4.2. Installation</a></span></dt><dt><span class="section"><a href="https://ao-bamboo.html#ao-bamboo-capability">9.4.3. Squish capability</a></span></dt><dt><span class="section"><a href="https://ao-bamboo.html#ao-bamboo-job">9.4.4. Job definition</a></span></dt><dt><span class="section"><a href="https://ao-bamboo.html#ao-bamboo-task">9.4.5. Task definition</a></span></dt><dt><span class="section"><a href="https://ao-bamboo.html#ao-bamboo-results">9.4.6. Test results</a></span></dt></dl></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="ao-bamboo-intro"></a>9.4.1. Introduction</h3></div></div></div><p>
+<a class="ulink" href="https://www.atlassian.com/software/bamboo" target="_blank">Atlassian Bamboo</a>
+ is a continuous integration server used to build,
+test and release software. The <span class="emphasis"><em>Squish Runner</em></span> plugin provides seamless <span class="emphasis"><em>Squish</em></span>
+integration with Bamboo. Users can add one or more <span class="emphasis"><em>Squish Runner</em></span> tasks to a
+Bamboo Job and execute <span class="emphasis"><em>Squish</em></span> GUI tests on designated local or remote agents.
+After executions finish, <span class="emphasis"><em>Squish</em></span> results are aggregated and added to the test results
+and made available in the entire Bamboo Plan (together with other tests, including unit tests).
+Additionally, Artifacts for <span class="emphasis"><em>Squish</em></span> tests are stored to allow efficient
+defect troubleshooting.
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="ao-bamboo-inst"></a>9.4.2. Installation</h3></div></div></div><p>
+The plugin is available from Atlassian Marketplace
+<a class="ulink" href="https://marketplace.atlassian.com/plugins/squish.squish" target="_blank">marketplace.atlassian.com/plugins/squish.squish</a>.
+</p><p>
+To install the <span class="emphasis"><em>Squish Runner</em></span> plugin go to <span class="guilabel">Bamboo Administration</span>
+and choose option <span class="guilabel">Manage Add-ons</span>. In this section click
+<span class="guilabel">Upload Add-on</span> to upload a jar file with a plugin.
+When the installation is completed, the Squish plugin is displayed in the user
+installed Add-ons list.
+</p><div class="screenshot"><div class="mediaobject" align="center"><img src="https://images/bamboo-UserInstalledPlugins.png" align="middle"></img><div class="caption">Bamboo user installed plugins.</div></div></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="ao-bamboo-capability"></a>9.4.3. Squish capability</h3></div></div></div><p>
+An Agent is a service that executes Bamboo builds, tests and deployments.
+The Agent Capabilities setting allows users to specify which
+agents are capable of executing <span class="emphasis"><em>Squish</em></span> GUI tests. If all local agents are able to run
+<span class="emphasis"><em>Squish</em></span> tests and the <span class="emphasis"><em>Squish</em></span> installation directory for all local agents is the same, the
+<code class="code">squish</code> custom capability should be added to the Server Capabilities settings
+<span class="guimenu">Bamboo administration</span>|<span class="guimenuitem">BUILD RESOURCES</span>|<span class="guimenuitem">Server capabilities</span>
+with key <code class="code">squish</code> and value set to <span class="emphasis"><em>Squish</em></span> installation path.
+The <code class="code">squish</code> capability will be inherited by
+all local agents. If <span class="emphasis"><em>Squish</em></span> tests are run on multiple local and remote agents then
+the <code class="code">squish</code> capability must be set for a given agent using
+<span class="guimenu">Bamboo administration</span>|<span class="guimenuitem">BUILD RESOURCES</span>|<span class="guimenuitem">Agents</span>|<span class="guimenuitem">AgentName</span>|<span class="guimenuitem">Agent-specific capabilities</span>
+
+</p><div class="screenshot"><div class="mediaobject" align="center"><img src="https://images/bamboo-SquishCapability.png" align="middle"></img><div class="caption">Adding Squish capability</div></div></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="ao-bamboo-job"></a>9.4.4. Job definition</h3></div></div></div><p>
+The Job, which executes the <span class="emphasis"><em>Squish</em></span> tests, must be configured as well.
+On the <span class="guilabel">Requirements</span> tab, in the Add extra requirement section, the requirement <code class="code">squish</code> with the condition
+<code class="code">exists</code> must be specified. The Requirement setting indicates this particular job can only be built by agents whose capabilities
+meet this requirement. After the requirement is added, the list of agents
+capable of executing <span class="emphasis"><em>Squish</em></span> tests is displayed.
+</p><div class="screenshot"><div class="mediaobject" align="center"><img src="https://images/bamboo-JobReq.png" align="middle"></img><div class="caption">Adding an extra job requirement</div></div></div><p>
+Next we need to define artifacts to be collected after the job finishes.
+Select the <span class="guilabel">Artifact</span> tab, and click <span class="guibutton">Create definition</span>.
+Set the artifact name to <code class="code">Squish</code> and the Copy Pattern to <code class="code">squish/**</code>.
+Select the <span class="guilabel">Miscellaneous</span> tab, and check (enable) the <span class="guilabel">Clean working directory after each build</span> option.
+</p><div class="screenshot"><div class="mediaobject" align="center"><img src="https://images/bamboo-ArtifactDef.png" align="middle"></img><div class="caption">Adding a new artifact definition</div></div></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="ao-bamboo-task"></a>9.4.5. Task definition</h3></div></div></div><p>
+A Task is a work item which is executed as part of a job.
+All tasks in a job are executed one at a time. Multiple <span class="emphasis"><em>Squish Runner</em></span>
+tasks can be added to a single job. Other tasks (like unit tests execution) can also be added to the same job.
+<span class="emphasis"><em>Squish Runner</em></span> tasks can be found in the <span class="guilabel">Test</span> category.
+</p><div class="screenshot"><div class="mediaobject" align="center"><img src="https://images/bamboo-AddSquishTask.png" align="middle"></img><div class="caption"><p>Adding a new <span class="emphasis"><em>Squish Runner</em></span> task</p></div></div></div><p>
+Each task must be configured. The <span class="guilabel">Task description</span> name is used to distinguish
+each task and is also used as the name in the <span class="emphasis"><em>Squish</em></span> results for both the XML and HTML
+formats. The <span class="guilabel">Test suite</span> field defines the full path to the test suite to execute,
+e.g. <code class="code">/suites/suite_addressbook</code>. To execute multiple test suites, provide each path in a separate line.
+The <span class="guilabel">Test cases</span> field describes which test cases
+are executed in the given test suite. If the field is empty, all test cases from
+test suite are execute. A single test case can be defined to execute or
+multiple test cases by separating each name with a comma (e.g. <code class="code">tst_case1, tst_case2</code>). The host and port where <span class="application">squishserver</span> is running must be defined. If the <span class="guilabel">Start/stop squishserver</span>
+option is checked, then the <span class="application">squishserver</span> starts on the host where the agent is running, and listening on the port configured in the task. The <span class="application">squishserver</span> is stopped when the test execution finishes. The <span class="guilabel">Environment variables</span> field can be used to define environment
+variables (for both <span class="application">squishrunner</span> and <span class="application">squishserver</span>). Multiple environment variables can be added separated by a space.
+The <span class="guilabel">Extra Options</span> field can be used to specify additional arguments to the <span class="application">squishrunner</span>. Each option and possible arguments have to be given in separate lines. </p><div class="screenshot"><div class="mediaobject" align="center"><img src="https://images/bamboo-SquishRunnerConf.png" align="middle"></img><div class="caption"><p>Configuring the <span class="emphasis"><em>Squish Runner</em></span> task</p></div></div></div><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Note"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/note.png"></img></td><th align="left">Note</th></tr><tr><td align="left" valign="top"><p>
+When running your tests using Windows Agents, please note, that the option to
+start/stop the <span class="application">squishserver</span> at the task level does not exist, and
+therefore the <span class="application">squishserver</span> must be already running on the host Agent before the
+<span class="emphasis"><em>Squish Runner</em></span> task starts.
+</p></td></tr></table></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="ao-bamboo-results"></a>9.4.6. Test results</h3></div></div></div><p>
+When the job is finished, the <span class="guilabel">Tests</span> tab displays information about both failed
+and successful tests as well as their execution duration. Moreover, information indicating
+which failed tests are new failures and which tests failed in previous builds also exists.
+Similarly, information indicating which Squish test cases failed in previous
+builds were successful in the current build. The <span class="guilabel">Logs</span> tab contains detailed logs from the
+<span class="emphasis"><em>Squish Runner</em></span> task, including information pertaining to settings and how the
+<span class="application">squishserver</span> and <span class="application">squishrunner</span> processes were started.
+</p><div class="screenshot"><div class="mediaobject" align="center"><img src="https://images/bamboo-TestResults.png" align="middle"></img><div class="caption">Job Test Results</div></div></div><p>
+The <span class="guilabel">Artifacts</span> tab contains the XML and HTML reports collected after a job finishes.
+For each <span class="emphasis"><em>Squish Runner</em></span> task defined in the job, separate XML and corresponding HTML
+files are created. To improve defect troubleshooting, HTML reports contain
+embedded screenshots taken by <span class="emphasis"><em>Squish</em></span> for all instances of test case ERROR or FAILURE.
+</p><div class="screenshot"><div class="mediaobject" align="center"><img src="https://images/bamboo-HTMLReport.png" align="middle"></img><div class="caption">HTML Report from Job Artifacts</div></div></div></div></div><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" type="text/javascript" src="ScriptingLanguage.js"></script><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format">setScriptingLanguage();</script><div class="navfooter"><hr></hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="https://ao-hudson.html">Prev</a> </td><td width="20%" align="center"><a accesskey="u" href="https://addons.html">Up</a></td><td width="40%" align="right"> <a accesskey="n" href="https://ao-teamcity.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">9.3. Jenkins integration </td><td width="20%" align="center"><a accesskey="h" href="https://index-noframes.html">Home</a></td><td width="40%" align="right" valign="top"> 9.5. JetBrains TeamCity integration</td></tr></table></div></body>
+<!-- Mirrored from ao-bamboo.html by HTTrack Website Copier/3.x [XR&CO'2013], Wed, 06 Jul 2022 13:29:01 GMT -->
+</html>

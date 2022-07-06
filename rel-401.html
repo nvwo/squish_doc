@@ -1,0 +1,145 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<!-- Mirrored from rel-401.html by HTTrack Website Copier/3.x [XR&CO'2013], Wed, 06 Jul 2022 13:28:56 GMT -->
+<head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><title>2.51. Version 4.0.1</title><link rel="stylesheet" href="manual.css" type="text/css"></link><meta name="generator" content="DocBook XSL Stylesheets V1.73.2"></meta><link rel="start" href="index-noframes.html" title="Squish Manual"></link><link rel="up" href="relnotes.html" title="Chapter 2. Release Notes—for Upgraders"></link><link rel="prev" href="rel-4011.html" title="2.50. Version 4.0.1.1"></link><link rel="next" href="rel-400.html" title="2.52. Version 4.0.0"></link><style xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" type="text/css" media="screen">
+        div.toc * { margin-left: 6px; margin-right: auto; max-width: 75em; }
+        div.toc span { margin-left: 0px; }
+        * { margin-left: auto; margin-right: auto; max-width: 75em; }
+        body { margin-left: 6px; margin-right: 6px; }
+        table th { padding: .5ex }
+        table td { padding: .5ex }
+    </style><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format">
+        function keyPress() {
+            var e = window.event;
+            if ( e == undefined ) {
+                return;
+            }
+            /* ### does not properly scroll, yet
+            if ( e.keyCode == 32 ) {
+            var l = document.links;
+            for ( var i = 0; i < l.length; i++ ) {
+                if ( l[i].innerText == "Next" ) {
+                location.href = l[i].href;
+                }
+            }
+            } else
+                */
+                if ( e.keyCode == 0x08 ) {
+            var l = document.links;
+            for ( var i = 0; i < l.length; i++ ) {
+                if ( l[i].innerText == "Prev" ) {
+                location.href = l[i].href;
+                }
+            }
+            }
+        }
+        document.onkeypress = keyPress;
+    </script></head><body><div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="rel-401"></a>2.51. Version 4.0.1</h2></div></div></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><span class="section"><a href="rel-401.html#idp36394568">2.51.1. General</a></span></dt><dt><span class="section"><a href="rel-401.html#idp36402608">2.51.2. New IDE</a></span></dt><dt><span class="section"><a href="rel-401.html#idp36421232">2.51.3. Qt-specific</a></span></dt><dt><span class="section"><a href="rel-401.html#idp36432024">2.51.4. Java-specific</a></span></dt><dt><span class="section"><a href="rel-401.html#idp36433856">2.51.5. Web-specific</a></span></dt><dt><span class="section"><a href="rel-401.html#idp36436448">2.51.6. Native Windows (new edition)</a></span></dt><dt><span class="section"><a href="rel-401.html#idp36438544">2.51.7. Mac-specific (Cocoa/Carbon edition)</a></span></dt><dt><span class="section"><a href="rel-401.html#idp36439952">2.51.8. iPhone/iPad-specific</a></span></dt><dt><span class="section"><a href="rel-401.html#idp36443416">2.51.9. Tk-specific</a></span></dt><dt><span class="section"><a href="rel-401.html#idp36444320">2.51.10. Source Builds</a></span></dt></dl></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="idp36394568"></a>2.51.1. General</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Improved the reliability of calls to the
+<code class="code">dragAndDrop</code> function on Windows
+machines.</p></li><li><p>Deal with the Tcl "wide" integer type. Fixed overload
+errors when, for example, the <code class="code">[seek]</code> command is being
+used.</p></li><li><p>Properly contain
+internal lookup errors that may occur during calls to the <a class="xref" href="rgs-squish.html#object.exists-function"><code class="function">object.exists</code></a> function.
+</p></li><li><p>Invoking <span class="application">squishrunner</span> <code class="option">--testsuite</code> now
+correctly prints all the test scripts' <code class="filename">stderr</code>
+output to <code class="filename">stderr</code> instead of merging the scripts'
+<code class="filename">stderr</code> and <code class="filename">stdout</code> output all
+into <code class="filename">stdout</code>. This restores the <span class="emphasis"><em>Squish</em></span> 3.4.x
+behavior.</p></li><li><p>No longer produce a spurious "Connection closed" error
+which sometimes occurred on application exit—for example, if
+the application was quit inside an event handler.</p></li><li><p>Fixed some problems that could occur when running
+<span class="application">squishrunner</span> <code class="option">--testsuite</code> on the command line where
+the test scripts output lots of text to <code class="filename">stdout</code>.
+</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="idp36402608"></a>2.51.2. New IDE</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Fixed a bug where the <span class="application">Squish IDE</span> could hang during
+startup.</p></li><li><p>Prevented native Windows dialogs from randomly appearing
+by upgrading to a newer Java Runtime environment.</p></li><li><p>Fixed high CPU consumption in the Script <a class="xref" href="ide.views.html#ide.the-console.view" title="8.2.3. Console view">Console view (Section 8.2.3)</a> after
+terminating script execution.</p></li><li><p>Recording of new TSL scripts is not supported so
+this language option is no longer shown.</p></li><li><p>Prevented a spurious exception from occurring when using
+the <span class="guibutton">Terminate</span> button to stop execution while
+halted at a breakpoint.</p></li><li><p>Prevented a spurious exception from occurring when
+filtering out all the results from the <a class="xref" href="ide.views.html#ide.the-test-results.view" title="8.2.18. Test Results view">Test Results view (Section 8.2.18)</a>.</p></li><li><p>Prevented a spurious exception that could occur when
+opening a file in an editor other than one of the default script
+editors.</p></li><li><p>Stopped flickering when updating the text shown in the
+<a class="xref" href="ide.main.window.html#ide-the-controlbar-window" title="8.1.3. Control Bar Window">Control Bar Window (Section 8.1.3)</a>.</p></li><li><p>Gracefully handle the opening of a test suite that has
+the same name as an existing test suite.</p></li><li><p>Fixed a problem with the <a class="xref" href="ide.main.window.html#ide.launch.aut.action" title="8.1.1.22. Launch AUT action"><span class="guiicon">Launch AUT</span> action (Section 8.1.1.22)</a> that could occur when the editor is
+maximized.</p></li><li><p>Prevented a spurious exception that could occur when
+quickly toggling a property checkbox in the <a class="xref" href="ide.views.html#ide.verification.point.creator.view" title="8.2.22. Verification Point Creator view">Verification Point Creator view (Section 8.2.22)</a>.</p></li><li><p>Disable
+the <a class="xref" href="ide.main.window.html#ide.launch.aut.action" title="8.1.1.22. Launch AUT action"><span class="guiicon">Launch AUT</span> action (Section 8.1.1.22)</a>,
+the <a class="xref" href="ide.main.window.html#ide.run.test.case.action" title="8.1.1.55. Run Test Case action"><span class="guiicon">Run Test Case</span> action (Section 8.1.1.55)</a>, and
+the <a class="xref" href="ide.main.window.html#ide.record.test.case.action" title="8.1.1.47. Record Test Case action"><span class="guiicon">Record Test Case</span> action (Section 8.1.1.47)</a> when they don't make
+sense—for example, when a test case has started.
+</p></li><li><p>Drastically improved the performance of the <a class="xref" href="ide.views.html#ide.the-test-results.view" title="8.2.18. Test Results view">Test Results view (Section 8.2.18)</a> by reducing the number of screen
+refreshes.</p></li><li><p>Automatically open the correct <a class="xref" href="ide.views.html#ide.the-console.view" title="8.2.3. Console view">Console view (Section 8.2.3)</a> when stopping at a
+breakpoint.</p></li><li><p>Improved the error message that appears when an attempt
+is made to select an invalid "Squish Tools" package.</p></li><li><p>Fixed a regression where the <a class="xref" href="ide.dialogs.html#ide.preferences.dialog" title="8.3.17. Pref­er­ences dialog">Pref­er­ences dialog (Section 8.3.17)</a>'s Playback preferences page was
+hidden: it is now visible. This page is used to configure the Snooze
+Factor and Cursor Animation settings.</p></li><li><p>When a file is deleted any editors that are showing the
+file's contents are now correctly closed.
+</p></li><li><p>Fixed the updating of failed image verification points
+with new expected results.</p></li><li><p>The <a class="xref" href="ide.main.window.html#ide.delete.test.suite.action" title="8.1.1.14. Delete Test Suite action"><span class="guiicon">Delete Test Suite</span> action (Section 8.1.1.14)</a> is
+now disabled when the AUT is running.</p></li><li><p>Gracefully handle the absence of a suite settings file
+(<code class="filename">suite.conf</code>).</p></li><li><p>The order of test cases is now correctly maintained
+in the <code class="filename">suite.conf</code> file even when a test case is
+renamed.</p></li><li><p>Any changes made through the <span class="application">Squish IDE</span> that affect the
+<code class="filename">suite.conf</code> file now result in the file being
+updated immediately. This ensures that if the <span class="application">squishrunner</span> accesses
+the <code class="filename">suite.conf</code> file after a change has been made in
+the <span class="application">Squish IDE</span>, the <span class="application">squishrunner</span> gets the most up to date data.
+</p></li><li><p>Fixed results produced by the <a class="xref" href="ide.main.window.html#ide.check.object.existence.action" title="8.1.1.3. Check Object Existence action"><span class="guiicon">Check Object Existence</span> action (Section 8.1.1.3)</a>.
+</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="idp36421232"></a>2.51.3. Qt-specific</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Wildcard matches can now be used on
+<code class="code">QGraphicsItem</code> objects' <code class="code">lineColor</code> and
+<code class="code">fillColor</code> properties.</p></li><li><p>Modifier key presses are now correctly simulated when
+calling the <a class="xref" href="rgs-qtconvenience.html#qt-dragItemBy-function"><code class="function">dragItemBy</code></a>
+function.</p></li><li><p>Added a new <code class="code">editable</code> property to
+<code class="code">QModelIndex</code> objects.</p></li><li><p>Added <a class="xref" href="rgs-qtconvenience.html#qt-mouseClick-function"><code class="function">mouseClick</code></a>
+overloads for <code class="code">Q3ListView</code> and <code class="code">Q3TableItem</code>
+objects. These new overloads don't require mouse button or keyboard
+modifier arguments.</p></li><li><p>Added a <a class="xref" href="rgs-qtconvenience.html#qt-mouseClick-function"><code class="function">mouseClick</code></a>
+overload for clicking web objects inside <code class="code">QtWebKit</code> widgets.
+This overload doesn't require mouse button or keyboard modifier
+arguments. </p></li><li><p>Fixed the recording and replay of clicks on
+<code class="code">QComboBox</code> items that have no text.</p></li><li><p>Improved the performance of looking up items in Qt
+widgets.</p></li><li><p>Fixed the <a class="xref" href="rg-cmdline.html#rgc-startaut-cli" title="7.4.7. start*aut">start*aut (Section 7.4.7)</a>
+tool's <code class="option">--verbose</code> option</p></li><li><p>Fixed out-of-bounds checking for rows and
+columns.</p></li><li><p>The object cache is now correctly invalidated when
+<span class="emphasis"><em>Squish</em></span> detects that a cached <code class="code">QObject</code> got
+deleted.</p></li><li><p>Improved the recognition of web elements inside
+<code class="code">QtWebKit</code> widgets in cases where the widget's HTML document
+is reloaded.</p></li><li><p>Properties of type <code class="code">QUrl</code> belonging to
+<code class="code">QObject</code>s are now automatically exposed.
+</p></li><li><p>Improved the error message that is output when the lookup
+of a <code class="code">QTableView</code>'s cell failed for given a row and column.
+</p></li><li><p>Improved the reliability of screenshot generation for Qt
+widgets; also fixed a bug when calling the <a class="xref" href="rgs-qtconvenience.html#qt-doubleClickItem-function"><code class="function">doubleClickItem</code></a> function on null
+objects.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="idp36432024"></a>2.51.4. Java-specific</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Fixed the recording of canceling a SWT
+ColorDialog.</p></li><li><p>Fixed a rare <code class="code">java.lang.ClassCastException</code>
+when clicking items in Java AWT GUIs.</p></li><li><p>Fixed Windows error R6034 when trying to launch a Java
+application with a 64-bit JRE installed.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="idp36433856"></a>2.51.5. Web-specific</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Fixed problems which could occur when running tests with
+Firefox 3.6.</p></li><li><p>Fixed problems which could occur when calling the
+<a class="xref" href="rgs-webconvenience.html#web-closeConfirm-function"><code class="function">closeConfirm</code></a> and
+<a class="xref" href="rgs-webconvenience.html#web-closePrompt-function"><code class="function">closePrompt</code></a> functions in test scripts.
+</p></li><li><p>Improved the recording of clicks on Java applets in web
+pages.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="idp36436448"></a>2.51.6. Native Windows (new edition)</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Fixed the recording of tests on Windows applications
+which temporarily close all of their windows.</p></li><li><p>Fixed the recording of mouse clicks on native Windows
+applications in cases where the object under the mouse cursor changes
+between the mouse button press and mouse button
+release.</p></li><li><p>Greatly improved the support for interacting with the
+Windows system tray.</p></li><li><p>Actions on disabled toolbar items are (correctly) no
+longer recorded.
+</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="idp36438544"></a>2.51.7. Mac-specific (Cocoa/Carbon edition)</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Fixed synchronization problems which could occur when
+calling the <a class="xref" href="rgs-macconvenience.html#mac-type-function"><code class="function">type</code></a> function and which
+caused the script to play back before all the keyboard events were
+processed.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="idp36439952"></a>2.51.8. iPhone/iPad-specific</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Added support for iOS 4 with the iPhone simulator.
+Note that separate packages are needed for iPhone
+OS 3.<span class="emphasis"><em>x</em></span> and for iOS 4.</p></li><li><p>Support hooking into applications that have an
+executable file name that is different from the
+<code class="filename">.app</code> name.</p></li><li><p>Added a new command line option
+<code class="option">--xcode-root=&lt;directory&gt;</code> to the
+<span class="application">iphonelauncher</span> tool in order to
+support Xcode installations in non-default
+locations.</p></li><li><p>Fixed a bug in the hook used to test on the iPhone
+device itself.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="idp36443416"></a>2.51.9. Tk-specific</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Fixed clicks on iwidgets TabNotebook objects.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="idp36444320"></a>2.51.10. Source Builds</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Perform 32-bit builds on macOS
+unless the <code class="option">--enable-64bit</code> option is passed to
+<span class="application">configure</span>.</p></li></ul></div></div></div><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" type="text/javascript" src="ScriptingLanguage.js"></script><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format">setScriptingLanguage();</script><div class="navfooter"><hr></hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="rel-4011.html">Prev</a> </td><td width="20%" align="center"><a accesskey="u" href="relnotes.html">Up</a></td><td width="40%" align="right"> <a accesskey="n" href="rel-400.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">2.50. Version 4.0.1.1 </td><td width="20%" align="center"><a accesskey="h" href="index-noframes.html">Home</a></td><td width="40%" align="right" valign="top"> 2.52. Version 4.0.0</td></tr></table></div></body>
+<!-- Mirrored from rel-401.html by HTTrack Website Copier/3.x [XR&CO'2013], Wed, 06 Jul 2022 13:28:56 GMT -->
+</html>

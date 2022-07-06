@@ -1,0 +1,75 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<!-- Mirrored from rel-331.html by HTTrack Website Copier/3.x [XR&CO'2013], Wed, 06 Jul 2022 13:28:57 GMT -->
+<head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><title>2.62. Version 3.3.1</title><link rel="stylesheet" href="manual.css" type="text/css"></link><meta name="generator" content="DocBook XSL Stylesheets V1.73.2"></meta><link rel="start" href="index-noframes.html" title="Squish Manual"></link><link rel="up" href="relnotes.html" title="Chapter 2. Release Notes—for Upgraders"></link><link rel="prev" href="rel-340.html" title="2.61. Version 3.4.0"></link><link rel="next" href="rel-330.html" title="2.63. Version 3.3.0"></link><style xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" type="text/css" media="screen">
+        div.toc * { margin-left: 6px; margin-right: auto; max-width: 75em; }
+        div.toc span { margin-left: 0px; }
+        * { margin-left: auto; margin-right: auto; max-width: 75em; }
+        body { margin-left: 6px; margin-right: 6px; }
+        table th { padding: .5ex }
+        table td { padding: .5ex }
+    </style><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format">
+        function keyPress() {
+            var e = window.event;
+            if ( e == undefined ) {
+                return;
+            }
+            /* ### does not properly scroll, yet
+            if ( e.keyCode == 32 ) {
+            var l = document.links;
+            for ( var i = 0; i < l.length; i++ ) {
+                if ( l[i].innerText == "Next" ) {
+                location.href = l[i].href;
+                }
+            }
+            } else
+                */
+                if ( e.keyCode == 0x08 ) {
+            var l = document.links;
+            for ( var i = 0; i < l.length; i++ ) {
+                if ( l[i].innerText == "Prev" ) {
+                location.href = l[i].href;
+                }
+            }
+            }
+        }
+        document.onkeypress = keyPress;
+    </script></head><body><div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="rel-331"></a>2.62. Version 3.3.1</h2></div></div></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><span class="section"><a href="rel-331.html#general.5">2.62.1. General</a></span></dt><dt><span class="section"><a href="rel-331.html#qt-specific.5">2.62.2. Qt-specific</a></span></dt><dt><span class="section"><a href="rel-331.html#java-specific.5">2.62.3. Java-specific</a></span></dt><dt><span class="section"><a href="rel-331.html#web-specific.5">2.62.4. Web-specific</a></span></dt><dt><span class="section"><a href="rel-331.html#source-builds.3">2.62.5. Source Builds</a></span></dt></dl></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="general.5"></a>2.62.1. General</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Prevent crash if the Spy is closed during a "Check all
+object existence" run.</p></li><li><p>Respect logScreenshot settings for test.fail() and
+test.fatal().</p></li><li><p>Fixed crashes when calling global functions or reading
+global script properties on an application that has already
+exited.</p></li><li><p>Support alternative locations for testcase templates
+by using the SQUISH_TESTCASE_TEMPLATES environment
+variable.</p></li><li><p>Fixed initialization of defaultApplicationContext()
+properties.</p></li><li><p>Fixes for the recording and spying of native windows
+controls.</p></li><li><p>Fixed crashes when inspecting invalid objects in the
+Variable Watcher.  </p></li><li><p>Handle negative timeouts more
+gracefully.</p></li><li><p>Fixed drag and drop when dragging over very small
+distances.</p></li><li><p>Let the Variable Watcher show Python objects of
+'new-style' classes (which inherit the generic
+'object').</p></li><li><p>Some heuristics for a more relaxed detection of Unix
+shell scripts.</p></li><li><p>Show the complete call trace in case a Python,
+JavaScript or TSL script fails.</p></li><li><p>Fix a crash on Solaris.</p></li><li><p>Fixed sending text to native Windows controls when the
+text contains non-ASCII characters.</p></li><li><p>Make the response timeout value editable in the server
+settings dialog.</p></li><li><p>Don't show null objects (i.e. a null pointer to a
+QWidget) as expandable in the Variable Watcher of the
+IDE.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="qt-specific.5"></a>2.62.2. Qt-specific</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Fixed invocation of functions with enum
+parameters.</p></li><li><p>Support mouseDrag() recording on all widget
+types.</p></li><li><p>When using attachToApplication(), correctly detect the
+case that another testcase is already connected and throw an
+error.</p></li><li><p>Respect the --port=xxx argument of the startaut
+command.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="java-specific.5"></a>2.62.3. Java-specific</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Fixed 'Illegal constant pool index' error when
+recording File Open actions in an SWT application.</p></li><li><p>Fix extra classes not being recognized by the script
+bindings.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="web-specific.5"></a>2.62.4. Web-specific</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p> Fixed entering non-alphanumerical characters using
+typeText() with Firefox.</p></li><li><p>Improved speed of the Spy when navigating through
+large web pages.</p></li><li><p>Fix lookup of 'heuristic' names with dots in their
+value.</p></li><li><p>Fixed typing text in web tests via setText() in case
+the given text contains backslashes.</p></li><li><p>Fixed compile problem with Solaris
+CC</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="source-builds.3"></a>2.62.5. Source Builds</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Avoid conflict between Perl flags and Solaris system
+headers.</p></li><li><p>Compile without QTabWidget support in Qt,
+i.e. QT_NO_TABWIDGET being defined.</p></li><li><p>Fixed compile problem with AIX xlC.</p></li><li><p>Fixed Qt visibility detection for the Intel compiler
+on Linux.</p></li><li><p>Fixed configure switches for enabling/disabling the
+Windows wrapper.</p></li><li><p>Compile fix for strict compiler. abs() is supposed to
+be defined in stdlib.h.</p></li></ul></div></div></div><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" type="text/javascript" src="ScriptingLanguage.js"></script><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format">setScriptingLanguage();</script><div class="navfooter"><hr></hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="rel-340.html">Prev</a> </td><td width="20%" align="center"><a accesskey="u" href="relnotes.html">Up</a></td><td width="40%" align="right"> <a accesskey="n" href="rel-330.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">2.61. Version 3.4.0 </td><td width="20%" align="center"><a accesskey="h" href="index-noframes.html">Home</a></td><td width="40%" align="right" valign="top"> 2.63. Version 3.3.0</td></tr></table></div></body>
+<!-- Mirrored from rel-331.html by HTTrack Website Copier/3.x [XR&CO'2013], Wed, 06 Jul 2022 13:28:57 GMT -->
+</html>

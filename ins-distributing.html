@@ -1,0 +1,130 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<!-- Mirrored from ins-distributing.html by HTTrack Website Copier/3.x [XR&CO'2013], Wed, 06 Jul 2022 13:28:58 GMT -->
+<head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><title>3.6. Distributing and Sharing an Installation</title><link rel="stylesheet" href="manual.css" type="text/css"></link><meta name="generator" content="DocBook XSL Stylesheets V1.73.2"></meta><link rel="start" href="index-noframes.html" title="Squish Manual"></link><link rel="up" href="install.html" title="Chapter 3. How to Install Squish"></link><link rel="prev" href="ins-qt-android.html" title="3.5. Installing Squish for Qt for Android testing"></link><link rel="next" href="installation.for.web.testing.html" title="3.7. Installing Squish for Web"></link><style xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" type="text/css" media="screen">
+        div.toc * { margin-left: 6px; margin-right: auto; max-width: 75em; }
+        div.toc span { margin-left: 0px; }
+        * { margin-left: auto; margin-right: auto; max-width: 75em; }
+        body { margin-left: 6px; margin-right: 6px; }
+        table th { padding: .5ex }
+        table td { padding: .5ex }
+    </style><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format">
+        function keyPress() {
+            var e = window.event;
+            if ( e == undefined ) {
+                return;
+            }
+            /* ### does not properly scroll, yet
+            if ( e.keyCode == 32 ) {
+            var l = document.links;
+            for ( var i = 0; i < l.length; i++ ) {
+                if ( l[i].innerText == "Next" ) {
+                location.href = l[i].href;
+                }
+            }
+            } else
+                */
+                if ( e.keyCode == 0x08 ) {
+            var l = document.links;
+            for ( var i = 0; i < l.length; i++ ) {
+                if ( l[i].innerText == "Prev" ) {
+                location.href = l[i].href;
+                }
+            }
+            }
+        }
+        document.onkeypress = keyPress;
+    </script></head><body><div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="ins-distributing"></a>3.6. Distributing and Sharing an Installation</h2></div></div></div><h4><a id="idp37601528"></a>Rationale</h4><p>
+Once you have completed the build steps described in the previous
+section you have a system ready to use on the local machine. You may
+repeat these steps for licensed users on as many machines as you
+like. (<span class="emphasis"><em>Squish</em></span> is normally licensed per user rather than per machine,
+so one licensee can install <span class="emphasis"><em>Squish</em></span> on all the machines they use.)
+</p><p>
+This section is for users or system administrators that wish to
+distribute or share a build performed on one machine to a different
+location or for users on other machines. If access to a local
+installation is all you need, you can safely skip the rest of this
+section and proceed to the <a class="xref" href="ins-new-ide.html" title="3.10. Standalone Installation of the IDE">Standalone Installation of the IDE (Section 3.10)</a> section, and
+then to the chapters about using <span class="emphasis"><em>Squish</em></span>, starting with <a class="xref" href="tutorials-qt.html#tgs-concepts" title="4.1.1.1. Squish Concepts">Squish Concepts (Section 4.1.1.1)</a> if you are new to <span class="emphasis"><em>Squish</em></span>.
+</p><p>
+There are many reasons why you might want to reuse the built
+executables and libraries—for example:
+</p><div class="itemizedlist"><ul type="disc"><li><p>
+Division of labor between developers or system administrators (who will
+<span class="emphasis"><em>build</em></span> <span class="emphasis"><em>Squish</em></span>) and testers (who will
+<span class="emphasis"><em>use</em></span> <span class="emphasis"><em>Squish</em></span>).
+</p></li><li><p>
+Separation between machines used for product development and machines
+used specifically for testing.
+</p></li><li><p>
+Reduced maintenance work required when upgrading the software.
+</p></li><li><p>
+Saving time by doing a single compilation and distributing the results.
+</p></li><li><p>
+Saving disk space since only the executables and their supporting
+libraries need to be distributed, not the entire source code.
+</p></li></ul></div><h4><a id="idp37607792"></a>Distributables</h4><p>
+After completing the build, the distributables can be found in the
+top-level <code class="filename">bin</code>, <code class="filename">lib</code>, and
+<code class="filename">etc</code> directories. The <code class="filename">bin</code>
+directory contains the executables (and some supporting
+<code class="filename">.dll</code> files on Windows), while other supporting
+libraries and script files are in the <code class="filename">lib</code> directory.
+The <code class="filename">etc</code> directory is used to hold installation
+configuration files—user specific settings are stored elsewhere, as
+explained shortly. Here is the list of all the files that
+comprise the <span class="emphasis"><em>Squish</em></span> toolset (including those needed by the IDE).
+We have used wildcard syntax to indicate multiple files where
+appropriate.
+</p><div class="tabularx"><table width="100%" border="1"><colgroup><col></col><col></col></colgroup><tbody valign="top"><tr><td align="left" valign="top"><p><span class="bold"><strong>Windows</strong></span></p></td><td align="left" valign="top"><div class="literallayout"><p><code class="filename">bin\*.*</code><br></br>
+<code class="filename">lib\*.*</code><br></br>
+<code class="filename">etc\paths.ini</code><br></br>
+<code class="filename">etc\squish.ini</code><br></br>
+<code class="filename">etc\*wrapper_descriptors.xml</code></p></div></td></tr><tr><td align="left" valign="top"><p><span class="bold"><strong>Linux/Unix/macOS</strong></span></p></td><td align="left" valign="top"><div class="literallayout"><p><code class="filename">bin/*</code><br></br>
+<code class="filename">lib/*</code><br></br>
+<code class="filename">etc/paths.ini</code><br></br>
+<code class="filename">etc/squish.ini</code><br></br>
+<code class="filename">etc/*wrapper_descriptors.xml</code></p></div></td></tr></tbody></table></div><p>
+Notice that the wrapper library and wrapper descriptors have been
+specified using a wildcard (<code class="code">*</code>) because there may be several
+of these depending on the toolkits you built <span class="emphasis"><em>Squish</em></span> to make use of
+(e.g., Qt, Java, etc.).
+</p><h4><a id="idp37621536"></a>Distribution</h4><p>
+To distribute the build to another location on the same machine, or on a
+different one, just copy over all the files (or only those in the groups
+required), from the three directories listed above. The original
+build path is hard-coded into the binaries, but they will still
+work in a different location. To enable the executables to locate the
+libraries and other files that they depend on, it is important that the
+relative positions of the files remains the same. This means that you
+can copy the files from the <code class="filename">bin</code>,
+<code class="filename">lib</code>, and <code class="filename">etc</code> directories, to
+whatever directories you want, providing that the
+<span class="emphasis"><em>relative</em></span> paths between the files remain the same,
+i.e., the directories used to store the files must have the same parent
+directory.
+</p><p>
+For example, if you copied the <code class="filename">bin</code> directory's
+files to the directory <code class="filename">C:\tools\squish\executable</code>,
+then the companion files from the <code class="filename">lib</code>, and
+<code class="filename">etc</code> directories <span class="emphasis"><em>must</em></span> go in
+directories under <code class="filename">C:\tools\squish</code>, such as
+<code class="filename">C:\tools\squish\library</code> and
+<code class="filename">C:\tools\squish\configuration</code>.
+</p><h4><a id="idp37628480"></a>Shared Installation</h4><p>
+To allow all licensed users to access <span class="emphasis"><em>Squish</em></span> from a shared network
+location, make the <code class="filename">bin</code>, <code class="filename">lib</code>,
+and <code class="filename">etc</code> directories accessible to them. This can be
+done via a share on Windows or via an NFS mount on Unix, for example. As
+mentioned earlier, the <code class="filename">bin</code>,
+<code class="filename">lib</code> and <code class="filename">etc</code> directories must
+all share the same parent directory.
+</p><p>
+User-specific settings are stored locally on a per-user basis in the
+application data directory on Windows
+(<code class="filename">%APPDATA%\froglogic\Squish</code>), or the
+<code class="filename">$HOME/.squish</code> directory on Unix and macOS.
+</p></div><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" type="text/javascript" src="ScriptingLanguage.js"></script><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format">setScriptingLanguage();</script><div class="navfooter"><hr></hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="ins-qt-android.html">Prev</a> </td><td width="20%" align="center"><a accesskey="u" href="install.html">Up</a></td><td width="40%" align="right"> <a accesskey="n" href="installation.for.web.testing.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">3.5. Installing Squish for Qt for Android testing </td><td width="20%" align="center"><a accesskey="h" href="index-noframes.html">Home</a></td><td width="40%" align="right" valign="top"> 3.7. Installing Squish for Web</td></tr></table></div></body>
+<!-- Mirrored from ins-distributing.html by HTTrack Website Copier/3.x [XR&CO'2013], Wed, 06 Jul 2022 13:28:58 GMT -->
+</html>

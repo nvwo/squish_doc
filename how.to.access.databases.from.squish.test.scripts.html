@@ -1,0 +1,891 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<!-- Mirrored from how.to.access.databases.from.squish.test.scripts.html by HTTrack Website Copier/3.x [XR&CO'2013], Wed, 06 Jul 2022 13:28:59 GMT -->
+<head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><title>5.18. How to Access Databases from Squish Test Scripts</title><link rel="stylesheet" href="manual.css" type="text/css"></link><meta name="generator" content="DocBook XSL Stylesheets V1.73.2"></meta><link rel="start" href="https://index-noframes.html" title="Squish Manual"></link><link rel="up" href="https://users-guide.html" title="Chapter 5. User Guide"></link><link rel="prev" href="https://ug-interact-with-files-environment.html" title="5.17. How to Interact with Files and with the Environment in Test Scripts"></link><link rel="next" href="https://ug-how-to-handle-exceptions-raised-in-test-scripts.html" title="5.19. How to Handle Exceptions Raised in Test Scripts"></link><style xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" type="text/css" media="screen">
+        div.toc * { margin-left: 6px; margin-right: auto; max-width: 75em; }
+        div.toc span { margin-left: 0px; }
+        * { margin-left: auto; margin-right: auto; max-width: 75em; }
+        body { margin-left: 6px; margin-right: 6px; }
+        table th { padding: .5ex }
+        table td { padding: .5ex }
+    </style><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format">
+        function keyPress() {
+            var e = window.event;
+            if ( e == undefined ) {
+                return;
+            }
+            /* ### does not properly scroll, yet
+            if ( e.keyCode == 32 ) {
+            var l = document.links;
+            for ( var i = 0; i < l.length; i++ ) {
+                if ( l[i].innerText == "Next" ) {
+                location.href = l[i].href;
+                }
+            }
+            } else
+                */
+                if ( e.keyCode == 0x08 ) {
+            var l = document.links;
+            for ( var i = 0; i < l.length; i++ ) {
+                if ( l[i].innerText == "Prev" ) {
+                location.href = l[i].href;
+                }
+            }
+            }
+        }
+        document.onkeypress = keyPress;
+    </script></head><body><div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="how.to.access.databases.from.squish.test.scripts"></a>5.18. How to Access Databases from Squish Test Scripts</h2></div></div></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><span class="section"><a href="https://how.to.access.databases.from.squish.test.scripts.html#ug-how.to.compare.application.data.with.database.data">5.18.1. How to Compare Application Data with Database Data</a></span></dt><dt><span class="section"><a href="https://how.to.access.databases.from.squish.test.scripts.html#how.to.log.test.results.directly.into.a.database">5.18.2. How to Log Test Results Directly into a Database</a></span></dt></dl></div><p>
+<span class="emphasis"><em>Squish</em></span> test scripts can access databases where the underlying
+scripting language provides a suitable library. (And in the case of
+JavaScript, which has no such library, <span class="emphasis"><em>Squish</em></span> provides one—see
+<a class="xref" href="https://rgs-js.html#sql" title="6.16.8. SQL">SQL (Section 6.16.8)</a>.)
+</p><p>
+You can use a database to provide input or verification data to the test script,
+or you can log test results directly to the database. We have examples of both
+kinds of usage in the following sections.
+
+</p><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Note: Python-specific"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/note.png"></img></td><th align="left">Python-specific</th></tr><tr><td align="left" valign="top"><p> The binary releases of Squish include a stripped down
+version of Python which does not include some standard libraries such as
+ssl, sqlite3, pip, mysql, and odbc. To access databases from Squish
+tests, you must use Squish with a full install of Python.
+You can <a class="ulink" href="https://kb.froglogic.com/display/KB/Changing the Python installation used by Squish binary packages" target="_blank">
+replace the version that is used by an existing install</a>,
+or compile Squish from source, and specify <code class="literal">--with-python=/path/to/full/python</code>
+when you run <code class="literal">configure</code>.
+</p><p>
+The examples in this section use SQLite 3, bindings
+provided by the <code class="code">sqlite3</code> package,
+part of the standard Python library since Python 2.5.
+</p><p>
+Incidentally, <a class="ulink" href="http://pypi.python.org/pypi" target="_blank">PyPI</a>
+(Python Package Index) provides many different database bindings
+packages, and pip can be used to install them, so you are not limited to
+standard libraries when using Python.
+</p></td></tr></table></div><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Note: Perl-specific"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/note.png"></img></td><th align="left">Perl-specific</th></tr><tr><td align="left" valign="top"><p>
+The examples in this section use SQLite 3, bindings to which are
+provided by the <code class="code">DBD::SQLite</code> package which is available from
+<a class="ulink" href="http://search.cpan.org/~adamk/DBD-SQLite/lib/DBD/SQLite.pm" target="_blank">CPAN</a>.
+</p><p>
+Windows users can install this package by starting a Console session and
+invoking Perl at the command line with <code class="code">perl -MCPAN -e shell</code>
+(this assumes that the machine is connected to the Internet). This will
+produce the CPAN prompt where you must install two packages. First type
+in <code class="code">install DBI</code>, and then <code class="code">install DBD::SQLite</code>.
+For Unix-like system users who are using the system's Perl installation
+(rather than a Perl supplied with <span class="emphasis"><em>Squish</em></span>), use the package management
+tools to install the DBI and DBD::SQLite packages.
+</p><p>
+Make sure that the packages are installed using the same Perl as
+<span class="emphasis"><em>Squish</em></span> uses (e.g., the one in the <span class="emphasis"><em>Squish</em></span> directory). This may not
+work if you are using a Perl that is supplied with a <span class="emphasis"><em>Squish</em></span> binary
+package; in such cases contact <span class="emphasis"><em>froglogic</em></span> support.
+</p></td></tr></table></div><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Note: Tcl-specific"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/note.png"></img></td><th align="left">Tcl-specific</th></tr><tr><td align="left" valign="top"><p>
+The examples in this section use SQLite 3, bindings to which are
+provided by the SQLite developers.
+</p><p>
+Linux users should be able to obtain the bindings via their package
+management tools—the package name should be
+<code class="filename">tclsqlite</code> or similar—providing that you are
+using the system's Tcl and not one supplied with <span class="emphasis"><em>Squish</em></span>. Windows users
+will need to download the bindings from <a class="ulink" href="http://www.sqlite.org/tclsqlite.html" target="_blank">SQLite</a>. Click the
+Download link and get the binary
+<code class="filename">tclsqlite-<span class="emphasis"><em>version</em></span>.zip</code> package.
+macOS users might have to build the package from source—like
+the Windows binary package it is available from <a class="ulink" href="http://www.sqlite.org/tclsqlite.html" target="_blank">SQLite</a> after clicking
+the Download link.
+</p></td></tr></table></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="ug-how.to.compare.application.data.with.database.data"></a>5.18.1. How to Compare Application Data with Database Data</h3></div></div></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><span class="section"><a href="https://how.to.access.databases.from.squish.test.scripts.html#comparing.a.gui.table.with.a.database.table.in.python">5.18.1.1. Comparing a GUI Table with a Database Table in Python</a></span></dt><dt><span class="section"><a href="https://how.to.access.databases.from.squish.test.scripts.html#comparing.a.gui.table.with.a.database.table.in.javascript">5.18.1.2. Comparing a GUI Table with a Database Table in JavaScript</a></span></dt><dt><span class="section"><a href="https://how.to.access.databases.from.squish.test.scripts.html#comparing.a.gui.table.with.a.database.table.in.perl">5.18.1.3. Comparing a GUI Table with a Database Table in Perl</a></span></dt><dt><span class="section"><a href="https://how.to.access.databases.from.squish.test.scripts.html#comparing.a.gui.table.with.a.database.table.in.tcl">5.18.1.4. Comparing a GUI Table with a Database Table in Tcl</a></span></dt></dl></div><p>
+Sometimes it is convenient to compare application data with data in a
+database. Some scripting languages include modules for database access
+in their standard libraries. Unfortunately this isn't the case for
+JavaScript, so <span class="emphasis"><em>Squish</em></span> provides the <a class="xref" href="https://rgs-js.html#sql-object" title="6.16.8.1. SQL Object">SQL Object (Section 6.16.8.1)</a> which
+can be used to interact with databases from JavaScript test scripts.
+</p><p>
+In this subsection we will look at how to read data from a table widget
+and for each row, verify that each cell has the same data as the
+corresponding SQL database's row's field. In the examples we will use
+Java AWT/Swing's JTable as the data-holding widget, but of course, we
+could use exactly the same approach using a Java SWT Table or a Qt
+<code class="code">QTableWidget</code>, or any other supported toolkit's table.
+</p><p>
+The structure of our <code class="code">main</code> function is very similar to one
+we used earlier in the CsvTable example where we compared the contents
+of a JTable with the contents of the <code class="filename">.csv</code> file from
+which the table was populated. Here though, instead of a custom
+<code class="code">compareTableWithDataFile</code> function, we have a
+<code class="code">compareTableWithDatabase</code> function.
+(See
+<a class="xref" href="https://ugs-javaapi.html#ug-testing-jtable-using-external-data" title="5.4.6.1.3. How to Test JTable and Use External Data Files (Java—AWT/Swing)">How to Test JTable and Use External Data Files (Java—AWT/Swing) (Section 5.4.6.1.3)</a>
+<a class="xref" href="https://ugs-javaapi.html#ug-testing-table-using-external-data" title="5.4.6.2.3. How to Test the Table Widget and Use External Data Files (Java/SWT)">How to Test the Table Widget and Use External Data Files
+(Java/SWT) (Section 5.4.6.2.3)</a>
+<a class="xref" href="https://ugs-qtapi.html#ug-testing-table-widgets-using-external-data" title="5.2.6.4. How to Test Table Widgets and Use External Data Files">How to Test Table Widgets and Use External Data Files (Section 5.2.6.4)</a>.)
+</p><div xmlns="" class="scriptlang"><form><select name="scriptlangcombo" onchange="javascript:changeScriptingLanguage(this)" onclick="javascript:changeScriptingLanguage(this)"><option value="all" selected>Show All</option><option value="JavaScript">Show JavaScript</option><option value="Perl">Show Perl</option><option value="Python">Show Python</option><option value="Ruby">Show Ruby</option><option value="Tcl">Show Tcl</option></select></form></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Python</span><pre class="programlisting">
+
+def main():
+    startApplication('"' + os.environ["SQUISH_PREFIX"] + '/examples/java/csvtable/CsvTableSwing.jar"')
+    source(findFile("scripts", "common.py"))
+    filename = "before.csv"
+    doFileOpen(filename)
+    jtable = waitForObject("{type='javax.swing.JTable' visible='true'}")
+    compareTableWithDatabase(jtable)
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">JavaScript</span><pre class="programlisting">
+
+function main()
+{
+    startApplication('"' + OS.getenv("SQUISH_PREFIX") + '/examples/java/csvtable/CsvTableSwing.jar"');
+    source(findFile("scripts", "common.js"));
+    var filename = "before.csv";
+    doFileOpen(filename);
+    var jtable = waitForObject(
+        "{type='javax.swing.JTable' visible='true'}");
+    compareTableWithDatabase(jtable);
+}
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Perl</span><pre class="programlisting">
+
+sub main
+{
+    startApplication("\"$ENV{'SQUISH_PREFIX'}/examples/java/csvtable/CsvTableSwing.jar\"");
+    source(findFile("scripts", "common.pl"));
+    my $filename = "before.csv";
+    doFileOpen($filename);
+    my $jtable = waitForObject(
+        "{type='javax.swing.JTable' visible='true'}");
+    compareTableWithDatabase($jtable);
+}
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Tcl</span><pre class="programlisting">
+
+proc main {} {
+    startApplication "\"$::env(SQUISH_PREFIX)/examples/java/csvtable/CsvTableSwing.jar\""
+    source [findFile "scripts" "common.tcl"]
+    set filename "before.csv"
+    doFileOpen $filename
+    set jtable [waitForObject {{type='javax.swing.JTable' visible='true'}}]
+    compareTableWithDatabase $jtable
+}
+</pre></div><p>
+The <code class="code">main</code> function begins by loading some common
+convenience functions, including a <code class="code">doOpenFile</code> function
+that navigates the AUT's menu system to open a file with the given name.
+Once the file is loaded the JTable is populated with the file's contents
+and we then call the custom <code class="code">compareTableWithDatabase</code>
+function to see if what we've loaded from the <code class="filename">.csv</code>
+file matches the data in a SQLite 3 database file.
+</p><p>
+Unfortunately, the database APIs vary quite a lot between the different
+scripting languages, so although the <span class="emphasis"><em>structure</em></span> of
+the custom <code class="code">compareTableWithDatabase</code> functions are all the
+same, the details are somewhat different. In view of this we will look
+at each language's implementation in is own separate
+subsubsection—each subsubsection is complete in itself, so you
+only need to read the one relevant to the scripting language that
+interests you.
+</p><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="comparing.a.gui.table.with.a.database.table.in.python"></a>5.18.1.1. Comparing a GUI Table with a Database Table in Python</h4></div></div></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Python</span><pre class="programlisting">
+
+import sqlite3
+import os
+
+def compareTableWithDatabase(jtable):
+    db3file = findFile("testdata", "before.db3")
+    db = cursor = None
+    try:
+        tableModel = jtable.getModel()
+        db = sqlite3.connect(db3file)
+        cursor = db.cursor()
+        cursor.execute("SELECT id, pollutant, type, standard, "
+            "averaging_time, regulatory_citation FROM csv ORDER BY id")
+        for record in cursor:
+            row = record[0] - 1
+            for column in range(0, 5):
+                test.compare(tableModel.getValueAt(row, column)
+                             .toString(), record[column + 1])
+    finally:
+        if cursor is not None:
+            cursor.close()
+        if db is not None:
+            db.close()
+</pre></div><p>
+The first thing we must do—before writing any of our
+functions—is import the <code class="code">sqlite3</code> module that the
+<code class="code">pysqlite</code> package provides.
+</p><p>
+To connect to a SQLite database we only need to supply a filename. The
+means of connection varies between scripting languages and libraries, as
+do their SQL APIs, but they are all the same in principle, even if the
+details of the syntax vary, although in most cases they require a
+username, password, hostname, and port, rather than a filename.
+</p><p>
+In Python we must obtain a connection, and then use the connection to
+obtain a database “<span class="quote">cursor</span>”. It is through this cursor that
+we execute queries. In this particular example, the SQL database table
+has a field that isn't present in the <code class="filename">.csv</code>
+file—<code class="code">id</code>—which actually corresponds to the record's
+row (but using 1-based indexing). Once we have the connection and
+cursor, we get a reference to the JTable's underlying
+model—naturally, this is different if we use a different toolkit,
+but whether we access a table widget's cells directly or via a model, we
+still get access to each cell's data. Then we execute the
+<code class="code">SELECT</code> query. We can iterate over the rows returned by the
+query (if any), by iterating over the cursor.
+</p><p>
+Each row returned by the cursor is effectively a tuple. We begin by
+retrieving the record's <code class="code">id</code> which is the record tuple's
+first item, and deducting 1 to account for the fact that the JTable uses
+0-based rows and the database uses 1-based IDs that correspond to rows.
+Then we iterate over every column, retrieving the JTable's text for the
+given row and column and comparing it with the database record with the
+corresponding row (ID) and column. (We have to add 1 to the database
+column because the database has an extra column at the beginning storing
+the IDs.)
+</p><p>
+And at the end, we close the cursor and the connection to the database,
+providing we made a successful connection in the first place. Although
+it doesn't matter much for SQLite, closing the connection to other
+databases is usually very important, so we have used a <code class="code">try</code>
+... <code class="code">finally</code> construct to ensure that no matter what happens
+after the connection is made, the connection is safely closed in the
+end. (Of course, <span class="emphasis"><em>Squish</em></span> would close the connection for us anyway, but
+we prefer to take a best-practice approach to our test code.)
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="comparing.a.gui.table.with.a.database.table.in.javascript"></a>5.18.1.2. Comparing a GUI Table with a Database Table in JavaScript</h4></div></div></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">JavaScript</span><pre class="programlisting">
+
+function compareTableWithDatabase(jtable)
+{
+    var db3file = findFile("testdata", "before.db3");
+    var db;
+    try {
+        var tableModel = jtable.getModel();
+        db = SQL.connect({Driver: "SQLite", Host: "localhost", 
+                          Database: db3file, UserName: "", Password: ""});
+        var result = db.query("SELECT id, pollutant, type, standard, " +
+            "averaging_time, regulatory_citation FROM csv ORDER BY id");
+        while (result.isValid) {
+            var row = result.value("id") - 1;
+            for (var column = 0; column &lt; 5; ++column) 
+                test.compare(tableModel.getValueAt(row, column)
+                    .toString(), result.value(column + 1));
+            result.toNext();
+        }
+    }
+    finally {
+        if (db)
+            db.close();
+    }
+}
+</pre></div><p>
+For the SQLite database it isn't necessary to provide a host, username,
+or password, but we have done so here in the JavaScript version because
+they are needed by pretty well every other database (although in most
+cases, host will sensibly default to localhost if not specified).
+Another SQLite quirk is that we must specify a database filename. The
+means of connection varies between scripting languages and libraries, as
+do their SQL APIs, but they are all the same in principle, even if the
+details of the syntax
+vary.
+</p><p>
+In JavaScript using <span class="emphasis"><em>Squish</em></span>'s <a class="xref" href="https://rgs-js.html#sql-object" title="6.16.8.1. SQL Object">SQL Object (Section 6.16.8.1)</a>, we can
+execute queries on the connection object itself. In fact, the JavaScript
+API has two kinds of query function we can use, the <a class="xref" href="https://rgs-js.html#js-SQLConnection.query-function"><code class="function"><span class="emphasis"><em>sqlConnection</em></span>.query</code></a> function for executing
+<code class="code">SELECT</code> statements, and the <a class="xref" href="https://rgs-js.html#js-SQLConnection.execute-function"><code class="function"><span class="emphasis"><em>sqlConnection</em></span>.execute</code></a> function for all other
+kinds of SQL statements (e.g., <code class="code">DELETE</code>, <code class="code">INSERT</code>,
+<code class="code">UPDATE</code>).
+</p><p>
+In this particular example, the SQL database table has a field that
+isn't present in the <code class="filename">.csv</code>
+file—<code class="code">id</code>—which actually corresponds to the record's
+row (but using 1-based indexing). Once we have the connection, we get a
+reference to the JTable's underlying model—naturally, this is
+different if we use a different toolkit, but whether we access a table
+widget's cells directly or via a model, we still get access to each
+cell's data. Then we execute the <code class="code">SELECT</code> query. The query
+returns a <a class="xref" href="https://rgs-js.html#sqlresult-object" title="6.16.8.3. SQLResult Object">SQLResult Object (Section 6.16.8.3)</a>, and this automatically
+navigates to the first record in the result set (assuming that there
+were any results). This gives us access to the first record in the
+results set.
+</p><p>
+The JavaScript API's <a class="xref" href="https://rgs-js.html#sqlresult-object" title="6.16.8.3. SQLResult Object">SQLResult Object (Section 6.16.8.3)</a>'s
+<code class="code">isValid</code> property is <code class="code">true</code> if we have navigated
+to a valid record. The <a class="xref" href="https://rgs-js.html#js-SQLResult.value-function"><code class="function"><span class="emphasis"><em>sqlResult</em></span>.value</code></a>
+method can accept either a field index (in this case, 0 for the
+<code class="code">id</code> field, 1 for the <code class="code">pollutant</code> field, and so
+on), or a field name. We begin by retrieving the record's
+<code class="code">id</code> using the field name, and deducting 1 to account for the
+fact that the JTable uses 0-based rows and the database uses 1-based IDs
+that correspond to rows. Then we iterate over every column, retrieving
+the JTable's text for the given row and column and comparing it with the
+database record with the corresponding row (ID) and column. (We have to
+add 1 to the database column because the database has an extra column at
+the beginning storing the IDs.) Once all the table's row's cells have
+been compared with the database's record's fields, we attempt to
+navigate to the next record in the database using the <a class="xref" href="https://rgs-js.html#js-SQLResult.toNext-function"><code class="function"><span class="emphasis"><em>sqlResult</em></span>.toNext</code></a> method.
+</p><p>
+And at the end, we close the connection to the database, providing we
+made a successful connection in the first place. Although it doesn't
+matter much for SQLite, closing the connection to other databases is
+usually very important, so we have used a <code class="code">try</code> ...
+<code class="code">finally</code> construct to ensure that no matter what happens
+after the connection is made, the connection is safely closed in the
+end. (Of course, <span class="emphasis"><em>Squish</em></span> would close the connection for us anyway, but
+we prefer to take a best-practice approach to our test code.)
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="comparing.a.gui.table.with.a.database.table.in.perl"></a>5.18.1.3. Comparing a GUI Table with a Database Table in Perl</h4></div></div></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Perl</span><pre class="programlisting">
+
+require Encode;
+use DBI;
+
+sub compareTableWithDatabase
+{
+    my $jtable = shift(@_);
+    my $db3file = findFile("testdata", "before.db3");
+    eval {
+        my $db = DBI-&gt;connect("dbi:SQLite:$db3file") ||
+            die("Failed to connect: $DBI::errstr");
+        my $tableModel = $jtable-&gt;getModel();
+        my $records = $db-&gt;selectall_arrayref(
+                "SELECT id, pollutant, type, standard, averaging_time, " .
+                "regulatory_citation FROM csv ORDER BY id");
+        foreach my $record (@$records) {
+            my $row = $record-&gt;[0] - 1;
+            foreach $column (0..4) {
+                my $field = $record-&gt;[$column + 1];
+                Encode::_utf8_on($field);
+                test::compare($tableModel-&gt;getValueAt($row, $column)-&gt;
+                    toString(), $field);
+            }
+        }
+    };
+    if ($@) {
+        test::fatal("$@");
+    }
+    else {
+        $db-&gt;disconnect;
+    }
+}
+</pre></div><p>
+The first thing we must do—before writing any of our
+functions—is require the <code class="code">Encode</code> module (the need for
+which we will explain shortly), and use the <code class="code">DBI</code> module that
+provides Perl's database access.
+</p><p>
+To connect to a SQLite database we only need to supply a filename. The
+means of connection varies between scripting languages and libraries, as
+do their SQL APIs, but they are all the same in principle, even if the
+details of the syntax vary, although in most cases they require a
+username, password, hostname, and port, rather than a filename.
+</p><p>
+In Perl we must obtain a connection and then use the connection object
+to perform our database operations. In this particular example, the SQL
+database table has a field that isn't present in the
+<code class="filename">.csv</code> file—<code class="code">id</code>—which
+actually corresponds to the record's row (but using 1-based indexing).
+Once we have the connection, we get a reference to the JTable's
+underlying model—naturally, this is different if we use a
+different toolkit, but whether we access a table widget's cells directly
+or via a model, we still get access to each cell's data. Then we execute
+the <code class="code">SELECT</code> query, asking to get our results as a reference
+to the results array (rather than copying the array, which would be
+inefficient). We can iterate over the rows returned by the query (if
+any), by iterating over the array's items.
+</p><p>
+Each array element holds one record. We begin by retrieving the record's
+<code class="code">id</code> which is the record's first item, and deducting 1 to
+account for the fact that the JTable uses 0-based rows and the database
+uses 1-based IDs that correspond to rows. Then we iterate over every
+column, retrieving the JTable's text for the given row and column and
+comparing it with the database record with the corresponding row (ID)
+and column. (We have to add 1 to the database column because the
+database has an extra column at the beginning storing the IDs.)
+</p><p>
+<span class="trademark">Java</span>™—and therefore the JTable—stores text as Unicode, and
+the text in our SQLite 3 database is also stored as Unicode (using
+the UTF-8 encoding).
+However, Perl assumes that text uses the local 8-bit encoding by
+default, so when we retrieve each text field from each record we must
+make sure that Perl knows that it is Unicode so that the comparison is
+correctly performed between Unicode strings and not between a Unicode
+string from the JTable and (possibly invalid) local 8-bit text from the
+database. This is achieved by using the <code class="code">Encode</code> module's
+<code class="code">_utf8_on</code> method. (Note that this method should only be
+used if we are <span class="emphasis"><em>certain</em></span> that the string we mark
+holds UTF-8 text.)
+</p><p>
+And at the end, we close the connection to the database, providing we
+made a successful connection in the first place. Although it doesn't
+matter much for SQLite, closing the connection to other databases is
+usually very important, so we have used an <code class="code">eval</code> block to
+ensure that no matter what happens after the connection is made, the
+connection is safely closed in the end. (Of course, <span class="emphasis"><em>Squish</em></span> would close
+the connection for us anyway, but we prefer to take a best-practice
+approach to our test code.)
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="comparing.a.gui.table.with.a.database.table.in.tcl"></a>5.18.1.4. Comparing a GUI Table with a Database Table in Tcl</h4></div></div></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Tcl</span><pre class="programlisting">
+
+package require sqlite3
+
+proc compareTableWithDatabase {jtable} {
+    sqlite3 db [findFile "testdata" "before.db3"]
+    set tableModel [invoke $jtable getModel]
+    set fields [list pollutant type standard averaging_time \
+        regulatory_citation]
+    set row 0
+    db eval {SELECT id, pollutant, type, standard, averaging_time, \
+            regulatory_citation FROM csv ORDER BY id} values {
+        for {set column 0} {$column &lt; 5} {incr column} {
+            set table_value [invoke [invoke $tableModel getValueAt \
+                $row $column] toString]
+            set db_value $values([lindex $fields $column])
+            test compare $table_value $db_value
+        }
+        incr row
+    }
+    db close
+}
+</pre></div><p>
+The first thing we must do—before writing any of our
+functions—is import the <code class="code">sqlite3</code> module. If the
+package is installed in a standard location it can be imported using a
+<code class="code">package</code> <code class="code">require</code> statement. Otherwise it is
+necessary to load the shared library that contains the
+bindings—for example, by replacing the <code class="code">package</code>
+<code class="code">require</code> statement with, say, <code class="code">load
+"C:\tclsqlite3.dll"</code>.
+</p><p>
+To connect to a SQLite database we only need to supply a filename. The
+means of connection varies between scripting languages and libraries, as
+do their SQL APIs, but they are all the same in principle, even if the
+details of the syntax vary, although in most cases they require a
+username, password, hostname, and port, rather than a filename.
+</p><p>
+In Tcl we can perform all our database operations through the connection
+object. In this particular example, the SQL database table has a field
+that isn't present in the <code class="filename">.csv</code>
+file—<code class="code">id</code>—which actually corresponds to the
+record's row (but using 1-based indexing). Once we have the connection,
+we get a reference to the JTable's underlying model—naturally,
+this is different if we use a different toolkit, but whether we access a
+table widget's cells directly or via a model, we still get access to
+each cell's data. Then we execute the <code class="code">SELECT</code> query. The
+query returns each row in turn in the <code class="code">values</code> array.
+</p><p>
+In this example we ignore the first field of each row that's returned
+(the <code class="code">id</code>) since this field isn't present in the JTable. For
+the remaining fields, we iterate over each one, retrieving the JTable's
+text for the given row and column and comparing it with the database
+record with the corresponding row and column.
+</p><p>
+And at the end, we close the connection to the database. Although it
+doesn't matter much for SQLite, closing the connection to other
+databases is usually very important—of course, <span class="emphasis"><em>Squish</em></span> would
+close the connection for us anyway, but we prefer to be explicit about
+our intentions.
+</p></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="how.to.log.test.results.directly.into.a.database"></a>5.18.2. How to Log Test Results Directly into a Database</h3></div></div></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><span class="section"><a href="https://how.to.access.databases.from.squish.test.scripts.html#logging.results.directly.to.a.database.in.python">5.18.2.1. Logging Results Directly to a Database in Python</a></span></dt><dt><span class="section"><a href="https://how.to.access.databases.from.squish.test.scripts.html#logging.results.directly.to.a.database.in.javascript">5.18.2.2. Logging Results Directly to a Database in JavaScript</a></span></dt><dt><span class="section"><a href="https://how.to.access.databases.from.squish.test.scripts.html#logging.results.directly.to.a.database.in.perl">5.18.2.3. Logging Results Directly to a Database in Perl</a></span></dt><dt><span class="section"><a href="https://how.to.access.databases.from.squish.test.scripts.html#logging.results.directly.to.a.database.in.tcl">5.18.2.4. Logging Results Directly to a Database in Tcl</a></span></dt></dl></div><p>
+<span class="emphasis"><em>Squish</em></span> can output its test results in plain text or XML, so it is very
+easy to parse the results to analyze them and to produce reports.
+(See, for example, <a class="xref" href="https://ug-batchtesting.html" title="5.26. How to Do Automated Batch Testing">How to Do Automated Batch Testing (Section 5.26)</a> and <a class="xref" href="https://rg-regressiontesting.html#rgr-processresults" title="7.1.3. Processing Test Results">Processing Test Results (Section 7.1.3)</a>.) However, if we prefer, we can log the
+test results directly from our test scripts ourselves. One way to do
+this is to use the scripting language's logging facilities (if it has
+any)—for example, using Python's <code class="code">logging</code> module.
+Another way is to log the results directly into a database—this is
+the approach we will look at in this subsection.
+</p><p>
+For our example we will use a simple SQLite 3 database stored in
+the test suite's shared test data in file
+<code class="filename">logfile.db3</code>. The database has three fields,
+<code class="code">id</code> (an auto-incrementing integer), <code class="code">result</code>, and
+<code class="code">message</code>, both text fields. Our test code assumes that the
+database exists (and so, is initially empty).
+</p><p>
+We will start by looking at a test case's <code class="code">main</code> function
+and where calls to <span class="emphasis"><em>Squish</em></span>'s <a class="xref" href="https://rgs-squish.html#test.log-function"><code class="function">test.log</code></a>
+function have been replaced with calls to a custom <code class="code">DB</code> class
+instances's <code class="code">log</code> method, and similarly calls to <span class="emphasis"><em>Squish</em></span>'s
+<a class="xref" href="https://rgs-squish.html#test.compare-function"><code class="function">test.compare</code></a> and <a class="xref" href="https://rgs-squish.html#test.verify-function"><code class="function">test.verify</code></a> functions have been replaced with
+calls to our custom <code class="code">db</code> object's <code class="code">compare</code> and
+<code class="code">verify</code> methods. (Note that for Tcl we don't create a
+custom class or object, but just use plain functions.)
+</p><div xmlns="" class="scriptlang"><form><select name="scriptlangcombo" onchange="javascript:changeScriptingLanguage(this)" onclick="javascript:changeScriptingLanguage(this)"><option value="all" selected>Show All</option><option value="JavaScript">Show JavaScript</option><option value="Perl">Show Perl</option><option value="Python">Show Python</option><option value="Ruby">Show Ruby</option><option value="Tcl">Show Tcl</option></select></form></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Python</span><pre class="programlisting">
+
+def main():
+    startApplication('"' + os.environ["SQUISH_PREFIX"] + '/examples/java/itemviews/ItemViewsSwing.jar"')
+    db = None
+    try:
+        db = DB()
+        tableWidgetName = ":Item Views_javax.swing.JTable"
+        tableWidget = waitForObject(tableWidgetName)
+        model = tableWidget.getModel()
+        for row in range(model.getRowCount()):
+            for column in range(model.getColumnCount()):
+                item = model.getValueAt(row, column)
+                selected = ""
+                if tableWidget.isCellSelected(row, column):
+                    selected = " +selected"
+                message = "(%d, %d) '%s'%s" % (row, column, item.toString(),
+                        selected)
+                db.log(message)
+            expected = bool(row in (14, 24))
+            db.compare(model.getValueAt(row, 0).toString(), str(expected))
+        db.verify(model.getRowCount() == 25)
+    finally:
+        if db is not None:
+            db.close()
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">JavaScript</span><pre class="programlisting">
+
+function main()
+{
+    startApplication('"' + OS.getenv("SQUISH_PREFIX") + '/examples/java/itemviews/ItemViewsSwing.jar"');
+    var db;
+    try {
+        db = new DB();
+        var tableWidgetName = ":Item Views_javax.swing.JTable";
+        var tableWidget = waitForObject(tableWidgetName);
+        var model = tableWidget.getModel();
+        for (var row = 0; row &lt; model.getRowCount(); ++row) {
+            for (var column = 0; column &lt; model.getColumnCount(); ++column) {
+                var item = model.getValueAt(row, column);
+                var selected = "";
+                if (tableWidget.isCellSelected(row, column)) {
+                    selected = " +selected";
+                }
+                var message = "(" + String(row) + ", " + String(column) + ") '" +
+                         item.toString() + "'" + selected;
+                db.log(message);
+            }
+            var expected = new Boolean((row == 14 || row == 24) ? true : false);
+            db.compare(model.getValueAt(row, 0).toString(), expected.toString());
+        }
+        db.verify(model.getRowCount() == 25);
+    }
+    finally {
+        if (db)
+            db.close();
+    }
+}
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Perl</span><pre class="programlisting">
+
+sub main
+{
+    startApplication("\"$ENV{'SQUISH_PREFIX'}/examples/java/itemviews/ItemViewsSwing.jar\"");
+    my $db;
+    eval {
+        $db = new DB(findFile("testdata", "logfile.db3"));
+        my $tableWidgetName = ":Item Views_javax.swing.JTable";
+        my $tableWidget = waitForObject($tableWidgetName);
+        my $model = $tableWidget-&gt;getModel();
+        for (my $row = 0; $row &lt; $model-&gt;getRowCount(); ++$row) {
+            for (my $column = 0; $column &lt; $model-&gt;getColumnCount();
+                ++$column) {
+                my $item = $model-&gt;getValueAt($row, $column);
+                my $selected = "";
+                if ($tableWidget-&gt;isCellSelected($row, $column)) {
+                    $selected = " +selected";
+                }
+                $db-&gt;log("($row, $column) '$item'$selected");
+            }
+            my $expected = ($row == 14 || $row == 24) ? "true" : "false";
+            $db-&gt;compare($model-&gt;getValueAt($row, 0), $expected);
+        }
+        $db-&gt;verify($model-&gt;getRowCount() == 25);
+    };
+    if ($@) {
+        test::fatal("$@");
+    }
+    else {
+        $db-&gt;close;
+    }
+}
+</pre></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Tcl</span><pre class="programlisting">
+
+proc main {} {
+    startApplication "\"$::env(SQUISH_PREFIX)/examples/java/itemviews/ItemViewsSwing.jar\""
+    sqlite3 db [findFile "testdata" "logfile.db3"]
+    set tableWidgetName ":Item Views_javax.swing.JTable"
+    set tableWidget [waitForObject $tableWidgetName]
+    set model [invoke $tableWidget getModel]
+    for {set row 0} {$row &lt; [invoke $model getRowCount]} {incr row} {
+        for {set column 0} {$column &lt; [invoke $model getColumnCount]} \
+            {incr column} {
+            set item [invoke $model getValueAt $row $column]
+            set selected ""
+            if {[invoke $tableWidget isCellSelected $row $column]} {
+                set selected " +selected"
+            }
+            set text [invoke $item toString]
+            set message "($row, $column) '$text'$selected"
+            db:log db $message
+        }
+        set expected "false"
+        if {$row == 14 || $row == 24} {
+            set expected "true"
+        }
+        set value [invoke [invoke $model getValueAt $row 0] toString]
+        db:compare db $value $expected
+    }
+    db:verify db [expr {[invoke $model getRowCount] == 25}]
+    db close
+}
+</pre></div><p>
+The <code class="code">main</code> function is very similar to one we saw in the
+itemviews example (see <a class="xref" href="https://ugs-javaapi.html#ug-testing-lists-tables-and-trees" title="5.4.6.1.2. How to Test JList, JTable, and JTree widgets (Java—AWT/Swing)">How to Test JList, JTable, and JTree widgets
+(Java—AWT/Swing) (Section 5.4.6.1.2)</a>). The function iterates
+over every row in a table widget and over every cell in every row. For
+each cell we log its contents with a string of the form
+“<span class="quote">(<span class="emphasis"><em>row</em></span>, <span class="emphasis"><em>column</em></span>)
+<span class="emphasis"><em>text</em></span></span>”, optionally appending
+“<span class="quote">+selected</span>” to the text for cells that are selected. The
+table's first row consists of checkboxes—the text for these comes
+out as “<span class="quote">true</span>” or “<span class="quote">false</span>”—and we check
+each one to make sure that it is unchecked (or in the case of rows 14
+and 24, checked). And at the end we verify that the table has exactly 25
+rows.
+</p><p>
+The <code class="code">DB</code> class's methods (and for Tcl, the
+<code class="code">db:*</code> functions) are simpler and less sophisticated than
+<span class="emphasis"><em>Squish</em></span>'s built-in test methods, but they show the proof of
+concept—you can of course make your own database logging functions
+as advanced as you like.
+</p><p>
+In terms of the <code class="code">DB</code> class, we begin by creating an
+instance—and as we will see in a moment, the database connection
+is made in the constructor. Then we call methods on the <code class="code">db</code>
+object in place of the <span class="emphasis"><em>Squish</em></span> test methods we would normally use.
+</p><p>
+Most scripting languages either don't have destructors, or have
+destructors that are not guaranteed to be called (or in the case of
+JavaScript, don't have a notion of destructors at all), so we use the
+appropriate scripting-language construct to ensure that if the
+<code class="code">db</code> object is created successfully, it is closed at the
+end—and inside this close method, the database connection is
+closed.
+</p><p>
+We are now ready to review the <code class="code">DB</code> class and its methods (or
+for Tcl, the <code class="code">db:*</code> functions). But, as we mentioned in the
+previous section, the database APIs vary quite a lot between the
+different scripting languages, so we will look at each language's
+implementation of this class in is own separate subsubsection—each
+subsubsection is complete in itself, so you only need to read the one
+relevant to the scripting language that interests you.
+</p><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="logging.results.directly.to.a.database.in.python"></a>5.18.2.1. Logging Results Directly to a Database in Python</h4></div></div></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Python</span><pre class="programlisting">
+
+import sqlite3
+
+class DB:
+
+    def __init__(self):
+        self.db = self.cursor = None
+        self.db = sqlite3.connect(findFile("testdata", "logfile.db3"))
+        self.cursor = self.db.cursor()
+
+    def log(self, message):
+        self.cursor.execute("INSERT INTO log (result, message) "
+            "VALUES ('LOG', ?)", (message,))
+
+    def compare(self, first, second):
+        if first == second:
+            result = "PASS"
+        else:
+            result = "FAIL"
+        self.cursor.execute("INSERT INTO log (result, message) "
+            "VALUES (?, 'Comparison')", (result,))
+
+    def verify(self, condition):
+        if condition:
+            result = "PASS"
+        else:
+            result = "FAIL"
+        self.cursor.execute("INSERT INTO log (result, message) "
+            "VALUES (?, 'Verification')", (result,))
+
+    def close(self):
+        if self.db is not None:
+            self.db.commit()
+        if self.cursor is not None:
+            self.cursor.close()
+        if self.db is not None:
+            self.db.close()
+</pre></div><p>
+We must, of course, begin by importing the <code class="code">sqlite3</code> module.
+</p><p>
+The <code class="code">DB</code> class assumes that the database already exists and
+contains a table called <code class="code">log</code> that has at least two text
+fields, <code class="code">result</code> and <code class="code">message</code>. In fact, for this
+example the SQLite SQL we used to create the table was:
+<code class="code">CREATE TABLE log (id INTEGER PRIMARY KEY, result TEXT, message
+TEXT)</code>. The <code class="code">id</code> field is autoincrementing which is why
+we don't need to explicitly insert values for it.
+</p><p>
+One small point to note is that if we use placeholders in calls to the
+<code class="code">cursor.execute</code> method (i.e., “<span class="quote">?</span>”, as we ought
+to, and do here), then the second argument <span class="emphasis"><em>must</em></span> be
+a tuple, even if we only have one value to pass as in all the methods
+implemented here.
+</p><p>
+Clearly the <code class="code">DB</code> class is very simple, but it shows the
+fundamentals of how we could create a database-savvy object that we
+could use to store whatever test data and results we liked, ready for
+post-processing or reporting.
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="logging.results.directly.to.a.database.in.javascript"></a>5.18.2.2. Logging Results Directly to a Database in JavaScript</h4></div></div></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">JavaScript</span><pre class="programlisting">
+
+function DB()
+{
+    var logfile = findFile("testdata", "logfile.db3");
+    this.connection = SQL.connect({Driver: "SQLite", Host: "localhost", 
+        Database: logfile, UserName: "", Password: ""});
+}
+
+DB.prototype.log = function(message)
+{
+    message = message.replace(RegExp("'", "g"), "");
+    this.connection.execute("INSERT INTO log (result, message) " +
+        "VALUES ('LOG', '" + message + "')");
+}
+
+DB.prototype.compare = function(first, second)
+{
+    var result = first == second ? "PASS" : "FAIL";
+    this.connection.execute("INSERT INTO log (result, message) " +
+        "VALUES ('" + result + "', 'Comparison')");
+}
+
+DB.prototype.verify = function(condition)
+{
+    var result = condition ? "PASS" : "FAIL";
+    this.connection.execute("INSERT INTO log (result, message) " +
+        "VALUES ('" + result + "', 'Verification')");
+}
+
+
+DB.prototype.close = function()
+{
+    this.connection.close();
+}
+</pre></div><p>
+The <code class="code">DB</code> function is the constructor and we use it to
+create the database connection. To provide the object returned by
+calling <code class="code">new DB()</code> with methods, we create anonymous
+functions which we immediately assign to the <code class="code">DB</code> class's
+prototype, using the names by which we want to call them.
+</p><p>
+In the case of the <code class="code">DB.log</code> method, we remove any single
+quotes from the message since we create the SQL to execute purely as a
+string, and single quotes would confuse things. (An alternative would be
+to escape them.)
+</p><p>
+The <code class="code">DB</code> class assumes that the database already exists and
+contains a table called <code class="code">log</code> that has at least two text
+fields, <code class="code">result</code> and <code class="code">message</code>. In fact, for this
+example the SQLite SQL we used to create the table was:
+<code class="code">CREATE TABLE log (id INTEGER PRIMARY KEY, result TEXT, message
+TEXT)</code>. The <code class="code">id</code> field is autoincrementing which is why
+we don't need to explicitly insert values for it.
+</p><p>
+Clearly the <code class="code">DB</code> class is very simple, but it shows the
+fundamentals of how we could create a database-savvy object that we
+could use to store whatever test data and results we liked, ready for
+post-processing or reporting.
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="logging.results.directly.to.a.database.in.perl"></a>5.18.2.3. Logging Results Directly to a Database in Perl</h4></div></div></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Perl</span><pre class="programlisting">
+
+use DBI;
+package DB;
+
+sub new {
+    my $self = shift;
+    my $class = ref($self) || $self;
+    my $db3file = shift;
+    my $db = DBI-&gt;connect("dbi:SQLite:$db3file") ||
+        die("Failed to connect: $DBI::errstr");
+    $self = { "db" =&gt; $db };
+    return bless $self, $class;
+}
+
+sub log {
+    my ($self, $message) = @_;
+    my $query = $self-&gt;{db}-&gt;prepare("INSERT INTO log (result, message) " .
+        "VALUES ('LOG', ?)");
+    $query-&gt;execute($message);
+}
+
+sub compare {
+    my ($self, $first, $second) = @_;
+    my $result = ($first eq $second) ? "PASS" : "FAIL";
+    my $query = $self-&gt;{db}-&gt;prepare("INSERT INTO log (result, message) " .
+        "VALUES (?, 'Comparison')");
+    $query-&gt;execute($result);
+}
+
+sub verify {
+    my ($self, $condition) = @_;
+    my $result = $condition ? "PASS" : "FAIL";
+    my $query = $self-&gt;{db}-&gt;prepare("INSERT INTO log (result, message) " .
+        "VALUES (?, 'Verification')");
+    $query-&gt;execute($result);
+}
+
+sub close {
+    my $self = shift;
+    $self-&gt;{db}-&gt;disconnect;
+}
+</pre></div><p>
+We must, of course, begin by using the <code class="code">DBI</code> module to
+provide database access.
+</p><p>
+The <code class="code">DB</code> class assumes that the database already exists and
+contains a table called <code class="code">log</code> that has at least two text
+fields, <code class="code">result</code> and <code class="code">message</code>. In fact, for this
+example the SQLite SQL we used to create the table was:
+<code class="code">CREATE TABLE log (id INTEGER PRIMARY KEY, result TEXT, message
+TEXT)</code>. The <code class="code">id</code> field is autoincrementing which is why
+we don't need to explicitly insert values for it.
+</p><p>
+One small point to note is that if we use placeholders in calls to the
+<code class="code">prepare</code> function (i.e., “<span class="quote">?</span>”, as we ought to,
+and do here), we must pass the actual values to use when we call the
+<code class="code">execute</code> method.
+</p><p>
+Clearly the <code class="code">DB</code> class is very simple, but it shows the
+fundamentals of how we could create a database-savvy object that we
+could use to store whatever test data and results we liked, ready for
+post-processing or reporting.
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="logging.results.directly.to.a.database.in.tcl"></a>5.18.2.4. Logging Results Directly to a Database in Tcl</h4></div></div></div><div xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="programlistingcontainer"><span class="programlistinglanguage">Tcl</span><pre class="programlisting">
+
+package require sqlite3
+
+proc db:log {db message} {
+    db eval {INSERT INTO log (result, message) VALUES ("LOG", $message)}
+}
+
+proc db:compare {db first second} {
+    if {$first == $second} {
+        set result "PASS"
+    } else {
+        set result "FAIL"
+    }
+    db eval {INSERT INTO log (result, message) VALUES \
+        ($result, "Comparison")}
+}
+
+proc db:verify {db condition} {
+    if {$condition} {
+        set result "PASS"
+    } else {
+        set result "FAIL"
+    }
+    db eval {INSERT INTO log (result, message) VALUES \
+        ($result, "Verification")}
+}
+</pre></div><p>
+We must, of course, begin by importing the <code class="code">sqlite3</code> module.
+(See <a class="xref" href="https://how.to.access.databases.from.squish.test.scripts.html#comparing.a.gui.table.with.a.database.table.in.tcl" title="5.18.1.4. Comparing a GUI Table with a Database Table in Tcl">Comparing a GUI Table with a Database Table in Tcl (Section 5.18.1.4)</a> for
+another way to do the import.)
+</p><p>
+The <code class="code">db:*</code> functions all expect to be passed a
+SQLite 3 database connection object as their first argument. All
+three functions assume that the database already exists and contains a
+table called <code class="code">log</code> that has at least two text fields,
+<code class="code">result</code> and <code class="code">message</code>. In fact, for this example
+the SQLite SQL we used to create the table was: <code class="code">CREATE TABLE log (id
+INTEGER PRIMARY KEY, result TEXT, message TEXT)</code>. The
+<code class="code">id</code> field is autoincrementing which is why we don't need to
+explicitly insert values for it.
+</p><p>
+Clearly these functions are very simple, but they show the fundamentals
+of how we could create database-savvy functions that we could use to
+store whatever test data and results we liked, ready for post-processing
+or reporting.
+</p></div></div></div><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" type="text/javascript" src="ScriptingLanguage.js"></script><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format">setScriptingLanguage();</script><div class="navfooter"><hr></hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="https://ug-interact-with-files-environment.html">Prev</a> </td><td width="20%" align="center"><a accesskey="u" href="https://users-guide.html">Up</a></td><td width="40%" align="right"> <a accesskey="n" href="https://ug-how-to-handle-exceptions-raised-in-test-scripts.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">5.17. How to Interact with Files and with the Environment in Test Scripts </td><td width="20%" align="center"><a accesskey="h" href="https://index-noframes.html">Home</a></td><td width="40%" align="right" valign="top"> 5.19. How to Handle Exceptions Raised in Test Scripts</td></tr></table></div></body>
+<!-- Mirrored from how.to.access.databases.from.squish.test.scripts.html by HTTrack Website Copier/3.x [XR&CO'2013], Wed, 06 Jul 2022 13:28:59 GMT -->
+</html>

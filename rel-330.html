@@ -1,0 +1,69 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<!-- Mirrored from rel-330.html by HTTrack Website Copier/3.x [XR&CO'2013], Wed, 06 Jul 2022 13:28:57 GMT -->
+<head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><title>2.63. Version 3.3.0</title><link rel="stylesheet" href="manual.css" type="text/css"></link><meta name="generator" content="DocBook XSL Stylesheets V1.73.2"></meta><link rel="start" href="index-noframes.html" title="Squish Manual"></link><link rel="up" href="relnotes.html" title="Chapter 2. Release Notes—for Upgraders"></link><link rel="prev" href="rel-331.html" title="2.62. Version 3.3.1"></link><link rel="next" href="rel-330b1.html" title="2.64. Version 3.3.0 Beta 1"></link><style xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" type="text/css" media="screen">
+        div.toc * { margin-left: 6px; margin-right: auto; max-width: 75em; }
+        div.toc span { margin-left: 0px; }
+        * { margin-left: auto; margin-right: auto; max-width: 75em; }
+        body { margin-left: 6px; margin-right: 6px; }
+        table th { padding: .5ex }
+        table td { padding: .5ex }
+    </style><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format">
+        function keyPress() {
+            var e = window.event;
+            if ( e == undefined ) {
+                return;
+            }
+            /* ### does not properly scroll, yet
+            if ( e.keyCode == 32 ) {
+            var l = document.links;
+            for ( var i = 0; i < l.length; i++ ) {
+                if ( l[i].innerText == "Next" ) {
+                location.href = l[i].href;
+                }
+            }
+            } else
+                */
+                if ( e.keyCode == 0x08 ) {
+            var l = document.links;
+            for ( var i = 0; i < l.length; i++ ) {
+                if ( l[i].innerText == "Prev" ) {
+                location.href = l[i].href;
+                }
+            }
+            }
+        }
+        document.onkeypress = keyPress;
+    </script></head><body><div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="rel-330"></a>2.63. Version 3.3.0</h2></div></div></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><span class="section"><a href="rel-330.html#general.6">2.63.1. General</a></span></dt><dt><span class="section"><a href="rel-330.html#qt-specific.6">2.63.2. Qt-specific</a></span></dt><dt><span class="section"><a href="rel-330.html#java-specific.6">2.63.3. Java-specific</a></span></dt><dt><span class="section"><a href="rel-330.html#web-specific.6">2.63.4. Web-specific</a></span></dt><dt><span class="section"><a href="rel-330.html#mac-specific">2.63.5. Mac-specific</a></span></dt><dt><span class="section"><a href="rel-330.html#source-builds.4">2.63.6. Source Builds</a></span></dt></dl></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="general.6"></a>2.63.1. General</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Ensure that the line of the breakpoint is visible once
+it is hit</p></li><li><p>Added saveDesktopScreenshot()
+function</p></li><li><p>Added OS.chdir(path) and OS.cwd() JavaScript functions.</p></li><li><p>Windows only: fix a crash in the squishserver that
+occurred in rare cases at the end of a testcase.</p></li><li><p>Bring the Squish IDE to the foreground once a
+breakpoint is hit.</p></li><li><p>Fix incorrect file names and line numbers in error
+messages when exceptions were thrown from imported Python
+modules.</p></li><li><p>Prevent Variable Watcher from crashing when displaying
+a variable after the AUT exited.</p></li><li><p>Fix renaming of columns after right clicking on a
+column header if the table has been scrolled to the
+right.</p></li><li><p>Properly enable/disable the Record button, menu entry
+and link on the suite info page depending on whether a default AUT is
+set or not.</p></li><li><p>Don't show JavaScript functions in the variable
+watcher.</p></li><li><p>Select current AUT path as default path when browsing
+for a new AUT in the testsuite settings dialog.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="qt-specific.6"></a>2.63.2. Qt-specific</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Fix the monkey test example so that it clicks on tabs
+again.</p></li><li><p>Make recording activateItem() calls on menus more
+robust.</p></li><li><p>Properly wrap QFlags types to avoid ambiguous
+overloads with int overloads. Other template class
+fixes.</p></li><li><p>Show the attributes of QPointF, QSizeF and QRectF
+properties in the Spy.</p></li><li><p>Fix object lookup after an object was
+reparented.</p></li><li><p>Fix for using Squish IDE with Qt4.4</p></li><li><p>Fix recording of nested menu items inside a context
+menu without title.</p></li><li><p>Improved Drag and Drop support.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="java-specific.6"></a>2.63.3. Java-specific</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Added support for the IBM Java Virtual
+Machine.</p></li><li><p>Added support for Java Web Start.</p></li><li><p>Miscellaneous fixes for the GEF support.</p></li><li><p>Added support for JFace actions.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="web-specific.6"></a>2.63.4. Web-specific</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Fixed File Upload on X11 platforms. Also make it work
+if the button is scrolled out of the view.</p></li><li><p>Improved the installer's detection of Firefox
+installations on Windows.</p></li><li><p>Use newer version of XPath code. Statements like
+'following-sibling::TABLE' should not result in an endless loop
+anymore.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="mac-specific"></a>2.63.5. Mac-specific</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Fixed most known hooking problems by avoiding up-front
+class initializations.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="source-builds.4"></a>2.63.6. Source Builds</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Fixed compilation with Python installations that use
+the C type long for representing a Unicode
+character.</p></li><li><p>Drastically shorten command line during Qt wrapper
+build to avoid errors from the Windows 2000 shell.</p></li><li><p>Fixed compile and link errors on AIX</p></li><li><p>A few percent speedup when building the Qt
+wrapper.</p></li></ul></div></div></div><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" type="text/javascript" src="ScriptingLanguage.js"></script><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format">setScriptingLanguage();</script><div class="navfooter"><hr></hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="rel-331.html">Prev</a> </td><td width="20%" align="center"><a accesskey="u" href="relnotes.html">Up</a></td><td width="40%" align="right"> <a accesskey="n" href="rel-330b1.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">2.62. Version 3.3.1 </td><td width="20%" align="center"><a accesskey="h" href="index-noframes.html">Home</a></td><td width="40%" align="right" valign="top"> 2.64. Version 3.3.0 Beta 1</td></tr></table></div></body>
+<!-- Mirrored from rel-330.html by HTTrack Website Copier/3.x [XR&CO'2013], Wed, 06 Jul 2022 13:28:57 GMT -->
+</html>

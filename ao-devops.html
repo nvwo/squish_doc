@@ -1,0 +1,112 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<!-- Mirrored from ao-devops.html by HTTrack Website Copier/3.x [XR&CO'2013], Wed, 06 Jul 2022 13:29:01 GMT -->
+<head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><title>9.9. Microsoft Azure DevOps integration</title><link rel="stylesheet" href="manual.css" type="text/css"></link><meta name="generator" content="DocBook XSL Stylesheets V1.73.2"></meta><link rel="start" href="https://index-noframes.html" title="Squish Manual"></link><link rel="up" href="https://addons.html" title="Chapter 9. Add-Ons Reference Manual"></link><link rel="prev" href="https://ao-vs-integration.html" title="9.8. Microsoft® Visual Studio® Integration"></link><link rel="next" href="https://eclipse.ide.integration.html" title="9.10. Eclipse IDE Integration"></link><style xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" type="text/css" media="screen">
+        div.toc * { margin-left: 6px; margin-right: auto; max-width: 75em; }
+        div.toc span { margin-left: 0px; }
+        * { margin-left: auto; margin-right: auto; max-width: 75em; }
+        body { margin-left: 6px; margin-right: 6px; }
+        table th { padding: .5ex }
+        table td { padding: .5ex }
+    </style><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format">
+        function keyPress() {
+            var e = window.event;
+            if ( e == undefined ) {
+                return;
+            }
+            /* ### does not properly scroll, yet
+            if ( e.keyCode == 32 ) {
+            var l = document.links;
+            for ( var i = 0; i < l.length; i++ ) {
+                if ( l[i].innerText == "Next" ) {
+                location.href = l[i].href;
+                }
+            }
+            } else
+                */
+                if ( e.keyCode == 0x08 ) {
+            var l = document.links;
+            for ( var i = 0; i < l.length; i++ ) {
+                if ( l[i].innerText == "Prev" ) {
+                location.href = l[i].href;
+                }
+            }
+            }
+        }
+        document.onkeypress = keyPress;
+    </script></head><body><div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="ao-devops"></a>9.9. Microsoft Azure DevOps integration</h2></div></div></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><span class="section"><a href="https://ao-devops.html#ao-devops-pipeline-agent">9.9.1. The Pipeline Agent</a></span></dt><dt><span class="section"><a href="https://ao-devops.html#ao-squish-task">9.9.2. Squish Task</a></span></dt><dt><span class="section"><a href="https://ao-devops.html#ao-squish-tc-task">9.9.3. Squish Test Center Task</a></span></dt><dt><span class="section"><a href="https://ao-devops.html#ao-devops-example">9.9.4. Example Configuration</a></span></dt></dl></div><p>
+		<span class="emphasis"><em>Squish</em></span> provides a rich command-line interface, allowing test executions and integrations with third-party tools, like Azure DevOps. Azure DevOps offers several services for augmenting development workflows, including Pipelines which can be used for Continuous Integration (CI) and Continuous Delivery (CD) of your project. Automated GUI tests created with Squish can be easily executed as part of these pipeline processes.
+	</p><p>
+		For executing a <span class="emphasis"><em>Squish</em></span> test as part of a pipeline the Squish Integration extension can be used. It is available on Microsoft marketplace: <a class="ulink" href="https://marketplace.visualstudio.com/items?itemName=froglogic.squishextension" target="_blank">Squish Integration</a>
+		The extension adds two tasks: one to run <span class="emphasis"><em>Squish</em></span> tests, and one to create Azure DevOps results with the help of <span class="application">Squish Test Center</span>.
+	</p><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="ao-devops-pipeline-agent"></a>9.9.1. The Pipeline Agent</h3></div></div></div><p>
+			Test execution requires a test environment. For Squish GUI tests, self-hosted agents (e.g., a local PC or laptop) or Virtual Machines (VMs) offered by the Azure cloud can be used. In the case of using the self-hosted solution, the <a class="ulink" href="https://docs.microsoft.com/en-us/azure/devops/pipelines/agents/agents?view=azure-devops" target="_blank">Azure Pipeline agent</a> needs to be installed.
+		</p><p>
+			Squish tests require access to a display, either a physical or virtual one. For Windows, the mentioned agent can be started in at least two different ways: as a service or as a process. As services do not have such access, the DevOps agent cannot be launched as a service to run Squish tests. Therefore, the agent has to be started as a process. For more details on running tests on Windows, please consult <a class="ulink" href="https://kb.froglogic.com/display/KB/Automation on Windows" target="_blank">this article</a>.
+		</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="ao-squish-task"></a>9.9.2. Squish Task</h3></div></div></div><p>
+			The Squish Task can be added to a build or a release Pipeline stage, with the goal to run Squish GUI tests and gather results. A requirement for the use of this task is to have Squish installed on the agent that will be running the task. Some settings of the task require special attention in order to work properly. For these, we provide additional information in the following section.
+		</p><div class="itemizedlist"><ul type="disc"><li><p>
+					<em class="parameter"><code>Squish folder (required)</code></em> - Path to Squish installation folder on the agent.
+				</p></li><li><p>
+					<em class="parameter"><code>Test suites (required)</code></em> - Path to Squish test suites, one path per line.
+				</p></li><li><p>
+					<em class="parameter"><code>Test cases</code></em> - Names of test cases to execute from the test suite. Values separated by semi-colon (;).
+				</p></li><li><p>
+					<em class="parameter"><code>Use stdout reportgen</code></em> - Whether Squish should output the test result to stdout, which can then be seen in the console of Azure DevOps.
+				</p></li><li><p>
+					<em class="parameter"><code>Use <span class="application">Squish Test Center</span> reportgen</code></em> - Whether Squish should use the <span class="application">Squish Test Center</span> reportgen. If selected, then additional settings are required.
+					</p><div class="itemizedlist"><ul type="circle"><li><p>
+								<em class="parameter"><code>Base URL of <span class="application">Squish Test Center</span> instance (required)</code></em> - URL to reach the <span class="application">Squish Test Center</span> instance that should be the receiver of the results. 
+							</p></li><li><p>
+								<em class="parameter"><code>Project (required)</code></em> - Which <span class="application">Squish Test Center</span> project should the results be pushed in.
+							</p></li><li><p>
+								<em class="parameter"><code>Upload token (required)</code></em> - Which <span class="application">Squish Test Center</span> upload token to use to push the results.
+							</p></li><li><p>
+								<em class="parameter"><code>Batch name</code></em> - The name of the batch that will be created with the result. If left empty, then <span class="application">Squish Test Center</span> will automatically generate a new one.
+								Pipeline variables can be used here.
+							</p></li><li><p>
+								<em class="parameter"><code>Labels</code></em> - List of ;-separated items that will be used to tag the results, in the form of "OS=Windows". Pipeline variables can be used here.
+							</p></li></ul></div><p>
+				</p></li></ul></div><p>
+			This task can be executed in parallel on different agents, enabling you to have the same set of Squish GUI tests run on multiple environments and, if wanted, have those results pushed to the same batch in <span class="application">Squish Test Center</span>.
+			The state of this task is directly linked to the results of Squish GUI tests: success if all tests passed without failures, warning if some tests contain failures, and failed if an error was encountered.
+		</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="ao-squish-tc-task"></a>9.9.3. Squish Test Center Task</h3></div></div></div><p>
+			This task is targeted for <span class="application">Squish Test Center</span> users of Azure DevOps traceability. Assuming that a mapping exists between Squish GUI tests and Azure DevOps tests in <span class="application">Squish Test Center</span>, then this task can be used to trigger
+			the creation of new runs and results in Azure DevOps based on the mapping. The settings required to run this task are the same that would be needed to do it manually and are listed below:
+		</p><div class="itemizedlist"><ul type="disc"><li><p>
+					<em class="parameter"><code>Base URL of <span class="application">Squish Test Center</span> instance (required)</code></em> - URL of the <span class="application">Squish Test Center</span> instance that will be used as the origin of the push action. 
+				</p></li><li><p>
+					<em class="parameter"><code>Project (required)</code></em> - Which <span class="application">Squish Test Center</span> project will be used as source of the mapping.
+				</p></li><li><p>
+					<em class="parameter"><code>Batch name (required)</code></em> - The name of the batch that contains the results to be pushed into Azure DevOps.
+				</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="ao-devops-example"></a>9.9.4. Example Configuration</h3></div></div></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><span class="section"><a href="https://ao-devops.html#ao-devops-example-setup">9.9.4.1. Setup</a></span></dt></dl></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="ao-devops-example-setup"></a>9.9.4.1. Setup</h4></div></div></div><div class="orderedlist"><ol type="1"><li><p>
+					In the Azure DevOps space, create a Build Pipeline.
+					</p><p>
+						We will not cover this step in detail as it depends highly on your project and the way you build your application. In this example, we used <span class="guibutton">Hosted VS2017 Agent pool</span>.
+						
+						The build artifacts (i.e., the Application Under Test) are published in <span class="guibutton">Azure Pipelines</span>.
+						</p><div class="screenshot"><div class="mediaobject" align="center"><img src="https://images/azure_ci_publish.png" align="middle"></img><div class="caption">Azure - Publishing Artifacts</div></div></div><p>
+					</p></li><li><p>
+					In the Azure DevOps space, create a Release Pipeline.
+					</p><p>
+						</p><div class="screenshot"><div class="mediaobject" align="center"><img src="https://images/azure_r_pipeline.png" align="middle"></img><div class="caption">Azure - Release Pipeline</div></div></div><p>
+						The artifacts for the Release Pipeline include:
+						</p><div class="itemizedlist"><ul type="disc"><li><p>The AUT, published in the previous step.</p></li><li><p>Squish GUI tests stored in an external GitHub repository.</p></li></ul></div><p>
+					</p></li><li><p>
+					Install Squish on the DevOps Agent
+					</p><p>
+						This step can be done manually or as part of the Release Pipeline. In the former approach, run the Squish installer on the DevOps Agent and follow the installation wizard.
+					</p><p>
+						In the latter approach, first deliver the Squish installer and <a class="ulink" href="https://ins-commandline-tools-server-ide.html#ins-binary-unattended" target="_blank">perform unattended installation</a> as a task in the Release Pipeline.
+					</p></li><li><p>
+					Execute Squish tests
+					</p><p>
+						</p><div class="screenshot"><div class="mediaobject" align="center"><img src="https://images/azure_pipeline_squish_task.png" align="middle"></img><div class="caption">Azure - Squish Task</div></div></div><p>
+						Add a Squish Task to the Build/Release Pipeline, and adapt the settings to your setup.
+					</p></li><li><p>
+					Push results into Azure DevOps from <span class="application">Squish Test Center</span>.
+					</p><p>
+						Push the results for the mentioned batch in <span class="application">Squish Test Center</span> into Azure DevOps, assuming a mapping was previously made between Azure DevOps tests and Squish GUI tests in the Traceability page. Learn more about it here: <a class="ulink" href="https://doc.froglogic.com/squish-testcenter/latest/ao-testcenter-azuredevops.html" target="_blank"> documentation </a>.
+					</p></li></ol></div></div></div></div><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" type="text/javascript" src="ScriptingLanguage.js"></script><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format">setScriptingLanguage();</script><div class="navfooter"><hr></hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="https://ao-vs-integration.html">Prev</a> </td><td width="20%" align="center"><a accesskey="u" href="https://addons.html">Up</a></td><td width="40%" align="right"> <a accesskey="n" href="https://eclipse.ide.integration.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">9.8. <span class="trademark">Microsoft</span>® <span class="trademark">Visual Studio</span>® Integration </td><td width="20%" align="center"><a accesskey="h" href="https://index-noframes.html">Home</a></td><td width="40%" align="right" valign="top"> 9.10. Eclipse IDE Integration</td></tr></table></div></body>
+<!-- Mirrored from ao-devops.html by HTTrack Website Copier/3.x [XR&CO'2013], Wed, 06 Jul 2022 13:29:01 GMT -->
+</html>

@@ -1,0 +1,87 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<!-- Mirrored from ug-how-to-work-with-test-results.html by HTTrack Website Copier/3.x [XR&CO'2013], Wed, 06 Jul 2022 13:29:00 GMT -->
+<head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><title>5.29.  How to Analyze Test Results</title><link rel="stylesheet" href="manual.css" type="text/css"></link><meta name="generator" content="DocBook XSL Stylesheets V1.73.2"></meta><link rel="start" href="index-noframes.html" title="Squish Manual"></link><link rel="up" href="users-guide.html" title="Chapter 5. User Guide"></link><link rel="prev" href="ug.how.to.create.cross.platform.tests.html" title="5.28. How to Create Cross-Platform Tests"></link><link rel="next" href="api.man.html" title="Chapter 6. API Reference Manual"></link><style xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" type="text/css" media="screen">
+        div.toc * { margin-left: 6px; margin-right: auto; max-width: 75em; }
+        div.toc span { margin-left: 0px; }
+        * { margin-left: auto; margin-right: auto; max-width: 75em; }
+        body { margin-left: 6px; margin-right: 6px; }
+        table th { padding: .5ex }
+        table td { padding: .5ex }
+    </style><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format">
+        function keyPress() {
+            var e = window.event;
+            if ( e == undefined ) {
+                return;
+            }
+            /* ### does not properly scroll, yet
+            if ( e.keyCode == 32 ) {
+            var l = document.links;
+            for ( var i = 0; i < l.length; i++ ) {
+                if ( l[i].innerText == "Next" ) {
+                location.href = l[i].href;
+                }
+            }
+            } else
+                */
+                if ( e.keyCode == 0x08 ) {
+            var l = document.links;
+            for ( var i = 0; i < l.length; i++ ) {
+                if ( l[i].innerText == "Prev" ) {
+                location.href = l[i].href;
+                }
+            }
+            }
+        }
+        document.onkeypress = keyPress;
+    </script></head><body><div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="ug-how-to-work-with-test-results"></a>5.29. 
+How to Analyze Test Results
+</h2></div></div></div><p> From the <a class="xref" href="ide.views.html#ide.the-test-results.view" title="8.2.18. Test Results view">Test Results view (Section 8.2.18)</a>,
+you can see the <span class="guilabel">Recent Test Results</span>, which is a
+drop-down menu with checkboxes to indicate which result is visible.
+The <span class="guilabel">Number of Results to Keep</span> can be configured from
+<span class="guimenu">Preferences</span>-<span class="guimenuitem">Squish</span>-<span class="guimenuitem">Logging</span>.
+<span class="guibutton">Clear</span> simply un-checks the current entry in
+<span class="guilabel">Recent Test Results</span>, and clears the Test Result View,
+without deleting anything. </p><div class="screenshot"><div class="mediaobject" align="center"><img src="images/ide/test-results-view.png" align="middle"></img><div class="caption"><p>The Test Results view
+</p></div></div></div><p>
+The Test Results view allows you to analyze a test result using a navigable tree
+view, where you can select and expand entire Test Suites, and individual Test
+Cases. You can also navigate to individual <code class="literal">LOG</code>, <code class="literal">PASS</code> or
+<code class="literal">FAIL</code> entries. For entries that correspond to a line
+number in a file, double-clicking on the tree node tells the <span class="application">Squish IDE</span> to open that
+file and bring the cursor to that line in your test.
+For entries that correspond to images, you can view the image by double-clicking
+on the tree node.
+</p><p>
+ For entries that correspond to failed screenshot, table, or visual
+verifications, you can right-click on them from the Test Results View
+and <span class="guilabel">View Differences</span>, or <span class="guilabel">Use As Expected Result</span>.
+</p><p> From the toolbar, it is possible to <span class="guilabel">Import Test
+Results</span> into this view, if they were previously saved to a file,
+and it is possible to select a result and <span class="guilabel">Export</span> it to a file.
+This way of moving test results in and out of the IDE is less convenient than
+using <span class="application">Squish Test Center</span> as a container for test results.  </p><p> To configure <span class="application">squishide</span> to
+use a <span class="application">Squish Test Center</span>, see <a class="xref" href="ide.views.html#ide.the-test-center.view" title="8.2.17. Test Center view">Test Center view (Section 8.2.17)</a>. After that,
+it is possible to <span class="guilabel">Upload Result to Squish Test Center</span>.
+You will be asked for a <span class="guilabel">Project</span>,
+<span class="guilabel">Batch</span>, and optional <span class="guilabel">Labels</span>.
+Batches and labels determine how your result can be organized
+and grouped with others in <span class="application">Squish Test Center</span>.
+</p><div class="screenshot"><div class="mediaobject" align="center"><img src="images/ide/test-results-upload.png" align="middle"></img><div class="caption"><p>Test Results upload
+</p></div></div></div><p>Once the result is uploaded, it can be viewed and analyzed in the web GUI of
+<span class="application">Squish Test Center</span>, or downloaded to and analyzed in another <span class="application">Squish IDE</span>.
+</p><div class="screenshot"><div class="mediaobject" align="center"><img src="images/ide/test-center-view.png" align="middle"></img><div class="caption"><p>The Test Center view, populated
+</p></div></div></div><p> <a class="xref" href="ide.views.html#ide.the-test-center.view" title="8.2.17. Test Center view">Test Center view (Section 8.2.17)</a> shows a table of
+test batch runs, each entry corresponds to a test result. After selecting an
+entry, it is possible to analyze it in <span class="application">Squish Test Center</span> by clicking the toolbar button
+<span class="guibutton">Open In Browser</span>, or to download it to the <span class="application">Squish IDE</span> with the
+<span class="guibutton">Download</span> button. Double-clicking on a table
+entry is the same as single-clicking on it and then selecting
+<span class="guilabel">Download</span>. After a result is downloaded, the
+<a class="xref" href="ide.views.html#ide.the-test-results.view" title="8.2.18. Test Results view">Test Results view (Section 8.2.18)</a>
+becomes visible and the selected result becomes the currently selected entry in
+<span class="guilabel">Recent Test Results</span>. That result can now be analyzed from
+the <span class="application">Squish IDE</span> as if it was executed locally. </p></div><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" type="text/javascript" src="ScriptingLanguage.js"></script><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format">setScriptingLanguage();</script><div class="navfooter"><hr></hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="ug.how.to.create.cross.platform.tests.html">Prev</a> </td><td width="20%" align="center"><a accesskey="u" href="users-guide.html">Up</a></td><td width="40%" align="right"> <a accesskey="n" href="api.man.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">5.28. How to Create Cross-Platform Tests </td><td width="20%" align="center"><a accesskey="h" href="index-noframes.html">Home</a></td><td width="40%" align="right" valign="top"> Chapter 6. API Reference Manual</td></tr></table></div></body>
+<!-- Mirrored from ug-how-to-work-with-test-results.html by HTTrack Website Copier/3.x [XR&CO'2013], Wed, 06 Jul 2022 13:29:00 GMT -->
+</html>

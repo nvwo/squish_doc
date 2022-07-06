@@ -1,0 +1,66 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<!-- Mirrored from rel-312.html by HTTrack Website Copier/3.x [XR&CO'2013], Wed, 06 Jul 2022 13:28:58 GMT -->
+<head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><title>2.69. Version 3.1.2</title><link rel="stylesheet" href="manual.css" type="text/css"></link><meta name="generator" content="DocBook XSL Stylesheets V1.73.2"></meta><link rel="start" href="index-noframes.html" title="Squish Manual"></link><link rel="up" href="relnotes.html" title="Chapter 2. Release Notes—for Upgraders"></link><link rel="prev" href="rel-320.html" title="2.68. Version 3.2"></link><link rel="next" href="rel-311.html" title="2.70. Version 3.1.1"></link><style xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" type="text/css" media="screen">
+        div.toc * { margin-left: 6px; margin-right: auto; max-width: 75em; }
+        div.toc span { margin-left: 0px; }
+        * { margin-left: auto; margin-right: auto; max-width: 75em; }
+        body { margin-left: 6px; margin-right: 6px; }
+        table th { padding: .5ex }
+        table td { padding: .5ex }
+    </style><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format">
+        function keyPress() {
+            var e = window.event;
+            if ( e == undefined ) {
+                return;
+            }
+            /* ### does not properly scroll, yet
+            if ( e.keyCode == 32 ) {
+            var l = document.links;
+            for ( var i = 0; i < l.length; i++ ) {
+                if ( l[i].innerText == "Next" ) {
+                location.href = l[i].href;
+                }
+            }
+            } else
+                */
+                if ( e.keyCode == 0x08 ) {
+            var l = document.links;
+            for ( var i = 0; i < l.length; i++ ) {
+                if ( l[i].innerText == "Prev" ) {
+                location.href = l[i].href;
+                }
+            }
+            }
+        }
+        document.onkeypress = keyPress;
+    </script></head><body><div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="rel-312"></a>2.69. Version 3.1.2</h2></div></div></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><span class="section"><a href="rel-312.html#general.11">2.69.1. General</a></span></dt><dt><span class="section"><a href="rel-312.html#qt.1">2.69.2. Qt</a></span></dt><dt><span class="section"><a href="rel-312.html#java.1">2.69.3. Java</a></span></dt><dt><span class="section"><a href="rel-312.html#web.1">2.69.4. Web</a></span></dt><dt><span class="section"><a href="rel-312.html#tk.1">2.69.5. Tk</a></span></dt></dl></div><p>Version 3.1.2 is a maintenance release that incorporates a
+couple of bug fixes. See the <code class="filename">ChangeLog</code> file in
+the package for a detailed list. User visible changes and improvements
+are listed below.</p><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="general.11"></a>2.69.1. General</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Fixed a race condition leading to occasional IDE
+crashes when removing a test suite.</p></li><li><p>Fix a crash in screenshot comparison with masks if the
+image is smaller than the mask.</p></li><li><p>More robust breakpoints in Python scripts located via
+SQUISH_SCRIPT_DIR.</p></li><li><p>Improved function overload resolution of Perl and
+JavaScript bindings. Prefer a normal type conversion over a "tolerant"
+one.</p></li><li><p>Support NULL pointer passing from Perl
+scripts.</p></li><li><p>Don't crash when using an invalid report output
+format.</p></li><li><p> Fix compile problems with Python
+2.5.</p></li><li><p>Added a "Copy Real Name" option to the
+Spy.</p></li><li><p>Improved algorithm that is used to detect whether a
+file is binary or text. French accents and Umlauts won't confuse it
+anymore.</p></li><li><p>Mac OS only: if you add an application path or add an
+attachable AUT via the test suite settings dialog, then show the last
+modal dialog in front.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="qt.1"></a>2.69.2. Qt</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Fix over-aggressive mouse move event compression so
+that recording multiple subsequent moves of a dialog window gets
+played back properly.</p></li><li><p>Fix setting breakpoints and using the spy with Qt
+3.3.8 on Windows.</p></li><li><p>Fixed Q3ListBox interaction crash.</p></li><li><p>Wrap Q3ComboBox which appeared in Qt
+4.1</p></li><li><p>Support Qt builds that have QWheelEvent
+disabled.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="java.1"></a>2.69.3. Java</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Support for Java testing on the Mac.</p></li><li><p>Keyboard mapping fixes for both SWT and AWT/Swing.</p></li><li><p>Replaying 'typeText()' fix in AWT/Swing, it simply called 'setText()'.</p></li><li><p>Fix replaying menu selection when menu bar is a derived JMenuBar class.</p></li><li><p>Filter out 'typeText()' on widgets not having the focus AWT/Swing.</p></li><li><p>Menu selections and combobox selections are now recorded on the mouse button release event for AWT/Swing.</p></li><li><p>Jvm crash workaround when calling 'toString()' on some SWT widgets.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="web.1"></a>2.69.4. Web</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Fix for hooking into pages which automatically
+redirect.</p></li><li><p>Fixed hang in unload handling.</p></li><li><p>Made isPageLoaded more robust.</p></li><li><p>Fixed occasions where picking objects
+hung.</p></li><li><p>Added dedicated support for Kiwi_TreeTable.</p></li><li><p>Fixed error handling.</p></li><li><p>Fixed recording selectOption() when the option text
+contains special characters.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="tk.1"></a>2.69.5. Tk</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Generate better names for randomly-named TkInter
+widgets.</p></li><li><p>Sanity check that allows recording on statically
+linked Tk apps.</p></li><li><p>Fixed hooking for TkInter Python
+applications.</p></li></ul></div></div></div><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" type="text/javascript" src="ScriptingLanguage.js"></script><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format">setScriptingLanguage();</script><div class="navfooter"><hr></hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="rel-320.html">Prev</a> </td><td width="20%" align="center"><a accesskey="u" href="relnotes.html">Up</a></td><td width="40%" align="right"> <a accesskey="n" href="rel-311.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">2.68. Version 3.2 </td><td width="20%" align="center"><a accesskey="h" href="index-noframes.html">Home</a></td><td width="40%" align="right" valign="top"> 2.70. Version 3.1.1</td></tr></table></div></body>
+<!-- Mirrored from rel-312.html by HTTrack Website Copier/3.x [XR&CO'2013], Wed, 06 Jul 2022 13:28:58 GMT -->
+</html>

@@ -1,0 +1,227 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<!-- Mirrored from ao-hudson.html by HTTrack Website Copier/3.x [XR&CO'2013], Wed, 06 Jul 2022 13:29:01 GMT -->
+<head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><title>9.3. Jenkins integration</title><link rel="stylesheet" href="manual.css" type="text/css"></link><meta name="generator" content="DocBook XSL Stylesheets V1.73.2"></meta><link rel="start" href="https://index-noframes.html" title="Squish Manual"></link><link rel="up" href="https://addons.html" title="Chapter 9. Add-Ons Reference Manual"></link><link rel="prev" href="https://ao-third-party.html" title="9.2. Third-Party Add-Ons"></link><link rel="next" href="https://ao-bamboo.html" title="9.4. Atlassian Bamboo integration"></link><style xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" type="text/css" media="screen">
+        div.toc * { margin-left: 6px; margin-right: auto; max-width: 75em; }
+        div.toc span { margin-left: 0px; }
+        * { margin-left: auto; margin-right: auto; max-width: 75em; }
+        body { margin-left: 6px; margin-right: 6px; }
+        table th { padding: .5ex }
+        table td { padding: .5ex }
+    </style><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format">
+        function keyPress() {
+            var e = window.event;
+            if ( e == undefined ) {
+                return;
+            }
+            /* ### does not properly scroll, yet
+            if ( e.keyCode == 32 ) {
+            var l = document.links;
+            for ( var i = 0; i < l.length; i++ ) {
+                if ( l[i].innerText == "Next" ) {
+                location.href = l[i].href;
+                }
+            }
+            } else
+                */
+                if ( e.keyCode == 0x08 ) {
+            var l = document.links;
+            for ( var i = 0; i < l.length; i++ ) {
+                if ( l[i].innerText == "Prev" ) {
+                location.href = l[i].href;
+                }
+            }
+            }
+        }
+        document.onkeypress = keyPress;
+    </script></head><body><div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="ao-hudson"></a>9.3. Jenkins integration</h2></div></div></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><span class="section"><a href="https://ao-hudson.html#ao-jenkins-installation">9.3.1. Installing the Plugin</a></span></dt><dt><span class="section"><a href="https://ao-hudson.html#ao-jenkins-example">9.3.2. Using the Plugin</a></span></dt><dt><span class="section"><a href="https://ao-hudson.html#ao-jenkins-execution-results">9.3.3. Execution Results</a></span></dt><dt><span class="section"><a href="https://ao-hudson.html#ao-jenkins-testcenter">9.3.4. Integration with Squish Test Center</a></span></dt></dl></div><p>
+  Jenkins is known as a Continuous Integration (CI) tool. It allows you to kick
+  off processing jobs in response to events, or on a regular schedule.
+  With Jenkins, you can also monitor executions, and examine the results.
+  Jenkins is commonly used to build software, or run regression tests.
+  (For more about Jenkins see <a class="ulink" href="https://jenkins.io/" target="_blank">https://jenkins.io/</a>.)
+  </p><p>
+  Using the plugin described in this section, it is possible to run
+  <span class="emphasis"><em>Squish</em></span> tests as part of a Jenkins job.
+  </p><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="ao-jenkins-installation"></a>9.3.1. Installing the Plugin</h3></div></div></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><span class="section"><a href="https://ao-hudson.html#ao-jenkins-froglogic-update-center">9.3.1.1. froglogic Update Center</a></span></dt><dt><span class="section"><a href="https://ao-hudson.html#ao-jenkins-manual-installation">9.3.1.2. Manual installation</a></span></dt></dl></div><div class="important" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Important: Release Notes and README"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Important]" src="https://images/important.png"></img></td><th align="left">Release Notes and README</th></tr><tr><td align="left" valign="top"><p>
+      Remember to get familiar with
+      <a class="ulink" href="https://jenkins-update-center.froglogic.com/public/squish-plugin/latest/ReleaseNotes.txt" target="_blank">Release Notes</a> and
+      <a class="ulink" href="https://jenkins-update-center.froglogic.com/public/squish-plugin/latest/README.txt" target="_blank">README</a> files before installing or updating the plugin.
+      </p></td></tr></table></div><p>
+    The plugin can be installed in two different ways. It can be installed with
+    <span class="emphasis"><em>froglogic Update Center</em></span>.
+    Alternatively, the plugin can be downloaded and installed manually.
+    </p><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="ao-jenkins-froglogic-update-center"></a>9.3.1.1. froglogic Update Center</h4></div></div></div><p>
+      froglogic Update Center is an update site that offers all Jenkins plugins developed by
+      froglogic. To make the Update Center accessible from a Jenkins instance the <a class="ulink" href="https://plugins.jenkins.io/update-sites-manager/" target="_blank"> UpdateSites Manager plugin
+      </a> can be used.
+      </p><p>
+      Once the <span class="emphasis"><em>UpdateSites Manager</em></span> plugin is installed, open
+      <span class="guibutton">Manage Jenkins</span> -&gt; <span class="guibutton">Manage UpdateSites</span>.
+      Next, add a new, custom <span class="guibutton">Update Site</span>.
+      </p><p>
+      To configure the connection with <span class="emphasis"><em>froglogic Update Center</em></span> provide
+      </p><div class="itemizedlist"><ul type="disc"><li><p> <span class="guibutton">ID</span>: froglogic-update-center</p></li><li><p> <span class="guibutton">URL</span>: https://jenkins-update-center.froglogic.com/update-center.json</p></li><li><p> <span class="guibutton">CA Certificate</span>: content of the
+        <a class="ulink" href="https://jenkins-update-center.froglogic.com/froglogic-update-center.crt" target="_blank">
+        froglogic Update Center certificate</a>
+      </p></li></ul></div><p>
+      </p><div class="screenshot"><div class="mediaobject" align="center"><img src="https://images/jenkinsPlugin-UpdateCenterConfiguration.png" align="middle"></img><div class="caption">froglogic Update Center configuration</div></div></div><p>
+      When the update site configuration is done, open
+      <span class="guibutton">Manage Jenkins</span> -&gt; <span class="guibutton">Manage Plugins</span> and
+      update the plugin list by clicking on the <span class="guibutton">Check now</span> button.
+      froglogic's plugins should be displayed on the
+      <span class="guibutton">Updates</span>, <span class="guibutton">Available</span> or <span class="guibutton">Installed</span>
+      list accordingly to the current plugin status.
+      </p><div class="screenshot"><div class="mediaobject" align="center"><img src="https://images/jenkinsPlugin-UpdateCenterAvailable.png" align="middle"></img><div class="caption">Available Jenkins Plugin</div></div></div><p>
+      In some cases, Jenkins restart after the new version installation might be required to
+      make the plugin works correctly.
+      </p></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="ao-jenkins-manual-installation"></a>9.3.1.2. Manual installation</h4></div></div></div><p>
+      The newest Squish Plugin can be downloaded from
+      <a class="ulink" href="https://jenkins-update-center.froglogic.com/public/squish-plugin/latest/" target="_blank">here</a>.
+      The minimum required Jenkins version is listed in the
+      <a class="ulink" href="https://jenkins-update-center.froglogic.com/public/squish-plugin/latest/ReleaseNotes.txt" target="_blank">ReleaseNotes.txt</a>
+      </p><p>
+      To install the plugin, simply download the <code class="filename">SquishPlugin.hpi</code> file and move or
+      copy it into <code class="filename">JENKINS_HOME/plugins</code> where <code class="code">JENKINS_HOME</code> is
+      Jenkins home directory. Once the file is in the right place it can be enabled simply by restarting
+      Jenkins. After the restart, there should be an entry for the <span class="emphasis"><em>Squish</em></span> plugin in the Jenkins plugin
+      manager.
+      </p><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Note:  Squish Jenkins Plugin Dependencies "><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/note.png"></img></td><th align="left"> Squish Jenkins Plugin Dependencies </th></tr><tr><td align="left" valign="top"><p> The Squish plugin for Jenkins has some dependencies on other standard
+      Jenkins plugins which need to be installed. The first time you try to load
+      this plugin, it may fail, listing the missing plugins. You can resolve this
+      issue by installing them from the Jenkins Plugin Manager. The plugins are:
+
+      </p><div class="itemizedlist"><ul type="disc"><li><p> "Pipeline: API" (workflow-api) </p></li><li><p> "Pipeline: Step API" (workflow-step-api) </p></li><li><p> "Plain Credentials Plugin" (plain-credentials) </p></li><li><p> "Structs Plugin" (structs) </p></li></ul></div><p>
+      </p></td></tr></table></div><div class="screenshot"><div class="mediaobject" align="center"><img src="https://images/jenkinsPlugin-pluginPage.png" align="middle"></img><div class="caption">The Jenkins Plugin Manager.</div></div></div></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="ao-jenkins-example"></a>9.3.2. Using the Plugin</h3></div></div></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><span class="section"><a href="https://ao-hudson.html#ao-jenkins-squish-global-configuration">9.3.2.1. Squish Global Configuration</a></span></dt><dt><span class="section"><a href="https://ao-hudson.html#ao-jenkins-example-freestyle-projects">9.3.2.2. Freestyle Projects</a></span></dt><dt><span class="section"><a href="https://ao-hudson.html#ao-jenkins-example-pipeline-jobs">9.3.2.3. Pipeline Jobs</a></span></dt><dt><span class="section"><a href="https://ao-hudson.html#ao-jenkins-extra-options">9.3.2.4. Extra Options supported in Jobs and Pipelines</a></span></dt></dl></div><div class="important" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Important: Inline Help"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Important]" src="https://images/important.png"></img></td><th align="left">Inline Help</th></tr><tr><td align="left" valign="top"><p>
+      Next to each Squish plugin configuration field, the
+      <img src="https://images/jenkinsPlugin-help.png"></img>
+      button is displayed.
+
+      </p><p>
+      Click the button to see the detailed configuration field description and possible value examples.
+      </p></td></tr></table></div><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Note:  For Windows nodes executions"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/note.png"></img></td><th align="left"> For Windows nodes executions</th></tr><tr><td align="left" valign="top"><p>
+      Squish tests will fail if the Jenkins node is started as Windows Service
+      and a Jenkins plugin starts squishserver by itself!
+      </p><p>
+      If Squish tests must be executed on the Jenkins server make sure Jenkins
+      is not installed as Windows Service. Jenkins can be started alternatively
+      by running “<span class="quote">java -jar jenkins.war</span>” from a command line.
+      </p></td></tr></table></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="ao-jenkins-squish-global-configuration"></a>9.3.2.1. Squish Global Configuration</h4></div></div></div><p>
+      After checking that the <span class="emphasis"><em>Squish</em></span> plugin is correctly
+      loaded, the next step is to add <span class="emphasis"><em>Squish</em></span>'s installations to Jenkins
+      Global Tool Configuration. To do so, select
+      <span class="guibutton">Manage Jenkins</span>
+      -&gt; <span class="guibutton">Global Tool Configuration</span>
+      -&gt; <span class="guibutton">Squish installations...</span>
+      It's possible to specify many <span class="emphasis"><em>Squish</em></span> installations.
+      For each of them specify an installation path and a unique name.
+      </p><div class="screenshot"><div class="mediaobject" align="center"><img src="https://images/jenkinsPlugin-globalToolConfig.png" align="middle"></img><div class="caption">Jenkins Global Tool Configuration.</div></div></div><p>
+      The next step is to define a global plugin configuration in
+      <span class="guibutton">Configure System</span>. Usually, there is no need to
+      change anything in that section.
+      </p><div class="screenshot"><div class="mediaobject" align="center"><img src="https://images/jenkinsPlugin-globalConfig.png" align="middle"></img><div class="caption">Jenkins Global Configuration.</div></div></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="ao-jenkins-example-freestyle-projects"></a>9.3.2.2. Freestyle Projects</h4></div></div></div><p>
+      To run <span class="emphasis"><em>Squish</em></span> tests in the Jenkins build process we must adapt a
+      job configuration to include <span class="emphasis"><em>Squish</em></span>. Here we will use the address book
+      example that is shipped with <span class="emphasis"><em>Squish</em></span>.
+      </p><p>
+      The only thing left to do is to add a <span class="emphasis"><em>Squish</em></span> build step to the project configuration.
+      Now one of the specified Squish packages can be selected from the
+      drop-down list. Next, set up the test suite and optionally, the test cases
+      which we want to be carried out.
+      Additionally, host and port may be specified to use an already running <span class="application">squishserver</span>.
+      In the screenshot, we have added one <span class="emphasis"><em>Squish</em></span> build step which executes
+      the <code class="filename">tst_adding</code> test case of the
+      <code class="filename">suite_py</code> test suite.
+      </p><div class="screenshot"><div class="mediaobject" align="center"><img src="https://images/jenkinsPlugin-jobConfig.png" align="middle"></img><div class="caption">Jenkins Job Configuration.</div></div></div><p>
+      After <span class="guibutton">Save</span>/<span class="guibutton">Apply</span> changes to the Jenkins project, we can run it.
+      </p></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="ao-jenkins-example-pipeline-jobs"></a>9.3.2.3. Pipeline Jobs</h4></div></div></div><p>
+      To run <span class="emphasis"><em>Squish</em></span> tests in the Jenkins Pipeline, we can use Squish Build Step in our Pipeline script.
+      </p><p>
+      To generate proper code we can use Jenkins built-in <span class="guilabel">Pipeline Syntax</span> functionality.
+      </p><div class="screenshot"><div class="mediaobject" align="center"><img src="https://images/jenkinsPlugin-PipelineSyntax.png" align="middle"></img><div class="caption">Pipeline Syntax.</div></div></div><p>
+      As a Sample Step we need to select <code class="code">squish: Runs Squish tests</code>.
+      </p><div class="screenshot"><div class="mediaobject" align="center"><img src="https://images/jenkinsPlugin-PipelineSquishStepSelection.png" align="middle"></img><div class="caption">Squish Step selection.</div></div></div><p>
+      After doing that, we can define the configuration the same way we do for Freestyle projects. When the configuration is ready
+      we click on <span class="guilabel">Generate Pipeline Script</span>.
+      </p><div class="screenshot"><div class="mediaobject" align="center"><img src="https://images/jenkinsPlugin-PipelineSquishStepGenerate.png" align="middle"></img><div class="caption">Generate Pipeline Script.</div></div></div><p>
+      Now we can use generated step in the Pipeline job.
+      </p><div class="screenshot"><div class="mediaobject" align="center"><img src="https://images/jenkinsPlugin-PipelineSquishStepUsage.png" align="middle"></img><div class="caption">Squish Plugin usage.</div></div></div><p>
+      Note that the Squish Pipeline Step doesn't set a build result. It returns a test execution status based on test results, global and job configurations.
+      Using that status a user may implement the desired handling.
+      </p></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="ao-jenkins-extra-options"></a>9.3.2.4. Extra Options supported in Jobs and Pipelines</h4></div></div></div><p>
+      The Extra Options configuration field is intended to specify additional arguments to squishrunner and squishserver.
+      </p><p>
+      Each option and possible arguments have to be given in separate lines.
+      </p><p>
+      Supported squishrunner options:
+
+      </p><div class="itemizedlist"><ul type="disc"><li><p><code class="option">--webbrowser</code> (see <a class="xref" href="https://rg-cmdline.html#rg-squishrunner-cli-playback--webbrowser" title="7.4.3.12. Playback option --webbrowser">Playback option <code class="option">--webbrowser</code> (Section 7.4.3.12)</a>)</p></li><li><p><code class="option">--webbrowserargs</code> (see <a class="xref" href="https://rg-cmdline.html#rg-squishrunner-cli-playback--webbrowser" title="7.4.3.12. Playback option --webbrowser">Playback option <code class="option">--webbrowser</code> (Section 7.4.3.12)</a>)</p></li><li><p><code class="option">--device</code> (see <a class="xref" href="https://rg-cmdline.html#rg-squishrunner-cli-playback--device" title="7.4.3.13. Playback option --device">Playback option <code class="option">--device</code> (Section 7.4.3.13)</a>)</p></li><li><p><code class="option">--launcherargs</code> (see <code class="option">--launcherargs</code> at <a class="xref" href="https://rg-cmdline.html#rg-squishrunner-cli--testsuite" title="7.4.3.3. squishrunner --testsuite: Running tests in batch mode">squishrunner --testsuite: Running tests in batch mode (Section 7.4.3.3)</a></p></li><li><p><code class="option">--resultdir</code> (see <a class="xref" href="https://rg-cmdline.html#rg-squishrunner-cli-playback--resultdir" title="7.4.3.5.  squishrunner --resultdir: Setting the Result Directory"> <code class="option">squishrunner --resultdir</code>: Setting the Result Directory  (Section 7.4.3.5)</a>)</p></li><li><p><code class="option">--retry</code> (see <a class="xref" href="https://rg-cmdline.html#rg-squishrunner-cli-playback--retry" title="7.4.3.17. Playback option --retry">Playback option <code class="option">--retry</code> (Section 7.4.3.17)</a>)</p></li><li><p><code class="option">--timeout</code> (see <a class="xref" href="https://rg-cmdline.html#rg-squishrunner-cli-playback--timeout" title="7.4.3.16. Playback option --timeout">Playback option <code class="option">--timeout</code> (Section 7.4.3.16)</a>)</p></li><li><p><code class="option">--abortOnFail</code> (see <a class="xref" href="https://rg-cmdline.html#rg-squishrunner-cli-playback--abortOnFail" title="7.4.3.11. Playback option --abortOnFail">Playback option <code class="option">--abortOnFail</code> (Section 7.4.3.11)</a>)</p></li><li><p><code class="option">--tags</code> (see <a class="xref" href="https://rg-cmdline.html#rg-squishrunner-cli-playback--tags" title="7.4.3.19. Playback option --tags">Playback option <code class="option">--tags</code> (Section 7.4.3.19)</a>)</p></li><li><p><code class="option">--random</code> (see <a class="xref" href="https://rg-cmdline.html#rg-squishrunner-cli-playback--random" title="7.4.3.20. Playback option --random">Playback option <code class="option">--random</code> (Section 7.4.3.20)</a>)</p></li><li><p><code class="option">--scriptargs</code> (see <a class="xref" href="https://rg-cmdline.html#rg-squishrunner-cli-playback--scriptargs" title="7.4.3.18. Playback option --scriptargs">Playback option <code class="option">--scriptargs</code> (Section 7.4.3.18)</a>)</p></li></ul></div><p>
+
+      Please note that <code class="option">--scriptargs</code> option with it's following parameters needs to be provided at the end. For example:
+
+      </p><pre class="screen">
+--webbrowser
+firefox
+--device
+016d24ab5227e2ff
+--abortOnFail
+--scriptargs
+--param1
+value1
+--param2
+value2
+      </pre><p>
+      </p><p>
+      Supported squishserver <code class="option">--config</code> options (see <a class="xref" href="https://rg-cmdline.html#rg-squishserver--config" title="7.4.4.3. Configuring squishserver">Configuring <span class="application">squishserver</span> (Section 7.4.4.3)</a> for more details):
+
+      </p><div class="itemizedlist"><ul type="disc"><li><p><code class="option">--config addAUT</code>: </p><pre class="screen">
+--config
+addAUT
+aut
+path</pre></li><li><p><code class="option">--config addAppPath</code>: </p><pre class="screen">
+--config
+addAppPath
+path</pre></li><li><p><code class="option">--config addAttachableAUT</code>: </p><pre class="screen">
+--config
+addAttachableAUT
+aut
+[host:]port</pre></li><li><p><code class="option">--config setResponseTimeout</code>: </p><pre class="screen">
+--config
+setResponseTimeout
+seconds</pre></li><li><p><code class="option">--config setAUTPostMortemTimeout</code>: </p><pre class="screen">
+--config
+setAUTPostMortemTimeout
+milliseconds</pre></li><li><p><code class="option">--config setAUTTimeout</code></p><pre class="screen">
+--config
+setAUTTimeout
+seconds</pre></li><li><p><code class="option">--config setCursorAnimation</code></p><pre class="screen">
+--config
+setCursorAnimation
+on|off</pre></li></ul></div><p>
+      </p></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="ao-jenkins-execution-results"></a>9.3.3. Execution Results</h3></div></div></div><p>
+    The summary page lists links to the Squish report page and later on to HTML Reports.
+    </p><div class="screenshot"><div class="mediaobject" align="center"><img src="https://images/jenkinsPlugin-buildSummaryHtmlReports.png" align="middle" alt="The Jenkins Build Summary - HTML Reports."></img><div class="caption">The Jenkins Build Summary - HTML Reports.</div></div></div><p>
+    The <span class="emphasis"><em>Squish</em></span> report page appears inside Jenkins:
+    </p><div class="screenshot"><div class="mediaobject" align="center"><img src="https://images/jenkinsPlugin-squishResult.png" align="middle"></img><div class="caption"><p>Jenkins <span class="emphasis"><em>Squish</em></span> Results.</p></div></div></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="ao-jenkins-testcenter"></a>9.3.4. Integration with Squish Test Center</h3></div></div></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><span class="section"><a href="https://ao-hudson.html#ao-jenkins-testcenter-global-configuration">9.3.4.1. Global Configuration</a></span></dt><dt><span class="section"><a href="https://ao-hudson.html#ao-jenkins-testcenter-job-configuration">9.3.4.2. Job Configuration</a></span></dt><dt><span class="section"><a href="https://ao-hudson.html#ao-jenkins-testcenter-execution">9.3.4.3. Test Execution Results</a></span></dt></dl></div><p>
+      With the Jenkins plugin, it's possible to send execution results directly to <a class="ulink" href="https://www.froglogic.com/testcenter/" target="_blank">Squish Test Center</a>
+      instead of generating the HTML report.
+    </p><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="ao-jenkins-testcenter-global-configuration"></a>9.3.4.1. Global Configuration</h4></div></div></div><p>
+        To configure the connection between Jenkins and <span class="application">Squish Test Center</span> open
+        <span class="guibutton">Manage Jenkins</span>
+        -&gt; <span class="guibutton">Configure System</span>.
+        In the <span class="guibutton">Squish Test Center Configuration</span> section, the URL of the <span class="application">Squish Test Center</span> needs to be provided along with Credentials.
+      </p><div class="screenshot"><div class="mediaobject" align="center"><img src="https://images/jenkinsPlugin-TestCenterConfiguration.png" align="middle"></img><div class="caption"><p>Jenkins Global <span class="application">Squish Test Center</span> Configuration.</p></div></div></div><p>
+        While setting-up the credentials the <span class="guibutton">Secret Text</span> kind needs to be selected.
+        The <span class="guibutton">Secret</span> value should be an
+        <a class="ulink" href="https://doc.froglogic.com/squish-testcenter/1.0.0/ug-user-management.html#upload-token" target="_blank">Upload Token</a> generated in the <span class="application">Squish Test Center</span>.
+      </p><div class="screenshot"><div class="mediaobject" align="center"><img src="https://images/jenkinsPlugin-TestCenterUploadToken.png" align="middle"></img><div class="caption"><p><span class="application">Squish Test Center</span> Upload Token.</p></div></div></div><p>
+        The connection can be tested with the <span class="guibutton">Verify Configuration</span> button.
+      </p></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="ao-jenkins-testcenter-job-configuration"></a>9.3.4.2. Job Configuration</h4></div></div></div><p>
+        When the connection with <span class="application">Squish Test Center</span> is configured, open the job configuration page.
+        At the bottom of the <span class="guibutton">Squish</span> build step, select the <span class="guibutton">Send results to the Squish Test Center</span> option.
+        After the option has been activated, new configuration fields appear. Provide necessary information and save the job configuration.
+      </p><div class="screenshot"><div class="mediaobject" align="center"><img src="https://images/jenkinsPlugin-TestCenterJobConfiguration.png" align="middle"></img><div class="caption"><p>Jenkins Job <span class="application">Squish Test Center</span> Configuration.</p></div></div></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="ao-jenkins-testcenter-execution"></a>9.3.4.3. Test Execution Results</h4></div></div></div><p>
+        After the job execution, if a job was configured to send results to <span class="application">Squish Test Center</span> the summary page lists links to respective <span class="application">Squish Test Center</span> batch pages.
+      </p><div class="screenshot"><div class="mediaobject" align="center"><img src="https://images/jenkinsPlugin-TestCenterSummary.png" align="middle"></img><div class="caption"><p><span class="application">Squish Test Center</span> Build Summary.</p></div></div></div></div></div></div><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format" type="text/javascript" src="ScriptingLanguage.js"></script><script xmlns="" xmlns:fo="http://www.w3.org/1999/XSL/Format">setScriptingLanguage();</script><div class="navfooter"><hr></hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="https://ao-third-party.html">Prev</a> </td><td width="20%" align="center"><a accesskey="u" href="https://addons.html">Up</a></td><td width="40%" align="right"> <a accesskey="n" href="https://ao-bamboo.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">9.2. Third-Party Add-Ons </td><td width="20%" align="center"><a accesskey="h" href="https://index-noframes.html">Home</a></td><td width="40%" align="right" valign="top"> 9.4. Atlassian Bamboo integration</td></tr></table></div></body>
+<!-- Mirrored from ao-hudson.html by HTTrack Website Copier/3.x [XR&CO'2013], Wed, 06 Jul 2022 13:29:01 GMT -->
+</html>
